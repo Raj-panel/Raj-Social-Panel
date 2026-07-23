@@ -1,25 +1,439 @@
-<div class="support">
+<!DOCTYPE html>
+<html lang="en">
 
-    <h2 class="section-title">
-        Need Help?
-    </h2>
+<head>
+    <meta charset="UTF-8">
 
-    <!-- Telegram Support -->
-    <a
-        href="https://t.me/RajSocialPanel"
-        target="_blank"
-        class="telegram"
-    >
-        Telegram Support
-    </a>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- WhatsApp Support -->
-    <a
-        href="https://wa.me/919337028344"
-        target="_blank"
-        class="whatsapp"
-    >
-        WhatsApp Support
-    </a>
+    <title>Raj Social Panel</title>
 
-</div>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        /* Header */
+
+        header {
+            background: linear-gradient(135deg, #111827, #2563eb);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        header h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        header p {
+            font-size: 18px;
+            color: #e5e7eb;
+        }
+
+        /* Main Container */
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 30px 20px;
+        }
+
+        /* Section Title */
+
+        .section-title {
+            text-align: center;
+            margin: 45px 0 25px;
+            font-size: 30px;
+        }
+
+        /* Service Grid */
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+        }
+
+        /* Service Card */
+
+        .service-card {
+            background: white;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .service-icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .service-card h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .service-card button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .service-card button:hover {
+            background: #1d4ed8;
+        }
+
+        /* Support */
+
+        .support {
+            text-align: center;
+            margin: 60px 0 30px;
+        }
+
+        .support-buttons {
+            margin-top: 25px;
+        }
+
+        .support-buttons a {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            margin: 8px;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .telegram {
+            background: #229ED9;
+        }
+
+        .telegram:hover {
+            opacity: 0.85;
+        }
+
+        .whatsapp {
+            background: #25D366;
+        }
+
+        .whatsapp:hover {
+            opacity: 0.85;
+        }
+
+        /* Footer */
+
+        footer {
+            background: #111827;
+            color: #d1d5db;
+            text-align: center;
+            padding: 25px;
+            margin-top: 50px;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 45px 15px;
+            }
+
+            header h1 {
+                font-size: 34px;
+            }
+
+            header p {
+                font-size: 15px;
+            }
+
+            .section-title {
+                font-size: 25px;
+            }
+
+            .support-buttons a {
+                display: block;
+                margin: 10px auto;
+                max-width: 280px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- Header -->
+
+    <header>
+
+        <h1>Raj Social Panel</h1>
+
+        <p>
+            Fast & Reliable Social Media Services
+        </p>
+
+    </header>
+
+
+    <!-- Main -->
+
+    <div class="container">
+
+
+        <!-- Instagram -->
+
+        <h2 class="section-title">
+            📸 Instagram Services
+        </h2>
+
+
+        <div class="services">
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    👥
+                </div>
+
+                <h3>
+                    Instagram Followers
+                </h3>
+
+                <button onclick="selectService('Instagram Followers')">
+                    Select Service
+                </button>
+
+            </div>
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    ❤️
+                </div>
+
+                <h3>
+                    Instagram Likes
+                </h3>
+
+                <button onclick="selectService('Instagram Likes')">
+                    Select Service
+                </button>
+
+            </div>
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    ▶️
+                </div>
+
+                <h3>
+                    Instagram Reels Views
+                </h3>
+
+                <button onclick="selectService('Instagram Reels Views')">
+                    Select Service
+                </button>
+
+            </div>
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    💬
+                </div>
+
+                <h3>
+                    Instagram Comments
+                </h3>
+
+                <button onclick="selectService('Instagram Comments')">
+                    Select Service
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- Facebook -->
+
+        <h2 class="section-title">
+            📘 Facebook Services
+        </h2>
+
+
+        <div class="services">
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    👥
+                </div>
+
+                <h3>
+                    Facebook Followers
+                </h3>
+
+                <button onclick="selectService('Facebook Followers')">
+                    Select Service
+                </button>
+
+            </div>
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    👍
+                </div>
+
+                <h3>
+                    Facebook Likes
+                </h3>
+
+                <button onclick="selectService('Facebook Likes')">
+                    Select Service
+                </button>
+
+            </div>
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    ▶️
+                </div>
+
+                <h3>
+                    Facebook Video Views
+                </h3>
+
+                <button onclick="selectService('Facebook Video Views')">
+                    Select Service
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- Support -->
+
+        <div class="support">
+
+            <h2 class="section-title">
+                💬 Need Help?
+            </h2>
+
+            <p>
+                Contact us for any help or support.
+            </p>
+
+
+            <div class="support-buttons">
+
+
+                <!-- Telegram -->
+
+                <a
+                    href="https://t.me/RajSocialPanel"
+                    target="_blank"
+                    class="telegram"
+                >
+                    ✈️ Telegram Support
+                </a>
+
+
+                <!-- WhatsApp -->
+
+                <a
+                    href="https://wa.me/919337028344"
+                    target="_blank"
+                    class="whatsapp"
+                >
+                    💬 WhatsApp Support
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        © 2026 Raj Social Panel
+
+        <br>
+
+        All Rights Reserved.
+
+    </footer>
+
+
+
+    <!-- JavaScript -->
+
+    <script>
+
+        function selectService(serviceName) {
+
+            alert(
+                "Selected Service: " +
+                serviceName +
+                "\n\n" +
+                "Order system will be available soon."
+            );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

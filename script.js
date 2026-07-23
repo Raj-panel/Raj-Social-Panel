@@ -4,7 +4,9 @@ const serviceData = {
         { name: "Instagram Followers", pricePer1000: 80 },
         { name: "Instagram Likes (Non Drop)", pricePer1000: 30 },
         { name: "Instagram Reels Views", pricePer1000: 10 },
-        { name: "Instagram Custom Report", pricePer1000: 150 }
+        { name: "Instagram Report Lifetime", pricePer1000: 100 },
+        { name: "Instagram Non Drop Comment", pricePer1000: 160 },
+        { name: "Instagram Post Save Lifetime", pricePer1000: 100 }
     ],
     facebook: [
         { name: "Facebook Non Drop Follow", pricePer1000: 49 },

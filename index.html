@@ -1,71 +1,92 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raj Social Panel</title>
+    <title>Raj Social Panel | Premium SMM Services</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
+    <div class="background-glow"></div>
+
     <header>
-        <h1>Raj Social Panel</h1>
-        <p>Login ছাড়া দ্রুত এবং নিরাপদ সোশ্যাল মিডিয়া সার্ভিস</p>
+        <div class="logo">Raj Social Panel</div>
+        <p class="tagline">Instant & High Quality Social Media Growth for India 🇮🇳</p>
         
         <div class="support-buttons">
-            <a href="https://t.me/RajSocialPanel" target="_blank" class="btn telegram">Telegram Channel</a>
-            <a href="https://wa.me/919337028344" target="_blank" class="btn whatsapp">WhatsApp Support</a>
+            <a href="https://t.me/RajSocialPanel" target="_blank" class="btn telegram">
+                <span>Join Telegram</span>
+            </a>
+            <a href="https://wa.me/919337028344" target="_blank" class="btn whatsapp">
+                <span>WhatsApp Support</span>
+            </a>
         </div>
     </header>
 
     <main class="container">
-        <!-- সার্ভিস ক্যাটাগরি সিলেক্ট -->
-        <div class="card">
-            <h2>১. সার্ভিস সিলেক্ট করুন</h2>
+        <!-- Service Selection -->
+        <div class="card glass">
+            <h2><span class="step-num">1</span> Choose Service</h2>
             
-            <label for="platform">প্ল্যাটফর্ম বেছে নিন:</label>
-            <select id="platform" onchange="updateServices()">
-                <option value="">-- প্ল্যাটফর্ম সিলেক্ট করুন --</option>
-                <option value="instagram">Instagram</option>
-                <option value="facebook">Facebook</option>
-            </select>
-
-            <label for="service">সার্ভিস বেছে নিন:</label>
-            <select id="service" onchange="calculatePrice()">
-                <option value="">-- আগে প্ল্যাটফর্ম সিলেক্ট করুন --</option>
-            </select>
-        </div>
-
-        <!-- অর্ডার ইনপুট ফর্ম -->
-        <div class="card">
-            <h2>২. অর্ডারের তথ্য দিন</h2>
-            
-            <label for="link">প্রোফাইল/পোস্টের লিঙ্ক (Link):</label>
-            <input type="text" id="link" placeholder="https://instagram.com/your_username">
-
-            <label for="quantity">পরিমাণ (Quantity):</label>
-            <input type="number" id="quantity" placeholder="যেমন: 1000" min="100" oninput="calculatePrice()">
-
-            <div class="price-box">
-                মোট মূল্য: ₹<span id="totalPrice">0</span> BDT/INR
+            <div class="input-group">
+                <label for="platform">Platform</label>
+                <select id="platform" onchange="updateServices()">
+                    <option value="">-- Select Platform --</option>
+                    <option value="instagram">Instagram</option>
+                    <option value="facebook">Facebook</option>
+                </select>
             </div>
 
-            <button class="submit-btn" onclick="generateOrder()">Submit & Pay</button>
+            <div class="input-group">
+                <label for="service">Service Type</label>
+                <select id="service" onchange="calculatePrice()">
+                    <option value="">-- Select Service --</option>
+                </select>
+            </div>
         </div>
 
-        <!-- পেমেন্ট সেকশন (প্রথমে হাইড থাকবে) -->
-        <div class="card" id="paymentCard" style="display: none;">
-            <h2>৩. পেমেন্ট করুন</h2>
-            <p>নিচের QR Code স্ক্যান করে পেমেন্ট সম্পন্ন করুন:</p>
+        <!-- Order Input Form -->
+        <div class="card glass">
+            <h2><span class="step-num">2</span> Enter Order Details</h2>
+            
+            <div class="input-group">
+                <label for="link">Target Link / Username</label>
+                <input type="text" id="link" placeholder="https://instagram.com/your_username">
+            </div>
+
+            <div class="input-group">
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" placeholder="e.g. 1000" min="100" oninput="calculatePrice()">
+            </div>
+
+            <div class="price-box">
+                <span class="price-label">Total Amount:</span>
+                <span class="price-val">₹<span id="totalPrice">0</span> INR</span>
+            </div>
+
+            <button class="submit-btn" onclick="generateOrder()">Proceed to Pay</button>
+        </div>
+
+        <!-- Payment Section -->
+        <div class="card glass" id="paymentCard" style="display: none;">
+            <h2><span class="step-num">3</span> Scan & Pay (UPI)</h2>
+            <p class="pay-subtext">Scan the QR code below with PhonePe, Paytm, or Google Pay:</p>
             
             <div class="qr-container">
                 <img id="qrCodeImg" src="" alt="UPI QR Code">
             </div>
 
-            <p class="pay-note">পেমেন্ট করার পর ট্রানজেকশন স্ক্রিনশট এবং Order ID নিচের হোয়াটসঅ্যাপে পাঠান।</p>
-            <a id="waPayBtn" href="#" target="_blank" class="btn whatsapp-pay">WhatsApp-এ পেমেন্ট কনফার্ম করুন</a>
+            <p class="pay-note">⚠️ After completing payment, take a screenshot and send it on WhatsApp for instant processing.</p>
+            
+            <a id="waPayBtn" href="#" target="_blank" class="btn whatsapp-pay">Confirm Order on WhatsApp</a>
         </div>
     </main>
+
+    <footer>
+        <p>© Raj Social Panel. All Rights Reserved.</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>

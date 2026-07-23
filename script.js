@@ -1,17 +1,18 @@
-// Prices in INR per 1000 quantity
+// Service Rates configured for calculation
+// Note: pricePer1000 holds price per 1000 items, display text shows per 100 rate as requested
 const serviceData = {
     instagram: [
-        { name: "Instagram Followers", pricePer1000: 80 },
-        { name: "Instagram Likes (Non Drop)", pricePer1000: 30 },
-        { name: "Instagram Reels Views Lifetime", pricePer1000: 10 },
-        { name: "Instagram Report Lifetime", pricePer100: 10 },
-        { name: "Instagram Non Drop Comment", pricePer100: 15 },
-        { name: "Instagram Post Save Lifetime", pricePer100: 10 }
+        { name: "Instagram Followers", pricePer1000: 80, displayText: "Instagram Followers - ₹80 / 1K" },
+        { name: "Instagram Likes (Non Drop)", pricePer1000: 30, displayText: "Instagram Likes (Non Drop) - ₹30 / 1K" },
+        { name: "Instagram Reels Views", pricePer1000: 10, displayText: "Instagram Reels Views - ₹10 / 1K" },
+        { name: "Instagram Report Lifetime", pricePer1000: 100, displayText: "Instagram Report Lifetime - ₹10 / 100" },
+        { name: "Instagram Non Drop Comment", pricePer1000: 150, displayText: "Instagram Non Drop Comment - ₹15 / 100" },
+        { name: "Instagram Post Save Lifetime", pricePer1000: 100, displayText: "Instagram Post Save Lifetime - ₹10 / 100" }
     ],
     facebook: [
-        { name: "Facebook Non Drop Follow", pricePer1000: 49 },
-        { name: "Facebook Non Drop Like", pricePer1000: 39 },
-        { name: "Facebook Reels / Videos Views", pricePer1000: 10 }
+        { name: "Facebook Non Drop Follow", pricePer1000: 49, displayText: "Facebook Non Drop Follow - ₹49 / 1K" },
+        { name: "Facebook Non Drop Like", pricePer1000: 39, displayText: "Facebook Non Drop Like - ₹39 / 1K" },
+        { name: "Facebook Reels / Videos Views", pricePer1000: 10, displayText: "Facebook Reels / Videos Views - ₹10 / 1K" }
     ]
 };
 
@@ -26,14 +27,14 @@ function updateServices() {
         serviceData[platform].forEach((item, index) => {
             let option = document.createElement("option");
             option.value = index;
-            option.text = `${item.name} - ₹${item.pricePer1000} / 1K`;
+            option.text = item.displayText;
             serviceSelect.appendChild(option);
         });
     }
     calculatePrice();
 }
 
-// Calculate price dynamically with Minimum ₹10 Order condition
+// Calculate price dynamically
 function calculatePrice() {
     const platform = document.getElementById("platform").value;
     const serviceIndex = document.getElementById("service").value;
@@ -113,22 +114,19 @@ function confirmPaymentWithUTR() {
     window.open(`https://wa.me/919337028344?text=${waMsg}`, '_blank');
 }
 
-// Auto-Increment Counter (Starts exactly from 10, increases by 1 per minute)
-function startMinuteCounter() {
-    const baseOrders = 10;
-    const baseCompleted = 9;
+// Global Fixed-Time Based Order Counter
+function startGlobalCounter() {
+    const baseOrders = 500; // প্রাথমিক বেস সংখ্যা
+    const baseCompleted = 492;
 
-    const startTimeKey = "raj_panel_start_time_v2"; 
-    let startTime = localStorage.getItem(startTimeKey);
-
-    if (!startTime) {
-        startTime = Date.now();
-        localStorage.setItem(startTimeKey, startTime);
-    }
+    // একটি নির্দিষ্ট অতীত সময়কে (Fixed Anchor Point) ধরে নেওয়া হলো
+    // জানুয়ারি ১, ২০২৬ তারিখ থেকে মিনিট পাওয়ার জন্য হিসাব
+    const fixedStartTime = new Date("2026-01-01T00:00:00Z").getTime();
 
     function updateDisplay() {
         const now = Date.now();
-        const minutesPassed = Math.floor((now - startTime) / (1000 * 60));
+        // ১ জানুয়ারি ২০২৬ এর পর থেকে কত মিনিট পার হয়েছে
+        const minutesPassed = Math.floor((now - fixedStartTime) / (1000 * 60));
 
         const total = baseOrders + minutesPassed;
         const success = baseCompleted + minutesPassed;
@@ -145,5 +143,5 @@ function startMinuteCounter() {
 
 // Page load event
 window.onload = function() {
-    startMinuteCounter();
+    startGlobalCounter();
 };

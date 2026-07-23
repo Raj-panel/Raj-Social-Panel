@@ -47,7 +47,7 @@ function calculatePrice() {
     }
 }
 
-// Generate dynamic QR Code and WhatsApp message
+// Generate dynamic QR Code and Payment Card
 function generateOrder() {
     const platform = document.getElementById("platform").value;
     const serviceIndex = document.getElementById("service").value;
@@ -62,8 +62,8 @@ function generateOrder() {
 
     const serviceName = serviceData[platform][serviceIndex].name;
 
-    // REPLACE WITH YOUR ACTUAL UPI ID
-    const upiId = "YOUR_UPI_ID@upi"; 
+    // YOUR ACTUAL UPI ID
+    const upiId = "Saheb.68@ptyes"; 
     const payeeName = "Raj Social Panel";
 
     // Dynamic UPI QR Code Generation
@@ -73,41 +73,69 @@ function generateOrder() {
     document.getElementById("qrCodeImg").src = qrApi;
     document.getElementById("paymentCard").style.display = "block";
 
-    // Format WhatsApp order message
-    const waMsg = `Hello! I have placed an order on Raj Social Panel:%0A%0A` +
-                  `*Service:* ${serviceName}%0A` +
-                  `*Target Link:* ${link}%0A` +
-                  `*Quantity:* ${quantity}%0A` +
-                  `*Amount:* ₹${totalPrice} INR%0A%0A` +
-                  `I will send the payment screenshot shortly.`;
-
-    document.getElementById("waPayBtn").href = `https://wa.me/919337028344?text=${waMsg}`;
-    
     // Smooth scroll to payment section
     document.getElementById("paymentCard").scrollIntoView({ behavior: 'smooth' });
 }
 
-// Auto-Increment Order Counter Code (Hourly Based)
-function updateOrderStats() {
-    const baseOrders = 10245; // প্রাথমিক মোট অর্ডার সংখ্যা
-    const baseCompleted = 10189; // প্রাথমিক সাকসেসফুল অর্ডার সংখ্যা
-    
-    // বর্তমান সময় ধরে ঘণ্টাভিত্তিক হিসেব
-    const hoursPassed = Math.floor(Date.now() / (1000 * 60 * 60)); 
-    
-    // প্রতি ঘণ্টায় গড়ে ১০-১২ টি করে অর্ডার যুক্ত হবে
-    const extraOrders = (hoursPassed % 500) * 11; 
-    
-    const total = baseOrders + extraOrders;
-    const success = baseCompleted + extraOrders;
+// Submit Order with UTR via WhatsApp
+function confirmPaymentWithUTR() {
+    const utr = document.getElementById("utrNumber").value;
+    const platform = document.getElementById("platform").value;
+    const serviceIndex = document.getElementById("service").value;
+    const link = document.getElementById("link").value;
+    const quantity = document.getElementById("quantity").value;
+    const totalPrice = document.getElementById("totalPrice").innerText;
 
-    if(document.getElementById("totalOrders")) {
-        document.getElementById("totalOrders").innerText = total.toLocaleString('en-IN');
-        document.getElementById("completedOrders").innerText = success.toLocaleString('en-IN');
+    if (!utr || utr.length < 10) {
+        alert("Please enter a valid 12-Digit UTR / Transaction ID!");
+        return;
     }
+
+    const serviceName = serviceData[platform][serviceIndex].name;
+
+    const waMsg = `🚀 *NEW ORDER PLACED*%0A%0A` +
+                  `*Service:* ${serviceName}%0A` +
+                  `*Target Link:* ${link}%0A` +
+                  `*Quantity:* ${quantity}%0A` +
+                  `*Amount Paid:* ₹${totalPrice} INR%0A` +
+                  `*UTR / Payment ID:* ${utr}%0A%0A` +
+                  `Please check payment and complete the order.`;
+
+    window.open(`https://wa.me/919337028344?text=${waMsg}`, '_blank');
 }
 
-// পেজ লোড হলে হিসেব চালু হবে
+// Auto-Increment Counter (Per Minute 1 Order)
+function startMinuteCounter() {
+    const baseOrders = 10;
+    const baseCompleted = 9;
+
+    const startTimeKey = "raj_panel_start_time";
+    let startTime = localStorage.getItem(startTimeKey);
+
+    if (!startTime) {
+        startTime = Date.now();
+        localStorage.setItem(startTimeKey, startTime);
+    }
+
+    function updateDisplay() {
+        const now = Date.now();
+        // প্রতি ১ মিনিটে ১ টি অতিরিক্ত অর্ডার
+        const minutesPassed = Math.floor((now - startTime) / (1000 * 60));
+
+        const total = baseOrders + minutesPassed;
+        const success = baseCompleted + minutesPassed;
+
+        if (document.getElementById("totalOrders")) {
+            document.getElementById("totalOrders").innerText = total.toLocaleString('en-IN');
+            document.getElementById("completedOrders").innerText = success.toLocaleString('en-IN');
+        }
+    }
+
+    updateDisplay();
+    setInterval(updateDisplay, 1000);
+}
+
+// Page load event
 window.onload = function() {
-    updateOrderStats();
+    startMinuteCounter();
 };

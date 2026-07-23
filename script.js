@@ -31,7 +31,7 @@ function updateServices() {
     calculatePrice();
 }
 
-// Calculate price dynamically
+// Calculate price dynamically with Minimum ₹10 Order condition
 function calculatePrice() {
     const platform = document.getElementById("platform").value;
     const serviceIndex = document.getElementById("service").value;
@@ -53,10 +53,17 @@ function generateOrder() {
     const serviceIndex = document.getElementById("service").value;
     const link = document.getElementById("link").value;
     const quantity = document.getElementById("quantity").value;
-    const totalPrice = document.getElementById("totalPrice").innerText;
+    const totalPriceText = document.getElementById("totalPrice").innerText;
+    const totalPrice = parseFloat(totalPriceText);
 
     if (!platform || serviceIndex === "" || !link || quantity <= 0) {
         alert("Please fill in all details correctly!");
+        return;
+    }
+
+    // ⚠️ Minimum Order Validation (Minimum ₹10 required)
+    if (totalPrice < 10) {
+        alert("⚠️ Minimum order amount is ₹10 INR. Please increase the quantity to place the order.");
         return;
     }
 
@@ -104,12 +111,12 @@ function confirmPaymentWithUTR() {
     window.open(`https://wa.me/919337028344?text=${waMsg}`, '_blank');
 }
 
-// Auto-Increment Counter (Per Minute 1 Order)
+// Auto-Increment Counter (Starts exactly from 10, increases by 1 per minute)
 function startMinuteCounter() {
     const baseOrders = 10;
     const baseCompleted = 9;
 
-    const startTimeKey = "raj_panel_start_time";
+    const startTimeKey = "raj_panel_start_time_v2"; 
     let startTime = localStorage.getItem(startTimeKey);
 
     if (!startTime) {
@@ -119,7 +126,6 @@ function startMinuteCounter() {
 
     function updateDisplay() {
         const now = Date.now();
-        // প্রতি ১ মিনিটে ১ টি অতিরিক্ত অর্ডার
         const minutesPassed = Math.floor((now - startTime) / (1000 * 60));
 
         const total = baseOrders + minutesPassed;

@@ -9,138 +9,155 @@
 </head>
 <body>
 
-    <!-- Background Glow Elements -->
-    <div class="bg-glow glow-1"></div>
-    <div class="bg-glow glow-2"></div>
-
-    <div class="container">
+    <div class="main-wrapper">
         
-        <!-- Header -->
-        <div class="header">
-            <div class="badge-online">
-                <span class="pulse-dot"></span> Instant Automatic Panel
-            </div>
-            <h1 class="logo-text">RAJ SOCIAL <span class="highlight">PANEL</span></h1>
+        <!-- Unique Hero Header -->
+        <div class="hero-header">
+            <div class="hero-badge"><i class="fa-solid fa-bolt"></i> FASTEST & CHEAPEST</div>
+            <h1 class="logo-glow">RAJ SOCIAL PANEL</h1>
             <p class="subtitle">Next-Gen Social Media Growth Provider 🇮🇳</p>
             
-            <div class="top-buttons">
-                <a href="https://t.me/your_telegram" target="_blank" class="btn-top btn-telegram">
+            <div class="hero-actions">
+                <a href="https://t.me/your_telegram" target="_blank" class="glass-btn btn-telegram">
                     <i class="fa-brands fa-telegram"></i> Telegram
                 </a>
-                <a href="https://wa.me/919337028344" target="_blank" class="btn-top btn-whatsapp-top">
+                <a href="https://wa.me/919337028344" target="_blank" class="glass-btn btn-whatsapp">
                     <i class="fa-brands fa-whatsapp"></i> Support
                 </a>
             </div>
         </div>
 
-        <!-- Step 1: Select Platform (Visual Grid) -->
-        <div class="card glass-card">
-            <div class="step-title">
-                <span class="step-num">1</span> Choose Platform
+        <!-- Step 1: Select Platform & Category -->
+        <div class="glass-card">
+            <div class="step-header">
+                <div class="step-badge">1</div>
+                <h3>Choose Service</h3>
             </div>
 
-            <div class="platform-grid">
-                <div class="platform-btn" id="plat-instagram" onclick="selectPlatform('instagram')">
-                    <i class="fa-brands fa-instagram platform-icon insta-icon"></i>
-                    <span>Instagram</span>
-                </div>
-                <div class="platform-btn" id="plat-facebook" onclick="selectPlatform('facebook')">
-                    <i class="fa-brands fa-facebook platform-icon fb-icon"></i>
-                    <span>Facebook</span>
-                </div>
+            <div class="input-box">
+                <label><i class="fa-solid fa-layer-group"></i> Platform</label>
+                <select id="platform" onchange="updateCategories()">
+                    <option value="">-- Select Platform --</option>
+                    <option value="instagram">Instagram</option>
+                    <option value="facebook">Facebook</option>
+                </select>
             </div>
 
-            <div class="form-group margin-top-15" id="categoryGroup" style="display: none;">
-                <label><i class="fa-solid fa-list-check"></i> Select Category</label>
+            <div class="input-box">
+                <label><i class="fa-solid fa-list-check"></i> Service Category</label>
                 <select id="serviceCategory" onchange="renderPackageCards()">
-                    <option value="">-- Choose Category --</option>
+                    <option value="">-- Choose Service Type --</option>
                 </select>
             </div>
         </div>
 
-        <!-- Step 2: Package List -->
-        <div class="card glass-card" id="packageSection" style="display: none;">
-            <div class="step-title">
-                <span class="step-num">2</span> Select Package
+        <!-- Step 2: Visual Package Selection Cards -->
+        <div class="glass-card" id="packageSection" style="display: none;">
+            <div class="step-header">
+                <div class="step-badge">2</div>
+                <h3>Select Package</h3>
             </div>
             
-            <div id="packageList">
-                <!-- Dynamic Package Cards -->
-            </div>
+            <div id="packageList"></div>
         </div>
 
-        <!-- Step 3: Order Details -->
-        <div class="card glass-card" id="orderDetailsSection" style="display: none;">
-            <div class="step-title">
-                <span class="step-num">3</span> Target Link & Order
+        <!-- Step 3: Target Details -->
+        <div class="glass-card" id="orderDetailsSection" style="display: none;">
+            <div class="step-header">
+                <div class="step-badge">3</div>
+                <h3>Order Details</h3>
             </div>
 
-            <div class="selected-summary-box" id="selectedSummary">
-                <!-- Summary Text -->
-            </div>
+            <div class="order-summary-pill" id="selectedSummary"></div>
 
-            <div class="form-group">
+            <div class="input-box">
                 <label><i class="fa-solid fa-link"></i> Target Link / Username</label>
-                <input type="text" id="link" placeholder="Paste link here...">
+                <input type="text" id="link" placeholder="Paste link or type username...">
             </div>
 
-            <button class="btn-pay" onclick="generateOrder()">Proceed to Pay <i class="fa-solid fa-arrow-right"></i></button>
+            <button class="action-btn" onclick="generateOrder()">
+                Proceed to Pay <i class="fa-solid fa-arrow-right"></i>
+            </button>
         </div>
 
-        <!-- Step 4: Payment -->
-        <div class="card glass-card payment-card" id="paymentCard" style="display: none;">
-            <div class="step-title">
-                <span class="step-num">4</span> Complete Payment
+        <!-- Step 4: Payment Window -->
+        <div class="glass-card payment-card" id="paymentCard" style="display: none;">
+            <div class="step-header">
+                <div class="step-badge">4</div>
+                <h3>Complete Payment</h3>
             </div>
 
-            <div class="payment-tabs">
-                <button class="tab-btn active" id="tabUpi" onclick="switchPaymentMethod('upi')"><i class="fa-solid fa-qrcode"></i> UPI / QR Code</button>
-                <button class="tab-btn" id="tabBinance" onclick="switchPaymentMethod('binance')"><i class="fa-solid fa-wallet"></i> Binance Pay</button>
+            <div class="pay-toggle-tabs">
+                <button class="pay-tab active" id="tabUpi" onclick="switchPaymentMethod('upi')">
+                    <i class="fa-solid fa-qrcode"></i> UPI QR Code
+                </button>
+                <button class="pay-tab" id="tabBinance" onclick="switchPaymentMethod('binance')">
+                    <i class="fa-solid fa-wallet"></i> Binance Pay
+                </button>
             </div>
 
+            <!-- UPI Payment Area -->
             <div id="upiPaymentView">
-                <div class="qr-container">
+                <div class="qr-box">
                     <img id="qrCodeImg" src="" alt="UPI QR Code">
-                    <p class="scan-text">Scan & Pay Exact Amount with Any UPI App</p>
+                    <p class="qr-sub">Scan & Pay Exact Amount with GPay / PhonePe / Paytm</p>
                 </div>
             </div>
 
+            <!-- Binance Payment Area (With Nickname & ID) -->
             <div id="binancePaymentView" style="display: none;">
-                <div class="qr-container">
+                <div class="qr-box">
                     <img id="binanceQrCodeImg" src="./binance-qr.png" alt="Binance QR">
+                    
+                    <!-- Binance Nickname & Pay ID Box -->
+                    <div class="binance-info-card">
+                        <div class="info-row">
+                            <span>Binance Nickname:</span>
+                            <strong class="highlight-text">Alex-Sahil786</strong>
+                        </div>
+                        <div class="info-row">
+                            <span>Binance Pay ID:</span>
+                            <strong class="highlight-text">827978569</strong>
+                        </div>
+                    </div>
+
                     <div class="usdt-badge" id="binanceUsdtDisplay">$0.00 USDT</div>
-                    <p class="scan-text">Scan with Binance App to Pay USDT</p>
+                    <p class="qr-sub">Scan QR Code or transfer USDT using Binance Pay ID</p>
                 </div>
             </div>
 
-            <div class="form-group margin-top-15">
+            <div class="input-box margin-top-15">
                 <label id="utrLabel"><i class="fa-solid fa-receipt"></i> Enter 12-Digit UPI UTR / Ref No:</label>
-                <input type="text" id="utrNumber" placeholder="e.g. 4029XXXXXXXX">
+                <input type="text" id="utrNumber" placeholder="e.g. 4029XXXXXXXX (12-Digit UTR)">
             </div>
 
-            <p class="pay-note">⚠️ পেমেন্ট করার পর UTR বসিয়ে হোয়াটসঅ্যাপে ক্লিক করুন।</p>
+            <!-- Fixed Bengali Text (No Typo) -->
+            <p class="payment-alert-note">
+                <i class="fa-solid fa-triangle-exclamation"></i> পেমেন্ট করার পর UTR / ট্রানজেকশন আইডি বসিয়ে হোয়াটসঅ্যাপে সাবমিট করুন।
+            </p>
 
-            <button class="btn-whatsapp-submit" onclick="confirmPaymentWithUTR()">
+            <button class="whatsapp-submit-btn" onclick="confirmPaymentWithUTR()">
                 <i class="fa-brands fa-whatsapp"></i> Submit Order on WhatsApp
             </button>
         </div>
 
         <!-- Live Statistics Card -->
-        <div class="stats-card glass-card">
-            <h3><i class="fa-solid fa-chart-line"></i> Live Panel Statistics</h3>
+        <div class="glass-card stats-box">
+            <div class="stats-title"><i class="fa-solid fa-chart-line"></i> Live Panel Activity</div>
             <div class="stats-grid">
-                <div class="stat-box">
-                    <span class="stat-number" id="totalOrders">5,94,338</span>
-                    <span class="stat-label">Total Orders</span>
+                <div class="stat-pill">
+                    <span class="stat-num" id="totalOrders">2,99,784</span>
+                    <span class="stat-lbl">Total Orders</span>
                 </div>
-                <div class="stat-box">
-                    <span class="stat-number" id="completedOrders">5,94,288</span>
-                    <span class="stat-label">Successful Orders</span>
+                <div class="stat-pill">
+                    <span class="stat-num" id="completedOrders">2,99,734</span>
+                    <span class="stat-lbl">Successful Orders</span>
                 </div>
             </div>
         </div>
 
-        <p class="footer-text">© Raj Social Panel. All Rights Reserved.</p>
+        <p class="footer-note">© Raj Social Panel. All Rights Reserved.</p>
+
     </div>
 
     <script src="script.js"></script>

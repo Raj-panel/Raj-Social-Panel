@@ -51,12 +51,22 @@ function switchPaymentMethod(method) {
     }
 }
 
-// Update service options based on selected platform
+// Update service options based on selected platform & Change Link Placeholder
 function updateServices() {
     const platform = document.getElementById("platform").value;
     const serviceSelect = document.getElementById("service");
+    const linkInput = document.getElementById("link");
     
     serviceSelect.innerHTML = '<option value="">-- Select Service --</option>';
+
+    // Dynamic Link Placeholder Based on Platform Selection
+    if (platform === "instagram") {
+        linkInput.placeholder = "https://instagram.com/your_username";
+    } else if (platform === "facebook") {
+        linkInput.placeholder = "https://facebook.com/your_profile_or_page_link";
+    } else {
+        linkInput.placeholder = "Enter target profile link or post link";
+    }
 
     if (platform && serviceData[platform]) {
         serviceData[platform].forEach((item, index) => {

@@ -9,24 +9,31 @@
 </head>
 <body>
 
-    <div class="header">
-        <div class="logo">
-            <i class="fa-solid fa-rocket logo-icon"></i>
-            <span>RAJ SOCIAL PANEL</span>
-        </div>
-        <p class="subtitle">Cheap & Best Quality Social Growth Provider 🇮🇳</p>
-    </div>
-
     <div class="container">
+        
+        <!-- Header & Top Buttons (Original Layout) -->
+        <div class="header">
+            <h1 class="logo-text">RAJ SOCIAL PANEL</h1>
+            <p class="subtitle">Instant & High Quality Social Media Growth for India 🇮🇳</p>
+            
+            <div class="top-buttons">
+                <a href="https://t.me/your_telegram" target="_blank" class="btn-top btn-telegram">
+                    <i class="fa-brands fa-telegram"></i> Join Telegram
+                </a>
+                <a href="https://wa.me/919337028344" target="_blank" class="btn-top btn-whatsapp-top">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp Support
+                </a>
+            </div>
+        </div>
         
         <!-- Step 1: Select Platform & Category -->
         <div class="card">
             <div class="step-title">
-                <span class="step-num">1</span> Select Service
+                <span class="step-num">1</span> Choose Service
             </div>
 
             <div class="form-group">
-                <label><i class="fa-solid fa-layer-group"></i> Platform</label>
+                <label>Platform</label>
                 <select id="platform" onchange="updateCategories()">
                     <option value="">-- Choose Platform --</option>
                     <option value="instagram">Instagram</option>
@@ -35,14 +42,14 @@
             </div>
 
             <div class="form-group">
-                <label><i class="fa-solid fa-list-check"></i> Service Type</label>
+                <label>Service Type</label>
                 <select id="serviceCategory" onchange="renderPackageCards()">
                     <option value="">-- Choose Category --</option>
                 </select>
             </div>
         </div>
 
-        <!-- Step 2: Visual Package Selection (Nexus Panel Style) -->
+        <!-- Step 2: Package List Cards -->
         <div class="card" id="packageSection" style="display: none;">
             <div class="step-title">
                 <span class="step-num">2</span> Select Package
@@ -53,10 +60,10 @@
             </div>
         </div>
 
-        <!-- Step 3: Enter Target Link & Order Details -->
+        <!-- Step 3: Enter Details & Order -->
         <div class="card" id="orderDetailsSection" style="display: none;">
             <div class="step-title">
-                <span class="step-num">3</span> Order Details
+                <span class="step-num">2</span> Enter Order Details
             </div>
 
             <div class="selected-summary-box" id="selectedSummary">
@@ -64,8 +71,8 @@
             </div>
 
             <div class="form-group">
-                <label><i class="fa-solid fa-link"></i> Target Link / Username</label>
-                <input type="text" id="link" placeholder="Enter link or username here...">
+                <label>Target Link / Username</label>
+                <input type="text" id="link" placeholder="https://instagram.com/your_username">
             </div>
 
             <button class="btn-pay" onclick="generateOrder()">Proceed to Pay</button>
@@ -74,7 +81,7 @@
         <!-- Step 4: Payment Section -->
         <div class="card payment-card" id="paymentCard" style="display: none;">
             <div class="step-title">
-                <span class="step-num">4</span> Complete Payment
+                <span class="step-num">3</span> Complete Payment
             </div>
 
             <div class="payment-tabs">
@@ -104,23 +111,23 @@
                 <input type="text" id="utrNumber" placeholder="e.g. 4029XXXXXXXX (12-Digit UTR)">
             </div>
 
-            <p class="pay-note">⚠️ পেমেন্ট করার পর ট্রান্সফার আইডি/UTR বসিয়ে হোয়াটসঅ্যাপে ক্লিক করুন।</p>
+            <p class="pay-note">⚠️ পেমেন্ট করার পর UTR বসিয়ে হোয়াটসঅ্যাপে ক্লিক করুন।</p>
 
-            <button class="btn-whatsapp" onclick="confirmPaymentWithUTR()">
+            <button class="btn-whatsapp-submit" onclick="confirmPaymentWithUTR()">
                 <i class="fa-brands fa-whatsapp"></i> Submit Order on WhatsApp
             </button>
         </div>
 
-        <!-- Live Panel Stats -->
+        <!-- Live Panel Stats (Original Count Format) -->
         <div class="stats-card">
-            <h3><i class="fa-solid fa-chart-line"></i> Live Panel Statistics</h3>
+            <h3>📊 Live Panel Statistics</h3>
             <div class="stats-grid">
                 <div class="stat-box">
-                    <span class="stat-number" id="totalOrders">5,240</span>
+                    <span class="stat-number" id="totalOrders">2,99,784</span>
                     <span class="stat-label">Total Orders</span>
                 </div>
                 <div class="stat-box">
-                    <span class="stat-number" id="completedOrders">5,190</span>
+                    <span class="stat-number" id="completedOrders">2,99,734</span>
                     <span class="stat-label">Successful Orders</span>
                 </div>
             </div>

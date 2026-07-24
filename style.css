@@ -1,134 +1,381 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raj Social Panel - Instant Growth</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-</head>
-<body>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    <div class="header">
-        <div class="logo">
-            <i class="fa-solid fa-rocket logo-icon"></i>
-            <span>RAJ SOCIAL PANEL</span>
-        </div>
-        <p class="subtitle">Cheap & Best Quality Social Growth Provider 🇮🇳</p>
-    </div>
+body {
+    background-color: #0b0e17;
+    color: #ffffff;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
 
-    <div class="container">
-        
-        <!-- Step 1: Select Platform & Category -->
-        <div class="card">
-            <div class="step-title">
-                <span class="step-num">1</span> Select Service
-            </div>
+.container {
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+}
 
-            <div class="form-group">
-                <label><i class="fa-solid fa-layer-group"></i> Platform</label>
-                <select id="platform" onchange="updateCategories()">
-                    <option value="">-- Choose Platform --</option>
-                    <option value="instagram">Instagram</option>
-                    <option value="facebook">Facebook</option>
-                </select>
-            </div>
+/* Header & Top Buttons Fix */
+.header {
+    text-align: center;
+    margin-bottom: 22px;
+    margin-top: 10px;
+}
 
-            <div class="form-group">
-                <label><i class="fa-solid fa-list-check"></i> Service Type</label>
-                <select id="serviceCategory" onchange="renderPackageCards()">
-                    <option value="">-- Choose Category --</option>
-                </select>
-            </div>
-        </div>
+.logo-text {
+    font-size: 26px;
+    font-weight: 900;
+    color: #38bdf8;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+}
 
-        <!-- Step 2: Visual Package Selection (Nexus Panel Style) -->
-        <div class="card" id="packageSection" style="display: none;">
-            <div class="step-title">
-                <span class="step-num">2</span> Select Package
-            </div>
-            
-            <div id="packageList">
-                <!-- Package Cards Rendered Here -->
-            </div>
-        </div>
+.subtitle {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-top: 6px;
+    margin-bottom: 16px;
+}
 
-        <!-- Step 3: Enter Target Link & Order Details -->
-        <div class="card" id="orderDetailsSection" style="display: none;">
-            <div class="step-title">
-                <span class="step-num">3</span> Order Details
-            </div>
+.top-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
 
-            <div class="selected-summary-box" id="selectedSummary">
-                <!-- Order Summary -->
-            </div>
+.btn-top {
+    padding: 10px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
 
-            <div class="form-group">
-                <label><i class="fa-solid fa-link"></i> Target Link / Username</label>
-                <input type="text" id="link" placeholder="Enter link or username here...">
-            </div>
+.btn-telegram {
+    background: #0088cc;
+}
 
-            <button class="btn-pay" onclick="generateOrder()">Proceed to Pay</button>
-        </div>
+.btn-whatsapp-top {
+    background: #128c7e;
+}
 
-        <!-- Step 4: Payment Section -->
-        <div class="card payment-card" id="paymentCard" style="display: none;">
-            <div class="step-title">
-                <span class="step-num">4</span> Complete Payment
-            </div>
+/* Original Rounded Dark Cards */
+.card {
+    background: #121826;
+    border: 1px solid #1e293b;
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 18px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
 
-            <div class="payment-tabs">
-                <button class="tab-btn active" id="tabUpi" onclick="switchPaymentMethod('upi')"><i class="fa-solid fa-qrcode"></i> UPI / QR Code</button>
-                <button class="tab-btn" id="tabBinance" onclick="switchPaymentMethod('binance')"><i class="fa-solid fa-wallet"></i> Binance Pay</button>
-            </div>
+.step-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+}
 
-            <!-- UPI Payment View -->
-            <div id="upiPaymentView">
-                <div class="qr-container">
-                    <img id="qrCodeImg" src="" alt="UPI QR Code">
-                    <p class="scan-text">Scan & Pay Exact Amount with Any UPI App</p>
-                </div>
-            </div>
+.step-num {
+    background: #38bdf8;
+    color: #0b0e17;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+}
 
-            <!-- Binance Payment View -->
-            <div id="binancePaymentView" style="display: none;">
-                <div class="qr-container">
-                    <img id="binanceQrCodeImg" src="./binance-qr.png" alt="Binance QR">
-                    <div class="usdt-badge" id="binanceUsdtDisplay">$0.00 USDT</div>
-                    <p class="scan-text">Scan with Binance App to Pay USDT</p>
-                </div>
-            </div>
+.form-group {
+    margin-bottom: 14px;
+}
 
-            <div class="form-group margin-top-15">
-                <label id="utrLabel"><i class="fa-solid fa-receipt"></i> Enter 12-Digit UPI UTR / Ref No:</label>
-                <input type="text" id="utrNumber" placeholder="e.g. 4029XXXXXXXX (12-Digit UTR)">
-            </div>
+.form-group label {
+    display: block;
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 6px;
+}
 
-            <p class="pay-note">⚠️ পেমেন্ট করার পর ট্রান্সফার আইডি/UTR বসিয়ে হোয়াটসঅ্যাপে ক্লিক করুন।</p>
+select, input {
+    width: 100%;
+    padding: 12px;
+    background: #0b0e17;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+}
 
-            <button class="btn-whatsapp" onclick="confirmPaymentWithUTR()">
-                <i class="fa-brands fa-whatsapp"></i> Submit Order on WhatsApp
-            </button>
-        </div>
+select:focus, input:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+}
 
-        <!-- Live Panel Stats -->
-        <div class="stats-card">
-            <h3><i class="fa-solid fa-chart-line"></i> Live Panel Statistics</h3>
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <span class="stat-number" id="totalOrders">5,240</span>
-                    <span class="stat-label">Total Orders</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-number" id="completedOrders">5,190</span>
-                    <span class="stat-label">Successful Orders</span>
-                </div>
-            </div>
-        </div>
+/* Package List & Cards */
+#packageList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
-        <p class="footer-text">© Raj Social Panel. All Rights Reserved.</p>
-    </div>
+.package-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
 
-    <script src="script.js"></script>
-</body>
-</html>
+.package-card:hover, .package-card.selected {
+    background: rgba(168, 85, 247, 0.12);
+    border: 1px solid #a855f7;
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
+}
+
+.pkg-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pkg-icon-box {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+.pkg-details {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.pkg-title-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.pkg-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.pkg-speed {
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+.pkg-price-btn {
+    background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(236, 72, 153, 0.3);
+}
+
+.badge {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+}
+
+.badge-demo { background: rgba(255, 255, 255, 0.15); color: #e2e8f0; }
+.badge-real { background: linear-gradient(90deg, #6366f1, #a855f7); color: #fff; }
+.badge-discount { background: linear-gradient(90deg, #f59e0b, #ef4444); color: #fff; }
+.badge-popular { background: linear-gradient(90deg, #3b82f6, #8b5cf6); color: #fff; }
+
+.custom-qty-card {
+    background: #0b0e17;
+    border: 1px solid #a855f7;
+    border-radius: 12px;
+    padding: 14px;
+}
+
+.selected-summary-box {
+    background: #0b0e17;
+    border: 1px dashed #38bdf8;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 14px;
+    text-align: center;
+    color: #38bdf8;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.btn-pay {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+    color: #fff;
+    font-weight: 800;
+    font-size: 16px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.payment-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid #1e293b;
+    color: #94a3b8;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.tab-btn.active {
+    background: #a855f7;
+    color: #fff;
+    border-color: #a855f7;
+}
+
+.qr-container {
+    text-align: center;
+    background: #0b0e17;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.qr-container img {
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+    background: #fff;
+    padding: 8px;
+}
+
+.scan-text {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 8px;
+}
+
+.usdt-badge {
+    display: inline-block;
+    background: #facc15;
+    color: #000;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 12px;
+    margin-top: 8px;
+}
+
+.btn-whatsapp-submit {
+    width: 100%;
+    padding: 14px;
+    background: #22c55e;
+    color: #fff;
+    font-weight: 800;
+    font-size: 15px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pay-note {
+    font-size: 11px;
+    color: #facc15;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.margin-top-15 { margin-top: 15px; }
+
+/* Stats Card */
+.stats-card {
+    background: #121826;
+    border: 1px solid #1e293b;
+    border-radius: 18px;
+    padding: 16px;
+    text-align: center;
+}
+
+.stats-card h3 {
+    font-size: 14px;
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.stats-grid {
+    display: flex;
+    gap: 12px;
+}
+
+.stat-box {
+    flex: 1;
+    background: #0b0e17;
+    padding: 12px;
+    border-radius: 12px;
+}
+
+.stat-number {
+    display: block;
+    font-size: 20px;
+    font-weight: 800;
+    color: #38bdf8;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+.footer-text {
+    text-align: center;
+    font-size: 11px;
+    color: #64748b;
+    margin: 20px 0;
+}

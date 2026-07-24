@@ -118,23 +118,22 @@ function generateOrder() {
         return;
     }
 
-    // 1. UPI QR Code Generation (Dynamic Amount)
+    // 1. UPI Dynamic QR Code Generation
     const upiId = "Saheb.68@ptyes"; 
     const payeeName = "Raj Social Panel";
     const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${totalPrice}&cu=INR`;
     const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
     document.getElementById("qrCodeImg").src = qrApi;
 
-    // 2. Binance USD Conversion & Dynamic QR Code ($1 = 95 INR)
+    // 2. Binance Static Original QR Code Image & Dynamic USDT Text ($1 = 95 INR)
     const usdtAmount = (totalPrice / 95).toFixed(2);
     document.getElementById("binanceUsdtDisplay").innerText = `$${usdtAmount} USDT`;
 
-    // Dynamic Binance Pay Link Encoded QR Code
-    const binancePayUrl = `https://binance.com/pay?nickname=Alex-Sahil786&amount=${usdtAmount}&currency=USDT`;
-    const binanceQrApi = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(binancePayUrl)}`;
-    
-    // Set Dynamic Binance QR Code
-    document.getElementById("binanceQrCodeImg").src = binanceQrApi;
+    // Use original uploaded static Binance QR code
+    const binanceQrImg = document.getElementById("binanceQrCodeImg");
+    if (binanceQrImg) {
+        binanceQrImg.src = "./binance-qr.png";
+    }
 
     // Display Payment Card
     document.getElementById("paymentCard").style.display = "block";

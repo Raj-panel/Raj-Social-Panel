@@ -1,17 +1,17 @@
 // Prices in INR - Format: Name | Qty | Price
 const serviceData = {
     instagram: [
-        { name: "Instagram Followers", pricePer1000: 80, qty: "1000 Qty", price: "₹80", displayText: "Instagram Followers — 1000 Qty — ₹80" },
-        { name: "Instagram Likes (Non Drop)", pricePer1000: 30, qty: "1000 Qty", price: "₹30", displayText: "Instagram Likes (Non Drop) — 1000 Qty — ₹30" },
-        { name: "Instagram Reels Views", pricePer1000: 10, qty: "1000 Qty", price: "₹10", displayText: "Instagram Reels Views — 1000 Qty — ₹10" },
-        { name: "Instagram Report Lifetime", pricePer1000: 100, qty: "100 Qty", price: "₹10", displayText: "Instagram Report Lifetime — 100 Qty — ₹10" },
-        { name: "Instagram Non Drop Comment", pricePer1000: 150, qty: "100 Qty", price: "₹15", displayText: "Instagram Non Drop Comment — 100 Qty — ₹15" },
-        { name: "Instagram Post Save Lifetime", pricePer1000: 100, qty: "100 Qty", price: "₹10", displayText: "Instagram Post Save Lifetime — 100 Qty — ₹10" }
+        { name: "Instagram Followers", pricePer1000: 80, qty: "1000 Qty", price: "₹80", displayText: "Instagram Followers — 1000 per ₹80" },
+        { name: "Instagram Likes (Non Drop)", pricePer1000: 30, qty: "1000 Qty", price: "₹30", displayText: "Instagram Likes (Non Drop) — 1000 per ₹30" },
+        { name: "Instagram Reels Views", pricePer1000: 10, qty: "1000 Qty", price: "₹10", displayText: "Instagram Reels Views — 1000 per ₹10" },
+        { name: "Instagram Report Lifetime", pricePer1000: 100, qty: "100 Qty", price: "₹10", displayText: "Instagram Report Lifetime — 100 per ₹10" },
+        { name: "Instagram Non Drop Comment", pricePer1000: 150, qty: "100 Qty", price: "₹15", displayText: "Instagram Non Drop Comment — 100 per ₹15" },
+        { name: "Instagram Post Save Lifetime", pricePer1000: 100, qty: "100 Qty", price: "₹10", displayText: "Instagram Post Save Lifetime — 100 per ₹10" }
     ],
     facebook: [
-        { name: "Facebook Non Drop Follow", pricePer1000: 49, qty: "1000 Qty", price: "₹49", displayText: "Facebook Non Drop Follow — 1000 Qty — ₹49" },
-        { name: "Facebook Non Drop Like", pricePer1000: 39, qty: "1000 Qty", price: "₹39", displayText: "Facebook Non Drop Like — 1000 Qty — ₹39" },
-        { name: "Facebook Reels / Videos Views", pricePer1000: 10, qty: "1000 Qty", price: "₹10", displayText: "Facebook Reels / Videos Views — 1000 Qty — ₹10" }
+        { name: "Facebook Non Drop Follow", pricePer1000: 49, qty: "1000 Qty", price: "₹49", displayText: "Facebook Non Drop Follow — 1000 per ₹49" },
+        { name: "Facebook Non Drop Like", pricePer1000: 39, qty: "1000 Qty", price: "₹39", displayText: "Facebook Non Drop Like — 1000 per ₹39" },
+        { name: "Facebook Reels / Videos Views", pricePer1000: 10, qty: "1000 Qty", price: "₹10", displayText: "Facebook Reels / Videos Views — 1000 per ₹10" }
     ]
 };
 

@@ -1,230 +1,172 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahil Recovery Hub</title>
-    <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
-        body { background-color: #f4f7f6; color: #333; }
-        header { background-color: #1877f2; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 22px; font-weight: bold; }
-        .menu-icon { font-size: 24px; cursor: pointer; }
-        .container { max-width: 500px; margin: 30px auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        h1, h2 { text-align: center; margin-bottom: 20px; }
-        
-        /* New Category Card Style */
-        .category-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        .category-card {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #ffffff;
-            border: 2px solid #e0e0e0;
-            padding: 15px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 16px;
-            font-weight: 600;
-        }
-        .category-card:hover {
-            border-color: #1877f2;
-            background-color: #f0f7ff;
-        }
-        .category-card.active {
-            border-color: #1877f2;
-            background-color: #e8f0fe;
-        }
-        .category-card.insta-card:hover {
-            border-color: #e1306c;
-            background-color: #fef0f5;
-        }
-        .category-card.insta-card.active {
-            border-color: #e1306c;
-            background-color: #fce4ec;
-        }
-
-        button { width: 100%; padding: 12px; border: none; background: #1877f2; color: white; border-radius: 5px; font-size: 16px; cursor: pointer; transition: 0.3s; }
-        button:hover { background: #115cbe; }
-        .hidden { display: none; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: 600; }
-        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
-        .qr-box { text-align: center; margin-top: 20px; }
-        .qr-box img { width: 200px; height: 200px; }
-        .nav-menu { display: none; position: absolute; top: 60px; right: 20px; background: white; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 1000; }
-        .nav-menu a { display: block; padding: 10px 20px; color: #333; text-decoration: none; }
-        .nav-menu a:hover { background: #f0f0f0; }
-    </style>
+    <title>Raj Social Panel - Premium Growth</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Header Section -->
-    <header>
-        <div class="logo">Sahil Recovery Hub</div>
-        <div class="menu-icon" onclick="toggleMenu()">☰</div>
-        <div class="nav-menu" id="navMenu">
-            <a href="#" onclick="showTrackSection()">Track Order</a>
-        </div>
-    </header>
-
-    <div class="container">
+    <div class="main-wrapper">
         
-        <!-- Step 1: Category Selection (New Card Style) -->
-        <div id="step-category">
-            <h2>ক্যাটাগরি সিলেক্ট করুন</h2>
-            <div class="category-grid">
-                <div class="category-card" onclick="selectCategory('facebook')">
-                    <span>🔵 Facebook Services</span>
-                    <span>➔</span>
-                </div>
-                <div class="category-card insta-card" onclick="selectCategory('instagram')">
-                    <span>📸 Instagram Services</span>
-                    <span>➔</span>
-                </div>
+        <!-- Hero Header -->
+        <div class="hero-header">
+            <div class="hero-badge"><i class="fa-solid fa-bolt"></i> FASTEST & CHEAPEST</div>
+            <h1 class="logo-glow">RAJ SOCIAL PANEL</h1>
+            <p class="subtitle">Next-Gen Social Media Growth Provider 🇮🇳</p>
+            
+            <div class="hero-actions">
+                <a href="https://t.me/your_telegram" target="_blank" class="glass-btn btn-telegram">
+                    <i class="fa-brands fa-telegram"></i> Telegram
+                </a>
+                <a href="https://wa.me/919337028344" target="_blank" class="glass-btn btn-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i> Support
+                </a>
             </div>
         </div>
 
-        <!-- Step 2: Service Selection -->
-        <div id="step-service" class="hidden">
-            <h2>সার্ভিস সিলেক্ট করুন</h2>
-            <div class="form-group">
-                <select id="serviceSelect" onchange="showForm()">
-                    <option value="">-- সার্ভিস বাছাই করুন --</option>
+        <!-- 100% Quality & 24hr Refund Guarantee Banner -->
+        <div class="guarantee-banner">
+            <div class="banner-item">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span><strong>100% High Quality & Pure Services</strong></span>
+            </div>
+            <div class="banner-item refund-text">
+                <i class="fa-solid fa-rotate-left"></i>
+                <span><strong>24-Hour Refund Guarantee:</strong> If your order gets cancelled or fails to complete, 100% of your money will be refunded within 24 hours!</span>
+            </div>
+        </div>
+
+        <!-- Step 1: Select Platform & Category -->
+        <div class="glass-card">
+            <div class="step-header">
+                <div class="step-badge">1</div>
+                <h3>Choose Service</h3>
+            </div>
+
+            <div class="input-box">
+                <label><i class="fa-solid fa-layer-group"></i> Platform</label>
+                <select id="platform" onchange="updateCategories()">
+                    <option value="">-- Select Platform --</option>
+                    <option value="instagram">Instagram</option>
+                    <option value="facebook">Facebook</option>
+                </select>
+            </div>
+
+            <div class="input-box">
+                <label><i class="fa-solid fa-list-check"></i> Service Category</label>
+                <select id="serviceCategory" onchange="renderPackageCards()">
+                    <option value="">-- Choose Service Type --</option>
                 </select>
             </div>
         </div>
 
-        <!-- Step 3: Input Form -->
-        <div id="step-form" class="hidden">
-            <h2>আপনার তথ্য দিন</h2>
-            <form id="recoveryForm" onsubmit="handleFormSubmit(event)">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" required id="fullName">
-                </div>
-                <div class="form-group">
-                    <label>Email or Phone Number</label>
-                    <input type="text" required id="userContact">
-                </div>
-                <div class="form-group">
-                    <label>Date of Birth</label>
-                    <input type="date" required id="dob">
-                </div>
-                <div class="form-group">
-                    <label>Profile Link / Username</label>
-                    <input type="text" placeholder="https://facebook.com/yourprofile" required id="profileLink">
-                </div>
-                <button type="submit">Submit & Pay</button>
-            </form>
+        <!-- Step 2: Visual Package Selection Cards -->
+        <div class="glass-card" id="packageSection" style="display: none;">
+            <div class="step-header">
+                <div class="step-badge">2</div>
+                <h3>Select Package</h3>
+            </div>
+            
+            <div id="packageList"></div>
         </div>
 
-        <!-- Step 4: Payment Section -->
-        <div id="step-payment" class="hidden">
-            <h2>পেমেন্ট করুন</h2>
-            <p style="text-align: center;">সার্ভিস চার্জ: <strong>₹499</strong></p>
-            <div class="qr-box">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=your-upi-id@ybl&pn=SahilRecovery&am=499" alt="PhonePe QR Code">
-                <p style="margin-top: 10px; font-size: 14px; color: #666;">QR কোড স্ক্যান করে পেমেন্ট সম্পূর্ণ করুন।</p>
-                <button style="margin-top: 15px; background: #25D366;" onclick="sendToWhatsApp()">পেমেন্ট করেছি (Confirm on WhatsApp)</button>
+        <!-- Step 3: Target Details -->
+        <div class="glass-card" id="orderDetailsSection" style="display: none;">
+            <div class="step-header">
+                <div class="step-badge">3</div>
+                <h3>Order Details</h3>
+            </div>
+
+            <div class="order-summary-pill" id="selectedSummary"></div>
+
+            <div class="input-box">
+                <label><i class="fa-solid fa-link"></i> Target Link / Username</label>
+                <input type="text" id="link" placeholder="Paste link or type username...">
+            </div>
+
+            <button class="action-btn" onclick="generateOrder()">
+                Proceed to Pay <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <!-- Step 4: Payment Window -->
+        <div class="glass-card payment-card" id="paymentCard" style="display: none;">
+            <div class="step-header">
+                <div class="step-badge">4</div>
+                <h3>Complete Payment</h3>
+            </div>
+
+            <div class="pay-toggle-tabs">
+                <button class="pay-tab active" id="tabUpi" onclick="switchPaymentMethod('upi')">
+                    <i class="fa-solid fa-qrcode"></i> UPI QR Code
+                </button>
+                <button class="pay-tab" id="tabBinance" onclick="switchPaymentMethod('binance')">
+                    <i class="fa-solid fa-wallet"></i> Binance Pay
+                </button>
+            </div>
+
+            <!-- UPI Payment Area -->
+            <div id="upiPaymentView">
+                <div class="qr-box">
+                    <img id="qrCodeImg" src="" alt="UPI QR Code">
+                    <p class="qr-sub">Scan & Pay Exact Amount with GPay / PhonePe / Paytm</p>
+                </div>
+            </div>
+
+            <!-- Binance Payment Area (Only Nickname Shown) -->
+            <div id="binancePaymentView" style="display: none;">
+                <div class="qr-box">
+                    <img id="binanceQrCodeImg" src="./binance-qr.png" alt="Binance QR">
+                    
+                    <!-- Binance Nickname Only -->
+                    <div class="binance-info-card">
+                        <div class="info-row">
+                            <span>Binance Nickname:</span>
+                            <strong class="highlight-text">Alex-Sahil786</strong>
+                        </div>
+                    </div>
+
+                    <div class="usdt-badge" id="binanceUsdtDisplay">$0.00 USDT</div>
+                    <p class="qr-sub">Scan QR Code using Binance App to Pay USDT</p>
+                </div>
+            </div>
+
+            <div class="input-box margin-top-15">
+                <label id="utrLabel"><i class="fa-solid fa-receipt"></i> Enter 12-Digit UPI UTR / Ref No:</label>
+                <input type="text" id="utrNumber" placeholder="e.g. 4029XXXXXXXX (12-Digit UTR)">
+            </div>
+
+            <p class="payment-alert-note">
+                <i class="fa-solid fa-triangle-exclamation"></i> After completing payment, enter the UTR / TxID and submit your order on WhatsApp.
+            </p>
+
+            <button class="whatsapp-submit-btn" onclick="confirmPaymentWithUTR()">
+                <i class="fa-brands fa-whatsapp"></i> Submit Order on WhatsApp
+            </button>
+        </div>
+
+        <!-- Live Statistics Card -->
+        <div class="glass-card stats-box">
+            <div class="stats-title"><i class="fa-solid fa-chart-line"></i> Live Panel Activity</div>
+            <div class="stats-grid">
+                <div class="stat-pill">
+                    <span class="stat-num" id="totalOrders">2,99,784</span>
+                    <span class="stat-lbl">Total Orders</span>
+                </div>
+                <div class="stat-pill">
+                    <span class="stat-num" id="completedOrders">2,99,734</span>
+                    <span class="stat-lbl">Successful Orders</span>
+                </div>
             </div>
         </div>
 
-        <!-- Track Order Section -->
-        <div id="step-track" class="hidden">
-            <h2>Track Your Status</h2>
-            <div class="form-group">
-                <label>আপনার Tracking ID দিন:</label>
-                <input type="text" id="trackInput" placeholder="যেমন: SRH1023">
-            </div>
-            <button onclick="checkStatus()">Search Status</button>
-            <p id="statusResult" style="margin-top: 15px; text-align: center; font-weight: bold;"></p>
-        </div>
+        <p class="footer-note">© Raj Social Panel. All Rights Reserved.</p>
 
     </div>
 
-    <script>
-        let selectedCategory = '';
-        let selectedService = '';
-        let generatedTrackingID = '';
-
-        function toggleMenu() {
-            const menu = document.getElementById('navMenu');
-            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function selectCategory(category) {
-            selectedCategory = category;
-            document.getElementById('step-category').classList.add('hidden');
-            document.getElementById('step-service').classList.remove('hidden');
-
-            const serviceSelect = document.getElementById('serviceSelect');
-            serviceSelect.innerHTML = '<option value="">-- সার্ভিস বাছাই করুন --</option>';
-
-            if (category === 'facebook') {
-                serviceSelect.innerHTML += `
-                    <option value="Facebook Suspended Account">Facebook Suspended Account</option>
-                    <option value="Facebook Locked Account Unblock">Facebook Locked Account Unblock</option>
-                `;
-            } else if (category === 'instagram') {
-                serviceSelect.innerHTML += `
-                    <option value="Instagram Suspended Account Recovery">Instagram Suspended Account Recovery</option>
-                `;
-            }
-        }
-
-        function showForm() {
-            selectedService = document.getElementById('serviceSelect').value;
-            if(selectedService) {
-                document.getElementById('step-service').classList.add('hidden');
-                document.getElementById('step-form').classList.remove('hidden');
-            }
-        }
-
-        function handleFormSubmit(event) {
-            event.preventDefault();
-            generatedTrackingID = 'SRH' + Math.floor(1000 + Math.random() * 9000);
-            
-            document.getElementById('step-form').classList.add('hidden');
-            document.getElementById('step-payment').classList.remove('hidden');
-        }
-
-        function sendToWhatsApp() {
-            const name = document.getElementById('fullName').value;
-            const contact = document.getElementById('userContact').value;
-            const dob = document.getElementById('dob').value;
-            const link = document.getElementById('profileLink').value;
-
-            const myPhoneNumber = "911234567890"; // আপনার আসল হোয়াটসঅ্যাপ নম্বর দিবেন
-
-            const message = `Hello Sahil Recovery Hub,%0A%0ANew Order Details:%0A- Tracking ID: ${generatedTrackingID}%0A- Category: ${selectedCategory}%0A- Service: ${selectedService}%0A- Name: ${name}%0A- Email/Phone: ${contact}%0A- DOB: ${dob}%0A- Profile Link: ${link}%0A%0APayment Done!`;
-
-            window.open(`https://wa.me/${myPhoneNumber}?text=${message}`, '_blank');
-        }
-
-        function showTrackSection() {
-            document.getElementById('step-category').classList.add('hidden');
-            document.getElementById('step-service').classList.add('hidden');
-            document.getElementById('step-form').classList.add('hidden');
-            document.getElementById('step-payment').classList.add('hidden');
-            document.getElementById('navMenu').style.display = 'none';
-            document.getElementById('step-track').classList.remove('hidden');
-        }
-
-        function checkStatus() {
-            const trackId = document.getElementById('trackInput').value;
-            if(trackId) {
-                document.getElementById('statusResult').innerText = "Status for " + trackId + ": In Progress (কাজ চলছে)";
-            } else {
-                alert("দয়া করে সঠিক Tracking ID দিন");
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

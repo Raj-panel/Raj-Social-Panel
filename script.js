@@ -1,370 +1,292 @@
-/* Dark & Glowing Purple Nexus Theme */
-:root {
-    --bg-dark: #090d16;
-    --card-bg: #111526;
-    --card-border: #3b1d60;
-    --accent-purple: #a855f7;
-    --gradient-btn: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
-    --gradient-icon: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-    --text-white: #ffffff;
-    --text-muted: #94a3b8;
+// Dynamic Database loaded with exact Rates provided by User
+const serviceData = {
+    instagram: {
+        "Instagram Followers": [
+            { type: "custom", name: "Instagram Followers", pricePer1000: 80, minQty: 100 }
+        ],
+        "❤️ Instagram Likes": [
+            { name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo" },
+            { name: "500 Likes", price: 25, badge: "Real", badgeClass: "badge-real" },
+            { name: "1K Likes", price: 30, badge: "Fast", badgeClass: "badge-popular" },
+            { name: "2K Likes", price: 50, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "5K Likes", price: 99, badge: "🔥 Best Value", badgeClass: "badge-discount" },
+            { name: "10K Likes", price: 179, badge: "👑 Most Popular", badgeClass: "badge-discount" }
+        ],
+        "💬 Instagram Comments": [
+            { name: "50 Comments", price: 15, badge: "Starter", badgeClass: "badge-demo" },
+            { name: "100 Comments", price: 20, badge: "Real", badgeClass: "badge-real" },
+            { name: "500 Comments", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "1K Comments", price: 99, badge: "🔥 Best Value", badgeClass: "badge-discount" }
+        ],
+        "🔄 Instagram Repost": [
+            { name: "50 Reposts", price: 15, badge: "Starter", badgeClass: "badge-demo" },
+            { name: "100 Reposts", price: 20, badge: "Real", badgeClass: "badge-real" },
+            { name: "500 Reposts", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "1K Reposts", price: 99, badge: "🔥 Best Value", badgeClass: "badge-discount" },
+            { name: "3K Reposts", price: 249, badge: "👑 Most Popular", badgeClass: "badge-discount" }
+        ],
+        "🚀 Instagram Shares": [
+            { name: "100 Shares", price: 10, badge: "Starter", badgeClass: "badge-demo" },
+            { name: "1K Shares", price: 30, badge: "Fast", badgeClass: "badge-popular" },
+            { name: "5K Shares", price: 69, badge: "🔥 Best Value", badgeClass: "badge-discount" },
+            { name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-discount" }
+        ],
+        "🎬 Instagram Views": [
+            { name: "1K Views", price: 10, badge: "Demo", badgeClass: "badge-demo" },
+            { name: "5K Views", price: 20, badge: "Starter", badgeClass: "badge-real" },
+            { name: "10K Views", price: 30, badge: "Best Value", badgeClass: "badge-discount" },
+            { name: "20K Views", price: 40, badge: "Popular", badgeClass: "badge-popular" },
+            { name: "50K Views", price: 70, badge: "Recommended", badgeClass: "badge-real" },
+            { name: "100K Views", price: 99, badge: "🔥 Best Seller", badgeClass: "badge-discount" },
+            { name: "500K Views", price: 299, badge: "👑 Most Popular", badgeClass: "badge-popular" },
+            { name: "1M Views", price: 499, badge: "💥 Mega Deal", badgeClass: "badge-discount" }
+        ]
+    },
+    facebook: {
+        "Facebook Followers": [
+            { type: "custom", name: "Facebook Followers", pricePer1000: 49, minQty: 100 }
+        ],
+        "Facebook Video Views": [
+            { name: "1K Facebook Views", price: 10, badge: "Demo", badgeClass: "badge-demo" },
+            { name: "5K Facebook Views", price: 45, badge: "Popular", badgeClass: "badge-popular" }
+        ]
+    }
+};
+
+let selectedPackage = null;
+let currentPaymentMethod = 'upi';
+
+// 1. Update Category Dropdown
+function updateCategories() {
+    const platform = document.getElementById("platform").value;
+    const catSelect = document.getElementById("serviceCategory");
+    const packageSection = document.getElementById("packageSection");
+    const orderDetailsSection = document.getElementById("orderDetailsSection");
+
+    catSelect.innerHTML = '<option value="">-- Choose Category --</option>';
+    packageSection.style.display = "none";
+    orderDetailsSection.style.display = "none";
+
+    if (platform && serviceData[platform]) {
+        Object.keys(serviceData[platform]).forEach(cat => {
+            let opt = document.createElement("option");
+            opt.value = cat;
+            opt.innerText = cat;
+            catSelect.appendChild(opt);
+        });
+    }
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+// 2. Render Cards / Custom Input
+function renderPackageCards() {
+    const platform = document.getElementById("platform").value;
+    const category = document.getElementById("serviceCategory").value;
+    const packageSection = document.getElementById("packageSection");
+    const packageList = document.getElementById("packageList");
+    const orderDetailsSection = document.getElementById("orderDetailsSection");
+    const linkInput = document.getElementById("link");
+
+    packageList.innerHTML = "";
+    orderDetailsSection.style.display = "none";
+    selectedPackage = null;
+
+    if (!platform || !category) {
+        packageSection.style.display = "none";
+        return;
+    }
+
+    if (platform === "instagram") {
+        linkInput.placeholder = "https://instagram.com/your_username_or_post";
+    } else {
+        linkInput.placeholder = "https://facebook.com/your_profile_or_post";
+    }
+
+    const iconClass = platform === "instagram" ? "fa-instagram" : "fa-facebook";
+    const packages = serviceData[platform][category];
+
+    packages.forEach((pkg) => {
+        if (pkg.type === "custom") {
+            const customCard = document.createElement("div");
+            customCard.className = "custom-qty-card";
+            customCard.innerHTML = `
+                <div style="margin-bottom: 10px;">
+                    <strong style="color: #38bdf8;">${pkg.name}</strong>
+                    <p style="font-size: 12px; color: #94a3b8;">Rate: ₹${pkg.pricePer1000} per 1000 Followers</p>
+                </div>
+                <div class="form-group">
+                    <label>Enter Quantity (কত ফলোয়ার লাগবে টাইপ করুন):</label>
+                    <input type="number" id="customQtyInput" placeholder="e.g. 1000" oninput="calculateCustomPrice(${pkg.pricePer1000})">
+                </div>
+                <div style="font-size: 15px; font-weight: bold; color: #4ade80;" id="customPriceDisplay">Total Amount: ₹0 INR</div>
+            `;
+            packageList.appendChild(customCard);
+        } else {
+            const card = document.createElement("div");
+            card.className = "package-card";
+            card.onclick = () => selectPackage(card, pkg, category);
+
+            card.innerHTML = `
+                <div class="pkg-left">
+                    <div class="pkg-icon-box">
+                        <i class="fa-brands ${iconClass}"></i>
+                    </div>
+                    <div class="pkg-details">
+                        <div class="pkg-title-row">
+                            <span class="pkg-name">${pkg.name}</span>
+                            ${pkg.badge ? `<span class="badge ${pkg.badgeClass}">${pkg.badge}</span>` : ''}
+                        </div>
+                        <span class="pkg-speed">⚡ Instant Delivery • High Quality</span>
+                    </div>
+                </div>
+                <div class="pkg-price-btn">₹${pkg.price}</div>
+            `;
+            packageList.appendChild(card);
+        }
+    });
+
+    packageSection.style.display = "block";
 }
 
-body {
-    background-color: var(--bg-dark);
-    color: var(--text-white);
-    padding: 15px;
-    display: flex;
-    justify-content: center;
+// 3. Custom Followers Price Calculator
+function calculateCustomPrice(ratePer1000) {
+    const qty = parseInt(document.getElementById("customQtyInput").value) || 0;
+    const priceDisplay = document.getElementById("customPriceDisplay");
+    const categoryName = document.getElementById("serviceCategory").value;
+
+    if (qty > 0) {
+        const total = (qty / 1000) * ratePer1000;
+        priceDisplay.innerText = `Total Amount: ₹${total.toFixed(2)} INR`;
+        
+        selectedPackage = {
+            name: `${qty} Followers`,
+            price: total,
+            category: categoryName,
+            isCustom: true
+        };
+
+        const summaryBox = document.getElementById("selectedSummary");
+        summaryBox.innerHTML = `Selected: <strong>${qty} Followers</strong> ➔ <span style="color: #4ade80;">₹${total.toFixed(2)} INR</span>`;
+        document.getElementById("orderDetailsSection").style.display = "block";
+    } else {
+        priceDisplay.innerText = `Total Amount: ₹0 INR`;
+        document.getElementById("orderDetailsSection").style.display = "none";
+        selectedPackage = null;
+    }
 }
 
-.container {
-    width: 100%;
-    max-width: 480px;
+// 4. Select Card Action
+function selectPackage(cardElement, pkgData, categoryName) {
+    document.querySelectorAll(".package-card").forEach(c => c.classList.remove("selected"));
+    cardElement.classList.add("selected");
+
+    selectedPackage = { ...pkgData, category: categoryName };
+
+    const summaryBox = document.getElementById("selectedSummary");
+    summaryBox.innerHTML = `Selected: <strong>${pkgData.name}</strong> (${categoryName}) ➔ <span style="color: #4ade80;">₹${pkgData.price} INR</span>`;
+
+    document.getElementById("orderDetailsSection").style.display = "block";
+    document.getElementById("orderDetailsSection").scrollIntoView({ behavior: 'smooth' });
 }
 
-.header {
-    text-align: center;
-    margin: 15px 0 20px 0;
+// 5. Generate Dynamic QR Code
+function generateOrder() {
+    const link = document.getElementById("link").value.trim();
+
+    if (!selectedPackage) {
+        alert("Please select a package first!");
+        return;
+    }
+
+    if (!link) {
+        alert("Please enter target link / username!");
+        return;
+    }
+
+    const totalPrice = selectedPackage.price;
+
+    // Dynamic UPI QR Code
+    const upiId = "Saheb.68@ptyes"; 
+    const payeeName = "Raj Social Panel";
+    const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${totalPrice}&cu=INR`;
+    const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
+    document.getElementById("qrCodeImg").src = qrApi;
+
+    // Binance USDT ($1 = 95 INR)
+    const usdtAmount = (totalPrice / 95).toFixed(2);
+    document.getElementById("binanceUsdtDisplay").innerText = `$${usdtAmount} USDT`;
+
+    document.getElementById("paymentCard").style.display = "block";
+    switchPaymentMethod('upi');
+    document.getElementById("paymentCard").scrollIntoView({ behavior: 'smooth' });
 }
 
-.logo {
-    font-size: 22px;
-    font-weight: 800;
-    color: #38bdf8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    letter-spacing: 1px;
+// 6. Switch UPI / Binance View
+function switchPaymentMethod(method) {
+    currentPaymentMethod = method;
+    const upiView = document.getElementById("upiPaymentView");
+    const binanceView = document.getElementById("binancePaymentView");
+    const tabUpi = document.getElementById("tabUpi");
+    const tabBinance = document.getElementById("tabBinance");
+    const utrLabel = document.getElementById("utrLabel");
+    const utrInput = document.getElementById("utrNumber");
+
+    if (method === 'upi') {
+        upiView.style.display = "block";
+        binanceView.style.display = "none";
+        tabUpi.classList.add("active");
+        tabBinance.classList.remove("active");
+        utrLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
+        utrInput.placeholder = "e.g. 4029XXXXXXXX (12-Digit UTR)";
+    } else {
+        upiView.style.display = "none";
+        binanceView.style.display = "block";
+        tabBinance.classList.add("active");
+        tabUpi.classList.remove("active");
+        utrLabel.innerText = "Transaction ID / Order ID:";
+        utrInput.placeholder = "e.g. Enter Binance Order ID";
+    }
 }
 
-.logo-icon {
-    color: #4ade80;
+// 7. Submit to WhatsApp
+function confirmPaymentWithUTR() {
+    const utr = document.getElementById("utrNumber").value.trim();
+    const link = document.getElementById("link").value.trim();
+
+    if (!utr || utr.length < 6) {
+        alert("Please enter a valid Transaction ID / UTR!");
+        return;
+    }
+
+    const usdtAmount = (selectedPackage.price / 95).toFixed(2);
+
+    const waMsg = `🚀 *NEW ORDER PLACED*%0A%0A` +
+                  `*Category:* ${selectedPackage.category}%0A` +
+                  `*Package:* ${selectedPackage.name}%0A` +
+                  `*Target Link:* ${link}%0A` +
+                  `*Amount Paid:* ₹${selectedPackage.price} INR ($${usdtAmount} USDT)%0A` +
+                  `*Payment Mode:* ${currentPaymentMethod.toUpperCase()}%0A` +
+                  `*Transaction ID / UTR:* ${utr}%0A%0A` +
+                  `Please check payment and start processing!`;
+
+    window.open(`https://wa.me/919337028344?text=${waMsg}`, '_blank');
 }
 
-.subtitle {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 4px;
+// Global Counter
+function startGlobalCounter() {
+    const baseStartDate = new Date("2026-01-01T00:00:00").getTime();
+    const baseOrders = 5240; 
+    const baseCompleted = 5190; 
+
+    function updateDisplay() {
+        const now = Date.now();
+        const minutesPassed = Math.floor((now - baseStartDate) / (1000 * 60));
+        if (document.getElementById("totalOrders")) {
+            document.getElementById("totalOrders").innerText = (baseOrders + minutesPassed).toLocaleString('en-IN');
+            document.getElementById("completedOrders").innerText = (baseCompleted + minutesPassed).toLocaleString('en-IN');
+        }
+    }
+    updateDisplay();
+    setInterval(updateDisplay, 1000);
 }
 
-.card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 20px;
-    padding: 18px;
-    margin-bottom: 18px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-}
-
-.step-title {
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #f3f4f6;
-}
-
-.step-num {
-    background: var(--accent-purple);
-    color: #fff;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 13px;
-}
-
-.form-group {
-    margin-bottom: 14px;
-}
-
-.form-group label {
-    display: block;
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 6px;
-}
-
-select, input {
-    width: 100%;
-    padding: 12px;
-    background: #090d16;
-    border: 1px solid #2a3447;
-    border-radius: 12px;
-    color: #fff;
-    font-size: 14px;
-    outline: none;
-}
-
-select:focus, input:focus {
-    border-color: var(--accent-purple);
-    box-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
-}
-
-/* --- NEXUS PACKAGE LIST CARDS --- */
-#packageList {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.package-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(255, 255, 255, 0.02);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    padding: 12px 10px;
-    border-radius: 14px;
-    cursor: pointer;
-    transition: all 0.25s ease;
-}
-
-.package-card:hover, .package-card.selected {
-    background: rgba(168, 85, 247, 0.12);
-    border: 1px solid var(--accent-purple);
-    box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
-}
-
-.pkg-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.pkg-icon-box {
-    width: 44px;
-    height: 44px;
-    background: var(--gradient-icon);
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    color: #ffffff;
-    flex-shrink: 0;
-}
-
-.pkg-details {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-}
-
-.pkg-title-row {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;
-}
-
-.pkg-name {
-    font-size: 15px;
-    font-weight: 700;
-    color: #ffffff;
-}
-
-.pkg-speed {
-    font-size: 11px;
-    color: var(--text-muted);
-}
-
-.pkg-price-btn {
-    background: var(--gradient-btn);
-    color: #ffffff;
-    font-weight: 800;
-    font-size: 14px;
-    padding: 8px 16px;
-    border-radius: 20px;
-    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
-    white-space: nowrap;
-}
-
-/* Badges / Pills */
-.badge {
-    font-size: 10px;
-    font-weight: 800;
-    padding: 2px 8px;
-    border-radius: 12px;
-    text-transform: uppercase;
-}
-
-.badge-demo { background: rgba(255, 255, 255, 0.15); color: #e2e8f0; }
-.badge-real { background: linear-gradient(90deg, #6366f1, #a855f7); color: #fff; }
-.badge-discount { background: linear-gradient(90deg, #f59e0b, #ef4444); color: #fff; }
-.badge-popular { background: linear-gradient(90deg, #3b82f6, #8b5cf6); color: #fff; }
-
-/* Custom Followers Card */
-.custom-qty-card {
-    background: #090d16;
-    border: 1px solid var(--accent-purple);
-    border-radius: 14px;
-    padding: 15px;
-}
-
-/* Order Summary Box */
-.selected-summary-box {
-    background: #090d16;
-    border: 1px dashed var(--accent-purple);
-    border-radius: 10px;
-    padding: 12px;
-    margin-bottom: 14px;
-    text-align: center;
-    color: #38bdf8;
-    font-weight: 600;
-    font-size: 14px;
-}
-
-/* Buttons */
-.btn-pay {
-    width: 100%;
-    padding: 14px;
-    background: var(--gradient-btn);
-    color: #fff;
-    font-weight: 800;
-    font-size: 16px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    margin-top: 8px;
-}
-
-.payment-tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.tab-btn {
-    flex: 1;
-    padding: 10px;
-    background: transparent;
-    border: 1px solid #2a3447;
-    color: var(--text-muted);
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.tab-btn.active {
-    background: var(--accent-purple);
-    color: #fff;
-    border-color: var(--accent-purple);
-}
-
-.qr-container {
-    text-align: center;
-    background: #090d16;
-    padding: 15px;
-    border-radius: 12px;
-}
-
-.qr-container img {
-    width: 200px;
-    height: 200px;
-    border-radius: 8px;
-    background: #fff;
-    padding: 8px;
-}
-
-.scan-text {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 8px;
-}
-
-.usdt-badge {
-    display: inline-block;
-    background: #facc15;
-    color: #000;
-    font-weight: 800;
-    padding: 4px 12px;
-    border-radius: 12px;
-    margin-top: 8px;
-}
-
-.btn-whatsapp {
-    width: 100%;
-    padding: 14px;
-    background: #22c55e;
-    color: #fff;
-    font-weight: 800;
-    font-size: 15px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.pay-note {
-    font-size: 11px;
-    color: #facc15;
-    margin-top: 10px;
-    text-align: center;
-}
-
-.margin-top-15 { margin-top: 15px; }
-
-/* Live Stats */
-.stats-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 16px;
-    padding: 15px;
-    text-align: center;
-}
-
-.stats-card h3 {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 12px;
-}
-
-.stats-grid {
-    display: flex;
-    gap: 10px;
-}
-
-.stat-box {
-    flex: 1;
-    background: #090d16;
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.stat-number {
-    display: block;
-    font-size: 18px;
-    font-weight: 800;
-    color: #38bdf8;
-}
-
-.stat-label {
-    font-size: 10px;
-    color: var(--text-muted);
-}
-
-.footer-text {
-    text-align: center;
-    font-size: 11px;
-    color: var(--text-muted);
-    margin: 20px 0;
-}
+window.onload = startGlobalCounter;

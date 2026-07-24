@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <!-- Guarantee Banner -->
+        <!-- 100% Quality & 24hr Refund Guarantee Banner -->
         <div class="guarantee-banner">
             <div class="banner-item">
                 <i class="fa-solid fa-shield-halved"></i>
@@ -39,7 +39,7 @@
             </div>
         </div>
 
-        <!-- Step 1: Choose Service -->
+        <!-- Step 1: Select Platform & Category -->
         <div class="glass-card">
             <div class="step-header">
                 <div class="step-badge">1</div>
@@ -47,7 +47,7 @@
             </div>
 
             <div class="input-box">
-                <label><i class="fa-solid fa-layer-group"></i> Select Platform</label>
+                <label><i class="fa-solid fa-layer-group"></i> Platform</label>
                 <select id="platform" onchange="updateCategories()">
                     <option value="">-- Select Platform --</option>
                     <option value="instagram">Instagram</option>
@@ -55,14 +55,15 @@
                 </select>
             </div>
 
-            <!-- Custom Category Grid Selection -->
-            <div class="input-box" id="categoryContainer" style="display: none;">
-                <label><i class="fa-solid fa-list-check"></i> Select Category</label>
-                <div id="categoryGrid" class="category-grid"></div>
+            <div class="input-box">
+                <label><i class="fa-solid fa-list-check"></i> Service Category</label>
+                <select id="serviceCategory" onchange="renderPackageCards()">
+                    <option value="">-- Choose Service Type --</option>
+                </select>
             </div>
         </div>
 
-        <!-- Step 2: Select Package -->
+        <!-- Step 2: Visual Package Selection Cards -->
         <div class="glass-card" id="packageSection" style="display: none;">
             <div class="step-header">
                 <div class="step-badge">2</div>
@@ -72,7 +73,7 @@
             <div id="packageList"></div>
         </div>
 
-        <!-- Step 3: Order Details -->
+        <!-- Step 3: Target Details -->
         <div class="glass-card" id="orderDetailsSection" style="display: none;">
             <div class="step-header">
                 <div class="step-badge">3</div>
@@ -107,7 +108,7 @@
                 </button>
             </div>
 
-            <!-- UPI Payment -->
+            <!-- UPI Payment Area -->
             <div id="upiPaymentView">
                 <div class="qr-box">
                     <img id="qrCodeImg" src="" alt="UPI QR Code">
@@ -115,11 +116,12 @@
                 </div>
             </div>
 
-            <!-- Binance Payment -->
+            <!-- Binance Payment Area (Only Nickname Shown) -->
             <div id="binancePaymentView" style="display: none;">
                 <div class="qr-box">
                     <img id="binanceQrCodeImg" src="./binance-qr.png" alt="Binance QR">
                     
+                    <!-- Binance Nickname Only -->
                     <div class="binance-info-card">
                         <div class="info-row">
                             <span>Binance Nickname:</span>
@@ -146,7 +148,7 @@
             </button>
         </div>
 
-        <!-- Live Activity -->
+        <!-- Live Statistics Card -->
         <div class="glass-card stats-box">
             <div class="stats-title"><i class="fa-solid fa-chart-line"></i> Live Panel Activity</div>
             <div class="stats-grid">

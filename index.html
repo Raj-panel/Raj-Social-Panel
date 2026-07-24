@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raj Social Panel | Premium SMM Services</title>
 
-    <!-- Social Media Preview Meta Tags (Instagram, Facebook, WhatsApp, Telegram) -->
+    <!-- Social Media Preview Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://raj-panel.github.io/Raj-Social-Panel/">
     <meta property="og:title" content="Raj Social Panel | Premium SMM Services">
@@ -59,6 +59,12 @@
                     <option value="">-- Select Service --</option>
                 </select>
             </div>
+
+            <!-- Service Rate Highlight Box -->
+            <div class="service-price-tag-box" style="margin-top: 10px; background: rgba(56, 189, 248, 0.05); border: 1px dashed #38bdf8; padding: 10px; border-radius: 8px; font-size: 13px; text-align: center;">
+                <span style="color: #94a3b8;">Selected Rate: </span>
+                <span id="activeRateDisplay" style="color: #4ade80; font-weight: bold;">-- Select a service to see rate --</span>
+            </div>
         </div>
 
         <!-- Order Input Form -->
@@ -85,20 +91,37 @@
 
         <!-- Payment Section -->
         <div class="card glass" id="paymentCard" style="display: none;">
-            <h2><span class="step-num">3</span> Scan, Pay & Enter UTR</h2>
-            <p class="pay-subtext">Scan the QR code below with PhonePe, Paytm, or Google Pay:</p>
+            <h2><span class="step-num">3</span> Complete Payment</h2>
             
-            <div class="qr-container">
-                <img id="qrCodeImg" src="" alt="UPI QR Code">
+            <!-- Payment Method Selection Tabs -->
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <button id="tabUpi" onclick="switchPaymentMethod('upi')" style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #38bdf8; background: #38bdf8; color: #000; font-weight: bold; cursor: pointer;">UPI (PhonePe/Paytm)</button>
+                <button id="tabBinance" onclick="switchPaymentMethod('binance')" style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #facc15; background: transparent; color: #facc15; font-weight: bold; cursor: pointer;">Binance Pay (Crypto)</button>
+            </div>
+
+            <!-- UPI Payment View -->
+            <div id="upiPaymentView">
+                <p class="pay-subtext">Scan the QR code below with PhonePe, Paytm, or Google Pay:</p>
+                <div class="qr-container">
+                    <img id="qrCodeImg" src="" alt="UPI QR Code">
+                </div>
+            </div>
+
+            <!-- Binance Payment View (Only QR Code) -->
+            <div id="binancePaymentView" style="display: none; text-align: center;">
+                <p class="pay-subtext">Scan with Binance App to Pay:</p>
+                <div class="qr-container" style="margin: 15px 0;">
+                    <img src="binance-qr.png" alt="Binance QR Code" style="max-width: 220px; border-radius: 12px; border: 2px solid #facc15;">
+                </div>
             </div>
 
             <!-- UTR Input Field -->
             <div class="input-group" style="margin-top: 15px;">
-                <label for="utrNumber">Enter 12-Digit UTR / UPI Ref No:</label>
-                <input type="text" id="utrNumber" placeholder="e.g. 4023XXXXXXXX" maxlength="12">
+                <label for="utrNumber" id="utrLabel">Enter 12-Digit UTR / Transaction ID:</label>
+                <input type="text" id="utrNumber" placeholder="Enter Transaction UTR / Binance Order ID">
             </div>
 
-            <p class="pay-note">⚠️ After paying, enter the UTR number above and click 'Submit Order' to confirm on WhatsApp.</p>
+            <p class="pay-note">⚠️ After paying, enter the Transaction ID / UTR above and click 'Submit Order' to confirm on WhatsApp.</p>
             
             <button class="submit-btn" style="background: linear-gradient(135deg, #25d366, #128c7e);" onclick="confirmPaymentWithUTR()">Submit Order on WhatsApp</button>
         </div>
@@ -108,11 +131,11 @@
             <h2>📊 Live Panel Statistics</h2>
             <div style="display: flex; justify-content: space-around; margin-top: 15px;">
                 <div>
-                    <h3 style="color: #38bdf8; font-size: 24px;" id="totalOrders">10</h3>
+                    <h3 style="color: #38bdf8; font-size: 24px;" id="totalOrders">5,240</h3>
                     <p style="font-size: 12px; color: #94a3b8;">Total Orders</p>
                 </div>
                 <div>
-                    <h3 style="color: #4ade80; font-size: 24px;" id="completedOrders">9</h3>
+                    <h3 style="color: #4ade80; font-size: 24px;" id="completedOrders">5,190</h3>
                     <p style="font-size: 12px; color: #94a3b8;">Successful Orders</p>
                 </div>
             </div>

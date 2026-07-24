@@ -1,213 +1,370 @@
-// Prices in INR - Format: Name | Qty | Price
-const serviceData = {
-    instagram: [
-        { name: "Instagram Followers", pricePer1000: 80, qty: "1000 Qty", price: "₹80", displayText: "Instagram Followers — 1000 per ₹80" },
-        { name: "Instagram Likes (Non Drop)", pricePer1000: 30, qty: "1000 Qty", price: "₹30", displayText: "Instagram Likes (Non Drop) — 1000 per ₹30" },
-        { name: "Instagram Reels Views", pricePer1000: 10, qty: "1000 Qty", price: "₹10", displayText: "Instagram Reels Views — 1000 per ₹10" },
-        { name: "Instagram Report Lifetime", pricePer1000: 100, qty: "100 Qty", price: "₹10", displayText: "Instagram Report Lifetime — 100 per ₹10" },
-        { name: "Instagram Non Drop Comment", pricePer1000: 150, qty: "100 Qty", price: "₹15", displayText: "Instagram Non Drop Comment — 100 per ₹15" },
-        { name: "Instagram Post Save Lifetime", pricePer1000: 100, qty: "100 Qty", price: "₹10", displayText: "Instagram Post Save Lifetime — 100 per ₹10" }
-    ],
-    facebook: [
-        { name: "Facebook Non Drop Follow", pricePer1000: 49, qty: "1000 Qty", price: "₹49", displayText: "Facebook Non Drop Follow — 1000 per ₹49" },
-        { name: "Facebook Non Drop Like", pricePer1000: 39, qty: "1000 Qty", price: "₹39", displayText: "Facebook Non Drop Like — 1000 per ₹39" },
-        { name: "Facebook Reels / Videos Views", pricePer1000: 10, qty: "1000 Qty", price: "₹10", displayText: "Facebook Reels / Videos Views — 1000 per ₹10" }
-    ]
-};
-
-let currentPaymentMethod = 'upi';
-
-// Switch Payment Method UI Smoothly
-function switchPaymentMethod(method) {
-    currentPaymentMethod = method;
-    const upiView = document.getElementById("upiPaymentView");
-    const binanceView = document.getElementById("binancePaymentView");
-    const tabUpi = document.getElementById("tabUpi");
-    const tabBinance = document.getElementById("tabBinance");
-    const utrLabel = document.getElementById("utrLabel");
-    const utrInput = document.getElementById("utrNumber");
-    const payNoteText = document.getElementById("payNoteText");
-
-    if (method === 'upi') {
-        upiView.style.display = "block";
-        binanceView.style.display = "none";
-        tabUpi.style.background = "#38bdf8";
-        tabUpi.style.color = "#000";
-        tabBinance.style.background = "transparent";
-        tabBinance.style.color = "#facc15";
-        utrLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
-        utrInput.placeholder = "e.g. 4029XXXXXXXX (12-Digit UTR)";
-        payNoteText.innerText = "⚠️ After payment, enter the Transaction ID / UTR above and click 'Submit Order on WhatsApp'.";
-    } else {
-        upiView.style.display = "none";
-        binanceView.style.display = "block";
-        tabBinance.style.background = "#facc15";
-        tabBinance.style.color = "#000";
-        tabUpi.style.background = "transparent";
-        tabUpi.style.color = "#38bdf8";
-        utrLabel.innerText = "Transaction ID / Order ID";
-        utrInput.placeholder = "e.g. Enter Binance Transaction ID / Order ID";
-        payNoteText.innerText = "Copy the order ID / Transaction ID";
-    }
+/* Dark & Glowing Purple Nexus Theme */
+:root {
+    --bg-dark: #090d16;
+    --card-bg: #111526;
+    --card-border: #3b1d60;
+    --accent-purple: #a855f7;
+    --gradient-btn: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+    --gradient-icon: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    --text-white: #ffffff;
+    --text-muted: #94a3b8;
 }
 
-// Update service options based on selected platform & Change Link Placeholder
-function updateServices() {
-    const platform = document.getElementById("platform").value;
-    const serviceSelect = document.getElementById("service");
-    const linkInput = document.getElementById("link");
-    
-    serviceSelect.innerHTML = '<option value="">-- Select Service --</option>';
-
-    // Dynamic Link Placeholder Based on Platform Selection
-    if (platform === "instagram") {
-        linkInput.placeholder = "https://instagram.com/your_username";
-    } else if (platform === "facebook") {
-        linkInput.placeholder = "https://facebook.com/your_profile_or_page_link";
-    } else {
-        linkInput.placeholder = "Enter target profile link or post link";
-    }
-
-    if (platform && serviceData[platform]) {
-        serviceData[platform].forEach((item, index) => {
-            let option = document.createElement("option");
-            option.value = index;
-            option.text = item.displayText;
-            serviceSelect.appendChild(option);
-        });
-    }
-    calculatePrice();
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-// Calculate price dynamically
-function calculatePrice() {
-    const platform = document.getElementById("platform").value;
-    const serviceIndex = document.getElementById("service").value;
-    const quantity = document.getElementById("quantity").value || 0;
-    const priceText = document.getElementById("totalPrice");
-    const rateDisplay = document.getElementById("activeRateDisplay");
-
-    if (platform && serviceIndex !== "") {
-        const selectedService = serviceData[platform][serviceIndex];
-        
-        if (rateDisplay) {
-            rateDisplay.innerHTML = `<span style="color: #facc15;">${selectedService.name}</span> ➔ <span style="color: #38bdf8;">${selectedService.qty}</span> = <span style="color: #4ade80; font-size: 15px;">${selectedService.price}</span>`;
-        }
-
-        if (quantity > 0) {
-            const pricePer1000 = selectedService.pricePer1000;
-            const totalPrice = (quantity / 1000) * pricePer1000;
-            priceText.innerText = totalPrice.toFixed(2);
-        } else {
-            priceText.innerText = "0";
-        }
-    } else {
-        priceText.innerText = "0";
-        if (rateDisplay) {
-            rateDisplay.innerText = "-- Select a service to see rate --";
-        }
-    }
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    padding: 15px;
+    display: flex;
+    justify-content: center;
 }
 
-// Generate dynamic QR Code and Payment Card
-function generateOrder() {
-    const platform = document.getElementById("platform").value;
-    const serviceIndex = document.getElementById("service").value;
-    const link = document.getElementById("link").value;
-    const quantity = document.getElementById("quantity").value;
-    const totalPriceText = document.getElementById("totalPrice").innerText;
-    const totalPrice = parseFloat(totalPriceText);
-
-    if (!platform || serviceIndex === "" || !link || quantity <= 0) {
-        alert("Please fill in all details correctly!");
-        return;
-    }
-
-    if (totalPrice < 10) {
-        alert("⚠️ Minimum order amount is ₹10 INR. Please increase the quantity to place the order.");
-        return;
-    }
-
-    // 1. UPI Dynamic QR Code Generation
-    const upiId = "Saheb.68@ptyes"; 
-    const payeeName = "Raj Social Panel";
-    const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${totalPrice}&cu=INR`;
-    const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
-    document.getElementById("qrCodeImg").src = qrApi;
-
-    // 2. Binance Static Original QR Code Image & Dynamic USDT Text ($1 = 95 INR)
-    const usdtAmount = (totalPrice / 95).toFixed(2);
-    document.getElementById("binanceUsdtDisplay").innerText = `$${usdtAmount} USDT`;
-
-    // Use original uploaded static Binance QR code
-    const binanceQrImg = document.getElementById("binanceQrCodeImg");
-    if (binanceQrImg) {
-        binanceQrImg.src = "./binance-qr.png";
-    }
-
-    // Display Payment Card
-    document.getElementById("paymentCard").style.display = "block";
-
-    // Default to UPI payment view
-    switchPaymentMethod('upi');
-
-    // Smooth scroll to payment section
-    document.getElementById("paymentCard").scrollIntoView({ behavior: 'smooth' });
+.container {
+    width: 100%;
+    max-width: 480px;
 }
 
-// Submit Order via WhatsApp
-function confirmPaymentWithUTR() {
-    const utr = document.getElementById("utrNumber").value;
-    const platform = document.getElementById("platform").value;
-    const serviceIndex = document.getElementById("service").value;
-    const link = document.getElementById("link").value;
-    const quantity = document.getElementById("quantity").value;
-    const totalPrice = document.getElementById("totalPrice").innerText;
-
-    if (!utr || utr.length < 6) {
-        alert("Please enter a valid Transaction ID / UTR!");
-        return;
-    }
-
-    const serviceName = serviceData[platform][serviceIndex].name;
-    const usdtAmount = (parseFloat(totalPrice) / 95).toFixed(2);
-
-    const waMsg = `🚀 *NEW ORDER PLACED*%0A%0A` +
-                  `*Service:* ${serviceName}%0A` +
-                  `*Target Link:* ${link}%0A` +
-                  `*Quantity:* ${quantity}%0A` +
-                  `*Amount Paid:* ₹${totalPrice} INR ($${usdtAmount} USDT)%0A` +
-                  `*Payment Mode:* ${currentPaymentMethod.toUpperCase()}%0A` +
-                  `*Transaction ID / Order ID:* ${utr}%0A%0A` +
-                  `Please check payment and complete the order.`;
-
-    window.open(`https://wa.me/919337028344?text=${waMsg}`, '_blank');
+.header {
+    text-align: center;
+    margin: 15px 0 20px 0;
 }
 
-// Global Date-Based Auto Counter
-function startGlobalCounter() {
-    const baseStartDate = new Date("2026-01-01T00:00:00").getTime();
-    const baseOrders = 5240; 
-    const baseCompleted = 5190; 
-
-    function updateDisplay() {
-        const now = Date.now();
-        const minutesPassed = Math.floor((now - baseStartDate) / (1000 * 60));
-
-        const total = baseOrders + minutesPassed;
-        const success = baseCompleted + minutesPassed;
-
-        if (document.getElementById("totalOrders")) {
-            document.getElementById("totalOrders").innerText = total.toLocaleString('en-IN');
-            document.getElementById("completedOrders").innerText = success.toLocaleString('en-IN');
-        }
-    }
-
-    updateDisplay();
-    setInterval(updateDisplay, 1000);
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+    color: #38bdf8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    letter-spacing: 1px;
 }
 
-// Page load event
-window.onload = function() {
-    startGlobalCounter();
-};
+.logo-icon {
+    color: #4ade80;
+}
+
+.subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 18px;
+    margin-bottom: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.step-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #f3f4f6;
+}
+
+.step-num {
+    background: var(--accent-purple);
+    color: #fff;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+select, input {
+    width: 100%;
+    padding: 12px;
+    background: #090d16;
+    border: 1px solid #2a3447;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+}
+
+select:focus, input:focus {
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
+}
+
+/* --- NEXUS PACKAGE LIST CARDS --- */
+#packageList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.package-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 12px 10px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.package-card:hover, .package-card.selected {
+    background: rgba(168, 85, 247, 0.12);
+    border: 1px solid var(--accent-purple);
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+}
+
+.pkg-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pkg-icon-box {
+    width: 44px;
+    height: 44px;
+    background: var(--gradient-icon);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+.pkg-details {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.pkg-title-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.pkg-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.pkg-speed {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.pkg-price-btn {
+    background: var(--gradient-btn);
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+    white-space: nowrap;
+}
+
+/* Badges / Pills */
+.badge {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+}
+
+.badge-demo { background: rgba(255, 255, 255, 0.15); color: #e2e8f0; }
+.badge-real { background: linear-gradient(90deg, #6366f1, #a855f7); color: #fff; }
+.badge-discount { background: linear-gradient(90deg, #f59e0b, #ef4444); color: #fff; }
+.badge-popular { background: linear-gradient(90deg, #3b82f6, #8b5cf6); color: #fff; }
+
+/* Custom Followers Card */
+.custom-qty-card {
+    background: #090d16;
+    border: 1px solid var(--accent-purple);
+    border-radius: 14px;
+    padding: 15px;
+}
+
+/* Order Summary Box */
+.selected-summary-box {
+    background: #090d16;
+    border: 1px dashed var(--accent-purple);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 14px;
+    text-align: center;
+    color: #38bdf8;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Buttons */
+.btn-pay {
+    width: 100%;
+    padding: 14px;
+    background: var(--gradient-btn);
+    color: #fff;
+    font-weight: 800;
+    font-size: 16px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.payment-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid #2a3447;
+    color: var(--text-muted);
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.tab-btn.active {
+    background: var(--accent-purple);
+    color: #fff;
+    border-color: var(--accent-purple);
+}
+
+.qr-container {
+    text-align: center;
+    background: #090d16;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.qr-container img {
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+    background: #fff;
+    padding: 8px;
+}
+
+.scan-text {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+.usdt-badge {
+    display: inline-block;
+    background: #facc15;
+    color: #000;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 12px;
+    margin-top: 8px;
+}
+
+.btn-whatsapp {
+    width: 100%;
+    padding: 14px;
+    background: #22c55e;
+    color: #fff;
+    font-weight: 800;
+    font-size: 15px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pay-note {
+    font-size: 11px;
+    color: #facc15;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.margin-top-15 { margin-top: 15px; }
+
+/* Live Stats */
+.stats-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 15px;
+    text-align: center;
+}
+
+.stats-card h3 {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.stats-grid {
+    display: flex;
+    gap: 10px;
+}
+
+.stat-box {
+    flex: 1;
+    background: #090d16;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.stat-number {
+    display: block;
+    font-size: 18px;
+    font-weight: 800;
+    color: #38bdf8;
+}
+
+.stat-label {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.footer-text {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin: 20px 0;
+}

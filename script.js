@@ -1,8 +1,7 @@
-// Dynamic Database loaded with exact Rates provided by User
 const serviceData = {
     instagram: {
         "Instagram Followers": [
-            { type: "custom", name: "Instagram Followers", pricePer1000: 80, minQty: 100 }
+            { type: "custom", name: "Instagram Followers", pricePer1000: 80 }
         ],
         "❤️ Instagram Likes": [
             { name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo" },
@@ -44,7 +43,7 @@ const serviceData = {
     },
     facebook: {
         "Facebook Followers": [
-            { type: "custom", name: "Facebook Followers", pricePer1000: 49, minQty: 100 }
+            { type: "custom", name: "Facebook Followers", pricePer1000: 49 }
         ],
         "Facebook Video Views": [
             { name: "1K Facebook Views", price: 10, badge: "Demo", badgeClass: "badge-demo" },
@@ -56,7 +55,6 @@ const serviceData = {
 let selectedPackage = null;
 let currentPaymentMethod = 'upi';
 
-// 1. Update Category Dropdown
 function updateCategories() {
     const platform = document.getElementById("platform").value;
     const catSelect = document.getElementById("serviceCategory");
@@ -77,7 +75,6 @@ function updateCategories() {
     }
 }
 
-// 2. Render Cards / Custom Input
 function renderPackageCards() {
     const platform = document.getElementById("platform").value;
     const category = document.getElementById("serviceCategory").value;
@@ -96,9 +93,9 @@ function renderPackageCards() {
     }
 
     if (platform === "instagram") {
-        linkInput.placeholder = "https://instagram.com/your_username_or_post";
+        linkInput.placeholder = "https://instagram.com/your_username";
     } else {
-        linkInput.placeholder = "https://facebook.com/your_profile_or_post";
+        linkInput.placeholder = "https://facebook.com/your_profile_link";
     }
 
     const iconClass = platform === "instagram" ? "fa-instagram" : "fa-facebook";
@@ -111,10 +108,10 @@ function renderPackageCards() {
             customCard.innerHTML = `
                 <div style="margin-bottom: 10px;">
                     <strong style="color: #38bdf8;">${pkg.name}</strong>
-                    <p style="font-size: 12px; color: #94a3b8;">Rate: ₹${pkg.pricePer1000} per 1000 Followers</p>
+                    <p style="font-size: 12px; color: #94a3b8;">Rate: ₹${pkg.pricePer1000} per 1000 Qty</p>
                 </div>
                 <div class="form-group">
-                    <label>Enter Quantity (কত ফলোয়ার লাগবে টাইপ করুন):</label>
+                    <label>Enter Quantity:</label>
                     <input type="number" id="customQtyInput" placeholder="e.g. 1000" oninput="calculateCustomPrice(${pkg.pricePer1000})">
                 </div>
                 <div style="font-size: 15px; font-weight: bold; color: #4ade80;" id="customPriceDisplay">Total Amount: ₹0 INR</div>
@@ -147,7 +144,6 @@ function renderPackageCards() {
     packageSection.style.display = "block";
 }
 
-// 3. Custom Followers Price Calculator
 function calculateCustomPrice(ratePer1000) {
     const qty = parseInt(document.getElementById("customQtyInput").value) || 0;
     const priceDisplay = document.getElementById("customPriceDisplay");
@@ -160,8 +156,7 @@ function calculateCustomPrice(ratePer1000) {
         selectedPackage = {
             name: `${qty} Followers`,
             price: total,
-            category: categoryName,
-            isCustom: true
+            category: categoryName
         };
 
         const summaryBox = document.getElementById("selectedSummary");
@@ -174,7 +169,6 @@ function calculateCustomPrice(ratePer1000) {
     }
 }
 
-// 4. Select Card Action
 function selectPackage(cardElement, pkgData, categoryName) {
     document.querySelectorAll(".package-card").forEach(c => c.classList.remove("selected"));
     cardElement.classList.add("selected");
@@ -188,7 +182,6 @@ function selectPackage(cardElement, pkgData, categoryName) {
     document.getElementById("orderDetailsSection").scrollIntoView({ behavior: 'smooth' });
 }
 
-// 5. Generate Dynamic QR Code
 function generateOrder() {
     const link = document.getElementById("link").value.trim();
 
@@ -204,14 +197,12 @@ function generateOrder() {
 
     const totalPrice = selectedPackage.price;
 
-    // Dynamic UPI QR Code
     const upiId = "Saheb.68@ptyes"; 
     const payeeName = "Raj Social Panel";
     const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${totalPrice}&cu=INR`;
     const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
     document.getElementById("qrCodeImg").src = qrApi;
 
-    // Binance USDT ($1 = 95 INR)
     const usdtAmount = (totalPrice / 95).toFixed(2);
     document.getElementById("binanceUsdtDisplay").innerText = `$${usdtAmount} USDT`;
 
@@ -220,7 +211,6 @@ function generateOrder() {
     document.getElementById("paymentCard").scrollIntoView({ behavior: 'smooth' });
 }
 
-// 6. Switch UPI / Binance View
 function switchPaymentMethod(method) {
     currentPaymentMethod = method;
     const upiView = document.getElementById("upiPaymentView");
@@ -247,7 +237,6 @@ function switchPaymentMethod(method) {
     }
 }
 
-// 7. Submit to WhatsApp
 function confirmPaymentWithUTR() {
     const utr = document.getElementById("utrNumber").value.trim();
     const link = document.getElementById("link").value.trim();
@@ -271,11 +260,11 @@ function confirmPaymentWithUTR() {
     window.open(`https://wa.me/919337028344?text=${waMsg}`, '_blank');
 }
 
-// Global Counter
+// Global Live Counter starting at 2,99,784
 function startGlobalCounter() {
     const baseStartDate = new Date("2026-01-01T00:00:00").getTime();
-    const baseOrders = 5240; 
-    const baseCompleted = 5190; 
+    const baseOrders = 299784; 
+    const baseCompleted = 299734; 
 
     function updateDisplay() {
         const now = Date.now();

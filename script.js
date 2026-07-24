@@ -26,6 +26,7 @@ function switchPaymentMethod(method) {
     const tabBinance = document.getElementById("tabBinance");
     const utrLabel = document.getElementById("utrLabel");
     const utrInput = document.getElementById("utrNumber");
+    const payNoteText = document.getElementById("payNoteText");
 
     if (method === 'upi') {
         upiView.style.display = "block";
@@ -36,6 +37,7 @@ function switchPaymentMethod(method) {
         tabBinance.style.color = "#facc15";
         utrLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
         utrInput.placeholder = "e.g. 4029XXXXXXXX (12-Digit UTR)";
+        payNoteText.innerText = "⚠️ After payment, enter the Transaction ID / UTR above and click 'Submit Order on WhatsApp'.";
     } else {
         upiView.style.display = "none";
         binanceView.style.display = "block";
@@ -43,8 +45,9 @@ function switchPaymentMethod(method) {
         tabBinance.style.color = "#000";
         tabUpi.style.background = "transparent";
         tabUpi.style.color = "#38bdf8";
-        utrLabel.innerText = "Enter Binance Pay Order ID / TxID:";
-        utrInput.placeholder = "e.g. Binance Order ID or TxID";
+        utrLabel.innerText = "Transaction ID / Order ID";
+        utrInput.placeholder = "e.g. Enter Binance Transaction ID / Order ID";
+        payNoteText.innerText = "Copy the order ID / Transaction ID";
     }
 }
 
@@ -115,13 +118,25 @@ function generateOrder() {
         return;
     }
 
-    // UPI QR Code Generation
+    // 1. UPI QR Code Generation (Dynamic Amount)
     const upiId = "Saheb.68@ptyes"; 
     const payeeName = "Raj Social Panel";
     const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${totalPrice}&cu=INR`;
     const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
-
     document.getElementById("qrCodeImg").src = qrApi;
+
+    // 2. Binance USD Conversion & Dynamic QR Code ($1 = 95 INR)
+    const usdtAmount = (totalPrice / 95).toFixed(2);
+    document.getElementById("binanceUsdtDisplay").innerText = `$${usdtAmount} USDT`;
+
+    // Dynamic Binance Pay Link Encoded QR Code
+    const binancePayUrl = `https://binance.com/pay?nickname=Alex-Sahil786&amount=${usdtAmount}&currency=USDT`;
+    const binanceQrApi = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(binancePayUrl)}`;
+    
+    // Set Dynamic Binance QR Code
+    document.getElementById("binanceQrCodeImg").src = binanceQrApi;
+
+    // Display Payment Card
     document.getElementById("paymentCard").style.display = "block";
 
     // Default to UPI payment view
@@ -146,14 +161,15 @@ function confirmPaymentWithUTR() {
     }
 
     const serviceName = serviceData[platform][serviceIndex].name;
+    const usdtAmount = (parseFloat(totalPrice) / 95).toFixed(2);
 
     const waMsg = `🚀 *NEW ORDER PLACED*%0A%0A` +
                   `*Service:* ${serviceName}%0A` +
                   `*Target Link:* ${link}%0A` +
                   `*Quantity:* ${quantity}%0A` +
-                  `*Amount Paid:* ₹${totalPrice} INR%0A` +
+                  `*Amount Paid:* ₹${totalPrice} INR ($${usdtAmount} USDT)%0A` +
                   `*Payment Mode:* ${currentPaymentMethod.toUpperCase()}%0A` +
-                  `*UTR / TxID:* ${utr}%0A%0A` +
+                  `*Transaction ID / Order ID:* ${utr}%0A%0A` +
                   `Please check payment and complete the order.`;
 
     window.open(`https://wa.me/919337028344?text=${waMsg}`, '_blank');

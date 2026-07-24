@@ -108,13 +108,13 @@ function renderPackageCards() {
             customCard.innerHTML = `
                 <div style="margin-bottom: 10px;">
                     <strong style="color: #38bdf8;">${pkg.name}</strong>
-                    <p style="font-size: 12px; color: #94a3b8;">Rate: ₹${pkg.pricePer1000} per 1000 Qty</p>
+                    <p style="font-size: 11px; color: #94a3b8;">Rate: ₹${pkg.pricePer1000} per 1000 Qty</p>
                 </div>
-                <div class="form-group">
+                <div class="input-box">
                     <label>Enter Quantity:</label>
                     <input type="number" id="customQtyInput" placeholder="e.g. 1000" oninput="calculateCustomPrice(${pkg.pricePer1000})">
                 </div>
-                <div style="font-size: 15px; font-weight: bold; color: #4ade80;" id="customPriceDisplay">Total Amount: ₹0 INR</div>
+                <div style="font-size: 14px; font-weight: bold; color: #4ade80;" id="customPriceDisplay">Total Amount: ₹0 INR</div>
             `;
             packageList.appendChild(customCard);
         } else {
@@ -132,7 +132,7 @@ function renderPackageCards() {
                             <span class="pkg-name">${pkg.name}</span>
                             ${pkg.badge ? `<span class="badge ${pkg.badgeClass}">${pkg.badge}</span>` : ''}
                         </div>
-                        <span class="pkg-speed">⚡ Instant Delivery • High Quality</span>
+                        <span class="pkg-speed">⚡ Instant Delivery • Premium Quality</span>
                     </div>
                 </div>
                 <div class="pkg-price-btn">₹${pkg.price}</div>
@@ -191,7 +191,7 @@ function generateOrder() {
     }
 
     if (!link) {
-        alert("Please enter target link / username!");
+        alert("Please enter target link or username!");
         return;
     }
 
@@ -233,7 +233,7 @@ function switchPaymentMethod(method) {
         tabBinance.classList.add("active");
         tabUpi.classList.remove("active");
         utrLabel.innerText = "Transaction ID / Order ID:";
-        utrInput.placeholder = "e.g. Enter Binance Order ID";
+        utrInput.placeholder = "e.g. Enter Binance Order ID / TxID";
     }
 }
 
@@ -260,7 +260,7 @@ function confirmPaymentWithUTR() {
     window.open(`https://wa.me/919337028344?text=${waMsg}`, '_blank');
 }
 
-// Global Live Counter starting at 2,99,784
+// Live Counter starting at 2,99,784
 function startGlobalCounter() {
     const baseStartDate = new Date("2026-01-01T00:00:00").getTime();
     const baseOrders = 299784; 

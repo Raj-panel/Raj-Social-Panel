@@ -1,20 +1,52 @@
-// Service Rates configured for calculation
-// Note: pricePer1000 holds price per 1000 items, display text shows per 100 rate as requested
+// Prices in INR - Format: Name | Qty | Price
 const serviceData = {
     instagram: [
-        { name: "Instagram Followers", pricePer1000: 80, displayText: "Instagram Followers - ₹80 / 1K" },
-        { name: "Instagram Likes (Non Drop)", pricePer1000: 30, displayText: "Instagram Likes (Non Drop) - ₹30 / 1K" },
-        { name: "Instagram Reels Views", pricePer1000: 10, displayText: "Instagram Reels Views - ₹10 / 1K" },
-        { name: "Instagram Report Lifetime", pricePer1000: 100, displayText: "Instagram Report Lifetime - ₹10 / 100" },
-        { name: "Instagram Non Drop Comment", pricePer1000: 150, displayText: "Instagram Non Drop Comment - ₹15 / 100" },
-        { name: "Instagram Post Save Lifetime", pricePer1000: 100, displayText: "Instagram Post Save Lifetime - ₹10 / 100" }
+        { name: "Instagram Followers", pricePer1000: 80, qty: "1000 Qty", price: "₹80", displayText: "Instagram Followers — 1000 Qty — ₹80" },
+        { name: "Instagram Likes (Non Drop)", pricePer1000: 30, qty: "1000 Qty", price: "₹30", displayText: "Instagram Likes (Non Drop) — 1000 Qty — ₹30" },
+        { name: "Instagram Reels Views", pricePer1000: 10, qty: "1000 Qty", price: "₹10", displayText: "Instagram Reels Views — 1000 Qty — ₹10" },
+        { name: "Instagram Report Lifetime", pricePer1000: 100, qty: "100 Qty", price: "₹10", displayText: "Instagram Report Lifetime — 100 Qty — ₹10" },
+        { name: "Instagram Non Drop Comment", pricePer1000: 150, qty: "100 Qty", price: "₹15", displayText: "Instagram Non Drop Comment — 100 Qty — ₹15" },
+        { name: "Instagram Post Save Lifetime", pricePer1000: 100, qty: "100 Qty", price: "₹10", displayText: "Instagram Post Save Lifetime — 100 Qty — ₹10" }
     ],
     facebook: [
-        { name: "Facebook Non Drop Follow", pricePer1000: 49, displayText: "Facebook Non Drop Follow - ₹49 / 1K" },
-        { name: "Facebook Non Drop Like", pricePer1000: 39, displayText: "Facebook Non Drop Like - ₹39 / 1K" },
-        { name: "Facebook Reels / Videos Views", pricePer1000: 10, displayText: "Facebook Reels / Videos Views - ₹10 / 1K" }
+        { name: "Facebook Non Drop Follow", pricePer1000: 49, qty: "1000 Qty", price: "₹49", displayText: "Facebook Non Drop Follow — 1000 Qty — ₹49" },
+        { name: "Facebook Non Drop Like", pricePer1000: 39, qty: "1000 Qty", price: "₹39", displayText: "Facebook Non Drop Like — 1000 Qty — ₹39" },
+        { name: "Facebook Reels / Videos Views", pricePer1000: 10, qty: "1000 Qty", price: "₹10", displayText: "Facebook Reels / Videos Views — 1000 Qty — ₹10" }
     ]
 };
+
+let currentPaymentMethod = 'upi';
+
+// Switch Payment Method UI Smoothly
+function switchPaymentMethod(method) {
+    currentPaymentMethod = method;
+    const upiView = document.getElementById("upiPaymentView");
+    const binanceView = document.getElementById("binancePaymentView");
+    const tabUpi = document.getElementById("tabUpi");
+    const tabBinance = document.getElementById("tabBinance");
+    const utrLabel = document.getElementById("utrLabel");
+    const utrInput = document.getElementById("utrNumber");
+
+    if (method === 'upi') {
+        upiView.style.display = "block";
+        binanceView.style.display = "none";
+        tabUpi.style.background = "#38bdf8";
+        tabUpi.style.color = "#000";
+        tabBinance.style.background = "transparent";
+        tabBinance.style.color = "#facc15";
+        utrLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
+        utrInput.placeholder = "e.g. 4029XXXXXXXX (12-Digit UTR)";
+    } else {
+        upiView.style.display = "none";
+        binanceView.style.display = "block";
+        tabBinance.style.background = "#facc15";
+        tabBinance.style.color = "#000";
+        tabUpi.style.background = "transparent";
+        tabUpi.style.color = "#38bdf8";
+        utrLabel.innerText = "Enter Binance Pay Order ID / TxID:";
+        utrInput.placeholder = "e.g. Binance Order ID or TxID";
+    }
+}
 
 // Update service options based on selected platform
 function updateServices() {
@@ -40,13 +72,27 @@ function calculatePrice() {
     const serviceIndex = document.getElementById("service").value;
     const quantity = document.getElementById("quantity").value || 0;
     const priceText = document.getElementById("totalPrice");
+    const rateDisplay = document.getElementById("activeRateDisplay");
 
-    if (platform && serviceIndex !== "" && quantity > 0) {
-        const pricePer1000 = serviceData[platform][serviceIndex].pricePer1000;
-        const totalPrice = (quantity / 1000) * pricePer1000;
-        priceText.innerText = totalPrice.toFixed(2);
+    if (platform && serviceIndex !== "") {
+        const selectedService = serviceData[platform][serviceIndex];
+        
+        if (rateDisplay) {
+            rateDisplay.innerHTML = `<span style="color: #facc15;">${selectedService.name}</span> ➔ <span style="color: #38bdf8;">${selectedService.qty}</span> = <span style="color: #4ade80; font-size: 15px;">${selectedService.price}</span>`;
+        }
+
+        if (quantity > 0) {
+            const pricePer1000 = selectedService.pricePer1000;
+            const totalPrice = (quantity / 1000) * pricePer1000;
+            priceText.innerText = totalPrice.toFixed(2);
+        } else {
+            priceText.innerText = "0";
+        }
     } else {
         priceText.innerText = "0";
+        if (rateDisplay) {
+            rateDisplay.innerText = "-- Select a service to see rate --";
+        }
     }
 }
 
@@ -64,30 +110,28 @@ function generateOrder() {
         return;
     }
 
-    // ⚠️ Minimum Order Validation (Minimum ₹10 required)
     if (totalPrice < 10) {
         alert("⚠️ Minimum order amount is ₹10 INR. Please increase the quantity to place the order.");
         return;
     }
 
-    const serviceName = serviceData[platform][serviceIndex].name;
-
-    // YOUR ACTUAL UPI ID
+    // UPI QR Code Generation
     const upiId = "Saheb.68@ptyes"; 
     const payeeName = "Raj Social Panel";
-
-    // Dynamic UPI QR Code Generation
     const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${totalPrice}&cu=INR`;
-    const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
+    const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
 
     document.getElementById("qrCodeImg").src = qrApi;
     document.getElementById("paymentCard").style.display = "block";
+
+    // Default to UPI payment view
+    switchPaymentMethod('upi');
 
     // Smooth scroll to payment section
     document.getElementById("paymentCard").scrollIntoView({ behavior: 'smooth' });
 }
 
-// Submit Order with UTR via WhatsApp
+// Submit Order via WhatsApp
 function confirmPaymentWithUTR() {
     const utr = document.getElementById("utrNumber").value;
     const platform = document.getElementById("platform").value;
@@ -96,8 +140,8 @@ function confirmPaymentWithUTR() {
     const quantity = document.getElementById("quantity").value;
     const totalPrice = document.getElementById("totalPrice").innerText;
 
-    if (!utr || utr.length < 10) {
-        alert("Please enter a valid 12-Digit UTR / Transaction ID!");
+    if (!utr || utr.length < 6) {
+        alert("Please enter a valid Transaction ID / UTR!");
         return;
     }
 
@@ -108,25 +152,22 @@ function confirmPaymentWithUTR() {
                   `*Target Link:* ${link}%0A` +
                   `*Quantity:* ${quantity}%0A` +
                   `*Amount Paid:* ₹${totalPrice} INR%0A` +
-                  `*UTR / Payment ID:* ${utr}%0A%0A` +
+                  `*Payment Mode:* ${currentPaymentMethod.toUpperCase()}%0A` +
+                  `*UTR / TxID:* ${utr}%0A%0A` +
                   `Please check payment and complete the order.`;
 
     window.open(`https://wa.me/919337028344?text=${waMsg}`, '_blank');
 }
 
-// Global Fixed-Time Based Order Counter
+// Global Date-Based Auto Counter
 function startGlobalCounter() {
-    const baseOrders = 500; // প্রাথমিক বেস সংখ্যা
-    const baseCompleted = 492;
-
-    // একটি নির্দিষ্ট অতীত সময়কে (Fixed Anchor Point) ধরে নেওয়া হলো
-    // জানুয়ারি ১, ২০২৬ তারিখ থেকে মিনিট পাওয়ার জন্য হিসাব
-    const fixedStartTime = new Date("2026-01-01T00:00:00Z").getTime();
+    const baseStartDate = new Date("2026-01-01T00:00:00").getTime();
+    const baseOrders = 5240; 
+    const baseCompleted = 5190; 
 
     function updateDisplay() {
         const now = Date.now();
-        // ১ জানুয়ারি ২০২৬ এর পর থেকে কত মিনিট পার হয়েছে
-        const minutesPassed = Math.floor((now - fixedStartTime) / (1000 * 60));
+        const minutesPassed = Math.floor((now - baseStartDate) / (1000 * 60));
 
         const total = baseOrders + minutesPassed;
         const success = baseCompleted + minutesPassed;

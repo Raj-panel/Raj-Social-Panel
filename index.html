@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raj Social Panel - Premium Growth</title>
+    <title>Raj Social Panel - Premium Growth Provider</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -11,11 +11,11 @@
 
     <div class="main-wrapper">
         
-        <!-- Unique Hero Header -->
+        <!-- Hero Header -->
         <div class="hero-header">
-            <div class="hero-badge"><i class="fa-solid fa-bolt"></i> FASTEST & CHEAPEST</div>
+            <div class="hero-badge"><i class="fa-solid fa-shield-halved"></i> 100% HIGH QUALITY & REAL SERVICES</div>
             <h1 class="logo-glow">RAJ SOCIAL PANEL</h1>
-            <p class="subtitle">Next-Gen Social Media Growth Provider 🇮🇳</p>
+            <p class="subtitle">Next-Gen Instant Social Media Growth Provider 🇮🇳</p>
             
             <div class="hero-actions">
                 <a href="https://t.me/your_telegram" target="_blank" class="glass-btn btn-telegram">
@@ -27,6 +27,16 @@
             </div>
         </div>
 
+        <!-- Guarantee & Refund Banner -->
+        <div class="guarantee-banner">
+            <div class="guarantee-item">
+                <i class="fa-solid fa-circle-check"></i> 100% Real & High-Quality Services
+            </div>
+            <div class="guarantee-item highlight">
+                <i class="fa-solid fa-rotate-left"></i> 100% Refund Policy within 24 Hours if Order Fails or Cancels!
+            </div>
+        </div>
+
         <!-- Step 1: Select Platform & Category -->
         <div class="glass-card">
             <div class="step-header">
@@ -35,7 +45,7 @@
             </div>
 
             <div class="input-box">
-                <label><i class="fa-solid fa-layer-group"></i> Platform</label>
+                <label><i class="fa-solid fa-layer-group"></i> Select Platform</label>
                 <select id="platform" onchange="updateCategories()">
                     <option value="">-- Select Platform --</option>
                     <option value="instagram">Instagram</option>
@@ -104,25 +114,20 @@
                 </div>
             </div>
 
-            <!-- Binance Payment Area (With Nickname & ID) -->
+            <!-- Binance Payment Area (Only Nickname) -->
             <div id="binancePaymentView" style="display: none;">
                 <div class="qr-box">
                     <img id="binanceQrCodeImg" src="./binance-qr.png" alt="Binance QR">
                     
-                    <!-- Binance Nickname & Pay ID Box -->
                     <div class="binance-info-card">
                         <div class="info-row">
                             <span>Binance Nickname:</span>
                             <strong class="highlight-text">Alex-Sahil786</strong>
                         </div>
-                        <div class="info-row">
-                            <span>Binance Pay ID:</span>
-                            <strong class="highlight-text">827978569</strong>
-                        </div>
                     </div>
 
                     <div class="usdt-badge" id="binanceUsdtDisplay">$0.00 USDT</div>
-                    <p class="qr-sub">Scan QR Code or transfer USDT using Binance Pay ID</p>
+                    <p class="qr-sub">Scan QR Code using Binance App</p>
                 </div>
             </div>
 
@@ -131,9 +136,9 @@
                 <input type="text" id="utrNumber" placeholder="e.g. 4029XXXXXXXX (12-Digit UTR)">
             </div>
 
-            <!-- Fixed Bengali Text (No Typo) -->
+            <!-- English Note -->
             <p class="payment-alert-note">
-                <i class="fa-solid fa-triangle-exclamation"></i> পেমেন্ট করার পর UTR / ট্রানজেকশন আইডি বসিয়ে হোয়াটসঅ্যাপে সাবমিট করুন।
+                <i class="fa-solid fa-circle-info"></i> After payment, enter your UTR / Transaction ID and click submit below.
             </p>
 
             <button class="whatsapp-submit-btn" onclick="confirmPaymentWithUTR()">

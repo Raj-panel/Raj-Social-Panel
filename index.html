@@ -123,10 +123,17 @@
                 
                 <div style="display: inline-block; padding: 15px; border-radius: 20px; background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(250, 204, 21, 0.4); box-shadow: 0 0 20px rgba(250, 204, 21, 0.2); backdrop-filter: blur(10px);">
                     <div style="background: #ffffff; padding: 12px; border-radius: 14px; display: inline-block;">
-                        <img src="./binance-qr.png" alt="Binance QR Code" style="width: 200px; height: 200px; display: block; object-fit: contain;">
+                        <img id="binanceQrCodeImg" src="./binance-qr.png" alt="Binance QR Code" style="width: 200px; height: 200px; display: block; object-fit: contain;">
                     </div>
-                    <div style="margin-top: 10px; font-size: 12px; color: #facc15; font-weight: 600; letter-spacing: 0.5px;">
-                        🟡 Binance Pay Supported
+                    
+                    <!-- Dynamic Rate Display & Nickname -->
+                    <div style="margin-top: 12px; font-size: 13px; color: #facc15; font-weight: bold; background: rgba(250, 204, 21, 0.1); padding: 8px 12px; border-radius: 8px; border: 1px dashed rgba(250, 204, 21, 0.4);">
+                        Payable Amount: <span id="binanceUsdtDisplay" style="color: #4ade80; font-size: 15px;">$0.00 USDT</span> <br>
+                        <span style="font-size: 11px; color: #94a3b8; font-weight: normal;">(Rate: $1 = ₹95 INR)</span>
+                    </div>
+
+                    <div style="margin-top: 8px; font-size: 13px; color: #ffffff; font-weight: 600; background: #facc15; color: #000; padding: 6px; border-radius: 6px;">
+                        Nick name: Alex-Sahil786
                     </div>
                 </div>
             </div>
@@ -137,7 +144,7 @@
                 <input type="text" id="utrNumber" placeholder="e.g. 4029XXXXXXXX (12-Digit UTR)">
             </div>
 
-            <p class="pay-note" style="font-size: 12px; color: #94a3b8; margin-top: 8px;">⚠️ After payment, enter the Transaction ID / UTR above and click 'Submit Order on WhatsApp'.</p>
+            <p class="pay-note" id="payNoteText" style="font-size: 12px; color: #94a3b8; margin-top: 8px;">⚠️ After payment, enter the Transaction ID / UTR above and click 'Submit Order on WhatsApp'.</p>
             
             <button class="submit-btn" style="background: linear-gradient(135deg, #25d366, #128c7e); margin-top: 15px;" onclick="confirmPaymentWithUTR()">Submit Order on WhatsApp</button>
         </div>

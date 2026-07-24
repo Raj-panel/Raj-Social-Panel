@@ -1,9 +1,9 @@
 const serviceData = {
     instagram: {
-        "Instagram Followers": [
+        "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐅𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬 𝐧𝐨𝐧 𝐝𝐫𝐨𝐩": [
             { type: "custom", name: "Instagram Followers", pricePer1000: 80 }
         ],
-        "❤️ Instagram Likes": [
+        "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐋𝐢𝐤𝐞𝐬 𝐥𝐢𝐟𝐞 𝐭𝐢𝐦𝐞": [
             { name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo" },
             { name: "500 Likes", price: 25, badge: "Real", badgeClass: "badge-real" },
             { name: "1K Likes", price: 30, badge: "Fast", badgeClass: "badge-popular" },
@@ -11,26 +11,26 @@ const serviceData = {
             { name: "5K Likes", price: 99, badge: "🔥 Best Value", badgeClass: "badge-discount" },
             { name: "10K Likes", price: 179, badge: "👑 Most Popular", badgeClass: "badge-discount" }
         ],
-        "💬 Instagram Comments": [
+        "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐂𝐨𝐦𝐦𝐞𝐧𝐭𝐬 𝐋𝐢𝐟𝐞 𝐭𝐢𝐦𝐞": [
             { name: "50 Comments", price: 15, badge: "Starter", badgeClass: "badge-demo" },
             { name: "100 Comments", price: 20, badge: "Real", badgeClass: "badge-real" },
             { name: "500 Comments", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
             { name: "1K Comments", price: 99, badge: "🔥 Best Value", badgeClass: "badge-discount" }
         ],
-        "🔄 Instagram Repost": [
+        "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐑𝐞𝐩𝐨𝐬𝐭 𝐥𝐢𝐟𝐞 𝐭𝐢𝐦𝐞": [
             { name: "50 Reposts", price: 15, badge: "Starter", badgeClass: "badge-demo" },
             { name: "100 Reposts", price: 20, badge: "Real", badgeClass: "badge-real" },
             { name: "500 Reposts", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
             { name: "1K Reposts", price: 99, badge: "🔥 Best Value", badgeClass: "badge-discount" },
             { name: "3K Reposts", price: 249, badge: "👑 Most Popular", badgeClass: "badge-discount" }
         ],
-        "🚀 Instagram Shares": [
+        "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐒𝐡𝐚𝐫𝐞𝐬 𝐥𝐢𝐟𝐞 𝐭𝐢𝐦𝐞": [
             { name: "100 Shares", price: 10, badge: "Starter", badgeClass: "badge-demo" },
             { name: "1K Shares", price: 30, badge: "Fast", badgeClass: "badge-popular" },
             { name: "5K Shares", price: 69, badge: "🔥 Best Value", badgeClass: "badge-discount" },
             { name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-discount" }
         ],
-        "🎬 Instagram Views": [
+        "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐕𝐢𝐞𝐰𝐬 𝐥𝐢𝐟𝐞 𝐓𝐢𝐦𝐞": [
             { name: "1K Views", price: 10, badge: "Demo", badgeClass: "badge-demo" },
             { name: "5K Views", price: 20, badge: "Starter", badgeClass: "badge-real" },
             { name: "10K Views", price: 30, badge: "Best Value", badgeClass: "badge-discount" },

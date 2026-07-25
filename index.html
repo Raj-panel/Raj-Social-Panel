@@ -12,7 +12,6 @@
     <meta property="og:title" content="Raj Social Panel | Premium SMM Services">
     <meta property="og:description" content="Instant Instagram Followers, Likes, Views & Facebook Services at Best Price in India.">
     
-    <!-- আপনার banner.png ফাইলের ডাইরেক্ট লিংক -->
     <meta property="og:image" content="https://raj-panel.github.io/Raj-Social-Panel/banner.png">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
@@ -574,6 +573,12 @@
                 "👤 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐅𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬 [𝐍𝐨𝐧-𝐃𝐫𝐨𝐩]": [
                     { type: "custom", name: "Instagram Followers Non Drop", pricePer1000: 129, minQty: 100 }
                 ],
+                "👥 Instagram Followers [Drop-30%]": [
+                    { name: "1K Followers", price: 50 },
+                    { name: "3K Followers", price: 129, badge: "⭐ Popular", badgeClass: "badge-popular" },
+                    { name: "5K Followers", price: 199, badge: "🔥 Best Value", badgeClass: "badge-discount" },
+                    { name: "10K Followers", price: 349, badge: "👑 Most Popular", badgeClass: "badge-discount" }
+                ],
                 "❤️ 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐋𝐢𝐤𝐞𝐬 [𝐍𝐨𝐧-𝐃𝐫𝐨𝐩]": [
                     { name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo" },
                     { name: "500 Likes", price: 25, badge: "Real", badgeClass: "badge-real" },
@@ -642,6 +647,7 @@
 
         var selectedPackage = null;
         var currentPaymentMethod = 'upi';
+        var upiId = "9337028344@ybl"; // Default UPI ID
 
         function updateCategories() {
             var platform = document.getElementById("platform").value;
@@ -776,112 +782,101 @@
             }
         }
 
-        function selectPackage(cardElement, pkgData, category) {
+        function selectPackage(cardElement, pkg, category) {
             var cards = document.querySelectorAll(".package-card");
             cards.forEach(function(c) { c.classList.remove("selected"); });
             cardElement.classList.add("selected");
 
-            selectedPackage = { name: pkgData.name, price: pkgData.price, category: category };
+            selectedPackage = {
+                name: pkg.name,
+                price: pkg.price,
+                category: category
+            };
 
             var summaryBox = document.getElementById("selectedSummary");
-            summaryBox.innerHTML = 'Selected: <strong>' + pkgData.name + '</strong> (' + category + ') ➔ <span style="color: #4ade80;">₹' + pkgData.price + ' INR</span>';
-
-            document.getElementById("orderDetailsSection").style.display = "block";
-            document.getElementById("orderDetailsSection").scrollIntoView({ behavior: 'smooth' });
+            summaryBox.innerHTML = 'Selected: <strong>' + pkg.name + '</strong> ➔ <span style="color: #4ade80;">₹' + pkg.price + ' INR</span>';
+            
+            var orderDetailsSection = document.getElementById("orderDetailsSection");
+            orderDetailsSection.style.display = "block";
+            orderDetailsSection.scrollIntoView({ behavior: 'smooth' });
         }
 
         function generateOrder() {
             var link = document.getElementById("link").value.trim();
-
             if (!selectedPackage) {
-                alert("Please select a package!");
+                alert("Please select a package first!");
                 return;
             }
-
             if (!link) {
-                alert("Please enter target link or username!");
+                alert("Please enter a valid link or username!");
                 return;
             }
 
-            var totalPrice = selectedPackage.price;
-            var upiId = "Saheb.68@ptyes"; 
-            var payeeName = "Raj Social Panel";
-            var upiUrl = "upi://pay?pa=" + upiId + "&pn=" + encodeURIComponent(payeeName) + "&am=" + totalPrice + "&cu=INR";
-            var qrApi = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" + encodeURIComponent(upiUrl);
+            // Generate UPI Dynamic QR Code
+            var amount = parseFloat(selectedPackage.price).toFixed(2);
+            var upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${amount}&cu=INR`;
+            var qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
             
             document.getElementById("qrCodeImg").src = qrApi;
 
-            var usdtAmount = (totalPrice / 95).toFixed(2);
-            document.getElementById("binanceUsdtDisplay").innerText = "$" + usdtAmount + " USDT";
+            // USDT approximate calculation (1 USDT = ~90 INR)
+            var usdtAmount = (selectedPackage.price / 90).toFixed(2);
+            document.getElementById("binanceUsdtDisplay").innerText = `$${usdtAmount} USDT`;
 
-            document.getElementById("paymentCard").style.display = "block";
-            switchPaymentMethod('upi');
-            document.getElementById("paymentCard").scrollIntoView({ behavior: 'smooth' });
+            var paymentCard = document.getElementById("paymentCard");
+            paymentCard.style.display = "block";
+            paymentCard.scrollIntoView({ behavior: 'smooth' });
         }
 
         function switchPaymentMethod(method) {
             currentPaymentMethod = method;
-            var upiView = document.getElementById("upiPaymentView");
-            var binanceView = document.getElementById("binancePaymentView");
             var tabUpi = document.getElementById("tabUpi");
             var tabBinance = document.getElementById("tabBinance");
+            var upiView = document.getElementById("upiPaymentView");
+            var binanceView = document.getElementById("binancePaymentView");
             var utrLabel = document.getElementById("utrLabel");
             var utrInput = document.getElementById("utrNumber");
 
             if (method === 'upi') {
-                upiView.style.display = "block";
-                binanceView.style.display = "none";
                 tabUpi.classList.add("active");
                 tabBinance.classList.remove("active");
-                utrLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
+                upiView.style.display = "block";
+                binanceView.style.display = "none";
+                utrLabel.innerHTML = '<i class="fa-solid fa-receipt"></i> Enter 12-Digit UPI UTR / Ref No:';
                 utrInput.placeholder = "e.g. 4029XXXXXXXX (12-Digit UTR)";
             } else {
-                upiView.style.display = "none";
-                binanceView.style.display = "block";
                 tabBinance.classList.add("active");
                 tabUpi.classList.remove("active");
-                utrLabel.innerText = "Transaction ID / Order ID:";
-                utrInput.placeholder = "e.g. Enter Binance Order ID / TxID";
+                binanceView.style.display = "block";
+                upiView.style.display = "none";
+                utrLabel.innerHTML = '<i class="fa-solid fa-receipt"></i> Enter Binance TxID / Order ID:';
+                utrInput.placeholder = "e.g. 21893XXXXXXXX (Binance TxID)";
             }
         }
 
         function confirmPaymentWithUTR() {
             var utr = document.getElementById("utrNumber").value.trim();
             var link = document.getElementById("link").value.trim();
+            var platform = document.getElementById("platform").value.toUpperCase();
 
-            if (!utr || utr.length < 6) {
-                alert("Please enter a valid Transaction ID / UTR!");
+            if (!utr) {
+                alert("Please enter payment UTR / TxID before submitting!");
                 return;
             }
 
-            var usdtAmount = (selectedPackage.price / 95).toFixed(2);
+            var message = `*NEW ORDER SUBMISSION* 🚀\n\n` +
+                          `*Platform:* ${platform}\n` +
+                          `*Category:* ${selectedPackage.category}\n` +
+                          `*Package:* ${selectedPackage.name}\n` +
+                          `*Amount Paid:* ₹${selectedPackage.price}\n` +
+                          `*Target Link:* ${link}\n` +
+                          `*Payment Method:* ${currentPaymentMethod.toUpperCase()}\n` +
+                          `*UTR/TxID:* ${utr}\n\n` +
+                          `Please process my order!`;
 
-            var waMsg = "🚀 *NEW ORDER PLACED*%0A%0A" +
-                          "*Category:* " + selectedPackage.category + "%0A" +
-                          "*Package:* " + selectedPackage.name + "%0A" +
-                          "*Target Link:* " + link + "%0A" +
-                          "*Amount Paid:* ₹" + selectedPackage.price.toFixed(2) + " INR ($" + usdtAmount + " USDT)%0A" +
-                          "*Payment Mode:* " + currentPaymentMethod.toUpperCase() + "%0A" +
-                          "*Transaction ID / UTR:* " + utr + "%0A%0A" +
-                          "Please check payment and start processing!";
-
-            window.open("https://wa.me/919337028344?text=" + waMsg, '_blank');
+            var whatsappUrl = `https://wa.me/919337028344?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, "_blank");
         }
-
-        function startDailyDynamicCounter() {
-            var baseOrdersToday = 10;
-            var now = new Date();
-            var minutesToday = (now.getHours() * 60) + now.getMinutes();
-            var addedOrders = Math.floor(minutesToday / 5);
-            var currentTotal = baseOrdersToday + addedOrders;
-
-            if (document.getElementById("totalOrders")) {
-                document.getElementById("totalOrders").innerText = currentTotal;
-                document.getElementById("completedOrders").innerText = currentTotal;
-            }
-        }
-
-        window.onload = startDailyDynamicCounter;
     </script>
 </body>
 </html>

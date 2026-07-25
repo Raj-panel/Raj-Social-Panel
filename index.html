@@ -186,44 +186,6 @@
             box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
         }
 
-        .category-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .category-btn {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 12px 14px;
-            color: #ffffff;
-            font-size: 14px;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .category-btn:hover, .category-btn.active {
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(168, 85, 247, 0.2));
-            border-color: #a855f7;
-            box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
-            transform: translateX(3px);
-        }
-
-        .category-btn i.fa-circle-check {
-            opacity: 0;
-            color: #38bdf8;
-            transition: opacity 0.2s;
-        }
-
-        .category-btn.active i.fa-circle-check {
-            opacity: 1;
-        }
-
         #packageList {
             display: flex;
             flex-direction: column;
@@ -422,7 +384,7 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .stat-num { display: block; font-size: 18px; font-weight: 800; color: #38bdf8; }
+        .stat-num { display: block; font-size: 20px; font-weight: 800; color: #38bdf8; }
         .stat-lbl { font-size: 10px; color: #64748b; }
         .footer-note { text-align: center; font-size: 11px; color: #475569; margin: 20px 0 10px 0; }
     </style>
@@ -459,7 +421,7 @@
             </div>
         </div>
 
-        <!-- Step 1: Choose Service -->
+        <!-- Step 1: Choose Service (Platform & Category Dropdowns) -->
         <div class="glass-card">
             <div class="step-header">
                 <div class="step-badge">1</div>
@@ -467,7 +429,7 @@
             </div>
 
             <div class="input-box">
-                <label><i class="fa-solid fa-layer-group"></i> Select Platform</label>
+                <label><i class="fa-solid fa-layer-group"></i> Platform</label>
                 <select id="platform" onchange="updateCategories()">
                     <option value="">-- Select Platform --</option>
                     <option value="instagram">Instagram</option>
@@ -475,10 +437,11 @@
                 </select>
             </div>
 
-            <!-- Custom Category Grid Selection -->
-            <div class="input-box" id="categoryContainer" style="display: none;">
-                <label><i class="fa-solid fa-list-check"></i> Select Category</label>
-                <div id="categoryGrid" class="category-grid"></div>
+            <div class="input-box">
+                <label><i class="fa-solid fa-list-check"></i> Service Category</label>
+                <select id="serviceCategory" onchange="renderPackageCards()">
+                    <option value="">-- Choose Category --</option>
+                </select>
             </div>
         </div>
 
@@ -566,16 +529,16 @@
             </button>
         </div>
 
-        <!-- Live Activity -->
+        <!-- Live Activity Section (Today's Dynamic Orders) -->
         <div class="glass-card stats-box">
             <div class="stats-title"><i class="fa-solid fa-chart-line"></i> Live Panel Activity</div>
             <div class="stats-grid">
                 <div class="stat-pill">
-                    <span class="stat-num" id="totalOrders">2,99,784</span>
-                    <span class="stat-lbl">Total Orders</span>
+                    <span class="stat-num" id="totalOrders">10</span>
+                    <span class="stat-lbl">Today's Orders</span>
                 </div>
                 <div class="stat-pill">
-                    <span class="stat-num" id="completedOrders">2,99,734</span>
+                    <span class="stat-num" id="completedOrders">10</span>
                     <span class="stat-lbl">Successful Orders</span>
                 </div>
             </div>
@@ -657,46 +620,32 @@
             }
         };
 
-        let selectedCategory = "";
         let selectedPackage = null;
         let currentPaymentMethod = 'upi';
 
         function updateCategories() {
             const platform = document.getElementById("platform").value;
-            const catContainer = document.getElementById("categoryContainer");
-            const catGrid = document.getElementById("categoryGrid");
+            const serviceCategorySelect = document.getElementById("serviceCategory");
             const packageSection = document.getElementById("packageSection");
             const orderDetailsSection = document.getElementById("orderDetailsSection");
 
-            catGrid.innerHTML = "";
+            serviceCategorySelect.innerHTML = '<option value="">-- Choose Category --</option>';
             packageSection.style.display = "none";
             orderDetailsSection.style.display = "none";
-            selectedCategory = "";
 
             if (platform && serviceData[platform]) {
-                catContainer.style.display = "block";
                 Object.keys(serviceData[platform]).forEach(cat => {
-                    const btn = document.createElement("div");
-                    btn.className = "category-btn";
-                    btn.innerHTML = `<span>${cat}</span> <i class="fa-solid fa-circle-check"></i>`;
-                    btn.onclick = () => selectCategory(btn, cat);
-                    catGrid.appendChild(btn);
+                    const opt = document.createElement("option");
+                    opt.value = cat;
+                    opt.innerText = cat;
+                    serviceCategorySelect.appendChild(opt);
                 });
-            } else {
-                catContainer.style.display = "none";
             }
-        }
-
-        function selectCategory(btnElement, categoryName) {
-            document.querySelectorAll(".category-btn").forEach(b => b.classList.remove("active"));
-            btnElement.classList.add("active");
-            selectedCategory = categoryName;
-
-            renderPackageCards();
         }
 
         function renderPackageCards() {
             const platform = document.getElementById("platform").value;
+            const category = document.getElementById("serviceCategory").value;
             const packageSection = document.getElementById("packageSection");
             const packageList = document.getElementById("packageList");
             const orderDetailsSection = document.getElementById("orderDetailsSection");
@@ -706,7 +655,7 @@
             orderDetailsSection.style.display = "none";
             selectedPackage = null;
 
-            if (!platform || !selectedCategory) {
+            if (!platform || !category) {
                 packageSection.style.display = "none";
                 return;
             }
@@ -718,7 +667,7 @@
             }
 
             const iconClass = platform === "instagram" ? "fa-instagram" : "fa-facebook";
-            const packages = serviceData[platform][selectedCategory];
+            const packages = serviceData[platform][category];
 
             packages.forEach((pkg) => {
                 if (pkg.type === "custom") {
@@ -731,7 +680,7 @@
                         </div>
                         <div class="input-box">
                             <label>Enter Quantity:</label>
-                            <input type="number" id="customQtyInput" placeholder="e.g. 1000" oninput="calculateCustomPrice(${pkg.pricePer1000})">
+                            <input type="number" id="customQtyInput" placeholder="e.g. 1000" oninput="calculateCustomPrice(${pkg.pricePer1000}, '${category}')">
                         </div>
                         <div style="font-size: 14px; font-weight: bold; color: #4ade80;" id="customPriceDisplay">Total Amount: ₹0 INR</div>
                     `;
@@ -739,7 +688,7 @@
                 } else {
                     const card = document.createElement("div");
                     card.className = "package-card";
-                    card.onclick = () => selectPackage(card, pkg);
+                    card.onclick = () => selectPackage(card, pkg, category);
 
                     card.innerHTML = `
                         <div class="pkg-left">
@@ -764,7 +713,7 @@
             packageSection.scrollIntoView({ behavior: 'smooth' });
         }
 
-        function calculateCustomPrice(ratePer1000) {
+        function calculateCustomPrice(ratePer1000, category) {
             const qty = parseInt(document.getElementById("customQtyInput").value) || 0;
             const priceDisplay = document.getElementById("customPriceDisplay");
 
@@ -775,7 +724,7 @@
                 selectedPackage = {
                     name: `${qty} Quantity`,
                     price: total,
-                    category: selectedCategory
+                    category: category
                 };
 
                 const summaryBox = document.getElementById("selectedSummary");
@@ -788,14 +737,14 @@
             }
         }
 
-        function selectPackage(cardElement, pkgData) {
+        function selectPackage(cardElement, pkgData, category) {
             document.querySelectorAll(".package-card").forEach(c => c.classList.remove("selected"));
             cardElement.classList.add("selected");
 
-            selectedPackage = { ...pkgData, category: selectedCategory };
+            selectedPackage = { ...pkgData, category: category };
 
             const summaryBox = document.getElementById("selectedSummary");
-            summaryBox.innerHTML = `Selected: <strong>${pkgData.name}</strong> (${selectedCategory}) ➔ <span style="color: #4ade80;">₹${pkgData.price} INR</span>`;
+            summaryBox.innerHTML = `Selected: <strong>${pkgData.name}</strong> (${category}) ➔ <span style="color: #4ade80;">₹${pkgData.price} INR</span>`;
 
             document.getElementById("orderDetailsSection").style.display = "block";
             document.getElementById("orderDetailsSection").scrollIntoView({ behavior: 'smooth' });
@@ -879,24 +828,26 @@
             window.open(`https://wa.me/919337028344?text=${waMsg}`, '_blank');
         }
 
-        function startGlobalCounter() {
-            const baseStartDate = new Date("2026-01-01T00:00:00").getTime();
-            const baseOrders = 299784; 
-            const baseCompleted = 299734; 
+        // Live Daily Activity Counter (Starts at 10, increases by 1 every 5 mins)
+        function startDailyDynamicCounter() {
+            const baseOrdersToday = 10;
+            const now = new Date();
+            const minutesToday = (now.getHours() * 60) + now.getMinutes();
+            const addedOrders = Math.floor(minutesToday / 5); // 1 order added every 5 minutes
+
+            const currentTotal = baseOrdersToday + addedOrders;
 
             function updateDisplay() {
-                const now = Date.now();
-                const minutesPassed = Math.floor((now - baseStartDate) / (1000 * 60));
                 if (document.getElementById("totalOrders")) {
-                    document.getElementById("totalOrders").innerText = (baseOrders + minutesPassed).toLocaleString('en-IN');
-                    document.getElementById("completedOrders").innerText = (baseCompleted + minutesPassed).toLocaleString('en-IN');
+                    document.getElementById("totalOrders").innerText = currentTotal;
+                    document.getElementById("completedOrders").innerText = currentTotal;
                 }
             }
             updateDisplay();
-            setInterval(updateDisplay, 1000);
+            setInterval(startDailyDynamicCounter, 60000); // Check and refresh every 1 minute
         }
 
-        window.onload = startGlobalCounter;
+        window.onload = startDailyDynamicCounter;
     </script>
 </body>
 </html>

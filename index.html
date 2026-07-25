@@ -6,22 +6,23 @@
     <title>Raj Social Panel | Premium SMM Services</title>
     <meta name="description" content="Instant Instagram Followers, Likes, Views & Facebook Services at Best Price in India.">
 
-    <!-- Social Media Link Sharing Preview (Open Graph Meta Tags) -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://raj-panel.github.io/Raj-Social-Panel/" />
-    <meta property="og:title" content="Raj Social Panel | Premium SMM Services" />
-    <meta property="og:description" content="Instant Instagram Followers, Likes, Views & Facebook Services at Best Price in India." />
+    <!-- Social Media Link Sharing Banner (Open Graph) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://raj-panel.github.io/Raj-Social-Panel/">
+    <meta property="og:title" content="Raj Social Panel | Premium SMM Services">
+    <meta property="og:description" content="Instant Instagram Followers, Likes, Views & Facebook Services at Best Price in India.">
     
-    <!-- ⬇️ আপনার GitHub রিপোজিটরির banner.png ফাইলের লিংক -->
-    <meta property="og:image" content="https://raj-panel.github.io/Raj-Social-Panel/banner.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <!-- আপনার banner.png ফাইলের ডাইরেক্ট লিংক -->
+    <meta property="og:image" content="https://raj-panel.github.io/Raj-Social-Panel/banner.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
     <!-- Twitter Preview Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Raj Social Panel | Premium SMM Services" />
-    <meta name="twitter:description" content="Instant Instagram Followers, Likes, Views & Facebook Services at Best Price in India." />
-    <meta name="twitter:image" content="https://raj-panel.github.io/Raj-Social-Panel/banner.png" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Raj Social Panel | Premium SMM Services">
+    <meta name="twitter:description" content="Instant Instagram Followers, Likes, Views & Facebook Services at Best Price in India.">
+    <meta name="twitter:image" content="https://raj-panel.github.io/Raj-Social-Panel/banner.png">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
@@ -411,7 +412,7 @@
 
     <div class="main-wrapper">
         
-        <!-- Hero Header -->
+        <!-- Header -->
         <div class="hero-header">
             <div class="hero-badge"><i class="fa-solid fa-bolt"></i> FASTEST & CHEAPEST</div>
             <h1 class="logo-glow">RAJ SOCIAL PANEL</h1>
@@ -435,7 +436,7 @@
             </div>
             <div class="banner-item refund-text">
                 <i class="fa-solid fa-rotate-left"></i>
-                <span><strong>24-Hour Refund Guarantee:</strong> If your order gets cancelled or fails to complete, 100% of your money will be refunded within 24 hours!</span>
+                <span><strong>24-Hour Refund Guarantee:</strong> If your order gets cancelled or fails to complete, 100% refund within 24 hours!</span>
             </div>
         </div>
 
@@ -547,7 +548,7 @@
             </button>
         </div>
 
-        <!-- Live Activity Section -->
+        <!-- Live Activity -->
         <div class="glass-card stats-box">
             <div class="stats-title"><i class="fa-solid fa-chart-line"></i> Live Panel Activity</div>
             <div class="stats-grid">
@@ -566,8 +567,9 @@
 
     </div>
 
+    <!-- JavaScript code -->
     <script>
-        const serviceData = {
+        var serviceData = {
             instagram: {
                 "👤 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐅𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬 (𝐌𝐢𝐧 𝟏𝟎𝟎)": [
                     { type: "custom", name: "Instagram Followers Non Drop", pricePer1000: 129, minQty: 100 }
@@ -638,36 +640,38 @@
             }
         };
 
-        let selectedPackage = null;
-        let currentPaymentMethod = 'upi';
+        var selectedPackage = null;
+        var currentPaymentMethod = 'upi';
 
         function updateCategories() {
-            const platform = document.getElementById("platform").value;
-            const serviceCategorySelect = document.getElementById("serviceCategory");
-            const packageSection = document.getElementById("packageSection");
-            const orderDetailsSection = document.getElementById("orderDetailsSection");
+            var platform = document.getElementById("platform").value;
+            var serviceCategorySelect = document.getElementById("serviceCategory");
+            var packageSection = document.getElementById("packageSection");
+            var orderDetailsSection = document.getElementById("orderDetailsSection");
 
             serviceCategorySelect.innerHTML = '<option value="">-- Choose Category --</option>';
             packageSection.style.display = "none";
             orderDetailsSection.style.display = "none";
 
             if (platform && serviceData[platform]) {
-                Object.keys(serviceData[platform]).forEach(cat => {
-                    const opt = document.createElement("option");
+                var categories = Object.keys(serviceData[platform]);
+                for (var i = 0; i < categories.length; i++) {
+                    var cat = categories[i];
+                    var opt = document.createElement("option");
                     opt.value = cat;
                     opt.innerText = cat;
                     serviceCategorySelect.appendChild(opt);
-                });
+                }
             }
         }
 
         function renderPackageCards() {
-            const platform = document.getElementById("platform").value;
-            const category = document.getElementById("serviceCategory").value;
-            const packageSection = document.getElementById("packageSection");
-            const packageList = document.getElementById("packageList");
-            const orderDetailsSection = document.getElementById("orderDetailsSection");
-            const linkInput = document.getElementById("link");
+            var platform = document.getElementById("platform").value;
+            var category = document.getElementById("serviceCategory").value;
+            var packageSection = document.getElementById("packageSection");
+            var packageList = document.getElementById("packageList");
+            var orderDetailsSection = document.getElementById("orderDetailsSection");
+            var linkInput = document.getElementById("link");
 
             packageList.innerHTML = "";
             orderDetailsSection.style.display = "none";
@@ -684,63 +688,65 @@
                 linkInput.placeholder = "https://facebook.com/your_profile_link";
             }
 
-            const iconClass = platform === "instagram" ? "fa-instagram" : "fa-facebook";
-            const packages = serviceData[platform][category];
+            var iconClass = platform === "instagram" ? "fa-instagram" : "fa-facebook";
+            var packages = serviceData[platform][category];
 
-            packages.forEach((pkg) => {
-                if (pkg.type === "custom") {
-                    const customCard = document.createElement("div");
-                    customCard.className = "custom-qty-card";
-                    customCard.innerHTML = `
-                        <div style="margin-bottom: 10px;">
-                            <strong style="color: #38bdf8;">${pkg.name}</strong>
-                            <p style="font-size: 11px; color: #94a3b8;">Rate: ₹${pkg.pricePer1000} per 1000 Qty (Minimum Order: ${pkg.minQty})</p>
-                        </div>
-                        <div class="input-box">
-                            <label>Enter Quantity (Minimum ${pkg.minQty}):</label>
-                            <input type="number" id="customQtyInput" placeholder="Minimum ${pkg.minQty}" min="${pkg.minQty}" oninput="calculateCustomPrice(${pkg.pricePer1000}, '${category}', ${pkg.minQty})">
-                            <div class="min-alert-text" id="minAlertText"><i class="fa-solid fa-triangle-exclamation"></i> ⚠️ Minimum order quantity is ${pkg.minQty}! You cannot order less than ${pkg.minQty}.</div>
-                        </div>
-                        <div style="font-size: 14px; font-weight: bold; color: #4ade80;" id="customPriceDisplay">Total Amount: ₹0 INR</div>
-                    `;
-                    packageList.appendChild(customCard);
-                } else {
-                    const card = document.createElement("div");
-                    card.className = "package-card";
-                    card.onclick = () => selectPackage(card, pkg, category);
-
-                    card.innerHTML = `
-                        <div class="pkg-left">
-                            <div class="pkg-icon-box">
-                                <i class="fa-brands ${iconClass}"></i>
+            for (var i = 0; i < packages.length; i++) {
+                (function(pkg) {
+                    if (pkg.type === "custom") {
+                        var customCard = document.createElement("div");
+                        customCard.className = "custom-qty-card";
+                        customCard.innerHTML = `
+                            <div style="margin-bottom: 10px;">
+                                <strong style="color: #38bdf8;">${pkg.name}</strong>
+                                <p style="font-size: 11px; color: #94a3b8;">Rate: ₹${pkg.pricePer1000} per 1000 Qty (Minimum Order: ${pkg.minQty})</p>
                             </div>
-                            <div class="pkg-details">
-                                <div class="pkg-title-row">
-                                    <span class="pkg-name">${pkg.name}</span>
-                                    ${pkg.badge ? `<span class="badge ${pkg.badgeClass}">${pkg.badge}</span>` : ''}
+                            <div class="input-box">
+                                <label>Enter Quantity (Minimum ${pkg.minQty}):</label>
+                                <input type="number" id="customQtyInput" placeholder="Minimum ${pkg.minQty}" min="${pkg.minQty}" oninput="calculateCustomPrice(${pkg.pricePer1000}, '${category}', ${pkg.minQty})">
+                                <div class="min-alert-text" id="minAlertText"><i class="fa-solid fa-triangle-exclamation"></i> ⚠️ Minimum order quantity is ${pkg.minQty}!</div>
+                            </div>
+                            <div style="font-size: 14px; font-weight: bold; color: #4ade80;" id="customPriceDisplay">Total Amount: ₹0 INR</div>
+                        `;
+                        packageList.appendChild(customCard);
+                    } else {
+                        var card = document.createElement("div");
+                        card.className = "package-card";
+                        card.onclick = function() { selectPackage(card, pkg, category); };
+
+                        card.innerHTML = `
+                            <div class="pkg-left">
+                                <div class="pkg-icon-box">
+                                    <i class="fa-brands ${iconClass}"></i>
                                 </div>
-                                <span class="pkg-speed">⚡ Instant Delivery • Premium Quality</span>
+                                <div class="pkg-details">
+                                    <div class="pkg-title-row">
+                                        <span class="pkg-name">${pkg.name}</span>
+                                        ${pkg.badge ? `<span class="badge ${pkg.badgeClass}">${pkg.badge}</span>` : ''}
+                                    </div>
+                                    <span class="pkg-speed">⚡ Instant Delivery • Premium Quality</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="pkg-price-btn">₹${pkg.price}</div>
-                    `;
-                    packageList.appendChild(card);
-                }
-            });
+                            <div class="pkg-price-btn">₹${pkg.price}</div>
+                        `;
+                        packageList.appendChild(card);
+                    }
+                })(packages[i]);
+            }
 
             packageSection.style.display = "block";
             packageSection.scrollIntoView({ behavior: 'smooth' });
         }
 
         function calculateCustomPrice(ratePer1000, category, minQty) {
-            const qtyInput = document.getElementById("customQtyInput");
-            const qty = parseInt(qtyInput.value) || 0;
-            const priceDisplay = document.getElementById("customPriceDisplay");
-            const minAlertText = document.getElementById("minAlertText");
+            var qtyInput = document.getElementById("customQtyInput");
+            var qty = parseInt(qtyInput.value) || 0;
+            var priceDisplay = document.getElementById("customPriceDisplay");
+            var minAlertText = document.getElementById("minAlertText");
 
             if (qty > 0 && qty < minQty) {
                 minAlertText.style.display = "block";
-                priceDisplay.innerText = `Total Amount: ₹0 INR`;
+                priceDisplay.innerText = "Total Amount: ₹0 INR";
                 document.getElementById("orderDetailsSection").style.display = "none";
                 selectedPackage = null;
                 return;
@@ -749,50 +755,46 @@
             }
 
             if (qty >= minQty) {
-                const total = (qty / 1000) * ratePer1000;
-                priceDisplay.innerText = `Total Amount: ₹${total.toFixed(2)} INR`;
+                var total = (qty / 1000) * ratePer1000;
+                priceDisplay.innerText = "Total Amount: ₹" + total.toFixed(2) + " INR";
                 
                 selectedPackage = {
-                    name: `${qty} Followers`,
+                    name: qty + " Followers",
                     price: total,
                     category: category,
                     qty: qty,
                     minQty: minQty
                 };
 
-                const summaryBox = document.getElementById("selectedSummary");
-                summaryBox.innerHTML = `Selected: <strong>${qty} Followers</strong> ➔ <span style="color: #4ade80;">₹${total.toFixed(2)} INR</span>`;
+                var summaryBox = document.getElementById("selectedSummary");
+                summaryBox.innerHTML = 'Selected: <strong>' + qty + ' Followers</strong> ➔ <span style="color: #4ade80;">₹' + total.toFixed(2) + ' INR</span>';
                 document.getElementById("orderDetailsSection").style.display = "block";
             } else {
-                priceDisplay.innerText = `Total Amount: ₹0 INR`;
+                priceDisplay.innerText = "Total Amount: ₹0 INR";
                 document.getElementById("orderDetailsSection").style.display = "none";
                 selectedPackage = null;
             }
         }
 
         function selectPackage(cardElement, pkgData, category) {
-            document.querySelectorAll(".package-card").forEach(c => c.classList.remove("selected"));
+            var cards = document.querySelectorAll(".package-card");
+            cards.forEach(function(c) { c.classList.remove("selected"); });
             cardElement.classList.add("selected");
 
-            selectedPackage = { ...pkgData, category: category };
+            selectedPackage = { name: pkgData.name, price: pkgData.price, category: category };
 
-            const summaryBox = document.getElementById("selectedSummary");
-            summaryBox.innerHTML = `Selected: <strong>${pkgData.name}</strong> (${category}) ➔ <span style="color: #4ade80;">₹${pkgData.price} INR</span>`;
+            var summaryBox = document.getElementById("selectedSummary");
+            summaryBox.innerHTML = 'Selected: <strong>' + pkgData.name + '</strong> (' + category + ') ➔ <span style="color: #4ade80;">₹' + pkgData.price + ' INR</span>';
 
             document.getElementById("orderDetailsSection").style.display = "block";
             document.getElementById("orderDetailsSection").scrollIntoView({ behavior: 'smooth' });
         }
 
         function generateOrder() {
-            const link = document.getElementById("link").value.trim();
+            var link = document.getElementById("link").value.trim();
 
             if (!selectedPackage) {
-                alert("Please select a package or enter valid quantity (Min 100)!");
-                return;
-            }
-
-            if (selectedPackage.qty && selectedPackage.qty < selectedPackage.minQty) {
-                alert(`Minimum order quantity is ${selectedPackage.minQty}!`);
+                alert("Please select a package!");
                 return;
             }
 
@@ -801,16 +803,16 @@
                 return;
             }
 
-            const totalPrice = selectedPackage.price;
-
-            const upiId = "Saheb.68@ptyes"; 
-            const payeeName = "Raj Social Panel";
-            const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${totalPrice}&cu=INR`;
-            const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
+            var totalPrice = selectedPackage.price;
+            var upiId = "Saheb.68@ptyes"; 
+            var payeeName = "Raj Social Panel";
+            var upiUrl = "upi://pay?pa=" + upiId + "&pn=" + encodeURIComponent(payeeName) + "&am=" + totalPrice + "&cu=INR";
+            var qrApi = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" + encodeURIComponent(upiUrl);
+            
             document.getElementById("qrCodeImg").src = qrApi;
 
-            const usdtAmount = (totalPrice / 95).toFixed(2);
-            document.getElementById("binanceUsdtDisplay").innerText = `$${usdtAmount} USDT`;
+            var usdtAmount = (totalPrice / 95).toFixed(2);
+            document.getElementById("binanceUsdtDisplay").innerText = "$" + usdtAmount + " USDT";
 
             document.getElementById("paymentCard").style.display = "block";
             switchPaymentMethod('upi');
@@ -819,12 +821,12 @@
 
         function switchPaymentMethod(method) {
             currentPaymentMethod = method;
-            const upiView = document.getElementById("upiPaymentView");
-            const binanceView = document.getElementById("binancePaymentView");
-            const tabUpi = document.getElementById("tabUpi");
-            const tabBinance = document.getElementById("tabBinance");
-            const utrLabel = document.getElementById("utrLabel");
-            const utrInput = document.getElementById("utrNumber");
+            var upiView = document.getElementById("upiPaymentView");
+            var binanceView = document.getElementById("binancePaymentView");
+            var tabUpi = document.getElementById("tabUpi");
+            var tabBinance = document.getElementById("tabBinance");
+            var utrLabel = document.getElementById("utrLabel");
+            var utrInput = document.getElementById("utrNumber");
 
             if (method === 'upi') {
                 upiView.style.display = "block";
@@ -844,45 +846,39 @@
         }
 
         function confirmPaymentWithUTR() {
-            const utr = document.getElementById("utrNumber").value.trim();
-            const link = document.getElementById("link").value.trim();
+            var utr = document.getElementById("utrNumber").value.trim();
+            var link = document.getElementById("link").value.trim();
 
             if (!utr || utr.length < 6) {
                 alert("Please enter a valid Transaction ID / UTR!");
                 return;
             }
 
-            const usdtAmount = (selectedPackage.price / 95).toFixed(2);
+            var usdtAmount = (selectedPackage.price / 95).toFixed(2);
 
-            const waMsg = `🚀 *NEW ORDER PLACED*%0A%0A` +
-                          `*Category:* ${selectedPackage.category}%0A` +
-                          `*Package:* ${selectedPackage.name}%0A` +
-                          `*Target Link:* ${link}%0A` +
-                          `*Amount Paid:* ₹${selectedPackage.price.toFixed(2)} INR ($${usdtAmount} USDT)%0A` +
-                          `*Payment Mode:* ${currentPaymentMethod.toUpperCase()}%0A` +
-                          `*Transaction ID / UTR:* ${utr}%0A%0A` +
-                          `Please check payment and start processing!`;
+            var waMsg = "🚀 *NEW ORDER PLACED*%0A%0A" +
+                          "*Category:* " + selectedPackage.category + "%0A" +
+                          "*Package:* " + selectedPackage.name + "%0A" +
+                          "*Target Link:* " + link + "%0A" +
+                          "*Amount Paid:* ₹" + selectedPackage.price.toFixed(2) + " INR ($" + usdtAmount + " USDT)%0A" +
+                          "*Payment Mode:* " + currentPaymentMethod.toUpperCase() + "%0A" +
+                          "*Transaction ID / UTR:* " + utr + "%0A%0A" +
+                          "Please check payment and start processing!";
 
-            window.open(`https://wa.me/919337028344?text=${waMsg}`, '_blank');
+            window.open("https://wa.me/919337028344?text=" + waMsg, '_blank');
         }
 
-        // Live Daily Activity Counter
         function startDailyDynamicCounter() {
-            const baseOrdersToday = 10;
-            const now = new Date();
-            const minutesToday = (now.getHours() * 60) + now.getMinutes();
-            const addedOrders = Math.floor(minutesToday / 5);
+            var baseOrdersToday = 10;
+            var now = new Date();
+            var minutesToday = (now.getHours() * 60) + now.getMinutes();
+            var addedOrders = Math.floor(minutesToday / 5);
+            var currentTotal = baseOrdersToday + addedOrders;
 
-            const currentTotal = baseOrdersToday + addedOrders;
-
-            function updateDisplay() {
-                if (document.getElementById("totalOrders")) {
-                    document.getElementById("totalOrders").innerText = currentTotal;
-                    document.getElementById("completedOrders").innerText = currentTotal;
-                }
+            if (document.getElementById("totalOrders")) {
+                document.getElementById("totalOrders").innerText = currentTotal;
+                document.getElementById("completedOrders").innerText = currentTotal;
             }
-            updateDisplay();
-            setInterval(startDailyDynamicCounter, 60000);
         }
 
         window.onload = startDailyDynamicCounter;

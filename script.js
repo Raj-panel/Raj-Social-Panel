@@ -1,138 +1,181 @@
 const serviceData = {
     instagram: {
-        "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐅𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬 𝐧𝐨𝐧 𝐝𝐫𝐨𝐩": [
-            { type: "custom", name: "Instagram Followers", pricePer1000: 80 }
+        "Followers Non-Drop": [
+            { type: "custom", name: "Instagram Non-Drop Followers", pricePer1000: 80 }
         ],
-        "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐋𝐢𝐤𝐞𝐬 𝐥𝐢𝐟𝐞 𝐭𝐢𝐦𝐞": [
+        "Followers": [
+            { name: "1K Followers", price: 50, badge: "Starter", badgeClass: "badge-demo" },
+            { name: "2K Followers", price: 90 },
+            { name: "3K Followers", price: 129, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "4K Followers", price: 165 },
+            { name: "5K Followers", price: 199, badge: "🔥 Best Value", badgeClass: "badge-best" },
+            { name: "6K Followers", price: 239 },
+            { name: "7K Followers", price: 279 },
+            { name: "8K Followers", price: 319 },
+            { name: "9K Followers", price: 359 },
+            { name: "10K Followers", price: 399, badge: "👑 Most Popular", badgeClass: "badge-best" }
+        ],
+        "Likes Lifetime": [
             { name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo" },
             { name: "500 Likes", price: 25, badge: "Real", badgeClass: "badge-real" },
             { name: "1K Likes", price: 30, badge: "Fast", badgeClass: "badge-popular" },
-            { name: "2K Likes", price: 50, badge: "⭐ Popular", badgeClass: "badge-popular" },
-            { name: "5K Likes", price: 99, badge: "🔥 Best Value", badgeClass: "badge-discount" },
-            { name: "10K Likes", price: 179, badge: "👑 Most Popular", badgeClass: "badge-discount" }
+            { name: "3K Likes", price: 69, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "5K Likes", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" },
+            { name: "10K Likes", price: 179, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
-        "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐂𝐨𝐦𝐦𝐞𝐧𝐭𝐬 𝐋𝐢𝐟𝐞 𝐭𝐢𝐦𝐞": [
+        "Reels / Video Views": [
+            { name: "1K Views", price: 10, badge: "DEMO", badgeClass: "badge-demo" },
+            { name: "5K Views", price: 20, badge: "STARTER", badgeClass: "badge-real" },
+            { name: "10K Views", price: 30, badge: "BEST VALUE", badgeClass: "badge-best" },
+            { name: "20K Views", price: 40, badge: "POPULAR", badgeClass: "badge-popular" },
+            { name: "50K Views", price: 70, badge: "RECOMMENDED", badgeClass: "badge-best" },
+            { name: "100K Views", price: 99, badge: "🔥 BEST SELLER", badgeClass: "badge-best" },
+            { name: "500K Views", price: 299, badge: "👑 MOST POPULAR", badgeClass: "badge-best" },
+            { name: "1M Views", price: 499, badge: "💥 MEGA DEAL", badgeClass: "badge-best" }
+        ],
+        "Comments Lifetime": [
             { name: "50 Comments", price: 15, badge: "Starter", badgeClass: "badge-demo" },
             { name: "100 Comments", price: 20, badge: "Real", badgeClass: "badge-real" },
             { name: "500 Comments", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
-            { name: "1K Comments", price: 99, badge: "🔥 Best Value", badgeClass: "badge-discount" }
+            { name: "1K Comments", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" }
         ],
-        "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐑𝐞𝐩𝐨𝐬𝐭 𝐥𝐢𝐟𝐞 𝐭𝐢𝐦𝐞": [
+        "Repost Lifetime": [
             { name: "50 Reposts", price: 15, badge: "Starter", badgeClass: "badge-demo" },
             { name: "100 Reposts", price: 20, badge: "Real", badgeClass: "badge-real" },
             { name: "500 Reposts", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
-            { name: "1K Reposts", price: 99, badge: "🔥 Best Value", badgeClass: "badge-discount" },
-            { name: "3K Reposts", price: 249, badge: "👑 Most Popular", badgeClass: "badge-discount" }
+            { name: "1K Reposts", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" },
+            { name: "3K Reposts", price: 249, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
-        "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐒𝐡𝐚𝐫𝐞𝐬 𝐥𝐢𝐟𝐞 𝐭𝐢𝐦𝐞": [
+        "Shares Lifetime": [
             { name: "100 Shares", price: 10, badge: "Starter", badgeClass: "badge-demo" },
             { name: "1K Shares", price: 30, badge: "Fast", badgeClass: "badge-popular" },
-            { name: "5K Shares", price: 69, badge: "🔥 Best Value", badgeClass: "badge-discount" },
-            { name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-discount" }
-        ],
-        "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐕𝐢𝐞𝐰𝐬 𝐥𝐢𝐟𝐞 𝐓𝐢𝐦𝐞": [
-            { name: "1K Views", price: 10, badge: "Demo", badgeClass: "badge-demo" },
-            { name: "5K Views", price: 20, badge: "Starter", badgeClass: "badge-real" },
-            { name: "10K Views", price: 30, badge: "Best Value", badgeClass: "badge-discount" },
-            { name: "20K Views", price: 40, badge: "Popular", badgeClass: "badge-popular" },
-            { name: "50K Views", price: 70, badge: "Recommended", badgeClass: "badge-real" },
-            { name: "100K Views", price: 99, badge: "🔥 Best Seller", badgeClass: "badge-discount" },
-            { name: "500K Views", price: 299, badge: "👑 Most Popular", badgeClass: "badge-popular" },
-            { name: "1M Views", price: 499, badge: "💥 Mega Deal", badgeClass: "badge-discount" }
+            { name: "5K Shares", price: 69, badge: "🔥 Best Value", badgeClass: "badge-best" },
+            { name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ]
     },
     facebook: {
         "Facebook Followers": [
             { type: "custom", name: "Facebook Followers", pricePer1000: 49 }
         ],
+        "Facebook Likes [Non-Drop]": [
+            { name: "100 Likes", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
+            { name: "500 Likes", price: 25, badge: "REAL", badgeClass: "badge-real" },
+            { name: "1K Likes", price: 39, badge: "FAST", badgeClass: "badge-popular" },
+            { name: "3K Likes", price: 69, badge: "⭐ POPULAR", badgeClass: "badge-popular" },
+            { name: "5K Likes", price: 99, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
+            { name: "10K Likes", price: 179, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
+        ],
         "Facebook Video Views": [
-            { name: "1K Facebook Views", price: 10, badge: "Demo", badgeClass: "badge-demo" },
-            { name: "5K Facebook Views", price: 45, badge: "Popular", badgeClass: "badge-popular" }
+            { name: "1K Views", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
+            { name: "3K Views", price: 25 },
+            { name: "5K Views", price: 35, badge: "⭐ POPULAR", badgeClass: "badge-popular" },
+            { name: "10K Views", price: 60 },
+            { name: "50K Views", price: 249, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
+            { name: "100K Views", price: 449, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
         ]
     }
 };
 
+let currentPlatform = 'instagram';
+let currentCategory = '';
 let selectedPackage = null;
 let currentPaymentMethod = 'upi';
 
-function updateCategories() {
-    const platform = document.getElementById("platform").value;
-    const catSelect = document.getElementById("serviceCategory");
-    const packageSection = document.getElementById("packageSection");
-    const orderDetailsSection = document.getElementById("orderDetailsSection");
+window.onload = function() {
+    switchPlatform('instagram');
+};
 
-    catSelect.innerHTML = '<option value="">-- Choose Category --</option>';
-    packageSection.style.display = "none";
-    orderDetailsSection.style.display = "none";
+function switchPlatform(platform) {
+    currentPlatform = platform;
+    selectedPackage = null;
+    document.getElementById("checkoutSection").style.display = "none";
+    document.getElementById("paymentCard").style.display = "none";
 
-    if (platform && serviceData[platform]) {
-        Object.keys(serviceData[platform]).forEach(cat => {
-            let opt = document.createElement("option");
-            opt.value = cat;
-            opt.innerText = cat;
-            catSelect.appendChild(opt);
-        });
-    }
-}
+    document.getElementById("btnInsta").classList.toggle("active", platform === 'instagram');
+    document.getElementById("btnFb").classList.toggle("active", platform === 'facebook');
 
-function renderPackageCards() {
-    const platform = document.getElementById("platform").value;
-    const category = document.getElementById("serviceCategory").value;
-    const packageSection = document.getElementById("packageSection");
-    const packageList = document.getElementById("packageList");
-    const orderDetailsSection = document.getElementById("orderDetailsSection");
+    const heroTitle = document.getElementById("heroTitle");
+    const heroLogoIcon = document.getElementById("heroLogoIcon");
+    const linkInputLabel = document.getElementById("linkInputLabel");
     const linkInput = document.getElementById("link");
 
-    packageList.innerHTML = "";
-    orderDetailsSection.style.display = "none";
-    selectedPackage = null;
-
-    if (!platform || !category) {
-        packageSection.style.display = "none";
-        return;
-    }
-
-    if (platform === "instagram") {
+    if (platform === 'instagram') {
+        heroTitle.innerText = "Instagram Boost";
+        heroLogoIcon.innerHTML = '<i class="fa-brands fa-instagram"></i>';
+        linkInputLabel.innerText = "Enter Instagram Target Link / Username:";
         linkInput.placeholder = "https://instagram.com/your_username";
     } else {
-        linkInput.placeholder = "https://facebook.com/your_profile_link";
+        heroTitle.innerText = "Facebook Boost";
+        heroLogoIcon.innerHTML = '<i class="fa-brands fa-facebook"></i>';
+        linkInputLabel.innerText = "Enter Facebook Profile / Post Link:";
+        linkInput.placeholder = "https://facebook.com/your_link";
     }
 
-    const iconClass = platform === "instagram" ? "fa-instagram" : "fa-facebook";
-    const packages = serviceData[platform][category];
+    renderCategoryTabs();
+}
+
+function renderCategoryTabs() {
+    const tabsContainer = document.getElementById("categoryTabs");
+    tabsContainer.innerHTML = "";
+
+    const categories = Object.keys(serviceData[currentPlatform]);
+    currentCategory = categories[0];
+
+    categories.forEach((cat, index) => {
+        const tabBtn = document.createElement("button");
+        tabBtn.className = `cat-tab ${index === 0 ? 'active' : ''}`;
+        tabBtn.innerText = cat;
+        tabBtn.onclick = () => {
+            document.querySelectorAll(".cat-tab").forEach(t => t.classList.remove("active"));
+            tabBtn.classList.add("active");
+            currentCategory = cat;
+            renderPackages();
+        };
+        tabsContainer.appendChild(tabBtn);
+    });
+
+    renderPackages();
+}
+
+function renderPackages() {
+    const packageList = document.getElementById("packageList");
+    packageList.innerHTML = "";
+    document.getElementById("checkoutSection").style.display = "none";
+    document.getElementById("paymentCard").style.display = "none";
+    selectedPackage = null;
+
+    const packages = serviceData[currentPlatform][currentCategory];
+    const iconClass = currentPlatform === 'instagram' ? 'fa-instagram' : 'fa-facebook';
 
     packages.forEach((pkg) => {
         if (pkg.type === "custom") {
-            const customCard = document.createElement("div");
-            customCard.className = "custom-qty-card";
-            customCard.innerHTML = `
-                <div style="margin-bottom: 10px;">
-                    <strong style="color: #38bdf8;">${pkg.name}</strong>
-                    <p style="font-size: 11px; color: #94a3b8;">Rate: ₹${pkg.pricePer1000} per 1000 Qty</p>
+            const customDiv = document.createElement("div");
+            customDiv.className = "custom-card";
+            customDiv.innerHTML = `
+                <div style="margin-bottom: 8px;">
+                    <strong style="color: #a855f7; font-size: 13px;">${pkg.name} (Custom Qty)</strong>
+                    <p style="font-size: 10px; color: #94a3b8;">Rate: ₹${pkg.pricePer1000} per 1000 Qty</p>
                 </div>
                 <div class="input-box">
-                    <label>Enter Quantity:</label>
-                    <input type="number" id="customQtyInput" placeholder="e.g. 1000" oninput="calculateCustomPrice(${pkg.pricePer1000})">
+                    <input type="number" id="customQtyInput" placeholder="Enter Quantity (e.g. 1000)" oninput="calculateCustomPrice('${pkg.name}', ${pkg.pricePer1000})">
                 </div>
-                <div style="font-size: 14px; font-weight: bold; color: #4ade80;" id="customPriceDisplay">Total Amount: ₹0 INR</div>
+                <div style="font-size: 12px; font-weight: 800; color: #22c55e;" id="customPriceDisplay">Total: ₹0.00 INR</div>
             `;
-            packageList.appendChild(customCard);
+            packageList.appendChild(customDiv);
         } else {
             const card = document.createElement("div");
-            card.className = "package-card";
-            card.onclick = () => selectPackage(card, pkg, category);
+            card.className = "pkg-card";
+            card.onclick = () => selectPackageCard(card, pkg);
 
             card.innerHTML = `
                 <div class="pkg-left">
-                    <div class="pkg-icon-box">
-                        <i class="fa-brands ${iconClass}"></i>
-                    </div>
-                    <div class="pkg-details">
-                        <div class="pkg-title-row">
-                            <span class="pkg-name">${pkg.name}</span>
-                            ${pkg.badge ? `<span class="badge ${pkg.badgeClass}">${pkg.badge}</span>` : ''}
+                    <div class="pkg-icon"><i class="fa-brands ${iconClass}"></i></div>
+                    <div class="pkg-info">
+                        <div class="pkg-title">
+                            ${pkg.name}
+                            ${pkg.badge ? `<span class="pkg-badge ${pkg.badgeClass || 'badge-popular'}">${pkg.badge}</span>` : ''}
                         </div>
-                        <span class="pkg-speed">⚡ Instant Delivery • Premium Quality</span>
+                        <span class="pkg-sub">⚡ Instant Delivery • Premium Quality</span>
                     </div>
                 </div>
                 <div class="pkg-price-btn">₹${pkg.price}</div>
@@ -140,46 +183,45 @@ function renderPackageCards() {
             packageList.appendChild(card);
         }
     });
-
-    packageSection.style.display = "block";
 }
 
-function calculateCustomPrice(ratePer1000) {
+function calculateCustomPrice(serviceName, ratePer1000) {
     const qty = parseInt(document.getElementById("customQtyInput").value) || 0;
     const priceDisplay = document.getElementById("customPriceDisplay");
-    const categoryName = document.getElementById("serviceCategory").value;
 
     if (qty > 0) {
         const total = (qty / 1000) * ratePer1000;
-        priceDisplay.innerText = `Total Amount: ₹${total.toFixed(2)} INR`;
+        priceDisplay.innerText = `Total: ₹${total.toFixed(2)} INR`;
         
         selectedPackage = {
-            name: `${qty} Followers`,
+            name: `${qty} ${serviceName}`,
             price: total,
-            category: categoryName
+            category: currentCategory
         };
 
-        const summaryBox = document.getElementById("selectedSummary");
-        summaryBox.innerHTML = `Selected: <strong>${qty} Followers</strong> ➔ <span style="color: #4ade80;">₹${total.toFixed(2)} INR</span>`;
-        document.getElementById("orderDetailsSection").style.display = "block";
+        showCheckoutSummary(`${qty} ${serviceName}`, total.toFixed(2));
     } else {
-        priceDisplay.innerText = `Total Amount: ₹0 INR`;
-        document.getElementById("orderDetailsSection").style.display = "none";
+        priceDisplay.innerText = `Total: ₹0.00 INR`;
+        document.getElementById("checkoutSection").style.display = "none";
         selectedPackage = null;
     }
 }
 
-function selectPackage(cardElement, pkgData, categoryName) {
-    document.querySelectorAll(".package-card").forEach(c => c.classList.remove("selected"));
+function selectPackageCard(cardElement, pkgData) {
+    document.querySelectorAll(".pkg-card").forEach(c => c.classList.remove("selected"));
     cardElement.classList.add("selected");
 
-    selectedPackage = { ...pkgData, category: categoryName };
+    selectedPackage = { ...pkgData, category: currentCategory };
+    showCheckoutSummary(pkgData.name, Number(pkgData.price).toFixed(2));
+}
 
+function showCheckoutSummary(pkgName, price) {
     const summaryBox = document.getElementById("selectedSummary");
-    summaryBox.innerHTML = `Selected: <strong>${pkgData.name}</strong> (${categoryName}) ➔ <span style="color: #4ade80;">₹${pkgData.price} INR</span>`;
-
-    document.getElementById("orderDetailsSection").style.display = "block";
-    document.getElementById("orderDetailsSection").scrollIntoView({ behavior: 'smooth' });
+    summaryBox.innerHTML = `Selected: <strong>${pkgName}</strong> ➔ <span style="color: #22c55e; font-weight:800;">₹${price} INR</span>`;
+    
+    const checkoutSec = document.getElementById("checkoutSection");
+    checkoutSec.style.display = "block";
+    checkoutSec.scrollIntoView({ behavior: 'smooth' });
 }
 
 function generateOrder() {
@@ -195,16 +237,12 @@ function generateOrder() {
         return;
     }
 
-    const totalPrice = selectedPackage.price;
-
+    const totalPrice = Number(selectedPackage.price).toFixed(2);
     const upiId = "Saheb.68@ptyes"; 
     const payeeName = "Raj Social Panel";
     const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${totalPrice}&cu=INR`;
-    const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
-    document.getElementById("qrCodeImg").src = qrApi;
-
-    const usdtAmount = (totalPrice / 95).toFixed(2);
-    document.getElementById("binanceUsdtDisplay").innerText = `$${usdtAmount} USDT`;
+    
+    document.getElementById("qrCodeImg").src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
 
     document.getElementById("paymentCard").style.display = "block";
     switchPaymentMethod('upi');
@@ -213,69 +251,49 @@ function generateOrder() {
 
 function switchPaymentMethod(method) {
     currentPaymentMethod = method;
-    const upiView = document.getElementById("upiPaymentView");
-    const binanceView = document.getElementById("binancePaymentView");
-    const tabUpi = document.getElementById("tabUpi");
-    const tabBinance = document.getElementById("tabBinance");
+    document.getElementById("upiPaymentView").style.display = method === 'upi' ? "block" : "none";
+    document.getElementById("binancePaymentView").style.display = method === 'binance' ? "block" : "none";
+
+    document.getElementById("tabUpi").classList.toggle("active", method === 'upi');
+    document.getElementById("tabBinance").classList.toggle("active", method === 'binance');
+
     const utrLabel = document.getElementById("utrLabel");
     const utrInput = document.getElementById("utrNumber");
 
     if (method === 'upi') {
-        upiView.style.display = "block";
-        binanceView.style.display = "none";
-        tabUpi.classList.add("active");
-        tabBinance.classList.remove("active");
         utrLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
         utrInput.placeholder = "e.g. 4029XXXXXXXX (12-Digit UTR)";
     } else {
-        upiView.style.display = "none";
-        binanceView.style.display = "block";
-        tabBinance.classList.add("active");
-        tabUpi.classList.remove("active");
-        utrLabel.innerText = "Transaction ID / Order ID:";
-        utrInput.placeholder = "e.g. Enter Binance Order ID / TxID";
+        utrLabel.innerText = "Transaction ID / TxID:";
+        utrInput.placeholder = "e.g. Enter Crypto Order ID / TxID";
     }
+}
+
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text);
+    alert("Copied to clipboard: " + text);
 }
 
 function confirmPaymentWithUTR() {
     const utr = document.getElementById("utrNumber").value.trim();
     const link = document.getElementById("link").value.trim();
 
-    if (!utr || utr.length < 6) {
-        alert("Please enter a valid Transaction ID / UTR!");
+    if (!utr || utr.length < 5) {
+        alert("Please enter a valid UTR or Transaction ID!");
         return;
     }
 
-    const usdtAmount = (selectedPackage.price / 95).toFixed(2);
+    const price = Number(selectedPackage.price).toFixed(2);
 
     const waMsg = `🚀 *NEW ORDER PLACED*%0A%0A` +
+                  `*Platform:* ${currentPlatform.toUpperCase()}%0A` +
                   `*Category:* ${selectedPackage.category}%0A` +
                   `*Package:* ${selectedPackage.name}%0A` +
                   `*Target Link:* ${link}%0A` +
-                  `*Amount Paid:* ₹${selectedPackage.price} INR ($${usdtAmount} USDT)%0A` +
+                  `*Amount Paid:* ₹${price} INR%0A` +
                   `*Payment Mode:* ${currentPaymentMethod.toUpperCase()}%0A` +
-                  `*Transaction ID / UTR:* ${utr}%0A%0A` +
-                  `Please check payment and start processing!`;
+                  `*Transaction ID/UTR:* ${utr}%0A%0A` +
+                  `Please start processing my order!`;
 
     window.open(`https://wa.me/919337028344?text=${waMsg}`, '_blank');
 }
-
-// Live Counter starting at 2,99,784
-function startGlobalCounter() {
-    const baseStartDate = new Date("2026-01-01T00:00:00").getTime();
-    const baseOrders = 299784; 
-    const baseCompleted = 299734; 
-
-    function updateDisplay() {
-        const now = Date.now();
-        const minutesPassed = Math.floor((now - baseStartDate) / (1000 * 60));
-        if (document.getElementById("totalOrders")) {
-            document.getElementById("totalOrders").innerText = (baseOrders + minutesPassed).toLocaleString('en-IN');
-            document.getElementById("completedOrders").innerText = (baseCompleted + minutesPassed).toLocaleString('en-IN');
-        }
-    }
-    updateDisplay();
-    setInterval(updateDisplay, 1000);
-}
-
-window.onload = startGlobalCounter;

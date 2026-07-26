@@ -1,16 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raj Social Panel - Premium Boosting Services</title>
 
-    <!-- Google Font Import -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Social Media Open Graph Meta Tags -->
+    <!-- Social Media Open Graph Meta Tags (For Link Preview) -->
     <meta property="og:title" content="Raj Social Panel - Premium Social Boosting Services">
     <meta property="og:description" content="Get instant Followers, Likes, Views for Instagram and Facebook at lowest prices!">
     <meta property="og:image" content="https://raj-panel.github.io/Rocky-Pael.com/banner.png">
@@ -28,103 +23,101 @@
 </head>
 <body>
 
-    <div class="main-wrapper">
-        <!-- Header / Nav -->
-        <div class="top-nav">
-            <a href="https://t.me/your_telegram" target="_blank" class="nav-btn telegram-btn">
-                <i class="fa-brands fa-telegram"></i> Telegram Support
-            </a>
-            <a href="https://wa.me/919337028344" target="_blank" class="nav-btn whatsapp-btn">
-                <i class="fa-brands fa-whatsapp"></i> WhatsApp Support
-            </a>
+    <!-- Header / Nav -->
+    <div class="top-nav">
+        <a href="https://t.me/your_telegram" target="_blank" class="nav-btn telegram-btn">
+            <i class="fa-brands fa-telegram"></i> Telegram Support
+        </a>
+        <a href="https://wa.me/919337028344" target="_blank" class="nav-btn whatsapp-btn">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp Support
+        </a>
+    </div>
+
+    <div class="container">
+        <!-- Platform Switcher Buttons -->
+        <div class="platform-switch">
+            <button id="btnInsta" class="platform-btn active" onclick="switchPlatform('instagram')">
+                <i class="fa-brands fa-instagram"></i> Instagram
+            </button>
+            <button id="btnFb" class="platform-btn" onclick="switchPlatform('facebook')">
+                <i class="fa-brands fa-facebook"></i> Facebook
+            </button>
         </div>
 
-        <div class="container">
-            <!-- Platform Switcher Buttons -->
-            <div class="platform-switch">
-                <button id="btnInsta" class="platform-btn active" onclick="switchPlatform('instagram')">
-                    <i class="fa-brands fa-instagram"></i> Instagram
-                </button>
-                <button id="btnFb" class="platform-btn" onclick="switchPlatform('facebook')">
-                    <i class="fa-brands fa-facebook"></i> Facebook
-                </button>
+        <!-- Banner Hero Section -->
+        <div class="hero-banner">
+            <div class="hero-icon" id="heroLogoIcon"><i class="fa-brands fa-instagram"></i></div>
+            <h1 id="heroTitle">Instagram Boost</h1>
+            <p>Real engagement delivered fast & safely</p>
+            <div class="stats-row">
+                <div class="stat-box"><strong>2,99,784</strong><span>Orders Delivered</span></div>
+                <div class="stat-box"><strong>24/7</strong><span>Support</span></div>
+                <div class="stat-box"><strong>100%</strong><span>Safe & Refundable</span></div>
+            </div>
+        </div>
+
+        <!-- Category Tabs Section -->
+        <div class="category-tabs" id="categoryTabs"></div>
+
+        <!-- Packages List Section -->
+        <div class="section-card">
+            <div class="step-header">
+                <span class="step-num">2</span> Select Package
+            </div>
+            <div id="packageList" class="package-list"></div>
+        </div>
+
+        <!-- Link & Checkout Section -->
+        <div class="section-card" id="checkoutSection" style="display: none;">
+            <div class="step-header">
+                <span class="step-num">3</span> Complete Your Order
+            </div>
+            <div class="selected-summary" id="selectedSummary"></div>
+
+            <div class="input-group">
+                <label id="linkInputLabel">Enter Target Link / Username:</label>
+                <input type="text" id="link" placeholder="Paste link here...">
             </div>
 
-            <!-- Banner Hero Section -->
-            <div class="hero-banner">
-                <div class="hero-icon" id="heroLogoIcon"><i class="fa-brands fa-instagram"></i></div>
-                <h1 id="heroTitle">Instagram Boost</h1>
-                <p>Real engagement delivered fast & safely</p>
-                <div class="stats-row">
-                    <div class="stat-box"><strong>2,99,784</strong><span>Orders Delivered</span></div>
-                    <div class="stat-box"><strong>24/7</strong><span>Support</span></div>
-                    <div class="stat-box"><strong>100%</strong><span>Safe & Refundable</span></div>
-                </div>
+            <button class="pay-now-btn" onclick="generateOrder()">
+                <i class="fa-solid fa-bolt"></i> Proceed to Pay
+            </button>
+        </div>
+
+        <!-- Payment Card Modal / Section -->
+        <div class="section-card payment-card" id="paymentCard" style="display: none;">
+            <h3>Select Payment Method</h3>
+            <div class="pay-method-tabs">
+                <button id="tabUpi" class="pay-tab active" onclick="switchPaymentMethod('upi')">UPI QR</button>
+                <button id="tabBinance" class="pay-tab" onclick="switchPaymentMethod('binance')">Crypto Payment</button>
             </div>
 
-            <!-- Category Tabs Section -->
-            <div class="category-tabs" id="categoryTabs"></div>
-
-            <!-- Packages List Section -->
-            <div class="section-card">
-                <div class="step-header">
-                    <span class="step-num">2</span> Select Package
+            <!-- UPI View -->
+            <div id="upiPaymentView" class="payment-view">
+                <p class="pay-note">Scan with PhonePe, Paytm, GooglePay</p>
+                <div class="qr-box">
+                    <img id="qrCodeImg" src="" alt="UPI QR Code">
                 </div>
-                <div id="packageList" class="package-list"></div>
+                <p class="upi-id-text">UPI ID: <strong>Saheb.68@ptyes</strong> <i class="fa-regular fa-copy" onclick="copyToClipboard('Saheb.68@ptyes')"></i></p>
             </div>
 
-            <!-- Link & Checkout Section -->
-            <div class="section-card" id="checkoutSection" style="display: none;">
-                <div class="step-header">
-                    <span class="step-num">3</span> Complete Your Order
+            <!-- Binance Crypto View -->
+            <div id="binancePaymentView" class="payment-view" style="display: none;">
+                <div class="qr-box">
+                    <img id="binanceQrImg" src="binance-qr.png" alt="Crypto QR Code">
                 </div>
-                <div class="selected-summary" id="selectedSummary"></div>
-
-                <div class="input-group">
-                    <label id="linkInputLabel">Enter Target Link / Username:</label>
-                    <input type="text" id="link" placeholder="Paste link here...">
-                </div>
-
-                <button class="pay-now-btn" onclick="generateOrder()">
-                    <i class="fa-solid fa-bolt"></i> Proceed to Pay
-                </button>
+                <p class="upi-id-text">Nick Name: <strong>Raj Panel Official</strong></p>
             </div>
 
-            <!-- Payment Card Modal / Section -->
-            <div class="section-card payment-card" id="paymentCard" style="display: none;">
-                <h3>Select Payment Method</h3>
-                <div class="pay-method-tabs">
-                    <button id="tabUpi" class="pay-tab active" onclick="switchPaymentMethod('upi')">UPI QR</button>
-                    <button id="tabBinance" class="pay-tab" onclick="switchPaymentMethod('binance')">Crypto Payment</button>
-                </div>
-
-                <!-- UPI View -->
-                <div id="upiPaymentView" class="payment-view">
-                    <p class="pay-note">Scan with PhonePe, Paytm, GooglePay</p>
-                    <div class="qr-box">
-                        <img id="qrCodeImg" src="" alt="UPI QR Code">
-                    </div>
-                    <p class="upi-id-text">UPI ID: <strong>Saheb.68@ptyes</strong> <i class="fa-regular fa-copy" onclick="copyToClipboard('Saheb.68@ptyes')"></i></p>
-                </div>
-
-                <!-- Binance Crypto View -->
-                <div id="binancePaymentView" class="payment-view" style="display: none;">
-                    <div class="qr-box">
-                        <img id="binanceQrImg" src="binance-qr.png" alt="Crypto QR Code">
-                    </div>
-                    <p class="upi-id-text">Nick Name: <strong>Raj Panel Official</strong></p>
-                </div>
-
-                <!-- Common UTR / TxID Input -->
-                <div class="input-group" style="margin-top: 15px;">
-                    <label id="utrLabel">Enter 12-Digit UPI UTR / Ref No:</label>
-                    <input type="text" id="utrNumber" placeholder="Enter Transaction Reference Number">
-                </div>
-
-                <button class="confirm-btn" onclick="confirmPaymentWithUTR()">
-                    <i class="fa-brands fa-whatsapp"></i> Confirm & Send on WhatsApp
-                </button>
+            <!-- Common UTR / TxID Input -->
+            <div class="input-group" style="margin-top: 15px;">
+                <label id="utrLabel">Enter 12-Digit UPI UTR / Ref No:</label>
+                <input type="text" id="utrNumber" placeholder="Enter Transaction Reference Number">
             </div>
+
+            <button class="confirm-btn" onclick="confirmPaymentWithUTR()">
+                <i class="fa-brands fa-whatsapp"></i> Confirm & Send on WhatsApp
+            </button>
         </div>
     </div>
 

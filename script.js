@@ -57,7 +57,7 @@ const serviceData = {
         "Facebook Followers": [
             { type: "custom", name: "Facebook Followers", pricePer1000: 49 }
         ],
-        "Facebook Likes [Non-Drop]": [
+        "Likes Non-Drop": [
             { name: "100 Likes", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
             { name: "500 Likes", price: 25, badge: "REAL", badgeClass: "badge-real" },
             { name: "1K Likes", price: 39, badge: "FAST", badgeClass: "badge-popular" },
@@ -65,7 +65,7 @@ const serviceData = {
             { name: "5K Likes", price: 99, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
             { name: "10K Likes", price: 179, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
         ],
-        "Facebook Video Views": [
+        "Reels / Video Views": [
             { name: "1K Views", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
             { name: "3K Views", price: 25 },
             { name: "5K Views", price: 35, badge: "⭐ POPULAR", badgeClass: "badge-popular" },
@@ -244,6 +244,13 @@ function generateOrder() {
     
     document.getElementById("qrCodeImg").src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
 
+    // Calculate Binance USDT Amount ($1 = 96 INR)
+    const usdtAmount = (selectedPackage.price / 96).toFixed(2);
+    const usdtDisplay = document.getElementById("usdtAmountDisplay");
+    if(usdtDisplay) {
+        usdtDisplay.innerText = `$${usdtAmount} USDT`;
+    }
+
     document.getElementById("paymentCard").style.display = "block";
     switchPaymentMethod('upi');
     document.getElementById("paymentCard").scrollIntoView({ behavior: 'smooth' });
@@ -261,17 +268,12 @@ function switchPaymentMethod(method) {
     const utrInput = document.getElementById("utrNumber");
 
     if (method === 'upi') {
-        utrLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
+        utrLabel.innerHTML = `<i class="fa-solid fa-receipt"></i> Enter 12-Digit UPI UTR / Ref No:`;
         utrInput.placeholder = "e.g. 4029XXXXXXXX (12-Digit UTR)";
     } else {
-        utrLabel.innerText = "Transaction ID / TxID:";
-        utrInput.placeholder = "e.g. Enter Crypto Order ID / TxID";
+        utrLabel.innerHTML = `<i class="fa-solid fa-receipt"></i> Enter Binance TxID / Order ID:`;
+        utrInput.placeholder = "e.g. 21893XXXXXXXX (Binance TxID)";
     }
-}
-
-function copyToClipboard(text) {
-    navigator.clipboard.writeText(text);
-    alert("Copied to clipboard: " + text);
 }
 
 function confirmPaymentWithUTR() {
@@ -284,13 +286,19 @@ function confirmPaymentWithUTR() {
     }
 
     const price = Number(selectedPackage.price).toFixed(2);
+    const usdtPrice = (selectedPackage.price / 96).toFixed(2);
+
+    let amountText = `₹${price} INR`;
+    if(currentPaymentMethod === 'binance') {
+        amountText = `$${usdtPrice} USDT (₹${price} INR)`;
+    }
 
     const waMsg = `🚀 *NEW ORDER PLACED*%0A%0A` +
                   `*Platform:* ${currentPlatform.toUpperCase()}%0A` +
                   `*Category:* ${selectedPackage.category}%0A` +
                   `*Package:* ${selectedPackage.name}%0A` +
                   `*Target Link:* ${link}%0A` +
-                  `*Amount Paid:* ₹${price} INR%0A` +
+                  `*Amount Paid:* ${amountText}%0A` +
                   `*Payment Mode:* ${currentPaymentMethod.toUpperCase()}%0A` +
                   `*Transaction ID/UTR:* ${utr}%0A%0A` +
                   `Please start processing my order!`;

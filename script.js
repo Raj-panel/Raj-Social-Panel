@@ -74,24 +74,11 @@ const serviceData = {
             { name: "50K Views", price: 249, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
             { name: "100K Views", price: 449, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
          ],
-           "Facebook Comments": [
-{ name: "50 Comments", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
-{ name: "100 Comments", price: 15, badge: "REAL", badgeClass: "badge-real" },
-{ name: "300 Comments", price: 25, badge: "⭐ POPULAR", badgeClass: "badge-popular" },
-{ name: "500 Comments", price: 39, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
-{ name: "1K Comments", price: 69 },
-{ name: "2K Comments", price: 129, badge: "🏆 BEST DEAL", badgeClass: "badge-best" },
-{ name: "5K Comments", price: 359, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
-],
-"Facebook Shares": [
-{ name: "100 Shares", price: 15, badge: "STARTER", badgeClass: "badge-demo" },
-{ name: "1K Shares", price: 25 },
-{ name: "5K Shares", price: 59, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
-{ name: "10K Shares", price: 89, badge: "⭐ POPULAR", badgeClass: "badge-popular" },
-{ name: "20K Shares", price: 149, badge: "🏆 BEST DEAL", badgeClass: "badge-best" },
-{ name: "100K Shares", price: 399, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
-]
-     
+            "Facebook Comments": [
+            { type: "custom", name: "Facebook Comments", pricePer1000: 60 }
+         ],
+            "Facebook Shares": [
+            { type: "custom", name: "Facebook Shares", pricePer1000: 10 }    
         ]
     }
 };

@@ -13,11 +13,6 @@ const serviceData = {
                 pricePer1000: 80
             }
         ],
-
-        // ==========================================
-        // INSTAGRAM FOLLOWERS
-        // Provider ID: 1192
-        // ==========================================
         "Followers": [
             { providerId: 1192, name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo" },
             { providerId: 1192, name: "1K Followers", price: 50 },

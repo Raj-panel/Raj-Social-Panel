@@ -73,6 +73,12 @@ const serviceData = {
             { name: "10K Views", price: 60 },
             { name: "50K Views", price: 249, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
             { name: "100K Views", price: 449, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
+         ],
+            "Facebook Comments": [
+            { type: "custom", name: "Facebook Comments", pricePer1000: 60 }
+         ],
+            "Facebook Shares": [
+            { type: "custom", name: "Facebook Shares", pricePer1000: 10 }    
         ]
     }
 };

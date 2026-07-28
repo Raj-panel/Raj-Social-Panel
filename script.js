@@ -34,6 +34,15 @@ const serviceData = {
             { name: "500K Views", price: 299, badge: "👑 MOST POPULAR", badgeClass: "badge-best" },
             { name: "1M Views", price: 499, badge: "💥 MEGA DEAL", badgeClass: "badge-best" }
         ],
+        "Photo / Post Views": [
+            { name: "1K Views", price: 10, badge: "🎯 Demo", badgeClass: "badge-demo" },
+            { name: "3K Views", price: 15, badge: "⚡ Starter", badgeClass: "badge-real" },
+            { name: "5K Views", price: 25, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "10K Views", price: 40, badge: "🔥 Best Value", badgeClass: "badge-best" },
+            { name: "30K Views", price: 70, badge: "💎 Value Pack", badgeClass: "badge-popular" },
+            { name: "50K Views", price: 99, badge: "🏆 Recommended", badgeClass: "badge-best" },
+            { name: "100K Views", price: 179, badge: "👑 Most Popular", badgeClass: "badge-best" }
+        ],
         "Comments Lifetime": [
             { name: "50 Comments", price: 15, badge: "Starter", badgeClass: "badge-demo" },
             { name: "100 Comments", price: 20, badge: "Real", badgeClass: "badge-real" },

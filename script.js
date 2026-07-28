@@ -27,7 +27,7 @@ const serviceData = {
         "Reels / Video Views": [
             { name: "1K Views", price: 10, badge: "DEMO", badgeClass: "badge-demo" },
             { name: "5K Views", price: 20, badge: "STARTER", badgeClass: "badge-real" },
-            { name: "10K Views", price: 30, badge: "BEST VALUE", badgeClass: "badge-best" },
+            { name: "10K Views", price: 25, badge: "BEST VALUE", badgeClass: "badge-best" },
             { name: "20K Views", price: 40, badge: "POPULAR", badgeClass: "badge-popular" },
             { name: "50K Views", price: 70, badge: "RECOMMENDED", badgeClass: "badge-best" },
             { name: "100K Views", price: 99, badge: "🔥 BEST SELLER", badgeClass: "badge-best" },
@@ -79,9 +79,9 @@ const serviceData = {
             { name: "100 Comments", price: 15 },
             { name: "300 Comments", price: 25, badge: "⭐ Popular", badgeClass: "badge-popular" },
             { name: "500 Comments", price: 39, badge: "🔥 Best Value", badgeClass: "badge-best" },
-            { name: "1K Comments", price: 69 },
-            { name: "2K Comments", price: 129, badge: "🏆 Best Deal", badgeClass: "badge-best" },
-            { name: "5K Comments", price: 359, badge: "👑 Most Popular", badgeClass: "badge-best" }
+            { name: "1K Comments", price: 60 },
+            { name: "2K Comments", price: 110, badge: "🏆 Best Deal", badgeClass: "badge-best" },
+            { name: "5K Comments", price: 260, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
         "Facebook Shares": [
             { name: "100 Shares", price: 15 },

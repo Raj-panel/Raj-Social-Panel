@@ -5,7 +5,7 @@ const serviceData = {
         ],
         "Followers": [
             { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo" },
-            { name: "1K Followers", price: 50, },
+            { name: "1K Followers", price: 50 },
             { name: "2K Followers", price: 90 },
             { name: "3K Followers", price: 129, badge: "⭐ Popular", badgeClass: "badge-popular" },
             { name: "4K Followers", price: 165 },
@@ -73,12 +73,23 @@ const serviceData = {
             { name: "10K Views", price: 60 },
             { name: "50K Views", price: 249, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
             { name: "100K Views", price: 449, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
-         ],
-            "Facebook Comments": [
-            { type: "custom", name: "Facebook Comments", pricePer1000: 60 }
-         ],
-            "Facebook Shares": [
-            { type: "custom", name: "Facebook Shares", pricePer1000: 10 }    
+        ],
+        "Facebook Comments": [
+            { name: "50 Comments", price: 10 },
+            { name: "100 Comments", price: 15 },
+            { name: "300 Comments", price: 25, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "500 Comments", price: 39, badge: "🔥 Best Value", badgeClass: "badge-best" },
+            { name: "1K Comments", price: 69 },
+            { name: "2K Comments", price: 129, badge: "🏆 Best Deal", badgeClass: "badge-best" },
+            { name: "5K Comments", price: 359, badge: "👑 Most Popular", badgeClass: "badge-best" }
+        ],
+        "Facebook Shares": [
+            { name: "100 Shares", price: 15 },
+            { name: "1K Shares", price: 25 },
+            { name: "5K Shares", price: 59, badge: "🔥 Best Value", badgeClass: "badge-best" },
+            { name: "10K Shares", price: 89, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "20K Shares", price: 149, badge: "🏆 Best Deal", badgeClass: "badge-best" },
+            { name: "100K Shares", price: 399, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ]
     }
 };

@@ -1,420 +1,554 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Boost Panel</title>
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-}
+    <!-- PWA / Web App Manifest & Theme -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMM Panel">
+    <link rel="apple-touch-icon" href="icon-192.png">
 
-body {
-    background: #fdf2f8;
-    background-image: radial-gradient(circle at 10% 10%, rgba(244, 114, 182, 0.15) 0%, transparent 40%),
-                      radial-gradient(circle at 90% 90%, rgba(192, 132, 252, 0.15) 0%, transparent 40%);
-    color: #1e293b;
-    min-height: 100vh;
-    padding: 12px;
-    display: flex;
-    justify-content: center;
-}
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-.main-wrapper {
-    width: 100%;
-    max-width: 440px;
-}
+    <!-- Open Graph / Facebook / Messenger Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://raj-panel.github.io/Smm-Panel.com/">
+    <meta property="og:title" content="Raj Social Panel - Premium Social Boosting Services">
+    <meta property="og:description" content="Get instant Followers, Likes, Views for Instagram and Facebook at lowest prices!">
 
-/* Support Header */
-.hero-actions {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 12px;
-}
+    <!-- Social Banner Image & Cache Optimization -->
+    <meta property="og:image" content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0">
+    <meta property="og:image:secure_url" content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
-.glass-btn {
-    padding: 8px 14px;
-    border-radius: 12px;
-    font-size: 11px;
-    font-weight: 700;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: #ffffff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://raj-panel.github.io/Smm-Panel.com/">
+    <meta name="twitter:title" content="Raj Social Panel - Premium Social Boosting Services">
+    <meta name="twitter:description" content="Instant Delivery & Premium Quality Social Media Services.">
+    <meta name="twitter:image" content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0">
+</head>
 
-.btn-telegram { border: 1px solid rgba(56, 189, 248, 0.4); color: #0284c7; }
-.btn-whatsapp { border: 1px solid rgba(34, 197, 94, 0.4); color: #16a34a; }
+<body>
 
-/* Platform Switcher Buttons */
-.platform-switch-container {
-    display: flex;
-    gap: 8px;
-    background: #ffffff;
-    padding: 5px;
-    border-radius: 16px;
-    margin-bottom: 12px;
-    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.08);
-}
+    <div class="main-wrapper">
 
-.platform-btn {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 12px;
-    font-weight: 800;
-    font-size: 13px;
-    background: transparent;
-    color: #64748b;
-    cursor: pointer;
-    transition: all 0.25s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-}
+        <!-- Support Buttons Header -->
+        <div class="hero-actions">
+            <a href="https://t.me/RajSocialPanel" target="_blank" class="glass-btn btn-telegram">
+                <i class="fa-brands fa-telegram"></i>
+                Telegram Support
+            </a>
 
-.platform-btn.active {
-    background: linear-gradient(135deg, #d946ef 0%, #8b5cf6 100%);
-    color: #ffffff;
-    box-shadow: 0 4px 12px rgba(217, 70, 239, 0.3);
-}
+            <a href="https://wa.me/919337028344" target="_blank" class="glass-btn btn-whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+                WhatsApp Support
+            </a>
+        </div>
 
-/* Hero Status Banner */
-.hero-banner {
-    background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
-    border-radius: 20px;
-    padding: 18px 16px;
-    color: #ffffff;
-    margin-bottom: 14px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 8px 25px rgba(236, 72, 153, 0.25);
-}
+        <!-- Platform Switcher -->
+        <div class="platform-switch-container">
+            <button
+                class="platform-btn active"
+                id="btnInsta"
+                onclick="switchPlatform('instagram')"
+            >
+                <i class="fa-brands fa-instagram"></i>
+                Instagram
+            </button>
 
-.hero-top-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-}
+            <button
+                class="platform-btn"
+                id="btnFb"
+                onclick="switchPlatform('facebook')"
+            >
+                <i class="fa-brands fa-facebook"></i>
+                Facebook
+            </button>
+        </div>
 
-.hero-logo-box {
-    width: 32px;
-    height: 32px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    backdrop-filter: blur(5px);
-}
+        <!-- Hero Status Banner -->
+        <div class="hero-banner">
 
-.provider-badge {
-    background: rgba(255, 255, 255, 0.25);
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 10px;
-    font-weight: 800;
-    backdrop-filter: blur(5px);
-}
+            <div class="hero-top-row">
 
-.hero-banner h2 { font-size: 20px; font-weight: 800; margin-bottom: 2px; }
-.hero-sub { font-size: 11px; opacity: 0.9; margin-bottom: 14px; }
+                <div class="hero-logo-box" id="heroLogoIcon">
+                    <i class="fa-brands fa-instagram"></i>
+                </div>
 
-.hero-stats-grid { display: flex; gap: 8px; }
+                <span class="provider-badge">
+                    #1 Service Provider
+                </span>
 
-.stat-card {
-    flex: 1;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    padding: 8px;
-    text-align: center;
-}
+            </div>
 
-.stat-icon { font-size: 11px; display: block; margin-bottom: 2px; }
-.stat-num { font-size: 13px; font-weight: 800; display: block; }
-.stat-lbl { font-size: 9px; opacity: 0.8; }
+            <h2 id="heroTitle">
+                Instagram Boost
+            </h2>
 
-/* Scrollable Horizontal Category Tabs */
-.category-tabs-wrapper {
-    overflow-x: auto;
-    white-space: nowrap;
-    margin-bottom: 14px;
-    padding-bottom: 4px;
-    scrollbar-width: none;
-}
+            <p class="hero-sub">
+                Real engagement delivered fast & safely
+            </p>
 
-.category-tabs-wrapper::-webkit-scrollbar { display: none; }
+            <div class="hero-stats-grid">
 
-.category-tabs { display: inline-flex; gap: 8px; }
+                <div class="stat-card">
+                    <span class="stat-icon">
+                        <i class="fa-solid fa-rocket"></i>
+                    </span>
 
-.cat-tab {
-    padding: 8px 16px;
-    background: #ffffff;
-    border: 1px solid #f1f5f9;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 700;
-    color: #475569;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-}
+                    <span class="stat-num" id="totalOrders">
+                        2,99,784
+                    </span>
 
-.cat-tab.active {
-    background: linear-gradient(135deg, #a855f7, #ec4899);
-    color: #ffffff;
-    border-color: transparent;
-    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
-}
+                    <span class="stat-lbl">
+                        Orders Delivered
+                    </span>
+                </div>
 
-/* Service Package Cards */
-.package-list-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 16px;
-}
+                <div class="stat-card">
+                    <span class="stat-icon">
+                        <i class="fa-solid fa-headset"></i>
+                    </span>
 
-.pkg-card {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 12px 14px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid #fae8ff;
-    box-shadow: 0 3px 10px rgba(244, 114, 182, 0.05);
-    cursor: pointer;
-    transition: all 0.2s;
-}
+                    <span class="stat-num">
+                        24/7
+                    </span>
 
-.pkg-card:hover, .pkg-card.selected {
-    border-color: #d946ef;
-    background: #fdf4ff;
-    transform: translateY(-1px);
-    box-shadow: 0 5px 15px rgba(217, 70, 239, 0.15);
-}
+                    <span class="stat-lbl">
+                        Support
+                    </span>
+                </div>
 
-.pkg-left { display: flex; align-items: center; gap: 12px; }
+                <div class="stat-card">
+                    <span class="stat-icon">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </span>
 
-.pkg-icon {
-    width: 38px;
-    height: 38px;
-    background: linear-gradient(135deg, #f43f5e, #a855f7);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 18px;
-}
+                    <span class="stat-num">
+                        100%
+                    </span>
 
-.pkg-info { display: flex; flex-direction: column; }
+                    <span class="stat-lbl">
+                        Safe & Refundable
+                    </span>
+                </div>
 
-.pkg-title {
-    font-size: 13px;
-    font-weight: 800;
-    color: #1e293b;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
+            </div>
+        </div>
 
-.pkg-sub { font-size: 10px; color: #94a3b8; margin-top: 1px; }
 
-.pkg-badge {
-    font-size: 9px;
-    padding: 2px 6px;
-    border-radius: 8px;
-    color: #fff;
-    font-weight: 800;
-}
+        <!-- Scrollable Category Tabs -->
+        <div class="category-tabs-wrapper">
+            <div
+                class="category-tabs"
+                id="categoryTabs"
+            ></div>
+        </div>
 
-.badge-popular { background: linear-gradient(90deg, #3b82f6, #8b5cf6); }
-.badge-best { background: linear-gradient(90deg, #f59e0b, #ef4444); }
-.badge-demo { background: #94a3b8; }
-.badge-real { background: #6366f1; }
 
-.pkg-price-btn {
-    background: linear-gradient(135deg, #d946ef 0%, #8b5cf6 100%);
-    color: #fff;
-    font-weight: 800;
-    font-size: 12px;
-    padding: 6px 14px;
-    border-radius: 16px;
-}
+        <!-- Package List Section -->
+        <div
+            class="package-list-container"
+            id="packageList"
+        ></div>
 
-.custom-card {
-    background: #ffffff;
-    border: 1px solid #d946ef;
-    border-radius: 16px;
-    padding: 14px;
-}
 
-.input-box { margin-bottom: 12px; }
+        <!-- ==========================================
+             NEW ORDER INTERFACE
+             ========================================== -->
 
-.input-box label {
-    display: block;
-    font-size: 11px;
-    font-weight: 700;
-    color: #64748b;
-    margin-bottom: 4px;
-}
+        <div
+            class="new-order-card"
+            id="checkoutSection"
+            style="display: none;"
+        >
 
-input {
-    width: 100%;
-    padding: 11px 12px;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    font-size: 13px;
-    outline: none;
-    color: #0f172a;
-}
+            <!-- Order Header -->
+            <div class="new-order-header">
 
-input:focus { border-color: #d946ef; background: #ffffff; }
+                <div class="new-order-icon">
+                    <i class="fa-brands fa-instagram"></i>
+                </div>
 
-/* Checkout Section */
-.checkout-card {
-    background: #ffffff;
-    border-radius: 20px;
-    padding: 16px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-    margin-bottom: 16px;
-    border: 1px solid #fae8ff;
-}
+                <div>
+                    <h3>
+                        Complete Your Order
+                    </h3>
 
-.checkout-header h3 { font-size: 14px; color: #0f172a; margin-bottom: 10px; }
+                    <p>
+                        Enter your details below
+                    </p>
+                </div>
 
-.order-summary-pill {
-    background: #fdf4ff;
-    border: 1px dashed #d946ef;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 12px;
-    color: #a855f7;
-    text-align: center;
-    margin-bottom: 12px;
-}
+            </div>
 
-.action-btn {
-    width: 100%;
-    padding: 12px;
-    background: linear-gradient(135deg, #d946ef, #8b5cf6);
-    color: #fff;
-    font-weight: 800;
-    font-size: 13px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-}
 
-/* Payment Switch Tabs */
-.pay-toggle-tabs { display: flex; gap: 8px; margin: 14px 0; }
+            <!-- Selected Service -->
+            <div class="selected-service-box">
 
-.pay-tab {
-    flex: 1;
-    padding: 8px;
-    background: #f1f5f9;
-    border: none;
-    border-radius: 10px;
-    font-size: 11px;
-    font-weight: 700;
-    color: #64748b;
-    cursor: pointer;
-}
+                <div class="service-box-top">
 
-.pay-tab.active { background: #a855f7; color: #fff; }
+                    <div class="service-box-icon">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
 
-.qr-box {
-    text-align: center;
-    background: #f8fafc;
-    padding: 12px;
-    border-radius: 12px;
-}
+                    <div class="service-box-info">
 
-.qr-box img {
-    width: 170px;
-    height: 170px;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-}
+                        <span class="service-box-label">
+                            Selected Service
+                        </span>
 
-.qr-sub { font-size: 10px; color: #64748b; margin-top: 6px; }
+                        <strong id="selectedServiceName">
+                            Instagram Followers
+                        </strong>
 
-/* Binance Box */
-.binance-info-card {
-    background: #fefce8;
-    border: 1px solid #fef08a;
-    padding: 12px;
-    border-radius: 12px;
-    text-align: center;
-}
+                    </div>
 
-.usdt-badge {
-    display: inline-block;
-    background: #eab308;
-    color: #fff;
-    font-weight: 800;
-    padding: 4px 12px;
-    border-radius: 12px;
-    font-size: 12px;
-    margin-top: 4px;
-}
+                </div>
 
-.crypto-details-box {
-    margin-top: 10px;
-    font-size: 11px;
-    text-align: left;
-    background: #fff;
-    padding: 8px 10px;
-    border-radius: 8px;
-    border: 1px solid #fef08a;
-}
+            </div>
 
-.crypto-details-box p {
-    margin-bottom: 6px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 
-.copy-btn {
-    background: #e2e8f0;
-    border: none;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 10px;
-    cursor: pointer;
-}
+            <!-- Quantity & Price -->
+            <div class="order-details-grid">
 
-.whatsapp-submit-btn {
-    width: 100%;
-    padding: 12px;
-    background: #22c55e;
-    color: #fff;
-    font-weight: 800;
-    font-size: 13px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-}
+                <div class="order-detail-item">
 
-.margin-top-15 { margin-top: 12px; }
+                    <span class="order-detail-label">
+                        <i class="fa-solid fa-layer-group"></i>
+                        Quantity
+                    </span>
 
-.footer-note {
-    text-align: center;
-    font-size: 10px;
-    color: #94a3b8;
-    margin-bottom: 20px;
-}
+                    <strong id="selectedQuantity">
+                        1,000
+                    </strong>
+
+                </div>
+
+
+                <div class="order-detail-item price-detail">
+
+                    <span class="order-detail-label">
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                        Total Price
+                    </span>
+
+                    <strong id="selectedPrice">
+                        ₹50.00
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Target Link / Username -->
+            <div class="new-input-box">
+
+                <label id="linkInputLabel">
+                    <i class="fa-brands fa-instagram"></i>
+                    Instagram Username / Profile Link
+                </label>
+
+                <div class="input-with-icon">
+
+                    <i class="fa-solid fa-link"></i>
+
+                    <input
+                        type="text"
+                        id="link"
+                        placeholder="https://instagram.com/your_username"
+                    >
+
+                </div>
+
+                <small>
+                    Make sure your profile is public before placing the order.
+                </small>
+
+            </div>
+
+
+            <!-- Order Summary -->
+            <div class="final-order-summary">
+
+                <div class="summary-row">
+
+                    <span>
+                        Service
+                    </span>
+
+                    <strong id="summaryService">
+                        Instagram Followers
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Quantity
+                    </span>
+
+                    <strong id="summaryQuantity">
+                        1,000
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-divider"></div>
+
+
+                <div class="summary-total">
+
+                    <span>
+                        Total Payable
+                    </span>
+
+                    <strong id="selectedSummary">
+                        ₹50.00 INR
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Proceed Button -->
+            <button
+                class="new-action-btn"
+                onclick="generateOrder()"
+            >
+
+                <span>
+                    Proceed to Payment
+                </span>
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+        </div>
+
+
+        <!-- ==========================================
+             PAYMENT GATEWAY
+             ========================================== -->
+
+        <div
+            class="payment-card"
+            id="paymentCard"
+            style="display: none;"
+        >
+
+            <div class="payment-title">
+
+                <span class="payment-step-number">
+                    4
+                </span>
+
+                <span>
+                    Complete Payment
+                </span>
+
+            </div>
+
+
+            <!-- Payment Method Tabs -->
+            <div class="pay-toggle-tabs">
+
+                <button
+                    class="pay-tab active"
+                    id="tabUpi"
+                    onclick="switchPaymentMethod('upi')"
+                >
+                    <i class="fa-solid fa-qrcode"></i>
+                    UPI QR Code
+                </button>
+
+                <button
+                    class="pay-tab"
+                    id="tabBinance"
+                    onclick="switchPaymentMethod('binance')"
+                >
+                    <i class="fa-solid fa-wallet"></i>
+                    Binance Pay
+                </button>
+
+            </div>
+
+
+            <!-- UPI Payment -->
+            <div
+                id="upiPaymentView"
+                class="qr-box"
+            >
+
+                <img
+                    id="qrCodeImg"
+                    src=""
+                    alt="Payment QR Code"
+                >
+
+                <p class="qr-sub">
+                    Scan & Pay Exact Amount with
+                    GPay / PhonePe / Paytm
+                </p>
+
+            </div>
+
+
+            <!-- Binance Payment -->
+            <div
+                id="binancePaymentView"
+                class="binance-payment-view"
+                style="display: none;"
+            >
+
+                <div class="binance-qr-wrapper">
+
+                    <p>
+                        Scan with Binance App to pay
+                    </p>
+
+                    <img
+                        src="binance-qr.png"
+                        alt="Binance QR Code"
+                    >
+
+                </div>
+
+
+                <div class="binance-nickname">
+
+                    Binance Nickname:
+
+                    <strong>
+                        Alex-Sahil786
+                    </strong>
+
+                </div>
+
+
+                <div class="usdt-amount-wrapper">
+
+                    <span id="usdtAmountDisplay">
+                        $0.00 USDT
+                    </span>
+
+                </div>
+
+
+                <p class="binance-instruction">
+                    Scan QR Code using Binance App to Pay USDT
+                </p>
+
+            </div>
+
+
+            <!-- UTR / Transaction ID -->
+            <div class="new-input-box payment-input-box">
+
+                <label id="utrLabel">
+
+                    <i class="fa-solid fa-receipt"></i>
+
+                    Enter 12-Digit UPI UTR / Ref No:
+
+                </label>
+
+                <input
+                    type="text"
+                    id="utrNumber"
+                    placeholder="4029XXXXXXXX (12-Digit UTR)"
+                >
+
+            </div>
+
+
+            <!-- Payment Notice -->
+            <div class="payment-notice">
+
+                <strong>
+                    ⚠️ After completing payment, enter the UTR / TxID and submit your order on WhatsApp.
+                </strong>
+
+            </div>
+
+
+            <!-- WhatsApp Submit -->
+            <button
+                class="whatsapp-submit-btn"
+                onclick="confirmPaymentWithUTR()"
+            >
+
+                <i class="fa-brands fa-whatsapp"></i>
+
+                Submit Order on WhatsApp
+
+            </button>
+
+        </div>
+
+
+        <!-- Footer -->
+        <div class="footer-note">
+
+            ⚡ Fast Processing • 100% Refund Guarantee If Failed
+
+        </div>
+
+    </div>
+
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+
+    <!-- Service Worker Registration for PWA -->
+    <script>
+
+        if ('serviceWorker' in navigator) {
+
+            window.addEventListener('load', () => {
+
+                navigator.serviceWorker
+                    .register('./sw.js')
+
+                    .then((reg) => {
+
+                        console.log(
+                            'Service Worker Registered Successfully:',
+                            reg
+                        );
+
+                    })
+
+                    .catch((err) => {
+
+                        console.log(
+                            'Service Worker Registration Failed:',
+                            err
+                        );
+
+                    });
+
+            });
+
+        }
+
+    </script>
+
+</body>
+</html>

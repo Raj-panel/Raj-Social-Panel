@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 * {
     margin: 0;
@@ -10,16 +10,8 @@
 body {
     background: #fdf2f8;
     background-image:
-        radial-gradient(
-            circle at 10% 10%,
-            rgba(244, 114, 182, 0.15) 0%,
-            transparent 40%
-        ),
-        radial-gradient(
-            circle at 90% 90%,
-            rgba(192, 132, 252, 0.15) 0%,
-            transparent 40%
-        );
+        radial-gradient(circle at 10% 10%, rgba(244, 114, 182, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(192, 132, 252, 0.15) 0%, transparent 40%);
     color: #1e293b;
     min-height: 100vh;
     padding: 12px;
@@ -31,7 +23,6 @@ body {
     width: 100%;
     max-width: 440px;
 }
-
 
 /* ==========================================
    SUPPORT HEADER
@@ -45,16 +36,16 @@ body {
 }
 
 .glass-btn {
-    padding: 8px 14px;
-    border-radius: 12px;
-    font-size: 11px;
+    padding: 9px 15px;
+    border-radius: 14px;
+    font-size: 12px;
     font-weight: 700;
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
     background: #ffffff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
 }
 
 .btn-telegram {
@@ -67,7 +58,6 @@ body {
     color: #16a34a;
 }
 
-
 /* ==========================================
    PLATFORM SWITCHER
 ========================================== */
@@ -76,19 +66,19 @@ body {
     display: flex;
     gap: 8px;
     background: #ffffff;
-    padding: 5px;
-    border-radius: 16px;
-    margin-bottom: 12px;
+    padding: 6px;
+    border-radius: 18px;
+    margin-bottom: 14px;
     box-shadow: 0 4px 15px rgba(236, 72, 153, 0.08);
 }
 
 .platform-btn {
     flex: 1;
-    padding: 10px;
+    padding: 12px;
     border: none;
-    border-radius: 12px;
+    border-radius: 14px;
     font-weight: 800;
-    font-size: 13px;
+    font-size: 14px;
     background: transparent;
     color: #64748b;
     cursor: pointer;
@@ -96,77 +86,68 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 7px;
 }
 
 .platform-btn.active {
-    background: linear-gradient(
-        135deg,
-        #d946ef 0%,
-        #8b5cf6 100%
-    );
+    background: linear-gradient(135deg, #d946ef 0%, #8b5cf6 100%);
     color: #ffffff;
-    box-shadow: 0 4px 12px rgba(217, 70, 239, 0.3);
+    box-shadow: 0 5px 15px rgba(217, 70, 239, 0.3);
 }
 
-
 /* ==========================================
-   HERO STATUS BANNER
+   HERO BANNER
 ========================================== */
 
 .hero-banner {
-    background: linear-gradient(
-        135deg,
-        #ec4899 0%,
-        #8b5cf6 100%
-    );
-    border-radius: 20px;
-    padding: 18px 16px;
+    background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+    border-radius: 22px;
+    padding: 20px 18px;
     color: #ffffff;
-    margin-bottom: 14px;
+    margin-bottom: 15px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 8px 25px rgba(236, 72, 153, 0.25);
+    box-shadow: 0 10px 30px rgba(236, 72, 153, 0.25);
 }
 
 .hero-top-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 9px;
 }
 
 .hero-logo-box {
-    width: 32px;
-    height: 32px;
+    width: 38px;
+    height: 38px;
     background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: 20px;
     backdrop-filter: blur(5px);
 }
 
 .provider-badge {
     background: rgba(255, 255, 255, 0.25);
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 10px;
+    padding: 7px 12px;
+    border-radius: 15px;
+    font-size: 11px;
     font-weight: 800;
     backdrop-filter: blur(5px);
 }
 
 .hero-banner h2 {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 800;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
 }
 
 .hero-sub {
-    font-size: 11px;
+    font-size: 12px;
     opacity: 0.9;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
 }
 
 .hero-stats-grid {
@@ -179,19 +160,19 @@ body {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    padding: 8px;
+    border-radius: 14px;
+    padding: 10px 6px;
     text-align: center;
 }
 
 .stat-icon {
-    font-size: 11px;
+    font-size: 12px;
     display: block;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
 }
 
 .stat-num {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 800;
     display: block;
 }
@@ -201,7 +182,6 @@ body {
     opacity: 0.8;
 }
 
-
 /* ==========================================
    CATEGORY TABS
 ========================================== */
@@ -209,7 +189,7 @@ body {
 .category-tabs-wrapper {
     overflow-x: auto;
     white-space: nowrap;
-    margin-bottom: 14px;
+    margin-bottom: 15px;
     padding-bottom: 4px;
     scrollbar-width: none;
 }
@@ -224,98 +204,45 @@ body {
 }
 
 .cat-tab {
-    padding: 8px 16px;
+    padding: 10px 17px;
     background: #ffffff;
     border: 1px solid #f1f5f9;
-    border-radius: 20px;
+    border-radius: 22px;
     font-size: 12px;
     font-weight: 700;
     color: #475569;
     cursor: pointer;
     transition: all 0.2s;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
 }
 
 .cat-tab.active {
-    background: linear-gradient(
-        135deg,
-        #a855f7,
-        #ec4899
-    );
+    background: linear-gradient(135deg, #a855f7, #ec4899);
     color: #ffffff;
     border-color: transparent;
-    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+    box-shadow: 0 5px 14px rgba(168, 85, 247, 0.3);
 }
-
 
 /* ==========================================
-   STEP TITLE
-========================================== */
-
-.step-title-card {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 12px 14px;
-    margin-bottom: 10px;
-    border: 1px solid #fae8ff;
-    box-shadow: 0 3px 10px rgba(244, 114, 182, 0.05);
-}
-
-.step-number {
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
-    border-radius: 10px;
-    background: linear-gradient(
-        135deg,
-        #d946ef,
-        #8b5cf6
-    );
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 800;
-    box-shadow: 0 4px 10px rgba(168, 85, 247, 0.25);
-}
-
-.step-title-card h3 {
-    font-size: 14px;
-    font-weight: 800;
-    color: #1e293b;
-    margin-bottom: 2px;
-}
-
-.step-title-card p {
-    font-size: 10px;
-    color: #94a3b8;
-}
-
-
-/* ==========================================
-   SERVICE PACKAGE CARDS
+   PACKAGE LIST
 ========================================== */
 
 .package-list-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 16px;
+    gap: 11px;
+    margin-bottom: 18px;
 }
 
 .pkg-card {
     background: #ffffff;
-    border-radius: 16px;
-    padding: 12px 14px;
+    border-radius: 18px;
+    padding: 14px 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     border: 1px solid #fae8ff;
-    box-shadow: 0 3px 10px rgba(244, 114, 182, 0.05);
+    box-shadow: 0 4px 12px rgba(244, 114, 182, 0.06);
     cursor: pointer;
     transition: all 0.2s;
 }
@@ -325,29 +252,26 @@ body {
     border-color: #d946ef;
     background: #fdf4ff;
     transform: translateY(-1px);
-    box-shadow: 0 5px 15px rgba(217, 70, 239, 0.15);
+    box-shadow: 0 6px 18px rgba(217, 70, 239, 0.18);
 }
 
 .pkg-left {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 13px;
 }
 
 .pkg-icon {
-    width: 38px;
-    height: 38px;
-    background: linear-gradient(
-        135deg,
-        #f43f5e,
-        #a855f7
-    );
-    border-radius: 12px;
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #f43f5e, #a855f7);
+    border-radius: 13px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
-    font-size: 18px;
+    font-size: 19px;
+    flex-shrink: 0;
 }
 
 .pkg-info {
@@ -356,42 +280,35 @@ body {
 }
 
 .pkg-title {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 800;
     color: #1e293b;
     display: flex;
     align-items: center;
     gap: 6px;
+    flex-wrap: wrap;
 }
 
 .pkg-sub {
     font-size: 10px;
     color: #94a3b8;
-    margin-top: 1px;
+    margin-top: 3px;
 }
 
 .pkg-badge {
     font-size: 9px;
-    padding: 2px 6px;
-    border-radius: 8px;
+    padding: 3px 7px;
+    border-radius: 9px;
     color: #fff;
     font-weight: 800;
 }
 
 .badge-popular {
-    background: linear-gradient(
-        90deg,
-        #3b82f6,
-        #8b5cf6
-    );
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
 }
 
 .badge-best {
-    background: linear-gradient(
-        90deg,
-        #f59e0b,
-        #ef4444
-    );
+    background: linear-gradient(90deg, #f59e0b, #ef4444);
 }
 
 .badge-demo {
@@ -403,18 +320,14 @@ body {
 }
 
 .pkg-price-btn {
-    background: linear-gradient(
-        135deg,
-        #d946ef 0%,
-        #8b5cf6 100%
-    );
+    background: linear-gradient(135deg, #d946ef 0%, #8b5cf6 100%);
     color: #fff;
     font-weight: 800;
-    font-size: 12px;
-    padding: 6px 14px;
-    border-radius: 16px;
+    font-size: 13px;
+    padding: 8px 15px;
+    border-radius: 18px;
+    white-space: nowrap;
 }
-
 
 /* ==========================================
    CUSTOM QUANTITY CARD
@@ -422,14 +335,22 @@ body {
 
 .custom-card {
     background: #ffffff;
-    border: 1px solid #d946ef;
-    border-radius: 16px;
-    padding: 14px;
-    box-shadow: 0 4px 12px rgba(217, 70, 239, 0.08);
+    border: 1px solid #e9d5ff;
+    border-radius: 18px;
+    padding: 16px;
+    box-shadow: 0 5px 15px rgba(168, 85, 247, 0.08);
 }
 
+.custom-card input {
+    margin-top: 4px;
+}
+
+/* ==========================================
+   INPUT
+========================================== */
+
 .input-box {
-    margin-bottom: 12px;
+    margin-bottom: 13px;
 }
 
 .input-box label {
@@ -437,397 +358,294 @@ body {
     font-size: 11px;
     font-weight: 700;
     color: #64748b;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
 }
 
 input {
     width: 100%;
-    padding: 11px 12px;
+    padding: 12px 13px;
     background: #f8fafc;
     border: 1px solid #e2e8f0;
-    border-radius: 10px;
+    border-radius: 11px;
     font-size: 13px;
     outline: none;
     color: #0f172a;
+    transition: 0.2s;
 }
 
 input:focus {
     border-color: #d946ef;
     background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.08);
 }
 
-
 /* ==========================================
-   CHECKOUT CARD
+   SECOND INTERFACE / CHECKOUT
+   IMAGE-LIKE LARGE ORDER INTERFACE
 ========================================== */
 
 .checkout-card {
-    background: #ffffff;
-    border-radius: 20px;
-    padding: 16px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
-    margin-bottom: 16px;
-    border: 1px solid #fae8ff;
-}
-
-.checkout-step-title {
-    margin: 0 0 14px 0;
-    padding: 0;
-    border: none;
-    box-shadow: none;
-    background: transparent;
-}
-
-
-/* ==========================================
-   SELECTED SERVICE BOX
-========================================== */
-
-.selected-service-box {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: linear-gradient(
-        135deg,
-        #fdf4ff,
-        #faf5ff
-    );
-    border: 1px solid #e9d5ff;
-    border-radius: 14px;
-    padding: 12px;
-    margin-bottom: 12px;
-}
-
-.selected-service-icon {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    border-radius: 12px;
-    background: linear-gradient(
-        135deg,
-        #ec4899,
-        #8b5cf6
-    );
+    display: none;
+    background: linear-gradient(180deg, #111827 0%, #0f172a 100%);
+    border-radius: 24px;
+    padding: 14px;
+    box-shadow:
+        0 15px 40px rgba(15, 23, 42, 0.25),
+        0 0 0 1px rgba(255,255,255,0.05);
+    margin-bottom: 18px;
+    border: 1px solid rgba(168, 85, 247, 0.35);
     color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
+    overflow: hidden;
 }
-
-.selected-service-info {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.selected-service-label {
-    font-size: 9px;
-    color: #94a3b8;
-    font-weight: 700;
-    margin-bottom: 3px;
-}
-
-.selected-service-info strong {
-    font-size: 12px;
-    color: #1e293b;
-    line-height: 1.3;
-}
-
-.selected-service-price {
-    text-align: right;
-    display: flex;
-    flex-direction: column;
-}
-
-.selected-service-price span {
-    font-size: 9px;
-    color: #94a3b8;
-    font-weight: 700;
-}
-
-.selected-service-price strong {
-    font-size: 15px;
-    color: #22c55e;
-    font-weight: 800;
-    margin-top: 2px;
-}
-
 
 /* ==========================================
-   ORDER SUMMARY
+   ORDER HEADER
 ========================================== */
+
+.checkout-header {
+    display: none;
+}
 
 .order-summary-pill {
-    background: #fdf4ff;
-    border: 1px dashed #d946ef;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 12px;
-    color: #a855f7;
-    text-align: center;
+    background: linear-gradient(135deg, #6d28d9 0%, #2563eb 100%);
+    border-radius: 18px;
+    padding: 18px 16px;
     margin-bottom: 12px;
+    color: #ffffff;
+    text-align: left;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.25);
+    font-size: 0;
+    position: relative;
+    overflow: hidden;
 }
 
+.order-summary-pill::before {
+    content: "Instagram • Normal Follower";
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0.75;
+    margin-bottom: 5px;
+}
+
+.order-summary-pill strong {
+    font-size: 21px;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.order-summary-pill strong::after {
+    content: " →";
+    color: #facc15;
+}
+
+.order-summary-pill span {
+    display: block;
+    margin-top: 8px;
+    font-size: 21px !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+}
+
+.order-summary-pill span::after {
+    content: " one-time";
+    font-size: 11px;
+    font-weight: 500;
+    opacity: 0.7;
+    margin-left: 5px;
+}
 
 /* ==========================================
-   ACTION BUTTON
+   TARGET LINK SECTION
+========================================== */
+
+.checkout-card > .input-box {
+    background: rgba(30, 41, 59, 0.75);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    padding: 13px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.checkout-card .input-box label {
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.checkout-card input {
+    background: #1e293b;
+    border: 1px solid #475569;
+    color: #ffffff;
+    border-radius: 10px;
+}
+
+.checkout-card input::placeholder {
+    color: #64748b;
+}
+
+.checkout-card input:focus {
+    border-color: #a855f7;
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
+}
+
+/* ==========================================
+   PROCEED BUTTON
 ========================================== */
 
 .action-btn {
     width: 100%;
-    padding: 12px;
-    background: linear-gradient(
-        135deg,
-        #d946ef,
-        #8b5cf6
-    );
+    padding: 13px;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
     color: #fff;
     font-weight: 800;
     font-size: 13px;
     border: none;
     border-radius: 12px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: all 0.2s;
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.25);
+    transition: 0.2s;
 }
 
 .action-btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 5px 15px rgba(139, 92, 246, 0.25);
 }
-
-.action-btn:active {
-    transform: translateY(0);
-}
-
 
 /* ==========================================
    PAYMENT CARD
 ========================================== */
 
 .payment-card {
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px solid #f1f5f9;
+    margin-top: 12px;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 18px;
+    padding: 14px;
 }
-
-.payment-step-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #0f172a;
-    font-size: 15px;
-    font-weight: 800;
-    margin-bottom: 14px;
-}
-
-.payment-step-number {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: #6366f1;
-    color: #ffffff;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-}
-
-
-/* ==========================================
-   PAYMENT TABS
-========================================== */
 
 .pay-toggle-tabs {
     display: flex;
-    gap: 8px;
+    gap: 4px;
+    background: #f8fafc;
+    padding: 3px;
+    border-radius: 25px;
     margin: 14px 0;
 }
 
 .pay-tab {
     flex: 1;
-    padding: 9px;
-    background: #f1f5f9;
+    padding: 10px 6px;
+    background: transparent;
     border: none;
-    border-radius: 10px;
+    border-radius: 22px;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
     color: #64748b;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: 0.2s;
 }
 
 .pay-tab.active {
-    background: #a855f7;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
     color: #fff;
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.35);
 }
-
 
 /* ==========================================
-   PAYMENT AMOUNT
-========================================== */
-
-.payment-amount-box {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #ffffff;
-    border: 1px solid #e9d5ff;
-    border-radius: 10px;
-    padding: 9px 12px;
-    margin-bottom: 12px;
-}
-
-.payment-amount-box span {
-    font-size: 11px;
-    color: #64748b;
-    font-weight: 700;
-}
-
-.payment-amount-box strong {
-    font-size: 16px;
-    color: #22c55e;
-    font-weight: 800;
-}
-
-
-/* ==========================================
-   QR PAYMENT
+   UPI PAYMENT
 ========================================== */
 
 .qr-box {
     text-align: center;
-    background: #f8fafc;
-    padding: 12px;
-    border-radius: 12px;
+    background: transparent;
+    padding: 4px;
+    border-radius: 15px;
+}
+
+.qr-box::before {
+    content: "SCAN TO PAY VIA UPI (Default Selected)";
+    display: block;
+    font-size: 13px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 12px;
 }
 
 .qr-box img {
-    width: 170px;
-    height: 170px;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
+    width: 175px;
+    height: 175px;
+    border-radius: 12px;
+    border: 6px solid #ffffff;
     background: #ffffff;
+    padding: 3px;
 }
 
 .qr-sub {
-    font-size: 10px;
-    color: #64748b;
-    margin-top: 8px;
-    line-height: 1.5;
+    font-size: 10px !important;
+    color: #94a3b8 !important;
+    margin-top: 10px !important;
 }
 
-
 /* ==========================================
-   BINANCE PAYMENT
+   BINANCE
 ========================================== */
 
-.binance-payment-box {
+.binance-info-card {
     background: #fefce8;
     border: 1px solid #fef08a;
-    padding: 14px;
+    padding: 12px;
     border-radius: 12px;
     text-align: center;
 }
 
-.binance-title {
-    font-size: 11px;
-    color: #713f12;
-    font-weight: 700;
-    margin-bottom: 10px;
+#binancePaymentView {
+    padding: 8px 0;
 }
 
-.binance-payment-box img {
-    max-width: 140px;
-    width: 100%;
-    border-radius: 6px;
-    background: #ffffff;
-    padding: 5px;
+#binancePaymentView > div:first-child {
+    border-radius: 14px !important;
 }
 
-.binance-nickname {
-    border: 1px solid #fde68a;
-    background: #ffffff;
-    padding: 9px 10px;
-    border-radius: 8px;
-    margin-top: 12px;
-    font-size: 11px;
-    color: #64748b;
-}
-
-.binance-nickname strong {
-    color: #d97706;
-}
-
-.usdt-amount-box {
-    margin-top: 10px;
-    margin-bottom: 8px;
-}
-
-.usdt-amount-box span {
-    background: #facc15;
-    color: #000000;
-    font-weight: 800;
-    padding: 5px 16px;
-    border-radius: 20px;
-    font-size: 14px;
+.usdt-badge {
     display: inline-block;
+    background: #eab308;
+    color: #fff;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-top: 4px;
 }
-
-.binance-sub {
-    font-size: 10px;
-    color: #92400e;
-    margin-top: 8px;
-}
-
 
 /* ==========================================
-   UTR / TRANSACTION INPUT
+   UTR / TRANSACTION ID
 ========================================== */
 
-.margin-top-15 {
-    margin-top: 12px;
+.payment-card .margin-top-15 {
+    margin-top: 15px;
 }
 
-#utrLabel {
-    font-size: 13px;
-    color: #64748b;
-    margin-bottom: 6px;
-    display: block;
-    font-weight: 700;
+.payment-card .input-box {
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid #334155;
+    padding: 12px;
+    border-radius: 12px;
 }
 
+.payment-card .input-box label {
+    color: #cbd5e1;
+}
 
 /* ==========================================
-   PAYMENT NOTICE
-========================================== */
-
-.payment-notice {
-    background: rgba(234, 179, 8, 0.1);
-    border-left: 3px solid #facc15;
-    padding: 10px;
-    border-radius: 6px;
-    text-align: left;
-    margin: 12px 0;
-    font-size: 11px;
-    color: #ca8a04;
-    line-height: 1.5;
-}
-
-
-/* ==========================================
-   WHATSAPP SUBMIT
+   WHATSAPP BUTTON
 ========================================== */
 
 .whatsapp-submit-btn {
     width: 100%;
-    padding: 12px;
-    background: #22c55e;
+    padding: 13px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
     color: #fff;
     font-weight: 800;
     font-size: 13px;
@@ -837,19 +655,14 @@ input:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    transition: all 0.2s;
+    gap: 7px;
+    box-shadow: 0 6px 18px rgba(34, 197, 94, 0.2);
+    transition: 0.2s;
 }
 
 .whatsapp-submit-btn:hover {
-    background: #16a34a;
     transform: translateY(-1px);
 }
-
-.whatsapp-submit-btn:active {
-    transform: translateY(0);
-}
-
 
 /* ==========================================
    FOOTER
@@ -861,7 +674,6 @@ input:focus {
     color: #94a3b8;
     margin-bottom: 20px;
 }
-
 
 /* ==========================================
    MOBILE RESPONSIVE
@@ -877,29 +689,20 @@ input:focus {
         max-width: 100%;
     }
 
-    .hero-actions {
-        gap: 6px;
-    }
-
-    .glass-btn {
-        padding: 8px 10px;
-        font-size: 10px;
-    }
-
     .hero-banner {
-        padding: 16px 12px;
+        padding: 16px 13px;
     }
 
-    .hero-stats-grid {
-        gap: 5px;
+    .hero-banner h2 {
+        font-size: 19px;
     }
 
     .stat-card {
-        padding: 7px 4px;
+        padding: 8px 4px;
     }
 
     .stat-num {
-        font-size: 11px;
+        font-size: 12px;
     }
 
     .stat-lbl {
@@ -907,51 +710,29 @@ input:focus {
     }
 
     .pkg-card {
-        padding: 10px;
+        padding: 12px 10px;
     }
 
     .pkg-left {
-        gap: 8px;
+        gap: 9px;
     }
 
     .pkg-icon {
-        width: 34px;
-        height: 34px;
-        min-width: 34px;
-        font-size: 15px;
+        width: 38px;
+        height: 38px;
+        font-size: 17px;
     }
 
     .pkg-title {
-        font-size: 11px;
-    }
-
-    .pkg-sub {
-        font-size: 9px;
+        font-size: 12px;
     }
 
     .pkg-price-btn {
         font-size: 11px;
-        padding: 6px 10px;
+        padding: 7px 11px;
     }
 
-    .selected-service-box {
-        padding: 10px;
-        gap: 8px;
+    .order-summary-pill strong {
+        font-size: 18px;
     }
-
-    .selected-service-icon {
-        width: 36px;
-        height: 36px;
-        min-width: 36px;
-        font-size: 16px;
-    }
-
-    .selected-service-info strong {
-        font-size: 11px;
-    }
-
-    .selected-service-price strong {
-        font-size: 13px;
-    }
-
 }

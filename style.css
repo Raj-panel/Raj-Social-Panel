@@ -255,6 +255,7 @@ body {
     border: 1px solid #d946ef;
     border-radius: 16px;
     padding: 14px;
+    margin-bottom: 16px;
 }
 
 .input-box { margin-bottom: 12px; }

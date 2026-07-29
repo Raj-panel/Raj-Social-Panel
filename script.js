@@ -361,13 +361,11 @@ const serviceData = {
 
     // ==========================================
     // FACEBOOK
-    // NO PROVIDER ID
     // ==========================================
     facebook: {
 
         // ==========================================
         // FACEBOOK FOLLOWERS
-        // NO PROVIDER ID
         // ==========================================
         "Facebook Followers": [
             {
@@ -379,7 +377,6 @@ const serviceData = {
 
         // ==========================================
         // FACEBOOK LIKES NON-DROP
-        // NO PROVIDER ID
         // ==========================================
         "Likes Non-Drop": [
             {
@@ -422,7 +419,6 @@ const serviceData = {
 
         // ==========================================
         // FACEBOOK REELS / VIDEO VIEWS
-        // NO PROVIDER ID
         // ==========================================
         "Reels / Video Views": [
             {
@@ -461,7 +457,6 @@ const serviceData = {
 
         // ==========================================
         // FACEBOOK COMMENTS
-        // NO PROVIDER ID
         // ==========================================
         "Facebook Comments": [
             {
@@ -504,7 +499,6 @@ const serviceData = {
 
         // ==========================================
         // FACEBOOK SHARES
-        // NO PROVIDER ID
         // ==========================================
         "Facebook Shares": [
             {
@@ -559,7 +553,9 @@ let currentPaymentMethod = "upi";
 // ==========================================
 
 window.onload = function () {
+
     switchPlatform("instagram");
+
 };
 
 
@@ -570,34 +566,64 @@ window.onload = function () {
 function switchPlatform(platform) {
 
     currentPlatform = platform;
+
     selectedPackage = null;
 
-    document.getElementById("checkoutSection").style.display = "none";
-    document.getElementById("paymentCard").style.display = "none";
 
-    document.getElementById("btnInsta")
-        .classList.toggle(
-            "active",
-            platform === "instagram"
-        );
+    document.getElementById(
+        "checkoutSection"
+    ).style.display = "none";
 
-    document.getElementById("btnFb")
-        .classList.toggle(
-            "active",
-            platform === "facebook"
-        );
+
+    document.getElementById(
+        "paymentCard"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "btnInsta"
+    ).classList.toggle(
+        "active",
+        platform === "instagram"
+    );
+
+
+    document.getElementById(
+        "btnFb"
+    ).classList.toggle(
+        "active",
+        platform === "facebook"
+    );
+
 
     const heroTitle =
-        document.getElementById("heroTitle");
+        document.getElementById(
+            "heroTitle"
+        );
+
 
     const heroLogoIcon =
-        document.getElementById("heroLogoIcon");
+        document.getElementById(
+            "heroLogoIcon"
+        );
+
 
     const linkInputLabel =
-        document.getElementById("linkInputLabel");
+        document.getElementById(
+            "linkInputLabel"
+        );
+
 
     const linkInput =
-        document.getElementById("link");
+        document.getElementById(
+            "link"
+        );
+
+
+    const selectedPlatformIcon =
+        document.getElementById(
+            "selectedPlatformIcon"
+        );
 
 
     if (platform === "instagram") {
@@ -605,31 +631,58 @@ function switchPlatform(platform) {
         heroTitle.innerText =
             "Instagram Boost";
 
+
         heroLogoIcon.innerHTML =
             '<i class="fa-brands fa-instagram"></i>';
+
 
         linkInputLabel.innerText =
             "Enter Instagram Target Link / Username:";
 
+
         linkInput.placeholder =
             "https://instagram.com/your_username";
 
-    } else {
+
+        if (selectedPlatformIcon) {
+
+            selectedPlatformIcon.className =
+                "fa-brands fa-instagram";
+
+        }
+
+    }
+
+    else {
 
         heroTitle.innerText =
             "Facebook Boost";
 
+
         heroLogoIcon.innerHTML =
             '<i class="fa-brands fa-facebook"></i>';
+
 
         linkInputLabel.innerText =
             "Enter Facebook Profile / Post Link:";
 
+
         linkInput.placeholder =
             "https://facebook.com/your_link";
+
+
+        if (selectedPlatformIcon) {
+
+            selectedPlatformIcon.className =
+                "fa-brands fa-facebook";
+
+        }
+
     }
 
+
     renderCategoryTabs();
+
 }
 
 
@@ -640,26 +693,37 @@ function switchPlatform(platform) {
 function renderCategoryTabs() {
 
     const tabsContainer =
-        document.getElementById("categoryTabs");
+        document.getElementById(
+            "categoryTabs"
+        );
+
 
     tabsContainer.innerHTML = "";
 
+
     const categories =
         Object.keys(
-            serviceData[currentPlatform]
+            serviceData[
+                currentPlatform
+            ]
         );
+
 
     currentCategory =
         categories[0];
 
 
     categories.forEach(
-        (cat, index) => {
+        (
+            cat,
+            index
+        ) => {
 
             const tabBtn =
                 document.createElement(
                     "button"
                 );
+
 
             tabBtn.className =
                 `cat-tab ${
@@ -668,12 +732,14 @@ function renderCategoryTabs() {
                         : ""
                 }`;
 
+
             tabBtn.innerText =
                 cat;
 
 
             tabBtn.onclick =
                 function () {
+
 
                     document
                         .querySelectorAll(
@@ -686,25 +752,31 @@ function renderCategoryTabs() {
                                 )
                         );
 
+
                     tabBtn.classList.add(
                         "active"
                     );
 
+
                     currentCategory =
                         cat;
 
+
                     renderPackages();
+
                 };
 
 
             tabsContainer.appendChild(
                 tabBtn
             );
+
         }
     );
 
 
     renderPackages();
+
 }
 
 
@@ -719,17 +791,21 @@ function renderPackages() {
             "packageList"
         );
 
+
     packageList.innerHTML = "";
+
 
     document.getElementById(
         "checkoutSection"
     ).style.display =
         "none";
 
+
     document.getElementById(
         "paymentCard"
     ).style.display =
         "none";
+
 
     selectedPackage =
         null;
@@ -750,7 +826,9 @@ function renderPackages() {
 
 
     packages.forEach(
-        (pkg) => {
+        (
+            pkg
+        ) => {
 
 
             // ==========================================
@@ -767,6 +845,7 @@ function renderPackages() {
                         "div"
                     );
 
+
                 customDiv.className =
                     "custom-card";
 
@@ -779,14 +858,21 @@ function renderPackages() {
                             color: #a855f7;
                             font-size: 13px;
                         ">
+
                             ${pkg.name} (Custom Qty)
+
                         </strong>
+
 
                         <p style="
                             font-size: 10px;
                             color: #94a3b8;
                         ">
-                            Rate: ₹${pkg.pricePer1000 || 0} per 1000 Qty
+
+                            Rate:
+                            ₹${pkg.pricePer1000 || 0}
+                            per 1000 Qty
+
                         </p>
 
                     </div>
@@ -811,12 +897,14 @@ function renderPackages() {
                     </div>
 
 
-                    <div style="
-                        font-size: 12px;
-                        font-weight: 800;
-                        color: #22c55e;
-                    "
-                    id="customPriceDisplay">
+                    <div
+                        style="
+                            font-size: 12px;
+                            font-weight: 800;
+                            color: #22c55e;
+                        "
+                        id="customPriceDisplay"
+                    >
 
                         Total: ₹0.00 INR
 
@@ -842,6 +930,7 @@ function renderPackages() {
                     document.createElement(
                         "div"
                     );
+
 
                 card.className =
                     "pkg-card";
@@ -888,7 +977,9 @@ function renderPackages() {
                                                 "badge-popular"
                                             }
                                         ">
+
                                             ${pkg.badge}
+
                                         </span>
                                         `
                                         : ""
@@ -920,10 +1011,12 @@ function renderPackages() {
                 packageList.appendChild(
                     card
                 );
+
             }
 
         }
     );
+
 }
 
 
@@ -951,7 +1044,9 @@ function calculateCustomPrice(
         );
 
 
-    if (qty > 0) {
+    if (
+        qty > 0
+    ) {
 
         const total =
             (
@@ -990,7 +1085,9 @@ function calculateCustomPrice(
             total.toFixed(2)
         );
 
-    } else {
+    }
+
+    else {
 
         priceDisplay.innerText =
             "Total: ₹0.00 INR";
@@ -1002,9 +1099,17 @@ function calculateCustomPrice(
             "none";
 
 
+        document.getElementById(
+            "paymentCard"
+        ).style.display =
+            "none";
+
+
         selectedPackage =
             null;
+
     }
+
 }
 
 
@@ -1059,6 +1164,7 @@ function selectPackageCard(
             pkgData.price
         ).toFixed(2)
     );
+
 }
 
 
@@ -1085,7 +1191,9 @@ function extractQuantity(
         );
 
 
-    if (!match) {
+    if (
+        !match
+    ) {
 
         return 0;
 
@@ -1126,6 +1234,7 @@ function extractQuantity(
     return Math.floor(
         number
     );
+
 }
 
 
@@ -1144,9 +1253,58 @@ function showCheckoutSummary(
         );
 
 
+    const selectedServiceName =
+        document.getElementById(
+            "selectedServiceName"
+        );
+
+
+    const selectedServicePrice =
+        document.getElementById(
+            "selectedServicePrice"
+        );
+
+
+    const upiAmountDisplay =
+        document.getElementById(
+            "upiAmountDisplay"
+        );
+
+
+    if (
+        selectedServiceName
+    ) {
+
+        selectedServiceName.innerText =
+            pkgName;
+
+    }
+
+
+    if (
+        selectedServicePrice
+    ) {
+
+        selectedServicePrice.innerText =
+            `₹${price}`;
+
+    }
+
+
+    if (
+        upiAmountDisplay
+    ) {
+
+        upiAmountDisplay.innerText =
+            `₹${price}`;
+
+    }
+
+
     summaryBox.innerHTML = `
 
         Selected:
+
         <strong>
             ${pkgName}
         </strong>
@@ -1175,9 +1333,17 @@ function showCheckoutSummary(
         "block";
 
 
+    document.getElementById(
+        "paymentCard"
+    ).style.display =
+        "none";
+
+
     checkoutSec.scrollIntoView({
-        behavior: "smooth"
+        behavior: "smooth",
+        block: "start"
     });
+
 }
 
 
@@ -1196,23 +1362,29 @@ function generateOrder() {
             .trim();
 
 
-    if (!selectedPackage) {
+    if (
+        !selectedPackage
+    ) {
 
         alert(
             "Please select a package first!"
         );
 
         return;
+
     }
 
 
-    if (!link) {
+    if (
+        !link
+    ) {
 
         alert(
             "Please enter target link or username!"
         );
 
         return;
+
     }
 
 
@@ -1242,11 +1414,34 @@ function generateOrder() {
     document.getElementById(
         "qrCodeImg"
     ).src =
+
         `https://api.qrserver.com/v1/create-qr-code/` +
+
         `?size=250x250` +
+
         `&data=${encodeURIComponent(
             upiUrl
         )}`;
+
+
+    // ==========================================
+    // UPDATE UPI AMOUNT
+    // ==========================================
+
+    const upiAmountDisplay =
+        document.getElementById(
+            "upiAmountDisplay"
+        );
+
+
+    if (
+        upiAmountDisplay
+    ) {
+
+        upiAmountDisplay.innerText =
+            `₹${totalPrice}`;
+
+    }
 
 
     // ==========================================
@@ -1290,8 +1485,10 @@ function generateOrder() {
     document.getElementById(
         "paymentCard"
     ).scrollIntoView({
-        behavior: "smooth"
+        behavior: "smooth",
+        block: "start"
     });
+
 }
 
 
@@ -1310,6 +1507,7 @@ function switchPaymentMethod(
     document.getElementById(
         "upiPaymentView"
     ).style.display =
+
         method === "upi"
             ? "block"
             : "none";
@@ -1318,6 +1516,7 @@ function switchPaymentMethod(
     document.getElementById(
         "binancePaymentView"
     ).style.display =
+
         method === "binance"
             ? "block"
             : "none";
@@ -1356,11 +1555,13 @@ function switchPaymentMethod(
     ) {
 
         utrLabel.innerHTML =
+
             `<i class="fa-solid fa-receipt"></i>
             Enter UPI UTR / Ref No:`;
 
 
         utrInput.placeholder =
+
             "Enter your UPI UTR / Reference Number";
 
     }
@@ -1368,14 +1569,17 @@ function switchPaymentMethod(
     else {
 
         utrLabel.innerHTML =
+
             `<i class="fa-solid fa-receipt"></i>
             Enter Binance TxID / Order ID:`;
 
 
         utrInput.placeholder =
+
             "Enter your Binance Transaction ID";
 
     }
+
 }
 
 
@@ -1413,6 +1617,7 @@ function confirmPaymentWithUTR() {
         );
 
         return;
+
     }
 
 
@@ -1425,6 +1630,7 @@ function confirmPaymentWithUTR() {
         );
 
         return;
+
     }
 
 
@@ -1451,6 +1657,7 @@ function confirmPaymentWithUTR() {
     ) {
 
         amountText =
+
             `$${usdtPrice} USDT (₹${price} INR)`;
 
     }
@@ -1458,11 +1665,12 @@ function confirmPaymentWithUTR() {
 
     // ==========================================
     // PROVIDER ID
-    // শুধুমাত্র Instagram-এর
-    // Provider ID থাকলে WhatsApp-এ দেখাবে
+    // Instagram Provider ID থাকলে দেখাবে
     // ==========================================
 
-    let providerText = "";
+    let providerText =
+        "";
+
 
     if (
         currentPlatform === "instagram" &&
@@ -1470,6 +1678,7 @@ function confirmPaymentWithUTR() {
     ) {
 
         providerText =
+
             `*Provider ID:* ${selectedPackage.providerId}%0A`;
 
     }

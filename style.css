@@ -9,17 +9,8 @@
 
 body {
     background: #fdf2f8;
-    background-image:
-        radial-gradient(
-            circle at 10% 10%,
-            rgba(244, 114, 182, 0.15) 0%,
-            transparent 40%
-        ),
-        radial-gradient(
-            circle at 90% 90%,
-            rgba(192, 132, 252, 0.15) 0%,
-            transparent 40%
-        );
+    background-image: radial-gradient(circle at 10% 10%, rgba(244, 114, 182, 0.15) 0%, transparent 40%),
+                      radial-gradient(circle at 90% 90%, rgba(192, 132, 252, 0.15) 0%, transparent 40%);
     color: #1e293b;
     min-height: 100vh;
     padding: 12px;
@@ -32,11 +23,7 @@ body {
     max-width: 440px;
 }
 
-
-/* ==========================================
-   SUPPORT HEADER
-========================================== */
-
+/* Support Header */
 .hero-actions {
     display: flex;
     gap: 10px;
@@ -54,24 +41,13 @@ body {
     align-items: center;
     gap: 6px;
     background: #ffffff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-.btn-telegram {
-    border: 1px solid rgba(56, 189, 248, 0.4);
-    color: #0284c7;
-}
+.btn-telegram { border: 1px solid rgba(56, 189, 248, 0.4); color: #0284c7; }
+.btn-whatsapp { border: 1px solid rgba(34, 197, 94, 0.4); color: #16a34a; }
 
-.btn-whatsapp {
-    border: 1px solid rgba(34, 197, 94, 0.4);
-    color: #16a34a;
-}
-
-
-/* ==========================================
-   PLATFORM SWITCHER
-========================================== */
-
+/* Platform Switcher Buttons */
 .platform-switch-container {
     display: flex;
     gap: 8px;
@@ -100,26 +76,14 @@ body {
 }
 
 .platform-btn.active {
-    background: linear-gradient(
-        135deg,
-        #d946ef 0%,
-        #8b5cf6 100%
-    );
+    background: linear-gradient(135deg, #d946ef 0%, #8b5cf6 100%);
     color: #ffffff;
     box-shadow: 0 4px 12px rgba(217, 70, 239, 0.3);
 }
 
-
-/* ==========================================
-   HERO STATUS BANNER
-========================================== */
-
+/* Hero Status Banner */
 .hero-banner {
-    background: linear-gradient(
-        135deg,
-        #ec4899 0%,
-        #8b5cf6 100%
-    );
+    background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
     border-radius: 20px;
     padding: 18px 16px;
     color: #ffffff;
@@ -157,22 +121,10 @@ body {
     backdrop-filter: blur(5px);
 }
 
-.hero-banner h2 {
-    font-size: 20px;
-    font-weight: 800;
-    margin-bottom: 2px;
-}
+.hero-banner h2 { font-size: 20px; font-weight: 800; margin-bottom: 2px; }
+.hero-sub { font-size: 11px; opacity: 0.9; margin-bottom: 14px; }
 
-.hero-sub {
-    font-size: 11px;
-    opacity: 0.9;
-    margin-bottom: 14px;
-}
-
-.hero-stats-grid {
-    display: flex;
-    gap: 8px;
-}
+.hero-stats-grid { display: flex; gap: 8px; }
 
 .stat-card {
     flex: 1;
@@ -184,28 +136,11 @@ body {
     text-align: center;
 }
 
-.stat-icon {
-    font-size: 11px;
-    display: block;
-    margin-bottom: 2px;
-}
+.stat-icon { font-size: 11px; display: block; margin-bottom: 2px; }
+.stat-num { font-size: 13px; font-weight: 800; display: block; }
+.stat-lbl { font-size: 9px; opacity: 0.8; }
 
-.stat-num {
-    font-size: 13px;
-    font-weight: 800;
-    display: block;
-}
-
-.stat-lbl {
-    font-size: 9px;
-    opacity: 0.8;
-}
-
-
-/* ==========================================
-   CATEGORY TABS
-========================================== */
-
+/* Scrollable Horizontal Category Tabs */
 .category-tabs-wrapper {
     overflow-x: auto;
     white-space: nowrap;
@@ -214,14 +149,9 @@ body {
     scrollbar-width: none;
 }
 
-.category-tabs-wrapper::-webkit-scrollbar {
-    display: none;
-}
+.category-tabs-wrapper::-webkit-scrollbar { display: none; }
 
-.category-tabs {
-    display: inline-flex;
-    gap: 8px;
-}
+.category-tabs { display: inline-flex; gap: 8px; }
 
 .cat-tab {
     padding: 8px 16px;
@@ -233,73 +163,17 @@ body {
     color: #475569;
     cursor: pointer;
     transition: all 0.2s;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
 }
 
 .cat-tab.active {
-    background: linear-gradient(
-        135deg,
-        #a855f7,
-        #ec4899
-    );
+    background: linear-gradient(135deg, #a855f7, #ec4899);
     color: #ffffff;
     border-color: transparent;
     box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
 }
 
-
-/* ==========================================
-   STEP TITLE
-========================================== */
-
-.step-title-card {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 12px 14px;
-    margin-bottom: 10px;
-    border: 1px solid #fae8ff;
-    box-shadow: 0 3px 10px rgba(244, 114, 182, 0.05);
-}
-
-.step-number {
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
-    border-radius: 10px;
-    background: linear-gradient(
-        135deg,
-        #d946ef,
-        #8b5cf6
-    );
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 800;
-    box-shadow: 0 4px 10px rgba(168, 85, 247, 0.25);
-}
-
-.step-title-card h3 {
-    font-size: 14px;
-    font-weight: 800;
-    color: #1e293b;
-    margin-bottom: 2px;
-}
-
-.step-title-card p {
-    font-size: 10px;
-    color: #94a3b8;
-}
-
-
-/* ==========================================
-   SERVICE PACKAGE CARDS
-========================================== */
-
+/* Service Package Cards */
 .package-list-container {
     display: flex;
     flex-direction: column;
@@ -320,28 +194,19 @@ body {
     transition: all 0.2s;
 }
 
-.pkg-card:hover,
-.pkg-card.selected {
+.pkg-card:hover, .pkg-card.selected {
     border-color: #d946ef;
     background: #fdf4ff;
     transform: translateY(-1px);
     box-shadow: 0 5px 15px rgba(217, 70, 239, 0.15);
 }
 
-.pkg-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
+.pkg-left { display: flex; align-items: center; gap: 12px; }
 
 .pkg-icon {
     width: 38px;
     height: 38px;
-    background: linear-gradient(
-        135deg,
-        #f43f5e,
-        #a855f7
-    );
+    background: linear-gradient(135deg, #f43f5e, #a855f7);
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -350,10 +215,7 @@ body {
     font-size: 18px;
 }
 
-.pkg-info {
-    display: flex;
-    flex-direction: column;
-}
+.pkg-info { display: flex; flex-direction: column; }
 
 .pkg-title {
     font-size: 13px;
@@ -364,11 +226,7 @@ body {
     gap: 6px;
 }
 
-.pkg-sub {
-    font-size: 10px;
-    color: #94a3b8;
-    margin-top: 1px;
-}
+.pkg-sub { font-size: 10px; color: #94a3b8; margin-top: 1px; }
 
 .pkg-badge {
     font-size: 9px;
@@ -378,36 +236,13 @@ body {
     font-weight: 800;
 }
 
-.badge-popular {
-    background: linear-gradient(
-        90deg,
-        #3b82f6,
-        #8b5cf6
-    );
-}
-
-.badge-best {
-    background: linear-gradient(
-        90deg,
-        #f59e0b,
-        #ef4444
-    );
-}
-
-.badge-demo {
-    background: #94a3b8;
-}
-
-.badge-real {
-    background: #6366f1;
-}
+.badge-popular { background: linear-gradient(90deg, #3b82f6, #8b5cf6); }
+.badge-best { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+.badge-demo { background: #94a3b8; }
+.badge-real { background: #6366f1; }
 
 .pkg-price-btn {
-    background: linear-gradient(
-        135deg,
-        #d946ef 0%,
-        #8b5cf6 100%
-    );
+    background: linear-gradient(135deg, #d946ef 0%, #8b5cf6 100%);
     color: #fff;
     font-weight: 800;
     font-size: 12px;
@@ -415,22 +250,14 @@ body {
     border-radius: 16px;
 }
 
-
-/* ==========================================
-   CUSTOM QUANTITY CARD
-========================================== */
-
 .custom-card {
     background: #ffffff;
     border: 1px solid #d946ef;
     border-radius: 16px;
     padding: 14px;
-    box-shadow: 0 4px 12px rgba(217, 70, 239, 0.08);
 }
 
-.input-box {
-    margin-bottom: 12px;
-}
+.input-box { margin-bottom: 12px; }
 
 .input-box label {
     display: block;
@@ -451,113 +278,19 @@ input {
     color: #0f172a;
 }
 
-input:focus {
-    border-color: #d946ef;
-    background: #ffffff;
-}
+input:focus { border-color: #d946ef; background: #ffffff; }
 
-
-/* ==========================================
-   CHECKOUT CARD
-========================================== */
-
+/* Checkout Section */
 .checkout-card {
     background: #ffffff;
     border-radius: 20px;
     padding: 16px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
     margin-bottom: 16px;
     border: 1px solid #fae8ff;
 }
 
-.checkout-step-title {
-    margin: 0 0 14px 0;
-    padding: 0;
-    border: none;
-    box-shadow: none;
-    background: transparent;
-}
-
-
-/* ==========================================
-   SELECTED SERVICE BOX
-========================================== */
-
-.selected-service-box {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: linear-gradient(
-        135deg,
-        #fdf4ff,
-        #faf5ff
-    );
-    border: 1px solid #e9d5ff;
-    border-radius: 14px;
-    padding: 12px;
-    margin-bottom: 12px;
-}
-
-.selected-service-icon {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    border-radius: 12px;
-    background: linear-gradient(
-        135deg,
-        #ec4899,
-        #8b5cf6
-    );
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-}
-
-.selected-service-info {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.selected-service-label {
-    font-size: 9px;
-    color: #94a3b8;
-    font-weight: 700;
-    margin-bottom: 3px;
-}
-
-.selected-service-info strong {
-    font-size: 12px;
-    color: #1e293b;
-    line-height: 1.3;
-}
-
-.selected-service-price {
-    text-align: right;
-    display: flex;
-    flex-direction: column;
-}
-
-.selected-service-price span {
-    font-size: 9px;
-    color: #94a3b8;
-    font-weight: 700;
-}
-
-.selected-service-price strong {
-    font-size: 15px;
-    color: #22c55e;
-    font-weight: 800;
-    margin-top: 2px;
-}
-
-
-/* ==========================================
-   ORDER SUMMARY
-========================================== */
+.checkout-header h3 { font-size: 14px; color: #0f172a; margin-bottom: 10px; }
 
 .order-summary-pill {
     background: #fdf4ff;
@@ -570,88 +303,24 @@ input:focus {
     margin-bottom: 12px;
 }
 
-
-/* ==========================================
-   ACTION BUTTON
-========================================== */
-
 .action-btn {
     width: 100%;
     padding: 12px;
-    background: linear-gradient(
-        135deg,
-        #d946ef,
-        #8b5cf6
-    );
+    background: linear-gradient(135deg, #d946ef, #8b5cf6);
     color: #fff;
     font-weight: 800;
     font-size: 13px;
     border: none;
     border-radius: 12px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: all 0.2s;
 }
 
-.action-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 5px 15px rgba(139, 92, 246, 0.25);
-}
-
-.action-btn:active {
-    transform: translateY(0);
-}
-
-
-/* ==========================================
-   PAYMENT CARD
-========================================== */
-
-.payment-card {
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px solid #f1f5f9;
-}
-
-.payment-step-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #0f172a;
-    font-size: 15px;
-    font-weight: 800;
-    margin-bottom: 14px;
-}
-
-.payment-step-number {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: #6366f1;
-    color: #ffffff;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-}
-
-
-/* ==========================================
-   PAYMENT TABS
-========================================== */
-
-.pay-toggle-tabs {
-    display: flex;
-    gap: 8px;
-    margin: 14px 0;
-}
+/* Payment Switch Tabs */
+.pay-toggle-tabs { display: flex; gap: 8px; margin: 14px 0; }
 
 .pay-tab {
     flex: 1;
-    padding: 9px;
+    padding: 8px;
     background: #f1f5f9;
     border: none;
     border-radius: 10px;
@@ -659,46 +328,9 @@ input:focus {
     font-weight: 700;
     color: #64748b;
     cursor: pointer;
-    transition: all 0.2s;
 }
 
-.pay-tab.active {
-    background: #a855f7;
-    color: #fff;
-}
-
-
-/* ==========================================
-   PAYMENT AMOUNT
-========================================== */
-
-.payment-amount-box {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #ffffff;
-    border: 1px solid #e9d5ff;
-    border-radius: 10px;
-    padding: 9px 12px;
-    margin-bottom: 12px;
-}
-
-.payment-amount-box span {
-    font-size: 11px;
-    color: #64748b;
-    font-weight: 700;
-}
-
-.payment-amount-box strong {
-    font-size: 16px;
-    color: #22c55e;
-    font-weight: 800;
-}
-
-
-/* ==========================================
-   QR PAYMENT
-========================================== */
+.pay-tab.active { background: #a855f7; color: #fff; }
 
 .qr-box {
     text-align: center;
@@ -712,117 +344,55 @@ input:focus {
     height: 170px;
     border-radius: 8px;
     border: 1px solid #e2e8f0;
-    background: #ffffff;
 }
 
-.qr-sub {
-    font-size: 10px;
-    color: #64748b;
-    margin-top: 8px;
-    line-height: 1.5;
-}
+.qr-sub { font-size: 10px; color: #64748b; margin-top: 6px; }
 
-
-/* ==========================================
-   BINANCE PAYMENT
-========================================== */
-
-.binance-payment-box {
+/* Binance Box */
+.binance-info-card {
     background: #fefce8;
     border: 1px solid #fef08a;
-    padding: 14px;
+    padding: 12px;
     border-radius: 12px;
     text-align: center;
 }
 
-.binance-title {
-    font-size: 11px;
-    color: #713f12;
-    font-weight: 700;
-    margin-bottom: 10px;
-}
-
-.binance-payment-box img {
-    max-width: 140px;
-    width: 100%;
-    border-radius: 6px;
-    background: #ffffff;
-    padding: 5px;
-}
-
-.binance-nickname {
-    border: 1px solid #fde68a;
-    background: #ffffff;
-    padding: 9px 10px;
-    border-radius: 8px;
-    margin-top: 12px;
-    font-size: 11px;
-    color: #64748b;
-}
-
-.binance-nickname strong {
-    color: #d97706;
-}
-
-.usdt-amount-box {
-    margin-top: 10px;
-    margin-bottom: 8px;
-}
-
-.usdt-amount-box span {
-    background: #facc15;
-    color: #000000;
-    font-weight: 800;
-    padding: 5px 16px;
-    border-radius: 20px;
-    font-size: 14px;
+.usdt-badge {
     display: inline-block;
+    background: #eab308;
+    color: #fff;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-top: 4px;
 }
 
-.binance-sub {
-    font-size: 10px;
-    color: #92400e;
-    margin-top: 8px;
-}
-
-
-/* ==========================================
-   UTR / TRANSACTION INPUT
-========================================== */
-
-.margin-top-15 {
-    margin-top: 12px;
-}
-
-#utrLabel {
-    font-size: 13px;
-    color: #64748b;
-    margin-bottom: 6px;
-    display: block;
-    font-weight: 700;
-}
-
-
-/* ==========================================
-   PAYMENT NOTICE
-========================================== */
-
-.payment-notice {
-    background: rgba(234, 179, 8, 0.1);
-    border-left: 3px solid #facc15;
-    padding: 10px;
-    border-radius: 6px;
-    text-align: left;
-    margin: 12px 0;
+.crypto-details-box {
+    margin-top: 10px;
     font-size: 11px;
-    color: #ca8a04;
-    line-height: 1.5;
+    text-align: left;
+    background: #fff;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #fef08a;
 }
 
+.crypto-details-box p {
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-/* ==========================================
-   WHATSAPP SUBMIT
-========================================== */
+.copy-btn {
+    background: #e2e8f0;
+    border: none;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    cursor: pointer;
+}
 
 .whatsapp-submit-btn {
     width: 100%;
@@ -838,120 +408,13 @@ input:focus {
     align-items: center;
     justify-content: center;
     gap: 6px;
-    transition: all 0.2s;
 }
 
-.whatsapp-submit-btn:hover {
-    background: #16a34a;
-    transform: translateY(-1px);
-}
-
-.whatsapp-submit-btn:active {
-    transform: translateY(0);
-}
-
-
-/* ==========================================
-   FOOTER
-========================================== */
+.margin-top-15 { margin-top: 12px; }
 
 .footer-note {
     text-align: center;
     font-size: 10px;
     color: #94a3b8;
     margin-bottom: 20px;
-}
-
-
-/* ==========================================
-   MOBILE RESPONSIVE
-========================================== */
-
-@media (max-width: 380px) {
-
-    body {
-        padding: 8px;
-    }
-
-    .main-wrapper {
-        max-width: 100%;
-    }
-
-    .hero-actions {
-        gap: 6px;
-    }
-
-    .glass-btn {
-        padding: 8px 10px;
-        font-size: 10px;
-    }
-
-    .hero-banner {
-        padding: 16px 12px;
-    }
-
-    .hero-stats-grid {
-        gap: 5px;
-    }
-
-    .stat-card {
-        padding: 7px 4px;
-    }
-
-    .stat-num {
-        font-size: 11px;
-    }
-
-    .stat-lbl {
-        font-size: 8px;
-    }
-
-    .pkg-card {
-        padding: 10px;
-    }
-
-    .pkg-left {
-        gap: 8px;
-    }
-
-    .pkg-icon {
-        width: 34px;
-        height: 34px;
-        min-width: 34px;
-        font-size: 15px;
-    }
-
-    .pkg-title {
-        font-size: 11px;
-    }
-
-    .pkg-sub {
-        font-size: 9px;
-    }
-
-    .pkg-price-btn {
-        font-size: 11px;
-        padding: 6px 10px;
-    }
-
-    .selected-service-box {
-        padding: 10px;
-        gap: 8px;
-    }
-
-    .selected-service-icon {
-        width: 36px;
-        height: 36px;
-        min-width: 36px;
-        font-size: 16px;
-    }
-
-    .selected-service-info strong {
-        font-size: 11px;
-    }
-
-    .selected-service-price strong {
-        font-size: 13px;
-    }
-
 }

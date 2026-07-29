@@ -1,199 +1,554 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Boost Panel</title>
-    
-    <!-- PWA / Web App Manifest & Theme -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0f172a">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="SMM Panel">
-    <link rel="apple-touch-icon" href="icon-192.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Boost Panel</title>
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Open Graph / Facebook / Messenger Meta Tags -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://raj-panel.github.io/Smm-Panel.com/">
-    <meta property="og:title" content="Raj Social Panel - Premium Social Boosting Services">
-    <meta property="og:description" content="Get instant Followers, Likes, Views for Instagram and Facebook at lowest prices!">
-    
-    <!-- Social Banner Image & Cache Optimization -->
-    <meta property="og:image" content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0">
-    <meta property="og:image:secure_url" content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0">
-    <meta property="og:image:type" content="image/png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <!-- PWA / Web App Manifest & Theme -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SMM Panel">
+    <link rel="apple-touch-icon" href="icon-192.png">
 
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://raj-panel.github.io/Smm-Panel.com/">
-    <meta name="twitter:title" content="Raj Social Panel - Premium Social Boosting Services">
-    <meta name="twitter:description" content="Instant Delivery & Premium Quality Social Media Services.">
-    <meta name="twitter:image" content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Open Graph / Facebook / Messenger Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://raj-panel.github.io/Smm-Panel.com/">
+    <meta property="og:title" content="Raj Social Panel - Premium Social Boosting Services">
+    <meta property="og:description" content="Get instant Followers, Likes, Views for Instagram and Facebook at lowest prices!">
+
+    <!-- Social Banner Image & Cache Optimization -->
+    <meta property="og:image" content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0">
+    <meta property="og:image:secure_url" content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://raj-panel.github.io/Smm-Panel.com/">
+    <meta name="twitter:title" content="Raj Social Panel - Premium Social Boosting Services">
+    <meta name="twitter:description" content="Instant Delivery & Premium Quality Social Media Services.">
+    <meta name="twitter:image" content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0">
 </head>
+
 <body>
 
-    <div class="main-wrapper">
-        
-        <!-- Support Buttons Header -->
-        <div class="hero-actions">
-            <a href="https://t.me/RajSocialPanel" target="_blank" class="glass-btn btn-telegram">
-                <i class="fa-brands fa-telegram"></i> Telegram Support
-            </a>
-            <a href="https://wa.me/919337028344" target="_blank" class="glass-btn btn-whatsapp">
-                <i class="fa-brands fa-whatsapp"></i> WhatsApp Support
-            </a>
-        </div>
+    <div class="main-wrapper">
 
-        <!-- Platform Switcher -->
-        <div class="platform-switch-container">
-            <button class="platform-btn active" id="btnInsta" onclick="switchPlatform('instagram')">
-                <i class="fa-brands fa-instagram"></i> Instagram
-            </button>
-            <button class="platform-btn" id="btnFb" onclick="switchPlatform('facebook')">
-                <i class="fa-brands fa-facebook"></i> Facebook
-            </button>
-        </div>
+        <!-- Support Buttons Header -->
+        <div class="hero-actions">
+            <a href="https://t.me/RajSocialPanel" target="_blank" class="glass-btn btn-telegram">
+                <i class="fa-brands fa-telegram"></i>
+                Telegram Support
+            </a>
 
-        <!-- Hero Status Banner -->
-        <div class="hero-banner">
-            <div class="hero-top-row">
-                <div class="hero-logo-box" id="heroLogoIcon">
-                    <i class="fa-brands fa-instagram"></i>
-                </div>
-                <span class="provider-badge">#1 Service Provider</span>
-            </div>
-            <h2 id="heroTitle">Instagram Boost</h2>
-            <p class="hero-sub">Real engagement delivered fast & safely</p>
+            <a href="https://wa.me/919337028344" target="_blank" class="glass-btn btn-whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+                WhatsApp Support
+            </a>
+        </div>
 
-            <div class="hero-stats-grid">
-                <div class="stat-card">
-                    <span class="stat-icon"><i class="fa-solid fa-rocket"></i></span>
-                    <span class="stat-num" id="totalOrders">2,99,784</span>
-                    <span class="stat-lbl">Orders Delivered</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-icon"><i class="fa-solid fa-headset"></i></span>
-                    <span class="stat-num">24/7</span>
-                    <span class="stat-lbl">Support</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-icon"><i class="fa-solid fa-shield-halved"></i></span>
-                    <span class="stat-num">100%</span>
-                    <span class="stat-lbl">Safe & Refundable</span>
-                </div>
-            </div>
-        </div>
+        <!-- Platform Switcher -->
+        <div class="platform-switch-container">
+            <button
+                class="platform-btn active"
+                id="btnInsta"
+                onclick="switchPlatform('instagram')"
+            >
+                <i class="fa-brands fa-instagram"></i>
+                Instagram
+            </button>
 
-        <!-- Scrollable Category Tabs -->
-        <div class="category-tabs-wrapper">
-            <div class="category-tabs" id="categoryTabs"></div>
-        </div>
+            <button
+                class="platform-btn"
+                id="btnFb"
+                onclick="switchPlatform('facebook')"
+            >
+                <i class="fa-brands fa-facebook"></i>
+                Facebook
+            </button>
+        </div>
 
-        <!-- Package List Section -->
-        <div class="package-list-container" id="packageList"></div>
+        <!-- Hero Status Banner -->
+        <div class="hero-banner">
 
-        <!-- Link & Checkout Drawer -->
-        <div class="checkout-card" id="checkoutSection" style="display: none;">
-            <div class="checkout-header">
-                <h3><i class="fa-solid fa-cart-shopping"></i> Complete Your Order</h3>
-            </div>
-            <div class="order-summary-pill" id="selectedSummary"></div>
+            <div class="hero-top-row">
 
-            <div class="input-box">
-                <label id="linkInputLabel">Enter Target Link / Username:</label>
-                <input type="text" id="link" placeholder="https://instagram.com/your_username">
-            </div>
+                <div class="hero-logo-box" id="heroLogoIcon">
+                    <i class="fa-brands fa-instagram"></i>
+                </div>
 
-            <button class="action-btn" onclick="generateOrder()">Proceed to Payment <i class="fa-solid fa-arrow-right"></i></button>
+                <span class="provider-badge">
+                    #1 Service Provider
+                </span>
 
-            <!-- Payment Gateway Details -->
-            <div class="payment-card" id="paymentCard" style="display: none;">
-                
-                <div style="font-weight: 700; font-size: 16px; margin-bottom: 15px; color: #fff;">
-                    <span style="background: #6366f1; color: #fff; border-radius: 50%; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; margin-right: 6px;">4</span> Complete Payment
-                </div>
+            </div>
 
-                <div class="pay-toggle-tabs">
-                    <button class="pay-tab active" id="tabUpi" onclick="switchPaymentMethod('upi')">
-                        <i class="fa-solid fa-qrcode"></i> UPI QR Code
-                    </button>
-                    <button class="pay-tab" id="tabBinance" onclick="switchPaymentMethod('binance')">
-                        <i class="fa-solid fa-wallet"></i> Binance Pay
-                    </button>
-                </div>
+            <h2 id="heroTitle">
+                Instagram Boost
+            </h2>
 
-                <!-- UPI Payment -->
-                <div id="upiPaymentView" class="qr-box" style="text-align: center;">
-                    <img id="qrCodeImg" src="" alt="Payment QR Code">
-                    <p class="qr-sub" style="margin-top: 12px; font-size: 12px; color: #94a3b8; font-weight: 500;">
-                        Scan & Pay Exact Amount with GPay / PhonePe / Paytm
-                    </p>
-                </div>
+            <p class="hero-sub">
+                Real engagement delivered fast & safely
+            </p>
 
-                <!-- Binance Pay / USDT View -->
-                <div id="binancePaymentView" style="display: none; text-align: center;">
-                    <div style="background: #ffffff; padding: 15px; border-radius: 12px; display: inline-block; margin-bottom: 12px;">
-                        <p style="font-size: 11px; color: #000; font-weight: 600; margin-bottom: 8px;">Scan with Binance App to pay</p>
-                        <img src="binance-qr.png" alt="Binance QR Code" style="max-width: 140px; border-radius: 4px;">
-                    </div>
+            <div class="hero-stats-grid">
 
-                    <!-- Binance Nickname Row -->
-                    <div style="border: 1px solid #334155; background: rgba(15, 23, 42, 0.6); padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; font-size: 13px; color: #cbd5e1;">
-                        Binance Nickname: <strong style="color: #facc15;">Alex-Sahil786</strong>
-                    </div>
+                <div class="stat-card">
+                    <span class="stat-icon">
+                        <i class="fa-solid fa-rocket"></i>
+                    </span>
 
-                    <!-- Dynamic Dollar Badge -->
-                    <div style="margin-bottom: 8px;">
-                        <span id="usdtAmountDisplay" style="background: #facc15; color: #000; font-weight: 800; padding: 4px 16px; border-radius: 20px; font-size: 14px; display: inline-block;">$0.00 USDT</span>
-                    </div>
+                    <span class="stat-num" id="totalOrders">
+                        2,99,784
+                    </span>
 
-                    <p style="font-size: 11px; color: #94a3b8; margin-bottom: 15px;">
-                        Scan QR Code using Binance App to Pay USDT
-                    </p>
-                </div>
+                    <span class="stat-lbl">
+                        Orders Delivered
+                    </span>
+                </div>
 
-                <!-- UTR Input -->
-                <div class="input-box margin-top-15" style="text-align: left;">
-                    <label id="utrLabel" style="font-size: 13px; color: #cbd5e1; margin-bottom: 6px; display: block;">
-                        <i class="fa-solid fa-receipt"></i> Enter 12-Digit UPI UTR / Ref No:
-                    </label>
-                    <input type="text" id="utrNumber" placeholder="4029XXXXXXXX (12-Digit UTR)">
-                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">
+                        <i class="fa-solid fa-headset"></i>
+                    </span>
 
-                <!-- Yellow Notice Box -->
-                <div style="background: rgba(234, 179, 8, 0.1); border-left: 3px solid #facc15; padding: 10px; border-radius: 6px; text-align: left; margin: 12px 0; font-size: 11px; color: #facc15; line-height: 1.4;">
-                    <strong>⚠️ After completing payment, enter the UTR / TxID and submit your order on WhatsApp.</strong>
-                </div>
+                    <span class="stat-num">
+                        24/7
+                    </span>
 
-                <!-- WhatsApp Submit Button -->
-                <button class="whatsapp-submit-btn" onclick="confirmPaymentWithUTR()">
-                    <i class="fa-brands fa-whatsapp"></i> Submit Order on WhatsApp
-                </button>
-            </div>
-        </div>
+                    <span class="stat-lbl">
+                        Support
+                    </span>
+                </div>
 
-        <div class="footer-note">
-            ⚡ Fast Processing • 100% Refund Guarantee If Failed
-        </div>
-    </div>
+                <div class="stat-card">
+                    <span class="stat-icon">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </span>
 
-    <script src="script.js"></script>
+                    <span class="stat-num">
+                        100%
+                    </span>
 
-    <!-- Service Worker Registration for PWA -->
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js')
-            .then((reg) => console.log('Service Worker Registered Successfully:', reg))
-            .catch((err) => console.log('Service Worker Registration Failed:', err));
-        });
-      }
-    </script>
+                    <span class="stat-lbl">
+                        Safe & Refundable
+                    </span>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Scrollable Category Tabs -->
+        <div class="category-tabs-wrapper">
+            <div
+                class="category-tabs"
+                id="categoryTabs"
+            ></div>
+        </div>
+
+
+        <!-- Package List Section -->
+        <div
+            class="package-list-container"
+            id="packageList"
+        ></div>
+
+
+        <!-- ==========================================
+             NEW ORDER INTERFACE
+             ========================================== -->
+
+        <div
+            class="new-order-card"
+            id="checkoutSection"
+            style="display: none;"
+        >
+
+            <!-- Order Header -->
+            <div class="new-order-header">
+
+                <div class="new-order-icon">
+                    <i class="fa-brands fa-instagram"></i>
+                </div>
+
+                <div>
+                    <h3>
+                        Complete Your Order
+                    </h3>
+
+                    <p>
+                        Enter your details below
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- Selected Service -->
+            <div class="selected-service-box">
+
+                <div class="service-box-top">
+
+                    <div class="service-box-icon">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+
+                    <div class="service-box-info">
+
+                        <span class="service-box-label">
+                            Selected Service
+                        </span>
+
+                        <strong id="selectedServiceName">
+                            Instagram Followers
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Quantity & Price -->
+            <div class="order-details-grid">
+
+                <div class="order-detail-item">
+
+                    <span class="order-detail-label">
+                        <i class="fa-solid fa-layer-group"></i>
+                        Quantity
+                    </span>
+
+                    <strong id="selectedQuantity">
+                        1,000
+                    </strong>
+
+                </div>
+
+
+                <div class="order-detail-item price-detail">
+
+                    <span class="order-detail-label">
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                        Total Price
+                    </span>
+
+                    <strong id="selectedPrice">
+                        ₹50.00
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Target Link / Username -->
+            <div class="new-input-box">
+
+                <label id="linkInputLabel">
+                    <i class="fa-brands fa-instagram"></i>
+                    Instagram Username / Profile Link
+                </label>
+
+                <div class="input-with-icon">
+
+                    <i class="fa-solid fa-link"></i>
+
+                    <input
+                        type="text"
+                        id="link"
+                        placeholder="https://instagram.com/your_username"
+                    >
+
+                </div>
+
+                <small>
+                    Make sure your profile is public before placing the order.
+                </small>
+
+            </div>
+
+
+            <!-- Order Summary -->
+            <div class="final-order-summary">
+
+                <div class="summary-row">
+
+                    <span>
+                        Service
+                    </span>
+
+                    <strong id="summaryService">
+                        Instagram Followers
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Quantity
+                    </span>
+
+                    <strong id="summaryQuantity">
+                        1,000
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-divider"></div>
+
+
+                <div class="summary-total">
+
+                    <span>
+                        Total Payable
+                    </span>
+
+                    <strong id="selectedSummary">
+                        ₹50.00 INR
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Proceed Button -->
+            <button
+                class="new-action-btn"
+                onclick="generateOrder()"
+            >
+
+                <span>
+                    Proceed to Payment
+                </span>
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+        </div>
+
+
+        <!-- ==========================================
+             PAYMENT GATEWAY
+             ========================================== -->
+
+        <div
+            class="payment-card"
+            id="paymentCard"
+            style="display: none;"
+        >
+
+            <div class="payment-title">
+
+                <span class="payment-step-number">
+                    4
+                </span>
+
+                <span>
+                    Complete Payment
+                </span>
+
+            </div>
+
+
+            <!-- Payment Method Tabs -->
+            <div class="pay-toggle-tabs">
+
+                <button
+                    class="pay-tab active"
+                    id="tabUpi"
+                    onclick="switchPaymentMethod('upi')"
+                >
+                    <i class="fa-solid fa-qrcode"></i>
+                    UPI QR Code
+                </button>
+
+                <button
+                    class="pay-tab"
+                    id="tabBinance"
+                    onclick="switchPaymentMethod('binance')"
+                >
+                    <i class="fa-solid fa-wallet"></i>
+                    Binance Pay
+                </button>
+
+            </div>
+
+
+            <!-- UPI Payment -->
+            <div
+                id="upiPaymentView"
+                class="qr-box"
+            >
+
+                <img
+                    id="qrCodeImg"
+                    src=""
+                    alt="Payment QR Code"
+                >
+
+                <p class="qr-sub">
+                    Scan & Pay Exact Amount with
+                    GPay / PhonePe / Paytm
+                </p>
+
+            </div>
+
+
+            <!-- Binance Payment -->
+            <div
+                id="binancePaymentView"
+                class="binance-payment-view"
+                style="display: none;"
+            >
+
+                <div class="binance-qr-wrapper">
+
+                    <p>
+                        Scan with Binance App to pay
+                    </p>
+
+                    <img
+                        src="binance-qr.png"
+                        alt="Binance QR Code"
+                    >
+
+                </div>
+
+
+                <div class="binance-nickname">
+
+                    Binance Nickname:
+
+                    <strong>
+                        Alex-Sahil786
+                    </strong>
+
+                </div>
+
+
+                <div class="usdt-amount-wrapper">
+
+                    <span id="usdtAmountDisplay">
+                        $0.00 USDT
+                    </span>
+
+                </div>
+
+
+                <p class="binance-instruction">
+                    Scan QR Code using Binance App to Pay USDT
+                </p>
+
+            </div>
+
+
+            <!-- UTR / Transaction ID -->
+            <div class="new-input-box payment-input-box">
+
+                <label id="utrLabel">
+
+                    <i class="fa-solid fa-receipt"></i>
+
+                    Enter 12-Digit UPI UTR / Ref No:
+
+                </label>
+
+                <input
+                    type="text"
+                    id="utrNumber"
+                    placeholder="4029XXXXXXXX (12-Digit UTR)"
+                >
+
+            </div>
+
+
+            <!-- Payment Notice -->
+            <div class="payment-notice">
+
+                <strong>
+                    ⚠️ After completing payment, enter the UTR / TxID and submit your order on WhatsApp.
+                </strong>
+
+            </div>
+
+
+            <!-- WhatsApp Submit -->
+            <button
+                class="whatsapp-submit-btn"
+                onclick="confirmPaymentWithUTR()"
+            >
+
+                <i class="fa-brands fa-whatsapp"></i>
+
+                Submit Order on WhatsApp
+
+            </button>
+
+        </div>
+
+
+        <!-- Footer -->
+        <div class="footer-note">
+
+            ⚡ Fast Processing • 100% Refund Guarantee If Failed
+
+        </div>
+
+    </div>
+
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+
+    <!-- Service Worker Registration for PWA -->
+    <script>
+
+        if ('serviceWorker' in navigator) {
+
+            window.addEventListener('load', () => {
+
+                navigator.serviceWorker
+                    .register('./sw.js')
+
+                    .then((reg) => {
+
+                        console.log(
+                            'Service Worker Registered Successfully:',
+                            reg
+                        );
+
+                    })
+
+                    .catch((err) => {
+
+                        console.log(
+                            'Service Worker Registration Failed:',
+                            err
+                        );
+
+                    });
+
+            });
+
+        }
+
+    </script>
+
 </body>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Boost Panel</title>
-
+    
     <!-- PWA / Web App Manifest & Theme -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
@@ -15,13 +15,14 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    
     <!-- Open Graph / Facebook / Messenger Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://raj-panel.github.io/Smm-Panel.com/">
     <meta property="og:title" content="Raj Social Panel - Premium Social Boosting Services">
     <meta property="og:description" content="Get instant Followers, Likes, Views for Instagram and Facebook at lowest prices!">
-
+    
+    <!-- Social Banner Image & Cache Optimization -->
     <meta property="og:image" content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0">
     <meta property="og:image:secure_url" content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0">
     <meta property="og:image:type" content="image/png">
@@ -38,646 +39,541 @@
 
 <body>
 
-<div class="main-wrapper">
+    <div class="main-wrapper">
+        
+        <!-- Support Buttons Header -->
+        <div class="hero-actions">
+            <a href="https://t.me/RajSocialPanel" target="_blank" class="glass-btn btn-telegram">
+                <i class="fa-brands fa-telegram"></i>
+                Telegram Support
+            </a>
 
-    <!-- ==========================================
-         SUPPORT BUTTONS
-    =========================================== -->
-    <div class="hero-actions">
-
-        <a href="https://t.me/RajSocialPanel"
-           target="_blank"
-           class="glass-btn btn-telegram">
-
-            <i class="fa-brands fa-telegram"></i>
-            Telegram Support
-
-        </a>
-
-        <a href="https://wa.me/919337028344"
-           target="_blank"
-           class="glass-btn btn-whatsapp">
-
-            <i class="fa-brands fa-whatsapp"></i>
-            WhatsApp Support
-
-        </a>
-
-    </div>
+            <a href="https://wa.me/919337028344" target="_blank" class="glass-btn btn-whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+                WhatsApp Support
+            </a>
+        </div>
 
 
-    <!-- ==========================================
-         PLATFORM SWITCHER
-    =========================================== -->
-    <div class="platform-switch-container">
+        <!-- Platform Switcher -->
+        <div class="platform-switch-container">
 
-        <button
-            class="platform-btn active"
-            id="btnInsta"
-            onclick="switchPlatform('instagram')">
+            <button
+                class="platform-btn active"
+                id="btnInsta"
+                onclick="switchPlatform('instagram')"
+            >
+                <i class="fa-brands fa-instagram"></i>
+                Instagram
+            </button>
 
-            <i class="fa-brands fa-instagram"></i>
-            Instagram
+            <button
+                class="platform-btn"
+                id="btnFb"
+                onclick="switchPlatform('facebook')"
+            >
+                <i class="fa-brands fa-facebook"></i>
+                Facebook
+            </button>
 
-        </button>
-
-        <button
-            class="platform-btn"
-            id="btnFb"
-            onclick="switchPlatform('facebook')">
-
-            <i class="fa-brands fa-facebook"></i>
-            Facebook
-
-        </button>
-
-    </div>
+        </div>
 
 
-    <!-- ==========================================
-         HERO STATUS BANNER
-    =========================================== -->
-    <div class="hero-banner">
+        <!-- Hero Status Banner -->
+        <div class="hero-banner">
 
-        <div class="hero-top-row">
+            <div class="hero-top-row">
+
+                <div
+                    class="hero-logo-box"
+                    id="heroLogoIcon"
+                >
+                    <i class="fa-brands fa-instagram"></i>
+                </div>
+
+                <span class="provider-badge">
+                    #1 Service Provider
+                </span>
+
+            </div>
+
+
+            <h2 id="heroTitle">
+                Instagram Boost
+            </h2>
+
+            <p class="hero-sub">
+                Real engagement delivered fast & safely
+            </p>
+
+
+            <div class="hero-stats-grid">
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">
+                        <i class="fa-solid fa-rocket"></i>
+                    </span>
+
+                    <span
+                        class="stat-num"
+                        id="totalOrders"
+                    >
+                        2,99,784
+                    </span>
+
+                    <span class="stat-lbl">
+                        Orders Delivered
+                    </span>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">
+                        <i class="fa-solid fa-headset"></i>
+                    </span>
+
+                    <span class="stat-num">
+                        24/7
+                    </span>
+
+                    <span class="stat-lbl">
+                        Support
+                    </span>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </span>
+
+                    <span class="stat-num">
+                        100%
+                    </span>
+
+                    <span class="stat-lbl">
+                        Safe & Refundable
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Scrollable Category Tabs -->
+        <div class="category-tabs-wrapper">
 
             <div
-                class="hero-logo-box"
-                id="heroLogoIcon">
-
-                <i class="fa-brands fa-instagram"></i>
-
-            </div>
-
-            <span class="provider-badge">
-                #1 Service Provider
-            </span>
+                class="category-tabs"
+                id="categoryTabs"
+            ></div>
 
         </div>
 
-        <h2 id="heroTitle">
-            Instagram Boost
-        </h2>
 
-        <p class="hero-sub">
-            Real engagement delivered fast & safely
-        </p>
-
-
-        <div class="hero-stats-grid">
-
-            <div class="stat-card">
-
-                <span class="stat-icon">
-                    <i class="fa-solid fa-rocket"></i>
-                </span>
-
-                <span
-                    class="stat-num"
-                    id="totalOrders">
-
-                    2,99,784
-
-                </span>
-
-                <span class="stat-lbl">
-                    Orders Delivered
-                </span>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <span class="stat-icon">
-                    <i class="fa-solid fa-headset"></i>
-                </span>
-
-                <span class="stat-num">
-                    24/7
-                </span>
-
-                <span class="stat-lbl">
-                    Support
-                </span>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <span class="stat-icon">
-                    <i class="fa-solid fa-shield-halved"></i>
-                </span>
-
-                <span class="stat-num">
-                    100%
-                </span>
-
-                <span class="stat-lbl">
-                    Safe & Refundable
-                </span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- ==========================================
-         CATEGORY TABS
-    =========================================== -->
-    <div class="category-tabs-wrapper">
+        <!-- ============================= -->
+        <!-- STEP 1 : SELECT SERVICE -->
+        <!-- ============================= -->
 
         <div
-            class="category-tabs"
-            id="categoryTabs">
+            class="step-title-card"
+            id="stepOneTitle"
+        >
+
+            <div class="step-number">
+                1
+            </div>
+
+            <div>
+
+                <h3>
+                    Select Your Service
+                </h3>
+
+                <p>
+                    Choose the package you want to order
+                </p>
+
+            </div>
+
         </div>
 
-    </div>
 
-
-    <!-- ==========================================
-         FIRST INTERFACE
-         SERVICE / PACKAGE LIST
-    =========================================== -->
-    <div
-        class="package-list-container"
-        id="packageList">
-
-    </div>
-
-
-    <!-- ==========================================
-         SECOND INTERFACE
-         PREMIUM CHECKOUT
-         SERVICE SELECT করার পর দেখাবে
-    =========================================== -->
-    <div
-        class="checkout-card"
-        id="checkoutSection"
-        style="display: none;">
-
-        <!-- Selected Service Premium Header -->
+        <!-- Package List Section -->
         <div
-            class="selected-service-card"
-            id="selectedServiceCard">
+            class="package-list-container"
+            id="packageList"
+        ></div>
 
-            <div class="selected-service-top">
 
-                <div class="selected-service-icon"
-                     id="selectedServiceIcon">
 
-                    <i class="fa-brands fa-instagram"></i>
+        <!-- ============================= -->
+        <!-- STEP 2 : ORDER DETAILS -->
+        <!-- ============================= -->
 
+        <div
+            class="checkout-card"
+            id="checkoutSection"
+            style="display: none;"
+        >
+
+            <div class="step-title-card checkout-step-title">
+
+                <div class="step-number">
+                    2
+                </div>
+
+                <div>
+
+                    <h3>
+                        Complete Your Order
+                    </h3>
+
+                    <p>
+                        Enter your details and proceed to payment
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Selected Service Summary -->
+            <div class="selected-service-box">
+
+                <div class="selected-service-icon">
+                    <i
+                        class="fa-brands fa-instagram"
+                        id="selectedPlatformIcon"
+                    ></i>
                 </div>
 
                 <div class="selected-service-info">
 
-                    <div
-                        class="selected-service-name"
-                        id="selectedServiceName">
-
-                        Instagram - Normal Followers
-
-                    </div>
-
-                    <div
-                        class="selected-package-name"
-                        id="selectedPackageName">
-
-                        5K Followers
-
-                    </div>
-
-                </div>
-
-                <div
-                    class="selected-badge"
-                    id="selectedPackageBadge">
-
-                    Best Value
-
-                </div>
-
-            </div>
-
-
-            <div class="selected-service-quantity">
-
-                <span>
-                    <i class="fa-solid fa-users"></i>
-                    <span id="selectedQuantity">
-                        5,000
-                    </span> Units
-                </span>
-
-            </div>
-
-
-            <div class="selected-service-price-row">
-
-                <div>
-
-                    <span
-                        class="selected-price"
-                        id="selectedPrice">
-
-                        ₹199.00
-
+                    <span class="selected-service-label">
+                        Selected Service
                     </span>
 
-                    <span class="one-time-text">
-                        one-time
+                    <strong id="selectedServiceName">
+                        -
+                    </strong>
+
+                </div>
+
+                <div class="selected-service-price">
+
+                    <span>
+                        Total
                     </span>
+
+                    <strong id="selectedServicePrice">
+                        ₹0.00
+                    </strong>
 
                 </div>
 
             </div>
 
-        </div>
+
+            <!-- Order Summary -->
+            <div
+                class="order-summary-pill"
+                id="selectedSummary"
+            ></div>
 
 
-        <!-- Target Link -->
-        <div class="checkout-input-section">
-
+            <!-- Target Link -->
             <div class="input-box">
 
                 <label id="linkInputLabel">
-
-                    Enter your Instagram link
-
+                    Enter Target Link / Username:
                 </label>
 
                 <input
                     type="text"
                     id="link"
-                    placeholder="https://instagram.com/your_username">
-
-            </div>
-
-        </div>
-
-
-        <!-- Order Summary -->
-        <div class="order-summary-card">
-
-            <div class="order-summary-title">
-
-                <i class="fa-solid fa-receipt"></i>
-
-                Order Summary
+                    placeholder="https://instagram.com/your_username"
+                >
 
             </div>
 
 
-            <div class="order-summary-row">
-
-                <span>
-                    Package
-                </span>
-
-                <strong id="summaryPackage">
-                    5K Followers →
-                </strong>
-
-            </div>
-
-
-            <div class="order-summary-divider"></div>
-
-
-            <div class="order-summary-row total-row">
-
-                <span>
-                    You Pay
-                </span>
-
-                <strong id="summaryPrice">
-                    ₹199.00
-                </strong>
-
-            </div>
-
-        </div>
-
-
-        <!-- Payment Method Switch -->
-        <div class="payment-method-container">
-
-            <div class="pay-toggle-tabs">
-
-                <button
-                    class="pay-tab active"
-                    id="tabUpi"
-                    onclick="switchPaymentMethod('upi')">
-
-                    <i class="fa-solid fa-qrcode"></i>
-
-                    UPI QR Code
-
-                </button>
-
-
-                <button
-                    class="pay-tab"
-                    id="tabBinance"
-                    onclick="switchPaymentMethod('binance')">
-
-                    <i class="fa-solid fa-wallet"></i>
-
-                    Binance Pay
-
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- ==========================================
-             UPI PAYMENT VIEW
-        =========================================== -->
-        <div
-            id="upiPaymentView"
-            class="upi-payment-section">
-
-            <div class="payment-section-title">
-
-                SCAN TO PAY VIA UPI
-
-                <span>
-                    (Default Selected)
-                </span>
-
-            </div>
-
-
-            <div class="qr-box">
-
-                <img
-                    id="qrCodeImg"
-                    src=""
-                    alt="Payment QR Code">
-
-            </div>
-
-
+            <!-- Proceed To Payment -->
             <button
-                class="upi-pay-button"
-                onclick="openUPIPayment()">
+                class="action-btn"
+                onclick="generateOrder()"
+            >
 
-                <i class="fa-solid fa-qrcode"></i>
+                <span>
+                    Proceed to Payment
+                </span>
 
-                PAY via UPI
+                <i class="fa-solid fa-arrow-right"></i>
 
             </button>
 
 
-            <p class="scan-payment-text">
 
-                Scan or enter payment detail into any UPI App
+            <!-- ============================= -->
+            <!-- PAYMENT SECTION -->
+            <!-- ============================= -->
 
-            </p>
+            <div
+                class="payment-card"
+                id="paymentCard"
+                style="display: none;"
+            >
 
+                <div class="payment-step-title">
 
-            <!-- UPI APP ICONS -->
-            <div class="upi-apps">
-
-                <div class="upi-app">
-
-                    <div class="upi-app-icon paytm-icon">
-                        Paytm
-                    </div>
+                    <span class="payment-step-number">
+                        3
+                    </span>
 
                     <span>
-                        Paytm
+                        Complete Payment
                     </span>
 
                 </div>
 
 
-                <div class="upi-app">
+                <!-- Payment Method Tabs -->
+                <div class="pay-toggle-tabs">
 
-                    <div class="upi-app-icon gpay-icon">
-                        G
-                    </div>
+                    <button
+                        class="pay-tab active"
+                        id="tabUpi"
+                        onclick="switchPaymentMethod('upi')"
+                    >
 
-                    <span>
-                        GPay
-                    </span>
+                        <i class="fa-solid fa-qrcode"></i>
 
-                </div>
+                        UPI QR Code
 
-
-                <div class="upi-app">
-
-                    <div class="upi-app-icon phonepe-icon">
-                        <i class="fa-solid fa-mobile-screen"></i>
-                    </div>
-
-                    <span>
-                        PhonePe
-                    </span>
-
-                </div>
+                    </button>
 
 
-                <div class="upi-app">
+                    <button
+                        class="pay-tab"
+                        id="tabBinance"
+                        onclick="switchPaymentMethod('binance')"
+                    >
 
-                    <div class="upi-app-icon other-upi-icon">
                         <i class="fa-solid fa-wallet"></i>
-                    </div>
 
-                    <span>
-                        Other UPI
-                    </span>
+                        Binance Pay
+
+                    </button>
 
                 </div>
 
+
+
+                <!-- UPI Payment -->
+                <div
+                    id="upiPaymentView"
+                    class="qr-box"
+                >
+
+                    <div class="payment-amount-box">
+
+                        <span>
+                            Amount to Pay
+                        </span>
+
+                        <strong id="upiAmountDisplay">
+                            ₹0.00
+                        </strong>
+
+                    </div>
+
+
+                    <img
+                        id="qrCodeImg"
+                        src=""
+                        alt="Payment QR Code"
+                    >
+
+
+                    <p class="qr-sub">
+
+                        Scan & Pay Exact Amount with
+                        GPay / PhonePe / Paytm
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- Binance Pay / USDT View -->
+                <div
+                    id="binancePaymentView"
+                    style="display: none;"
+                >
+
+                    <div class="binance-payment-box">
+
+                        <p class="binance-title">
+                            Scan with Binance App to pay
+                        </p>
+
+
+                        <img
+                            src="binance-qr.png"
+                            alt="Binance QR Code"
+                        >
+
+
+                        <div class="binance-nickname">
+
+                            Binance Nickname:
+
+                            <strong>
+                                Alex-Sahil786
+                            </strong>
+
+                        </div>
+
+
+                        <div class="usdt-amount-box">
+
+                            <span id="usdtAmountDisplay">
+                                $0.00 USDT
+                            </span>
+
+                        </div>
+
+
+                        <p class="binance-sub">
+                            Scan QR Code using Binance App to Pay USDT
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Transaction ID / UTR -->
+                <div
+                    class="input-box margin-top-15"
+                    style="text-align: left;"
+                >
+
+                    <label
+                        id="utrLabel"
+                    >
+
+                        <i class="fa-solid fa-receipt"></i>
+
+                        Enter UPI UTR / Ref No:
+
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="utrNumber"
+                        placeholder="Enter your UPI UTR / Reference Number"
+                    >
+
+                </div>
+
+
+
+                <!-- Payment Notice -->
+                <div class="payment-notice">
+
+                    <strong>
+                        ⚠️ After completing payment, enter the UTR / TxID and submit your order on WhatsApp.
+                    </strong>
+
+                </div>
+
+
+
+                <!-- WhatsApp Submit Button -->
+                <button
+                    class="whatsapp-submit-btn"
+                    onclick="confirmPaymentWithUTR()"
+                >
+
+                    <i class="fa-brands fa-whatsapp"></i>
+
+                    Submit Order on WhatsApp
+
+                </button>
+
             </div>
 
         </div>
 
 
-        <!-- ==========================================
-             BINANCE PAYMENT VIEW
-        =========================================== -->
-        <div
-            id="binancePaymentView"
-            class="binance-payment-section"
-            style="display: none;">
 
-            <div class="payment-section-title">
+        <!-- Footer -->
+        <div class="footer-note">
 
-                PAY VIA BINANCE PAY
-
-            </div>
-
-
-            <div class="binance-qr-box">
-
-                <p>
-                    Scan with Binance App to pay
-                </p>
-
-                <img
-                    src="binance-qr.png"
-                    alt="Binance QR Code">
-
-            </div>
-
-
-            <div class="binance-nickname">
-
-                Binance Nickname:
-
-                <strong>
-                    Alex-Sahil786
-                </strong>
-
-            </div>
-
-
-            <div class="usdt-display-box">
-
-                <span id="usdtAmountDisplay">
-
-                    $0.00 USDT
-
-                </span>
-
-            </div>
-
-
-            <p class="binance-payment-text">
-
-                Scan QR Code using Binance App to Pay USDT
-
-            </p>
-
-        </div>
-
-
-        <!-- ==========================================
-             SUBMIT ORDER SECTION
-        =========================================== -->
-        <div class="submit-order-section">
-
-            <div class="submit-order-title">
-
-                <i class="fa-solid fa-file-invoice"></i>
-
-                Submit Order
-
-            </div>
-
-
-            <div class="input-box">
-
-                <label id="utrLabel">
-
-                    <i class="fa-solid fa-receipt"></i>
-
-                    Enter UPI UTR / Ref No:
-
-                </label>
-
-                <input
-                    type="text"
-                    id="utrNumber"
-                    placeholder="Enter Transaction ID / UTR">
-
-            </div>
-
-
-            <!-- Notice -->
-            <div class="payment-notice">
-
-                <strong>
-
-                    ⚠️ After completing payment, enter the UTR / TxID and submit your order on WhatsApp.
-
-                </strong>
-
-            </div>
-
-
-            <!-- WhatsApp Submit -->
-            <button
-                class="whatsapp-submit-btn"
-                onclick="confirmPaymentWithUTR()">
-
-                <i class="fa-brands fa-whatsapp"></i>
-
-                Submit Order on WhatsApp
-
-            </button>
+            ⚡ Fast Processing • 100% Refund Guarantee If Failed
 
         </div>
 
     </div>
 
 
-    <!-- Footer -->
-    <div class="footer-note">
 
-        ⚡ Fast Processing • 100% Refund Guarantee If Failed
-
-    </div>
-
-</div>
+    <!-- Main JavaScript -->
+    <script src="script.js"></script>
 
 
-<!-- ==========================================
-     MAIN JAVASCRIPT
-========================================== -->
-<script src="script.js"></script>
 
+    <!-- Service Worker Registration for PWA -->
+    <script>
 
-<!-- ==========================================
-     SERVICE WORKER REGISTRATION
-========================================== -->
-<script>
+        if ('serviceWorker' in navigator) {
 
-if ('serviceWorker' in navigator) {
+            window.addEventListener(
+                'load',
+                () => {
 
-    window.addEventListener(
-        'load',
-        () => {
+                    navigator.serviceWorker
+                        .register('./sw.js')
 
-            navigator.serviceWorker
-                .register('./sw.js')
+                        .then(
+                            (reg) => {
 
-                .then(
-                    (reg) => {
+                                console.log(
+                                    'Service Worker Registered Successfully:',
+                                    reg
+                                );
 
-                        console.log(
-                            'Service Worker Registered Successfully:',
-                            reg
+                            }
+                        )
+
+                        .catch(
+                            (err) => {
+
+                                console.log(
+                                    'Service Worker Registration Failed:',
+                                    err
+                                );
+
+                            }
                         );
 
-                    }
-                )
-
-                .catch(
-                    (err) => {
-
-                        console.log(
-                            'Service Worker Registration Failed:',
-                            err
-                        );
-
-                    }
-                );
+                }
+            );
 
         }
-    );
 
-}
-
-</script>
+    </script>
 
 </body>
 </html>

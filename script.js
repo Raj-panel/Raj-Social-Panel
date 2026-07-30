@@ -1513,3 +1513,86 @@ function confirmPaymentWithUTR() {
     );
 
 }
+// Dynamic PWA Install & Toggle Logic
+let deferredPrompt;
+const installContainer = document.getElementById('installAppContainer');
+
+// Listen for PWA Install Prompt Event
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    showInstallBtn();
+});
+
+// Trigger Real App Installation
+function triggerPwaInstall() {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('App Installed Successfully');
+            }
+            deferredPrompt = null;
+        });
+    } else {
+        alert('Browser install prompt is ready! If already installed, check your phone home screen.');
+    }
+}
+
+// Show & Hide Functions
+function hideInstallBtn() {
+    if (installContainer) {
+        installContainer.classList.add('hide-install-btn');
+    }
+}
+
+function showInstallBtn() {
+    if (installContainer) {
+        installContainer.classList.remove('hide-install-btn');
+    }
+}
+
+// Switch Platform Function (Instagram / Facebook Front view)
+function switchPlatform(platform) {
+    // 1. Show Install Button when user switches to main Instagram or Facebook View
+    showInstallBtn();
+
+    const btnInsta = document.getElementById('btnInsta');
+    const btnFb = document.getElementById('btnFb');
+    const heroTitle = document.getElementById('heroTitle');
+    const heroLogoIcon = document.getElementById('heroLogoIcon');
+
+    if (platform === 'instagram') {
+        if(btnInsta) btnInsta.classList.add('active');
+        if(btnFb) btnFb.classList.remove('active');
+        if(heroTitle) heroTitle.innerText = 'Instagram Boost';
+        if(heroLogoIcon) heroLogoIcon.innerHTML = '<i class="fa-brands fa-instagram"></i>';
+    } else if (platform === 'facebook') {
+        if(btnFb) btnFb.classList.add('active');
+        if(btnInsta) btnInsta.classList.remove('active');
+        if(heroTitle) heroTitle.innerText = 'Facebook Boost';
+        if(heroLogoIcon) heroLogoIcon.innerHTML = '<i class="fa-brands fa-facebook"></i>';
+    }
+
+    if (typeof loadCategories === 'function') {
+        loadCategories(platform);
+    }
+}
+
+// Automatic Event Listeners: Hide "Install App" when Category or Service is clicked
+document.addEventListener('DOMContentLoaded', () => {
+    const categoryContainer = document.getElementById('categoryTabs');
+    const packageContainer = document.getElementById('packageList');
+
+    if (categoryContainer) {
+        categoryContainer.addEventListener('click', () => {
+            hideInstallBtn(); // Hide Install App when clicking Followers/Likes/Services
+        });
+    }
+
+    if (packageContainer) {
+        packageContainer.addEventListener('click', () => {
+            hideInstallBtn(); // Hide Install App when selecting package
+        });
+    }
+});

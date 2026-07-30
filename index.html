@@ -4,37 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Boost Panel</title>
-    
-    <!-- PWA / Web App Manifest & Theme -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0f172a">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="SMM Panel">
-    <link rel="apple-touch-icon" href="icon-192.png">
-
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Open Graph / Facebook / Messenger Meta Tags -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://raj-panel.github.io/Smm-Panel.com/">
-    <meta property="og:title" content="Raj Social Panel - Premium Social Boosting Services">
-    <meta property="og:description" content="Get instant Followers, Likes, Views for Instagram and Facebook at lowest prices!">
-    
-    <!-- Social Banner Image & Cache Optimization -->
-    <meta property="og:image" content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0">
-    <meta property="og:image:secure_url" content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0">
-    <meta property="og:image:type" content="image/png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://raj-panel.github.io/Smm-Panel.com/">
-    <meta name="twitter:title" content="Raj Social Panel - Premium Social Boosting Services">
-    <meta name="twitter:description" content="Instant Delivery & Premium Quality Social Media Services.">
-    <meta name="twitter:image" content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0">
 </head>
 <body>
 
@@ -114,66 +85,41 @@
 
             <!-- Payment Gateway Details -->
             <div class="payment-card" id="paymentCard" style="display: none;">
-                
-                <div style="font-weight: 700; font-size: 16px; margin-bottom: 15px; color: #fff;">
-                    <span style="background: #6366f1; color: #fff; border-radius: 50%; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; margin-right: 6px;">4</span> Complete Payment
-                </div>
-
                 <div class="pay-toggle-tabs">
                     <button class="pay-tab active" id="tabUpi" onclick="switchPaymentMethod('upi')">
-                        <i class="fa-solid fa-qrcode"></i> UPI QR Code
+                        <i class="fa-solid fa-qrcode"></i> UPI / QR Code
                     </button>
                     <button class="pay-tab" id="tabBinance" onclick="switchPaymentMethod('binance')">
-                        <i class="fa-solid fa-wallet"></i> Binance Pay
+                        <i class="fa-solid fa-coins"></i> Crypto (Binance USDT)
                     </button>
                 </div>
 
                 <!-- UPI Payment -->
-                <div id="upiPaymentView" class="qr-box" style="text-align: center;">
+                <div id="upiPaymentView" class="qr-box">
                     <img id="qrCodeImg" src="" alt="Payment QR Code">
-                    <p class="qr-sub" style="margin-top: 12px; font-size: 12px; color: #94a3b8; font-weight: 500;">
-                        Scan & Pay Exact Amount with GPay / PhonePe / Paytm
-                    </p>
+                    <p class="qr-sub">Scan QR using GPay, PhonePe, Paytm, or BHIM</p>
                 </div>
 
                 <!-- Binance Pay / USDT View -->
-                <div id="binancePaymentView" style="display: none; text-align: center;">
-                    <div style="background: #ffffff; padding: 15px; border-radius: 12px; display: inline-block; margin-bottom: 12px;">
-                        <p style="font-size: 11px; color: #000; font-weight: 600; margin-bottom: 8px;">Scan with Binance App to pay</p>
-                        <img src="binance-qr.png" alt="Binance QR Code" style="max-width: 140px; border-radius: 4px;">
+                <div id="binancePaymentView" style="display: none;">
+                    <div class="binance-info-card">
+                        <p class="info-row">Send USDT (TRC20 / BEP20)</p>
+                        <span class="usdt-badge" id="binanceUsdtDisplay">$0.00 USDT</span>
+                        
+                        <div class="crypto-details-box">
+                            <p><strong>Binance Pay ID:</strong> <span id="binancePayId">248392019</span> <button onclick="copyToClipboard('248392019')" class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></p>
+                            <p><strong>USDT Address (TRC20):</strong> <span id="usdtAddress">TX98s...Kj82P</span> <button onclick="copyToClipboard('TX98s...Kj82P')" class="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button></p>
+                        </div>
                     </div>
-
-                    <!-- Binance Nickname Row -->
-                    <div style="border: 1px solid #334155; background: rgba(15, 23, 42, 0.6); padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; font-size: 13px; color: #cbd5e1;">
-                        Binance Nickname: <strong style="color: #facc15;">Alex-Sahil786</strong>
-                    </div>
-
-                    <!-- Dynamic Dollar Badge -->
-                    <div style="margin-bottom: 8px;">
-                        <span id="usdtAmountDisplay" style="background: #facc15; color: #000; font-weight: 800; padding: 4px 16px; border-radius: 20px; font-size: 14px; display: inline-block;">$0.00 USDT</span>
-                    </div>
-
-                    <p style="font-size: 11px; color: #94a3b8; margin-bottom: 15px;">
-                        Scan QR Code using Binance App to Pay USDT
-                    </p>
                 </div>
 
-                <!-- UTR Input -->
-                <div class="input-box margin-top-15" style="text-align: left;">
-                    <label id="utrLabel" style="font-size: 13px; color: #cbd5e1; margin-bottom: 6px; display: block;">
-                        <i class="fa-solid fa-receipt"></i> Enter 12-Digit UPI UTR / Ref No:
-                    </label>
-                    <input type="text" id="utrNumber" placeholder="4029XXXXXXXX (12-Digit UTR)">
+                <div class="input-box margin-top-15">
+                    <label id="utrLabel">Enter 12-Digit UPI UTR / Ref No:</label>
+                    <input type="text" id="utrNumber" placeholder="e.g. 4029XXXXXXXX (12-Digit UTR)">
                 </div>
 
-                <!-- Yellow Notice Box -->
-                <div style="background: rgba(234, 179, 8, 0.1); border-left: 3px solid #facc15; padding: 10px; border-radius: 6px; text-align: left; margin: 12px 0; font-size: 11px; color: #facc15; line-height: 1.4;">
-                    <strong>⚠️ After completing payment, enter the UTR / TxID and submit your order on WhatsApp.</strong>
-                </div>
-
-                <!-- WhatsApp Submit Button -->
                 <button class="whatsapp-submit-btn" onclick="confirmPaymentWithUTR()">
-                    <i class="fa-brands fa-whatsapp"></i> Submit Order on WhatsApp
+                    <i class="fa-brands fa-whatsapp"></i> Confirm Order on WhatsApp
                 </button>
             </div>
         </div>
@@ -184,16 +130,5 @@
     </div>
 
     <script src="script.js"></script>
-
-    <!-- Service Worker Registration for PWA -->
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js')
-            .then((reg) => console.log('Service Worker Registered Successfully:', reg))
-            .catch((err) => console.log('Service Worker Registration Failed:', err));
-        });
-      }
-    </script>
 </body>
 </html>

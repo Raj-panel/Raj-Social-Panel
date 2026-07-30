@@ -22,7 +22,7 @@ const serviceData = {
         // INSTAGRAM FOLLOWERS
         // NO PROVIDER ID
         // ==========================================
-        "Followers": [
+        "Followers 20% EXTRA": [
             {
                 name: "200 Followers",
                 price: 20,

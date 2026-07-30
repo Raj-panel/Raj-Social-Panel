@@ -3,37 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raj Social Panel</title>
+    <title>Social Boost Panel</title>
     
     <!-- PWA / Web App Manifest & Theme -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Raj Social Panel">
+    <meta name="apple-mobile-web-app-title" content="SMM Panel">
     <link rel="apple-touch-icon" href="icon-192.png">
 
-    <!-- Fonts & Icons -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <!-- Open Graph Meta Tags -->
+    <!-- Open Graph / Facebook / Messenger Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://raj-panel.github.io/Smm-Panel.com/">
     <meta property="og:title" content="Raj Social Panel - Premium Social Boosting Services">
     <meta property="og:description" content="Get instant Followers, Likes, Views for Instagram and Facebook at lowest prices!">
+    
+    <!-- Social Banner Image & Cache Optimization -->
     <meta property="og:image" content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0">
+    <meta property="og:image:secure_url" content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://raj-panel.github.io/Smm-Panel.com/">
+    <meta name="twitter:title" content="Raj Social Panel - Premium Social Boosting Services">
+    <meta name="twitter:description" content="Instant Delivery & Premium Quality Social Media Services.">
+    <meta name="twitter:image" content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0">
 </head>
 <body>
 
     <div class="main-wrapper">
         
-        <!-- Header Brand Title Design (Exact as Screen) -->
-        <div class="brand-header">
-            <h1 class="brand-title">Raj-Social-panel</h1>
-        </div>
-
         <!-- Support Buttons Header -->
         <div class="hero-actions">
             <a href="https://t.me/RajSocialPanel" target="_blank" class="glass-btn btn-telegram">
@@ -108,6 +114,7 @@
 
             <!-- Payment Gateway Details -->
             <div class="payment-card" id="paymentCard" style="display: none;">
+                
                 <div style="font-weight: 700; font-size: 16px; margin-bottom: 15px; color: #fff;">
                     <span style="background: #6366f1; color: #fff; border-radius: 50%; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; margin-right: 6px;">4</span> Complete Payment
                 </div>
@@ -136,10 +143,12 @@
                         <img src="binance-qr.png" alt="Binance QR Code" style="max-width: 140px; border-radius: 4px;">
                     </div>
 
+                    <!-- Binance Nickname Row -->
                     <div style="border: 1px solid #334155; background: rgba(15, 23, 42, 0.6); padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; font-size: 13px; color: #cbd5e1;">
                         Binance Nickname: <strong style="color: #facc15;">Alex-Sahil786</strong>
                     </div>
 
+                    <!-- Dynamic Dollar Badge -->
                     <div style="margin-bottom: 8px;">
                         <span id="usdtAmountDisplay" style="background: #facc15; color: #000; font-weight: 800; padding: 4px 16px; border-radius: 20px; font-size: 14px; display: inline-block;">$0.00 USDT</span>
                     </div>
@@ -157,10 +166,12 @@
                     <input type="text" id="utrNumber" placeholder="4029XXXXXXXX (12-Digit UTR)">
                 </div>
 
+                <!-- Yellow Notice Box -->
                 <div style="background: rgba(234, 179, 8, 0.1); border-left: 3px solid #facc15; padding: 10px; border-radius: 6px; text-align: left; margin: 12px 0; font-size: 11px; color: #facc15; line-height: 1.4;">
                     <strong>⚠️ After completing payment, enter the UTR / TxID and submit your order on WhatsApp.</strong>
                 </div>
 
+                <!-- WhatsApp Submit Button -->
                 <button class="whatsapp-submit-btn" onclick="confirmPaymentWithUTR()">
                     <i class="fa-brands fa-whatsapp"></i> Submit Order on WhatsApp
                 </button>
@@ -170,19 +181,11 @@
         <div class="footer-note">
             ⚡ Fast Processing • 100% Refund Guarantee If Failed
         </div>
-
-        <!-- Bottom Floating Install App Button Container -->
-        <div class="install-app-wrapper" id="installAppContainer">
-            <button class="install-app-btn" id="btnInstallPwa" onclick="triggerPwaInstall()">
-                <i class="fa-solid fa-download"></i> Install App
-            </button>
-        </div>
-
     </div>
 
     <script src="script.js"></script>
 
-    <!-- Service Worker Registration -->
+    <!-- Service Worker Registration for PWA -->
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {

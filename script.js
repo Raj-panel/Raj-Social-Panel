@@ -858,89 +858,73 @@ function renderPackages() {
                     };
 
 
-                card.innerHTML = pkg.name === "10K Followers" ? `
+                card.innerHTML = `
 
-<div class="pkg-left">
+                    <div class="pkg-left">
 
-    <div class="pkg-icon">
-        <i class="fa-brands ${iconClass}"></i>
-    </div>
+                        <div class="pkg-icon">
 
-    <div class="pkg-info">
+                            <i class="
+                                fa-brands
+                                ${iconClass}
+                            "></i>
 
-        <div class="pkg-title">
+                        </div>
 
-            ${pkg.name}
 
-            <span class="pkg-badge super-combo">
-                🏆 SUPER COMBO
-            </span>
+                        <div class="pkg-info">
 
-        </div>
+                            <div class="pkg-title">
 
-        <span class="pkg-sub">
-            ⚡ Instant Delivery • Premium Quality
-        </span>
+                                ${pkg.name}
 
-        <div class="combo-offer">
-            🎁 BUY 10K, GET 2K FOLLOWERS FREE
-        </div>
+                                ${
+                                    pkg.badge
+                                        ? `
+                                        <span class="
+                                            pkg-badge
+                                            ${
+                                                pkg.badgeClass ||
+                                                "badge-popular"
+                                            }
+                                        ">
+                                            ${pkg.badge}
+                                        </span>
+                                        `
+                                        : ""
+                                }
 
-    </div>
+                            </div>
 
-</div>
 
-<div class="combo-right">
+                            <span class="pkg-sub">
 
-    <div class="pkg-price-btn">
-        ₹${pkg.price}
-    </div>
+                                ⚡ Instant Delivery • Premium Quality
 
-    <div class="old-price">
-        ₹479
-    </div>
+                            </span>
 
-    <div class="total-pack">
-        + Total 12K
-    </div>
+                        </div>
 
-</div>
+                    </div>
 
-` : `
 
-<div class="pkg-left">
+                    <div class="pkg-price-btn">
 
-    <div class="pkg-icon">
-        <i class="fa-brands ${iconClass}"></i>
-    </div>
+                        ₹${pkg.price}
 
-    <div class="pkg-info">
+                    </div>
 
-        <div class="pkg-title">
+                `;
 
-            ${pkg.name}
 
-            ${
-                pkg.badge
-                ? `<span class="pkg-badge ${pkg.badgeClass || "badge-popular"}">${pkg.badge}</span>`
-                : ""
+                packageList.appendChild(
+                    card
+                );
             }
 
-        </div>
-
-        <span class="pkg-sub">
-            ⚡ Instant Delivery • Premium Quality
-        </span>
-
-    </div>
-
-</div>
-
-<div class="pkg-price-btn">
-    ₹${pkg.price}
-</div>
-
-`;
+        }
+    );
+}
 
 
 // ==========================================

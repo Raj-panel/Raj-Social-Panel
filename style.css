@@ -418,3 +418,15 @@ input:focus { border-color: #d946ef; background: #ffffff; }
     color: #94a3b8;
     margin-bottom: 20px;
 }
+.badge-super{
+    background: linear-gradient(90deg,#ff9800,#ff4081);
+    color:#fff;
+    font-weight:800;
+    animation:pulseBadge 1.8s infinite;
+}
+
+@keyframes pulseBadge{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.05);}
+    100%{transform:scale(1);}
+}

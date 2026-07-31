@@ -12,7 +12,7 @@ const serviceData = {
         "Followers Non-Drop": [
             {
                 type: "custom",
-                name: "Instagram Non-Drop Followers",
+                name: "Instagram Non-Drop Followers 365 Day Refill",
                 providerId: 1192,
                 pricePer1000: 80
             }

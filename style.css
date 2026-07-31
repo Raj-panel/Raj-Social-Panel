@@ -458,26 +458,3 @@ input:focus { border-color: #d946ef; background: #ffffff; }
     font-weight:800;
     color:#16a34a;
 }
-.pkg-price-box{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-}
-
-.combo-info{
-    margin-top:6px;
-    text-align:center;
-}
-
-.old-price{
-    font-size:11px;
-    color:#777;
-    text-decoration:line-through;
-    font-weight:600;
-}
-
-.total-follow{
-    font-size:13px;
-    font-weight:800;
-    color:#111;
-}

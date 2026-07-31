@@ -72,8 +72,8 @@ const serviceData = {
             {
                 name: "10K Followers",
                 price: 399,
-                badge: "👑 Most Popular",
-                badgeClass: "badge-best"
+                badge: "🎁 BUY 10K + GET 2K FREE",
+                badgeClass: "badge-super"
             }
         ],
 

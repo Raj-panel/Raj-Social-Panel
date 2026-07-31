@@ -1513,3 +1513,94 @@ function confirmPaymentWithUTR() {
     );
 
 }
+// =====================================================
+// PWA INSTALL APP
+// =====================================================
+
+let deferredPrompt = null;
+
+const installContainer = document.getElementById("installContainer");
+const installBtn = document.getElementById("installBtn");
+
+function toggleInstallButton() {
+
+    if (!installContainer) return;
+
+    if (
+        currentPlatform === "instagram" &&
+        currentCategory === "Followers Non-Drop" &&
+        deferredPrompt
+    ) {
+
+        installContainer.style.display = "block";
+
+    } else {
+
+        installContainer.style.display = "none";
+
+    }
+
+}
+
+window.addEventListener("beforeinstallprompt", (e) => {
+
+    e.preventDefault();
+
+    deferredPrompt = e;
+
+    toggleInstallButton();
+
+});
+
+if (installBtn) {
+
+    installBtn.addEventListener("click", async () => {
+
+        if (!deferredPrompt) return;
+
+        deferredPrompt.prompt();
+
+        await deferredPrompt.userChoice;
+
+        deferredPrompt = null;
+
+        toggleInstallButton();
+
+    });
+
+}
+
+window.addEventListener("appinstalled", () => {
+
+    if (installContainer) {
+
+        installContainer.style.display = "none";
+
+    }
+
+});
+
+
+// =====================================================
+// Existing Functions Patch
+// =====================================================
+
+const oldSwitchPlatform = switchPlatform;
+
+switchPlatform = function(platform) {
+
+    oldSwitchPlatform(platform);
+
+    toggleInstallButton();
+
+};
+
+const oldRenderPackages = renderPackages;
+
+renderPackages = function() {
+
+    oldRenderPackages();
+
+    toggleInstallButton();
+
+};

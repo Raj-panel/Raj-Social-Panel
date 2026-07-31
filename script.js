@@ -71,9 +71,12 @@ const serviceData = {
             },
             {
                 name: "10K Followers",
+                subtext: "+ 2000 FREE (Total 12K)",
+                offerText: "BUY 10K, GET 2K FOLLOWERS FREE 🔥",
                 price: 399,
-                badge: "👑 Most Popular",
-                badgeClass: "badge-best"
+                originalPrice: "₹479",
+                badge: "✨ SUPER COMBO",
+                badgeClass: "badge-combo"
             }
         ],
 
@@ -752,7 +755,10 @@ function renderPackages() {
     packages.forEach(
         (pkg) => {
 
-
+    let subtextHTML = pkg.subtext ? `<small class="pkg-subtext">${pkg.subtext}</small>` : '';
+    let offerHTML = pkg.offerText ? `<div class="offer-banner">${pkg.offerText}</div>` : '';
+    let strikePrice = pkg.originalPrice ? `<span class="strike-price">${pkg.originalPrice}</span>` : '';
+            
             // ==========================================
             // CUSTOM QUANTITY SERVICE
             // ==========================================
@@ -765,7 +771,7 @@ function renderPackages() {
                 const customDiv =
                     document.createElement(
                         "div"
-                    );
+                    )
 
                 customDiv.className =
                     "custom-card";

@@ -458,3 +458,35 @@ input:focus { border-color: #d946ef; background: #ffffff; }
     font-weight:800;
     color:#16a34a;
 }
+
+
+/* ===== PWA Install UI ===== */
+.panel-heading{
+ text-align:center;
+ font-size:32px;
+ font-weight:800;
+ color:#8b5cf6;
+ margin:8px 0 14px;
+ letter-spacing:1px;
+}
+#installContainer{
+ display:none;
+ text-align:center;
+ margin:-2px 0 16px;
+}
+.install-btn{
+ border:none;
+ border-radius:999px;
+ padding:14px 28px;
+ background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+ color:#fff;
+ font-size:16px;
+ font-weight:800;
+ cursor:pointer;
+ box-shadow:0 8px 18px rgba(59,130,246,.25);
+ transition:.25s;
+}
+.install-btn:hover{
+ transform:translateY(-2px);
+}
+.install-btn i{margin-right:8px;}

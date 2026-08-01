@@ -463,10 +463,8 @@ input:focus { border-color: #d946ef; background: #ffffff; }
 
 #installContainer{
     display:none;
-    width:100%;
     text-align:center;
-    margin:22px 0 24px;
-    animation:installFade .4s ease;
+    margin-top:20px;
 }
 
 .install-btn{
@@ -475,8 +473,8 @@ input:focus { border-color: #d946ef; background: #ffffff; }
     justify-content:center;
     gap:10px;
 
-    min-width:270px;
-    height:64px;
+    width:290px;
+    height:62px;
 
     border:none;
     border-radius:999px;
@@ -488,12 +486,32 @@ input:focus { border-color: #d946ef; background: #ffffff; }
     font-weight:800;
 
     cursor:pointer;
-    transition:.3s;
+    transition:.3s ease;
 
     box-shadow:
         0 0 12px rgba(29,161,242,.35),
-        0 0 28px rgba(109,93,252,.28),
-        0 12px 28px rgba(59,130,246,.25);
+        0 0 28px rgba(109,93,252,.30),
+        0 12px 24px rgba(59,130,246,.28);
+
+    animation:installGlow 2s infinite alternate;
+}
+
+.install-btn:hover{
+    transform:translateY(-3px) scale(1.03);
+}
+
+@keyframes installGlow{
+    from{
+        box-shadow:
+            0 0 12px rgba(29,161,242,.35),
+            0 0 28px rgba(109,93,252,.30);
+    }
+
+    to{
+        box-shadow:
+            0 0 20px rgba(29,161,242,.60),
+            0 0 45px rgba(109,93,252,.55);
+    }
 }
 
 .install-btn i{

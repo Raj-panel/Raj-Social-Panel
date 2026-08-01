@@ -74,7 +74,7 @@ const serviceData = {
         ],
 
         "Shares Lifetime": [
-            { providerId: 50, name: "100 Shares", price: 10, badge: "Starter", badgeClass: "badge-demo" },
+            { providerId: 50, name: "100 Shares", price: 5, badge: "Starter", badgeClass: "badge-demo" },
             { providerId: 50, name: "1K Shares", price: 30, badge: "Fast", badgeClass: "badge-popular" },
             { providerId: 50, name: "5K Shares", price: 69, badge: "🔥 Best Value", badgeClass: "badge-best" },
             { providerId: 50, name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-best" }

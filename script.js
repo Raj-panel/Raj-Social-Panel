@@ -142,7 +142,7 @@ window.onload = function () {
     switchPlatform("instagram");
 };
 
-// ব্যাক বাটন চাপা হলে চেকআউট বন্ধ
+// ব্যাক বাটন চাপলে চেকআউট বন্ধ
 window.addEventListener('popstate', function (event) {
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage && checkoutPage.style.display === "block") {
@@ -409,11 +409,21 @@ function showCheckoutOverlay() {
     if (document.getElementById("checkoutUnitsText"))
         document.getElementById("checkoutUnitsText").innerText = `${d.quantity.toLocaleString()} Package`;
 
-    // 🔴 FIX: Price Update Bug (আগের দাম থেকে যাওয়ার সমস্যার সমাধান)
+    // 🔴 FIX 1: ডবল ₹₹ সরানো হলো এবং একবারে সঠিক দাম বসানো হলো
     const priceEl = document.getElementById("checkoutPriceText");
     if (priceEl) {
-        // Parent কে পরিবর্তন না করে সরাসরি Element এর ভেতর লেখা পরিবর্তন করা হলো, যাতে ID ডিলিট না হয়!
-        priceEl.innerHTML = `₹${d.price.toFixed(2)} <span style="font-size: 14px; font-weight: normal; opacity: 0.8; margin-left: 5px;">You Pay</span>`;
+        priceEl.innerText = `${d.price.toFixed(2)}`;
+    }
+    
+    // one-time লেখা রিমুভ করে clean You Pay সেট
+    const priceCard = priceEl ? priceEl.parentElement : null;
+    if (priceCard) {
+        const subSpans = priceCard.querySelectorAll("span");
+        subSpans.forEach(s => {
+            if (s.id !== "checkoutPriceText") {
+                s.innerText = "You Pay";
+            }
+        });
     }
 
     // Order Summary হাইড
@@ -425,7 +435,7 @@ function showCheckoutOverlay() {
     const linkLabel = document.getElementById("checkoutLinkLabel");
     const linkInput = document.getElementById("checkoutLinkInput");
     if (linkInput) {
-        linkInput.value = ""; // আগের লিংক ক্লিয়ার
+        linkInput.value = ""; 
         if (d.platform.toLowerCase() === "facebook") {
             if (linkLabel) linkLabel.innerText = "Enter your Facebook link";
             linkInput.placeholder = "https://facebook.com/your_profile";
@@ -436,25 +446,25 @@ function showCheckoutOverlay() {
     }
 
     const txnInput = document.getElementById("checkoutTxnId");
-    if (txnInput) txnInput.value = ""; // আগের ট্রানজেকশন আইডি ক্লিয়ার
+    if (txnInput) txnInput.value = "";
 
     if (document.getElementById("checkoutUsdtAmount")) {
         const usdt = (d.price / 88).toFixed(2);
         document.getElementById("checkoutUsdtAmount").innerText = `$${usdt} USDT`;
     }
 
-    // 🔴 FIX: QR Code সাইজ ছোট করা হয়েছে (যাতে এক পেজে ধরে যায়)
+    // 🔴 FIX 2: QR Code সাইজ ১৪০px করে এক পেজে ফিট করা হলো
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price}&cu=INR`;
-    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
+    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
         qrImg.src = qrImageSrc;
         qrImg.style.display = "block";
         qrImg.style.margin = "0 auto";
-        qrImg.style.width = "180px"; // Size reduced
-        qrImg.style.height = "180px";
+        qrImg.style.width = "140px";
+        qrImg.style.height = "140px";
     }
 
     const payViaUpiBtn = document.getElementById("payViaUpiAppBtn") || document.querySelector(".pay-via-upi-btn");
@@ -462,20 +472,21 @@ function showCheckoutOverlay() {
         payViaUpiBtn.style.display = "none";
     }
 
-    // 🔴 FIX: Compact UI CSS (ফাঁকা জায়গা কমানোর জন্য অটোমেটিক CSS অ্যাড)
-    if (!document.getElementById("compactCheckoutCss")) {
+    // Ultra Compact CSS injection to fit screen
+    if (!document.getElementById("ultraCompactCss")) {
         const style = document.createElement("style");
-        style.id = "compactCheckoutCss";
+        style.id = "ultraCompactCss";
         style.innerHTML = `
-            #checkoutPage { padding: 10px 15px !important; }
-            #checkoutPage .checkout-card { margin-bottom: 12px !important; padding: 12px !important; }
-            #checkoutPage .input-box { margin-bottom: 10px !important; }
-            #checkoutPage input { padding: 10px 12px !important; font-size: 13px !important; height: 42px !important; }
-            #checkoutUpiView { padding: 10px !important; margin-bottom: 10px !important;}
-            #checkoutPage .payment-tabs { margin-bottom: 12px !important; }
-            #checkoutPage .submit-btn { padding: 12px !important; height: 45px !important; font-size: 14px !important; }
-            #checkoutPage p, #checkoutPage label { margin-bottom: 5px !important; font-size: 12px !important; }
-            .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 8px !important; font-size: 11px !important; margin-bottom: 10px !important; }
+            #checkoutPage { padding: 8px 12px !important; }
+            #checkoutPage .checkout-card { margin-bottom: 6px !important; padding: 8px 12px !important; }
+            #checkoutPage .input-box { margin-bottom: 6px !important; }
+            #checkoutPage input { padding: 6px 10px !important; font-size: 12px !important; height: 36px !important; }
+            #checkoutUpiView { padding: 6px !important; margin-bottom: 6px !important;}
+            #checkoutPage .payment-tabs { margin-bottom: 6px !important; }
+            #checkoutPage .submit-btn { padding: 8px !important; height: 40px !important; font-size: 13px !important; margin-top: 4px !important; }
+            #checkoutPage p, #checkoutPage label { margin-bottom: 3px !important; font-size: 11px !important; }
+            .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 6px !important; font-size: 10px !important; margin-bottom: 6px !important; }
+            .pay-apps-icons, [class*="paytm"], [class*="gpay"] { display: none !important; } /* Hide extra icons to save height */
         `;
         document.head.appendChild(style);
     }

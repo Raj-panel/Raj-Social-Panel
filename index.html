@@ -5,7 +5,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Social Boost Panel</title>
 <!-- Google Font for Custom Modern Design -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&display=swap" rel="stylesheet"/>
 <!-- PWA / Web App Manifest & Theme -->
 <link href="manifest.json" rel="manifest"/>
 <meta content="#0f172a" name="theme-color"/>
@@ -40,6 +40,7 @@
     font-family: 'Poppins', sans-serif !important;
     font-size: 28px !important;
     font-weight: 800 !important;
+    font-style: italic !important;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
@@ -50,10 +51,11 @@
     filter: drop-shadow(0px 2px 8px rgba(168, 85, 247, 0.4));
   }
 
-  /* Install App Container - Margin increased to push it further down */
+  /* Install App Container */
   #installContainer {
     text-align: center;
     margin: 40px 0 30px 0;
+    transition: all 0.3s ease-in-out;
   }
   .install-btn {
     box-shadow: 0 0 20px rgba(0, 150, 255, 0.8), 0 0 40px rgba(138, 43, 226, 0.6);
@@ -146,7 +148,7 @@
 <i class="fa-solid fa-wallet"></i> Binance Pay
                     </button>
 </div>
-<!-- UPI Payment -->
+<!-- UPI Payment View -->
 <div class="qr-box" id="upiPaymentView" style="text-align: center;">
 <img alt="Payment QR Code" id="qrCodeImg" src=""/>
 <p class="qr-sub" style="margin-top: 12px; font-size: 12px; color: #94a3b8; font-weight: 500;">
@@ -200,6 +202,27 @@
 
 </div>
 <script src="script.js"></script>
+
+<!-- Custom Script to Hide Install App on Quantity Input Focus -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Event delegation for dynamically generated quantity input
+    document.body.addEventListener("focusin", function (e) {
+      if (e.target && (e.target.id === "quantity" || e.target.placeholder.includes("Quantity"))) {
+        const installBox = document.getElementById("installContainer");
+        if (installBox) installBox.style.display = "none";
+      }
+    });
+
+    document.body.addEventListener("focusout", function (e) {
+      if (e.target && (e.target.id === "quantity" || e.target.placeholder.includes("Quantity"))) {
+        const installBox = document.getElementById("installContainer");
+        if (installBox) installBox.style.display = "block";
+      }
+    });
+  });
+</script>
+
 <!-- Service Worker Registration for PWA -->
 <script>
       if ('serviceWorker' in navigator) {

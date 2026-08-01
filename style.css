@@ -459,81 +459,34 @@ input:focus { border-color: #d946ef; background: #ffffff; }
     color:#16a34a;
 }
 
+
 /* ===== PWA Install UI ===== */
-
+.panel-heading{
+ text-align:center;
+ font-size:32px;
+ font-weight:800;
+ color:#8b5cf6;
+ margin:8px 0 14px;
+ letter-spacing:1px;
+}
 #installContainer{
-    display:none;
-    text-align:center;
-    margin-top:20px;
+ display:none;
+ text-align:center;
+ margin:-2px 0 16px;
 }
-
 .install-btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-
-    width:290px;
-    height:62px;
-
-    border:none;
-    border-radius:999px;
-
-    background:linear-gradient(135deg,#1da1f2,#6d5dfc);
-
-    color:#fff;
-    font-size:18px;
-    font-weight:800;
-
-    cursor:pointer;
-    transition:.3s ease;
-
-    box-shadow:
-        0 0 12px rgba(29,161,242,.35),
-        0 0 28px rgba(109,93,252,.30),
-        0 12px 24px rgba(59,130,246,.28);
-
-    animation:installGlow 2s infinite alternate;
+ border:none;
+ border-radius:999px;
+ padding:14px 28px;
+ background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+ color:#fff;
+ font-size:16px;
+ font-weight:800;
+ cursor:pointer;
+ box-shadow:0 8px 18px rgba(59,130,246,.25);
+ transition:.25s;
 }
-
 .install-btn:hover{
-    transform:translateY(-3px) scale(1.03);
+ transform:translateY(-2px);
 }
-
-@keyframes installGlow{
-    from{
-        box-shadow:
-            0 0 12px rgba(29,161,242,.35),
-            0 0 28px rgba(109,93,252,.30);
-    }
-
-    to{
-        box-shadow:
-            0 0 20px rgba(29,161,242,.60),
-            0 0 45px rgba(109,93,252,.55);
-    }
-}
-
-.install-btn i{
-    font-size:20px;
-    margin:0;
-}
-
-.install-btn:hover{
-    transform:translateY(-3px) scale(1.03);
-    box-shadow:
-        0 0 18px rgba(29,161,242,.55),
-        0 0 40px rgba(109,93,252,.45),
-        0 16px 34px rgba(59,130,246,.35);
-}
-
-@keyframes installFade{
-    from{
-        opacity:0;
-        transform:translateY(15px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
+.install-btn i{margin-right:8px;}

@@ -523,7 +523,7 @@ const serviceData = {
 };
 
 // ==========================================
-// GLOBAL VARIABLES & BACK BUTTON HANDLER
+// GLOBAL VARIABLES
 // ==========================================
 
 let currentPlatform = "instagram";
@@ -535,12 +535,11 @@ window.onload = function () {
     switchPlatform("instagram");
 };
 
-// ব্রাউজার বা ডিভাইসের ব্যাক বাটন পপ-আপ হ্যান্ডেল করার লজিক
+// ব্যাক বাটন চাপা হলে চেকআউট বন্ধ এবং ডাটা রিসেট
 window.addEventListener('popstate', function (event) {
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage && checkoutPage.style.display === "block") {
-        checkoutPage.style.display = "none";
-        checkoutPage.classList.add("hidden");
+        closeCheckoutUI();
     }
 });
 
@@ -569,6 +568,7 @@ function switchPlatform(platform) {
     }
 
     renderCategoryTabs();
+    toggleInstallButton();
 }
 
 // ==========================================
@@ -593,6 +593,7 @@ function renderCategoryTabs() {
             tabBtn.classList.add("active");
             currentCategory = cat;
             renderPackages();
+            toggleInstallButton();
         };
 
         tabsContainer.appendChild(tabBtn);
@@ -781,7 +782,7 @@ function openCheckoutFromCustom() {
 function showCheckoutOverlay() {
     const d = currentCheckoutData;
 
-    // ১. ব্রাউজারে হিস্টোরি স্টেট পুশ করা যাতে ব্যাক বাটন চাপলে অ্যাপ বন্ধ না হয়ে শুধু পপ-আপ বন্ধ হয়
+    // ১. ব্যাক প্রেস হ্যান্ডেল করার জন্য হিস্টোরি স্টেট
     history.pushState({ checkoutOpen: true }, "");
 
     const iconBox = document.getElementById("checkoutPlatformIcon");
@@ -800,25 +801,26 @@ function showCheckoutOverlay() {
     if (document.getElementById("checkoutBadge"))
         document.getElementById("checkoutBadge").innerText = d.badge;
 
-    // units লেখার বদলে Package প্রদর্শন
+    // units এর জায়গায় Package লেখা
     if (document.getElementById("checkoutUnitsText"))
         document.getElementById("checkoutUnitsText").innerText = `${d.quantity.toLocaleString()} Package`;
 
-    // one-time এর জায়গায় You Pay প্রদর্শন
+    // one-time এর জায়গায় You Pay লেখা
     const checkoutPriceParent = document.getElementById("checkoutPriceText") ? document.getElementById("checkoutPriceText").parentElement : null;
     if (checkoutPriceParent) {
         checkoutPriceParent.innerHTML = `₹${d.price.toFixed(2)} <span style="font-size: 12px; font-weight: normal; opacity: 0.8;">You Pay</span>`;
     }
 
-    // Order Summary বক্স লুকানো
-    const orderSummaryBox = document.querySelector(".order-summary-box") || document.getElementById("orderSummaryBox");
-    if (orderSummaryBox) {
-        orderSummaryBox.style.display = "none";
-    }
+    // 🔴 ২. ORDER SUMMARY এবং YOU PAY এর বক্স দুটি সম্পূর্ণ রিমুভ (Hide) করা
+    const allSummaryElements = document.querySelectorAll(".order-summary-box, #orderSummaryBox, [class*='summary']");
+    allSummaryElements.forEach(el => {
+        el.style.display = "none";
+    });
 
     const linkLabel = document.getElementById("checkoutLinkLabel");
     const linkInput = document.getElementById("checkoutLinkInput");
     if (linkInput) {
+        linkInput.value = ""; // আগের লিংক ক্লিয়ার
         if (d.platform.toLowerCase() === "facebook") {
             if (linkLabel) linkLabel.innerText = "Enter your Facebook link";
             linkInput.placeholder = "https://facebook.com/your_profile";
@@ -828,12 +830,15 @@ function showCheckoutOverlay() {
         }
     }
 
+    const txnInput = document.getElementById("checkoutTxnId");
+    if (txnInput) txnInput.value = ""; // আগের ট্রানজেকশন আইডি ক্লিয়ার
+
     if (document.getElementById("checkoutUsdtAmount")) {
         const usdt = (d.price / 88).toFixed(2);
         document.getElementById("checkoutUsdtAmount").innerText = `$${usdt} USDT`;
     }
 
-    // সঠিক UPI ID: saheb.68@ptyes
+    // UPI QR Code Generator
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price}&cu=INR`;
     const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
@@ -841,12 +846,10 @@ function showCheckoutOverlay() {
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
         qrImg.src = qrImageSrc;
-        // QR Code মিডিলে আনা
         qrImg.style.display = "block";
         qrImg.style.margin = "0 auto";
     }
 
-    // Pay via UPI বাটন হাইড করে দেওয়া
     const payViaUpiBtn = document.getElementById("payViaUpiAppBtn") || document.querySelector(".pay-via-upi-btn");
     if (payViaUpiBtn) {
         payViaUpiBtn.style.display = "none";
@@ -859,13 +862,18 @@ function showCheckoutOverlay() {
     }
 }
 
-function closeCheckout() {
+// ৩. চেকআউট পপ-আপ বন্ধ এবং ডাটা পুরোপুরি রিসেট করার ফাংশন
+function closeCheckoutUI() {
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage) {
         checkoutPage.classList.add("hidden");
         checkoutPage.style.display = "none";
     }
-    // হিস্টোরিতে ব্যাক হ্যান্ডেল করা
+    currentCheckoutData = {}; // ডাটা ক্লিয়ার
+}
+
+function closeCheckout() {
+    closeCheckoutUI();
     if (history.state && history.state.checkoutOpen) {
         history.back();
     }
@@ -924,3 +932,51 @@ function submitOrderToWhatsApp() {
 
     window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
 }
+
+// =====================================================
+// PWA INSTALL APP LOGIC
+// =====================================================
+
+let deferredPrompt = null;
+
+window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    toggleInstallButton();
+});
+
+function toggleInstallButton() {
+    const installContainer = document.getElementById("installContainer");
+    if (!installContainer) return;
+
+    if (
+        currentPlatform === "instagram" &&
+        currentCategory === "Followers Non-Drop" &&
+        deferredPrompt
+    ) {
+        installContainer.style.display = "block";
+    } else {
+        installContainer.style.display = "none";
+    }
+}
+
+const installBtn = document.getElementById("installBtn");
+if (installBtn) {
+    installBtn.addEventListener("click", async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            deferredPrompt = null;
+            toggleInstallButton();
+        }
+    });
+}
+
+window.addEventListener("appinstalled", () => {
+    const installContainer = document.getElementById("installContainer");
+    if (installContainer) {
+        installContainer.style.display = "none";
+    }
+    deferredPrompt = null;
+});

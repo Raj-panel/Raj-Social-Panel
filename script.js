@@ -12,7 +12,7 @@ const serviceData = {
         "Followers Non-Drop": [
             {
                 type: "custom",
-                name: "Instagram Followers [High Quality Accounts - 100% Non Drop - 500K+ Per Day - 365 Days Refill 10 Minutes Start",
+                name: "Instagram Followers [High Quality Accounts] 100% Non-Drop -500K+ Per Day- 10 Minutes Start",
                 providerId: 1192,
                 pricePer1000: 80
             }

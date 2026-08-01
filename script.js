@@ -38,7 +38,7 @@ const serviceData = {
         ],
 
         "Reels / Video Views": [
-            { providerId: 853, name: "1K Views", price: 10, badge: "DEMO", badgeClass: "badge-demo" },
+            { providerId: 853, name: "1K Views", price: 5, badge: "DEMO", badgeClass: "badge-demo" },
             { providerId: 853, name: "5K Views", price: 20, badge: "STARTER", badgeClass: "badge-real" },
             { providerId: 853, name: "10K Views", price: 25, badge: "BEST VALUE", badgeClass: "badge-best" },
             { providerId: 853, name: "20K Views", price: 40, badge: "POPULAR", badgeClass: "badge-popular" },

@@ -4,6 +4,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Social Boost Panel</title>
+<!-- Google Font for Custom Modern Design -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap" rel="stylesheet"/>
 <!-- PWA / Web App Manifest & Theme -->
 <link href="manifest.json" rel="manifest"/>
 <meta content="#0f172a" name="theme-color"/>
@@ -31,8 +33,23 @@
 <meta content="Instant Delivery &amp; Premium Quality Social Media Services." name="twitter:description"/>
 <meta content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0" name="twitter:image"/>
 
-<!-- Custom Styling for Install App Glowing Effect & Position -->
+<!-- Custom Styling for Header Text & Install App Button -->
 <style>
+  /* Modern Styling for Heading Text */
+  .panel-heading {
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 28px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin: 15px 0 20px 0;
+    filter: drop-shadow(0px 2px 8px rgba(168, 85, 247, 0.4));
+  }
+
   #installContainer {
     text-align: center;
     margin: 20px 0 10px 0;
@@ -48,7 +65,10 @@
 </style>
 </head>
 <body>
-<div class="main-wrapper"><div class="panel-heading">RAJ SOCIAL PANEL</div>
+<div class="main-wrapper">
+<!-- Updated Stylish Heading -->
+<div class="panel-heading">RAJ-SOCIAL-PANEL</div>
+
 <!-- Support Buttons Header -->
 <div class="hero-actions">
 <a class="glass-btn btn-telegram" href="https://t.me/RajSocialPanel" target="_blank">
@@ -144,7 +164,7 @@
 </div>
 <!-- Dynamic Dollar Badge -->
 <div style="margin-bottom: 8px;">
-<span id="usdtAmountDescription" style="background: #facc15; color: #000; font-weight: 800; padding: 4px 16px; border-radius: 20px; font-size: 14px; display: inline-block;">$0.00 USDT</span>
+<span id="usdtAmountDisplay" style="background: #facc15; color: #000; font-weight: 800; padding: 4px 16px; border-radius: 20px; font-size: 14px; display: inline-block;">$0.00 USDT</span>
 </div>
 <p style="font-size: 11px; color: #94a3b8; margin-bottom: 15px;">
                         Scan QR Code using Binance App to Pay USDT

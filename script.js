@@ -5,10 +5,6 @@ const serviceData = {
     // ==========================================
     instagram: {
 
-        // ==========================================
-        // INSTAGRAM FOLLOWERS NON-DROP
-        // Provider ID: 1192
-        // ==========================================
         "Followers Non-Drop": [
             {
                 type: "custom",
@@ -18,506 +14,117 @@ const serviceData = {
             }
         ],
 
-        // ==========================================
-        // INSTAGRAM FOLLOWERS
-        // NO PROVIDER ID
-        // ==========================================
         "Followers 25+% EXTRA": [
-            {
-                name: "200 Followers",
-                price: 20,
-                badge: "Starter",
-                badgeClass: "badge-demo"
-            },
-            {
-                name: "1K Followers",
-                price: 50
-            },
-            {
-                name: "2K Followers",
-                price: 90
-            },
-            {
-                name: "3K Followers",
-                price: 129,
-                badge: "⭐ Popular",
-                badgeClass: "badge-popular"
-            },
-            {
-                name: "4K Followers",
-                price: 165
-            },
-            {
-                name: "5K Followers",
-                price: 199,
-                badge: "🔥 Best Value",
-                badgeClass: "badge-best"
-            },
-            {
-                name: "6K Followers",
-                price: 239
-            },
-            {
-                name: "7K Followers",
-                price: 279
-            },
-            {
-                name: "8K Followers",
-                price: 319
-            },
-            {
-                name: "9K Followers",
-                price: 359
-            },
-            {
-                name: "10K Followers",
-                price: 399,
-                badge: "🎁 BUY 10K + GET 2K FREE",
-                badgeClass: "badge-super"
-            }
+            { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo" },
+            { name: "1K Followers", price: 50 },
+            { name: "2K Followers", price: 90 },
+            { name: "3K Followers", price: 129, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "4K Followers", price: 165 },
+            { name: "5K Followers", price: 199, badge: "🔥 Best Value", badgeClass: "badge-best" },
+            { name: "6K Followers", price: 239 },
+            { name: "7K Followers", price: 279 },
+            { name: "8K Followers", price: 319 },
+            { name: "9K Followers", price: 359 },
+            { name: "10K Followers", price: 399, badge: "🎁 BUY 10K + GET 2K FREE", badgeClass: "badge-super" }
         ],
 
-        // ==========================================
-        // INSTAGRAM LIKES LIFETIME
-        // Provider ID: 675
-        // ==========================================
         "Likes Lifetime": [
-            {
-                providerId: 675,
-                name: "100 Likes",
-                price: 15,
-                badge: "Starter",
-                badgeClass: "badge-demo"
-            },
-            {
-                providerId: 675,
-                name: "500 Likes",
-                price: 25,
-                badge: "Real",
-                badgeClass: "badge-real"
-            },
-            {
-                providerId: 675,
-                name: "1K Likes",
-                price: 30,
-                badge: "Fast",
-                badgeClass: "badge-popular"
-            },
-            {
-                providerId: 675,
-                name: "3K Likes",
-                price: 69,
-                badge: "⭐ Popular",
-                badgeClass: "badge-popular"
-            },
-            {
-                providerId: 675,
-                name: "5K Likes",
-                price: 99,
-                badge: "🔥 Best Value",
-                badgeClass: "badge-best"
-            },
-            {
-                providerId: 675,
-                name: "10K Likes",
-                price: 179,
-                badge: "👑 Most Popular",
-                badgeClass: "badge-best"
-            }
+            { providerId: 675, name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo" },
+            { providerId: 675, name: "500 Likes", price: 25, badge: "Real", badgeClass: "badge-real" },
+            { providerId: 675, name: "1K Likes", price: 30, badge: "Fast", badgeClass: "badge-popular" },
+            { providerId: 675, name: "3K Likes", price: 69, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { providerId: 675, name: "5K Likes", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" },
+            { providerId: 675, name: "10K Likes", price: 179, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
 
-        // ==========================================
-        // INSTAGRAM REELS / VIDEO VIEWS
-        // Provider ID: 853
-        // ==========================================
         "Reels / Video Views": [
-            {
-                providerId: 853,
-                name: "1K Views",
-                price: 10,
-                badge: "DEMO",
-                badgeClass: "badge-demo"
-            },
-            {
-                providerId: 853,
-                name: "5K Views",
-                price: 20,
-                badge: "STARTER",
-                badgeClass: "badge-real"
-            },
-            {
-                providerId: 853,
-                name: "10K Views",
-                price: 25,
-                badge: "BEST VALUE",
-                badgeClass: "badge-best"
-            },
-            {
-                providerId: 853,
-                name: "20K Views",
-                price: 40,
-                badge: "POPULAR",
-                badgeClass: "badge-popular"
-            },
-            {
-                providerId: 853,
-                name: "50K Views",
-                price: 70,
-                badge: "RECOMMENDED",
-                badgeClass: "badge-best"
-            },
-            {
-                providerId: 853,
-                name: "100K Views",
-                price: 99,
-                badge: "🔥 BEST SELLER",
-                badgeClass: "badge-best"
-            },
-            {
-                providerId: 853,
-                name: "500K Views",
-                price: 299,
-                badge: "👑 MOST POPULAR",
-                badgeClass: "badge-best"
-            },
-            {
-                providerId: 853,
-                name: "1M Views",
-                price: 499,
-                badge: "💥 MEGA DEAL",
-                badgeClass: "badge-best"
-            }
+            { providerId: 853, name: "1K Views", price: 10, badge: "DEMO", badgeClass: "badge-demo" },
+            { providerId: 853, name: "5K Views", price: 20, badge: "STARTER", badgeClass: "badge-real" },
+            { providerId: 853, name: "10K Views", price: 25, badge: "BEST VALUE", badgeClass: "badge-best" },
+            { providerId: 853, name: "20K Views", price: 40, badge: "POPULAR", badgeClass: "badge-popular" },
+            { providerId: 853, name: "50K Views", price: 70, badge: "RECOMMENDED", badgeClass: "badge-best" },
+            { providerId: 853, name: "100K Views", price: 99, badge: "🔥 BEST SELLER", badgeClass: "badge-best" },
+            { providerId: 853, name: "500K Views", price: 299, badge: "👑 MOST POPULAR", badgeClass: "badge-best" },
+            { providerId: 853, name: "1M Views", price: 499, badge: "💥 MEGA DEAL", badgeClass: "badge-best" }
         ],
 
-        // ==========================================
-        // INSTAGRAM PHOTO / POST VIEWS
-        // Provider ID: 1030
-        // ==========================================
         "Photo / Post Views": [
-            {
-                providerId: 1030,
-                name: "1K Views",
-                price: 10,
-                badge: "🎯 Demo",
-                badgeClass: "badge-demo"
-            },
-            {
-                providerId: 1030,
-                name: "3K Views",
-                price: 15,
-                badge: "⚡ Starter",
-                badgeClass: "badge-real"
-            },
-            {
-                providerId: 1030,
-                name: "5K Views",
-                price: 25,
-                badge: "⭐ Popular",
-                badgeClass: "badge-popular"
-            },
-            {
-                providerId: 1030,
-                name: "10K Views",
-                price: 40,
-                badge: "🔥 Best Value",
-                badgeClass: "badge-best"
-            },
-            {
-                providerId: 1030,
-                name: "30K Views",
-                price: 79,
-                badge: "💎 Value Pack",
-                badgeClass: "badge-popular"
-            },
-            {
-                providerId: 1030,
-                name: "50K Views",
-                price: 119,
-                badge: "🏆 Recommended",
-                badgeClass: "badge-best"
-            },
-            {
-                providerId: 1030,
-                name: "100K Views",
-                price: 220,
-                badge: "👑 Most Popular",
-                badgeClass: "badge-best"
-            }
+            { providerId: 1030, name: "1K Views", price: 10, badge: "🎯 Demo", badgeClass: "badge-demo" },
+            { providerId: 1030, name: "3K Views", price: 15, badge: "⚡ Starter", badgeClass: "badge-real" },
+            { providerId: 1030, name: "5K Views", price: 25, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { providerId: 1030, name: "10K Views", price: 40, badge: "🔥 Best Value", badgeClass: "badge-best" },
+            { providerId: 1030, name: "30K Views", price: 79, badge: "💎 Value Pack", badgeClass: "badge-popular" },
+            { providerId: 1030, name: "50K Views", price: 119, badge: "🏆 Recommended", badgeClass: "badge-best" },
+            { providerId: 1030, name: "100K Views", price: 220, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
 
-        // ==========================================
-        // INSTAGRAM COMMENTS LIFETIME
-        // Provider ID: 31
-        // ==========================================
         "Comments Lifetime": [
-            {
-                providerId: 31,
-                name: "50 Comments",
-                price: 15,
-                badge: "Starter",
-                badgeClass: "badge-demo"
-            },
-            {
-                providerId: 31,
-                name: "100 Comments",
-                price: 20,
-                badge: "Real",
-                badgeClass: "badge-real"
-            },
-            {
-                providerId: 31,
-                name: "500 Comments",
-                price: 59,
-                badge: "⭐ Popular",
-                badgeClass: "badge-popular"
-            },
-            {
-                providerId: 31,
-                name: "1K Comments",
-                price: 99,
-                badge: "🔥 Best Value",
-                badgeClass: "badge-best"
-            }
+            { providerId: 31, name: "50 Comments", price: 15, badge: "Starter", badgeClass: "badge-demo" },
+            { providerId: 31, name: "100 Comments", price: 20, badge: "Real", badgeClass: "badge-real" },
+            { providerId: 31, name: "500 Comments", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { providerId: 31, name: "1K Comments", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" }
         ],
 
-        // ==========================================
-        // INSTAGRAM REPOST LIFETIME
-        // Provider ID: 505
-        // ==========================================
         "Repost Lifetime": [
-            {
-                providerId: 505,
-                name: "50 Reposts",
-                price: 15,
-                badge: "Starter",
-                badgeClass: "badge-demo"
-            },
-            {
-                providerId: 505,
-                name: "100 Reposts",
-                price: 20,
-                badge: "Real",
-                badgeClass: "badge-real"
-            },
-            {
-                providerId: 505,
-                name: "500 Reposts",
-                price: 59,
-                badge: "⭐ Popular",
-                badgeClass: "badge-popular"
-            },
-            {
-                providerId: 505,
-                name: "1K Reposts",
-                price: 99,
-                badge: "🔥 Best Value",
-                badgeClass: "badge-best"
-            },
-            {
-                providerId: 505,
-                name: "3K Reposts",
-                price: 249,
-                badge: "👑 Most Popular",
-                badgeClass: "badge-best"
-            }
+            { providerId: 505, name: "50 Reposts", price: 15, badge: "Starter", badgeClass: "badge-demo" },
+            { providerId: 505, name: "100 Reposts", price: 20, badge: "Real", badgeClass: "badge-real" },
+            { providerId: 505, name: "500 Reposts", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { providerId: 505, name: "1K Reposts", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" },
+            { providerId: 505, name: "3K Reposts", price: 249, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
 
-        // ==========================================
-        // INSTAGRAM SHARES LIFETIME
-        // Provider ID: 50
-        // ==========================================
         "Shares Lifetime": [
-            {
-                providerId: 50,
-                name: "100 Shares",
-                price: 10,
-                badge: "Starter",
-                badgeClass: "badge-demo"
-            },
-            {
-                providerId: 50,
-                name: "1K Shares",
-                price: 30,
-                badge: "Fast",
-                badgeClass: "badge-popular"
-            },
-            {
-                providerId: 50,
-                name: "5K Shares",
-                price: 69,
-                badge: "🔥 Best Value",
-                badgeClass: "badge-best"
-            },
-            {
-                providerId: 50,
-                name: "10K Shares",
-                price: 99,
-                badge: "👑 Most Popular",
-                badgeClass: "badge-best"
-            }
+            { providerId: 50, name: "100 Shares", price: 10, badge: "Starter", badgeClass: "badge-demo" },
+            { providerId: 50, name: "1K Shares", price: 30, badge: "Fast", badgeClass: "badge-popular" },
+            { providerId: 50, name: "5K Shares", price: 69, badge: "🔥 Best Value", badgeClass: "badge-best" },
+            { providerId: 50, name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ]
     },
 
     // ==========================================
     // FACEBOOK
-    // NO PROVIDER ID
     // ==========================================
     facebook: {
 
         "Facebook Followers": [
-            {
-                type: "custom",
-                name: "Facebook Followers",
-                pricePer1000: 49
-            }
+            { type: "custom", name: "Facebook Followers", pricePer1000: 49 }
         ],
 
         "Likes Non-Drop": [
-            {
-                name: "100 Likes",
-                price: 10,
-                badge: "STARTER",
-                badgeClass: "badge-demo"
-            },
-            {
-                name: "500 Likes",
-                price: 25,
-                badge: "REAL",
-                badgeClass: "badge-real"
-            },
-            {
-                name: "1K Likes",
-                price: 39,
-                badge: "FAST",
-                badgeClass: "badge-popular"
-            },
-            {
-                name: "3K Likes",
-                price: 69,
-                badge: "⭐ POPULAR",
-                badgeClass: "badge-popular"
-            },
-            {
-                name: "5K Likes",
-                price: 99,
-                badge: "🔥 BEST VALUE",
-                badgeClass: "badge-best"
-            },
-            {
-                name: "10K Likes",
-                price: 179,
-                badge: "👑 MOST POPULAR",
-                badgeClass: "badge-best"
-            }
+            { name: "100 Likes", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
+            { name: "500 Likes", price: 25, badge: "REAL", badgeClass: "badge-real" },
+            { name: "1K Likes", price: 39, badge: "FAST", badgeClass: "badge-popular" },
+            { name: "3K Likes", price: 69, badge: "⭐ POPULAR", badgeClass: "badge-popular" },
+            { name: "5K Likes", price: 99, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
+            { name: "10K Likes", price: 179, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
         ],
 
         "Reels / Video Views": [
-            {
-                name: "1K Views",
-                price: 10,
-                badge: "STARTER",
-                badgeClass: "badge-demo"
-            },
-            {
-                name: "3K Views",
-                price: 25
-            },
-            {
-                name: "5K Views",
-                price: 35,
-                badge: "⭐ POPULAR",
-                badgeClass: "badge-popular"
-            },
-            {
-                name: "10K Views",
-                price: 60
-            },
-            {
-                name: "50K Views",
-                price: 249,
-                badge: "🔥 BEST VALUE",
-                badgeClass: "badge-best"
-            },
-            {
-                name: "100K Views",
-                price: 449,
-                badge: "👑 MOST POPULAR",
-                badgeClass: "badge-best"
-            }
+            { name: "1K Views", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
+            { name: "3K Views", price: 25 },
+            { name: "5K Views", price: 35, badge: "⭐ POPULAR", badgeClass: "badge-popular" },
+            { name: "10K Views", price: 60 },
+            { name: "50K Views", price: 249, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
+            { name: "100K Views", price: 449, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
         ],
 
         "Facebook Comments": [
-            {
-                name: "50 Comments",
-                price: 10
-            },
-            {
-                name: "100 Comments",
-                price: 15
-            },
-            {
-                name: "300 Comments",
-                price: 25,
-                badge: "⭐ Popular",
-                badgeClass: "badge-popular"
-            },
-            {
-                name: "500 Comments",
-                price: 39,
-                badge: "🔥 Best Value",
-                badgeClass: "badge-best"
-            },
-            {
-                name: "1K Comments",
-                price: 60
-            },
-            {
-                name: "2K Comments",
-                price: 110,
-                badge: "🏆 Best Deal",
-                badgeClass: "badge-best"
-            },
-            {
-                name: "5K Comments",
-                price: 260,
-                badge: "👑 Most Popular",
-                badgeClass: "badge-best"
-            }
+            { name: "50 Comments", price: 10 },
+            { name: "100 Comments", price: 15 },
+            { name: "300 Comments", price: 25, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "500 Comments", price: 39, badge: "🔥 Best Value", badgeClass: "badge-best" },
+            { name: "1K Comments", price: 60 },
+            { name: "2K Comments", price: 110, badge: "🏆 Best Deal", badgeClass: "badge-best" },
+            { name: "5K Comments", price: 260, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
 
         "Facebook Shares": [
-            {
-                name: "100 Shares",
-                price: 15
-            },
-            {
-                name: "1K Shares",
-                price: 25
-            },
-            {
-                name: "5K Shares",
-                price: 59,
-                badge: "🔥 Best Value",
-                badgeClass: "badge-best"
-            },
-            {
-                name: "10K Shares",
-                price: 89,
-                badge: "⭐ Popular",
-                badgeClass: "badge-popular"
-            },
-            {
-                name: "20K Shares",
-                price: 149,
-                badge: "🏆 Best Deal",
-                badgeClass: "badge-best"
-            },
-            {
-                name: "100K Shares",
-                price: 399,
-                badge: "👑 Most Popular",
-                badgeClass: "badge-best"
-            }
+            { name: "100 Shares", price: 15 },
+            { name: "1K Shares", price: 25 },
+            { name: "5K Shares", price: 59, badge: "🔥 Best Value", badgeClass: "badge-best" },
+            { name: "10K Shares", price: 89, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "20K Shares", price: 149, badge: "🏆 Best Deal", badgeClass: "badge-best" },
+            { name: "100K Shares", price: 399, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ]
     }
 };
@@ -535,7 +142,7 @@ window.onload = function () {
     switchPlatform("instagram");
 };
 
-// ব্যাক বাটন চাপা হলে চেকআউট বন্ধ এবং ডাটা রিসেট
+// ব্যাক বাটন চাপা হলে চেকআউট বন্ধ
 window.addEventListener('popstate', function (event) {
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage && checkoutPage.style.display === "block") {
@@ -617,7 +224,6 @@ function renderPackages() {
     const iconClass = currentPlatform === "instagram" ? "fa-instagram" : "fa-facebook";
 
     packages.forEach((pkg) => {
-
         if (pkg.type === "custom") {
             const customDiv = document.createElement("div");
             customDiv.className = "custom-card";
@@ -782,7 +388,6 @@ function openCheckoutFromCustom() {
 function showCheckoutOverlay() {
     const d = currentCheckoutData;
 
-    // ১. ব্যাক প্রেস হ্যান্ডেল করার জন্য হিস্টোরি স্টেট
     history.pushState({ checkoutOpen: true }, "");
 
     const iconBox = document.getElementById("checkoutPlatformIcon");
@@ -801,17 +406,17 @@ function showCheckoutOverlay() {
     if (document.getElementById("checkoutBadge"))
         document.getElementById("checkoutBadge").innerText = d.badge;
 
-    // units এর জায়গায় Package লেখা
     if (document.getElementById("checkoutUnitsText"))
         document.getElementById("checkoutUnitsText").innerText = `${d.quantity.toLocaleString()} Package`;
 
-    // one-time এর জায়গায় You Pay লেখা
-    const checkoutPriceParent = document.getElementById("checkoutPriceText") ? document.getElementById("checkoutPriceText").parentElement : null;
-    if (checkoutPriceParent) {
-        checkoutPriceParent.innerHTML = `₹${d.price.toFixed(2)} <span style="font-size: 12px; font-weight: normal; opacity: 0.8;">You Pay</span>`;
+    // 🔴 FIX: Price Update Bug (আগের দাম থেকে যাওয়ার সমস্যার সমাধান)
+    const priceEl = document.getElementById("checkoutPriceText");
+    if (priceEl) {
+        // Parent কে পরিবর্তন না করে সরাসরি Element এর ভেতর লেখা পরিবর্তন করা হলো, যাতে ID ডিলিট না হয়!
+        priceEl.innerHTML = `₹${d.price.toFixed(2)} <span style="font-size: 14px; font-weight: normal; opacity: 0.8; margin-left: 5px;">You Pay</span>`;
     }
 
-    // 🔴 ২. ORDER SUMMARY এবং YOU PAY এর বক্স দুটি সম্পূর্ণ রিমুভ (Hide) করা
+    // Order Summary হাইড
     const allSummaryElements = document.querySelectorAll(".order-summary-box, #orderSummaryBox, [class*='summary']");
     allSummaryElements.forEach(el => {
         el.style.display = "none";
@@ -838,21 +443,41 @@ function showCheckoutOverlay() {
         document.getElementById("checkoutUsdtAmount").innerText = `$${usdt} USDT`;
     }
 
-    // UPI QR Code Generator
+    // 🔴 FIX: QR Code সাইজ ছোট করা হয়েছে (যাতে এক পেজে ধরে যায়)
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price}&cu=INR`;
-    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
+    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
         qrImg.src = qrImageSrc;
         qrImg.style.display = "block";
         qrImg.style.margin = "0 auto";
+        qrImg.style.width = "180px"; // Size reduced
+        qrImg.style.height = "180px";
     }
 
     const payViaUpiBtn = document.getElementById("payViaUpiAppBtn") || document.querySelector(".pay-via-upi-btn");
     if (payViaUpiBtn) {
         payViaUpiBtn.style.display = "none";
+    }
+
+    // 🔴 FIX: Compact UI CSS (ফাঁকা জায়গা কমানোর জন্য অটোমেটিক CSS অ্যাড)
+    if (!document.getElementById("compactCheckoutCss")) {
+        const style = document.createElement("style");
+        style.id = "compactCheckoutCss";
+        style.innerHTML = `
+            #checkoutPage { padding: 10px 15px !important; }
+            #checkoutPage .checkout-card { margin-bottom: 12px !important; padding: 12px !important; }
+            #checkoutPage .input-box { margin-bottom: 10px !important; }
+            #checkoutPage input { padding: 10px 12px !important; font-size: 13px !important; height: 42px !important; }
+            #checkoutUpiView { padding: 10px !important; margin-bottom: 10px !important;}
+            #checkoutPage .payment-tabs { margin-bottom: 12px !important; }
+            #checkoutPage .submit-btn { padding: 12px !important; height: 45px !important; font-size: 14px !important; }
+            #checkoutPage p, #checkoutPage label { margin-bottom: 5px !important; font-size: 12px !important; }
+            .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 8px !important; font-size: 11px !important; margin-bottom: 10px !important; }
+        `;
+        document.head.appendChild(style);
     }
 
     const checkoutPage = document.getElementById("checkoutPage");
@@ -862,14 +487,13 @@ function showCheckoutOverlay() {
     }
 }
 
-// ৩. চেকআউট পপ-আপ বন্ধ এবং ডাটা পুরোপুরি রিসেট করার ফাংশন
 function closeCheckoutUI() {
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage) {
         checkoutPage.classList.add("hidden");
         checkoutPage.style.display = "none";
     }
-    currentCheckoutData = {}; // ডাটা ক্লিয়ার
+    currentCheckoutData = {}; 
 }
 
 function closeCheckout() {

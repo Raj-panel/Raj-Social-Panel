@@ -490,3 +490,322 @@ input:focus { border-color: #d946ef; background: #ffffff; }
  transform:translateY(-2px);
 }
 .install-btn i{margin-right:8px;}
+/* ==================================================
+   NEW PAYMENT PAGE / CHECKOUT OVERLAY STYLES
+   ================================================== */
+.checkout-page-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0b0f19; /* Theme background matching modern dark style */
+  z-index: 999999;
+  overflow-y: auto;
+  box-sizing: border-box;
+  animation: slideInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.checkout-page-overlay.hidden {
+  display: none !important;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.checkout-content {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px 16px 40px 16px;
+}
+
+.checkout-nav {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.back-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.checkout-heading-text {
+  flex: 1;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  margin-right: 50px;
+}
+
+/* Premium Service Card */
+.premium-service-card {
+  background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  margin-bottom: 18px;
+}
+
+.card-top-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.platform-badge-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #a855f7, #6366f1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: #fff;
+}
+
+.card-info h4 {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+.badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pkg-name-badge {
+  font-size: 13px;
+  font-weight: 700;
+  color: #cbd5e1;
+}
+
+.popular-badge {
+  background: #facc15;
+  color: #000;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+}
+
+.units-text {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: 10px;
+}
+
+.price-text {
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  margin-top: 4px;
+}
+
+.price-text small {
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+/* Input Fields */
+.checkout-input-group {
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.checkout-input-group label {
+  display: block;
+  font-size: 13px;
+  color: #cbd5e1;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.checkout-input-group input {
+  width: 100%;
+  padding: 12px 14px;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid #334155;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.checkout-input-group input:focus {
+  border-color: #a855f7;
+}
+
+/* Order Summary Box */
+.checkout-order-summary {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 18px;
+}
+
+.summary-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.summary-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 10px 0;
+}
+
+.summary-row.pay-row {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.pay-amount {
+  color: #38bdf8;
+  font-size: 18px;
+}
+
+/* Payment View Box */
+.payment-view-box {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+  margin-top: 14px;
+}
+
+.payment-view-box.hidden {
+  display: none;
+}
+
+.scan-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: #facc15;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.qr-wrapper img {
+  width: 160px;
+  height: 160px;
+  border-radius: 10px;
+  border: 3px solid #fff;
+}
+
+.pay-app-btn {
+  display: inline-block;
+  margin-top: 10px;
+  background: #334155;
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.upi-icons-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.upi-chip {
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.binance-nick-box {
+  border: 1px solid #334155;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px;
+  border-radius: 8px;
+  margin: 10px 0;
+  font-size: 12px;
+  color: #cbd5e1;
+}
+
+.usdt-badge-box span {
+  background: #facc15;
+  color: #000;
+  font-weight: 800;
+  padding: 4px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  display: inline-block;
+}
+
+.margin-top-20 {
+  margin-top: 20px;
+}
+
+.notice-yellow-box {
+  background: rgba(234, 179, 8, 0.1);
+  border-left: 3px solid #facc15;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: left;
+  margin: 12px 0;
+  font-size: 11px;
+  color: #facc15;
+  line-height: 1.4;
+}
+
+.whatsapp-submit-btn {
+  width: 100%;
+  background: #22c55e;
+  color: #fff;
+  border: none;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+  transition: transform 0.2s;
+}
+
+.whatsapp-submit-btn:active {
+  transform: scale(0.98);
+}

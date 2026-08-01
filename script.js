@@ -364,10 +364,6 @@ const serviceData = {
     // ==========================================
     facebook: {
 
-        // ==========================================
-        // FACEBOOK FOLLOWERS
-        // NO PROVIDER ID
-        // ==========================================
         "Facebook Followers": [
             {
                 type: "custom",
@@ -376,10 +372,6 @@ const serviceData = {
             }
         ],
 
-        // ==========================================
-        // FACEBOOK LIKES NON-DROP
-        // NO PROVIDER ID
-        // ==========================================
         "Likes Non-Drop": [
             {
                 name: "100 Likes",
@@ -419,10 +411,6 @@ const serviceData = {
             }
         ],
 
-        // ==========================================
-        // FACEBOOK REELS / VIDEO VIEWS
-        // NO PROVIDER ID
-        // ==========================================
         "Reels / Video Views": [
             {
                 name: "1K Views",
@@ -458,10 +446,6 @@ const serviceData = {
             }
         ],
 
-        // ==========================================
-        // FACEBOOK COMMENTS
-        // NO PROVIDER ID
-        // ==========================================
         "Facebook Comments": [
             {
                 name: "50 Comments",
@@ -501,10 +485,6 @@ const serviceData = {
             }
         ],
 
-        // ==========================================
-        // FACEBOOK SHARES
-        // NO PROVIDER ID
-        // ==========================================
         "Facebook Shares": [
             {
                 name: "100 Shares",
@@ -543,22 +523,26 @@ const serviceData = {
 };
 
 // ==========================================
-// GLOBAL VARIABLES
+// GLOBAL VARIABLES & BACK BUTTON HANDLER
 // ==========================================
 
 let currentPlatform = "instagram";
 let currentCategory = "";
 let selectedPackage = null;
-let currentPaymentMethod = "upi";
 let currentCheckoutData = {};
-
-// ==========================================
-// PAGE LOAD
-// ==========================================
 
 window.onload = function () {
     switchPlatform("instagram");
 };
+
+// ব্রাউজার বা ডিভাইসের ব্যাক বাটন পপ-আপ হ্যান্ডেল করার লজিক
+window.addEventListener('popstate', function (event) {
+    const checkoutPage = document.getElementById("checkoutPage");
+    if (checkoutPage && checkoutPage.style.display === "block") {
+        checkoutPage.style.display = "none";
+        checkoutPage.classList.add("hidden");
+    }
+});
 
 // ==========================================
 // SWITCH INSTAGRAM / FACEBOOK
@@ -568,11 +552,6 @@ function switchPlatform(platform) {
     currentPlatform = platform;
     selectedPackage = null;
 
-    const checkoutSec = document.getElementById("checkoutSection");
-    const payCard = document.getElementById("paymentCard");
-    if (checkoutSec) checkoutSec.style.display = "none";
-    if (payCard) payCard.style.display = "none";
-
     const btnInsta = document.getElementById("btnInsta");
     const btnFb = document.getElementById("btnFb");
     if (btnInsta) btnInsta.classList.toggle("active", platform === "instagram");
@@ -580,19 +559,13 @@ function switchPlatform(platform) {
 
     const heroTitle = document.getElementById("heroTitle");
     const heroLogoIcon = document.getElementById("heroLogoIcon");
-    const linkInputLabel = document.getElementById("linkInputLabel");
-    const linkInput = document.getElementById("link");
 
     if (platform === "instagram") {
         if (heroTitle) heroTitle.innerText = "Instagram Boost";
         if (heroLogoIcon) heroLogoIcon.innerHTML = '<i class="fa-brands fa-instagram"></i>';
-        if (linkInputLabel) linkInputLabel.innerText = "Enter Instagram Target Link / Username:";
-        if (linkInput) linkInput.placeholder = "https://instagram.com/your_username";
     } else {
         if (heroTitle) heroTitle.innerText = "Facebook Boost";
         if (heroLogoIcon) heroLogoIcon.innerHTML = '<i class="fa-brands fa-facebook"></i>';
-        if (linkInputLabel) linkInputLabel.innerText = "Enter Facebook Profile / Post Link:";
-        if (linkInput) linkInput.placeholder = "https://facebook.com/your_link";
     }
 
     renderCategoryTabs();
@@ -637,12 +610,6 @@ function renderPackages() {
     if (!packageList) return;
 
     packageList.innerHTML = "";
-
-    const checkoutSec = document.getElementById("checkoutSection");
-    const payCard = document.getElementById("paymentCard");
-    if (checkoutSec) checkoutSec.style.display = "none";
-    if (payCard) payCard.style.display = "none";
-
     selectedPackage = null;
 
     const packages = serviceData[currentPlatform][currentCategory];
@@ -650,7 +617,6 @@ function renderPackages() {
 
     packages.forEach((pkg) => {
 
-        // Custom Quantity Service
         if (pkg.type === "custom") {
             const customDiv = document.createElement("div");
             customDiv.className = "custom-card";
@@ -685,16 +651,11 @@ function renderPackages() {
             `;
 
             packageList.appendChild(customDiv);
-        }
-
-        // Normal Package Card
-        else {
+        } else {
             const card = document.createElement("div");
             card.className = "pkg-card";
 
-            // ক্লিক করলেই সরাসরি নতুন Checkout Overlay খুলবে
             card.onclick = function () {
-                selectPackageCard(card, pkg);
                 const qty = extractQuantity(pkg.name);
                 const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
                 openCheckoutForFixed(
@@ -735,19 +696,17 @@ function renderPackages() {
 }
 
 // ==========================================
-// CUSTOM PRICE CALCULATOR
+// CUSTOM PRICE CALCULATOR & EXTRACT
 // ==========================================
 
 function calculateCustomPrice(serviceName, ratePer1000, providerId) {
     const qtyInput = document.getElementById("customQtyInput");
     const qty = parseInt(qtyInput ? qtyInput.value : 0) || 0;
-    const priceDisplay = document.getElementById("customPriceDisplay");
     const calcPriceSpan = document.getElementById("customCalcPrice");
 
     if (qty > 0) {
         const total = (qty / 1000) * ratePer1000;
         if (calcPriceSpan) calcPriceSpan.innerText = total.toFixed(2);
-        else if (priceDisplay) priceDisplay.innerText = `Total: ₹${total.toFixed(2)} INR`;
 
         selectedPackage = {
             name: `${qty} ${serviceName}`,
@@ -756,40 +715,11 @@ function calculateCustomPrice(serviceName, ratePer1000, providerId) {
             quantity: qty,
             category: currentCategory
         };
-
-        showCheckoutSummary(`${qty} ${serviceName}`, total.toFixed(2));
     } else {
         if (calcPriceSpan) calcPriceSpan.innerText = "0.00";
-        else if (priceDisplay) priceDisplay.innerText = "Total: ₹0.00 INR";
-
-        const checkoutSec = document.getElementById("checkoutSection");
-        if (checkoutSec) checkoutSec.style.display = "none";
         selectedPackage = null;
     }
 }
-
-// ==========================================
-// SELECT NORMAL PACKAGE
-// ==========================================
-
-function selectPackageCard(cardElement, pkgData) {
-    document.querySelectorAll(".pkg-card").forEach(c => c.classList.remove("selected"));
-    cardElement.classList.add("selected");
-
-    const quantity = extractQuantity(pkgData.name);
-
-    selectedPackage = {
-        ...pkgData,
-        category: currentCategory,
-        quantity: quantity
-    };
-
-    showCheckoutSummary(pkgData.name, Number(pkgData.price).toFixed(2));
-}
-
-// ==========================================
-// EXTRACT QUANTITY
-// ==========================================
 
 function extractQuantity(name) {
     const text = name.toUpperCase().replace(/,/g, "");
@@ -806,207 +736,9 @@ function extractQuantity(name) {
 }
 
 // ==========================================
-// CHECKOUT SUMMARY
+// 🚀 CHECKOUT & PAYMENT OVERLAY LOGIC
 // ==========================================
 
-function showCheckoutSummary(pkgName, price) {
-    const summaryBox = document.getElementById("selectedSummary");
-    if (summaryBox) {
-        summaryBox.innerHTML = `
-            Selected: <strong>${pkgName}</strong> ➔ 
-            <span style="color: #22c55e; font-weight: 800;">₹${price} INR</span>
-        `;
-    }
-
-    const checkoutSec = document.getElementById("checkoutSection");
-    if (checkoutSec) {
-        checkoutSec.style.display = "block";
-    }
-}
-
-// ==========================================
-// GENERATE PAYMENT ORDER (Old Flow Backup)
-// ==========================================
-
-function generateOrder() {
-    const linkInput = document.getElementById("link");
-    const link = linkInput ? linkInput.value.trim() : "";
-
-    if (!selectedPackage) {
-        alert("Please select a package first!");
-        return;
-    }
-
-    if (!link) {
-        alert("Please enter target link or username!");
-        return;
-    }
-
-    const totalPrice = Number(selectedPackage.price).toFixed(2);
-    const upiId = "Saheb.68@ptyes";
-    const payeeName = "Raj Social Panel";
-    const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${totalPrice}&cu=INR`;
-
-    const qrImg = document.getElementById("qrCodeImg");
-    if (qrImg) {
-        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
-    }
-
-    const usdtAmount = (selectedPackage.price / 96).toFixed(2);
-    const usdtDisplay = document.getElementById("usdtAmountDisplay");
-    if (usdtDisplay) {
-        usdtDisplay.innerText = `$${usdtAmount} USDT`;
-    }
-
-    const payCard = document.getElementById("paymentCard");
-    if (payCard) {
-        payCard.style.display = "block";
-        payCard.scrollIntoView({ behavior: "smooth" });
-    }
-
-    switchPaymentMethod("upi");
-}
-
-// ==========================================
-// SWITCH PAYMENT METHOD (Old Flow Backup)
-// ==========================================
-
-function switchPaymentMethod(method) {
-    currentPaymentMethod = method;
-
-    const viewUpi = document.getElementById("upiPaymentView");
-    const viewBinance = document.getElementById("binancePaymentView");
-    if (viewUpi) viewUpi.style.display = method === "upi" ? "block" : "none";
-    if (viewBinance) viewBinance.style.display = method === "binance" ? "block" : "none";
-
-    const tabUpi = document.getElementById("tabUpi");
-    const tabBinance = document.getElementById("tabBinance");
-    if (tabUpi) tabUpi.classList.toggle("active", method === "upi");
-    if (tabBinance) tabBinance.classList.toggle("active", method === "binance");
-
-    const utrLabel = document.getElementById("utrLabel");
-    const utrInput = document.getElementById("utrNumber");
-
-    if (method === "upi") {
-        if (utrLabel) utrLabel.innerHTML = `<i class="fa-solid fa-receipt"></i> Enter UPI UTR / Ref No:`;
-        if (utrInput) utrInput.placeholder = "Enter your UPI UTR / Reference Number";
-    } else {
-        if (utrLabel) utrLabel.innerHTML = `<i class="fa-solid fa-receipt"></i> Enter Binance TxID / Order ID:`;
-        if (utrInput) utrInput.placeholder = "Enter your Binance Transaction ID";
-    }
-}
-
-// ==========================================
-// CONFIRM PAYMENT (Old Flow Backup)
-// ==========================================
-
-function confirmPaymentWithUTR() {
-    const utrInput = document.getElementById("utrNumber");
-    const linkInput = document.getElementById("link");
-    const utr = utrInput ? utrInput.value.trim() : "";
-    const link = linkInput ? linkInput.value.trim() : "";
-
-    if (!utr || utr.length < 5) {
-        alert("Please enter a valid UTR or Transaction ID!");
-        return;
-    }
-
-    if (!selectedPackage) {
-        alert("Please select a package first!");
-        return;
-    }
-
-    const price = Number(selectedPackage.price).toFixed(2);
-    const usdtPrice = (selectedPackage.price / 96).toFixed(2);
-    let amountText = `₹${price} INR`;
-
-    if (currentPaymentMethod === "binance") {
-        amountText = `$${usdtPrice} USDT (₹${price} INR)`;
-    }
-
-    let providerText = "";
-    if (currentPlatform === "instagram" && selectedPackage.providerId) {
-        providerText = `*Provider ID:* ${selectedPackage.providerId}%0A`;
-    }
-
-    const waMsg =
-        `🚀 *NEW ORDER PLACED*%0A%0A` +
-        `*Platform:* ${currentPlatform.toUpperCase()}%0A` +
-        `*Category:* ${selectedPackage.category}%0A` +
-        providerText +
-        `*Package:* ${selectedPackage.name}%0A` +
-        `*Quantity:* ${selectedPackage.quantity}%0A` +
-        `*Target Link:* ${link}%0A` +
-        `*Amount Paid:* ${amountText}%0A` +
-        `*Payment Mode:* ${currentPaymentMethod.toUpperCase()}%0A` +
-        `*Transaction ID/UTR:* ${utr}%0A%0A` +
-        `Please start processing my order!`;
-
-    window.open(`https://wa.me/919337028344?text=${waMsg}`, "_blank");
-}
-
-// =====================================================
-// PWA INSTALL APP
-// =====================================================
-
-let deferredPrompt = null;
-const installContainer = document.getElementById("installContainer");
-const installBtn = document.getElementById("installBtn");
-
-function toggleInstallButton() {
-    if (!installContainer) return;
-
-    if (
-        currentPlatform === "instagram" &&
-        currentCategory === "Followers Non-Drop" &&
-        deferredPrompt
-    ) {
-        installContainer.style.display = "block";
-    } else {
-        installContainer.style.display = "none";
-    }
-}
-
-window.addEventListener("beforeinstallprompt", (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    toggleInstallButton();
-});
-
-if (installBtn) {
-    installBtn.addEventListener("click", async () => {
-        if (!deferredPrompt) return;
-        deferredPrompt.prompt();
-        await deferredPrompt.userChoice;
-        deferredPrompt = null;
-        toggleInstallButton();
-    });
-}
-
-window.addEventListener("appinstalled", () => {
-    if (installContainer) {
-        installContainer.style.display = "none";
-    }
-});
-
-// Patch platform & package changes for PWA Button
-const oldSwitchPlatform = switchPlatform;
-switchPlatform = function(platform) {
-    oldSwitchPlatform(platform);
-    toggleInstallButton();
-};
-
-const oldRenderPackages = renderPackages;
-renderPackages = function() {
-    oldRenderPackages();
-    toggleInstallButton();
-};
-
-// ==========================================
-// 🚀 NEW OVERLAY CHECKOUT & PAYMENT FLOW LOGIC
-// ==========================================
-
-// ১. Fixed Package-এর জন্য Checkout
 function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge) {
     currentCheckoutData = {
         platform: platform,
@@ -1020,13 +752,11 @@ function openCheckoutForFixed(platform, serviceName, packageName, quantity, pric
     showCheckoutOverlay();
 }
 
-// ২. Custom Quantity-র জন্য Checkout
 function openCheckoutFromCustom() {
-    const qtyInput = document.getElementById("customQtyInput") || document.getElementById("quantity");
+    const qtyInput = document.getElementById("customQtyInput");
     const qty = parseFloat(qtyInput ? qtyInput.value : 0);
 
-    const serviceTitle = document.querySelector(".custom-title") ? document.querySelector(".custom-title").innerText : "Custom Service";
-    const calculatedPriceText = document.getElementById("customCalcPrice") || document.getElementById("calculated-price");
+    const calculatedPriceText = document.getElementById("customCalcPrice");
     const price = parseFloat(calculatedPriceText ? calculatedPriceText.innerText : 0);
 
     if (!qty || qty <= 0) {
@@ -1038,7 +768,7 @@ function openCheckoutFromCustom() {
 
     currentCheckoutData = {
         platform: platformCap,
-        serviceName: serviceTitle,
+        serviceName: currentCategory,
         packageName: `${qty.toLocaleString()} Custom Qty`,
         quantity: qty,
         price: price,
@@ -1048,9 +778,11 @@ function openCheckoutFromCustom() {
     showCheckoutOverlay();
 }
 
-// ৩. Payment Overlay-তে ডাটা পপুলেট করে পেজ দেখানোর ফাংশন
 function showCheckoutOverlay() {
     const d = currentCheckoutData;
+
+    // ১. ব্রাউজারে হিস্টোরি স্টেট পুশ করা যাতে ব্যাক বাটন চাপলে অ্যাপ বন্ধ না হয়ে শুধু পপ-আপ বন্ধ হয়
+    history.pushState({ checkoutOpen: true }, "");
 
     const iconBox = document.getElementById("checkoutPlatformIcon");
     if (iconBox) {
@@ -1068,11 +800,21 @@ function showCheckoutOverlay() {
     if (document.getElementById("checkoutBadge"))
         document.getElementById("checkoutBadge").innerText = d.badge;
 
+    // units লেখার বদলে Package প্রদর্শন
     if (document.getElementById("checkoutUnitsText"))
-        document.getElementById("checkoutUnitsText").innerText = `${d.quantity.toLocaleString()} units`;
+        document.getElementById("checkoutUnitsText").innerText = `${d.quantity.toLocaleString()} Package`;
 
-    if (document.getElementById("checkoutPriceText"))
-        document.getElementById("checkoutPriceText").innerText = d.price.toFixed(2);
+    // one-time এর জায়গায় You Pay প্রদর্শন
+    const checkoutPriceParent = document.getElementById("checkoutPriceText") ? document.getElementById("checkoutPriceText").parentElement : null;
+    if (checkoutPriceParent) {
+        checkoutPriceParent.innerHTML = `₹${d.price.toFixed(2)} <span style="font-size: 12px; font-weight: normal; opacity: 0.8;">You Pay</span>`;
+    }
+
+    // Order Summary বক্স লুকানো
+    const orderSummaryBox = document.querySelector(".order-summary-box") || document.getElementById("orderSummaryBox");
+    if (orderSummaryBox) {
+        orderSummaryBox.style.display = "none";
+    }
 
     const linkLabel = document.getElementById("checkoutLinkLabel");
     const linkInput = document.getElementById("checkoutLinkInput");
@@ -1086,26 +828,29 @@ function showCheckoutOverlay() {
         }
     }
 
-    if (document.getElementById("summaryPackageText"))
-        document.getElementById("summaryPackageText").innerText = d.packageName;
-
-    if (document.getElementById("summaryPayAmount"))
-        document.getElementById("summaryPayAmount").innerText = d.price.toFixed(2);
-
     if (document.getElementById("checkoutUsdtAmount")) {
         const usdt = (d.price / 88).toFixed(2);
         document.getElementById("checkoutUsdtAmount").innerText = `$${usdt} USDT`;
     }
 
-    const upiId = "9337028344@ybl";
+    // সঠিক UPI ID: saheb.68@ptyes
+    const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price}&cu=INR`;
-    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
+    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
 
-    if (document.getElementById("checkoutQrImg"))
-        document.getElementById("checkoutQrImg").src = qrImageSrc;
+    const qrImg = document.getElementById("checkoutQrImg");
+    if (qrImg) {
+        qrImg.src = qrImageSrc;
+        // QR Code মিডিলে আনা
+        qrImg.style.display = "block";
+        qrImg.style.margin = "0 auto";
+    }
 
-    if (document.getElementById("payViaUpiAppBtn"))
-        document.getElementById("payViaUpiAppBtn").href = upiUrl;
+    // Pay via UPI বাটন হাইড করে দেওয়া
+    const payViaUpiBtn = document.getElementById("payViaUpiAppBtn") || document.querySelector(".pay-via-upi-btn");
+    if (payViaUpiBtn) {
+        payViaUpiBtn.style.display = "none";
+    }
 
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage) {
@@ -1114,16 +859,18 @@ function showCheckoutOverlay() {
     }
 }
 
-// ৪. Payment Page বন্ধ করা (Back Button)
 function closeCheckout() {
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage) {
         checkoutPage.classList.add("hidden");
         checkoutPage.style.display = "none";
     }
+    // হিস্টোরিতে ব্যাক হ্যান্ডেল করা
+    if (history.state && history.state.checkoutOpen) {
+        history.back();
+    }
 }
 
-// ৫. Payment Tab (UPI vs Binance) পরিবর্তন করা
 function switchCheckoutPayment(type) {
     const btnUpi = document.getElementById("btnTabUpi");
     const btnBinance = document.getElementById("btnTabBinance");
@@ -1143,7 +890,6 @@ function switchCheckoutPayment(type) {
     }
 }
 
-// ৬. WhatsApp-এ Order Submit করার ফাংশন
 function submitOrderToWhatsApp() {
     const linkInput = document.getElementById("checkoutLinkInput");
     const txnInput = document.getElementById("checkoutTxnId");

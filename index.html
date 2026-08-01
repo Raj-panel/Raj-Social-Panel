@@ -35,14 +35,14 @@
 <style>
   #installContainer {
     text-align: center;
-    margin: 25px 0 15px 0;
+    margin: 20px 0 10px 0;
   }
   .install-btn {
-    box-shadow: 0 0 15px rgba(0, 150, 255, 0.7), 0 0 30px rgba(138, 43, 226, 0.5);
+    box-shadow: 0 0 20px rgba(0, 150, 255, 0.8), 0 0 40px rgba(138, 43, 226, 0.6);
     transition: all 0.3s ease-in-out;
   }
   .install-btn:hover {
-    box-shadow: 0 0 25px rgba(0, 150, 255, 0.9), 0 0 45px rgba(138, 43, 226, 0.8);
+    box-shadow: 0 0 30px rgba(0, 150, 255, 1), 0 0 50px rgba(138, 43, 226, 0.9);
     transform: translateY(-2px);
   }
 </style>
@@ -144,7 +144,7 @@
 </div>
 <!-- Dynamic Dollar Badge -->
 <div style="margin-bottom: 8px;">
-<span id="usdtAmountDisplay" style="background: #facc15; color: #000; font-weight: 800; padding: 4px 16px; border-radius: 20px; font-size: 14px; display: inline-block;">$0.00 USDT</span>
+<span id="usdtAmountDescription" style="background: #facc15; color: #000; font-weight: 800; padding: 4px 16px; border-radius: 20px; font-size: 14px; display: inline-block;">$0.00 USDT</span>
 </div>
 <p style="font-size: 11px; color: #94a3b8; margin-bottom: 15px;">
                         Scan QR Code using Binance App to Pay USDT
@@ -168,14 +168,15 @@
 </div>
 </div>
 
-<!-- Install App Button Moved Here at Bottom -->
+<div class="footer-note">
+            ⚡ Fast Processing • 100% Refund Guarantee If Failed
+</div>
+
+<!-- Install App Button Placed Below Footer Note -->
 <div id="installContainer" style="display:none;">
 <button class="install-btn" id="installBtn"><i class="fa-solid fa-download"></i> Install App</button>
 </div>
 
-<div class="footer-note">
-            ⚡ Fast Processing • 100% Refund Guarantee If Failed
-        </div>
 </div>
 <script src="script.js"></script>
 <!-- Service Worker Registration for PWA -->

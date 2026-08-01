@@ -1604,3 +1604,190 @@ renderPackages = function() {
     toggleInstallButton();
 
 };
+// ==========================================
+// 🚀 NEW ORDER FLOW & PAYMENT PAGE LOGIC
+// ==========================================
+
+// ১. গ্লোবাল ডাটা অবজেক্ট (যেখানে পেমেন্ট পেজের ডাটা সেভ থাকবে)
+let currentCheckoutData = {};
+
+// ২. Fixed Package-এর জন্য Checkout ওপেন করার ফাংশন
+function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge) {
+  currentCheckoutData = {
+    platform: platform, // 'Instagram' অথবা 'Facebook'
+    serviceName: serviceName,
+    packageName: packageName,
+    quantity: quantity,
+    price: price,
+    badge: badge || 'Popular'
+  };
+
+  showCheckoutOverlay();
+}
+
+// ৩. Custom Quantity-র জন্য Checkout ওপেন করার ফাংশন
+function openCheckoutFromCustom() {
+  // আপনার বর্তমান Custom Qty ইনপুট ও প্রাইজ এলিমেন্ট থেকে ডাটা নেওয়া হচ্ছে
+  const qtyInput = document.getElementById("quantity") || document.getElementById("customQtyInput");
+  const qty = parseFloat(qtyInput ? qtyInput.value : 0);
+  
+  // সার্ভিস নেম এবং রেট ডিটেক্ট করা
+  const serviceTitle = document.querySelector(".custom-title") ? document.querySelector(".custom-title").innerText : "Instagram Service";
+  const calculatedPriceText = document.getElementById("calculated-price") || document.getElementById("customCalcPrice");
+  const price = parseFloat(calculatedPriceText ? calculatedPriceText.innerText : 0);
+
+  if (!qty || qty <= 0) {
+    alert("দয়া করে সঠিক Quantity লিখুন!");
+    return;
+  }
+
+  // সোশ্যাল মিডিয়া ডিটেক্ট করা (Instagram/Facebook)
+  const isFb = serviceTitle.toLowerCase().includes("facebook");
+  
+  currentCheckoutData = {
+    platform: isFb ? "Facebook" : "Instagram",
+    serviceName: serviceTitle,
+    packageName: `${qty.toLocaleString()} Custom Qty`,
+    quantity: qty,
+    price: price,
+    badge: "Custom"
+  };
+
+  showCheckoutOverlay();
+}
+
+// ৪. Payment Overlay-তে ডাটা পপুলেট করে পেজ দেখানোর মূল ফাংশন
+function showCheckoutOverlay() {
+  const d = currentCheckoutData;
+
+  // প্ল্যাটফর্ম আইকন আপডেট
+  const iconBox = document.getElementById("checkoutPlatformIcon");
+  if (iconBox) {
+    iconBox.innerHTML = d.platform.toLowerCase() === "facebook" 
+      ? `<i class="fa-brands fa-facebook"></i>` 
+      : `<i class="fa-brands fa-instagram"></i>`;
+  }
+
+  // সার্ভিস ও প্যাকেজ ডিটেইলস আপডেট
+  if (document.getElementById("checkoutServiceTitle")) 
+    document.getElementById("checkoutServiceTitle").innerText = `${d.platform} - ${d.serviceName}`;
+  
+  if (document.getElementById("checkoutPkgBadgeName")) 
+    document.getElementById("checkoutPkgBadgeName").innerText = d.packageName;
+  
+  if (document.getElementById("checkoutBadge")) 
+    document.getElementById("checkoutBadge").innerText = d.badge;
+  
+  if (document.getElementById("checkoutUnitsText")) 
+    document.getElementById("checkoutUnitsText").innerText = `${d.quantity.toLocaleString()} units`;
+  
+  if (document.getElementById("checkoutPriceText")) 
+    document.getElementById("checkoutPriceText").innerText = d.price.toFixed(2);
+
+  // সোশ্যাল লিংক ইনপুটের Placeholder আপডেট
+  const linkLabel = document.getElementById("checkoutLinkLabel");
+  const linkInput = document.getElementById("checkoutLinkInput");
+  if (linkInput) {
+    if (d.platform.toLowerCase() === "facebook") {
+      if (linkLabel) linkLabel.innerText = "Enter your Facebook link";
+      linkInput.placeholder = "https://facebook.com/your_profile";
+    } else {
+      if (linkLabel) linkLabel.innerText = "Enter your Instagram link";
+      linkInput.placeholder = "https://instagram.com/your_username";
+    }
+  }
+
+  // Order Summary আপডেট
+  if (document.getElementById("summaryPackageText")) 
+    document.getElementById("summaryPackageText").innerText = d.packageName;
+  
+  if (document.getElementById("summaryPayAmount")) 
+    document.getElementById("summaryPayAmount").innerText = d.price.toFixed(2);
+
+  // USDT Price হিসেব (Binance-এর জন্য)
+  if (document.getElementById("checkoutUsdtAmount")) {
+    const usdt = (d.price / 88).toFixed(2); // উদাহরণস্বরূপ conversion rate
+    document.getElementById("checkoutUsdtAmount").innerText = `$${usdt} USDT`;
+  }
+
+  // Dynamic UPI QR Code তৈরি
+  const upiId = "9337028344@ybl"; // 👈 আপনার সঠিক UPI ID দিন
+  const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price}&cu=INR`;
+  const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
+  
+  if (document.getElementById("checkoutQrImg")) 
+    document.getElementById("checkoutQrImg").src = qrImageSrc;
+  
+  if (document.getElementById("payViaUpiAppBtn")) 
+    document.getElementById("payViaUpiAppBtn").href = upiUrl;
+
+  // Checkout Overlay স্ক্রিনে দেখানো
+  const checkoutPage = document.getElementById("checkoutPage");
+  if (checkoutPage) {
+    checkoutPage.classList.remove("hidden");
+  }
+}
+
+// ৫. Payment Page বন্ধ করা (Back Button)
+function closeCheckout() {
+  const checkoutPage = document.getElementById("checkoutPage");
+  if (checkoutPage) {
+    checkoutPage.classList.add("hidden");
+  }
+}
+
+// ৬. Payment Tab (UPI vs Binance) পরিবর্তন করা
+function switchCheckoutPayment(type) {
+  const btnUpi = document.getElementById("btnTabUpi");
+  const btnBinance = document.getElementById("btnTabBinance");
+  const viewUpi = document.getElementById("checkoutUpiView");
+  const viewBinance = document.getElementById("checkoutBinanceView");
+
+  if (type === 'upi') {
+    if (btnUpi) btnUpi.classList.add("active");
+    if (btnBinance) btnBinance.classList.remove("active");
+    if (viewUpi) viewUpi.classList.remove("hidden");
+    if (viewBinance) viewBinance.classList.add("hidden");
+  } else {
+    if (btnBinance) btnBinance.classList.add("active");
+    if (btnUpi) btnUpi.classList.remove("active");
+    if (viewBinance) viewBinance.classList.remove("hidden");
+    if (viewUpi) viewUpi.classList.add("hidden");
+  }
+}
+
+// ৭. WhatsApp-এ Order Submit করার ফাংশন
+function submitOrderToWhatsApp() {
+  const linkInput = document.getElementById("checkoutLinkInput");
+  const txnInput = document.getElementById("checkoutTxnId");
+
+  const link = linkInput ? linkInput.value.trim() : "";
+  const txnId = txnInput ? txnInput.value.trim() : "";
+
+  if (!link) {
+    alert("দয়া করে আপনার Social Media Link দিন!");
+    return;
+  }
+  if (!txnId) {
+    alert("দয়া করে Transaction ID / UTR নম্বর লিখুন!");
+    return;
+  }
+
+  const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
+  const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
+  const whatsappNumber = "919337028344"; // 👈 আপনার WhatsApp নম্বর
+
+  const d = currentCheckoutData;
+
+  const message = `🚀 *NEW ORDER SUBMITTED* 🚀\n\n` +
+    `📌 *Social Media:* ${d.platform}\n` +
+    `🛠️ *Service Name:* ${d.serviceName}\n` +
+    `📦 *Package:* ${d.packageName}\n` +
+    `🔢 *Quantity:* ${d.quantity}\n` +
+    `💰 *Total Price:* ₹${d.price}\n` +
+    `🔗 *Target Link:* ${link}\n` +
+    `💳 *Payment Method:* ${payMethod}\n` +
+    `🧾 *Transaction ID / UTR:* ${txnId}`;
+
+  window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
+}

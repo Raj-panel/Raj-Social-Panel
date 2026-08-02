@@ -343,74 +343,39 @@ function extractQuantity(name) {
 }
 
 // ==========================================
-// DYNAMIC LINK CONFIG & VALIDATION SYSTEM
+// DYNAMIC LINK CONFIG & FLEXIBLE VALIDATION SYSTEM
 // ==========================================
 
 function getServiceLinkConfig(platform, serviceCategory) {
     const p = platform.toLowerCase();
     const c = serviceCategory.toLowerCase();
 
-    // Instagram Rules
+    // Instagram Rules (With flexible query parameters support)
     if (p === "instagram") {
         if (c.includes("follower")) {
             return {
                 label: "Profile Link (Account Must be Public)",
                 placeholder: "https://instagram.com/your_username",
-                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/[a-zA-Z0-9_\.]+\/?$/i,
+                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/[a-zA-Z0-9_\.]+(\/?|\?.*)$/i,
                 error: "Please enter a valid Instagram Profile Link."
             };
         } else if (c.includes("reel") || c.includes("video")) {
             return {
                 label: "Reel/Video Link (Account Must be Public)",
                 placeholder: "https://instagram.com/reel/...",
-                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(reel|tv|p)\/[a-zA-Z0-9_-]+\/?$/i,
+                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(reel|tv|p)\/[a-zA-Z0-9_-]+(\/?|\?.*)$/i,
                 error: "Please enter a valid Instagram Reel or Video Link."
             };
-        } else if (c.includes("like")) {
+        } else if (c.includes("like") || c.includes("comment") || c.includes("share") || c.includes("repost") || c.includes("photo") || c.includes("post")) {
             return {
-                label: "Reel/Post Link (Account Must be Public)",
+                label: "Post/Reel Link (Account Must be Public)",
                 placeholder: "https://instagram.com/p/...",
-                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv)\/[a-zA-Z0-9_-]+\/?$/i,
+                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv)\/[a-zA-Z0-9_-]+(\/?|\?.*)$/i,
                 error: "Please enter a valid Instagram Post or Reel Link."
-            };
-        } else if (c.includes("comment")) {
-            return {
-                label: "Reel/Post Link (Account Must be Public)",
-                placeholder: "https://instagram.com/p/...",
-                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv)\/[a-zA-Z0-9_-]+\/?$/i,
-                error: "Please enter a valid Instagram Post or Reel Link."
-            };
-        } else if (c.includes("share")) {
-            return {
-                label: "Reel/Post Link (Account Must be Public)",
-                placeholder: "https://instagram.com/p/...",
-                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv)\/[a-zA-Z0-9_-]+\/?$/i,
-                error: "Please enter a valid Instagram Post or Reel Link."
-            };
-        } else if (c.includes("save")) {
-            return {
-                label: "Reel/Post Link (Account Must be Public)",
-                placeholder: "https://instagram.com/p/...",
-                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv)\/[a-zA-Z0-9_-]+\/?$/i,
-                error: "Please enter a valid Instagram Post or Reel Link."
-            };
-        } else if (c.includes("repost")) {
-            return {
-                label: "Reel/Post Link (Account Must be Public)",
-                placeholder: "https://instagram.com/p/...",
-                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv)\/[a-zA-Z0-9_-]+\/?$/i,
-                error: "Please enter a valid Instagram Post or Reel Link."
-            };
-        } else if (c.includes("photo") || c.includes("post")) {
-            return {
-                label: "Post Link (Account Must be Public)",
-                placeholder: "https://instagram.com/p/...",
-                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv)\/[a-zA-Z0-9_-]+\/?$/i,
-                error: "Please enter a valid Instagram Post Link."
             };
         }
         return {
-            label: "Profile Link (Account Must be Public)",
+            label: "Profile/Post Link (Account Must be Public)",
             placeholder: "https://instagram.com/your_username",
             pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/.+/i,
             error: "Please enter a valid Instagram Link."
@@ -419,70 +384,6 @@ function getServiceLinkConfig(platform, serviceCategory) {
 
     // Facebook Rules
     if (p === "facebook") {
-        if (c.includes("follower")) {
-            return {
-                label: "Profile Link (Profile/Page Must be Public)",
-                placeholder: "https://facebook.com/your_profile",
-                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
-                error: "Please enter a valid Facebook Profile or Page Link."
-            };
-        } else if (c.includes("page like")) {
-            return {
-                label: "Page Link (Page Must be Public)",
-                placeholder: "https://facebook.com/your_page",
-                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
-                error: "Please enter a valid Facebook Page Link."
-            };
-        } else if (c.includes("post like")) {
-            return {
-                label: "Post Link (Post Must be Public)",
-                placeholder: "https://facebook.com/.../posts/...",
-                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
-                error: "Please enter a valid Facebook Post Link."
-            };
-        } else if (c.includes("like")) {
-            return {
-                label: "Post Link (Post Must be Public)",
-                placeholder: "https://facebook.com/.../posts/...",
-                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
-                error: "Please enter a valid Facebook Post Link."
-            };
-        } else if (c.includes("video")) {
-            return {
-                label: "Video Link (Video Must be Public)",
-                placeholder: "https://facebook.com/watch/?v=...",
-                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
-                error: "Please enter a valid Facebook Video Link."
-            };
-        } else if (c.includes("reel")) {
-            return {
-                label: "Reel Link (Reel Must be Public)",
-                placeholder: "https://facebook.com/reel/...",
-                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/reel\/.+/i,
-                error: "Please enter a valid Facebook Reel Link."
-            };
-        } else if (c.includes("comment")) {
-            return {
-                label: "Post/Reel Link (Must be Public)",
-                placeholder: "https://facebook.com/...",
-                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
-                error: "Please enter a valid Facebook Post or Reel Link."
-            };
-        } else if (c.includes("share")) {
-            return {
-                label: "Post Link (Post Must be Public)",
-                placeholder: "https://facebook.com/...",
-                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
-                error: "Please enter a valid Facebook Post Link."
-            };
-        } else if (c.includes("photo")) {
-            return {
-                label: "Photo Link (Photo Must be Public)",
-                placeholder: "https://facebook.com/photo/...",
-                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
-                error: "Please enter a valid Facebook Photo Link."
-            };
-        }
         return {
             label: "Target Link (Must be Public)",
             placeholder: "https://facebook.com/...",
@@ -617,23 +518,12 @@ function showCheckoutOverlay() {
     if (priceEl) {
         priceEl.innerText = `${d.price.toFixed(2)}`;
     }
-    
-    const priceCard = priceEl ? priceEl.parentElement : null;
-    if (priceCard) {
-        const subSpans = priceCard.querySelectorAll("span");
-        subSpans.forEach(s => {
-            if (s.id !== "checkoutPriceText") {
-                s.innerText = "You Pay";
-            }
-        });
+
+    // HIDE ORDER SUMMARY BOX (অনুরোধ অনুযায়ী Order Summary বক্স হাইড করা হলো)
+    const orderSummaryContainer = document.querySelector(".order-summary") || document.getElementById("orderSummaryBox");
+    if (orderSummaryContainer) {
+        orderSummaryContainer.style.display = "none";
     }
-
-    // Order Summary update
-    const summaryPkg = document.getElementById("summaryPackageText");
-    if (summaryPkg) summaryPkg.innerText = d.packageName;
-
-    const summaryPay = document.getElementById("summaryPayAmount");
-    if (summaryPay) summaryPay.innerText = d.price.toFixed(2);
 
     // Apply Dynamic Link Input Config
     const config = getServiceLinkConfig(d.platform, d.serviceName);
@@ -665,15 +555,15 @@ function showCheckoutOverlay() {
     // QR Code Generation
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price}&cu=INR`;
-    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(upiUrl)}`;
+    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
         qrImg.src = qrImageSrc;
         qrImg.style.display = "block";
         qrImg.style.margin = "0 auto";
-        qrImg.style.width = "140px";
-        qrImg.style.height = "140px";
+        qrImg.style.width = "130px";
+        qrImg.style.height = "130px";
     }
 
     const payViaUpiBtn = document.getElementById("payViaUpiAppBtn") || document.querySelector(".pay-via-upi-btn");
@@ -681,21 +571,21 @@ function showCheckoutOverlay() {
         payViaUpiBtn.style.display = "none";
     }
 
-    // Ultra Compact CSS injection to fit screen
+    // Ultra Compact Mobile Layout CSS injection (No Scroll Needed)
     if (!document.getElementById("ultraCompactCss")) {
         const style = document.createElement("style");
         style.id = "ultraCompactCss";
         style.innerHTML = `
-            #checkoutPage { padding: 8px 12px !important; }
-            #checkoutPage .checkout-card { margin-bottom: 6px !important; padding: 8px 12px !important; }
-            #checkoutPage .input-box { margin-bottom: 6px !important; }
-            #checkoutPage input { padding: 6px 10px !important; font-size: 12px !important; height: 36px !important; }
-            #checkoutUpiView { padding: 6px !important; margin-bottom: 6px !important;}
-            #checkoutPage .payment-tabs { margin-bottom: 6px !important; }
-            #checkoutPage .submit-btn { padding: 8px !important; height: 40px !important; font-size: 13px !important; margin-top: 4px !important; }
-            #checkoutPage p, #checkoutPage label { margin-bottom: 3px !important; font-size: 11px !important; }
-            .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 6px !important; font-size: 10px !important; margin-bottom: 6px !important; }
-            .pay-apps-icons, [class*="paytm"], [class*="gpay"] { display: none !important; }
+            #checkoutPage { padding: 4px 8px !important; }
+            #checkoutPage .checkout-card { margin-bottom: 4px !important; padding: 6px 10px !important; }
+            #checkoutPage .input-box { margin-bottom: 4px !important; }
+            #checkoutPage input { padding: 5px 8px !important; font-size: 11px !important; height: 32px !important; }
+            #checkoutUpiView { padding: 4px !important; margin-bottom: 4px !important; text-align: center; }
+            #checkoutPage .payment-tabs { margin-bottom: 4px !important; }
+            #checkoutPage .submit-btn { padding: 6px !important; height: 36px !important; font-size: 12px !important; margin-top: 2px !important; }
+            #checkoutPage p, #checkoutPage label { margin-bottom: 2px !important; font-size: 10px !important; }
+            .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 4px !important; font-size: 9px !important; margin-bottom: 4px !important; }
+            .pay-apps-icons, [class*="paytm"], [class*="gpay"], .order-summary { display: none !important; }
         `;
         document.head.appendChild(style);
     }
@@ -749,7 +639,7 @@ function submitOrderToWhatsApp() {
     const link = linkInput ? linkInput.value.trim() : "";
     const txnId = txnInput ? txnInput.value.trim() : "";
 
-    // Dynamic Validation Check
+    // Validation Check
     const isLinkValid = validateCheckoutLink();
 
     if (!link) {

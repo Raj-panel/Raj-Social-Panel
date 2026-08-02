@@ -1,8 +1,19 @@
 const serviceData = {
+
+    // ==========================================
+    // INSTAGRAM
+    // ==========================================
     instagram: {
+
         "Followers Non-Drop": [
-            { type: "custom", name: "Instagram Followers [High Quality] 100% Non-Drop -500K+ Per Day- 10 Minutes Start", providerId: 1192, pricePer1000: 80 }
+            {
+                type: "custom",
+                name: "Instagram Followers [High Quality] 100% Non-Drop -500K+ Per Day- 10 Minutes Start",
+                providerId: 1192,
+                pricePer1000: 80
+            }
         ],
+
         "Followers 25+% EXTRA": [
             { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo" },
             { name: "1K Followers", price: 50 },
@@ -16,6 +27,7 @@ const serviceData = {
             { name: "9K Followers", price: 359 },
             { name: "10K Followers", price: 399, badge: "🎁 BUY 10K + GET 2K FREE", badgeClass: "badge-super" }
         ],
+
         "Likes Lifetime": [
             { providerId: 675, name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo" },
             { providerId: 675, name: "500 Likes", price: 25, badge: "Real", badgeClass: "badge-real" },
@@ -24,6 +36,7 @@ const serviceData = {
             { providerId: 675, name: "5K Likes", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" },
             { providerId: 675, name: "10K Likes", price: 179, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
+
         "Reels / Video Views": [
             { providerId: 853, name: "1K Views", price: 5, badge: "DEMO", badgeClass: "badge-demo" },
             { providerId: 853, name: "5K Views", price: 20, badge: "STARTER", badgeClass: "badge-real" },
@@ -34,6 +47,7 @@ const serviceData = {
             { providerId: 853, name: "500K Views", price: 299, badge: "👑 MOST POPULAR", badgeClass: "badge-best" },
             { providerId: 853, name: "1M Views", price: 499, badge: "💥 MEGA DEAL", badgeClass: "badge-best" }
         ],
+
         "Photo / Post Views": [
             { providerId: 1030, name: "1K Views", price: 10, badge: "🎯 Demo", badgeClass: "badge-demo" },
             { providerId: 1030, name: "3K Views", price: 15, badge: "⚡ Starter", badgeClass: "badge-real" },
@@ -43,12 +57,14 @@ const serviceData = {
             { providerId: 1030, name: "50K Views", price: 119, badge: "🏆 Recommended", badgeClass: "badge-best" },
             { providerId: 1030, name: "100K Views", price: 220, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
+
         "Comments Lifetime": [
             { providerId: 31, name: "50 Comments", price: 15, badge: "Starter", badgeClass: "badge-demo" },
             { providerId: 31, name: "100 Comments", price: 20, badge: "Real", badgeClass: "badge-real" },
             { providerId: 31, name: "500 Comments", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
             { providerId: 31, name: "1K Comments", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" }
         ],
+
         "Repost Lifetime": [
             { providerId: 505, name: "50 Reposts", price: 15, badge: "Starter", badgeClass: "badge-demo" },
             { providerId: 505, name: "100 Reposts", price: 20, badge: "Real", badgeClass: "badge-real" },
@@ -56,6 +72,7 @@ const serviceData = {
             { providerId: 505, name: "1K Reposts", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" },
             { providerId: 505, name: "3K Reposts", price: 249, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
+
         "Shares Lifetime": [
             { providerId: 50, name: "100 Shares", price: 5, badge: "Starter", badgeClass: "badge-demo" },
             { providerId: 50, name: "1K Shares", price: 30, badge: "Fast", badgeClass: "badge-popular" },
@@ -63,8 +80,16 @@ const serviceData = {
             { providerId: 50, name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ]
     },
+
+    // ==========================================
+    // FACEBOOK
+    // ==========================================
     facebook: {
-        "Facebook Followers": [{ type: "custom", name: "Facebook Followers", pricePer1000: 49 }],
+
+        "Facebook Followers": [
+            { type: "custom", name: "Facebook Followers", pricePer1000: 49 }
+        ],
+
         "Likes Non-Drop": [
             { name: "100 Likes", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
             { name: "500 Likes", price: 25, badge: "REAL", badgeClass: "badge-real" },
@@ -73,6 +98,7 @@ const serviceData = {
             { name: "5K Likes", price: 99, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
             { name: "10K Likes", price: 179, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
         ],
+
         "Reels / Video Views": [
             { name: "1K Views", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
             { name: "3K Views", price: 25 },
@@ -81,6 +107,7 @@ const serviceData = {
             { name: "50K Views", price: 249, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
             { name: "100K Views", price: 449, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
         ],
+
         "Facebook Comments": [
             { name: "50 Comments", price: 10 },
             { name: "100 Comments", price: 15 },
@@ -90,6 +117,7 @@ const serviceData = {
             { name: "2K Comments", price: 110, badge: "🏆 Best Deal", badgeClass: "badge-best" },
             { name: "5K Comments", price: 260, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
+
         "Facebook Shares": [
             { name: "100 Shares", price: 15 },
             { name: "1K Shares", price: 25 },
@@ -101,6 +129,10 @@ const serviceData = {
     }
 };
 
+// ==========================================
+// GLOBAL VARIABLES
+// ==========================================
+
 let currentPlatform = "instagram";
 let currentCategory = "";
 let selectedPackage = null;
@@ -110,13 +142,17 @@ window.onload = function () {
     switchPlatform("instagram");
 };
 
-// 📱 মোবাইল ব্যাক বাটন দিয়ে ড্রয়ার বন্ধ করার ম্যাজিক হ্যান্ডলার
-window.addEventListener("popstate", function (e) {
+// ব্যাক বাটন চাপলে চেকআউট বন্ধ
+window.addEventListener('popstate', function (event) {
     const checkoutPage = document.getElementById("checkoutPage");
-    if (checkoutPage && !checkoutPage.classList.contains("hidden")) {
-        closeCheckout(false); // Browser back triggered
+    if (checkoutPage && checkoutPage.style.display === "block") {
+        closeCheckoutUI();
     }
 });
+
+// ==========================================
+// SWITCH INSTAGRAM / FACEBOOK
+// ==========================================
 
 function switchPlatform(platform) {
     currentPlatform = platform;
@@ -139,7 +175,12 @@ function switchPlatform(platform) {
     }
 
     renderCategoryTabs();
+    toggleInstallButton();
 }
+
+// ==========================================
+// RENDER CATEGORY TABS
+// ==========================================
 
 function renderCategoryTabs() {
     const tabsContainer = document.getElementById("categoryTabs");
@@ -159,6 +200,7 @@ function renderCategoryTabs() {
             tabBtn.classList.add("active");
             currentCategory = cat;
             renderPackages();
+            toggleInstallButton();
         };
 
         tabsContainer.appendChild(tabBtn);
@@ -166,6 +208,10 @@ function renderCategoryTabs() {
 
     renderPackages();
 }
+
+// ==========================================
+// RENDER PACKAGES
+// ==========================================
 
 function renderPackages() {
     const packageList = document.getElementById("packageList");
@@ -184,39 +230,81 @@ function renderPackages() {
 
             customDiv.innerHTML = `
                 <div style="margin-bottom: 8px;">
-                    <strong class="custom-title" style="color: #a855f7; font-size: 13px;">${pkg.name} (Custom Qty)</strong>
-                    <p style="font-size: 10px; color: #94a3b8;">Rate: ₹${pkg.pricePer1000 || 0} per 1000 Qty</p>
+                    <strong class="custom-title" style="color: #a855f7; font-size: 13px;">
+                        ${pkg.name} (Custom Qty)
+                    </strong>
+                    <p style="font-size: 10px; color: #94a3b8;">
+                        Rate: ₹${pkg.pricePer1000 || 0} per 1000 Qty
+                    </p>
                 </div>
+
                 <div class="input-box">
-                    <input type="number" id="customQtyInput" placeholder="Enter Quantity (e.g. 1000)" min="1" oninput="calculateCustomPrice('${pkg.name}', ${pkg.pricePer1000 || 0}, ${pkg.providerId || "null"})">
+                    <input
+                        type="number"
+                        id="customQtyInput"
+                        placeholder="Enter Quantity (e.g. 1000)"
+                        min="1"
+                        oninput="calculateCustomPrice('${pkg.name}', ${pkg.pricePer1000 || 0}, ${pkg.providerId || "null"})"
+                    >
                 </div>
-                <div style="font-size: 12px; font-weight: 800; color: #22c55e; margin-top: 5px;">Total: ₹<span id="customCalcPrice">0.00</span> INR</div>
-                <button class="action-btn" style="margin-top: 10px; width: 100%; padding: 10px; background: #22c55e; color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;" onclick="openCheckoutFromCustom()">Proceed to Payment</button>
+
+                <div style="font-size: 12px; font-weight: 800; color: #22c55e; margin-top: 5px;" id="customPriceDisplay">
+                    Total: ₹<span id="customCalcPrice">0.00</span> INR
+                </div>
+
+                <button class="action-btn" style="margin-top: 10px; width: 100%; padding: 8px; background: #22c55e; color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;" onclick="openCheckoutFromCustom()">
+                    Proceed to Payment
+                </button>
             `;
+
             packageList.appendChild(customDiv);
         } else {
             const card = document.createElement("div");
             card.className = "pkg-card";
+
             card.onclick = function () {
                 const qty = extractQuantity(pkg.name);
                 const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
-                openCheckoutForFixed(platformCap, currentCategory, pkg.name, qty, pkg.price, pkg.badge || 'Popular');
+                openCheckoutForFixed(
+                    platformCap,
+                    currentCategory,
+                    pkg.name,
+                    qty,
+                    pkg.price,
+                    pkg.badge || 'Popular'
+                );
             };
 
             card.innerHTML = `
                 <div class="pkg-left">
-                    <div class="pkg-icon"><i class="fa-brands ${iconClass}"></i></div>
+                    <div class="pkg-icon">
+                        <i class="fa-brands ${iconClass}"></i>
+                    </div>
+
                     <div class="pkg-info">
-                        <div class="pkg-title">${pkg.name} ${pkg.badge ? `<span class="pkg-badge ${pkg.badgeClass || "badge-popular"}">${pkg.badge}</span>` : ""}</div>
-                        <span class="pkg-sub">⚡ Instant Delivery • Premium Quality</span>
+                        <div class="pkg-title">
+                            ${pkg.name}
+                            ${pkg.badge ? `<span class="pkg-badge ${pkg.badgeClass || "badge-popular"}">${pkg.badge}</span>` : ""}
+                        </div>
+                        <span class="pkg-sub">
+                            ⚡ Instant Delivery • Premium Quality
+                        </span>
                     </div>
                 </div>
-                <div class="pkg-price-btn">₹${pkg.price}</div>
+
+                <div class="pkg-price-btn">
+                    ₹${pkg.price}
+                </div>
             `;
+
             packageList.appendChild(card);
         }
     });
 }
+
+// ==========================================
+// CUSTOM PRICE CALCULATOR & EXTRACT
+// ==========================================
 
 function calculateCustomPrice(serviceName, ratePer1000, providerId) {
     const qtyInput = document.getElementById("customQtyInput");
@@ -226,7 +314,14 @@ function calculateCustomPrice(serviceName, ratePer1000, providerId) {
     if (qty > 0) {
         const total = (qty / 1000) * ratePer1000;
         if (calcPriceSpan) calcPriceSpan.innerText = total.toFixed(2);
-        selectedPackage = { name: `${qty} ${serviceName}`, price: total, providerId: providerId, quantity: qty, category: currentCategory };
+
+        selectedPackage = {
+            name: `${qty} ${serviceName}`,
+            price: total,
+            providerId: providerId,
+            quantity: qty,
+            category: currentCategory
+        };
     } else {
         if (calcPriceSpan) calcPriceSpan.innerText = "0.00";
         selectedPackage = null;
@@ -237,84 +332,185 @@ function extractQuantity(name) {
     const text = name.toUpperCase().replace(/,/g, "");
     const match = text.match(/(\d+(?:\.\d+)?)\s*(M|K)?/);
     if (!match) return 0;
+
     let number = parseFloat(match[1]);
     const unit = match[2];
+
     if (unit === "K") number = number * 1000;
     else if (unit === "M") number = number * 1000000;
+
     return Math.floor(number);
 }
 
+// ==========================================
+// 🚀 CHECKOUT & PAYMENT OVERLAY LOGIC
+// ==========================================
+
 function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge) {
-    currentCheckoutData = { platform, serviceName, packageName, quantity, price, badge: badge || 'Popular' };
+    currentCheckoutData = {
+        platform: platform,
+        serviceName: serviceName,
+        packageName: packageName,
+        quantity: quantity,
+        price: price,
+        badge: badge || 'Popular'
+    };
+
     showCheckoutOverlay();
 }
 
 function openCheckoutFromCustom() {
     const qtyInput = document.getElementById("customQtyInput");
     const qty = parseFloat(qtyInput ? qtyInput.value : 0);
+
     const calculatedPriceText = document.getElementById("customCalcPrice");
     const price = parseFloat(calculatedPriceText ? calculatedPriceText.innerText : 0);
 
     if (!qty || qty <= 0) {
-        alert("Please enter a valid quantity!");
+        alert("দয়া করে সঠিক Quantity লিখুন!");
         return;
     }
 
     const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
-    currentCheckoutData = { platform: platformCap, serviceName: currentCategory, packageName: `${qty.toLocaleString()} Custom Qty`, quantity: qty, price: price, badge: "Custom" };
+
+    currentCheckoutData = {
+        platform: platformCap,
+        serviceName: currentCategory,
+        packageName: `${qty.toLocaleString()} Custom Qty`,
+        quantity: qty,
+        price: price,
+        badge: "Custom"
+    };
+
     showCheckoutOverlay();
 }
 
 function showCheckoutOverlay() {
     const d = currentCheckoutData;
 
+    history.pushState({ checkoutOpen: true }, "");
+
     const iconBox = document.getElementById("checkoutPlatformIcon");
-    if (iconBox) iconBox.innerHTML = d.platform.toLowerCase() === "facebook" ? `<i class="fa-brands fa-facebook"></i>` : `<i class="fa-brands fa-instagram"></i>`;
+    if (iconBox) {
+        iconBox.innerHTML = d.platform.toLowerCase() === "facebook"
+            ? `<i class="fa-brands fa-facebook"></i>`
+            : `<i class="fa-brands fa-instagram"></i>`;
+    }
 
-    if (document.getElementById("checkoutServiceTitle")) document.getElementById("checkoutServiceTitle").innerText = `${d.platform} - ${d.serviceName}`;
-    if (document.getElementById("checkoutPkgBadgeName")) document.getElementById("checkoutPkgBadgeName").innerText = d.packageName;
-    if (document.getElementById("checkoutBadge")) document.getElementById("checkoutBadge").innerText = d.badge;
-    if (document.getElementById("checkoutUnitsText")) document.getElementById("checkoutUnitsText").innerText = `${d.quantity.toLocaleString()} units`;
+    if (document.getElementById("checkoutServiceTitle"))
+        document.getElementById("checkoutServiceTitle").innerText = `${d.platform} - ${d.serviceName}`;
 
+    if (document.getElementById("checkoutPkgBadgeName"))
+        document.getElementById("checkoutPkgBadgeName").innerText = d.packageName;
+
+    if (document.getElementById("checkoutBadge"))
+        document.getElementById("checkoutBadge").innerText = d.badge;
+
+    if (document.getElementById("checkoutUnitsText"))
+        document.getElementById("checkoutUnitsText").innerText = `${d.quantity.toLocaleString()} Package`;
+
+    // 🔴 FIX 1: ডবল ₹₹ সরানো হলো এবং একবারে সঠিক দাম বসানো হলো
     const priceEl = document.getElementById("checkoutPriceText");
-    if (priceEl) priceEl.innerText = `${d.price.toFixed(2)}`;
+    if (priceEl) {
+        priceEl.innerText = `${d.price.toFixed(2)}`;
+    }
+    
+    // one-time লেখা রিমুভ করে clean You Pay সেট
+    const priceCard = priceEl ? priceEl.parentElement : null;
+    if (priceCard) {
+        const subSpans = priceCard.querySelectorAll("span");
+        subSpans.forEach(s => {
+            if (s.id !== "checkoutPriceText") {
+                s.innerText = "You Pay";
+            }
+        });
+    }
 
+    // Order Summary হাইড
+    const allSummaryElements = document.querySelectorAll(".order-summary-box, #orderSummaryBox, [class*='summary']");
+    allSummaryElements.forEach(el => {
+        el.style.display = "none";
+    });
+
+    const linkLabel = document.getElementById("checkoutLinkLabel");
     const linkInput = document.getElementById("checkoutLinkInput");
-    if (linkInput) linkInput.value = "";
+    if (linkInput) {
+        linkInput.value = ""; 
+        if (d.platform.toLowerCase() === "facebook") {
+            if (linkLabel) linkLabel.innerText = "Enter your Facebook link";
+            linkInput.placeholder = "https://facebook.com/your_profile";
+        } else {
+            if (linkLabel) linkLabel.innerText = "Enter your Instagram link";
+            linkInput.placeholder = "https://instagram.com/your_username";
+        }
+    }
 
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
 
+    if (document.getElementById("checkoutUsdtAmount")) {
+        const usdt = (d.price / 88).toFixed(2);
+        document.getElementById("checkoutUsdtAmount").innerText = `$${usdt} USDT`;
+    }
+
+    // 🔴 FIX 2: QR Code সাইজ ১৪০px করে এক পেজে ফিট করা হলো
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price}&cu=INR`;
-    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(upiUrl)}`;
+    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
         qrImg.src = qrImageSrc;
+        qrImg.style.display = "block";
+        qrImg.style.margin = "0 auto";
+        qrImg.style.width = "140px";
+        qrImg.style.height = "140px";
     }
 
-    const payBtn = document.getElementById("payViaUpiAppBtn");
-    if (payBtn) {
-        payBtn.href = upiUrl;
+    const payViaUpiBtn = document.getElementById("payViaUpiAppBtn") || document.querySelector(".pay-via-upi-btn");
+    if (payViaUpiBtn) {
+        payViaUpiBtn.style.display = "none";
+    }
+
+    // Ultra Compact CSS injection to fit screen
+    if (!document.getElementById("ultraCompactCss")) {
+        const style = document.createElement("style");
+        style.id = "ultraCompactCss";
+        style.innerHTML = `
+            #checkoutPage { padding: 8px 12px !important; }
+            #checkoutPage .checkout-card { margin-bottom: 6px !important; padding: 8px 12px !important; }
+            #checkoutPage .input-box { margin-bottom: 6px !important; }
+            #checkoutPage input { padding: 6px 10px !important; font-size: 12px !important; height: 36px !important; }
+            #checkoutUpiView { padding: 6px !important; margin-bottom: 6px !important;}
+            #checkoutPage .payment-tabs { margin-bottom: 6px !important; }
+            #checkoutPage .submit-btn { padding: 8px !important; height: 40px !important; font-size: 13px !important; margin-top: 4px !important; }
+            #checkoutPage p, #checkoutPage label { margin-bottom: 3px !important; font-size: 11px !important; }
+            .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 6px !important; font-size: 10px !important; margin-bottom: 6px !important; }
+            .pay-apps-icons, [class*="paytm"], [class*="gpay"] { display: none !important; } /* Hide extra icons to save height */
+        `;
+        document.head.appendChild(style);
     }
 
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage) {
         checkoutPage.classList.remove("hidden");
-        // ব্রাউজার হিস্ট্রিতে স্টেক যোগ করা যাতে মোবাইল ব্যাক বাটন সাইট বন্ধ না করে দেয়
-        window.history.pushState({ checkoutOpen: true }, "");
+        checkoutPage.style.display = "block";
     }
 }
 
-// ⬅️ ব্যাক বাটন ক্লিক ও মোবাইল ব্যাক বাটন হ্যান্ডলার
-function closeCheckout(shouldGoBackInHistory = true) {
+function closeCheckoutUI() {
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage) {
         checkoutPage.classList.add("hidden");
+        checkoutPage.style.display = "none";
     }
-    if (shouldGoBackInHistory && window.history.state && window.history.state.checkoutOpen) {
-        window.history.back();
+    currentCheckoutData = {}; 
+}
+
+function closeCheckout() {
+    closeCheckoutUI();
+    if (history.state && history.state.checkoutOpen) {
+        history.back();
     }
 }
 
@@ -345,20 +541,18 @@ function submitOrderToWhatsApp() {
     const txnId = txnInput ? txnInput.value.trim() : "";
 
     if (!link) {
-        alert("Please enter your target link!");
-        if (linkInput) linkInput.focus();
+        alert("দয়া করে আপনার Social Media Link দিন!");
         return;
     }
-
     if (!txnId) {
-        alert("Please enter your Transaction ID / UTR number!");
-        if (txnInput) txnInput.focus();
+        alert("দয়া করে Transaction ID / UTR নম্বর লিখুন!");
         return;
     }
 
     const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
     const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
     const whatsappNumber = "919337028344";
+
     const d = currentCheckoutData;
 
     const message = `🚀 *NEW ORDER SUBMITTED* 🚀\n\n` +
@@ -373,3 +567,51 @@ function submitOrderToWhatsApp() {
 
     window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
 }
+
+// =====================================================
+// PWA INSTALL APP LOGIC
+// =====================================================
+
+let deferredPrompt = null;
+
+window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    toggleInstallButton();
+});
+
+function toggleInstallButton() {
+    const installContainer = document.getElementById("installContainer");
+    if (!installContainer) return;
+
+    if (
+        currentPlatform === "instagram" &&
+        currentCategory === "Followers Non-Drop" &&
+        deferredPrompt
+    ) {
+        installContainer.style.display = "block";
+    } else {
+        installContainer.style.display = "none";
+    }
+}
+
+const installBtn = document.getElementById("installBtn");
+if (installBtn) {
+    installBtn.addEventListener("click", async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            deferredPrompt = null;
+            toggleInstallButton();
+        }
+    });
+}
+
+window.addEventListener("appinstalled", () => {
+    const installContainer = document.getElementById("installContainer");
+    if (installContainer) {
+        installContainer.style.display = "none";
+    }
+    deferredPrompt = null;
+});

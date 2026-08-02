@@ -68,7 +68,8 @@
 <body>
 <div class="main-wrapper" id="mainHomeView">
   <!-- Header -->
-  <div class="panel-heading">𝑹𝑨𝑱-𝑺𝑶𝑪𝑰𝑨𝑳-𝑷𝑨𝑵𝑬𝑳</div>
+  <div class="panel-heading">𝑹𝑨𝑱-𝑺𝑶𝑪𝑰𝑨𝑳-𝑷𝑨𝑵𝑬𝑳
+</div>
 
   <!-- Support Buttons Header -->
   <div class="hero-actions">
@@ -143,7 +144,7 @@
 <div id="checkoutPage" class="checkout-page-overlay hidden">
   <div class="checkout-content">
     
-    <!-- Top Bar with Back Button (Fixed OnClick Function) -->
+    <!-- Top Bar with Back Button -->
     <div class="checkout-nav">
       <button class="back-btn" onclick="closeCheckout()"><i class="fa-solid fa-arrow-left"></i> Back</button>
       <div class="checkout-heading-text">Checkout</div>
@@ -171,9 +172,22 @@
 
     <!-- Social Link Input -->
     <div class="checkout-input-group">
-      <label id="checkoutLinkLabel">Profile Link (Account Must be Public)</label>
+      <label id="checkoutLinkLabel">Enter your Instagram link</label>
       <input type="text" id="checkoutLinkInput" placeholder="https://instagram.com/your_username" />
-      <small id="checkoutLinkError" style="color: #ef4444; font-size: 12px; font-weight: 600; margin-top: 4px; display: none;"></small>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="checkout-order-summary">
+      <div class="summary-title">Order Summary</div>
+      <div class="summary-row">
+        <span>Package</span>
+        <span id="summaryPackageText">5K Followers</span>
+      </div>
+      <div class="summary-divider"></div>
+      <div class="summary-row pay-row">
+        <span>You Pay</span>
+        <span class="pay-amount">₹<span id="summaryPayAmount">199.00</span></span>
+      </div>
     </div>
 
     <!-- Payment Tabs -->
@@ -235,8 +249,7 @@
   </div>
 </div>
 
-<!-- Updated Script Source with Version to Bypass Cache -->
-<script src="script.js?v=3.0"></script>
+<script src="script.js"></script>
 
 <!-- Custom Script to Hide Install App on Input Focus -->
 <script>

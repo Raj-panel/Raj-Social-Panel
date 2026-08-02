@@ -343,53 +343,62 @@ function extractQuantity(name) {
 }
 
 // ==========================================
-// DYNAMIC LINK CONFIG & FLEXIBLE VALIDATION SYSTEM
+// DYNAMIC LINK CONFIG & VALIDATION SYSTEM
 // ==========================================
 
 function getServiceLinkConfig(platform, serviceCategory) {
     const p = platform.toLowerCase();
     const c = serviceCategory.toLowerCase();
 
-    // Instagram Rules (With flexible query parameters support)
+    // Flexible regex with URL parameters support
     if (p === "instagram") {
         if (c.includes("follower")) {
             return {
                 label: "Profile Link (Account Must be Public)",
                 placeholder: "https://instagram.com/your_username",
-                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/[a-zA-Z0-9_\.]+(\/?|\?.*)$/i,
+                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/[a-zA-Z0-9_\.]+(\/)?(\?.*)?$/i,
                 error: "Please enter a valid Instagram Profile Link."
             };
         } else if (c.includes("reel") || c.includes("video")) {
             return {
                 label: "Reel/Video Link (Account Must be Public)",
                 placeholder: "https://instagram.com/reel/...",
-                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(reel|tv|p)\/[a-zA-Z0-9_-]+(\/?|\?.*)$/i,
+                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(reel|tv|p)\/[a-zA-Z0-9_-]+(\/)?(\?.*)?$/i,
                 error: "Please enter a valid Instagram Reel or Video Link."
             };
-        } else if (c.includes("like") || c.includes("comment") || c.includes("share") || c.includes("repost") || c.includes("photo") || c.includes("post")) {
+        } else {
             return {
-                label: "Post/Reel Link (Account Must be Public)",
+                label: "Reel/Post Link (Account Must be Public)",
                 placeholder: "https://instagram.com/p/...",
-                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv)\/[a-zA-Z0-9_-]+(\/?|\?.*)$/i,
+                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv)\/[a-zA-Z0-9_-]+(\/)?(\?.*)?$/i,
                 error: "Please enter a valid Instagram Post or Reel Link."
             };
         }
-        return {
-            label: "Profile/Post Link (Account Must be Public)",
-            placeholder: "https://instagram.com/your_username",
-            pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/.+/i,
-            error: "Please enter a valid Instagram Link."
-        };
     }
 
-    // Facebook Rules
     if (p === "facebook") {
-        return {
-            label: "Target Link (Must be Public)",
-            placeholder: "https://facebook.com/...",
-            pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
-            error: "Please enter a valid Facebook Link."
-        };
+        if (c.includes("follower") || c.includes("page")) {
+            return {
+                label: "Profile/Page Link (Must be Public)",
+                placeholder: "https://facebook.com/your_profile",
+                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
+                error: "Please enter a valid Facebook Profile/Page Link."
+            };
+        } else if (c.includes("reel")) {
+            return {
+                label: "Reel Link (Reel Must be Public)",
+                placeholder: "https://facebook.com/reel/...",
+                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/reel\/.+/i,
+                error: "Please enter a valid Facebook Reel Link."
+            };
+        } else {
+            return {
+                label: "Post/Video Link (Must be Public)",
+                placeholder: "https://facebook.com/...",
+                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
+                error: "Please enter a valid Facebook Link."
+            };
+        }
     }
 
     return {
@@ -438,7 +447,6 @@ function validateCheckoutLink() {
     }
 }
 
-// Real-time input validation binding
 document.addEventListener("DOMContentLoaded", function () {
     const linkInput = document.getElementById("checkoutLinkInput");
     if (linkInput) {
@@ -519,12 +527,6 @@ function showCheckoutOverlay() {
         priceEl.innerText = `${d.price.toFixed(2)}`;
     }
 
-    // HIDE ORDER SUMMARY BOX (অনুরোধ অনুযায়ী Order Summary বক্স হাইড করা হলো)
-    const orderSummaryContainer = document.querySelector(".order-summary") || document.getElementById("orderSummaryBox");
-    if (orderSummaryContainer) {
-        orderSummaryContainer.style.display = "none";
-    }
-
     // Apply Dynamic Link Input Config
     const config = getServiceLinkConfig(d.platform, d.serviceName);
     const linkLabel = document.getElementById("checkoutLinkLabel");
@@ -571,21 +573,21 @@ function showCheckoutOverlay() {
         payViaUpiBtn.style.display = "none";
     }
 
-    // Ultra Compact Mobile Layout CSS injection (No Scroll Needed)
+    // Ultra Compact CSS injection to fit entire screen without scroll
     if (!document.getElementById("ultraCompactCss")) {
         const style = document.createElement("style");
         style.id = "ultraCompactCss";
         style.innerHTML = `
-            #checkoutPage { padding: 4px 8px !important; }
-            #checkoutPage .checkout-card { margin-bottom: 4px !important; padding: 6px 10px !important; }
-            #checkoutPage .input-box { margin-bottom: 4px !important; }
-            #checkoutPage input { padding: 5px 8px !important; font-size: 11px !important; height: 32px !important; }
-            #checkoutUpiView { padding: 4px !important; margin-bottom: 4px !important; text-align: center; }
-            #checkoutPage .payment-tabs { margin-bottom: 4px !important; }
-            #checkoutPage .submit-btn { padding: 6px !important; height: 36px !important; font-size: 12px !important; margin-top: 2px !important; }
+            #checkoutPage { padding: 4px 10px !important; }
+            #checkoutPage .checkout-card, #checkoutPage .premium-service-card { margin-bottom: 4px !important; padding: 6px 10px !important; }
+            #checkoutPage .checkout-input-group { margin-top: 4px !important; margin-bottom: 4px !important; }
+            #checkoutPage input { padding: 4px 8px !important; font-size: 11px !important; height: 32px !important; }
+            #checkoutUpiView { padding: 4px !important; margin-bottom: 4px !important;}
+            #checkoutPage .pay-toggle-tabs { margin-bottom: 4px !important; }
+            #checkoutPage .whatsapp-submit-btn { padding: 6px !important; height: 36px !important; font-size: 12px !important; margin-top: 4px !important; }
             #checkoutPage p, #checkoutPage label { margin-bottom: 2px !important; font-size: 10px !important; }
-            .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 4px !important; font-size: 9px !important; margin-bottom: 4px !important; }
-            .pay-apps-icons, [class*="paytm"], [class*="gpay"], .order-summary { display: none !important; }
+            .notice-yellow-box { padding: 4px 6px !important; font-size: 9px !important; margin-bottom: 4px !important; }
+            .upi-icons-row { display: none !important; }
         `;
         document.head.appendChild(style);
     }
@@ -639,7 +641,6 @@ function submitOrderToWhatsApp() {
     const link = linkInput ? linkInput.value.trim() : "";
     const txnId = txnInput ? txnInput.value.trim() : "";
 
-    // Validation Check
     const isLinkValid = validateCheckoutLink();
 
     if (!link) {

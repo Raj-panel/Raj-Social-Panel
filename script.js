@@ -394,6 +394,56 @@ function getLinkConfig(platform, category) {
     return config;
 }
 
+// =====================================================
+// 🔥 DYNAMIC PRICE DEDUCTION ENGINE (SERVICE LIST-BASED)
+// =====================================================
+
+function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUnitQty, baseUnitPrice) {
+    const platformData = serviceData[platformKey.toLowerCase()];
+    if (!platformData || !platformData[categoryKey]) {
+        return (totalQty / baseUnitQty) * baseUnitPrice;
+    }
+
+    const availablePackages = platformData[categoryKey]
+        .filter(p => !p.type) // Filter out custom type
+        .map(p => ({
+            qty: extractQuantity(p.name),
+            price: p.price
+        }))
+        .filter(p => p.qty > 0)
+        .sort((a, b) => b.qty - a.qty); // Sort descending
+
+    // 1. Exact match with service pricing
+    const exactMatch = availablePackages.find(p => p.qty === totalQty);
+    if (exactMatch) {
+        return exactMatch.price;
+    }
+
+    // 2. If package exists smaller or larger, compute best tiered pricing
+    let remaining = totalQty;
+    let totalPrice = 0;
+
+    for (let pkg of availablePackages) {
+        if (remaining >= pkg.qty) {
+            let count = Math.floor(remaining / pkg.qty);
+            totalPrice += count * pkg.price;
+            remaining = remaining % pkg.qty;
+        }
+    }
+
+    // 3. Fallback for remaining smaller unit leftover
+    if (remaining > 0) {
+        let smallestPkg = availablePackages[availablePackages.length - 1];
+        if (smallestPkg) {
+            totalPrice += (remaining / smallestPkg.qty) * smallestPkg.price;
+        } else {
+            totalPrice += (remaining / baseUnitQty) * baseUnitPrice;
+        }
+    }
+
+    return totalPrice;
+}
+
 // ==========================================
 // 🚀 CHECKOUT & QUANTITY COUNTER LOGIC
 // ==========================================
@@ -446,9 +496,17 @@ function openCheckoutFromCustom() {
 function updateCheckoutQuantityDisplay() {
     const d = currentCheckoutData;
     
-    // Total price and Total unit calculation
+    // Total quantity calculated from base quantity & multiplier
     d.quantity = d.baseQuantity * d.multiplier;
-    d.price = d.basePrice * d.multiplier;
+
+    // Smart Price Lookup from serviceData table
+    d.price = calculateDynamicPriceForQty(
+        d.platform,
+        d.serviceName,
+        d.quantity,
+        d.baseQuantity,
+        d.basePrice
+    );
 
     // Display updates
     const qtyCountDisplay = document.getElementById("checkoutQtyCount");
@@ -465,7 +523,7 @@ function updateCheckoutQuantityDisplay() {
         document.getElementById("checkoutUsdtAmount").innerText = `$${usdt} USDT`;
     }
 
-    // Dynamic QR update according to price change
+    // Dynamic QR update according to calculated price
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR`;
     const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(upiUrl)}`;
@@ -507,7 +565,7 @@ function showCheckoutOverlay() {
     if (document.getElementById("checkoutBadge"))
         document.getElementById("checkoutBadge").innerText = d.badge;
 
-    // Add + / - Quantity Counter Box dynamically if not exists
+    // Add + / - Quantity Counter Box dynamically
     let counterContainer = document.getElementById("checkoutQtyCounterBox");
     const priceEl = document.getElementById("checkoutPriceText");
     const priceParent = priceEl ? priceEl.parentElement : null;
@@ -550,7 +608,7 @@ function showCheckoutOverlay() {
         el.style.display = "none";
     });
 
-    // Set Dynamic Link Input Label & Placeholder
+    // Dynamic Link Input Label & Placeholder
     const linkConfig = getLinkConfig(d.platform, d.serviceName);
     const linkLabel = document.getElementById("checkoutLinkLabel");
     const linkInput = document.getElementById("checkoutLinkInput");
@@ -657,7 +715,7 @@ function submitOrderToWhatsApp() {
     const message = `🚀 *NEW ORDER SUBMITTED* 🚀\n\n` +
         `📌 *Social Media:* ${d.platform}\n` +
         `🛠️ *Service Name:* ${d.serviceName}\n` +
-        `📦 *Package:* ${d.packageName} (x${d.multiplier})\n` +
+        `📦 *Package:* ${d.packageName}\n` +
         `🔢 *Total Quantity:* ${d.quantity.toLocaleString()}\n` +
         `💰 *Total Price:* ₹${d.price.toFixed(2)}\n` +
         `🔗 *Target Link:* ${link}\n` +

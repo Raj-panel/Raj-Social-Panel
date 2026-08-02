@@ -343,35 +343,37 @@ function extractQuantity(name) {
 }
 
 // ==========================================
-// DYNAMIC LINK CONFIG & VALIDATION SYSTEM
+// UNIVERSAL LINK CONFIG & VALIDATION (ALLOW ALL LINKS)
 // ==========================================
 
 function getServiceLinkConfig(platform, serviceCategory) {
     const p = platform.toLowerCase();
     const c = serviceCategory.toLowerCase();
 
-    // Flexible regex with URL parameters support
+    // UNIVERSAL REGEX: Allow ANY link starting with http/https or instagram/facebook domain format
+    const universalPattern = /^(https?:\/\/)?([a-zA-Z0-9_\-]+\.)+[a-zA-Z0-9_\-]+(\/.*)?$/i;
+
     if (p === "instagram") {
         if (c.includes("follower")) {
             return {
                 label: "Profile Link (Account Must be Public)",
                 placeholder: "https://instagram.com/your_username",
-                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/[a-zA-Z0-9_\.]+(\/)?(\?.*)?$/i,
-                error: "Please enter a valid Instagram Profile Link."
+                pattern: universalPattern.source,
+                error: "Please enter your Link."
             };
         } else if (c.includes("reel") || c.includes("video")) {
             return {
                 label: "Reel/Video Link (Account Must be Public)",
                 placeholder: "https://instagram.com/reel/...",
-                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(reel|tv|p)\/[a-zA-Z0-9_-]+(\/)?(\?.*)?$/i,
-                error: "Please enter a valid Instagram Reel or Video Link."
+                pattern: universalPattern.source,
+                error: "Please enter your Link."
             };
         } else {
             return {
-                label: "Reel/Post Link (Account Must be Public)",
+                label: "Post/Reel Link (Account Must be Public)",
                 placeholder: "https://instagram.com/p/...",
-                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv)\/[a-zA-Z0-9_-]+(\/)?(\?.*)?$/i,
-                error: "Please enter a valid Instagram Post or Reel Link."
+                pattern: universalPattern.source,
+                error: "Please enter your Link."
             };
         }
     }
@@ -381,22 +383,15 @@ function getServiceLinkConfig(platform, serviceCategory) {
             return {
                 label: "Profile/Page Link (Must be Public)",
                 placeholder: "https://facebook.com/your_profile",
-                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
-                error: "Please enter a valid Facebook Profile/Page Link."
-            };
-        } else if (c.includes("reel")) {
-            return {
-                label: "Reel Link (Reel Must be Public)",
-                placeholder: "https://facebook.com/reel/...",
-                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/reel\/.+/i,
-                error: "Please enter a valid Facebook Reel Link."
+                pattern: universalPattern.source,
+                error: "Please enter your Link."
             };
         } else {
             return {
-                label: "Post/Video Link (Must be Public)",
+                label: "Target Link (Must be Public)",
                 placeholder: "https://facebook.com/...",
-                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
-                error: "Please enter a valid Facebook Link."
+                pattern: universalPattern.source,
+                error: "Please enter your Link."
             };
         }
     }
@@ -404,8 +399,8 @@ function getServiceLinkConfig(platform, serviceCategory) {
     return {
         label: "Target Link (Must be Public)",
         placeholder: "Enter valid social media link",
-        pattern: /^https?:\/\/.+/i,
-        error: "Please enter a valid URL."
+        pattern: universalPattern.source,
+        error: "Please enter your Link."
     };
 }
 
@@ -415,8 +410,6 @@ function validateCheckoutLink() {
     if (!linkInput) return true;
 
     const value = linkInput.value.trim();
-    const patternStr = linkInput.dataset.pattern;
-    const errorMsg = linkInput.dataset.error;
 
     if (value === "") {
         if (errorEl) {
@@ -427,24 +420,13 @@ function validateCheckoutLink() {
         return false;
     }
 
-    if (!patternStr) return true;
-
-    const regex = new RegExp(patternStr, "i");
-    if (!regex.test(value)) {
-        if (errorEl) {
-            errorEl.innerText = errorMsg || "Invalid Link provided.";
-            errorEl.style.display = "block";
-        }
-        linkInput.style.borderColor = "#ef4444";
-        return false;
-    } else {
-        if (errorEl) {
-            errorEl.innerText = "";
-            errorEl.style.display = "none";
-        }
-        linkInput.style.borderColor = "#22c55e";
-        return true;
+    // Always valid if user types any link
+    if (errorEl) {
+        errorEl.innerText = "";
+        errorEl.style.display = "none";
     }
+    linkInput.style.borderColor = "#22c55e";
+    return true;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -527,7 +509,7 @@ function showCheckoutOverlay() {
         priceEl.innerText = `${d.price.toFixed(2)}`;
     }
 
-    // Apply Dynamic Link Input Config
+    // Apply Link Config
     const config = getServiceLinkConfig(d.platform, d.serviceName);
     const linkLabel = document.getElementById("checkoutLinkLabel");
     const linkInput = document.getElementById("checkoutLinkInput");
@@ -537,7 +519,7 @@ function showCheckoutOverlay() {
     if (linkInput) {
         linkInput.value = "";
         linkInput.placeholder = config.placeholder;
-        linkInput.dataset.pattern = config.pattern.source;
+        linkInput.dataset.pattern = config.pattern;
         linkInput.dataset.error = config.error;
         linkInput.style.borderColor = "";
     }
@@ -557,15 +539,15 @@ function showCheckoutOverlay() {
     // QR Code Generation
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price}&cu=INR`;
-    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=${encodeURIComponent(upiUrl)}`;
+    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
         qrImg.src = qrImageSrc;
         qrImg.style.display = "block";
         qrImg.style.margin = "0 auto";
-        qrImg.style.width = "130px";
-        qrImg.style.height = "130px";
+        qrImg.style.width = "120px";
+        qrImg.style.height = "120px";
     }
 
     const payViaUpiBtn = document.getElementById("payViaUpiAppBtn") || document.querySelector(".pay-via-upi-btn");
@@ -573,20 +555,21 @@ function showCheckoutOverlay() {
         payViaUpiBtn.style.display = "none";
     }
 
-    // Ultra Compact CSS injection to fit entire screen without scroll
+    // Ultra Fit Responsiveness for All Mobile Screen Heights
     if (!document.getElementById("ultraCompactCss")) {
         const style = document.createElement("style");
         style.id = "ultraCompactCss";
         style.innerHTML = `
-            #checkoutPage { padding: 4px 10px !important; }
-            #checkoutPage .checkout-card, #checkoutPage .premium-service-card { margin-bottom: 4px !important; padding: 6px 10px !important; }
-            #checkoutPage .checkout-input-group { margin-top: 4px !important; margin-bottom: 4px !important; }
-            #checkoutPage input { padding: 4px 8px !important; font-size: 11px !important; height: 32px !important; }
-            #checkoutUpiView { padding: 4px !important; margin-bottom: 4px !important;}
-            #checkoutPage .pay-toggle-tabs { margin-bottom: 4px !important; }
-            #checkoutPage .whatsapp-submit-btn { padding: 6px !important; height: 36px !important; font-size: 12px !important; margin-top: 4px !important; }
-            #checkoutPage p, #checkoutPage label { margin-bottom: 2px !important; font-size: 10px !important; }
-            .notice-yellow-box { padding: 4px 6px !important; font-size: 9px !important; margin-bottom: 4px !important; }
+            #checkoutPage { padding: 4px 10px !important; display: flex; flex-direction: column; justify-content: space-between; height: 100vh !important; max-height: 100vh !important; box-sizing: border-box !important; overflow: hidden !important; }
+            #checkoutPage .checkout-content { display: flex; flex-direction: column; height: 100%; justify-content: space-between; }
+            #checkoutPage .premium-service-card { margin-bottom: 3px !important; padding: 6px 10px !important; flex-shrink: 0; }
+            #checkoutPage .checkout-input-group { margin-top: 2px !important; margin-bottom: 2px !important; flex-shrink: 0; }
+            #checkoutPage input { padding: 4px 8px !important; font-size: 11px !important; height: 30px !important; }
+            #checkoutUpiView { padding: 2px !important; margin-bottom: 2px !important; flex-shrink: 0; }
+            #checkoutPage .pay-toggle-tabs { margin-bottom: 2px !important; flex-shrink: 0; }
+            #checkoutPage .whatsapp-submit-btn { padding: 6px !important; height: 36px !important; font-size: 12px !important; margin-top: auto !important; margin-bottom: 4px !important; width: 100% !important; flex-shrink: 0; }
+            #checkoutPage p, #checkoutPage label { margin-bottom: 1px !important; font-size: 10px !important; }
+            .notice-yellow-box { padding: 3px 5px !important; font-size: 9px !important; margin-bottom: 2px !important; flex-shrink: 0; }
             .upi-icons-row { display: none !important; }
         `;
         document.head.appendChild(style);
@@ -641,16 +624,8 @@ function submitOrderToWhatsApp() {
     const link = linkInput ? linkInput.value.trim() : "";
     const txnId = txnInput ? txnInput.value.trim() : "";
 
-    const isLinkValid = validateCheckoutLink();
-
     if (!link) {
         alert("Please enter your target link!");
-        if (linkInput) linkInput.focus();
-        return;
-    }
-
-    if (!isLinkValid) {
-        alert(linkInput.dataset.error || "Please enter a valid URL according to the selected service.");
         if (linkInput) linkInput.focus();
         return;
     }

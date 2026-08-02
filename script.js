@@ -142,7 +142,7 @@ window.onload = function () {
     switchPlatform("instagram");
 };
 
-// ব্যাক বাটন চাপলে চেকআউট বন্ধ
+// Back button handles closing checkout
 window.addEventListener('popstate', function (event) {
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage && checkoutPage.style.display === "block") {
@@ -342,6 +342,138 @@ function extractQuantity(name) {
     return Math.floor(number);
 }
 
+// =====================================================
+// DYNAMIC LINK DETECTION & VALIDATION LOGIC
+// =====================================================
+
+function getLinkConfig(platform, category) {
+    const p = (platform || "").toLowerCase();
+    const c = (category || "").toLowerCase();
+
+    let config = {
+        label: "Link",
+        placeholder: "Enter Link (Account Must be Public)",
+        type: "general"
+    };
+
+    if (p === "instagram") {
+        if (c.includes("reels") || c.includes("video views")) {
+            config.label = "Reel / Video Link";
+            config.placeholder = "Reel / Video Link (Account Must be Public)";
+            config.type = "ig_video";
+        } else if (c.includes("likes") || c.includes("comments") || c.includes("shares") || c.includes("repost") || c.includes("saves")) {
+            config.label = "Reel / Post Link";
+            config.placeholder = "Reel / Post Link (Account Must be Public)";
+            config.type = "ig_post_reel";
+        } else if (c.includes("followers")) {
+            config.label = "Profile Link";
+            config.placeholder = "Profile Link (Account Must be Public)";
+            config.type = "ig_profile";
+        } else if (c.includes("photo") || c.includes("post views")) {
+            config.label = "Post Link";
+            config.placeholder = "Post Link (Account Must be Public)";
+            config.type = "ig_post";
+        }
+    } else if (p === "facebook") {
+        if (c.includes("followers")) {
+            config.label = "Profile Link";
+            config.placeholder = "Profile Link (Account Must be Public)";
+            config.type = "fb_profile";
+        } else if (c.includes("page likes")) {
+            config.label = "Page Link";
+            config.placeholder = "Page Link (Page Must be Public)";
+            config.type = "fb_page";
+        } else if (c.includes("post likes") || c.includes("likes non-drop") || c.includes("shares")) {
+            config.label = "Post Link";
+            config.placeholder = "Post Link (Post Must be Public)";
+            config.type = "fb_post";
+        } else if (c.includes("video views")) {
+            config.label = "Video Link";
+            config.placeholder = "Video Link (Video Must be Public)";
+            config.type = "fb_video";
+        } else if (c.includes("reels views")) {
+            config.label = "Reel / Video Link";
+            config.placeholder = "Reel / Video Link (Account Must be Public)";
+            config.type = "fb_video";
+        } else if (c.includes("comments")) {
+            config.label = "Post / Reel Link";
+            config.placeholder = "Post / Reel Link (Account Must be Public)";
+            config.type = "fb_post_reel";
+        }
+    }
+
+    return config;
+}
+
+function validateLinkByType(link, type) {
+    const trimmedLink = link.trim().toLowerCase();
+
+    if (!trimmedLink.startsWith("http://") && !trimmedLink.startsWith("https://") && !trimmedLink.includes(".")) {
+        return { valid: false, message: "Please enter a valid link standard format!" };
+    }
+
+    switch (type) {
+        case "ig_profile":
+            if (!trimmedLink.includes("instagram.com")) {
+                return { valid: false, message: "Please enter a valid Instagram Profile Link!" };
+            }
+            break;
+
+        case "ig_post":
+            if (!trimmedLink.includes("instagram.com") || (!trimmedLink.includes("/p/") && !trimmedLink.includes("/reel/"))) {
+                return { valid: false, message: "Please enter a valid Instagram Post Link!" };
+            }
+            break;
+
+        case "ig_post_reel":
+            if (!trimmedLink.includes("instagram.com") || (!trimmedLink.includes("/p/") && !trimmedLink.includes("/reel/"))) {
+                return { valid: false, message: "Please enter a valid Instagram Reel or Post Link!" };
+            }
+            break;
+
+        case "ig_video":
+            if (!trimmedLink.includes("instagram.com") || (!trimmedLink.includes("/reel/") && !trimmedLink.includes("/tv/") && !trimmedLink.includes("/p/"))) {
+                return { valid: false, message: "Please enter a valid Instagram Reel or Video Link!" };
+            }
+            break;
+
+        case "fb_profile":
+            if (!trimmedLink.includes("facebook.com") && !trimmedLink.includes("fb.watch")) {
+                return { valid: false, message: "Please enter a valid Facebook Profile Link!" };
+            }
+            break;
+
+        case "fb_page":
+            if (!trimmedLink.includes("facebook.com") && !trimmedLink.includes("fb.watch")) {
+                return { valid: false, message: "Please enter a valid Facebook Page Link!" };
+            }
+            break;
+
+        case "fb_post":
+            if (!trimmedLink.includes("facebook.com") && !trimmedLink.includes("fb.watch")) {
+                return { valid: false, message: "Please enter a valid Facebook Post Link!" };
+            }
+            break;
+
+        case "fb_post_reel":
+            if (!trimmedLink.includes("facebook.com") && !trimmedLink.includes("fb.watch")) {
+                return { valid: false, message: "Please enter a valid Facebook Post or Reel Link!" };
+            }
+            break;
+
+        case "fb_video":
+            if (!trimmedLink.includes("facebook.com") && !trimmedLink.includes("fb.watch")) {
+                return { valid: false, message: "Please enter a valid Facebook Video or Reel Link!" };
+            }
+            break;
+
+        default:
+            break;
+    }
+
+    return { valid: true, message: "" };
+}
+
 // ==========================================
 // 🚀 CHECKOUT & PAYMENT OVERLAY LOGIC
 // ==========================================
@@ -367,7 +499,7 @@ function openCheckoutFromCustom() {
     const price = parseFloat(calculatedPriceText ? calculatedPriceText.innerText : 0);
 
     if (!qty || qty <= 0) {
-        alert("Please enter a valid quantity!");
+        alert("Please enter a valid Quantity!");
         return;
     }
 
@@ -429,12 +561,19 @@ function showCheckoutOverlay() {
         el.style.display = "none";
     });
 
-    // Dynamic Label and Placeholder assignment
-    updateDynamicLinkUI();
-
+    // Dynamic Link Input Label & Placeholder Assignment
+    const linkConfig = getLinkConfig(d.platform, d.serviceName);
+    const linkLabel = document.getElementById("checkoutLinkLabel");
     const linkInput = document.getElementById("checkoutLinkInput");
+    
+    if (linkLabel) {
+        linkLabel.innerText = linkConfig.label;
+    }
+    
     if (linkInput) {
         linkInput.value = "";
+        linkInput.placeholder = linkConfig.placeholder;
+        linkInput.setAttribute("data-service-type", linkConfig.type);
     }
 
     const txnInput = document.getElementById("checkoutTxnId");
@@ -523,183 +662,23 @@ function switchCheckoutPayment(type) {
     }
 }
 
-// =====================================================
-// DYNAMIC LINK DETECTOR & VALIDATION SYSTEM
-// =====================================================
-
-function getLinkConfig(platform, category) {
-    const plat = (platform || "").toLowerCase();
-    const cat = (category || "").toLowerCase();
-
-    let config = {
-        label: "Target Link",
-        placeholder: "Target Link (Account Must be Public)",
-        patterns: [/^https?:\/\//i],
-        errorMsg: "Invalid URL provided! Please enter a valid URL."
-    };
-
-    if (plat === "instagram") {
-        if (cat.includes("followers")) {
-            config = {
-                label: "Profile Link",
-                placeholder: "Profile Link (Account Must be Public)",
-                patterns: [
-                    /^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9_.]+\/?$/i,
-                    /^https?:\/\/(www\.)?instagr\.am\/[a-zA-Z0-9_.]+\/?$/i
-                ],
-                errorMsg: "Please enter a valid Instagram Profile Link!"
-            };
-        } else if (cat.includes("reels") || cat.includes("video views")) {
-            config = {
-                label: "Reel / Video Link",
-                placeholder: "Reel / Video Link (Account Must be Public)",
-                patterns: [
-                    /^https?:\/\/(www\.)?instagram\.com\/(reel|p|tv)\/[a-zA-Z0-9_-]+\/?/i
-                ],
-                errorMsg: "Please enter a valid Instagram Reel or Video Link!"
-            };
-        } else if (cat.includes("likes")) {
-            config = {
-                label: "Reel / Post Link",
-                placeholder: "Reel / Post Link (Account Must be Public)",
-                patterns: [
-                    /^https?:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/[a-zA-Z0-9_-]+\/?/i
-                ],
-                errorMsg: "Please enter a valid Instagram Reel or Post Link!"
-            };
-        } else if (cat.includes("photo") || cat.includes("post views")) {
-            config = {
-                label: "Post Link",
-                placeholder: "Post Link (Account Must be Public)",
-                patterns: [
-                    /^https?:\/\/(www\.)?instagram\.com\/(p|tv)\/[a-zA-Z0-9_-]+\/?/i
-                ],
-                errorMsg: "Please enter a valid Instagram Post Link!"
-            };
-        } else if (cat.includes("comments") || cat.includes("shares") || cat.includes("saves") || cat.includes("repost")) {
-            config = {
-                label: "Reel / Post Link",
-                placeholder: "Reel / Post Link (Account Must be Public)",
-                patterns: [
-                    /^https?:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/[a-zA-Z0-9_-]+\/?/i
-                ],
-                errorMsg: "Please enter a valid Instagram Reel or Post Link!"
-            };
-        }
-    } else if (plat === "facebook") {
-        if (cat.includes("followers")) {
-            config = {
-                label: "Profile Link",
-                placeholder: "Profile Link (Account Must be Public)",
-                patterns: [
-                    /^https?:\/\/(www\.|m\.)?facebook\.com\/.+/i,
-                    /^https?:\/\/fb\.watch\/.+/i
-                ],
-                errorMsg: "Please enter a valid Facebook Profile Link!"
-            };
-        } else if (cat.includes("page likes")) {
-            config = {
-                label: "Page Link",
-                placeholder: "Page Link (Page Must be Public)",
-                patterns: [
-                    /^https?:\/\/(www\.|m\.)?facebook\.com\/.+/i
-                ],
-                errorMsg: "Please enter a valid Facebook Page Link!"
-            };
-        } else if (cat.includes("likes non-drop") || cat.includes("post likes")) {
-            config = {
-                label: "Post Link",
-                placeholder: "Post Link (Post Must be Public)",
-                patterns: [
-                    /^https?:\/\/(www\.|m\.)?facebook\.com\/.+/i,
-                    /^https?:\/\/fb\.watch\/.+/i
-                ],
-                errorMsg: "Please enter a valid Facebook Post Link!"
-            };
-        } else if (cat.includes("video views")) {
-            config = {
-                label: "Video Link",
-                placeholder: "Video Link (Video Must be Public)",
-                patterns: [
-                    /^https?:\/\/(www\.|m\.)?facebook\.com\/.+/i,
-                    /^https?:\/\/fb\.watch\/.+/i
-                ],
-                errorMsg: "Please enter a valid Facebook Video Link!"
-            };
-        } else if (cat.includes("reels views")) {
-            config = {
-                label: "Reel / Video Link",
-                placeholder: "Reel / Video Link (Account Must be Public)",
-                patterns: [
-                    /^https?:\/\/(www\.|m\.)?facebook\.com\/.+/i,
-                    /^https?:\/\/fb\.watch\/.+/i
-                ],
-                errorMsg: "Please enter a valid Facebook Reel or Video Link!"
-            };
-        } else if (cat.includes("comments")) {
-            config = {
-                label: "Post / Reel Link",
-                placeholder: "Post / Reel Link (Account Must be Public)",
-                patterns: [
-                    /^https?:\/\/(www\.|m\.)?facebook\.com\/.+/i,
-                    /^https?:\/\/fb\.watch\/.+/i
-                ],
-                errorMsg: "Please enter a valid Facebook Post or Reel Link!"
-            };
-        } else if (cat.includes("shares")) {
-            config = {
-                label: "Post Link",
-                placeholder: "Post Link (Post Must be Public)",
-                patterns: [
-                    /^https?:\/\/(www\.|m\.)?facebook\.com\/.+/i,
-                    /^https?:\/\/fb\.watch\/.+/i
-                ],
-                errorMsg: "Please enter a valid Facebook Post Link!"
-            };
-        }
-    }
-
-    return config;
-}
-
-function validateSocialLink(url, config) {
-    if (!url || typeof url !== "string") return false;
-    const cleanUrl = url.trim();
-    if (!cleanUrl) return false;
-    return config.patterns.some(pattern => pattern.test(cleanUrl));
-}
-
-function updateDynamicLinkUI() {
-    if (!currentCheckoutData || !currentCheckoutData.platform) return;
-
-    const labelEl = document.getElementById("checkoutLinkLabel");
-    const inputEl = document.getElementById("checkoutLinkInput");
-    
-    if (!labelEl || !inputEl) return;
-
-    const config = getLinkConfig(currentCheckoutData.platform, currentCheckoutData.serviceName);
-
-    labelEl.innerText = config.label;
-    inputEl.placeholder = config.placeholder;
-}
-
 function submitOrderToWhatsApp() {
     const linkInput = document.getElementById("checkoutLinkInput");
     const txnInput = document.getElementById("checkoutTxnId");
 
     const link = linkInput ? linkInput.value.trim() : "";
     const txnId = txnInput ? txnInput.value.trim() : "";
-
-    const d = currentCheckoutData;
+    const serviceType = linkInput ? linkInput.getAttribute("data-service-type") : "general";
 
     if (!link) {
         alert("Please enter your Social Media Link!");
         return;
     }
 
-    const linkConfig = getLinkConfig(d.platform, d.serviceName);
-    if (!validateSocialLink(link, linkConfig)) {
-        alert(linkConfig.errorMsg);
+    // Dynamic Link Validation Check
+    const validation = validateLinkByType(link, serviceType);
+    if (!validation.valid) {
+        alert(validation.message);
         return;
     }
 
@@ -711,6 +690,8 @@ function submitOrderToWhatsApp() {
     const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
     const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
     const whatsappNumber = "919337028344";
+
+    const d = currentCheckoutData;
 
     const message = `🚀 *NEW ORDER SUBMITTED* 🚀\n\n` +
         `📌 *Social Media:* ${d.platform}\n` +

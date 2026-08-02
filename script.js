@@ -343,7 +343,7 @@ function extractQuantity(name) {
 }
 
 // =====================================================
-// DYNAMIC LINK LABEL & PLACEHOLDER CONFIG (NO STRICT VALIDATION)
+// DYNAMIC LINK LABEL & PLACEHOLDER CONFIG
 // =====================================================
 
 function getLinkConfig(platform, category) {
@@ -395,7 +395,7 @@ function getLinkConfig(platform, category) {
 }
 
 // ==========================================
-// 🚀 CHECKOUT & PAYMENT OVERLAY LOGIC
+// 🚀 CHECKOUT & QUANTITY COUNTER LOGIC
 // ==========================================
 
 function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge) {
@@ -403,8 +403,11 @@ function openCheckoutForFixed(platform, serviceName, packageName, quantity, pric
         platform: platform,
         serviceName: serviceName,
         packageName: packageName,
+        baseQuantity: quantity,
         quantity: quantity,
+        basePrice: price,
         price: price,
+        multiplier: 1,
         badge: badge || 'Popular'
     };
 
@@ -429,12 +432,58 @@ function openCheckoutFromCustom() {
         platform: platformCap,
         serviceName: currentCategory,
         packageName: `${qty.toLocaleString()} Custom Qty`,
+        baseQuantity: qty,
         quantity: qty,
+        basePrice: price,
         price: price,
+        multiplier: 1,
         badge: "Custom"
     };
 
     showCheckoutOverlay();
+}
+
+function updateCheckoutQuantityDisplay() {
+    const d = currentCheckoutData;
+    
+    // Total price and Total unit calculation
+    d.quantity = d.baseQuantity * d.multiplier;
+    d.price = d.basePrice * d.multiplier;
+
+    // Display updates
+    const qtyCountDisplay = document.getElementById("checkoutQtyCount");
+    if (qtyCountDisplay) qtyCountDisplay.innerText = d.multiplier;
+
+    const unitsText = document.getElementById("checkoutUnitsText");
+    if (unitsText) unitsText.innerText = `${d.quantity.toLocaleString()} Package`;
+
+    const priceEl = document.getElementById("checkoutPriceText");
+    if (priceEl) priceEl.innerText = `${d.price.toFixed(2)}`;
+
+    if (document.getElementById("checkoutUsdtAmount")) {
+        const usdt = (d.price / 88).toFixed(2);
+        document.getElementById("checkoutUsdtAmount").innerText = `$${usdt} USDT`;
+    }
+
+    // Dynamic QR update according to price change
+    const upiId = "saheb.68@ptyes";
+    const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR`;
+    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(upiUrl)}`;
+
+    const qrImg = document.getElementById("checkoutQrImg");
+    if (qrImg) {
+        qrImg.src = qrImageSrc;
+    }
+}
+
+function changeCheckoutMultiplier(delta) {
+    if (!currentCheckoutData.multiplier) currentCheckoutData.multiplier = 1;
+    
+    let newMultiplier = currentCheckoutData.multiplier + delta;
+    if (newMultiplier < 1) newMultiplier = 1; // Cannot be lower than 1
+
+    currentCheckoutData.multiplier = newMultiplier;
+    updateCheckoutQuantityDisplay();
 }
 
 function showCheckoutOverlay() {
@@ -458,19 +507,39 @@ function showCheckoutOverlay() {
     if (document.getElementById("checkoutBadge"))
         document.getElementById("checkoutBadge").innerText = d.badge;
 
-    if (document.getElementById("checkoutUnitsText"))
-        document.getElementById("checkoutUnitsText").innerText = `${d.quantity.toLocaleString()} Package`;
-
+    // Add + / - Quantity Counter Box dynamically if not exists
+    let counterContainer = document.getElementById("checkoutQtyCounterBox");
     const priceEl = document.getElementById("checkoutPriceText");
-    if (priceEl) {
-        priceEl.innerText = `${d.price.toFixed(2)}`;
+    const priceParent = priceEl ? priceEl.parentElement : null;
+
+    if (!counterContainer && priceParent) {
+        counterContainer = document.createElement("div");
+        counterContainer.id = "checkoutQtyCounterBox";
+        counterContainer.style.cssText = "display: flex; align-items: center; background: rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 2px 6px; gap: 10px; margin-left: auto;";
+        
+        counterContainer.innerHTML = `
+            <button type="button" onclick="changeCheckoutMultiplier(-1)" style="background: rgba(255, 255, 255, 0.15); color: #fff; border: none; width: 28px; height: 28px; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">-</button>
+            <span id="checkoutQtyCount" style="color: #fff; font-weight: bold; font-size: 14px; min-width: 16px; text-align: center;">1</span>
+            <button type="button" onclick="changeCheckoutMultiplier(1)" style="background: rgba(255, 255, 255, 0.15); color: #fff; border: none; width: 28px; height: 28px; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
+        `;
+
+        if (priceParent.style) {
+            priceParent.style.display = "flex";
+            priceParent.style.alignItems = "center";
+            priceParent.style.justifyContent = "space-between";
+        }
+        priceParent.appendChild(counterContainer);
     }
-    
+
+    // Reset multiplier to 1 when checkout opens
+    d.multiplier = 1;
+    updateCheckoutQuantityDisplay();
+
     const priceCard = priceEl ? priceEl.parentElement : null;
     if (priceCard) {
         const subSpans = priceCard.querySelectorAll("span");
         subSpans.forEach(s => {
-            if (s.id !== "checkoutPriceText") {
+            if (s.id !== "checkoutPriceText" && s.id !== "checkoutQtyCount") {
                 s.innerText = "You Pay";
             }
         });
@@ -481,7 +550,7 @@ function showCheckoutOverlay() {
         el.style.display = "none";
     });
 
-    // Dynamic Label and Placeholder according to selected service
+    // Set Dynamic Link Input Label & Placeholder
     const linkConfig = getLinkConfig(d.platform, d.serviceName);
     const linkLabel = document.getElementById("checkoutLinkLabel");
     const linkInput = document.getElementById("checkoutLinkInput");
@@ -496,24 +565,6 @@ function showCheckoutOverlay() {
 
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
-
-    if (document.getElementById("checkoutUsdtAmount")) {
-        const usdt = (d.price / 88).toFixed(2);
-        document.getElementById("checkoutUsdtAmount").innerText = `$${usdt} USDT`;
-    }
-
-    const upiId = "saheb.68@ptyes";
-    const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price}&cu=INR`;
-    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(upiUrl)}`;
-
-    const qrImg = document.getElementById("checkoutQrImg");
-    if (qrImg) {
-        qrImg.src = qrImageSrc;
-        qrImg.style.display = "block";
-        qrImg.style.margin = "0 auto";
-        qrImg.style.width = "140px";
-        qrImg.style.height = "140px";
-    }
 
     const payViaUpiBtn = document.getElementById("payViaUpiAppBtn") || document.querySelector(".pay-via-upi-btn");
     if (payViaUpiBtn) {
@@ -587,7 +638,6 @@ function submitOrderToWhatsApp() {
     const link = linkInput ? linkInput.value.trim() : "";
     const txnId = txnInput ? txnInput.value.trim() : "";
 
-    // শুধুমাত্র লিংক বা UTR খালি থাকলে এলার্ট দেখাবে, তাছাড়া যেকোনো লিংক দিলেই একসেপ্ট করবে
     if (!link) {
         alert("Please enter your Social Media Link!");
         return;
@@ -607,9 +657,9 @@ function submitOrderToWhatsApp() {
     const message = `🚀 *NEW ORDER SUBMITTED* 🚀\n\n` +
         `📌 *Social Media:* ${d.platform}\n` +
         `🛠️ *Service Name:* ${d.serviceName}\n` +
-        `📦 *Package:* ${d.packageName}\n` +
-        `🔢 *Quantity:* ${d.quantity}\n` +
-        `💰 *Total Price:* ₹${d.price}\n` +
+        `📦 *Package:* ${d.packageName} (x${d.multiplier})\n` +
+        `🔢 *Total Quantity:* ${d.quantity.toLocaleString()}\n` +
+        `💰 *Total Price:* ₹${d.price.toFixed(2)}\n` +
         `🔗 *Target Link:* ${link}\n` +
         `💳 *Payment Method:* ${payMethod}\n` +
         `🧾 *Transaction ID / UTR:* ${txnId}`;

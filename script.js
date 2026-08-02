@@ -720,3 +720,50 @@ window.addEventListener("appinstalled", () => {
     }
     deferredPrompt = null;
 });
+// =====================================================
+// PWA INSTALL APP LOGIC (UPDATED)
+// =====================================================
+
+let deferredPrompt = null;
+
+window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    toggleInstallButton();
+});
+
+function toggleInstallButton() {
+    const installContainer = document.getElementById("installContainer");
+    if (!installContainer) return;
+
+    // ব্রাউজারে ইনস্টল এভেলেবল থাকলে বাটন দেখাবে
+    if (deferredPrompt) {
+        installContainer.style.display = "block";
+    } else {
+        installContainer.style.display = "none";
+    }
+}
+
+const installBtn = document.getElementById("installBtn");
+if (installBtn) {
+    installBtn.addEventListener("click", async () => {
+        if (!deferredPrompt) return;
+        
+        // প্রম্পট দেখাবে
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        
+        if (outcome === 'accepted') {
+            deferredPrompt = null;
+            toggleInstallButton(); // ইনস্টল করার সাথে সাথে বাটনটি হাইড হয়ে যাবে
+        }
+    });
+}
+
+window.addEventListener("appinstalled", () => {
+    const installContainer = document.getElementById("installContainer");
+    if (installContainer) {
+        installContainer.style.display = "none";
+    }
+    deferredPrompt = null;
+});

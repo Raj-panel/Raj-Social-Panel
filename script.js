@@ -696,7 +696,7 @@ function submitOrderToWhatsApp() {
 
     const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
     const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
-    const whatsappNumber = "919337028344";
+    const whatsappNumber = "919239628344";
 
     const d = currentCheckoutData;
 

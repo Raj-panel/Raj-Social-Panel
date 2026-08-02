@@ -5,7 +5,7 @@ const serviceData = {
     // ==========================================
     instagram: {
 
-        "Followers Non-Drop": [
+        "🇮🇳Followers Non-Drop": [
             {
                 type: "custom",
                 name: "Instagram Followers [High Quality] 100% Non-Drop -500K+ Per Day- 10 Minutes Start",
@@ -14,7 +14,7 @@ const serviceData = {
             }
         ],
 
-        "Followers 25+% EXTRA": [
+        "Followers": [
             { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo" },
             { name: "1K Followers", price: 50 },
             { name: "2K Followers", price: 90 },

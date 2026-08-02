@@ -134,33 +134,18 @@ let currentPlatform = "instagram";
 let currentCategory = "";
 let selectedPackage = null;
 let currentCheckoutData = {};
+let isCheckoutActive = false;
 
 window.onload = function () {
     switchPlatform("instagram");
-    attachBackEvents();
 };
 
-// ----------------------------------------------------
-// BACK BUTTON & HARDWARE BACK FIX (PREVENT APP EXIT)
-// ----------------------------------------------------
-function attachBackEvents() {
-    // Mobile Back Button Event
-    window.addEventListener('popstate', function (event) {
-        const checkoutPage = document.getElementById("checkoutPage");
-        if (checkoutPage && (checkoutPage.style.display === "flex" || checkoutPage.style.display === "block")) {
-            closeCheckoutUI();
-        }
-    });
-
-    // Check UI Back Button inside Checkout Page
-    const backBtn = document.querySelector("#checkoutPage button, #checkoutPage .back-btn, #checkoutPage [onclick*='close']");
-    if (backBtn) {
-        backBtn.onclick = function(e) {
-            e.preventDefault();
-            closeCheckout();
-        };
+// 🔄 PROPER BACK BUTTON HANDLING (মোবাইলের ব্যাক বাটনে কাজ করার জন্য)
+window.addEventListener('popstate', function (event) {
+    if (isCheckoutActive) {
+        closeCheckoutUI();
     }
-}
+});
 
 function switchPlatform(platform) {
     currentPlatform = platform;
@@ -359,7 +344,6 @@ function getServiceLinkConfig(platform, serviceCategory) {
     }
 }
 
-// CHECKOUT OPEN & FIT SCREEN LOGIC
 function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge) {
     currentCheckoutData = {
         platform: platform,
@@ -402,8 +386,11 @@ function openCheckoutFromCustom() {
 function showCheckoutOverlay() {
     const d = currentCheckoutData;
 
-    // Push State for back button handling
-    history.pushState({ checkoutOpen: true }, "", "#checkout");
+    // Push History State so native Back works without closing page
+    if (!isCheckoutActive) {
+        history.pushState({ page: 'checkout' }, "");
+        isCheckoutActive = true;
+    }
 
     const iconBox = document.getElementById("checkoutPlatformIcon");
     if (iconBox) {
@@ -453,7 +440,7 @@ function showCheckoutOverlay() {
         document.getElementById("checkoutUsdtAmount").innerText = `$${usdt} USDT`;
     }
 
-    // QR Code Generation (Slightly smaller to fit every mobile)
+    // QR Code Generation
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price}&cu=INR`;
     const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=95x95&data=${encodeURIComponent(upiUrl)}`;
@@ -467,64 +454,64 @@ function showCheckoutOverlay() {
         qrImg.style.height = "95px";
     }
 
-    // Dynamic Style Injection to Guarantee Ultra-Compact Single Screen
-    let style = document.getElementById("ultraCompactCss");
-    if (!style) {
-        style = document.createElement("style");
-        style.id = "ultraCompactCss";
+    // PERFECT FIT COMPACT CSS FOR FULL DISPLAY WITH NO SCROLLBAR
+    if (!document.getElementById("perfectLayoutCss")) {
+        const style = document.createElement("style");
+        style.id = "perfectLayoutCss";
+        style.innerHTML = `
+            #checkoutPage {
+                padding: 4px 10px !important;
+                height: 100vh !important;
+                max-height: 100vh !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: space-between !important;
+            }
+            #checkoutPage .checkout-header {
+                margin-top: 2px !important;
+                margin-bottom: 2px !important;
+            }
+            #checkoutPage .premium-service-card {
+                margin-bottom: 4px !important;
+                padding: 4px 8px !important;
+            }
+            #checkoutPage .checkout-input-group {
+                margin-top: 2px !important;
+                margin-bottom: 4px !important;
+            }
+            #checkoutPage input {
+                padding: 4px 8px !important;
+                font-size: 11px !important;
+                height: 30px !important;
+            }
+            #checkoutUpiView {
+                padding: 2px !important;
+                margin-bottom: 2px !important;
+            }
+            #checkoutPage .pay-toggle-tabs {
+                margin-bottom: 4px !important;
+            }
+            .notice-yellow-box {
+                padding: 3px 5px !important;
+                font-size: 9px !important;
+                margin-bottom: 4px !important;
+            }
+            .whatsapp-submit-btn, #checkoutPage button.confirm-btn {
+                padding: 6px !important;
+                height: 36px !important;
+                font-size: 13px !important;
+                margin-top: auto !important;
+                margin-bottom: 4px !important;
+                width: 100% !important;
+            }
+            .upi-icons-row {
+                margin-top: 2px !important;
+            }
+        `;
         document.head.appendChild(style);
     }
-    style.innerHTML = `
-        #checkoutPage {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100vw !important;
-            height: 100vh !important;
-            max-height: 100vh !important;
-            background: #0f172a !important;
-            z-index: 99999 !important;
-            padding: 8px 12px !important;
-            box-sizing: border-box !important;
-            overflow: hidden !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: space-between !important;
-        }
-        #checkoutPage .premium-service-card {
-            margin-bottom: 4px !important;
-            padding: 6px 10px !important;
-        }
-        #checkoutPage .checkout-input-group {
-            margin-top: 2px !important;
-            margin-bottom: 4px !important;
-        }
-        #checkoutPage input {
-            padding: 5px 8px !important;
-            font-size: 11px !important;
-            height: 30px !important;
-        }
-        #checkoutUpiView {
-            padding: 2px !important;
-            margin-bottom: 2px !important;
-        }
-        #checkoutPage .pay-toggle-tabs {
-            margin-bottom: 4px !important;
-        }
-        .notice-yellow-box {
-            padding: 3px 5px !important;
-            font-size: 8.5px !important;
-            margin-bottom: 4px !important;
-        }
-        .whatsapp-submit-btn, #checkoutPage button.confirm-btn, #checkoutPage .btn-whatsapp {
-            padding: 6px !important;
-            height: 36px !important;
-            font-size: 12px !important;
-            margin-top: auto !important;
-            margin-bottom: 4px !important;
-            width: 100% !important;
-        }
-    `;
 
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage) {
@@ -533,21 +520,23 @@ function showCheckoutOverlay() {
     }
 }
 
-// CLOSE CHECKOUT (BACK ACTION)
+// ⬅️ BACK BUTTON UI CLICK LOGIC
+function closeCheckout() {
+    if (isCheckoutActive) {
+        history.back(); // Trigger browser back, which calls closeCheckoutUI via popstate
+    } else {
+        closeCheckoutUI();
+    }
+}
+
 function closeCheckoutUI() {
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage) {
         checkoutPage.classList.add("hidden");
         checkoutPage.style.display = "none";
     }
+    isCheckoutActive = false;
     currentCheckoutData = {}; 
-}
-
-function closeCheckout() {
-    closeCheckoutUI();
-    if (window.location.hash === "#checkout") {
-        history.back();
-    }
 }
 
 function switchCheckoutPayment(type) {

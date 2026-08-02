@@ -343,59 +343,52 @@ function extractQuantity(name) {
 }
 
 // =====================================================
-// DYNAMIC LINK LABEL & PLACEHOLDER CONFIG
+// 🎯 DYNAMIC LINK LABEL & PLACEHOLDER RULES
 // =====================================================
 
 function getLinkConfig(platform, category) {
     const p = (platform || "").toLowerCase();
     const c = (category || "").toLowerCase();
 
-    let config = {
-        label: "Link",
-        placeholder: "Enter Link (Account Must be Public)"
-    };
-
     if (p === "instagram") {
-        if (c.includes("reels") || c.includes("video views")) {
-            config.label = "Reel / Video Link";
-            config.placeholder = "Reel / Video Link (Account Must be Public)";
-        } else if (c.includes("likes") || c.includes("comments") || c.includes("shares") || c.includes("repost") || c.includes("saves")) {
-            config.label = "Reel / Post Link";
-            config.placeholder = "Reel / Post Link (Account Must be Public)";
-        } else if (c.includes("followers")) {
-            config.label = "Profile Link";
-            config.placeholder = "Profile Link (Account Must be Public)";
-        } else if (c.includes("photo") || c.includes("post views")) {
-            config.label = "Post Link";
-            config.placeholder = "Post Link (Account Must be Public)";
+        if (c.includes("followers")) {
+            return {
+                label: "Profile Link (Account Must be Public)",
+                placeholder: "https://instagram.com/your_username"
+            };
+        } else if (c.includes("reels") || c.includes("video")) {
+            return {
+                label: "Reel / Video Link",
+                placeholder: "https://www.instagram.com/reel/xxxxxx"
+            };
+        } else {
+            return {
+                label: "Post / Reel Link",
+                placeholder: "https://www.instagram.com/p/xxxxxx"
+            };
         }
     } else if (p === "facebook") {
         if (c.includes("followers")) {
-            config.label = "Profile Link";
-            config.placeholder = "Profile Link (Account Must be Public)";
-        } else if (c.includes("page likes")) {
-            config.label = "Page Link";
-            config.placeholder = "Page Link (Page Must be Public)";
-        } else if (c.includes("post likes") || c.includes("likes non-drop") || c.includes("shares")) {
-            config.label = "Post Link";
-            config.placeholder = "Post Link (Post Must be Public)";
-        } else if (c.includes("video views")) {
-            config.label = "Video Link";
-            config.placeholder = "Video Link (Video Must be Public)";
-        } else if (c.includes("reels views")) {
-            config.label = "Reel / Video Link";
-            config.placeholder = "Reel / Video Link (Account Must be Public)";
-        } else if (c.includes("comments")) {
-            config.label = "Post / Reel Link";
-            config.placeholder = "Post / Reel Link (Account Must be Public)";
+            return {
+                label: "Profile / Page Link (Must be Public)",
+                placeholder: "https://facebook.com/your_page_or_profile"
+            };
+        } else {
+            return {
+                label: "Post / Video Link",
+                placeholder: "https://facebook.com/permalink.php?story_fbid=..."
+            };
         }
     }
 
-    return config;
+    return {
+        label: "Profile Link (Account Must be Public)",
+        placeholder: "https://instagram.com/your_username"
+    };
 }
 
 // =====================================================
-// 🔥 DYNAMIC PRICE DEDUCTION ENGINE (SERVICE LIST-BASED)
+// 🔥 DYNAMIC PRICE DEDUCTION ENGINE
 // =====================================================
 
 function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUnitQty, baseUnitPrice) {
@@ -405,21 +398,19 @@ function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUni
     }
 
     const availablePackages = platformData[categoryKey]
-        .filter(p => !p.type) // Filter out custom type
+        .filter(p => !p.type) 
         .map(p => ({
             qty: extractQuantity(p.name),
             price: p.price
         }))
         .filter(p => p.qty > 0)
-        .sort((a, b) => b.qty - a.qty); // Sort descending
+        .sort((a, b) => b.qty - a.qty); 
 
-    // 1. Exact match with service pricing
     const exactMatch = availablePackages.find(p => p.qty === totalQty);
     if (exactMatch) {
         return exactMatch.price;
     }
 
-    // 2. If package exists smaller or larger, compute best tiered pricing
     let remaining = totalQty;
     let totalPrice = 0;
 
@@ -431,7 +422,6 @@ function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUni
         }
     }
 
-    // 3. Fallback for remaining smaller unit leftover
     if (remaining > 0) {
         let smallestPkg = availablePackages[availablePackages.length - 1];
         if (smallestPkg) {
@@ -496,10 +486,8 @@ function openCheckoutFromCustom() {
 function updateCheckoutQuantityDisplay() {
     const d = currentCheckoutData;
     
-    // Total quantity calculated from base quantity & multiplier
     d.quantity = d.baseQuantity * d.multiplier;
 
-    // Smart Price Lookup from serviceData table
     d.price = calculateDynamicPriceForQty(
         d.platform,
         d.serviceName,
@@ -508,7 +496,6 @@ function updateCheckoutQuantityDisplay() {
         d.basePrice
     );
 
-    // Display updates
     const qtyCountDisplay = document.getElementById("checkoutQtyCount");
     if (qtyCountDisplay) qtyCountDisplay.innerText = d.multiplier;
 
@@ -523,7 +510,6 @@ function updateCheckoutQuantityDisplay() {
         document.getElementById("checkoutUsdtAmount").innerText = `$${usdt} USDT`;
     }
 
-    // Dynamic QR update according to calculated price
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR`;
     const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(upiUrl)}`;
@@ -538,7 +524,7 @@ function changeCheckoutMultiplier(delta) {
     if (!currentCheckoutData.multiplier) currentCheckoutData.multiplier = 1;
     
     let newMultiplier = currentCheckoutData.multiplier + delta;
-    if (newMultiplier < 1) newMultiplier = 1; // Cannot be lower than 1
+    if (newMultiplier < 1) newMultiplier = 1;
 
     currentCheckoutData.multiplier = newMultiplier;
     updateCheckoutQuantityDisplay();
@@ -565,7 +551,6 @@ function showCheckoutOverlay() {
     if (document.getElementById("checkoutBadge"))
         document.getElementById("checkoutBadge").innerText = d.badge;
 
-    // Add + / - Quantity Counter Box dynamically
     let counterContainer = document.getElementById("checkoutQtyCounterBox");
     const priceEl = document.getElementById("checkoutPriceText");
     const priceParent = priceEl ? priceEl.parentElement : null;
@@ -589,7 +574,6 @@ function showCheckoutOverlay() {
         priceParent.appendChild(counterContainer);
     }
 
-    // Reset multiplier to 1 when checkout opens
     d.multiplier = 1;
     updateCheckoutQuantityDisplay();
 
@@ -608,7 +592,7 @@ function showCheckoutOverlay() {
         el.style.display = "none";
     });
 
-    // Dynamic Link Input Label & Placeholder
+    // ✨ Dynamic Link Label & Placeholder according to Selected Service
     const linkConfig = getLinkConfig(d.platform, d.serviceName);
     const linkLabel = document.getElementById("checkoutLinkLabel");
     const linkInput = document.getElementById("checkoutLinkInput");

@@ -343,6 +343,209 @@ function extractQuantity(name) {
 }
 
 // ==========================================
+// DYNAMIC LINK CONFIG & VALIDATION SYSTEM
+// ==========================================
+
+function getServiceLinkConfig(platform, serviceCategory) {
+    const p = platform.toLowerCase();
+    const c = serviceCategory.toLowerCase();
+
+    // Instagram Rules
+    if (p === "instagram") {
+        if (c.includes("follower")) {
+            return {
+                label: "Profile Link (Account Must be Public)",
+                placeholder: "https://instagram.com/your_username",
+                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/[a-zA-Z0-9_\.]+\/?$/i,
+                error: "Please enter a valid Instagram Profile Link."
+            };
+        } else if (c.includes("reel") || c.includes("video")) {
+            return {
+                label: "Reel/Video Link (Account Must be Public)",
+                placeholder: "https://instagram.com/reel/...",
+                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(reel|tv|p)\/[a-zA-Z0-9_-]+\/?$/i,
+                error: "Please enter a valid Instagram Reel or Video Link."
+            };
+        } else if (c.includes("like")) {
+            return {
+                label: "Reel/Post Link (Account Must be Public)",
+                placeholder: "https://instagram.com/p/...",
+                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv)\/[a-zA-Z0-9_-]+\/?$/i,
+                error: "Please enter a valid Instagram Post or Reel Link."
+            };
+        } else if (c.includes("comment")) {
+            return {
+                label: "Reel/Post Link (Account Must be Public)",
+                placeholder: "https://instagram.com/p/...",
+                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv)\/[a-zA-Z0-9_-]+\/?$/i,
+                error: "Please enter a valid Instagram Post or Reel Link."
+            };
+        } else if (c.includes("share")) {
+            return {
+                label: "Reel/Post Link (Account Must be Public)",
+                placeholder: "https://instagram.com/p/...",
+                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv)\/[a-zA-Z0-9_-]+\/?$/i,
+                error: "Please enter a valid Instagram Post or Reel Link."
+            };
+        } else if (c.includes("save")) {
+            return {
+                label: "Reel/Post Link (Account Must be Public)",
+                placeholder: "https://instagram.com/p/...",
+                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv)\/[a-zA-Z0-9_-]+\/?$/i,
+                error: "Please enter a valid Instagram Post or Reel Link."
+            };
+        } else if (c.includes("repost")) {
+            return {
+                label: "Reel/Post Link (Account Must be Public)",
+                placeholder: "https://instagram.com/p/...",
+                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv)\/[a-zA-Z0-9_-]+\/?$/i,
+                error: "Please enter a valid Instagram Post or Reel Link."
+            };
+        } else if (c.includes("photo") || c.includes("post")) {
+            return {
+                label: "Post Link (Account Must be Public)",
+                placeholder: "https://instagram.com/p/...",
+                pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|tv)\/[a-zA-Z0-9_-]+\/?$/i,
+                error: "Please enter a valid Instagram Post Link."
+            };
+        }
+        return {
+            label: "Profile Link (Account Must be Public)",
+            placeholder: "https://instagram.com/your_username",
+            pattern: /^(https?:\/\/)?(www\.)?instagram\.com\/.+/i,
+            error: "Please enter a valid Instagram Link."
+        };
+    }
+
+    // Facebook Rules
+    if (p === "facebook") {
+        if (c.includes("follower")) {
+            return {
+                label: "Profile Link (Profile/Page Must be Public)",
+                placeholder: "https://facebook.com/your_profile",
+                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
+                error: "Please enter a valid Facebook Profile or Page Link."
+            };
+        } else if (c.includes("page like")) {
+            return {
+                label: "Page Link (Page Must be Public)",
+                placeholder: "https://facebook.com/your_page",
+                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
+                error: "Please enter a valid Facebook Page Link."
+            };
+        } else if (c.includes("post like")) {
+            return {
+                label: "Post Link (Post Must be Public)",
+                placeholder: "https://facebook.com/.../posts/...",
+                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
+                error: "Please enter a valid Facebook Post Link."
+            };
+        } else if (c.includes("like")) {
+            return {
+                label: "Post Link (Post Must be Public)",
+                placeholder: "https://facebook.com/.../posts/...",
+                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
+                error: "Please enter a valid Facebook Post Link."
+            };
+        } else if (c.includes("video")) {
+            return {
+                label: "Video Link (Video Must be Public)",
+                placeholder: "https://facebook.com/watch/?v=...",
+                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
+                error: "Please enter a valid Facebook Video Link."
+            };
+        } else if (c.includes("reel")) {
+            return {
+                label: "Reel Link (Reel Must be Public)",
+                placeholder: "https://facebook.com/reel/...",
+                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/reel\/.+/i,
+                error: "Please enter a valid Facebook Reel Link."
+            };
+        } else if (c.includes("comment")) {
+            return {
+                label: "Post/Reel Link (Must be Public)",
+                placeholder: "https://facebook.com/...",
+                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
+                error: "Please enter a valid Facebook Post or Reel Link."
+            };
+        } else if (c.includes("share")) {
+            return {
+                label: "Post Link (Post Must be Public)",
+                placeholder: "https://facebook.com/...",
+                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
+                error: "Please enter a valid Facebook Post Link."
+            };
+        } else if (c.includes("photo")) {
+            return {
+                label: "Photo Link (Photo Must be Public)",
+                placeholder: "https://facebook.com/photo/...",
+                pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
+                error: "Please enter a valid Facebook Photo Link."
+            };
+        }
+        return {
+            label: "Target Link (Must be Public)",
+            placeholder: "https://facebook.com/...",
+            pattern: /^(https?:\/\/)?(www\.|m\.)?facebook\.com\/.+/i,
+            error: "Please enter a valid Facebook Link."
+        };
+    }
+
+    return {
+        label: "Target Link (Must be Public)",
+        placeholder: "Enter valid social media link",
+        pattern: /^https?:\/\/.+/i,
+        error: "Please enter a valid URL."
+    };
+}
+
+function validateCheckoutLink() {
+    const linkInput = document.getElementById("checkoutLinkInput");
+    const errorEl = document.getElementById("checkoutLinkError");
+    if (!linkInput) return true;
+
+    const value = linkInput.value.trim();
+    const patternStr = linkInput.dataset.pattern;
+    const errorMsg = linkInput.dataset.error;
+
+    if (value === "") {
+        if (errorEl) {
+            errorEl.innerText = "";
+            errorEl.style.display = "none";
+        }
+        linkInput.style.borderColor = "";
+        return false;
+    }
+
+    if (!patternStr) return true;
+
+    const regex = new RegExp(patternStr, "i");
+    if (!regex.test(value)) {
+        if (errorEl) {
+            errorEl.innerText = errorMsg || "Invalid Link provided.";
+            errorEl.style.display = "block";
+        }
+        linkInput.style.borderColor = "#ef4444";
+        return false;
+    } else {
+        if (errorEl) {
+            errorEl.innerText = "";
+            errorEl.style.display = "none";
+        }
+        linkInput.style.borderColor = "#22c55e";
+        return true;
+    }
+}
+
+// Real-time input validation binding
+document.addEventListener("DOMContentLoaded", function () {
+    const linkInput = document.getElementById("checkoutLinkInput");
+    if (linkInput) {
+        linkInput.addEventListener("input", validateCheckoutLink);
+    }
+});
+
+// ==========================================
 // 🚀 CHECKOUT & PAYMENT OVERLAY LOGIC
 // ==========================================
 
@@ -367,7 +570,7 @@ function openCheckoutFromCustom() {
     const price = parseFloat(calculatedPriceText ? calculatedPriceText.innerText : 0);
 
     if (!qty || qty <= 0) {
-        alert("দয়া করে সঠিক Quantity লিখুন!");
+        alert("Please enter a valid quantity!");
         return;
     }
 
@@ -407,15 +610,14 @@ function showCheckoutOverlay() {
         document.getElementById("checkoutBadge").innerText = d.badge;
 
     if (document.getElementById("checkoutUnitsText"))
-        document.getElementById("checkoutUnitsText").innerText = `${d.quantity.toLocaleString()} Package`;
+        document.getElementById("checkoutUnitsText").innerText = `${d.quantity.toLocaleString()} units`;
 
-    // 🔴 FIX 1: ডবল ₹₹ সরানো হলো এবং একবারে সঠিক দাম বসানো হলো
+    // price display
     const priceEl = document.getElementById("checkoutPriceText");
     if (priceEl) {
         priceEl.innerText = `${d.price.toFixed(2)}`;
     }
     
-    // one-time লেখা রিমুভ করে clean You Pay সেট
     const priceCard = priceEl ? priceEl.parentElement : null;
     if (priceCard) {
         const subSpans = priceCard.querySelectorAll("span");
@@ -426,23 +628,30 @@ function showCheckoutOverlay() {
         });
     }
 
-    // Order Summary হাইড
-    const allSummaryElements = document.querySelectorAll(".order-summary-box, #orderSummaryBox, [class*='summary']");
-    allSummaryElements.forEach(el => {
-        el.style.display = "none";
-    });
+    // Order Summary update
+    const summaryPkg = document.getElementById("summaryPackageText");
+    if (summaryPkg) summaryPkg.innerText = d.packageName;
 
+    const summaryPay = document.getElementById("summaryPayAmount");
+    if (summaryPay) summaryPay.innerText = d.price.toFixed(2);
+
+    // Apply Dynamic Link Input Config
+    const config = getServiceLinkConfig(d.platform, d.serviceName);
     const linkLabel = document.getElementById("checkoutLinkLabel");
     const linkInput = document.getElementById("checkoutLinkInput");
+    const errorEl = document.getElementById("checkoutLinkError");
+
+    if (linkLabel) linkLabel.innerText = config.label;
     if (linkInput) {
-        linkInput.value = ""; 
-        if (d.platform.toLowerCase() === "facebook") {
-            if (linkLabel) linkLabel.innerText = "Enter your Facebook link";
-            linkInput.placeholder = "https://facebook.com/your_profile";
-        } else {
-            if (linkLabel) linkLabel.innerText = "Enter your Instagram link";
-            linkInput.placeholder = "https://instagram.com/your_username";
-        }
+        linkInput.value = "";
+        linkInput.placeholder = config.placeholder;
+        linkInput.dataset.pattern = config.pattern.source;
+        linkInput.dataset.error = config.error;
+        linkInput.style.borderColor = "";
+    }
+    if (errorEl) {
+        errorEl.innerText = "";
+        errorEl.style.display = "none";
     }
 
     const txnInput = document.getElementById("checkoutTxnId");
@@ -453,7 +662,7 @@ function showCheckoutOverlay() {
         document.getElementById("checkoutUsdtAmount").innerText = `$${usdt} USDT`;
     }
 
-    // 🔴 FIX 2: QR Code সাইজ ১৪০px করে এক পেজে ফিট করা হলো
+    // QR Code Generation
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price}&cu=INR`;
     const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(upiUrl)}`;
@@ -486,7 +695,7 @@ function showCheckoutOverlay() {
             #checkoutPage .submit-btn { padding: 8px !important; height: 40px !important; font-size: 13px !important; margin-top: 4px !important; }
             #checkoutPage p, #checkoutPage label { margin-bottom: 3px !important; font-size: 11px !important; }
             .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 6px !important; font-size: 10px !important; margin-bottom: 6px !important; }
-            .pay-apps-icons, [class*="paytm"], [class*="gpay"] { display: none !important; } /* Hide extra icons to save height */
+            .pay-apps-icons, [class*="paytm"], [class*="gpay"] { display: none !important; }
         `;
         document.head.appendChild(style);
     }
@@ -540,12 +749,24 @@ function submitOrderToWhatsApp() {
     const link = linkInput ? linkInput.value.trim() : "";
     const txnId = txnInput ? txnInput.value.trim() : "";
 
+    // Dynamic Validation Check
+    const isLinkValid = validateCheckoutLink();
+
     if (!link) {
-        alert("দয়া করে আপনার Social Media Link দিন!");
+        alert("Please enter your target link!");
+        if (linkInput) linkInput.focus();
         return;
     }
+
+    if (!isLinkValid) {
+        alert(linkInput.dataset.error || "Please enter a valid URL according to the selected service.");
+        if (linkInput) linkInput.focus();
+        return;
+    }
+
     if (!txnId) {
-        alert("দয়া করে Transaction ID / UTR নম্বর লিখুন!");
+        alert("Please enter your Transaction ID / UTR number!");
+        if (txnInput) txnInput.focus();
         return;
     }
 

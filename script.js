@@ -5,7 +5,7 @@ const serviceData = {
     // ==========================================
     instagram: {
 
-        "🇮🇳Followers Non-Drop": [
+        "Followers Non-Drop": [
             {
                 type: "custom",
                 name: "Instagram Followers [High Quality] 100% Non-Drop -500K+ Per Day- 10 Minutes Start",
@@ -38,7 +38,7 @@ const serviceData = {
         ],
 
         "Reels / Video Views": [
-            { providerId: 853, name: "1K Views", price: 5, badge: "DEMO", badgeClass: "badge-demo" },
+            { providerId: 853, name: "1K Views", price: 10, badge: "DEMO", badgeClass: "badge-demo" },
             { providerId: 853, name: "5K Views", price: 20, badge: "STARTER", badgeClass: "badge-real" },
             { providerId: 853, name: "10K Views", price: 25, badge: "BEST VALUE", badgeClass: "badge-best" },
             { providerId: 853, name: "20K Views", price: 40, badge: "POPULAR", badgeClass: "badge-popular" },
@@ -74,7 +74,7 @@ const serviceData = {
         ],
 
         "Shares Lifetime": [
-            { providerId: 50, name: "100 Shares", price: 5, badge: "Starter", badgeClass: "badge-demo" },
+            { providerId: 50, name: "100 Shares", price: 10, badge: "Starter", badgeClass: "badge-demo" },
             { providerId: 50, name: "1K Shares", price: 30, badge: "Fast", badgeClass: "badge-popular" },
             { providerId: 50, name: "5K Shares", price: 69, badge: "🔥 Best Value", badgeClass: "badge-best" },
             { providerId: 50, name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-best" }
@@ -130,6 +130,113 @@ const serviceData = {
 };
 
 // ==========================================
+// DYNAMIC LINK CONFIGURATIONS & VALIDATIONS
+// ==========================================
+
+const linkConfigurations = {
+    instagram: {
+        followers: {
+            keywords: ["follower"],
+            label: "Profile Link (Account Must be Public)",
+            placeholder: "https://instagram.com/username",
+            errorMsg: "Please enter a valid Instagram Profile Link.",
+            validate: (url) => {
+                return (url.includes("instagram.com/") || url.includes("instagr.am/")) && 
+                       !url.includes("/reel/") && !url.includes("/p/") && !url.includes("/tv/");
+            }
+        },
+        reels: {
+            keywords: ["reel", "video views"],
+            label: "Reel/Video Link (Account Must be Public)",
+            placeholder: "https://instagram.com/reel/...",
+            errorMsg: "Please enter a valid Instagram Reel/Video Link.",
+            validate: (url) => {
+                return (url.includes("instagram.com/") || url.includes("instagr.am/")) && 
+                       (url.includes("/reel/") || url.includes("/tv/") || url.includes("/p/"));
+            }
+        },
+        posts: {
+            keywords: ["like", "comment", "share", "save", "repost"],
+            label: "Reel/Post Link (Account Must be Public)",
+            placeholder: "https://instagram.com/p/... or /reel/...",
+            errorMsg: "Please enter a valid Instagram Reel or Post Link.",
+            validate: (url) => {
+                return (url.includes("instagram.com/") || url.includes("instagr.am/")) && 
+                       (url.includes("/p/") || url.includes("/reel/") || url.includes("/tv/"));
+            }
+        },
+        photos: {
+            keywords: ["photo", "post views"],
+            label: "Post Link (Account Must be Public)",
+            placeholder: "https://instagram.com/p/...",
+            errorMsg: "Please enter a valid Instagram Post Link.",
+            validate: (url) => {
+                return (url.includes("instagram.com/") || url.includes("instagr.am/")) && 
+                       (url.includes("/p/") || url.includes("/tv/"));
+            }
+        }
+    },
+    facebook: {
+        followers: {
+            keywords: ["follower", "page likes"],
+            label: "Profile/Page Link (Profile/Page Must be Public)",
+            placeholder: "https://facebook.com/your_profile_or_page",
+            errorMsg: "Please enter a valid Facebook Profile or Page Link.",
+            validate: (url) => {
+                return url.includes("facebook.com/") || url.includes("fb.watch/") || url.includes("fb.com/");
+            }
+        },
+        videos: {
+            keywords: ["video views", "reel"],
+            label: "Video Link (Must be Public)",
+            placeholder: "https://facebook.com/watch/... or /reel/...",
+            errorMsg: "Please enter a valid Facebook Video or Reel Link.",
+            validate: (url) => {
+                return url.includes("facebook.com/") || url.includes("fb.watch/") || url.includes("fb.com/");
+            }
+        },
+        posts: {
+            keywords: ["like", "comment", "share"],
+            label: "Post Link (Must be Public)",
+            placeholder: "https://facebook.com/posts/... or /permalink/...",
+            errorMsg: "Please enter a valid Facebook Post Link.",
+            validate: (url) => {
+                return url.includes("facebook.com/") || url.includes("fb.com/");
+            }
+        }
+    }
+};
+
+function getLinkConfig(platform, categoryName) {
+    const platKey = platform.toLowerCase();
+    const catLower = categoryName.toLowerCase();
+    const configs = linkConfigurations[platKey];
+
+    if (!configs) {
+        return {
+            label: `Enter your ${platform} link`,
+            placeholder: `https://${platKey}.com/your_link`,
+            errorMsg: `Please enter a valid ${platform} link.`,
+            validate: (url) => url.length > 5
+        };
+    }
+
+    for (let key in configs) {
+        const item = configs[key];
+        if (item.keywords.some(kw => catLower.includes(kw))) {
+            return item;
+        }
+    }
+
+    return {
+        label: `Enter your ${platform} link (Must be Public)`,
+        placeholder: `https://${platKey}.com/your_link`,
+        errorMsg: `Please enter a valid ${platform} link.`,
+        validate: (url) => url.length > 5
+    };
+}
+
+// ==========================================
 // GLOBAL VARIABLES
 // ==========================================
 
@@ -142,7 +249,7 @@ window.onload = function () {
     switchPlatform("instagram");
 };
 
-// ব্যাক বাটন চাপলে চেকআউট বন্ধ
+// Handle Back Button
 window.addEventListener('popstate', function (event) {
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage && checkoutPage.style.display === "block") {
@@ -367,7 +474,7 @@ function openCheckoutFromCustom() {
     const price = parseFloat(calculatedPriceText ? calculatedPriceText.innerText : 0);
 
     if (!qty || qty <= 0) {
-        alert("দয়া করে সঠিক Quantity লিখুন!");
+        alert("Please enter a valid quantity!");
         return;
     }
 
@@ -409,13 +516,12 @@ function showCheckoutOverlay() {
     if (document.getElementById("checkoutUnitsText"))
         document.getElementById("checkoutUnitsText").innerText = `${d.quantity.toLocaleString()} Package`;
 
-    // 🔴 FIX 1: ডবল ₹₹ সরানো হলো এবং একবারে সঠিক দাম বসানো হলো
+    // Price Update
     const priceEl = document.getElementById("checkoutPriceText");
     if (priceEl) {
         priceEl.innerText = `${d.price.toFixed(2)}`;
     }
     
-    // one-time লেখা রিমুভ করে clean You Pay সেট
     const priceCard = priceEl ? priceEl.parentElement : null;
     if (priceCard) {
         const subSpans = priceCard.querySelectorAll("span");
@@ -426,23 +532,23 @@ function showCheckoutOverlay() {
         });
     }
 
-    // Order Summary হাইড
+    // Hide Order Summary
     const allSummaryElements = document.querySelectorAll(".order-summary-box, #orderSummaryBox, [class*='summary']");
     allSummaryElements.forEach(el => {
         el.style.display = "none";
     });
 
+    // 🔴 DYNAMIC LINK INPUT LOGIC UPDATE
+    const linkConfig = getLinkConfig(d.platform, d.serviceName);
+    currentCheckoutData.linkConfig = linkConfig;
+
     const linkLabel = document.getElementById("checkoutLinkLabel");
     const linkInput = document.getElementById("checkoutLinkInput");
+
+    if (linkLabel) linkLabel.innerText = linkConfig.label;
     if (linkInput) {
         linkInput.value = ""; 
-        if (d.platform.toLowerCase() === "facebook") {
-            if (linkLabel) linkLabel.innerText = "Enter your Facebook link";
-            linkInput.placeholder = "https://facebook.com/your_profile";
-        } else {
-            if (linkLabel) linkLabel.innerText = "Enter your Instagram link";
-            linkInput.placeholder = "https://instagram.com/your_username";
-        }
+        linkInput.placeholder = linkConfig.placeholder;
     }
 
     const txnInput = document.getElementById("checkoutTxnId");
@@ -453,7 +559,7 @@ function showCheckoutOverlay() {
         document.getElementById("checkoutUsdtAmount").innerText = `$${usdt} USDT`;
     }
 
-    // 🔴 FIX 2: QR Code সাইজ ১৪০px করে এক পেজে ফিট করা হলো
+    // QR Code Generation
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price}&cu=INR`;
     const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(upiUrl)}`;
@@ -472,7 +578,7 @@ function showCheckoutOverlay() {
         payViaUpiBtn.style.display = "none";
     }
 
-    // Ultra Compact CSS injection to fit screen
+    // Ultra Compact CSS Injection
     if (!document.getElementById("ultraCompactCss")) {
         const style = document.createElement("style");
         style.id = "ultraCompactCss";
@@ -486,7 +592,7 @@ function showCheckoutOverlay() {
             #checkoutPage .submit-btn { padding: 8px !important; height: 40px !important; font-size: 13px !important; margin-top: 4px !important; }
             #checkoutPage p, #checkoutPage label { margin-bottom: 3px !important; font-size: 11px !important; }
             .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 6px !important; font-size: 10px !important; margin-bottom: 6px !important; }
-            .pay-apps-icons, [class*="paytm"], [class*="gpay"] { display: none !important; } /* Hide extra icons to save height */
+            .pay-apps-icons, [class*="paytm"], [class*="gpay"] { display: none !important; }
         `;
         document.head.appendChild(style);
     }
@@ -533,19 +639,32 @@ function switchCheckoutPayment(type) {
     }
 }
 
+// ==========================================
+// SUBMIT ORDER TO WHATSAPP WITH VALIDATION
+// ==========================================
+
 function submitOrderToWhatsApp() {
     const linkInput = document.getElementById("checkoutLinkInput");
     const txnInput = document.getElementById("checkoutTxnId");
 
     const link = linkInput ? linkInput.value.trim() : "";
     const txnId = txnInput ? txnInput.value.trim() : "";
+    const config = currentCheckoutData.linkConfig;
 
     if (!link) {
-        alert("দয়া করে আপনার Social Media Link দিন!");
+        alert("Please enter your target link!");
         return;
     }
+
+    // 🔴 DYNAMIC URL VALIDATION CHECK
+    if (config && config.validate && !config.validate(link)) {
+        alert(config.errorMsg || "Please enter a valid link.");
+        if (linkInput) linkInput.focus();
+        return;
+    }
+
     if (!txnId) {
-        alert("দয়া করে Transaction ID / UTR নম্বর লিখুন!");
+        alert("Please enter Transaction ID / UTR number!");
         return;
     }
 

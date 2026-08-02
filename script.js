@@ -5,7 +5,7 @@ const serviceData = {
     // ==========================================
     instagram: {
 
-        "🇮🇳Followers Non-Drop": [
+        "Followers Non-Drop": [
             {
                 type: "custom",
                 name: "Instagram Followers [High Quality] 100% Non-Drop -500K+ Per Day- 10 Minutes Start",

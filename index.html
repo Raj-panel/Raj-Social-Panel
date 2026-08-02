@@ -1,284 +1,290 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Social Boost Panel</title>
-<!-- Google Font for Custom Modern Design -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&display=swap" rel="stylesheet"/>
-<!-- PWA / Web App Manifest & Theme -->
-<link href="manifest.json" rel="manifest"/>
-<meta content="#0f172a" name="theme-color"/>
-<meta content="yes" name="apple-mobile-web-app-capable"/>
-<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
-<meta content="SMM Panel" name="apple-mobile-web-app-title"/>
-<link href="icon-192.png" rel="apple-touch-icon"/>
-<link href="style.css" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<!-- Open Graph Meta Tags -->
-<meta content="website" property="og:type"/>
-<meta content="https://raj-panel.github.io/Smm-Panel.com/" property="og:url"/>
-<meta content="Raj Social Panel - Premium Social Boosting Services" property="og:title"/>
-<meta content="Get instant Followers, Likes, Views for Instagram and Facebook at lowest prices!" property="og:description"/>
-<meta content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0" property="og:image"/>
-<meta content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0" property="og:image:secure_url"/>
-<meta content="image/png" property="og:image:type"/>
-<meta content="1200" property="og:image:width"/>
-<meta content="630" property="og:image:height"/>
-<!-- Twitter Card Meta Tags -->
-<meta content="summary_large_image" name="twitter:card"/>
-<meta content="https://raj-panel.github.io/Smm-Panel.com/" name="twitter:url"/>
-<meta content="Raj Social Panel - Premium Social Boosting Services" name="twitter:title"/>
-<meta content="Instant Delivery &amp; Premium Quality Social Media Services." name="twitter:description"/>
-<meta content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0" name="twitter:image"/>
-
-<style>
-  /* Modern Styling for Heading Text */
-  .panel-heading {
-    font-family: 'Poppins', sans-serif !important;
-    font-size: 28px !important;
-    font-weight: 800 !important;
-    font-style: italic !important;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-align: center;
-    margin: 15px 0 20px 0;
-    filter: drop-shadow(0px 2px 8px rgba(168, 85, 247, 0.4));
-  }
-
-  /* Install App Container */
-  #installContainer {
-    text-align: center;
-    margin: 40px 0 30px 0;
-    transition: all 0.3s ease-in-out;
-  }
-  .install-btn {
-    box-shadow: 0 0 20px rgba(0, 150, 255, 0.8), 0 0 40px rgba(138, 43, 226, 0.6);
-    transition: all 0.3s ease-in-out;
-  }
-  .install-btn:hover {
-    box-shadow: 0 0 30px rgba(0, 150, 255, 1), 0 0 50px rgba(138, 43, 226, 0.9);
-    transform: translateY(-2px);
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Panel</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #0f0d13;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .checkout-card {
+            background-color: #16121e;
+            width: 100%;
+            max-width: 420px;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .back-btn {
+            background: #231d2e;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .title {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-right: 40px;
+        }
+        .service-box {
+            background: #231b36;
+            border: 1px solid #3c2a5c;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .service-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .service-icon {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+        .service-details h4 {
+            font-size: 15px;
+            color: #fff;
+        }
+        .popular-badge {
+            background: #d4a017;
+            color: #000;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        .package-text {
+            color: #a0a0a0;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+        .price {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .price span {
+            font-size: 12px;
+            color: #888;
+            font-weight: normal;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 8px;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            background: #231d2e;
+            border: 1px solid #3a3247;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+        }
+        input:focus, select:focus {
+            border-color: #7b2cbf;
+        }
+        .payment-methods {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .pay-btn {
+            flex: 1;
+            padding: 10px;
+            background: #281d3c;
+            border: 1px solid #5a388a;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .notice {
+            background: #262013;
+            border-left: 3px solid #d4a017;
+            padding: 10px;
+            font-size: 11px;
+            color: #d4a017;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .confirm-btn {
+            width: 100%;
+            padding: 14px;
+            background: #107c41;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        .confirm-btn:hover {
+            background: #0e6b37;
+        }
+    </style>
 </head>
 <body>
-<div class="main-wrapper" id="mainHomeView">
-  <!-- Header -->
-  <div class="panel-heading">𝐑𝐀𝐉-𝐒𝐎𝐂𝐈𝐀𝐋-𝐏𝐀𝐍𝐄𝐋
-</div>
 
-  <!-- Support Buttons Header -->
-  <div class="hero-actions">
-    <a class="glass-btn btn-telegram" href="https://t.me/RajSocialPanel" target="_blank">
-      <i class="fa-brands fa-telegram"></i> Telegram Support
-    </a>
-    <a class="glass-btn btn-whatsapp" href="https://wa.me/919337028344" target="_blank">
-      <i class="fa-brands fa-whatsapp"></i> WhatsApp Support
-    </a>
-  </div>
-
-  <!-- Platform Switcher -->
-  <div class="platform-switch-container">
-    <button class="platform-btn active" id="btnInsta" onclick="switchPlatform('instagram')">
-      <i class="fa-brands fa-instagram"></i> Instagram
-    </button>
-    <button class="platform-btn" id="btnFb" onclick="switchPlatform('facebook')">
-      <i class="fa-brands fa-facebook"></i> Facebook
-    </button>
-  </div>
-
-  <!-- Hero Status Banner -->
-  <div class="hero-banner">
-    <div class="hero-top-row">
-      <div class="hero-logo-box" id="heroLogoIcon">
-        <i class="fa-brands fa-instagram"></i>
-      </div>
-      <span class="provider-badge">#1 Service Provider</span>
-    </div>
-    <h2 id="heroTitle">Instagram Boost</h2>
-    <p class="hero-sub">Real engagement delivered fast &amp; safely</p>
-    <div class="hero-stats-grid">
-      <div class="stat-card">
-        <span class="stat-icon"><i class="fa-solid fa-rocket"></i></span>
-        <span class="stat-num" id="totalOrders">10M</span>
-        <span class="stat-lbl">Orders Delivered</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-icon"><i class="fa-solid fa-headset"></i></span>
-        <span class="stat-num">24/7</span>
-        <span class="stat-lbl">Support</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-icon"><i class="fa-solid fa-shield-halved"></i></span>
-        <span class="stat-num">100%</span>
-        <span class="stat-lbl">Safe &amp; Refundable</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Scrollable Category Tabs -->
-  <div class="category-tabs-wrapper">
-    <div class="category-tabs" id="categoryTabs"></div>
-  </div>
-
-  <!-- Package List Section -->
-  <div class="package-list-container" id="packageList"></div>
-
-  <div class="footer-note">
-    ⚡ Fast Processing • 100% Refund Guarantee If Failed
-  </div>
-
-  <!-- Install App Button -->
-  <div id="installContainer" style="display:none;">
-    <button class="install-btn" id="installBtn"><i class="fa-solid fa-download"></i> Install App</button>
-  </div>
-</div>
-
-<!-- ============================================== -->
-<!-- NEW PAYMENT / CHECKOUT PAGE OVERLAY (Full Screen Drawer) -->
-<!-- ============================================== -->
-<div id="checkoutPage" class="checkout-page-overlay hidden">
-  <div class="checkout-content">
-    
-    <!-- Top Bar with Back Button -->
-    <div class="checkout-nav">
-      <button class="back-btn" onclick="closeCheckout()"><i class="fa-solid fa-arrow-left"></i> Back</button>
-      <div class="checkout-heading-text">Checkout</div>
+<div class="checkout-card">
+    <div class="header">
+        <button class="back-btn" onclick="history.back()">← Back</button>
+        <div class="title">Checkout</div>
     </div>
 
-    <!-- Premium Service Card -->
-    <div class="premium-service-card">
-      <div class="card-top-row">
-        <div class="platform-badge-icon" id="checkoutPlatformIcon">
-          <i class="fa-brands fa-instagram"></i>
+    <div class="service-box">
+        <div class="service-info">
+            <div class="service-icon" id="platformIcon">📷</div>
+            <div class="service-details">
+                <h4 id="serviceTitle">Instagram - Followers 25+% EXTRA <span class="popular-badge">POPULAR</span></h4>
+                <div class="package-text">1,000 Package</div>
+            </div>
         </div>
-        <div class="card-info">
-          <h4 id="checkoutServiceTitle">Instagram Followers</h4>
-          <div class="badge-row">
-            <span class="pkg-name-badge" id="checkoutPkgBadgeName">5K Followers</span>
-            <span class="popular-badge" id="checkoutBadge">Best Value</span>
-          </div>
-        </div>
-      </div>
-      <div class="units-text" id="checkoutUnitsText">5,000 units</div>
-      <div class="price-text">
-        ₹<span id="checkoutPriceText">199.00</span> <small>one-time</small>
-      </div>
+        <div class="price">₹50.00 <span>one-time</span></div>
     </div>
 
-    <!-- Social Link Input -->
-    <div class="checkout-input-group">
-      <label id="checkoutLinkLabel">Enter your Instagram link</label>
-      <input type="text" id="checkoutLinkInput" placeholder="https://instagram.com/your_username" />
+    <!-- Platform Selection Option -->
+    <div class="form-group">
+        <label for="platformSelect">Select Platform</label>
+        <select id="platformSelect" onchange="updatePlatform()">
+            <option value="instagram">Instagram</option>
+            <option value="facebook">Facebook</option>
+        </select>
     </div>
 
-    <!-- Order Summary -->
-    <div class="checkout-order-summary">
-      <div class="summary-title">Order Summary</div>
-      <div class="summary-row">
-        <span>Package</span>
-        <span id="summaryPackageText">5K Followers</span>
-      </div>
-      <div class="summary-divider"></div>
-      <div class="summary-row pay-row">
-        <span>You Pay</span>
-        <span class="pay-amount">₹<span id="summaryPayAmount">199.00</span></span>
-      </div>
+    <!-- Dynamic Profile Link Input -->
+    <div class="form-group">
+        <label id="linkLabel" for="profileLink">Profile Link</label>
+        <input type="text" id="profileLink" placeholder="https://www.instagram.com/your_username">
     </div>
 
-    <!-- Payment Tabs -->
-    <div class="pay-toggle-tabs">
-      <button class="pay-tab active" id="btnTabUpi" onclick="switchCheckoutPayment('upi')">
-        <i class="fa-solid fa-qrcode"></i> UPI QR Code
-      </button>
-      <button class="pay-tab" id="btnTabBinance" onclick="switchCheckoutPayment('binance')">
-        <i class="fa-solid fa-wallet"></i> Binance Pay
-      </button>
+    <div class="payment-methods">
+        <div class="pay-btn">📱 UPI QR Code</div>
+        <div class="pay-btn">💼 Binance Pay</div>
     </div>
 
-    <!-- UPI Payment Container -->
-    <div id="checkoutUpiView" class="payment-view-box">
-      <div class="scan-title">SCAN TO PAY VIA UPI (Default Selected)</div>
-      <div class="qr-wrapper">
-        <img id="checkoutQrImg" src="" alt="UPI QR Code" />
-        <a href="#" id="payViaUpiAppBtn" class="pay-app-btn"><i class="fa-solid fa-bolt"></i> PAY via UPI</a>
-      </div>
-      <p class="qr-sub">Scan or enter payment detail into any UPI App</p>
-      <div class="upi-icons-row">
-        <span class="upi-chip">Paytm</span>
-        <span class="upi-chip">GPay</span>
-        <span class="upi-chip">PhonePe</span>
-        <span class="upi-chip">Other UPI</span>
-      </div>
+    <div class="form-group">
+        <label>Submit Order (Transaction ID / UTR)</label>
+        <input type="text" id="transactionId" placeholder="Enter Transaction ID / UTR">
     </div>
 
-    <!-- Binance Payment Container -->
-    <div id="checkoutBinanceView" class="payment-view-box hidden">
-      <div class="scan-title">SCAN TO PAY VIA BINANCE</div>
-      <div class="qr-wrapper">
-        <img src="binance-qr.png" alt="Binance QR Code" />
-      </div>
-      <div class="binance-nick-box">
-        Binance Nickname: <strong style="color: #facc15;">Alex-Sahil786</strong>
-      </div>
-      <div class="usdt-badge-box">
-        <span id="checkoutUsdtAmount">$0.00 USDT</span>
-      </div>
+    <div class="notice">
+        ⚠️ After completing payment, enter the Transaction ID / UTR and submit order.
     </div>
 
-    <!-- Transaction ID Input -->
-    <div class="checkout-input-group margin-top-20">
-      <label>Submit Order</label>
-      <input type="text" id="checkoutTxnId" placeholder="Enter Transaction ID / UTR" />
-    </div>
-
-    <!-- Notice Box -->
-    <div class="notice-yellow-box">
-      <strong>⚠️ After completing payment, enter the Transaction ID / UTR and submit order.</strong>
-    </div>
-
-    <!-- WhatsApp Submit Button -->
-    <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
-      <i class="fa-brands fa-whatsapp"></i> Confirm your order
+    <button class="confirm-btn" onclick="submitOrder()">
+        💬 Confirm your order
     </button>
-
-  </div>
 </div>
 
-<script src="script.js"></script>
-
-<!-- Custom Script to Hide Install App on Input Focus -->
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    document.body.addEventListener("focusin", function (e) {
-      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
-        const installBox = document.getElementById("installContainer");
-        if (installBox) installBox.style.display = "none";
-      }
-    });
+    // প্ল্যাটফর্ম পরিবর্তন হলে Placeholder এবং Label আপডেট হবে
+    function updatePlatform() {
+        const platform = document.getElementById("platformSelect").value;
+        const profileInput = document.getElementById("profileLink");
+        const serviceTitle = document.getElementById("serviceTitle");
+        const platformIcon = document.getElementById("platformIcon");
 
-    document.body.addEventListener("focusout", function (e) {
-      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
-        const installBox = document.getElementById("installContainer");
-        if (installBox) installBox.style.display = "block";
-      }
-    });
-  });
+        if (platform === "instagram") {
+            profileInput.placeholder = "https://www.instagram.com/your_username";
+            serviceTitle.innerHTML = 'Instagram - Followers 25+% EXTRA <span class="popular-badge">POPULAR</span>';
+            platformIcon.style.background = "radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%)";
+            platformIcon.innerHTML = "📷";
+        } else if (platform === "facebook") {
+            profileInput.placeholder = "https://www.facebook.com/your_profile";
+            serviceTitle.innerHTML = 'Facebook - Followers/Likes <span class="popular-badge">POPULAR</span>';
+            platformIcon.style.background = "#1877F2";
+            platformIcon.innerHTML = "👍";
+        }
+    }
+
+    // Instagram URL Validation (সব ধরণের সঠিক লিংক গ্রহণ করবে)
+    function isValidInstagramUrl(url) {
+        return url.includes("instagram.com/") || url.includes("instagr.am/");
+    }
+
+    // Facebook URL Validation (সব ধরণের সঠিক লিংক গ্রহণ করবে)
+    function isValidFacebookUrl(url) {
+        return url.includes("facebook.com/") || url.includes("fb.com/") || url.includes("fb.watch/");
+    }
+
+    // ফর্ম সাবমিশন ফাংশন
+    function submitOrder() {
+        const platform = document.getElementById("platformSelect").value;
+        const profileLink = document.getElementById("profileLink").value.trim();
+        const transactionId = document.getElementById("transactionId").value.trim();
+
+        if (!profileLink) {
+            alert("Please enter a Profile Link!");
+            return;
+        }
+
+        // Instagram ভ্যালিডেশন চেক
+        if (platform === "instagram") {
+            if (!isValidInstagramUrl(profileLink)) {
+                alert("Please enter a valid Instagram Profile Link!");
+                return;
+            }
+        } 
+        // Facebook ভ্যালিডেশন চেক
+        else if (platform === "facebook") {
+            if (!isValidFacebookUrl(profileLink)) {
+                alert("Please enter a valid Facebook Profile Link!");
+                return;
+            }
+        }
+
+        if (!transactionId) {
+            alert("Please enter your Transaction ID / UTR!");
+            return;
+        }
+
+        // সবকিছু ঠিক থাকলে অর্ডার কনফার্ম হবে
+        alert("Order Submitted Successfully!");
+    }
 </script>
 
-<!-- Service Worker Registration for PWA -->
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then((reg) => console.log('Service Worker Registered Successfully:', reg))
-        .catch((err) => console.log('Service Worker Registration Failed:', err));
-    });
-  }
-</script>
 </body>
 </html>

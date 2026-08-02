@@ -129,10 +129,7 @@ const serviceData = {
     }
 };
 
-// ==========================================
 // GLOBAL VARIABLES
-// ==========================================
-
 let currentPlatform = "instagram";
 let currentCategory = "";
 let selectedPackage = null;
@@ -142,17 +139,12 @@ window.onload = function () {
     switchPlatform("instagram");
 };
 
-// ব্যাক বাটন চাপলে চেকআউট বন্ধ
 window.addEventListener('popstate', function (event) {
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage && checkoutPage.style.display === "block") {
         closeCheckoutUI();
     }
 });
-
-// ==========================================
-// SWITCH INSTAGRAM / FACEBOOK
-// ==========================================
 
 function switchPlatform(platform) {
     currentPlatform = platform;
@@ -177,10 +169,6 @@ function switchPlatform(platform) {
     renderCategoryTabs();
     toggleInstallButton();
 }
-
-// ==========================================
-// RENDER CATEGORY TABS
-// ==========================================
 
 function renderCategoryTabs() {
     const tabsContainer = document.getElementById("categoryTabs");
@@ -208,10 +196,6 @@ function renderCategoryTabs() {
 
     renderPackages();
 }
-
-// ==========================================
-// RENDER PACKAGES
-// ==========================================
 
 function renderPackages() {
     const packageList = document.getElementById("packageList");
@@ -302,10 +286,6 @@ function renderPackages() {
     });
 }
 
-// ==========================================
-// CUSTOM PRICE CALCULATOR & EXTRACT
-// ==========================================
-
 function calculateCustomPrice(serviceName, ratePer1000, providerId) {
     const qtyInput = document.getElementById("customQtyInput");
     const qty = parseInt(qtyInput ? qtyInput.value : 0) || 0;
@@ -342,104 +322,29 @@ function extractQuantity(name) {
     return Math.floor(number);
 }
 
-// ==========================================
-// UNIVERSAL LINK CONFIG & VALIDATION (ALLOW ALL LINKS)
-// ==========================================
-
+// UNIVERSAL LINK CONFIG
 function getServiceLinkConfig(platform, serviceCategory) {
-    const p = platform.toLowerCase();
     const c = serviceCategory.toLowerCase();
 
-    // UNIVERSAL REGEX: Allow ANY link starting with http/https or instagram/facebook domain format
-    const universalPattern = /^(https?:\/\/)?([a-zA-Z0-9_\-]+\.)+[a-zA-Z0-9_\-]+(\/.*)?$/i;
-
-    if (p === "instagram") {
-        if (c.includes("follower")) {
-            return {
-                label: "Profile Link (Account Must be Public)",
-                placeholder: "https://instagram.com/your_username",
-                pattern: universalPattern.source,
-                error: "Please enter your Link."
-            };
-        } else if (c.includes("reel") || c.includes("video")) {
-            return {
-                label: "Reel/Video Link (Account Must be Public)",
-                placeholder: "https://instagram.com/reel/...",
-                pattern: universalPattern.source,
-                error: "Please enter your Link."
-            };
-        } else {
-            return {
-                label: "Post/Reel Link (Account Must be Public)",
-                placeholder: "https://instagram.com/p/...",
-                pattern: universalPattern.source,
-                error: "Please enter your Link."
-            };
-        }
+    if (c.includes("follower")) {
+        return {
+            label: "Profile Link (Account Must be Public)",
+            placeholder: "https://instagram.com/your_username"
+        };
+    } else if (c.includes("reel") || c.includes("video")) {
+        return {
+            label: "Reel/Video Link (Account Must be Public)",
+            placeholder: "Enter Reel or Video link"
+        };
+    } else {
+        return {
+            label: "Post/Reel Link (Account Must be Public)",
+            placeholder: "Enter Post or Reel link"
+        };
     }
-
-    if (p === "facebook") {
-        if (c.includes("follower") || c.includes("page")) {
-            return {
-                label: "Profile/Page Link (Must be Public)",
-                placeholder: "https://facebook.com/your_profile",
-                pattern: universalPattern.source,
-                error: "Please enter your Link."
-            };
-        } else {
-            return {
-                label: "Target Link (Must be Public)",
-                placeholder: "https://facebook.com/...",
-                pattern: universalPattern.source,
-                error: "Please enter your Link."
-            };
-        }
-    }
-
-    return {
-        label: "Target Link (Must be Public)",
-        placeholder: "Enter valid social media link",
-        pattern: universalPattern.source,
-        error: "Please enter your Link."
-    };
 }
 
-function validateCheckoutLink() {
-    const linkInput = document.getElementById("checkoutLinkInput");
-    const errorEl = document.getElementById("checkoutLinkError");
-    if (!linkInput) return true;
-
-    const value = linkInput.value.trim();
-
-    if (value === "") {
-        if (errorEl) {
-            errorEl.innerText = "";
-            errorEl.style.display = "none";
-        }
-        linkInput.style.borderColor = "";
-        return false;
-    }
-
-    // Always valid if user types any link
-    if (errorEl) {
-        errorEl.innerText = "";
-        errorEl.style.display = "none";
-    }
-    linkInput.style.borderColor = "#22c55e";
-    return true;
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    const linkInput = document.getElementById("checkoutLinkInput");
-    if (linkInput) {
-        linkInput.addEventListener("input", validateCheckoutLink);
-    }
-});
-
-// ==========================================
-// 🚀 CHECKOUT & PAYMENT OVERLAY LOGIC
-// ==========================================
-
+// CHECKOUT LOGIC
 function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge) {
     currentCheckoutData = {
         platform: platform,
@@ -503,13 +408,11 @@ function showCheckoutOverlay() {
     if (document.getElementById("checkoutUnitsText"))
         document.getElementById("checkoutUnitsText").innerText = `${d.quantity.toLocaleString()} units`;
 
-    // price display
     const priceEl = document.getElementById("checkoutPriceText");
     if (priceEl) {
         priceEl.innerText = `${d.price.toFixed(2)}`;
     }
 
-    // Apply Link Config
     const config = getServiceLinkConfig(d.platform, d.serviceName);
     const linkLabel = document.getElementById("checkoutLinkLabel");
     const linkInput = document.getElementById("checkoutLinkInput");
@@ -519,8 +422,6 @@ function showCheckoutOverlay() {
     if (linkInput) {
         linkInput.value = "";
         linkInput.placeholder = config.placeholder;
-        linkInput.dataset.pattern = config.pattern;
-        linkInput.dataset.error = config.error;
         linkInput.style.borderColor = "";
     }
     if (errorEl) {
@@ -539,38 +440,71 @@ function showCheckoutOverlay() {
     // QR Code Generation
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price}&cu=INR`;
-    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(upiUrl)}`;
+    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
         qrImg.src = qrImageSrc;
         qrImg.style.display = "block";
         qrImg.style.margin = "0 auto";
-        qrImg.style.width = "120px";
-        qrImg.style.height = "120px";
+        qrImg.style.width = "100px";
+        qrImg.style.height = "100px";
     }
 
-    const payViaUpiBtn = document.getElementById("payViaUpiAppBtn") || document.querySelector(".pay-via-upi-btn");
-    if (payViaUpiBtn) {
-        payViaUpiBtn.style.display = "none";
-    }
-
-    // Ultra Fit Responsiveness for All Mobile Screen Heights
+    // AUTO-FIT FULLSCREEN CSS (NO-SCROLL LAYOUT)
     if (!document.getElementById("ultraCompactCss")) {
         const style = document.createElement("style");
         style.id = "ultraCompactCss";
         style.innerHTML = `
-            #checkoutPage { padding: 4px 10px !important; display: flex; flex-direction: column; justify-content: space-between; height: 100vh !important; max-height: 100vh !important; box-sizing: border-box !important; overflow: hidden !important; }
-            #checkoutPage .checkout-content { display: flex; flex-direction: column; height: 100%; justify-content: space-between; }
-            #checkoutPage .premium-service-card { margin-bottom: 3px !important; padding: 6px 10px !important; flex-shrink: 0; }
-            #checkoutPage .checkout-input-group { margin-top: 2px !important; margin-bottom: 2px !important; flex-shrink: 0; }
-            #checkoutPage input { padding: 4px 8px !important; font-size: 11px !important; height: 30px !important; }
-            #checkoutUpiView { padding: 2px !important; margin-bottom: 2px !important; flex-shrink: 0; }
-            #checkoutPage .pay-toggle-tabs { margin-bottom: 2px !important; flex-shrink: 0; }
-            #checkoutPage .whatsapp-submit-btn { padding: 6px !important; height: 36px !important; font-size: 12px !important; margin-top: auto !important; margin-bottom: 4px !important; width: 100% !important; flex-shrink: 0; }
-            #checkoutPage p, #checkoutPage label { margin-bottom: 1px !important; font-size: 10px !important; }
-            .notice-yellow-box { padding: 3px 5px !important; font-size: 9px !important; margin-bottom: 2px !important; flex-shrink: 0; }
-            .upi-icons-row { display: none !important; }
+            #checkoutPage {
+                padding: 6px 12px !important;
+                height: 100vh !important;
+                max-height: 100vh !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: space-between !important;
+            }
+            #checkoutPage .checkout-header {
+                margin-bottom: 4px !important;
+            }
+            #checkoutPage .premium-service-card {
+                margin-bottom: 6px !important;
+                padding: 6px 10px !important;
+            }
+            #checkoutPage .checkout-input-group {
+                margin-top: 4px !important;
+                margin-bottom: 6px !important;
+            }
+            #checkoutPage input {
+                padding: 6px 10px !important;
+                font-size: 11px !important;
+                height: 32px !important;
+            }
+            #checkoutUpiView {
+                padding: 4px !important;
+                margin-bottom: 4px !important;
+            }
+            #checkoutPage .pay-toggle-tabs {
+                margin-bottom: 6px !important;
+            }
+            .notice-yellow-box {
+                padding: 4px 6px !important;
+                font-size: 9px !important;
+                margin-bottom: 6px !important;
+            }
+            .whatsapp-submit-btn, #checkoutPage button.confirm-btn {
+                padding: 8px !important;
+                height: 38px !important;
+                font-size: 13px !important;
+                margin-top: auto !important;
+                margin-bottom: 2px !important;
+                width: 100% !important;
+            }
+            .upi-icons-row {
+                margin-top: 2px !important;
+            }
         `;
         document.head.appendChild(style);
     }
@@ -578,7 +512,7 @@ function showCheckoutOverlay() {
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage) {
         checkoutPage.classList.remove("hidden");
-        checkoutPage.style.display = "block";
+        checkoutPage.style.display = "flex";
     }
 }
 
@@ -654,10 +588,6 @@ function submitOrderToWhatsApp() {
 
     window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
 }
-
-// =====================================================
-// PWA INSTALL APP LOGIC
-// =====================================================
 
 let deferredPrompt = null;
 

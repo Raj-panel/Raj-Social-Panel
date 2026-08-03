@@ -512,13 +512,22 @@ function updateCheckoutQuantityDisplay() {
 
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR`;
-    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=${encodeURIComponent(upiUrl)}`;
+    
+    // 🌟 1. QR Code Size 300x300 & Margin=10 for High-Quality Scanning from Gallery
+    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=10&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
         qrImg.src = qrImageSrc;
         qrImg.style.width = "110px";
         qrImg.style.height = "110px";
+    }
+
+    // 🌟 2. Update Direct Pay via UPI App Link
+    const payViaUpiBtn = document.getElementById("payViaUpiAppBtn");
+    if (payViaUpiBtn) {
+        payViaUpiBtn.href = upiUrl;
+        payViaUpiBtn.style.display = "flex";
     }
 }
 
@@ -576,6 +585,31 @@ function showCheckoutOverlay() {
         priceParent.appendChild(counterContainer);
     }
 
+    // 🌟 Inject "Pay via UPI App" Direct Button if it doesn't exist
+    const viewUpi = document.getElementById("checkoutUpiView");
+    if (viewUpi && !document.getElementById("payViaUpiAppBtn")) {
+        const directPayBtn = document.createElement("a");
+        directPayBtn.id = "payViaUpiAppBtn";
+        directPayBtn.innerText = "📲 Click Here to Pay via UPI App";
+        directPayBtn.style.cssText = `
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 12px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin: 4px auto 6px auto;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
+            border: 1px solid rgba(255,255,255,0.2);
+        `;
+        viewUpi.insertBefore(directPayBtn, viewUpi.firstChild);
+    }
+
     d.multiplier = 1;
     updateCheckoutQuantityDisplay();
 
@@ -609,11 +643,6 @@ function showCheckoutOverlay() {
 
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
-
-    const payViaUpiBtn = document.getElementById("payViaUpiAppBtn") || document.querySelector(".pay-via-upi-btn");
-    if (payViaUpiBtn) {
-        payViaUpiBtn.style.display = "none";
-    }
 
     // 📱 Mobile Ultra-Compact Layout Styles
     if (!document.getElementById("ultraCompactCss")) {

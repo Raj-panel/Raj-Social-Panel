@@ -142,6 +142,13 @@ window.onload = function () {
     switchPlatform("instagram");
 };
 
+window.addEventListener('popstate', function (event) {
+    const checkoutPage = document.getElementById("checkoutPage");
+    if (checkoutPage && checkoutPage.style.display === "block") {
+        closeCheckoutUI();
+    }
+});
+
 // ==========================================
 // SWITCH INSTAGRAM / FACEBOOK
 // ==========================================
@@ -438,7 +445,7 @@ function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUni
 }
 
 // ==========================================
-// CHECKOUT & REDIRECTION LOGIC
+// CHECKOUT & QUANTITY COUNTER LOGIC
 // ==========================================
 
 function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge) {
@@ -468,6 +475,7 @@ function openCheckoutFromCustom() {
 
     const calculatedPriceText = document.getElementById("customCalcPrice");
     const price = parseFloat(calculatedPriceText ? calculatedPriceText.innerText : 0);
+
     const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
 
     currentCheckoutData = {
@@ -485,29 +493,191 @@ function openCheckoutFromCustom() {
     showCheckoutOverlay();
 }
 
-// DIRECT REDIRECTION TO CHECKOUT.HTML
+function updateCheckoutQuantityDisplay() {
+    const d = currentCheckoutData;
+    
+    d.quantity = d.baseQuantity * d.multiplier;
+
+    d.price = calculateDynamicPriceForQty(
+        d.platform,
+        d.serviceName,
+        d.quantity,
+        d.baseQuantity,
+        d.basePrice
+    );
+
+    const qtyCountDisplay = document.getElementById("checkoutQtyCount");
+    if (qtyCountDisplay) qtyCountDisplay.innerText = d.multiplier;
+
+    const unitsText = document.getElementById("checkoutUnitsText");
+    if (unitsText) unitsText.innerText = `${d.quantity.toLocaleString()} Package`;
+
+    const priceEl = document.getElementById("checkoutPriceText");
+    if (priceEl) priceEl.innerText = `${d.price.toFixed(2)}`;
+
+    if (document.getElementById("checkoutUsdtAmount")) {
+        const usdt = (d.price / 88).toFixed(2);
+        document.getElementById("checkoutUsdtAmount").innerText = `$${usdt} USDT`;
+    }
+
+    const upiId = "akibur.s@ptyes";
+    const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR`;
+    
+    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=20&data=${encodeURIComponent(upiUrl)}`;
+
+    const qrImg = document.getElementById("checkoutQrImg");
+    if (qrImg) {
+        qrImg.src = qrImageSrc;
+        qrImg.style.width = "180px";
+        qrImg.style.height = "180px";
+    }
+
+    // Pay via UPI App button code removed / hidden as requested
+    const payViaUpiBtn = document.getElementById("payViaUpiAppBtn");
+    if (payViaUpiBtn) {
+        payViaUpiBtn.style.display = "none";
+    }
+}
+
+function changeCheckoutMultiplier(delta) {
+    if (!currentCheckoutData.multiplier) currentCheckoutData.multiplier = 1;
+    
+    let newMultiplier = currentCheckoutData.multiplier + delta;
+    if (newMultiplier < 1) newMultiplier = 1;
+
+    currentCheckoutData.multiplier = newMultiplier;
+    updateCheckoutQuantityDisplay();
+}
+
 function showCheckoutOverlay() {
     const d = currentCheckoutData;
 
-    const queryParams = new URLSearchParams({
-        platform: d.platform,
-        service: d.serviceName,
-        package: d.packageName,
-        quantity: d.quantity,
-        price: d.price,
-        badge: d.badge
-    }).toString();
+    history.pushState({ checkoutOpen: true }, "");
 
-    // Redirection to checkout.html
-    window.location.href = `checkout.html?${queryParams}`;
+    const iconBox = document.getElementById("checkoutPlatformIcon");
+    if (iconBox) {
+        iconBox.innerHTML = d.platform.toLowerCase() === "facebook"
+            ? `<i class="fa-brands fa-facebook"></i>`
+            : `<i class="fa-brands fa-instagram"></i>`;
+    }
+
+    if (document.getElementById("checkoutServiceTitle"))
+        document.getElementById("checkoutServiceTitle").innerText = `${d.platform} - ${d.serviceName}`;
+
+    if (document.getElementById("checkoutPkgBadgeName"))
+        document.getElementById("checkoutPkgBadgeName").innerText = d.packageName;
+
+    if (document.getElementById("checkoutBadge"))
+        document.getElementById("checkoutBadge").innerText = d.badge;
+
+    let counterContainer = document.getElementById("checkoutQtyCounterBox");
+    const priceEl = document.getElementById("checkoutPriceText");
+    const priceParent = priceEl ? priceEl.parentElement : null;
+
+    if (!counterContainer && priceParent) {
+        counterContainer = document.createElement("div");
+        counterContainer.id = "checkoutQtyCounterBox";
+        counterContainer.style.cssText = "display: flex; align-items: center; background: rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 1px 4px; gap: 6px; margin-left: auto;";
+        
+        counterContainer.innerHTML = `
+            <button type="button" onclick="changeCheckoutMultiplier(-1)" style="background: rgba(255, 255, 255, 0.15); color: #fff; border: none; width: 24px; height: 24px; border-radius: 4px; font-weight: bold; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center;">-</button>
+            <span id="checkoutQtyCount" style="color: #fff; font-weight: bold; font-size: 13px; min-width: 14px; text-align: center;">1</span>
+            <button type="button" onclick="changeCheckoutMultiplier(1)" style="background: rgba(255, 255, 255, 0.15); color: #fff; border: none; width: 24px; height: 24px; border-radius: 4px; font-weight: bold; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
+        `;
+
+        if (priceParent.style) {
+            priceParent.style.display = "flex";
+            priceParent.style.alignItems = "center";
+            priceParent.style.justifyContent = "space-between";
+        }
+        priceParent.appendChild(counterContainer);
+    }
+
+    // Dynamic payViaUpiAppBtn injection removed so button won't appear
+    const payViaUpiBtn = document.getElementById("payViaUpiAppBtn");
+    if (payViaUpiBtn) {
+        payViaUpiBtn.style.display = "none";
+    }
+
+    d.multiplier = 1;
+    updateCheckoutQuantityDisplay();
+
+    const priceCard = priceEl ? priceEl.parentElement : null;
+    if (priceCard) {
+        const subSpans = priceCard.querySelectorAll("span");
+        subSpans.querySelectorAll ? subSpans.forEach(s => {
+            if (s.id !== "checkoutPriceText" && s.id !== "checkoutQtyCount") {
+                s.innerText = "You Pay";
+            }
+        }) : null;
+    }
+
+    const allSummaryElements = document.querySelectorAll(".order-summary-box, #orderSummaryBox, [class*='summary']");
+    allSummaryElements.forEach(el => {
+        el.style.display = "none";
+    });
+
+    const linkConfig = getLinkConfig(d.platform, d.serviceName);
+    const linkLabel = document.getElementById("checkoutLinkLabel");
+    const linkInput = document.getElementById("checkoutLinkInput");
+
+    if (linkLabel) {
+        linkLabel.innerText = linkConfig.label;
+    }
+    if (linkInput) {
+        linkInput.value = "";
+        linkInput.placeholder = linkConfig.placeholder;
+    }
+
+    const txnInput = document.getElementById("checkoutTxnId");
+    if (txnInput) txnInput.value = "";
+
+    // CSS Styling to keep Paytm, GPay, PhonePe, Other UPI visible while hiding unwanted elements
+    if (!document.getElementById("ultraCompactCss")) {
+        const style = document.createElement("style");
+        style.id = "ultraCompactCss";
+        style.innerHTML = `
+            #checkoutPage { padding: 4px 10px !important; max-width: 480px; margin: 0 auto; }
+            #checkoutPage .checkout-card { margin-bottom: 4px !important; padding: 6px 10px !important; }
+            #checkoutPage .input-box { margin-bottom: 4px !important; }
+            #checkoutPage input { padding: 4px 8px !important; font-size: 11px !important; height: 32px !important; }
+            #checkoutUpiView { padding: 4px !important; margin-bottom: 4px !important; text-align: center; }
+            #checkoutUpiView img { width: 160px !important; height: 160px !important; margin: 2px auto !important; background: #fff; padding: 6px; border-radius: 8px; }
+            #checkoutPage .payment-tabs { margin-bottom: 4px !important; }
+            #checkoutPage .submit-btn { padding: 6px !important; height: 36px !important; font-size: 12px !important; margin-top: 2px !important; }
+            #checkoutPage p, #checkoutPage label { margin-bottom: 2px !important; font-size: 10px !important; }
+            .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 4px 8px !important; font-size: 9.5px !important; margin-bottom: 4px !important; }
+            
+            /* Hide Pay via UPI button element if present in HTML */
+            #payViaUpiAppBtn { display: none !important; }
+
+            /* Keeping Paytm, GPay, PhonePe, Other UPI fully visible */
+            .pay-apps-icons, [class*="paytm"], [class*="gpay"], [class*="phonepe"] { display: flex !important; }
+        `;
+        document.head.appendChild(style);
+    }
+
+    const checkoutPage = document.getElementById("checkoutPage");
+    if (checkoutPage) {
+        checkoutPage.classList.remove("hidden");
+        checkoutPage.style.display = "block";
+    }
 }
 
 function closeCheckoutUI() {
+    const checkoutPage = document.getElementById("checkoutPage");
+    if (checkoutPage) {
+        checkoutPage.classList.add("hidden");
+        checkoutPage.style.display = "none";
+    }
     currentCheckoutData = {}; 
 }
 
 function closeCheckout() {
     closeCheckoutUI();
+    if (history.state && history.state.checkoutOpen) {
+        history.back();
+    }
 }
 
 function switchCheckoutPayment(type) {

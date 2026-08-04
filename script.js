@@ -581,7 +581,7 @@ function showCheckoutOverlay() {
         
         counterContainer.innerHTML = `
             <button type="button" onclick="changeCheckoutMultiplier(-1)" style="background: rgba(255, 255, 255, 0.15); color: #fff; border: none; width: 24px; height: 24px; border-radius: 4px; font-weight: bold; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center;">-</button>
-            <span id="checkoutQtyCount" style="color: #fff; font-weight: bold; font-size: 16px; min-width: 14px; text-align: center;">1</span>
+            <span id="checkoutQtyCount" style="color: #fff; font-weight: bold; font-size: 1px; min-width: 14px; text-align: center;">1</span>
             <button type="button" onclick="changeCheckoutMultiplier(1)" style="background: rgba(255, 255, 255, 0.15); color: #fff; border: none; width: 24px; height: 24px; border-radius: 4px; font-weight: bold; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
         `;
 

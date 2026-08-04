@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:ital,wght@1,800&display=swap');
 
 * {
     margin: 0;
@@ -8,9 +8,9 @@
 }
 
 body {
-    background: #fdf2f8;
-    background-image: radial-gradient(circle at 10% 10%, rgba(244, 114, 182, 0.15) 0%, transparent 40%),
-                      radial-gradient(circle at 90% 90%, rgba(192, 132, 252, 0.15) 0%, transparent 40%);
+    background: #090d16;
+    background-image: radial-gradient(circle at 10% 10%, rgba(244, 114, 182, 0.08) 0%, transparent 40%),
+                      radial-gradient(circle at 90% 90%, rgba(192, 132, 252, 0.08) 0%, transparent 40%);
     color: #1e293b;
     min-height: 100vh;
     padding: 12px;
@@ -280,129 +280,258 @@ input {
 
 input:focus { border-color: #d946ef; background: #ffffff; }
 
-/* Checkout Section */
-.checkout-card {
-    background: #ffffff;
-    border-radius: 20px;
-    padding: 16px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-    margin-bottom: 16px;
-    border: 1px solid #fae8ff;
-}
-
-.checkout-header h3 { font-size: 14px; color: #0f172a; margin-bottom: 10px; }
-
-.order-summary-pill {
-    background: #fdf4ff;
-    border: 1px dashed #d946ef;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 12px;
-    color: #a855f7;
+.footer-note {
     text-align: center;
-    margin-bottom: 12px;
+    font-size: 10px;
+    color: #94a3b8;
+    margin-bottom: 20px;
 }
 
-.action-btn {
+/* =========================================================
+   100% PIXEL PERFECT MATCH CHECKOUT PAGE UI (DARK GLOW THEME)
+   ========================================================= */
+
+.checkout-page-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    padding: 12px;
-    background: linear-gradient(135deg, #d946ef, #8b5cf6);
+    height: 100%;
+    background: #080c14;
+    z-index: 999999;
+    overflow-y: auto;
+    box-sizing: border-box;
+    animation: slideInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.checkout-page-overlay.hidden {
+    display: none !important;
+}
+
+@keyframes slideInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.checkout-content {
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 16px 14px 40px 14px;
+}
+
+.checkout-nav {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.back-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     color: #fff;
-    font-weight: 800;
+    padding: 6px 16px;
+    border-radius: 20px;
     font-size: 13px;
-    border: none;
-    border-radius: 12px;
+    font-weight: 600;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-/* Payment Switch Tabs */
-.pay-toggle-tabs { display: flex; gap: 8px; margin: 14px 0; }
-
-.pay-tab {
-    flex: 1;
-    padding: 8px;
-    background: #f1f5f9;
-    border: none;
-    border-radius: 10px;
-    font-size: 11px;
-    font-weight: 700;
-    color: #64748b;
-    cursor: pointer;
-}
-
-.pay-tab.active { background: #a855f7; color: #fff; }
-
-.qr-box {
-    text-align: center;
-    background: #f8fafc;
-    padding: 12px;
-    border-radius: 12px;
-}
-
-.qr-box img {
-    width: 170px;
-    height: 170px;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-}
-
-.qr-sub { font-size: 10px; color: #64748b; margin-top: 6px; }
-
-/* Binance Box */
-.binance-info-card {
-    background: #fefce8;
-    border: 1px solid #fef08a;
-    padding: 12px;
-    border-radius: 12px;
-    text-align: center;
-}
-
-.usdt-badge {
-    display: inline-block;
-    background: #eab308;
-    color: #fff;
+.checkout-heading-text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
     font-weight: 800;
-    padding: 4px 12px;
+    color: #ffffff;
+    letter-spacing: 0.3px;
+}
+
+/* Premium Product Card with Neon Glow Effect */
+.premium-service-card {
+    background: linear-gradient(135deg, #4c1d95 0%, #2e1065 50%, #1e1b4b 100%);
+    border: 1px solid #c084fc;
+    border-radius: 18px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 0 20px rgba(192, 132, 252, 0.35), 0 8px 30px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.card-top-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.platform-badge-icon {
+    width: 44px;
+    height: 44px;
     border-radius: 12px;
+    background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
+}
+
+.card-info h4 {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 800;
+    margin: 0 0 2px 0;
+}
+
+.badge-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.units-subtitle {
     font-size: 12px;
-    margin-top: 4px;
+    color: #cbd5e1;
+    font-weight: 600;
 }
 
-.crypto-details-box {
-    margin-top: 10px;
+.popular-badge {
+    background: #facc15;
+    color: #000000;
+    font-size: 9px;
+    font-weight: 900;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card-bottom-row {
+    margin-top: 8px;
+}
+
+.package-tag-text {
     font-size: 11px;
-    text-align: left;
-    background: #fff;
-    padding: 8px 10px;
-    border-radius: 8px;
-    border: 1px solid #fef08a;
+    color: #94a3b8;
+    margin-bottom: 4px;
 }
 
-.crypto-details-box p {
-    margin-bottom: 6px;
+.price-multiplier-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.copy-btn {
-    background: #e2e8f0;
-    border: none;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 10px;
-    cursor: pointer;
+.price-text {
+    font-size: 26px;
+    font-weight: 900;
+    color: #ffffff;
 }
 
-.whatsapp-submit-btn {
-    width: 100%;
-    padding: 12px;
-    background: #22c55e;
-    color: #fff;
-    font-weight: 800;
-    font-size: 13px;
+.price-text small {
+    font-size: 12px;
+    color: #a855f7;
+    font-weight: 600;
+}
+
+/* Quantity Box (+ / - Buttons) */
+.counter-box {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 2px 4px;
+    gap: 12px;
+}
+
+.counter-box button {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
     border: none;
-    border-radius: 12px;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.counter-box span {
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 14px;
+    min-width: 14px;
+    text-align: center;
+}
+
+/* Inputs Styling with Link Icon */
+.checkout-input-group {
+    margin-bottom: 14px;
+}
+
+.checkout-input-group label {
+    display: block;
+    font-size: 11px;
+    color: #a7f3d0;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 12px;
+    color: #818cf8;
+    font-size: 13px;
+}
+
+.checkout-input-group input {
+    width: 100%;
+    padding: 11px 12px 11px 34px;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid #3b82f6;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 12px;
+    outline: none;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.15);
+}
+
+.checkout-input-group input:focus {
+    border-color: #c084fc;
+    box-shadow: 0 0 12px rgba(192, 132, 252, 0.3);
+}
+
+/* Payment Method Switch Tabs */
+.pay-toggle-tabs {
+    display: flex;
+    gap: 10px;
+    margin: 14px 0 12px 0;
+}
+
+.pay-tab {
+    flex: 1;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    color: #1e293b;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -410,402 +539,164 @@ input:focus { border-color: #d946ef; background: #ffffff; }
     gap: 6px;
 }
 
-.margin-top-15 { margin-top: 12px; }
-
-.footer-note {
-    text-align: center;
-    font-size: 10px;
-    color: #94a3b8;
-    margin-bottom: 20px;
-}
-.badge-super{
-    background: linear-gradient(90deg,#ff9800,#ff4081);
-    color:#fff;
-    font-weight:800;
-    animation:pulseBadge 1.8s infinite;
+.pay-tab.active {
+    background: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35);
 }
 
-@keyframes pulseBadge{
-    0%{transform:scale(1);}
-    50%{transform:scale(1.05);}
-    100%{transform:scale(1);}
-}
-/* ===== SUPER COMBO CARD ===== */
-
-.pkg-card.super-combo{
-    border:2px solid #ff9800;
-    background:linear-gradient(135deg,#fff8e1,#fff0f7);
-    box-shadow:0 8px 20px rgba(255,152,0,.18);
-    position:relative;
-}
-
-.pkg-card.super-combo::before{
-    content:"🔥 BEST OFFER";
-    position:absolute;
-    top:-10px;
-    right:15px;
-    background:linear-gradient(90deg,#ff9800,#ff4081);
-    color:#fff;
-    font-size:10px;
-    font-weight:800;
-    padding:4px 10px;
-    border-radius:20px;
-}
-
-.combo-free{
-    margin-top:6px;
-    font-size:11px;
-    font-weight:800;
-    color:#16a34a;
-}
-
-
-/* ===== PWA Install UI ===== */
-.panel-heading{
- text-align:center;
- font-size:32px;
- font-weight:800;
- color:#8b5cf6;
- margin:8px 0 14px;
- letter-spacing:1px;
-}
-#installContainer{
- display:none;
- text-align:center;
- margin:-2px 0 16px;
-}
-.install-btn{
- border:none;
- border-radius:999px;
- padding:14px 28px;
- background:linear-gradient(135deg,#3b82f6,#8b5cf6);
- color:#fff;
- font-size:16px;
- font-weight:800;
- cursor:pointer;
- box-shadow:0 8px 18px rgba(59,130,246,.25);
- transition:.25s;
-}
-.install-btn:hover{
- transform:translateY(-2px);
-}
-.install-btn i{margin-right:8px;}
-/* ==================================================
-   NEW PAYMENT PAGE / CHECKOUT OVERLAY STYLES
-   ================================================== */
-.checkout-page-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #0b0f19; /* Theme background matching modern dark style */
-  z-index: 999999;
-  overflow-y: auto;
-  box-sizing: border-box;
-  animation: slideInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.checkout-page-overlay.hidden {
-  display: none !important;
-}
-
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.checkout-content {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 16px 16px 40px 16px;
-}
-
-.checkout-nav {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.back-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #fff;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.checkout-heading-text {
-  flex: 1;
-  text-align: center;
-  font-size: 18px;
-  font-weight: 700;
-  color: #fff;
-  margin-right: 50px;
-}
-
-/* Premium Service Card */
-.premium-service-card {
-  background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%);
-  border: 1px solid rgba(168, 85, 247, 0.3);
-  border-radius: 16px;
-  padding: 16px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-  margin-bottom: 18px;
-}
-
-.card-top-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.platform-badge-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #a855f7, #6366f1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  color: #fff;
-}
-
-.card-info h4 {
-  color: #fff;
-  font-size: 15px;
-  font-weight: 700;
-  margin: 0 0 4px 0;
-}
-
-.badge-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.pkg-name-badge {
-  font-size: 13px;
-  font-weight: 700;
-  color: #cbd5e1;
-}
-
-.popular-badge {
-  background: #facc15;
-  color: #000;
-  font-size: 10px;
-  font-weight: 800;
-  padding: 2px 8px;
-  border-radius: 10px;
-  text-transform: uppercase;
-}
-
-.units-text {
-  font-size: 12px;
-  color: #94a3b8;
-  margin-top: 10px;
-}
-
-.price-text {
-  font-size: 24px;
-  font-weight: 800;
-  color: #fff;
-  margin-top: 4px;
-}
-
-.price-text small {
-  font-size: 12px;
-  color: #94a3b8;
-  font-weight: 400;
-}
-
-/* Input Fields */
-.checkout-input-group {
-  margin-bottom: 16px;
-  text-align: left;
-}
-
-.checkout-input-group label {
-  display: block;
-  font-size: 13px;
-  color: #cbd5e1;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.checkout-input-group input {
-  width: 100%;
-  padding: 12px 14px;
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px solid #334155;
-  border-radius: 10px;
-  color: #fff;
-  font-size: 14px;
-  outline: none;
-  box-sizing: border-box;
-}
-
-.checkout-input-group input:focus {
-  border-color: #a855f7;
-}
-
-/* Order Summary Box */
-.checkout-order-summary {
-  background: rgba(15, 23, 42, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  padding: 14px;
-  margin-bottom: 18px;
-}
-
-.summary-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 10px;
-}
-
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  color: #94a3b8;
-}
-
-.summary-divider {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.1);
-  margin: 10px 0;
-}
-
-.summary-row.pay-row {
-  font-size: 16px;
-  font-weight: 700;
-  color: #fff;
-}
-
-.pay-amount {
-  color: #38bdf8;
-  font-size: 18px;
-}
-
-/* Payment View Box */
+/* QR Code Section Outer Box */
 .payment-view-box {
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px solid #334155;
-  border-radius: 14px;
-  padding: 16px;
-  text-align: center;
-  margin-top: 14px;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid #3b82f6;
+    border-radius: 16px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.1);
 }
 
-.payment-view-box.hidden {
-  display: none;
-}
+.payment-view-box.hidden { display: none; }
 
 .scan-title {
-  font-size: 12px;
-  font-weight: 800;
-  color: #facc15;
-  letter-spacing: 0.5px;
-  margin-bottom: 12px;
+    font-size: 13px;
+    font-weight: 900;
+    color: #c084fc;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
 }
 
-.qr-wrapper img {
-  width: 160px;
-  height: 160px;
-  border-radius: 10px;
-  border: 3px solid #fff;
+.qr-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
 }
 
-.pay-app-btn {
-  display: inline-block;
-  margin-top: 10px;
-  background: #334155;
-  color: #fff;
-  padding: 6px 14px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  text-decoration: none;
+.qr-border-glow {
+    background: #ffffff;
+    padding: 8px;
+    border-radius: 14px;
+    box-shadow: 0 0 20px rgba(192, 132, 252, 0.4);
+    display: inline-block;
 }
 
-.upi-icons-row {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 12px;
+.qr-border-glow img {
+    width: 170px;
+    height: 170px;
+    display: block;
+    border-radius: 6px;
 }
 
-.upi-chip {
-  background: rgba(255, 255, 255, 0.08);
-  color: #cbd5e1;
-  font-size: 11px;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-weight: 600;
+.qr-sub {
+    font-size: 10px;
+    color: #94a3b8;
+    margin: 8px 0 12px 0;
 }
 
+/* 4 Payment App Grid Buttons */
+.upi-apps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.app-btn {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 8px 2px;
+    font-size: 11px;
+    font-weight: 800;
+    color: #0f172a;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.app-btn:active {
+    transform: scale(0.96);
+}
+
+.app-dot.blue {
+    width: 6px;
+    height: 6px;
+    background: #00baf2;
+    border-radius: 50%;
+}
+
+.app-logo-g {
+    color: #4285f4;
+    font-weight: 900;
+}
+
+.app-logo-pe {
+    color: #5f259f;
+    font-weight: 900;
+    font-size: 10px;
+}
+
+/* Binance Card Elements */
 .binance-nick-box {
-  border: 1px solid #334155;
-  background: rgba(0, 0, 0, 0.3);
-  padding: 8px;
-  border-radius: 8px;
-  margin: 10px 0;
-  font-size: 12px;
-  color: #cbd5e1;
+    border: 1px solid #334155;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 8px;
+    border-radius: 8px;
+    margin: 10px 0;
+    font-size: 11px;
+    color: #cbd5e1;
 }
 
 .usdt-badge-box span {
-  background: #facc15;
-  color: #000;
-  font-weight: 800;
-  padding: 4px 16px;
-  border-radius: 20px;
-  font-size: 13px;
-  display: inline-block;
+    background: #facc15;
+    color: #000;
+    font-weight: 800;
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    display: inline-block;
 }
 
-.margin-top-20 {
-  margin-top: 20px;
-}
+.margin-top-15 { margin-top: 14px; }
 
+/* Warning Box Match */
 .notice-yellow-box {
-  background: rgba(234, 179, 8, 0.1);
-  border-left: 3px solid #facc15;
-  padding: 10px;
-  border-radius: 6px;
-  text-align: left;
-  margin: 12px 0;
-  font-size: 11px;
-  color: #facc15;
-  line-height: 1.4;
+    background: #fefce8;
+    border: 1px solid #fde047;
+    padding: 10px 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 12px 0;
+    font-size: 10px;
+    color: #a16207;
+    font-weight: 700;
+    line-height: 1.3;
 }
 
+.warn-icon { font-size: 14px; }
+
+/* Confirm Order Button */
 .whatsapp-submit-btn {
-  width: 100%;
-  background: #22c55e;
-  color: #fff;
-  border: none;
-  padding: 14px;
-  font-size: 15px;
-  font-weight: 700;
-  border-radius: 12px;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
-  transition: transform 0.2s;
+    width: 100%;
+    background: #10b981;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 800;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .whatsapp-submit-btn:active {
-  transform: scale(0.98);
+    transform: scale(0.98);
 }

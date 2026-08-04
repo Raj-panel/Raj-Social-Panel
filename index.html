@@ -5,12 +5,12 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Social Boost Panel</title>
 <!-- Google Font for Custom Modern Design -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <!-- PWA / Web App Manifest & Theme -->
 <link href="manifest.json" rel="manifest"/>
-<meta content="#0f172a" name="theme-color"/>
+<meta content="#ffffff" name="theme-color"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
-<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
 <meta content="SMM Panel" name="apple-mobile-web-app-title"/>
 <link href="icon-192.png" rel="apple-touch-icon"/>
 <link href="style.css" rel="stylesheet"/>
@@ -138,49 +138,52 @@
 </div>
 
 <!-- ============================================== -->
-<!-- UPDATED PIXEL-PERFECT CHECKOUT PAGE OVERLAY -->
+<!-- NEW PAYMENT / CHECKOUT PAGE OVERLAY (Pixel Perfect Light Theme Layout) -->
 <!-- ============================================== -->
 <div id="checkoutPage" class="checkout-page-overlay hidden">
   <div class="checkout-content">
     
-    <!-- Top Bar with Back Button & Header Title -->
+    <!-- Top Bar with Back Button -->
     <div class="checkout-nav">
       <button class="back-btn" onclick="closeCheckout()"><i class="fa-solid fa-arrow-left"></i> Back</button>
       <div class="checkout-heading-text">Checkout</div>
     </div>
 
-    <!-- Product Card (Pixel Match Right Screenshot) -->
+    <!-- 2. Product Card Matching Right Screenshot -->
     <div class="premium-service-card">
       <div class="card-top-row">
         <div class="platform-badge-icon" id="checkoutPlatformIcon">
           <i class="fa-brands fa-instagram"></i>
         </div>
-        <div class="card-info">
-          <h4 id="checkoutServiceTitle">Instagram - Followers</h4>
-          <div class="badge-row">
-            <span class="units-text-inline" id="checkoutUnitsText">200 Followers</span>
+        <div class="card-title-group">
+          <div class="title-with-badge">
+            <h4 id="checkoutServiceTitle">Instagram - Followers</h4>
             <span class="popular-badge" id="checkoutBadge">STARTER</span>
+          </div>
+          <div class="pkg-sub-details">
+            <span id="checkoutPkgBadgeName">200 Followers</span>
           </div>
         </div>
       </div>
       
       <div class="card-bottom-row">
-        <div class="pkg-name-badge" id="checkoutPkgBadgeName">200 Package</div>
-      </div>
-
-      <div class="price-qty-row">
-        <div class="price-text">
-          <span id="checkoutPriceText">₹20.00</span> <small>one-time</small>
+        <div class="price-side">
+          <span class="units-text" id="checkoutUnitsText">200 Package</span>
+          <div class="price-text">
+            ₹<span id="checkoutPriceText">20.00</span> <small>one-time</small>
+          </div>
         </div>
-        <div class="qty-counter-box">
-          <button class="qty-btn" onclick="changeCheckoutMultiplier(-1)">-</button>
-          <span class="qty-count" id="checkoutQtyCount">1</span>
-          <button class="qty-btn" onclick="changeCheckoutMultiplier(1)">+</button>
+        
+        <!-- Quantity Counter Buttons -->
+        <div class="quantity-counter-box">
+          <button class="qty-btn" onclick="changeCheckoutMultiplier(-1)"><i class="fa-solid fa-minus"></i></button>
+          <span class="qty-val" id="checkoutQtyCount">1</span>
+          <button class="qty-btn" onclick="changeCheckoutMultiplier(1)"><i class="fa-solid fa-plus"></i></button>
         </div>
       </div>
     </div>
 
-    <!-- Profile Link Input Box -->
+    <!-- 3. Profile Link Input -->
     <div class="checkout-input-group">
       <label id="checkoutLinkLabel">Profile Link (Account Must be Public)</label>
       <div class="input-with-icon">
@@ -189,7 +192,7 @@
       </div>
     </div>
 
-    <!-- Payment Method Buttons -->
+    <!-- 4. Payment Method Buttons (UPI / Binance Switch) -->
     <div class="pay-toggle-tabs">
       <button class="pay-tab active" id="btnTabUpi" onclick="switchCheckoutPayment('upi')">
         <i class="fa-solid fa-border-all"></i> UPI QR Code
@@ -199,27 +202,29 @@
       </button>
     </div>
 
-    <!-- UPI Payment Container -->
+    <!-- 5, 6, 7. UPI Payment & App Buttons Section -->
     <div id="checkoutUpiView" class="payment-view-box">
       <div class="scan-title">SCAN TO PAY VIA UPI</div>
+      
       <div class="qr-wrapper">
         <img id="checkoutQrImg" src="" alt="UPI QR Code" />
       </div>
-      <p class="qr-sub">Scan or enter payment detail into any UPI App</p>
       
-      <!-- Instant Payment App Buttons -->
-      <div class="upi-app-buttons-grid">
-        <button class="upi-app-btn paytm-btn" data-app="paytm">
-          Paytm
+      <p class="qr-sub">Scan or enter payment detail into any UPI App</p>
+
+      <!-- Payment App Buttons -->
+      <div class="upi-icons-grid">
+        <button class="upi-app-btn" data-app="paytm">
+          <span>Paytm</span>
         </button>
-        <button class="upi-app-btn gpay-btn" data-app="gpay">
-          <span class="gpay-g">G</span>Pay
+        <button class="upi-app-btn" data-app="gpay">
+          <i class="fa-brands fa-google-pay gpay-color"></i> <span>GPay</span>
         </button>
-        <button class="upi-app-btn phonepe-btn" data-app="phonepe">
-          <i class="fa-solid fa-square-p"></i> PhonePe
+        <button class="upi-app-btn" data-app="phonepe">
+          <i class="fa-solid fa-p phonepe-color"></i> <span>PhonePe</span>
         </button>
-        <button class="upi-app-btn other-btn" data-app="other">
-          <i class="fa-solid fa-border-all"></i> Other UPI
+        <button class="upi-app-btn" data-app="other">
+          <i class="fa-solid fa-border-all"></i> <span>Other UPI</span>
         </button>
       </div>
     </div>
@@ -231,14 +236,14 @@
         <img src="binance-qr.png" alt="Binance QR Code" />
       </div>
       <div class="binance-nick-box">
-        Binance Nickname: <strong style="color: #facc15;">Alex-Sahil786</strong>
+        Binance Nickname: <strong>Alex-Sahil786</strong>
       </div>
       <div class="usdt-badge-box">
         <span id="checkoutUsdtAmount">$0.00 USDT</span>
       </div>
     </div>
 
-    <!-- UTR Input Box -->
+    <!-- 8. UTR Input Box -->
     <div class="checkout-input-group margin-top-15">
       <label>Enter Your UTR number</label>
       <div class="input-with-icon">
@@ -247,13 +252,13 @@
       </div>
     </div>
 
-    <!-- Warning Box -->
+    <!-- 9. Warning Box -->
     <div class="notice-yellow-box">
       <i class="fa-solid fa-triangle-exclamation warning-icon"></i>
       <span>After completing payment, enter the Transaction ID / UTR and Confirm your order.</span>
     </div>
 
-    <!-- Confirm WhatsApp Button -->
+    <!-- 10. Confirm Button -->
     <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
       <i class="fa-brands fa-whatsapp"></i> Confirm your order
     </button>

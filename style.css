@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Poppins:ital,wght@1,800&display=swap');
 
 {
 margin: 0;
@@ -23,6 +23,22 @@ width: 100%;
 max-width: 440px;
 }
 
+/* Modern Header Title Styling */
+.panel-heading {
+font-family: 'Poppins', sans-serif !important;
+font-size: 28px !important;
+font-weight: 800 !important;
+font-style: italic !important;
+text-transform: uppercase;
+letter-spacing: 1.5px;
+background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+text-align: center;
+margin: 10px 0 16px 0;
+filter: drop-shadow(0px 2px 8px rgba(168, 85, 247, 0.4));
+}
+
 /* Support Header */
 .hero-actions {
 display: flex;
@@ -42,6 +58,11 @@ align-items: center;
 gap: 6px;
 background: #ffffff;
 box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+transition: all 0.2s ease;
+}
+
+.glass-btn:hover {
+transform: translateY(-1px);
 }
 
 .btn-telegram { border: 1px solid rgba(56, 189, 248, 0.4); color: #0284c7; }
@@ -438,89 +459,85 @@ font-size: 10px;
 color: #94a3b8;
 margin-bottom: 20px;
 }
-.badge-super{
-background: linear-gradient(90deg,#ff9800,#ff4081);
-color:#fff;
-font-weight:800;
-animation:pulseBadge 1.8s infinite;
+
+.badge-super {
+background: linear-gradient(90deg, #ff9800, #ff4081);
+color: #fff;
+font-weight: 800;
+animation: pulseBadge 1.8s infinite;
 }
 
-@keyframes pulseBadge{
-0%{transform:scale(1);}
-50%{transform:scale(1.05);}
-100%{transform:scale(1);}
+@keyframes pulseBadge {
+0% { transform: scale(1); }
+50% { transform: scale(1.05); }
+100% { transform: scale(1); }
 }
 
 /* ===== SUPER COMBO CARD ===== */
-.pkg-card.super-combo{
-border:2px solid #ff9800;
-background:linear-gradient(135deg,#fff8e1,#fff0f7);
-box-shadow:0 8px 20px rgba(255,152,0,.18);
-position:relative;
+.pkg-card.super-combo {
+border: 2px solid #ff9800;
+background: linear-gradient(135deg, #fff8e1, #fff0f7);
+box-shadow: 0 8px 20px rgba(255, 152, 0, 0.18);
+position: relative;
 }
 
-.pkg-card.super-combo::before{
-content:"🔥 BEST OFFER";
-position:absolute;
-top:-10px;
-right:15px;
-background:linear-gradient(90deg,#ff9800,#ff4081);
-color:#fff;
-font-size:10px;
-font-weight:800;
-padding:4px 10px;
-border-radius:20px;
+.pkg-card.super-combo::before {
+content: "🔥 BEST OFFER";
+position: absolute;
+top: -10px;
+right: 15px;
+background: linear-gradient(90deg, #ff9800, #ff4081);
+color: #fff;
+font-size: 10px;
+font-weight: 800;
+padding: 4px 10px;
+border-radius: 20px;
 }
 
-.combo-free{
-margin-top:6px;
-font-size:11px;
-font-weight:800;
-color:#16a34a;
+.combo-free {
+margin-top: 6px;
+font-size: 11px;
+font-weight: 800;
+color: #16a34a;
 }
 
 /* ===== PWA Install UI ===== */
-.panel-heading{
-text-align:center;
-font-size:32px;
-font-weight:800;
-color:#8b5cf6;
-margin:8px 0 14px;
-letter-spacing:1px;
+#installContainer {
+text-align: center;
+margin: 30px 0 20px 0;
+transition: all 0.3s ease-in-out;
 }
-#installContainer{
-display:none;
-text-align:center;
-margin:-2px 0 16px;
-}
-.install-btn{
-border:none;
-border-radius:999px;
-padding:14px 28px;
-background:linear-gradient(135deg,#3b82f6,#8b5cf6);
-color:#fff;
-font-size:16px;
-font-weight:800;
-cursor:pointer;
-box-shadow:0 8px 18px rgba(59,130,246,.25);
-transition:.25s;
-}
-.install-btn:hover{
-transform:translateY(-2px);
-}
-.install-btn i{margin-right:8px;}
 
-/* STREAMING_CHUNK:Styling the checkout overlay light theme... /
-/ ==================================================
-NEW PAYMENT PAGE / CHECKOUT OVERLAY STYLES (LIGHT THEME UPDATE)
-================================================== /
+.install-btn {
+border: none;
+border-radius: 999px;
+padding: 14px 28px;
+background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+color: #ffffff;
+font-size: 15px;
+font-weight: 800;
+cursor: pointer;
+box-shadow: 0 0 20px rgba(0, 150, 255, 0.6), 0 0 35px rgba(138, 43, 226, 0.4);
+transition: all 0.3s ease-in-out;
+}
+
+.install-btn:hover {
+box-shadow: 0 0 28px rgba(0, 150, 255, 0.9), 0 0 45px rgba(138, 43, 226, 0.7);
+transform: translateY(-2px);
+}
+
+.install-btn i { margin-right: 8px; }
+
+/* ==================================================
+PAYMENT PAGE / CHECKOUT OVERLAY STYLES
+================================================== */
 .checkout-page-overlay {
 position: fixed;
 top: 0;
 left: 0;
 width: 100%;
 height: 100%;
-background-color: #f7f9fc; / Clean light background */
+background-color: #f7f9fc;
 z-index: 999999;
 overflow-y: auto;
 box-sizing: border-box;
@@ -586,7 +603,7 @@ color: #2e1065;
 margin-right: 50px;
 }
 
-/* Premium Service Card - Vibrant Light Gradient */
+/* Premium Service Card */
 .premium-service-card {
 background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
 border: none;
@@ -807,7 +824,6 @@ border-radius: 8px;
 font-weight: 700;
 }
 
-/* UPI App colors */
 .upi-chip.paytm { color: #00baf2; }
 .upi-chip.gpay { color: #ea4335; }
 .upi-chip.phonepe { color: #5f259f; }

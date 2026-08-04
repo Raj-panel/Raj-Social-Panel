@@ -1,50 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Social Boost Panel</title>
-  
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Poppins:ital,wght@1,800&display=swap" rel="stylesheet"/>
-  
-  <!-- PWA / Web App Manifest & Theme -->
-  <link href="manifest.json" rel="manifest"/>
-  <meta content="#fdf2f8" name="theme-color"/>
-  <meta content="yes" name="apple-mobile-web-app-capable"/>
-  <meta content="default" name="apple-mobile-web-app-status-bar-style"/>
-  <meta content="SMM Panel" name="apple-mobile-web-app-title"/>
-  <link href="icon-192.png" rel="apple-touch-icon"/>
-  
-  <!-- Stylesheets -->
-  <link href="styles.css" rel="stylesheet"/>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Social Boost Panel</title>
+<!-- Google Font for Custom Modern Design -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&display=swap" rel="stylesheet"/>
+<!-- PWA / Web App Manifest & Theme -->
+<link href="manifest.json" rel="manifest"/>
+<meta content="#0f172a" name="theme-color"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="SMM Panel" name="apple-mobile-web-app-title"/>
+<link href="icon-192.png" rel="apple-touch-icon"/>
+<link href="style.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Open Graph Meta Tags -->
+<meta content="website" property="og:type"/>
+<meta content="https://raj-panel.github.io/Smm-Panel.com/" property="og:url"/>
+<meta content="Raj Social Panel - Premium Social Boosting Services" property="og:title"/>
+<meta content="Get instant Followers, Likes, Views for Instagram and Facebook at lowest prices!" property="og:description"/>
+<meta content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0" property="og:image"/>
+<meta content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0" property="og:image:secure_url"/>
+<meta content="image/png" property="og:image:type"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<!-- Twitter Card Meta Tags -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://raj-panel.github.io/Smm-Panel.com/" name="twitter:url"/>
+<meta content="Raj Social Panel - Premium Social Boosting Services" name="twitter:title"/>
+<meta content="Instant Delivery &amp; Premium Quality Social Media Services." name="twitter:description"/>
+<meta content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0" name="twitter:image"/>
 
-  <!-- Open Graph Meta Tags -->
-  <meta content="website" property="og:type"/>
-  <meta content="https://raj-panel.github.io/Smm-Panel.com/" property="og:url"/>
-  <meta content="Raj Social Panel - Premium Social Boosting Services" property="og:title"/>
-  <meta content="Get instant Followers, Likes, Views for Instagram and Facebook at lowest prices!" property="og:description"/>
-  <meta content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0" property="og:image"/>
-  <meta content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0" property="og:image:secure_url"/>
-  <meta content="image/png" property="og:image:type"/>
-  <meta content="1200" property="og:image:width"/>
-  <meta content="630" property="og:image:height"/>
-  
-  <!-- Twitter Card Meta Tags -->
-  <meta content="summary_large_image" name="twitter:card"/>
-  <meta content="https://raj-panel.github.io/Smm-Panel.com/" name="twitter:url"/>
-  <meta content="Raj Social Panel - Premium Social Boosting Services" name="twitter:title"/>
-  <meta content="Instant Delivery &amp; Premium Quality Social Media Services." name="twitter:description"/>
-  <meta content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0" name="twitter:image"/>
+<style>
+  /* Modern Styling for Heading Text */
+  .panel-heading {
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 28px !important;
+    font-weight: 800 !important;
+    font-style: italic !important;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin: 15px 0 20px 0;
+    filter: drop-shadow(0px 2px 8px rgba(168, 85, 247, 0.4));
+  }
+
+  /* Install App Container */
+  #installContainer {
+    text-align: center;
+    margin: 40px 0 30px 0;
+    transition: all 0.3s ease-in-out;
+  }
+  .install-btn {
+    box-shadow: 0 0 20px rgba(0, 150, 255, 0.8), 0 0 40px rgba(138, 43, 226, 0.6);
+    transition: all 0.3s ease-in-out;
+  }
+  .install-btn:hover {
+    box-shadow: 0 0 30px rgba(0, 150, 255, 1), 0 0 50px rgba(138, 43, 226, 0.9);
+    transform: translateY(-2px);
+  }
+</style>
 </head>
 <body>
-
 <div class="main-wrapper" id="mainHomeView">
-  <!-- Header Title -->
-  <div class="panel-heading">𝑹𝑨𝑱-𝑺𝑶𝑪𝑰𝑨𝑳-𝑷𝑨𝑵𝑬𝑳</div>
+  <!-- Header -->
+  <div class="panel-heading">𝑹𝑨𝑱-𝑺𝑶𝑪𝑰𝑨𝑳-𝑷𝑨𝑵𝑬𝑳
+</div>
 
   <!-- Support Buttons Header -->
   <div class="hero-actions">
@@ -114,18 +139,18 @@
 </div>
 
 <!-- ============================================== -->
-<!-- PAYMENT / CHECKOUT PAGE OVERLAY (Full Screen Drawer) -->
+<!-- NEW PAYMENT / CHECKOUT PAGE OVERLAY (Full Screen Drawer) -->
 <!-- ============================================== -->
 <div id="checkoutPage" class="checkout-page-overlay hidden">
   <div class="checkout-content">
     
-    <!-- Top Navigation Bar -->
+    <!-- Top Bar with Back Button -->
     <div class="checkout-nav">
       <button class="back-btn" onclick="closeCheckout()"><i class="fa-solid fa-arrow-left"></i> Back</button>
       <div class="checkout-heading-text">Checkout</div>
     </div>
 
-    <!-- Premium Service Summary Card -->
+    <!-- Premium Service Card -->
     <div class="premium-service-card">
       <div class="card-top-row">
         <div class="platform-badge-icon" id="checkoutPlatformIcon">
@@ -151,7 +176,7 @@
       <input type="text" id="checkoutLinkInput" placeholder="https://instagram.com/your_username" />
     </div>
 
-    <!-- Order Summary Breakdown -->
+    <!-- Order Summary -->
     <div class="checkout-order-summary">
       <div class="summary-title">Order Summary</div>
       <div class="summary-row">
@@ -165,7 +190,7 @@
       </div>
     </div>
 
-    <!-- Payment Switcher Tabs -->
+    <!-- Payment Tabs -->
     <div class="pay-toggle-tabs">
       <button class="pay-tab active" id="btnTabUpi" onclick="switchCheckoutPayment('upi')">
         <i class="fa-solid fa-qrcode"></i> UPI QR Code
@@ -175,7 +200,7 @@
       </button>
     </div>
 
-    <!-- UPI Payment View Container -->
+    <!-- UPI Payment Container -->
     <div id="checkoutUpiView" class="payment-view-box">
       <div class="scan-title">SCAN TO PAY VIA UPI (Default Selected)</div>
       <div class="qr-wrapper">
@@ -184,21 +209,21 @@
       </div>
       <p class="qr-sub">Scan or enter payment detail into any UPI App</p>
       <div class="upi-icons-row">
-        <span class="upi-chip paytm">Paytm</span>
-        <span class="upi-chip gpay">GPay</span>
-        <span class="upi-chip phonepe">PhonePe</span>
+        <span class="upi-chip">Paytm</span>
+        <span class="upi-chip">GPay</span>
+        <span class="upi-chip">PhonePe</span>
         <span class="upi-chip">Other UPI</span>
       </div>
     </div>
 
-    <!-- Binance Payment View Container -->
+    <!-- Binance Payment Container -->
     <div id="checkoutBinanceView" class="payment-view-box hidden">
       <div class="scan-title">SCAN TO PAY VIA BINANCE</div>
       <div class="qr-wrapper">
         <img src="binance-qr.png" alt="Binance QR Code" />
       </div>
       <div class="binance-nick-box">
-        Binance Nickname: <strong style="color: #ca8a04;">Alex-Sahil786</strong>
+        Binance Nickname: <strong style="color: #facc15;">Alex-Sahil786</strong>
       </div>
       <div class="usdt-badge-box">
         <span id="checkoutUsdtAmount">$0.00 USDT</span>
@@ -211,12 +236,12 @@
       <input type="text" id="checkoutTxnId" placeholder="Enter Transaction ID / UTR(e.g. 123456789012)" />
     </div>
 
-    <!-- Important Notice Box -->
+    <!-- Notice Box -->
     <div class="notice-yellow-box">
       <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
     </div>
 
-    <!-- WhatsApp Submit Action -->
+    <!-- WhatsApp Submit Button -->
     <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
       <i class="fa-brands fa-whatsapp"></i> Confirm your order
     </button>
@@ -226,7 +251,7 @@
 
 <script src="script.js"></script>
 
-<!-- Hide Install Box on Form Field Focus -->
+<!-- Custom Script to Hide Install App on Input Focus -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     document.body.addEventListener("focusin", function (e) {
@@ -245,7 +270,7 @@
   });
 </script>
 
-<!-- Service Worker Registration -->
+<!-- Service Worker Registration for PWA -->
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {

@@ -661,7 +661,7 @@ function showCheckoutOverlay() {
             #checkoutPage .input-box { margin-bottom: 4px !important; }
             #checkoutPage input { padding: 4px 8px !important; font-size: 11px !important; height: 32px !important; }
             #checkoutUpiView { padding: 4px !important; margin-bottom: 4px !important; text-align: center; }
-            #checkoutUpiView img { width: 110px !important; height: 110px !important; margin: 2px auto !important; }
+            #checkoutUpiView img { width: 180px !important; height: 180px !important; margin: 2px auto !important; }
             #checkoutPage .payment-tabs { margin-bottom: 4px !important; }
             #checkoutPage .submit-btn { padding: 6px !important; height: 36px !important; font-size: 12px !important; margin-top: 2px !important; }
             #checkoutPage p, #checkoutPage label { margin-bottom: 2px !important; font-size: 10px !important; }

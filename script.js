@@ -532,7 +532,6 @@ function updateCheckoutQuantityDisplay() {
         qrImg.style.height = "180px";
     }
 
-    // Pay via UPI App button code removed / hidden as requested
     const payViaUpiBtn = document.getElementById("payViaUpiAppBtn");
     if (payViaUpiBtn) {
         payViaUpiBtn.style.display = "none";
@@ -549,8 +548,26 @@ function changeCheckoutMultiplier(delta) {
     updateCheckoutQuantityDisplay();
 }
 
+// Single-page Modal Element Hata Diya Gaya hai aur Direct Redirection Enable kiya gaya hai
 function showCheckoutOverlay() {
     const d = currentCheckoutData;
+
+    // Check if separate HTML page element exists. If not, redirect to checkout.html
+    const checkoutPage = document.getElementById("checkoutPage");
+
+    if (!checkoutPage) {
+        const queryParams = new URLSearchParams({
+            platform: d.platform,
+            service: d.serviceName,
+            package: d.packageName,
+            quantity: d.quantity,
+            price: d.price,
+            badge: d.badge
+        }).toString();
+
+        window.location.href = `checkout.html?${queryParams}`;
+        return;
+    }
 
     history.pushState({ checkoutOpen: true }, "");
 
@@ -593,7 +610,6 @@ function showCheckoutOverlay() {
         priceParent.appendChild(counterContainer);
     }
 
-    // Dynamic payViaUpiAppBtn injection removed so button won't appear
     const payViaUpiBtn = document.getElementById("payViaUpiAppBtn");
     if (payViaUpiBtn) {
         payViaUpiBtn.style.display = "none";
@@ -632,7 +648,6 @@ function showCheckoutOverlay() {
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
 
-    // CSS Styling to keep Paytm, GPay, PhonePe, Other UPI visible while hiding unwanted elements
     if (!document.getElementById("ultraCompactCss")) {
         const style = document.createElement("style");
         style.id = "ultraCompactCss";
@@ -648,16 +663,13 @@ function showCheckoutOverlay() {
             #checkoutPage p, #checkoutPage label { margin-bottom: 2px !important; font-size: 10px !important; }
             .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 4px 8px !important; font-size: 9.5px !important; margin-bottom: 4px !important; }
             
-            /* Hide Pay via UPI button element if present in HTML */
             #payViaUpiAppBtn { display: none !important; }
 
-            /* Keeping Paytm, GPay, PhonePe, Other UPI fully visible */
             .pay-apps-icons, [class*="paytm"], [class*="gpay"], [class*="phonepe"] { display: flex !important; }
         `;
         document.head.appendChild(style);
     }
 
-    const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage) {
         checkoutPage.classList.remove("hidden");
         checkoutPage.style.display = "block";

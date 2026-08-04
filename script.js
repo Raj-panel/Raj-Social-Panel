@@ -142,7 +142,6 @@ window.onload = function () {
     switchPlatform("instagram");
 };
 
-// Back button handles closing checkout
 window.addEventListener('popstate', function (event) {
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage && checkoutPage.style.display === "block") {
@@ -354,7 +353,7 @@ function extractQuantity(name) {
 }
 
 // =====================================================
-// 🎯 DYNAMIC LINK LABEL & PLACEHOLDER RULES
+// DYNAMIC LINK LABEL & PLACEHOLDER RULES
 // =====================================================
 
 function getLinkConfig(platform, category) {
@@ -399,7 +398,7 @@ function getLinkConfig(platform, category) {
 }
 
 // =====================================================
-// 🔥 DYNAMIC PRICE DEDUCTION ENGINE
+// DYNAMIC PRICE DEDUCTION ENGINE
 // =====================================================
 
 function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUnitQty, baseUnitPrice) {
@@ -446,7 +445,7 @@ function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUni
 }
 
 // ==========================================
-// 🚀 CHECKOUT & QUANTITY COUNTER LOGIC
+// CHECKOUT & QUANTITY COUNTER LOGIC
 // ==========================================
 
 function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge) {
@@ -470,7 +469,7 @@ function openCheckoutFromCustom() {
     const qty = parseFloat(qtyInput ? qtyInput.value : 0);
 
     if (!qty || qty < 100) {
-        alert("⚠️ Minimum order quantity is 100! (কমপক্ষে ১০০টি অর্ডার করতে হবে)");
+        alert("Minimum order quantity is 100!");
         return;
     }
 
@@ -524,7 +523,6 @@ function updateCheckoutQuantityDisplay() {
     const upiId = "akibur.s@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR`;
     
-    // কিউআর কোড সাইজ এবং গ্যাপ (margin=20) নিশ্চিত করা হলো যাতে ডাউনলোড/স্ক্যানে সমস্যা না হয়
     const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=20&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
@@ -599,7 +597,7 @@ function showCheckoutOverlay() {
     if (viewUpi && !document.getElementById("payViaUpiAppBtn")) {
         const directPayBtn = document.createElement("a");
         directPayBtn.id = "payViaUpiAppBtn";
-        directPayBtn.innerText = "📲 Click Here to Pay via UPI App";
+        directPayBtn.innerText = "Click Here to Pay via UPI App";
         directPayBtn.style.cssText = `
             display: flex;
             align-items: center;
@@ -625,11 +623,11 @@ function showCheckoutOverlay() {
     const priceCard = priceEl ? priceEl.parentElement : null;
     if (priceCard) {
         const subSpans = priceCard.querySelectorAll("span");
-        subSpans.forEach(s => {
+        subSpans.querySelectorAll ? subSpans.forEach(s => {
             if (s.id !== "checkoutPriceText" && s.id !== "checkoutQtyCount") {
                 s.innerText = "You Pay";
             }
-        });
+        }) : null;
     }
 
     const allSummaryElements = document.querySelectorAll(".order-summary-box, #orderSummaryBox, [class*='summary']");
@@ -652,7 +650,7 @@ function showCheckoutOverlay() {
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
 
-    // 🚀 কিউআর কোডের নিচের অংশটি চিরতরে কোডিং থেকে লুকানোর এবং ডিজাইন ঠিক রাখার CSS
+    // CSS Styling to keep Paytm, GPay, PhonePe, Other UPI visible while hiding only unwanted boxes if needed
     if (!document.getElementById("ultraCompactCss")) {
         const style = document.createElement("style");
         style.id = "ultraCompactCss";
@@ -667,19 +665,9 @@ function showCheckoutOverlay() {
             #checkoutPage .submit-btn { padding: 6px !important; height: 36px !important; font-size: 12px !important; margin-top: 2px !important; }
             #checkoutPage p, #checkoutPage label { margin-bottom: 2px !important; font-size: 10px !important; }
             .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 4px 8px !important; font-size: 9.5px !important; margin-bottom: 4px !important; }
-            .pay-apps-icons, [class*="paytm"], [class*="gpay"] { display: none !important; }
             
-            /* 🔥 কিউআর কোডের নিচে থাকা PAY via UPI এবং বর্ডার সমেত সমস্ত অংশ পার্মানেন্টলি হাইড করা হলো */
-            #checkoutUpiView div:has(> img#checkoutQrImg) ~ div {
-                display: none !important;
-            }
-            #checkoutUpiView .scan-title,
-            #checkoutUpiView [class*="scan"],
-            #checkoutUpiView [class*="upi-title"],
-            #checkoutUpiView div[style*="border"],
-            #checkoutUpiView div[class*="border"] {
-                display: none !important;
-            }
+            /* Keeping Paytm, GPay, PhonePe, Other UPI fully visible as requested */
+            .pay-apps-icons, [class*="paytm"], [class*="gpay"], [class*="phonepe"] { display: flex !important; }
         `;
         document.head.appendChild(style);
     }
@@ -749,15 +737,15 @@ function submitOrderToWhatsApp() {
 
     const d = currentCheckoutData;
 
-    const message = `🚀 *NEW ORDER SUBMITTED* 🚀\n\n` +
-        `📌 *Social Media:* ${d.platform}\n` +
-        `🛠️ *Service Name:* ${d.serviceName}\n` +
-        `📦 *Package:* ${d.packageName}\n` +
-        `🔢 *Total Quantity:* ${d.quantity.toLocaleString()}\n` +
-        `💰 *Total Price:* ₹${d.price.toFixed(2)}\n` +
-        `🔗 *Target Link:* ${link}\n` +
-        `💳 *Payment Method:* ${payMethod}\n` +
-        `🧾 *Transaction ID / UTR:* ${txnId}`;
+    const message = `NEW ORDER SUBMITTED\n\n` +
+        `Social Media: ${d.platform}\n` +
+        `Service Name: ${d.serviceName}\n` +
+        `Package: ${d.packageName}\n` +
+        `Total Quantity: ${d.quantity.toLocaleString()}\n` +
+        `Total Price: ₹${d.price.toFixed(2)}\n` +
+        `Target Link: ${link}\n` +
+        `Payment Method: ${payMethod}\n` +
+        `Transaction ID / UTR: ${txnId}`;
 
     window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
 }

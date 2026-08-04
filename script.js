@@ -524,13 +524,14 @@ function updateCheckoutQuantityDisplay() {
     const upiId = "akibur.s@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR`;
     
-    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=10&data=${encodeURIComponent(upiUrl)}`;
+    // কিউআর কোড সাইজ এবং গ্যাপ (margin=20) নিশ্চিত করা হলো যাতে ডাউনলোড/স্ক্যানে সমস্যা না হয়
+    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=20&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
         qrImg.src = qrImageSrc;
-        qrImg.style.width = "110px";
-        qrImg.style.height = "110px";
+        qrImg.style.width = "180px";
+        qrImg.style.height = "180px";
     }
 
     const payViaUpiBtn = document.getElementById("payViaUpiAppBtn");
@@ -651,7 +652,7 @@ function showCheckoutOverlay() {
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
 
-    // Mobile Ultra-Compact Layout & QR Text Hiding Style
+    // 🚀 কিউআর কোডের নিচের অংশটি চিরতরে কোডিং থেকে লুকানোর এবং ডিজাইন ঠিক রাখার CSS
     if (!document.getElementById("ultraCompactCss")) {
         const style = document.createElement("style");
         style.id = "ultraCompactCss";
@@ -661,21 +662,22 @@ function showCheckoutOverlay() {
             #checkoutPage .input-box { margin-bottom: 4px !important; }
             #checkoutPage input { padding: 4px 8px !important; font-size: 11px !important; height: 32px !important; }
             #checkoutUpiView { padding: 4px !important; margin-bottom: 4px !important; text-align: center; }
-            #checkoutUpiView img { width: 180px !important; height: 180px !important; margin: 2px auto !important; }
+            #checkoutUpiView img { width: 180px !important; height: 180px !important; margin: 6px auto !important; background: #fff; padding: 6px; border-radius: 8px; }
             #checkoutPage .payment-tabs { margin-bottom: 4px !important; }
             #checkoutPage .submit-btn { padding: 6px !important; height: 36px !important; font-size: 12px !important; margin-top: 2px !important; }
             #checkoutPage p, #checkoutPage label { margin-bottom: 2px !important; font-size: 10px !important; }
             .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 4px 8px !important; font-size: 9.5px !important; margin-bottom: 4px !important; }
             .pay-apps-icons, [class*="paytm"], [class*="gpay"] { display: none !important; }
             
-            /* 🔥 কিউআর কোডের উপরের SCAN to PAY via UPI এবং নিচের PAY via UPI লেখা দুটো নিখুঁতভাবে হাইড করার কোড */
-            #checkoutUpiView div:has(> img#checkoutQrImg) + div,
-            #checkoutUpiView > div:first-child:has(> img#checkoutQrImg) ~ div {
+            /* 🔥 কিউআর কোডের নিচে থাকা PAY via UPI এবং বর্ডার সমেত সমস্ত অংশ পার্মানেন্টলি হাইড করা হলো */
+            #checkoutUpiView div:has(> img#checkoutQrImg) ~ div {
                 display: none !important;
             }
             #checkoutUpiView .scan-title,
             #checkoutUpiView [class*="scan"],
-            #checkoutUpiView [class*="upi-title"] {
+            #checkoutUpiView [class*="upi-title"],
+            #checkoutUpiView div[style*="border"],
+            #checkoutUpiView div[class*="border"] {
                 display: none !important;
             }
         `;

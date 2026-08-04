@@ -4,9 +4,9 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Social Boost Panel</title>
-<!-- Google Font for Custom Modern Design -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&display=swap" rel="stylesheet"/>
-<!-- PWA / Web App Manifest & Theme -->
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:ital,wght@1,800&display=swap" rel="stylesheet"/>
+<!-- PWA & Theme Meta -->
 <link href="manifest.json" rel="manifest"/>
 <meta content="#0f172a" name="theme-color"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
@@ -29,7 +29,7 @@
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="https://raj-panel.github.io/Smm-Panel.com/" name="twitter:url"/>
 <meta content="Raj Social Panel - Premium Social Boosting Services" name="twitter:title"/>
-<meta content="Instant Delivery &amp; Premium Quality Social Media Services." name="twitter:description"/>
+<meta content="Instant Delivery & Premium Quality Social Media Services." name="twitter:description"/>
 <meta content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0" name="twitter:image"/>
 
 <style>
@@ -68,8 +68,7 @@
 <body>
 <div class="main-wrapper" id="mainHomeView">
   <!-- Header -->
-  <div class="panel-heading">𝑹𝑨𝑱-𝑺𝑶𝑪𝑰𝑨𝑳-𝑷𝑨𝑵𝑬𝑳
-</div>
+  <div class="panel-heading">𝑹𝑨𝑱-𝑺𝑶𝑪𝑰𝑨𝑳-𝑷𝑨𝑵𝑬𝑳</div>
 
   <!-- Support Buttons Header -->
   <div class="hero-actions">
@@ -100,7 +99,7 @@
       <span class="provider-badge">#1 Service Provider</span>
     </div>
     <h2 id="heroTitle">Instagram Boost</h2>
-    <p class="hero-sub">Real engagement delivered fast &amp; safely</p>
+    <p class="hero-sub">Real engagement delivered fast & safely</p>
     <div class="hero-stats-grid">
       <div class="stat-card">
         <span class="stat-icon"><i class="fa-solid fa-rocket"></i></span>
@@ -115,7 +114,7 @@
       <div class="stat-card">
         <span class="stat-icon"><i class="fa-solid fa-shield-halved"></i></span>
         <span class="stat-num">100%</span>
-        <span class="stat-lbl">Safe &amp; Refundable</span>
+        <span class="stat-lbl">Safe & Refundable</span>
       </div>
     </div>
   </div>
@@ -139,7 +138,7 @@
 </div>
 
 <!-- ============================================== -->
-<!-- NEW PAYMENT / CHECKOUT PAGE OVERLAY (Full Screen Drawer) -->
+<!-- 100% MATCHED CHECKOUT OVERLAY (Full Screen) -->
 <!-- ============================================== -->
 <div id="checkoutPage" class="checkout-page-overlay hidden">
   <div class="checkout-content">
@@ -150,77 +149,91 @@
       <div class="checkout-heading-text">Checkout</div>
     </div>
 
-    <!-- Premium Service Card -->
+    <!-- Product Card (Glow Match) -->
     <div class="premium-service-card">
       <div class="card-top-row">
         <div class="platform-badge-icon" id="checkoutPlatformIcon">
           <i class="fa-brands fa-instagram"></i>
         </div>
         <div class="card-info">
-          <h4 id="checkoutServiceTitle">Instagram Followers</h4>
+          <h4 id="checkoutServiceTitle">Instagram - Followers</h4>
           <div class="badge-row">
-            <span class="pkg-name-badge" id="checkoutPkgBadgeName">5K Followers</span>
-            <span class="popular-badge" id="checkoutBadge">Best Value</span>
+            <span class="units-subtitle" id="checkoutUnitsText">200 Followers</span>
+            <span class="popular-badge" id="checkoutBadge">STARTER</span>
           </div>
         </div>
       </div>
-      <div class="units-text" id="checkoutUnitsText">5,000 units</div>
-      <div class="price-text">
-        ₹<span id="checkoutPriceText">199.00</span> <small>one-time</small>
+      
+      <div class="card-bottom-row">
+        <div class="package-tag-text" id="checkoutPkgBadgeName">200 Package</div>
+        <div class="price-multiplier-wrapper">
+          <div class="price-text">
+            ₹<span id="checkoutPriceText">20.00</span> <small>one-time</small>
+          </div>
+          <div class="counter-box" id="checkoutQtyCounterBox">
+            <button type="button" class="btn-qty-minus" onclick="changeCheckoutMultiplier(-1)">-</button>
+            <span id="checkoutQtyCount">1</span>
+            <button type="button" class="btn-qty-plus" onclick="changeCheckoutMultiplier(1)">+</button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Social Link Input -->
+    <!-- Profile Link Input Box -->
     <div class="checkout-input-group">
-      <label id="checkoutLinkLabel">Enter your Instagram link</label>
-      <input type="text" id="checkoutLinkInput" placeholder="https://instagram.com/your_username" />
-    </div>
-
-    <!-- Order Summary -->
-    <div class="checkout-order-summary">
-      <div class="summary-title">Order Summary</div>
-      <div class="summary-row">
-        <span>Package</span>
-        <span id="summaryPackageText">5K Followers</span>
-      </div>
-      <div class="summary-divider"></div>
-      <div class="summary-row pay-row">
-        <span>You Pay</span>
-        <span class="pay-amount">₹<span id="summaryPayAmount">199.00</span></span>
+      <label id="checkoutLinkLabel">Profile Link (Account Must be Public)</label>
+      <div class="input-with-icon">
+        <i class="fa-solid fa-link input-icon"></i>
+        <input type="text" id="checkoutLinkInput" placeholder="https://instagram.com/your_username" />
       </div>
     </div>
 
-    <!-- Payment Tabs -->
+    <!-- Payment Switch Buttons -->
     <div class="pay-toggle-tabs">
       <button class="pay-tab active" id="btnTabUpi" onclick="switchCheckoutPayment('upi')">
-        <i class="fa-solid fa-qrcode"></i> UPI QR Code
+        <i class="fa-solid fa-border-all"></i> UPI QR Code
       </button>
       <button class="pay-tab" id="btnTabBinance" onclick="switchCheckoutPayment('binance')">
         <i class="fa-solid fa-wallet"></i> Binance Pay
       </button>
     </div>
 
-    <!-- UPI Payment Container -->
+    <!-- UPI Payment View Container -->
     <div id="checkoutUpiView" class="payment-view-box">
-      <div class="scan-title">SCAN TO PAY VIA UPI (Default Selected)</div>
+      <div class="scan-title">SCAN TO PAY VIA UPI</div>
+      
       <div class="qr-wrapper">
-        <img id="checkoutQrImg" src="" alt="UPI QR Code" />
-        <a href="#" id="payViaUpiAppBtn" class="pay-app-btn"><i class="fa-solid fa-bolt"></i> PAY via UPI</a>
+        <div class="qr-border-glow">
+          <img id="checkoutQrImg" src="" alt="UPI QR Code" />
+        </div>
       </div>
+      
       <p class="qr-sub">Scan or enter payment detail into any UPI App</p>
-      <div class="upi-icons-row">
-        <span class="upi-chip">Paytm</span>
-        <span class="upi-chip">GPay</span>
-        <span class="upi-chip">PhonePe</span>
-        <span class="upi-chip">Other UPI</span>
+      
+      <!-- 4 App Direct Payment Buttons -->
+      <div class="upi-apps-grid">
+        <button type="button" class="app-btn paytm-btn" onclick="openDirectUpiApp('paytm')">
+          <span class="app-dot blue"></span> Paytm
+        </button>
+        <button type="button" class="app-btn gpay-btn" onclick="openDirectUpiApp('gpay')">
+          <span class="app-logo-g">G</span> Pay
+        </button>
+        <button type="button" class="app-btn phonepe-btn" onclick="openDirectUpiApp('phonepe')">
+          <span class="app-logo-pe">পে</span> PhonePe
+        </button>
+        <button type="button" class="app-btn other-btn" onclick="openDirectUpiApp('other')">
+          <i class="fa-solid fa-border-all"></i> Other UPI
+        </button>
       </div>
     </div>
 
-    <!-- Binance Payment Container -->
+    <!-- Binance Payment View Container -->
     <div id="checkoutBinanceView" class="payment-view-box hidden">
       <div class="scan-title">SCAN TO PAY VIA BINANCE</div>
       <div class="qr-wrapper">
-        <img src="binance-qr.png" alt="Binance QR Code" />
+        <div class="qr-border-glow">
+          <img src="binance-qr.png" alt="Binance QR Code" />
+        </div>
       </div>
       <div class="binance-nick-box">
         Binance Nickname: <strong style="color: #facc15;">Alex-Sahil786</strong>
@@ -230,18 +243,22 @@
       </div>
     </div>
 
-    <!-- Transaction ID Input -->
+    <!-- Transaction ID Input Box -->
     <div class="checkout-input-group margin-top-15">
       <label>Enter Your UTR number</label>
-      <input type="text" id="checkoutTxnId" placeholder="Enter Transaction ID / UTR(e.g. 123456789012)" />
+      <div class="input-with-icon">
+        <i class="fa-solid fa-receipt input-icon"></i>
+        <input type="text" id="checkoutTxnId" placeholder="Enter Transaction ID / UTR(e.g. 123456789012)" />
+      </div>
     </div>
 
-    <!-- Notice Box -->
+    <!-- Warning Message Box -->
     <div class="notice-yellow-box">
-      <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
+      <span class="warn-icon">⚠️</span>
+      <span>After completing payment, enter the Transaction ID / UTR and Confirm your order.</span>
     </div>
 
-    <!-- WhatsApp Submit Button -->
+    <!-- Confirm Order WhatsApp Button -->
     <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
       <i class="fa-brands fa-whatsapp"></i> Confirm your order
     </button>
@@ -251,7 +268,6 @@
 
 <script src="script.js"></script>
 
-<!-- Custom Script to Hide Install App on Input Focus -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     document.body.addEventListener("focusin", function (e) {
@@ -270,7 +286,6 @@
   });
 </script>
 
-<!-- Service Worker Registration for PWA -->
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {

@@ -1,12 +1,12 @@
 <!-- ============================================== -->
-<!-- PIXEL PERFECT CHECKOUT PAGE OVERLAY -->
+<!-- CHECKOUT PAGE OVERLAY (SECOND INTERFACE) -->
 <!-- ============================================== -->
 <div id="checkoutPage" class="checkout-page-overlay hidden">
   <div class="checkout-content">
     
     <!-- Top Navigation -->
     <div class="checkout-nav">
-      <button class="back-btn" onclick="closeCheckout()">
+      <button type="button" class="back-btn" onclick="closeCheckout()">
         <i class="fa-solid fa-arrow-left"></i> Back
       </button>
       <div class="checkout-heading-text">Checkout</div>
@@ -54,10 +54,10 @@
 
     <!-- Payment Switcher Buttons -->
     <div class="pay-method-buttons">
-      <button class="pay-method-btn upi-btn active" id="btnTabUpi" onclick="switchCheckoutPayment('upi')">
+      <button type="button" class="pay-method-btn upi-btn active" id="btnTabUpi" onclick="switchCheckoutPayment('upi')">
         <i class="fa-solid fa-qrcode"></i> UPI QR Code
       </button>
-      <button class="pay-method-btn binance-btn" id="btnTabBinance" onclick="switchCheckoutPayment('binance')">
+      <button type="button" class="pay-method-btn binance-btn" id="btnTabBinance" onclick="switchCheckoutPayment('binance')">
         <i class="fa-solid fa-wallet"></i> Binance Pay
       </button>
     </div>
@@ -72,16 +72,16 @@
       
       <!-- UPI App Deep Link Buttons -->
       <div class="upi-app-grid">
-        <button class="upi-app-btn paytm-btn" onclick="openUpiApp('paytm')">
+        <button type="button" class="upi-app-btn paytm-btn" onclick="openUpiApp('paytm')">
           <span class="paytm-text">Paytm</span>
         </button>
-        <button class="upi-app-btn gpay-btn" onclick="openUpiApp('gpay')">
+        <button type="button" class="upi-app-btn gpay-btn" onclick="openUpiApp('gpay')">
           <i class="fa-brands fa-google gpay-icon"></i> GPay
         </button>
-        <button class="upi-app-btn phonepe-btn" onclick="openUpiApp('phonepe')">
+        <button type="button" class="upi-app-btn phonepe-btn" onclick="openUpiApp('phonepe')">
           <span class="phonepe-icon">পে</span> PhonePe
         </button>
-        <button class="upi-app-btn other-upi-btn" onclick="openUpiApp('other')">
+        <button type="button" class="upi-app-btn other-upi-btn" onclick="openUpiApp('other')">
           <i class="fa-solid fa-qrcode"></i> Other UPI
         </button>
       </div>
@@ -117,7 +117,7 @@
     </div>
 
     <!-- Confirm WhatsApp Button -->
-    <button class="whatsapp-confirm-btn" onclick="submitOrderToWhatsApp()">
+    <button type="button" class="whatsapp-confirm-btn" onclick="submitOrderToWhatsApp()">
       <i class="fa-brands fa-whatsapp"></i> Confirm your order
     </button>
 

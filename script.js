@@ -532,10 +532,10 @@ function updateCheckoutQuantityDisplay() {
         qrImg.style.height = "180px";
     }
 
+    // Pay via UPI App button code removed / hidden as requested
     const payViaUpiBtn = document.getElementById("payViaUpiAppBtn");
     if (payViaUpiBtn) {
-        payViaUpiBtn.href = upiUrl;
-        payViaUpiBtn.style.display = "flex";
+        payViaUpiBtn.style.display = "none";
     }
 }
 
@@ -593,28 +593,10 @@ function showCheckoutOverlay() {
         priceParent.appendChild(counterContainer);
     }
 
-    const viewUpi = document.getElementById("checkoutUpiView");
-    if (viewUpi && !document.getElementById("payViaUpiAppBtn")) {
-        const directPayBtn = document.createElement("a");
-        directPayBtn.id = "payViaUpiAppBtn";
-        directPayBtn.innerText = "Click Here to Pay via UPI App";
-        directPayBtn.style.cssText = `
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #8b5cf6, #6366f1);
-            color: #ffffff;
-            font-weight: bold;
-            font-size: 12px;
-            padding: 8px 12px;
-            border-radius: 8px;
-            text-decoration: none;
-            margin: 4px auto 6px auto;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
-            border: 1px solid rgba(255,255,255,0.2);
-        `;
-        viewUpi.insertBefore(directPayBtn, viewUpi.firstChild);
+    // Dynamic payViaUpiAppBtn injection removed so button won't appear
+    const payViaUpiBtn = document.getElementById("payViaUpiAppBtn");
+    if (payViaUpiBtn) {
+        payViaUpiBtn.style.display = "none";
     }
 
     d.multiplier = 1;
@@ -650,7 +632,7 @@ function showCheckoutOverlay() {
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
 
-    // CSS Styling to keep Paytm, GPay, PhonePe, Other UPI visible while hiding only unwanted boxes if needed
+    // CSS Styling to keep Paytm, GPay, PhonePe, Other UPI visible while hiding unwanted elements
     if (!document.getElementById("ultraCompactCss")) {
         const style = document.createElement("style");
         style.id = "ultraCompactCss";
@@ -660,13 +642,16 @@ function showCheckoutOverlay() {
             #checkoutPage .input-box { margin-bottom: 4px !important; }
             #checkoutPage input { padding: 4px 8px !important; font-size: 11px !important; height: 32px !important; }
             #checkoutUpiView { padding: 4px !important; margin-bottom: 4px !important; text-align: center; }
-            #checkoutUpiView img { width: 180px !important; height: 180px !important; margin: 6px auto !important; background: #fff; padding: 6px; border-radius: 8px; }
+            #checkoutUpiView img { width: 160px !important; height: 160px !important; margin: 4px auto !important; background: #fff; padding: 6px; border-radius: 8px; }
             #checkoutPage .payment-tabs { margin-bottom: 4px !important; }
             #checkoutPage .submit-btn { padding: 6px !important; height: 36px !important; font-size: 12px !important; margin-top: 2px !important; }
             #checkoutPage p, #checkoutPage label { margin-bottom: 2px !important; font-size: 10px !important; }
             .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 4px 8px !important; font-size: 9.5px !important; margin-bottom: 4px !important; }
             
-            /* Keeping Paytm, GPay, PhonePe, Other UPI fully visible as requested */
+            /* Hide Pay via UPI button element if present in HTML */
+            #payViaUpiAppBtn { display: none !important; }
+
+            /* Keeping Paytm, GPay, PhonePe, Other UPI fully visible */
             .pay-apps-icons, [class*="paytm"], [class*="gpay"], [class*="phonepe"] { display: flex !important; }
         `;
         document.head.appendChild(style);

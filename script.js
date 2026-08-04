@@ -524,7 +524,6 @@ function updateCheckoutQuantityDisplay() {
     const upiId = "akibur.s@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR`;
     
-    // QR Code Size 260x260 & Margin=10 for High-Quality Scanning from Gallery
     const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=10&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
@@ -534,7 +533,6 @@ function updateCheckoutQuantityDisplay() {
         qrImg.style.height = "110px";
     }
 
-    // Direct Pay via UPI App Link
     const payViaUpiBtn = document.getElementById("payViaUpiAppBtn");
     if (payViaUpiBtn) {
         payViaUpiBtn.href = upiUrl;
@@ -596,7 +594,6 @@ function showCheckoutOverlay() {
         priceParent.appendChild(counterContainer);
     }
 
-    // Inject "Pay via UPI App" Direct Button if it doesn't exist
     const viewUpi = document.getElementById("checkoutUpiView");
     if (viewUpi && !document.getElementById("payViaUpiAppBtn")) {
         const directPayBtn = document.createElement("a");
@@ -639,7 +636,6 @@ function showCheckoutOverlay() {
         el.style.display = "none";
     });
 
-    // Dynamic Link Label & Placeholder
     const linkConfig = getLinkConfig(d.platform, d.serviceName);
     const linkLabel = document.getElementById("checkoutLinkLabel");
     const linkInput = document.getElementById("checkoutLinkInput");
@@ -655,7 +651,7 @@ function showCheckoutOverlay() {
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
 
-    // Mobile Ultra-Compact Layout Styles
+    // Mobile Ultra-Compact Layout & PAY via UPI Hide Style
     if (!document.getElementById("ultraCompactCss")) {
         const style = document.createElement("style");
         style.id = "ultraCompactCss";
@@ -671,6 +667,15 @@ function showCheckoutOverlay() {
             #checkoutPage p, #checkoutPage label { margin-bottom: 2px !important; font-size: 10px !important; }
             .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 4px 8px !important; font-size: 9.5px !important; margin-bottom: 4px !important; }
             .pay-apps-icons, [class*="paytm"], [class*="gpay"] { display: none !important; }
+            
+            /* 🔥 SCAN to PAY via UPI টেক্সট এবং তার আশপাশের বর্ডার বক্স সম্পূর্ণ হাইড করার কোড */
+            #checkoutUpiView > div:has(#checkoutQrImg) + div,
+            #checkoutUpiView .scan-title,
+            #checkoutUpiView [class*="scan"],
+            #checkoutUpiView [class*="upi-title"],
+            #checkoutUpiView > div:nth-child(2) {
+                display: none !important;
+            }
         `;
         document.head.appendChild(style);
     }

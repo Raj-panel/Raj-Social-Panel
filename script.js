@@ -145,7 +145,7 @@ window.onload = function () {
 // Back button handles closing checkout
 window.addEventListener('popstate', function (event) {
     const checkoutPage = document.getElementById("checkoutPage");
-    if (checkoutPage && checkoutPage.style.display === "block") {
+    if (checkoutPage && (checkoutPage.style.display === "block" || !checkoutPage.classList.contains("hidden"))) {
         closeCheckoutUI();
     }
 });
@@ -470,7 +470,7 @@ function openCheckoutFromCustom() {
     const qty = parseFloat(qtyInput ? qtyInput.value : 0);
 
     if (!qty || qty < 100) {
-        alert("⚠️ Minimum order quantity is 100! (কমপক্ষে ১০০টি অর্ডার করতে হবে)");
+        alert("⚠️ Minimum order quantity is 100!");
         return;
     }
 
@@ -511,10 +511,10 @@ function updateCheckoutQuantityDisplay() {
     if (qtyCountDisplay) qtyCountDisplay.innerText = d.multiplier;
 
     const unitsText = document.getElementById("checkoutUnitsText");
-    if (unitsText) unitsText.innerText = `${d.quantity.toLocaleString()} Package`;
+    if (unitsText) unitsText.innerText = `${d.quantity.toLocaleString()} Quantity`;
 
     const priceEl = document.getElementById("checkoutPriceText");
-    if (priceEl) priceEl.innerText = `${d.price.toFixed(2)}`;
+    if (priceEl) priceEl.innerText = `₹${d.price.toFixed(2)}`;
 
     if (document.getElementById("checkoutUsdtAmount")) {
         const usdt = (d.price / 88).toFixed(2);
@@ -524,21 +524,18 @@ function updateCheckoutQuantityDisplay() {
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR`;
     
-    // QR Code Size 300x300 & Margin=10 for High-Quality Scanning from Gallery
+    // QR Code Size 300x300 & Margin=10
     const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=10&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
         qrImg.src = qrImageSrc;
-        qrImg.style.width = "110px";
-        qrImg.style.height = "110px";
     }
 
     // Direct Pay via UPI App Link
     const payViaUpiBtn = document.getElementById("payViaUpiAppBtn");
     if (payViaUpiBtn) {
         payViaUpiBtn.href = upiUrl;
-        payViaUpiBtn.style.display = "flex";
     }
 }
 
@@ -573,72 +570,6 @@ function showCheckoutOverlay() {
     if (document.getElementById("checkoutBadge"))
         document.getElementById("checkoutBadge").innerText = d.badge;
 
-    let counterContainer = document.getElementById("checkoutQtyCounterBox");
-    const priceEl = document.getElementById("checkoutPriceText");
-    const priceParent = priceEl ? priceEl.parentElement : null;
-
-    if (!counterContainer && priceParent) {
-        counterContainer = document.createElement("div");
-        counterContainer.id = "checkoutQtyCounterBox";
-        counterContainer.style.cssText = "display: flex; align-items: center; background: rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 1px 4px; gap: 6px; margin-left: auto;";
-        
-        counterContainer.innerHTML = `
-            <button type="button" onclick="changeCheckoutMultiplier(-1)" style="background: rgba(255, 255, 255, 0.15); color: #fff; border: none; width: 24px; height: 24px; border-radius: 4px; font-weight: bold; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center;">-</button>
-            <span id="checkoutQtyCount" style="color: #fff; font-weight: bold; font-size: 13px; min-width: 14px; text-align: center;">1</span>
-            <button type="button" onclick="changeCheckoutMultiplier(1)" style="background: rgba(255, 255, 255, 0.15); color: #fff; border: none; width: 24px; height: 24px; border-radius: 4px; font-weight: bold; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
-        `;
-
-        if (priceParent.style) {
-            priceParent.style.display = "flex";
-            priceParent.style.alignItems = "center";
-            priceParent.style.justifyContent = "space-between";
-        }
-        priceParent.appendChild(counterContainer);
-    }
-
-    // Inject "Pay via UPI App" Direct Button if it doesn't exist
-    const viewUpi = document.getElementById("checkoutUpiView");
-    if (viewUpi && !document.getElementById("payViaUpiAppBtn")) {
-        const directPayBtn = document.createElement("a");
-        directPayBtn.id = "payViaUpiAppBtn";
-        directPayBtn.innerText = "📲 Click Here to Pay via UPI App";
-        directPayBtn.style.cssText = `
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #8b5cf6, #6366f1);
-            color: #ffffff;
-            font-weight: bold;
-            font-size: 12px;
-            padding: 8px 12px;
-            border-radius: 8px;
-            text-decoration: none;
-            margin: 4px auto 6px auto;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
-            border: 1px solid rgba(255,255,255,0.2);
-        `;
-        viewUpi.insertBefore(directPayBtn, viewUpi.firstChild);
-    }
-
-    d.multiplier = 1;
-    updateCheckoutQuantityDisplay();
-
-    const priceCard = priceEl ? priceEl.parentElement : null;
-    if (priceCard) {
-        const subSpans = priceCard.querySelectorAll("span");
-        subSpans.forEach(s => {
-            if (s.id !== "checkoutPriceText" && s.id !== "checkoutQtyCount") {
-                s.innerText = "You Pay";
-            }
-        });
-    }
-
-    const allSummaryElements = document.querySelectorAll(".order-summary-box, #orderSummaryBox, [class*='summary']");
-    allSummaryElements.forEach(el => {
-        el.style.display = "none";
-    });
-
     // Dynamic Link Label & Placeholder
     const linkConfig = getLinkConfig(d.platform, d.serviceName);
     const linkLabel = document.getElementById("checkoutLinkLabel");
@@ -655,25 +586,8 @@ function showCheckoutOverlay() {
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
 
-    // Mobile Ultra-Compact Layout Styles
-    if (!document.getElementById("ultraCompactCss")) {
-        const style = document.createElement("style");
-        style.id = "ultraCompactCss";
-        style.innerHTML = `
-            #checkoutPage { padding: 4px 10px !important; max-width: 480px; margin: 0 auto; }
-            #checkoutPage .checkout-card { margin-bottom: 4px !important; padding: 6px 10px !important; }
-            #checkoutPage .input-box { margin-bottom: 4px !important; }
-            #checkoutPage input { padding: 4px 8px !important; font-size: 11px !important; height: 32px !important; }
-            #checkoutUpiView { padding: 4px !important; margin-bottom: 4px !important; text-align: center; }
-            #checkoutUpiView img { width: 110px !important; height: 110px !important; margin: 2px auto !important; }
-            #checkoutPage .payment-tabs { margin-bottom: 4px !important; }
-            #checkoutPage .submit-btn { padding: 6px !important; height: 36px !important; font-size: 12px !important; margin-top: 2px !important; }
-            #checkoutPage p, #checkoutPage label { margin-bottom: 2px !important; font-size: 10px !important; }
-            .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 4px 8px !important; font-size: 9.5px !important; margin-bottom: 4px !important; }
-            .pay-apps-icons, [class*="paytm"], [class*="gpay"] { display: none !important; }
-        `;
-        document.head.appendChild(style);
-    }
+    d.multiplier = 1;
+    updateCheckoutQuantityDisplay();
 
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage) {
@@ -717,6 +631,15 @@ function switchCheckoutPayment(type) {
     }
 }
 
+function triggerDirectUpi(app) {
+    const d = currentCheckoutData;
+    const upiId = "saheb.68@ptyes";
+    const amount = d.price ? d.price.toFixed(2) : "0.00";
+    const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${amount}&cu=INR`;
+
+    window.location.href = upiUrl;
+}
+
 function submitOrderToWhatsApp() {
     const linkInput = document.getElementById("checkoutLinkInput");
     const txnInput = document.getElementById("checkoutTxnId");
@@ -735,7 +658,7 @@ function submitOrderToWhatsApp() {
     }
 
     const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
-    const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
+    const payMethod = isUpi ? "UPI QR Code / App" : "Binance Pay";
     const whatsappNumber = "919239628344";
 
     const d = currentCheckoutData;

@@ -68,8 +68,7 @@
 <body>
 <div class="main-wrapper" id="mainHomeView">
   <!-- Header -->
-  <div class="panel-heading">𝑹𝑨𝑱-𝑺𝑶𝑪𝑰𝑨𝑳-𝑷𝑨𝑵𝑬𝑳
-</div>
+  <div class="panel-heading">𝑹𝑨𝑱-𝑺𝑶𝑪𝑰𝑨𝑳-𝑷𝑨𝑵𝑬𝑳</div>
 
   <!-- Support Buttons Header -->
   <div class="hero-actions">
@@ -139,7 +138,7 @@
 </div>
 
 <!-- ============================================== -->
-<!-- NEW PAYMENT / CHECKOUT PAGE OVERLAY (Full Screen Drawer) -->
+<!-- NEW PREMIUM WHITE CHECKOUT PAGE OVERLAY -->
 <!-- ============================================== -->
 <div id="checkoutPage" class="checkout-page-overlay hidden">
   <div class="checkout-content">
@@ -150,7 +149,7 @@
       <div class="checkout-heading-text">Checkout</div>
     </div>
 
-    <!-- Premium Service Card -->
+    <!-- Premium Service Card (Gradient & White UI) -->
     <div class="premium-service-card">
       <div class="card-top-row">
         <div class="platform-badge-icon" id="checkoutPlatformIcon">
@@ -164,29 +163,19 @@
           </div>
         </div>
       </div>
-      <div class="units-text" id="checkoutUnitsText">5,000 units</div>
+
+      <div class="card-middle-row">
+        <div class="units-text" id="checkoutUnitsText">5,000 Package</div>
+        <!-- Quantity Increment/Decrement Buttons -->
+        <div class="qty-counter-wrapper">
+          <button type="button" class="qty-btn" onclick="changeCheckoutMultiplier(-1)">-</button>
+          <span id="checkoutQtyCount" class="qty-count-val">1</span>
+          <button type="button" class="qty-btn" onclick="changeCheckoutMultiplier(1)">+</button>
+        </div>
+      </div>
+
       <div class="price-text">
-        ₹<span id="checkoutPriceText">199.00</span> <small>one-time</small>
-      </div>
-    </div>
-
-    <!-- Social Link Input -->
-    <div class="checkout-input-group">
-      <label id="checkoutLinkLabel">Enter your Instagram link</label>
-      <input type="text" id="checkoutLinkInput" placeholder="https://instagram.com/your_username" />
-    </div>
-
-    <!-- Order Summary -->
-    <div class="checkout-order-summary">
-      <div class="summary-title">Order Summary</div>
-      <div class="summary-row">
-        <span>Package</span>
-        <span id="summaryPackageText">5K Followers</span>
-      </div>
-      <div class="summary-divider"></div>
-      <div class="summary-row pay-row">
-        <span>You Pay</span>
-        <span class="pay-amount">₹<span id="summaryPayAmount">199.00</span></span>
+        <span class="you-pay-label">You Pay:</span> ₹<span id="checkoutPriceText">199.00</span>
       </div>
     </div>
 
@@ -202,48 +191,76 @@
 
     <!-- UPI Payment Container -->
     <div id="checkoutUpiView" class="payment-view-box">
-      <div class="scan-title">SCAN TO PAY VIA UPI (Default Selected)</div>
-      <div class="qr-wrapper">
-        <img id="checkoutQrImg" src="" alt="UPI QR Code" />
-        <a href="#" id="payViaUpiAppBtn" class="pay-app-btn"><i class="fa-solid fa-bolt"></i> PAY via UPI</a>
+      <div class="scan-title">SCAN QR CODE TO PAY</div>
+      <div class="qr-card-container">
+        <div class="qr-wrapper">
+          <img id="checkoutQrImg" src="" alt="UPI QR Code" />
+        </div>
       </div>
-      <p class="qr-sub">Scan or enter payment detail into any UPI App</p>
-      <div class="upi-icons-row">
-        <span class="upi-chip">Paytm</span>
-        <span class="upi-chip">GPay</span>
-        <span class="upi-chip">PhonePe</span>
-        <span class="upi-chip">Other UPI</span>
+      <p class="qr-sub">Scan using any UPI App or click below</p>
+      
+      <!-- Premium UPI App Direct Buttons -->
+      <div class="upi-apps-grid">
+        <a href="#" id="upiPaytmBtn" onclick="payViaApp('paytm')" class="upi-app-btn paytm-btn">
+          <i class="fa-solid fa-bolt"></i> Paytm
+        </a>
+        <a href="#" id="upiGpayBtn" onclick="payViaApp('gpay')" class="upi-app-btn gpay-btn">
+          <i class="fa-brands fa-google-pay"></i> Google Pay
+        </a>
+        <a href="#" id="upiPhonepeBtn" onclick="payViaApp('phonepe')" class="upi-app-btn phonepe-btn">
+          <i class="fa-solid fa-mobile-screen-button"></i> PhonePe
+        </a>
+        <a href="#" id="upiOtherBtn" onclick="payViaApp('other')" class="upi-app-btn other-btn">
+          <i class="fa-solid fa-wallet"></i> Other UPI
+        </a>
       </div>
     </div>
 
     <!-- Binance Payment Container -->
     <div id="checkoutBinanceView" class="payment-view-box hidden">
-      <div class="scan-title">SCAN TO PAY VIA BINANCE</div>
-      <div class="qr-wrapper">
-        <img src="binance-qr.png" alt="Binance QR Code" />
+      <div class="scan-title">PAY VIA BINANCE PAY</div>
+      <div class="qr-card-container">
+        <div class="qr-wrapper">
+          <img src="binance-qr.png" alt="Binance QR Code" />
+        </div>
       </div>
       <div class="binance-nick-box">
-        Binance Nickname: <strong style="color: #facc15;">Alex-Sahil786</strong>
+        Binance Nickname: <strong>Alex-Sahil786</strong>
       </div>
       <div class="usdt-badge-box">
         <span id="checkoutUsdtAmount">$0.00 USDT</span>
       </div>
     </div>
 
-    <!-- Transaction ID Input -->
+    <!-- Input Box: Profile Link -->
     <div class="checkout-input-group margin-top-15">
-      <label>Enter Your UTR number</label>
-      <input type="text" id="checkoutTxnId" placeholder="Enter Transaction ID / UTR(e.g. 123456789012)" />
+      <label id="checkoutLinkLabel">Profile Link (Account Must be Public)</label>
+      <div class="input-with-icon">
+        <i class="fa-solid fa-link input-icon"></i>
+        <input type="text" id="checkoutLinkInput" placeholder="https://instagram.com/your_username" />
+      </div>
     </div>
 
-    <!-- Notice Box -->
-    <div class="notice-yellow-box">
-      <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
+    <!-- Input Box: UTR Number -->
+    <div class="checkout-input-group margin-top-15">
+      <label>Enter UTR / Transaction ID</label>
+      <div class="input-with-icon">
+        <i class="fa-solid fa-receipt input-icon"></i>
+        <input type="text" id="checkoutTxnId" placeholder="Enter 12-digit UTR / Transaction ID" />
+      </div>
+    </div>
+
+    <!-- Warning Box -->
+    <div class="notice-orange-box">
+      <i class="fa-solid fa-triangle-exclamation warning-icon"></i>
+      <div>
+        <strong>Warning:</strong> After completing the payment, enter the 12-digit UTR/Transaction ID above and click Confirm Order.
+      </div>
     </div>
 
     <!-- WhatsApp Submit Button -->
     <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
-      <i class="fa-brands fa-whatsapp"></i> Confirm your order
+      <i class="fa-brands fa-whatsapp"></i> Confirm Order
     </button>
 
   </div>

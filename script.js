@@ -521,10 +521,10 @@ function updateCheckoutQuantityDisplay() {
         document.getElementById("checkoutUsdtAmount").innerText = `$${usdt} USDT`;
     }
 
-    const upiId = "saheb.68@ptyes";
+    const upiId = "akibur.s@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR`;
     
-    // QR Code Size 300x300 & Margin=10 for High-Quality Scanning from Gallery
+    // QR Code Size 400x400 & Margin=10 for High-Quality Scanning from Gallery
     const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=10&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");

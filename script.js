@@ -209,7 +209,6 @@ function renderPackages() {
         if (pkg.type === "custom") {
             const customDiv = document.createElement("div");
             customDiv.className = "custom-card";
-            customDiv.style.cssText = "background: #fff; border-radius: 16px; padding: 14px; border: 1.5px solid #f0abfc; box-shadow: 0 4px 12px rgba(240, 171, 252, 0.1); margin-bottom: 10px;";
 
             customDiv.innerHTML = `
                 <div style="margin-bottom: 8px;">
@@ -225,7 +224,7 @@ function renderPackages() {
                     <input
                         type="number"
                         id="customQtyInput"
-                        placeholder="Enter Quantity (e.g. 1000)"
+                        placeholder="Min 100 (e.g. 1000)"
                         min="1"
                         style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 13px; outline: none;"
                         oninput="calculateCustomPrice('${pkg.name}', ${pkg.pricePer1000 || 0}, ${pkg.providerId || "null"})"
@@ -233,7 +232,7 @@ function renderPackages() {
                 </div>
 
                 <div style="font-size: 13px; font-weight: 800; color: #16a34a; margin-bottom: 10px;" id="customPriceDisplay">
-                    Total Price: ₹<span id="customCalcPrice">0.00</span> INR
+                    Total: ₹<span id="customCalcPrice">0.00</span> INR
                 </div>
 
                 <button class="action-btn" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; border: none; border-radius: 12px; font-weight: 800; font-size: 13px; cursor: pointer; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);" onclick="openCheckoutFromCustom()">
@@ -326,7 +325,7 @@ function extractQuantity(name) {
 }
 
 // =====================================================
-// 🎯 DYNAMIC LINK LABEL & PLACEHOLDER RULES
+// DYNAMIC LINK LABEL & PLACEHOLDER RULES
 // =====================================================
 function getLinkConfig(platform, category) {
     const p = (platform || "").toLowerCase();
@@ -370,7 +369,7 @@ function getLinkConfig(platform, category) {
 }
 
 // =====================================================
-// 🔥 DYNAMIC PRICE DEDUCTION ENGINE
+// DYNAMIC PRICE DEDUCTION ENGINE
 // =====================================================
 function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUnitQty, baseUnitPrice) {
     const platformData = serviceData[platformKey.toLowerCase()];
@@ -416,7 +415,7 @@ function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUni
 }
 
 // ==========================================
-// 🚀 CHECKOUT & QUANTITY COUNTER LOGIC
+// CHECKOUT & QUANTITY COUNTER LOGIC
 // ==========================================
 function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge) {
     currentCheckoutData = {
@@ -480,10 +479,10 @@ function updateCheckoutQuantityDisplay() {
     if (qtyCountDisplay) qtyCountDisplay.innerText = d.multiplier;
 
     const unitsText = document.getElementById("checkoutUnitsText");
-    if (unitsText) unitsText.innerText = `${d.quantity.toLocaleString()} Package`;
+    if (unitsText) unitsText.innerText = `${d.quantity.toLocaleString()} Quantity`;
 
     const priceEl = document.getElementById("checkoutPriceText");
-    if (priceEl) priceEl.innerText = `₹${d.price.toFixed(2)}`;
+    if (priceEl) priceEl.innerText = `${d.price.toFixed(2)}`;
 
     if (document.getElementById("checkoutUsdtAmount")) {
         const usdt = (d.price / 88).toFixed(2);
@@ -492,7 +491,7 @@ function updateCheckoutQuantityDisplay() {
 
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR`;
-    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=${encodeURIComponent(upiUrl)}`;
+    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
@@ -587,6 +586,28 @@ function switchCheckoutPayment(type) {
         if (btnUpi) btnUpi.classList.remove("active");
         if (viewBinance) viewBinance.classList.remove("hidden");
         if (viewUpi) viewUpi.classList.add("hidden");
+    }
+}
+
+// =====================================================
+// 📲 DYNAMIC UPI PAYMENT DIRECT REDIRECT LOGIC
+// =====================================================
+function payViaApp(appType) {
+    const price = currentCheckoutData.price ? currentCheckoutData.price.toFixed(2) : "0.00";
+    const upiId = "saheb.68@ptyes";
+    const name = encodeURIComponent("RajSocialPanel");
+    
+    // Base Deep-Link Standard Dynamic URL
+    let baseUpi = `upi://pay?pa=${upiId}&pn=${name}&am=${price}&cu=INR`;
+
+    if (appType === 'paytm') {
+        window.location.href = `paytmmp://pay?pa=${upiId}&pn=${name}&am=${price}&cu=INR` || baseUpi;
+    } else if (appType === 'gpay') {
+        window.location.href = baseUpi;
+    } else if (appType === 'phonepe') {
+        window.location.href = `phonepe://pay?pa=${upiId}&pn=${name}&am=${price}&cu=INR` || baseUpi;
+    } else {
+        window.location.href = baseUpi;
     }
 }
 

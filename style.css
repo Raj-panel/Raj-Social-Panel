@@ -700,3 +700,43 @@ input:focus { border-color: #a855f7; background: #ffffff; }
 .whatsapp-submit-btn:active, .action-btn:active {
     transform: scale(0.98);
 }
+/* Install App Button Container Fix */
+.install-app-container {
+    display: flex;
+    justify-content: center;
+    margin: 25px 0 15px 0;
+}
+
+.install-app-btn {
+    background: linear-gradient(135deg, #3b82f6 0%, #a855f7 100%);
+    color: #ffffff;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.install-app-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(168, 85, 247, 0.5);
+}
+
+.app-logo-pe {
+    background: #5f259f;
+    color: #fff;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: bold;
+}

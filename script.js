@@ -534,6 +534,12 @@ function updateCheckoutQuantityDisplay() {
         qrImg.style.height = "110px";
     }
 
+    // Direct Pay via UPI App Link
+    const payViaUpiBtn = document.getElementById("payViaUpiAppBtn");
+    if (payViaUpiBtn) {
+        payViaUpiBtn.href = upiUrl;
+        payViaUpiBtn.style.display = "flex";
+    }
 }
 
 function changeCheckoutMultiplier(delta) {

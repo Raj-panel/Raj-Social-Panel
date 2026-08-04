@@ -242,10 +242,14 @@ function renderPackages() {
                     <input
                         type="number"
                         id="customQtyInput"
-                        placeholder="Enter Quantity (e.g. 1000)"
-                        min="1"
+                        placeholder="Min 100 (e.g. 1000)"
+                        min="100"
                         oninput="calculateCustomPrice('${pkg.name}', ${pkg.pricePer1000 || 0}, ${pkg.providerId || "null"})"
                     >
+                </div>
+
+                <div style="font-size: 11px; color: #ef4444; margin-top: 4px; display: none;" id="customMinWarning">
+                    ⚠️ Minimum Quantity is 100!
                 </div>
 
                 <div style="font-size: 12px; font-weight: 800; color: #22c55e; margin-top: 5px;" id="customPriceDisplay">
@@ -303,15 +307,21 @@ function renderPackages() {
 }
 
 // ==========================================
-// CUSTOM PRICE CALCULATOR & EXTRACT
+// CUSTOM PRICE CALCULATOR & MINIMUM 100 CHECK
 // ==========================================
 
 function calculateCustomPrice(serviceName, ratePer1000, providerId) {
     const qtyInput = document.getElementById("customQtyInput");
     const qty = parseInt(qtyInput ? qtyInput.value : 0) || 0;
     const calcPriceSpan = document.getElementById("customCalcPrice");
+    const minWarning = document.getElementById("customMinWarning");
 
-    if (qty > 0) {
+    if (qty > 0 && qty < 100) {
+        if (minWarning) minWarning.style.display = "block";
+        if (calcPriceSpan) calcPriceSpan.innerText = "0.00";
+        selectedPackage = null;
+    } else if (qty >= 100) {
+        if (minWarning) minWarning.style.display = "none";
         const total = (qty / 1000) * ratePer1000;
         if (calcPriceSpan) calcPriceSpan.innerText = total.toFixed(2);
 
@@ -323,6 +333,7 @@ function calculateCustomPrice(serviceName, ratePer1000, providerId) {
             category: currentCategory
         };
     } else {
+        if (minWarning) minWarning.style.display = "none";
         if (calcPriceSpan) calcPriceSpan.innerText = "0.00";
         selectedPackage = null;
     }
@@ -458,13 +469,13 @@ function openCheckoutFromCustom() {
     const qtyInput = document.getElementById("customQtyInput");
     const qty = parseFloat(qtyInput ? qtyInput.value : 0);
 
-    const calculatedPriceText = document.getElementById("customCalcPrice");
-    const price = parseFloat(calculatedPriceText ? calculatedPriceText.innerText : 0);
-
-    if (!qty || qty <= 0) {
-        alert("Please enter a valid Quantity!");
+    if (!qty || qty < 100) {
+        alert("⚠️ Minimum order quantity is 100! (কমপক্ষে ১০০টি অর্ডার করতে হবে)");
         return;
     }
+
+    const calculatedPriceText = document.getElementById("customCalcPrice");
+    const price = parseFloat(calculatedPriceText ? calculatedPriceText.innerText : 0);
 
     const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
 
@@ -512,13 +523,22 @@ function updateCheckoutQuantityDisplay() {
 
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR`;
-    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=${encodeURIComponent(upiUrl)}`;
+    
+    // QR Code Size 300x300 & Margin=10 for High-Quality Scanning from Gallery
+    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=10&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
         qrImg.src = qrImageSrc;
         qrImg.style.width = "110px";
         qrImg.style.height = "110px";
+    }
+
+    // Direct Pay via UPI App Link
+    const payViaUpiBtn = document.getElementById("payViaUpiAppBtn");
+    if (payViaUpiBtn) {
+        payViaUpiBtn.href = upiUrl;
+        payViaUpiBtn.style.display = "flex";
     }
 }
 
@@ -576,6 +596,31 @@ function showCheckoutOverlay() {
         priceParent.appendChild(counterContainer);
     }
 
+    // Inject "Pay via UPI App" Direct Button if it doesn't exist
+    const viewUpi = document.getElementById("checkoutUpiView");
+    if (viewUpi && !document.getElementById("payViaUpiAppBtn")) {
+        const directPayBtn = document.createElement("a");
+        directPayBtn.id = "payViaUpiAppBtn";
+        directPayBtn.innerText = "📲 Click Here to Pay via UPI App";
+        directPayBtn.style.cssText = `
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 12px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin: 4px auto 6px auto;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
+            border: 1px solid rgba(255,255,255,0.2);
+        `;
+        viewUpi.insertBefore(directPayBtn, viewUpi.firstChild);
+    }
+
     d.multiplier = 1;
     updateCheckoutQuantityDisplay();
 
@@ -610,12 +655,7 @@ function showCheckoutOverlay() {
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
 
-    const payViaUpiBtn = document.getElementById("payViaUpiAppBtn") || document.querySelector(".pay-via-upi-btn");
-    if (payViaUpiBtn) {
-        payViaUpiBtn.style.display = "none";
-    }
-
-    // 📱 Mobile Ultra-Compact Layout Styles
+    // Mobile Ultra-Compact Layout Styles
     if (!document.getElementById("ultraCompactCss")) {
         const style = document.createElement("style");
         style.id = "ultraCompactCss";

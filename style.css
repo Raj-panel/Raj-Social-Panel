@@ -1,383 +1,853 @@
-/* ==================================================
-   NEW PAYMENT PAGE / CHECKOUT OVERLAY STYLES (MODIFIED)
-   ================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+
+{
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+background: #fdf2f8;
+background-image: radial-gradient(circle at 10% 10%, rgba(244, 114, 182, 0.15) 0%, transparent 40%),
+radial-gradient(circle at 90% 90%, rgba(192, 132, 252, 0.15) 0%, transparent 40%);
+color: #1e293b;
+min-height: 100vh;
+padding: 12px;
+display: flex;
+justify-content: center;
+}
+
+.main-wrapper {
+width: 100%;
+max-width: 440px;
+}
+
+/* Support Header */
+.hero-actions {
+display: flex;
+gap: 10px;
+justify-content: center;
+margin-bottom: 12px;
+}
+
+.glass-btn {
+padding: 8px 14px;
+border-radius: 12px;
+font-size: 11px;
+font-weight: 700;
+text-decoration: none;
+display: flex;
+align-items: center;
+gap: 6px;
+background: #ffffff;
+box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.btn-telegram { border: 1px solid rgba(56, 189, 248, 0.4); color: #0284c7; }
+.btn-whatsapp { border: 1px solid rgba(34, 197, 94, 0.4); color: #16a34a; }
+
+/* Platform Switcher Buttons */
+.platform-switch-container {
+display: flex;
+gap: 8px;
+background: #ffffff;
+padding: 5px;
+border-radius: 16px;
+margin-bottom: 12px;
+box-shadow: 0 4px 15px rgba(236, 72, 153, 0.08);
+}
+
+.platform-btn {
+flex: 1;
+padding: 10px;
+border: none;
+border-radius: 12px;
+font-weight: 800;
+font-size: 13px;
+background: transparent;
+color: #64748b;
+cursor: pointer;
+transition: all 0.25s;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 6px;
+}
+
+.platform-btn.active {
+background: linear-gradient(135deg, #d946ef 0%, #8b5cf6 100%);
+color: #ffffff;
+box-shadow: 0 4px 12px rgba(217, 70, 239, 0.3);
+}
+
+/* Hero Status Banner */
+.hero-banner {
+background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+border-radius: 20px;
+padding: 18px 16px;
+color: #ffffff;
+margin-bottom: 14px;
+position: relative;
+overflow: hidden;
+box-shadow: 0 8px 25px rgba(236, 72, 153, 0.25);
+}
+
+.hero-top-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 8px;
+}
+
+.hero-logo-box {
+width: 32px;
+height: 32px;
+background: rgba(255, 255, 255, 0.2);
+border-radius: 10px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 18px;
+backdrop-filter: blur(5px);
+}
+
+.provider-badge {
+background: rgba(255, 255, 255, 0.25);
+padding: 4px 10px;
+border-radius: 12px;
+font-size: 10px;
+font-weight: 800;
+backdrop-filter: blur(5px);
+}
+
+.hero-banner h2 { font-size: 20px; font-weight: 800; margin-bottom: 2px; }
+.hero-sub { font-size: 11px; opacity: 0.9; margin-bottom: 14px; }
+
+.hero-stats-grid { display: flex; gap: 8px; }
+
+.stat-card {
+flex: 1;
+background: rgba(255, 255, 255, 0.15);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.2);
+border-radius: 12px;
+padding: 8px;
+text-align: center;
+}
+
+.stat-icon { font-size: 11px; display: block; margin-bottom: 2px; }
+.stat-num { font-size: 13px; font-weight: 800; display: block; }
+.stat-lbl { font-size: 9px; opacity: 0.8; }
+
+/* Scrollable Horizontal Category Tabs */
+.category-tabs-wrapper {
+overflow-x: auto;
+white-space: nowrap;
+margin-bottom: 14px;
+padding-bottom: 4px;
+scrollbar-width: none;
+}
+
+.category-tabs-wrapper::-webkit-scrollbar { display: none; }
+
+.category-tabs { display: inline-flex; gap: 8px; }
+
+.cat-tab {
+padding: 8px 16px;
+background: #ffffff;
+border: 1px solid #f1f5f9;
+border-radius: 20px;
+font-size: 12px;
+font-weight: 700;
+color: #475569;
+cursor: pointer;
+transition: all 0.2s;
+box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+.cat-tab.active {
+background: linear-gradient(135deg, #a855f7, #ec4899);
+color: #ffffff;
+border-color: transparent;
+box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+}
+
+/* Service Package Cards */
+.package-list-container {
+display: flex;
+flex-direction: column;
+gap: 10px;
+margin-bottom: 16px;
+}
+
+.pkg-card {
+background: #ffffff;
+border-radius: 16px;
+padding: 12px 14px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+border: 1px solid #fae8ff;
+box-shadow: 0 3px 10px rgba(244, 114, 182, 0.05);
+cursor: pointer;
+transition: all 0.2s;
+}
+
+.pkg-card:hover, .pkg-card.selected {
+border-color: #d946ef;
+background: #fdf4ff;
+transform: translateY(-1px);
+box-shadow: 0 5px 15px rgba(217, 70, 239, 0.15);
+}
+
+.pkg-left { display: flex; align-items: center; gap: 12px; }
+
+.pkg-icon {
+width: 38px;
+height: 38px;
+background: linear-gradient(135deg, #f43f5e, #a855f7);
+border-radius: 12px;
+display: flex;
+align-items: center;
+justify-content: center;
+color: #fff;
+font-size: 18px;
+}
+
+.pkg-info { display: flex; flex-direction: column; }
+
+.pkg-title {
+font-size: 13px;
+font-weight: 800;
+color: #1e293b;
+display: flex;
+align-items: center;
+gap: 6px;
+}
+
+.pkg-sub { font-size: 10px; color: #94a3b8; margin-top: 1px; }
+
+.pkg-badge {
+font-size: 9px;
+padding: 2px 6px;
+border-radius: 8px;
+color: #fff;
+font-weight: 800;
+}
+
+.badge-popular { background: linear-gradient(90deg, #3b82f6, #8b5cf6); }
+.badge-best { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+.badge-demo { background: #94a3b8; }
+.badge-real { background: #6366f1; }
+
+.pkg-price-btn {
+background: linear-gradient(135deg, #d946ef 0%, #8b5cf6 100%);
+color: #fff;
+font-weight: 800;
+font-size: 12px;
+padding: 6px 14px;
+border-radius: 16px;
+}
+
+.custom-card {
+background: #ffffff;
+border: 1px solid #d946ef;
+border-radius: 16px;
+padding: 14px;
+}
+
+.input-box { margin-bottom: 12px; }
+
+.input-box label {
+display: block;
+font-size: 11px;
+font-weight: 700;
+color: #64748b;
+margin-bottom: 4px;
+}
+
+input {
+width: 100%;
+padding: 11px 12px;
+background: #f8fafc;
+border: 1px solid #e2e8f0;
+border-radius: 10px;
+font-size: 13px;
+outline: none;
+color: #0f172a;
+}
+
+input:focus { border-color: #d946ef; background: #ffffff; }
+
+/* Checkout Section */
+.checkout-card {
+background: #ffffff;
+border-radius: 20px;
+padding: 16px;
+box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+margin-bottom: 16px;
+border: 1px solid #fae8ff;
+}
+
+.checkout-header h3 { font-size: 14px; color: #0f172a; margin-bottom: 10px; }
+
+.order-summary-pill {
+background: #fdf4ff;
+border: 1px dashed #d946ef;
+padding: 10px;
+border-radius: 10px;
+font-size: 12px;
+color: #a855f7;
+text-align: center;
+margin-bottom: 12px;
+}
+
+.action-btn {
+width: 100%;
+padding: 12px;
+background: linear-gradient(135deg, #d946ef, #8b5cf6);
+color: #fff;
+font-weight: 800;
+font-size: 13px;
+border: none;
+border-radius: 12px;
+cursor: pointer;
+}
+
+/* Payment Switch Tabs */
+.pay-toggle-tabs { display: flex; gap: 8px; margin: 14px 0; }
+
+.pay-tab {
+flex: 1;
+padding: 10px;
+background: #ffffff;
+border: 1.5px solid #d8b4fe;
+border-radius: 12px;
+font-size: 12px;
+font-weight: 700;
+color: #2563eb;
+cursor: pointer;
+transition: all 0.2s ease;
+}
+
+.pay-tab.active {
+background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+color: #ffffff;
+border-color: transparent;
+box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+}
+
+.qr-box {
+text-align: center;
+background: #ffffff;
+padding: 16px;
+border-radius: 16px;
+border: 1.5px solid #e9d5ff;
+}
+
+.qr-box img {
+width: 170px;
+height: 170px;
+border-radius: 12px;
+border: 1px solid #f3e8ff;
+padding: 6px;
+background: #ffffff;
+box-shadow: 0 4px 15px rgba(168, 85, 247, 0.12);
+}
+
+.qr-sub { font-size: 11px; color: #64748b; margin-top: 8px; }
+
+/* Binance Box */
+.binance-info-card {
+background: #fefce8;
+border: 1px solid #fef08a;
+padding: 12px;
+border-radius: 12px;
+text-align: center;
+}
+
+.usdt-badge {
+display: inline-block;
+background: #eab308;
+color: #fff;
+font-weight: 800;
+padding: 4px 12px;
+border-radius: 12px;
+font-size: 12px;
+margin-top: 4px;
+}
+
+.crypto-details-box {
+margin-top: 10px;
+font-size: 11px;
+text-align: left;
+background: #fff;
+padding: 8px 10px;
+border-radius: 8px;
+border: 1px solid #fef08a;
+}
+
+.crypto-details-box p {
+margin-bottom: 6px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.copy-btn {
+background: #e2e8f0;
+border: none;
+padding: 2px 6px;
+border-radius: 4px;
+font-size: 10px;
+cursor: pointer;
+}
+
+.whatsapp-submit-btn {
+width: 100%;
+padding: 14px;
+background: #10b981;
+color: #ffffff;
+font-weight: 800;
+font-size: 15px;
+border: none;
+border-radius: 12px;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+transition: all 0.2s;
+}
+
+.whatsapp-submit-btn:hover {
+background: #059669;
+}
+
+.whatsapp-submit-btn:active {
+transform: scale(0.98);
+}
+
+.margin-top-15 { margin-top: 12px; }
+
+.footer-note {
+text-align: center;
+font-size: 10px;
+color: #94a3b8;
+margin-bottom: 20px;
+}
+.badge-super{
+background: linear-gradient(90deg,#ff9800,#ff4081);
+color:#fff;
+font-weight:800;
+animation:pulseBadge 1.8s infinite;
+}
+
+@keyframes pulseBadge{
+0%{transform:scale(1);}
+50%{transform:scale(1.05);}
+100%{transform:scale(1);}
+}
+
+/* ===== SUPER COMBO CARD ===== */
+.pkg-card.super-combo{
+border:2px solid #ff9800;
+background:linear-gradient(135deg,#fff8e1,#fff0f7);
+box-shadow:0 8px 20px rgba(255,152,0,.18);
+position:relative;
+}
+
+.pkg-card.super-combo::before{
+content:"🔥 BEST OFFER";
+position:absolute;
+top:-10px;
+right:15px;
+background:linear-gradient(90deg,#ff9800,#ff4081);
+color:#fff;
+font-size:10px;
+font-weight:800;
+padding:4px 10px;
+border-radius:20px;
+}
+
+.combo-free{
+margin-top:6px;
+font-size:11px;
+font-weight:800;
+color:#16a34a;
+}
+
+/* ===== PWA Install UI ===== */
+.panel-heading{
+text-align:center;
+font-size:32px;
+font-weight:800;
+color:#8b5cf6;
+margin:8px 0 14px;
+letter-spacing:1px;
+}
+#installContainer{
+display:none;
+text-align:center;
+margin:-2px 0 16px;
+}
+.install-btn{
+border:none;
+border-radius:999px;
+padding:14px 28px;
+background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+color:#fff;
+font-size:16px;
+font-weight:800;
+cursor:pointer;
+box-shadow:0 8px 18px rgba(59,130,246,.25);
+transition:.25s;
+}
+.install-btn:hover{
+transform:translateY(-2px);
+}
+.install-btn i{margin-right:8px;}
+
+/* STREAMING_CHUNK:Styling the checkout overlay light theme... /
+/ ==================================================
+NEW PAYMENT PAGE / CHECKOUT OVERLAY STYLES (LIGHT THEME UPDATE)
+================================================== /
 .checkout-page-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #ffffff; /* White Premium Theme */
-  z-index: 999999;
-  overflow-y: auto;
-  box-sizing: border-box;
-  animation: slideInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: #f7f9fc; / Clean light background */
+z-index: 999999;
+overflow-y: auto;
+box-sizing: border-box;
+animation: slideInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .checkout-page-overlay.hidden {
-  display: none !important;
+display: none !important;
 }
 
 @keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+from {
+opacity: 0;
+transform: translateY(40px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
 }
 
 .checkout-content {
-  max-width: 440px;
-  margin: 0 auto;
-  padding: 20px 16px 40px 16px;
+max-width: 440px;
+margin: 0 auto;
+padding: 16px 16px 40px 16px;
 }
 
 .checkout-nav {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 20px;
+position: relative;
 }
 
 .back-btn {
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
-  color: #1e293b;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
+background: #ffffff;
+border: 1.5px solid #d8b4fe;
+color: #5b21b6;
+padding: 8px 18px;
+border-radius: 20px;
+font-size: 13px;
+font-weight: 700;
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 6px;
+box-shadow: 0 2px 8px rgba(124, 58, 237, 0.08);
+transition: all 0.2s;
 }
 
 .back-btn:hover {
-  background: #e2e8f0;
+background: #f5f3ff;
+border-color: #a855f7;
 }
 
 .checkout-heading-text {
-  flex: 1;
-  text-align: center;
-  font-size: 18px;
-  font-weight: 800;
-  color: #0f172a;
-  margin-right: 50px;
+flex: 1;
+text-align: center;
+font-size: 20px;
+font-weight: 800;
+color: #2e1065;
+margin-right: 50px;
 }
 
-/* Premium Product Card (Purple/Pink Gradient) */
+/* Premium Service Card - Vibrant Light Gradient */
 .premium-service-card {
-  background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
-  border: none;
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 10px 30px rgba(236, 72, 153, 0.25);
-  margin-bottom: 20px;
-  position: relative;
-  overflow: hidden;
+background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+border: none;
+border-radius: 18px;
+padding: 18px;
+box-shadow: 0 10px 25px rgba(168, 85, 247, 0.25);
+margin-bottom: 20px;
+color: #ffffff;
 }
 
 .card-top-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+display: flex;
+align-items: center;
+gap: 12px;
 }
 
 .platform-badge-icon {
-  width: 46px;
-  height: 46px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  color: #ffffff;
+width: 46px;
+height: 46px;
+border-radius: 12px;
+background: rgba(255, 255, 255, 0.25);
+backdrop-filter: blur(8px);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 24px;
+color: #ffffff;
 }
 
 .card-info h4 {
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 800;
-  margin: 0 0 4px 0;
+color: #ffffff;
+font-size: 17px;
+font-weight: 800;
+margin: 0 0 4px 0;
 }
 
 .badge-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+display: flex;
+align-items: center;
+gap: 8px;
 }
 
 .pkg-name-badge {
-  font-size: 13px;
-  font-weight: 700;
-  color: #fce7f3;
+font-size: 13px;
+font-weight: 600;
+color: rgba(255, 255, 255, 0.95);
 }
 
 .popular-badge {
-  background: #ffffff;
-  color: #d946ef;
-  font-size: 10px;
-  font-weight: 800;
-  padding: 3px 10px;
-  border-radius: 12px;
-  text-transform: uppercase;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+background: #facc15;
+color: #000000;
+font-size: 10px;
+font-weight: 800;
+padding: 2px 8px;
+border-radius: 10px;
+text-transform: uppercase;
 }
 
 .units-text {
-  font-size: 12px;
-  color: #fbcfe8;
-  margin-top: 12px;
+font-size: 12px;
+color: rgba(255, 255, 255, 0.9);
+margin-top: 12px;
 }
 
 .price-text {
-  font-size: 26px;
-  font-weight: 800;
-  color: #ffffff;
-  margin-top: 2px;
+font-size: 28px;
+font-weight: 800;
+color: #ffffff;
+margin-top: 2px;
+line-height: 1;
 }
 
 .price-text small {
-  font-size: 13px;
-  color: #fbcfe8;
-  font-weight: 600;
+font-size: 12px;
+color: #fca5a5;
+font-weight: 500;
 }
 
-/* Premium Input Design */
+/* Input Fields - Light Styled */
 .checkout-input-group {
-  margin-bottom: 18px;
-  text-align: left;
+margin-bottom: 20px;
+text-align: left;
 }
 
 .checkout-input-group label {
-  display: block;
-  font-size: 12px;
-  color: #475569;
-  font-weight: 700;
-  margin-bottom: 6px;
+display: block;
+font-size: 13px;
+color: #4b5563;
+font-weight: 700;
+margin-bottom: 8px;
 }
 
 .checkout-input-group input {
-  width: 100%;
-  padding: 13px 16px;
-  background: #f8fafc;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 14px;
-  color: #0f172a;
-  font-size: 14px;
-  font-weight: 600;
-  outline: none;
-  box-sizing: border-box;
-  transition: all 0.2s ease;
+width: 100%;
+padding: 13px 14px;
+background: #ffffff;
+border: 1.5px solid #d8b4fe;
+border-radius: 12px;
+color: #1e293b;
+font-size: 14px;
+outline: none;
+box-sizing: border-box;
+transition: all 0.2s ease;
 }
 
 .checkout-input-group input:focus {
-  border-color: #d946ef;
-  background: #ffffff;
-  box-shadow: 0 0 0 4px rgba(217, 70, 239, 0.1);
+border-color: #9333ea;
+background: #ffffff;
+box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.12);
 }
 
 /* Order Summary Box */
 .checkout-order-summary {
-  background: #ffffff;
-  border: 1px solid #fae8ff;
-  border-radius: 16px;
-  padding: 16px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 20px rgba(217, 70, 239, 0.05);
+background: #ffffff;
+border: 1.5px solid #e9d5ff;
+border-radius: 14px;
+padding: 16px;
+margin-bottom: 20px;
+box-shadow: 0 4px 15px rgba(168, 85, 247, 0.05);
 }
 
 .summary-title {
-  font-size: 14px;
-  font-weight: 800;
-  color: #0f172a;
-  margin-bottom: 12px;
+font-size: 14px;
+font-weight: 800;
+color: #2e1065;
+margin-bottom: 10px;
 }
 
 .summary-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  color: #64748b;
-  font-weight: 600;
+display: flex;
+justify-content: space-between;
+font-size: 13px;
+color: #64748b;
 }
 
 .summary-divider {
-  height: 1px;
-  background: #f1f5f9;
-  margin: 12px 0;
+height: 1px;
+background: #f3e8ff;
+margin: 10px 0;
 }
 
 .summary-row.pay-row {
-  font-size: 16px;
-  font-weight: 800;
-  color: #0f172a;
+font-size: 16px;
+font-weight: 800;
+color: #1e293b;
 }
 
 .pay-amount {
-  color: #d946ef;
-  font-size: 18px;
-  font-weight: 800;
+color: #9333ea;
+font-size: 18px;
 }
 
-/* Payment View Box & Bigger QR Code with Glow Effect */
+/* Payment View Box */
 .payment-view-box {
-  background: #ffffff;
-  border: 1px solid #f1f5f9;
-  border-radius: 20px;
-  padding: 20px;
-  text-align: center;
-  margin-top: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+background: #ffffff;
+border: 1.5px solid #e9d5ff;
+border-radius: 16px;
+padding: 20px;
+text-align: center;
+margin-top: 16px;
+box-shadow: 0 4px 20px rgba(168, 85, 247, 0.08);
 }
 
 .payment-view-box.hidden {
-  display: none;
+display: none;
 }
 
 .scan-title {
-  font-size: 13px;
-  font-weight: 800;
-  color: #8b5cf6;
-  letter-spacing: 0.5px;
-  margin-bottom: 14px;
-  text-transform: uppercase;
-}
-
-.qr-wrapper {
-  display: inline-block;
-  padding: 10px;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 0 25px rgba(217, 70, 239, 0.25); /* Glow Effect */
-  border: 2px solid #fae8ff;
-  margin-bottom: 14px;
+font-size: 14px;
+font-weight: 800;
+color: #7e22ce;
+letter-spacing: 0.5px;
+margin-bottom: 14px;
+text-transform: uppercase;
 }
 
 .qr-wrapper img {
-  width: 210px; /* Bigger QR Code */
-  height: 210px; /* Bigger QR Code */
-  border-radius: 10px;
-  display: block;
+width: 170px;
+height: 170px;
+border-radius: 14px;
+border: 1px solid #f3e8ff;
+padding: 8px;
+background: #ffffff;
+box-shadow: 0 4px 15px rgba(168, 85, 247, 0.15);
 }
 
 .pay-app-btn {
-  display: inline-block;
-  margin-top: 12px;
-  background: linear-gradient(135deg, #d946ef 0%, #8b5cf6 100%);
-  color: #ffffff;
-  padding: 10px 20px;
-  border-radius: 12px;
-  font-size: 13px;
-  font-weight: 700;
-  text-decoration: none;
-  box-shadow: 0 4px 15px rgba(217, 70, 239, 0.3);
-  transition: all 0.2s;
+display: inline-block;
+margin-top: 12px;
+background: #f3e8ff;
+color: #7e22ce;
+padding: 8px 16px;
+border-radius: 8px;
+font-size: 12px;
+font-weight: 700;
+text-decoration: none;
+transition: all 0.2s;
 }
 
 .pay-app-btn:hover {
-  transform: translateY(-1px);
+background: #e9d5ff;
 }
 
-/* Premium UPI Buttons Grid */
 .upi-icons-row {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-top: 16px;
+display: flex;
+justify-content: center;
+gap: 8px;
+margin-top: 14px;
 }
 
 .upi-chip {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  color: #334155;
-  font-size: 12px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+background: #f9fafb;
+border: 1px solid #e5e7eb;
+color: #4b5563;
+font-size: 11px;
+padding: 6px 10px;
+border-radius: 8px;
+font-weight: 700;
 }
 
-.upi-chip:hover {
-  background: #ffffff;
-  border-color: #d946ef;
-  color: #d946ef;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(217, 70, 239, 0.12);
-}
+/* UPI App colors */
+.upi-chip.paytm { color: #00baf2; }
+.upi-chip.gpay { color: #ea4335; }
+.upi-chip.phonepe { color: #5f259f; }
 
 .binance-nick-box {
-  border: 1px solid #fef08a;
-  background: #fefce8;
-  padding: 12px;
-  border-radius: 12px;
-  margin: 12px 0;
-  font-size: 12px;
-  color: #854d0e;
-  font-weight: 600;
+border: 1px solid #fef08a;
+background: #fefce8;
+padding: 10px;
+border-radius: 10px;
+margin: 10px 0;
+font-size: 12px;
+color: #854d0e;
+font-weight: 600;
 }
 
 .usdt-badge-box span {
-  background: #eab308;
-  color: #ffffff;
-  font-weight: 800;
-  padding: 6px 18px;
-  border-radius: 20px;
-  font-size: 13px;
-  display: inline-block;
-  box-shadow: 0 4px 12px rgba(234, 179, 8, 0.25);
+background: #facc15;
+color: #000000;
+font-weight: 800;
+padding: 4px 16px;
+border-radius: 20px;
+font-size: 13px;
+display: inline-block;
 }
 
 .margin-top-20 {
-  margin-top: 20px;
+margin-top: 20px;
 }
 
+/* Alert / Notice Yellow Box */
 .notice-yellow-box {
-  background: #fefce8;
-  border-left: 4px solid #eab308;
-  padding: 12px;
-  border-radius: 8px;
-  text-align: left;
-  margin: 14px 0;
-  font-size: 12px;
-  color: #713f12;
-  line-height: 1.5;
-  font-weight: 600;
-}
-
-/* Premium WhatsApp Submit Button */
-.whatsapp-submit-btn {
-  width: 100%;
-  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-  color: #ffffff;
-  border: none;
-  padding: 15px;
-  font-size: 15px;
-  font-weight: 800;
-  border-radius: 14px;
-  cursor: pointer;
-  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.35);
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.whatsapp-submit-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(34, 197, 94, 0.45);
-}
-
-.whatsapp-submit-btn:active {
-  transform: scale(0.98);
+background: #fffbeb;
+border: 1px solid #fef3c7;
+border-left: 4px solid #f59e0b;
+padding: 12px;
+border-radius: 10px;
+text-align: left;
+margin: 14px 0 20px 0;
+font-size: 12px;
+color: #b45309;
+font-weight: 600;
+line-height: 1.4;
 }

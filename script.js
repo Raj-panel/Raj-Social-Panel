@@ -651,7 +651,7 @@ function showCheckoutOverlay() {
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
 
-    // Mobile Ultra-Compact Layout & PAY via UPI Hide Style
+    // Mobile Ultra-Compact Layout & QR Text Hiding Style
     if (!document.getElementById("ultraCompactCss")) {
         const style = document.createElement("style");
         style.id = "ultraCompactCss";
@@ -668,12 +668,14 @@ function showCheckoutOverlay() {
             .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 4px 8px !important; font-size: 9.5px !important; margin-bottom: 4px !important; }
             .pay-apps-icons, [class*="paytm"], [class*="gpay"] { display: none !important; }
             
-            /* 🔥 SCAN to PAY via UPI টেক্সট এবং তার আশপাশের বর্ডার বক্স সম্পূর্ণ হাইড করার কোড */
-            #checkoutUpiView > div:has(#checkoutQrImg) + div,
+            /* 🔥 কিউআর কোডের উপরের SCAN to PAY via UPI এবং নিচের PAY via UPI লেখা দুটো নিখুঁতভাবে হাইড করার কোড */
+            #checkoutUpiView div:has(> img#checkoutQrImg) + div,
+            #checkoutUpiView > div:first-child:has(> img#checkoutQrImg) ~ div {
+                display: none !important;
+            }
             #checkoutUpiView .scan-title,
             #checkoutUpiView [class*="scan"],
-            #checkoutUpiView [class*="upi-title"],
-            #checkoutUpiView > div:nth-child(2) {
+            #checkoutUpiView [class*="upi-title"] {
                 display: none !important;
             }
         `;

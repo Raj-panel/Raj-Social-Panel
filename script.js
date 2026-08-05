@@ -617,6 +617,25 @@ function showCheckoutOverlay() {
     }
 
     d.multiplier = 1;
+
+    // Ensure "SCAN TO PAY VIA UPI" Heading is displayed right above QR Code across all devices
+    const upiView = document.getElementById("checkoutUpiView");
+    const qrImg = document.getElementById("checkoutQrImg");
+    if (upiView) {
+        let scanHeading = document.getElementById("scanToPayHeading");
+        if (!scanHeading) {
+            scanHeading = document.createElement("h3");
+            scanHeading.id = "scanToPayHeading";
+            scanHeading.innerText = "SCAN TO PAY VIA UPI";
+            scanHeading.style.cssText = "margin: 6px 0 4px 0 !important; font-size: 15px !important; font-weight: 800 !important; text-align: center !important; text-transform: uppercase !important; background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; display: block !important; visibility: visible !important; opacity: 1 !important;";
+        }
+        if (qrImg && qrImg.parentElement === upiView) {
+            upiView.insertBefore(scanHeading, qrImg);
+        } else {
+            upiView.prepend(scanHeading);
+        }
+    }
+
     updateCheckoutQuantityDisplay();
 
     const priceCard = priceEl ? priceEl.parentElement : null;
@@ -649,7 +668,7 @@ function showCheckoutOverlay() {
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
 
-    // CSS Styling optimized for ultra-compact layout
+    // CSS Styling optimized for ultra-compact layout & heading visibility
     if (!document.getElementById("ultraCompactCss")) {
         const style = document.createElement("style");
         style.id = "ultraCompactCss";
@@ -659,6 +678,7 @@ function showCheckoutOverlay() {
             #checkoutPage .input-box { margin-bottom: 2px !important; }
             #checkoutPage input { padding: 3px 6px !important; font-size: 11px !important; height: 32px !important; }
             #checkoutUpiView { padding: 0px !important; margin-bottom: 2px !important; text-align: center; }
+            #scanToPayHeading { display: block !important; visibility: visible !important; opacity: 1 !important; margin: 6px 0 4px 0 !important; font-size: 14px !important; font-weight: 800 !important; text-align: center !important; text-transform: uppercase !important; background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; }
             #checkoutUpiView img { width: 130px !important; height: 130px !important; object-fit: contain !important; margin: 2px auto !important; padding: 4px !important; border-radius: 8px !important; }
             .upi-app-btn-grid { margin-top: 4px !important; gap: 4px !important; }
             #checkoutPage .payment-tabs { margin-bottom: 2px !important; }

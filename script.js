@@ -523,13 +523,15 @@ function updateCheckoutQuantityDisplay() {
     const upiId = "akibur.s@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
     
-    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=20&data=${encodeURIComponent(upiUrl)}`;
+    // QR Code Margin reduced to 0 to eliminate unnecessary white padding around QR
+    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=0&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
         qrImg.src = qrImageSrc;
-        qrImg.style.width = "180px";
-        qrImg.style.height = "180px";
+        // Reduced QR size (~28% smaller) for compact display
+        qrImg.style.width = "130px";
+        qrImg.style.height = "130px";
     }
 }
 
@@ -649,20 +651,22 @@ function showCheckoutOverlay() {
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
 
-    // CSS Styling for compact view
+    // CSS Styling optimized for ultra-compact layout (Fits screen without scrolling)
     if (!document.getElementById("ultraCompactCss")) {
         const style = document.createElement("style");
         style.id = "ultraCompactCss";
         style.innerHTML = `
-            #checkoutPage { padding: 4px 10px !important; max-width: 480px; margin: 0 auto; }
-            #checkoutPage .checkout-card { margin-bottom: 4px !important; padding: 6px 10px !important; }
-            #checkoutPage .input-box { margin-bottom: 4px !important; }
-            #checkoutPage input { padding: 4px 8px !important; font-size: 11px !important; height: 35px !important; }
-            #checkoutUpiView { padding: 2px !important; margin-bottom: 2px !important; text-align: center; }
-            #checkoutPage .payment-tabs { margin-bottom: 4px !important; }
-            #checkoutPage .submit-btn { padding: 6px !important; height: 36px !important; font-size: 12px !important; margin-top: 2px !important; }
-            #checkoutPage p, #checkoutPage label { margin-bottom: 2px !important; font-size: 10px !important; }
-            .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 4px 8px !important; font-size: 9.5px !important; margin-bottom: 4px !important; }
+            #checkoutPage { padding: 2px 8px !important; max-width: 440px; margin: 0 auto; }
+            #checkoutPage .checkout-card { margin-bottom: 2px !important; padding: 4px 8px !important; }
+            #checkoutPage .input-box { margin-bottom: 2px !important; }
+            #checkoutPage input { padding: 3px 6px !important; font-size: 11px !important; height: 32px !important; }
+            #checkoutUpiView { padding: 0px !important; margin-bottom: 2px !important; text-align: center; }
+            #checkoutUpiView img { margin: 2px auto !important; padding: 4px !important; border-radius: 8px !important; }
+            .upi-app-btn-grid { margin-top: 4px !important; gap: 4px !important; }
+            #checkoutPage .payment-tabs { margin-bottom: 2px !important; }
+            #checkoutPage .submit-btn { padding: 4px !important; height: 34px !important; font-size: 12px !important; margin-top: 2px !important; }
+            #checkoutPage p, #checkoutPage label { margin-bottom: 1px !important; font-size: 9.5px !important; }
+            .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 2px 6px !important; font-size: 9px !important; margin-bottom: 2px !important; }
             #payViaUpiAppBtn { display: none !important; }
         `;
         document.head.appendChild(style);

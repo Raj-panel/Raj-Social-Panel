@@ -735,17 +735,25 @@ function submitOrderToWhatsApp() {
 
     const d = currentCheckoutData;
 
-    const message = `NEW ORDER SUBMITTED\n\n` +
-        `Social Media: ${d.platform}\n` +
-        `Service Name: ${d.serviceName}\n` +
-        `Package: ${d.packageName}\n` +
-        `Total Quantity: ${d.quantity.toLocaleString()}\n` +
-        `Total Price: ₹${d.price.toFixed(2)}\n` +
-        `Target Link: ${link}\n` +
-        `Payment Method: ${payMethod}\n` +
-        `Transaction ID / UTR: ${txnId}`;
+    // Line breaks explicitly defined as %0A to avoid WebView newline stripping
+    const formattedMessage = 
+        `🚀 *NEW ORDER SUBMITTED* 🚀%0A%0A` +
+        `📌 *Social Media:* ${d.platform || ''}%0A` +
+        `🛠️ *Service Name:* ${d.serviceName || ''}%0A` +
+        `📦 *Package:* ${d.packageName || ''}%0A` +
+        `🔢 *Total Quantity:* ${(d.quantity || 0).toLocaleString()}%0A` +
+        `💰 *Total Price:* ₹${(d.price || 0).toFixed(2)}%0A` +
+        `🔗 *Target Link:* ${link}%0A` +
+        `💳 *Payment Method:* ${payMethod}%0A` +
+        `🧾 *Transaction ID / UTR:* ${txnId}`;
 
-    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
+    // UTF-8 encoding fix specifically for Android WebView & Web browsers
+    const encodedMessage = encodeURIComponent(decodeURIComponent(formattedMessage));
+
+    // Uses https://api.whatsapp.com/send which works 100% reliably in Android WebView Intents
+    const waUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedMessage}`;
+
+    window.open(waUrl, "_blank");
 }
 
 // =====================================================

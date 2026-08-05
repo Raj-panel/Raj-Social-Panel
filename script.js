@@ -529,6 +529,8 @@ function updateCheckoutQuantityDisplay() {
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
         qrImg.src = qrImageSrc;
+        qrImg.style.width = "130px";
+        qrImg.style.height = "130px";
         qrImg.style.objectFit = "contain";
     }
 }
@@ -598,12 +600,12 @@ function showCheckoutOverlay() {
     if (!counterContainer && priceParent) {
         counterContainer = document.createElement("div");
         counterContainer.id = "checkoutQtyCounterBox";
-        counterContainer.style.cssText = "display: flex; align-items: center; background: rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 1px 4px; gap: 4px; margin-left: auto;";
+        counterContainer.style.cssText = "display: flex; align-items: center; background: rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 1px 4px; gap: 6px; margin-left: auto;";
         
         counterContainer.innerHTML = `
-            <button type="button" onclick="changeCheckoutMultiplier(-1)" style="background: rgba(255, 255, 255, 0.2); color: #fff; border: none; width: 26px; height: 26px; border-radius: 4px; font-weight: bold; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center;">-</button>
-            <span id="checkoutQtyCount" style="color: #fff; font-weight: bold; font-size: 14px; min-width: 18px; text-align: center;">1</span>
-            <button type="button" onclick="changeCheckoutMultiplier(1)" style="background: rgba(255, 255, 255, 0.2); color: #fff; border: none; width: 26px; height: 26px; border-radius: 4px; font-weight: bold; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
+            <button type="button" onclick="changeCheckoutMultiplier(-1)" style="background: rgba(255, 255, 255, 0.2); color: #fff; border: none; width: 30px; height: 30px; border-radius: 5px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">-</button>
+            <span id="checkoutQtyCount" style="color: #fff; font-weight: bold; font-size: 16px; min-width: 22px; text-align: center;">1</span>
+            <button type="button" onclick="changeCheckoutMultiplier(1)" style="background: rgba(255, 255, 255, 0.2); color: #fff; border: none; width: 30px; height: 30px; border-radius: 5px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
         `;
 
         if (priceParent.style) {
@@ -625,7 +627,7 @@ function showCheckoutOverlay() {
             scanHeading = document.createElement("h3");
             scanHeading.id = "scanToPayHeading";
             scanHeading.innerText = "SCAN TO PAY VIA UPI";
-            scanHeading.style.cssText = "margin: 2px 0 !important; font-size: clamp(12px, 3.5vw, 15px) !important; font-weight: 800 !important; text-align: center !important; text-transform: uppercase !important; background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; display: block !important; visibility: visible !important; opacity: 1 !important;";
+            scanHeading.style.cssText = "margin: 6px 0 4px 0 !important; font-size: 15px !important; font-weight: 800 !important; text-align: center !important; text-transform: uppercase !important; background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; display: block !important; visibility: visible !important; opacity: 1 !important;";
         }
         if (qrImg && qrImg.parentElement === upiView) {
             upiView.insertBefore(scanHeading, qrImg);
@@ -666,87 +668,24 @@ function showCheckoutOverlay() {
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
 
-    // Dynamic Responsive CSS Optimization to prevent scrolling on all Android screen heights
+    // CSS Styling optimized for ultra-compact layout & heading visibility
     if (!document.getElementById("ultraCompactCss")) {
         const style = document.createElement("style");
         style.id = "ultraCompactCss";
         style.innerHTML = `
-            @media screen and (max-width: 768px) {
-                #checkoutPage { 
-                    padding: clamp(2px, 1vh, 6px) clamp(4px, 2vw, 8px) !important; 
-                    max-width: 100% !important; 
-                    margin: 0 auto !important;
-                    display: flex !important;
-                    flex-direction: column !important;
-                    justify-content: space-between !important;
-                    min-height: 100vh !important;
-                    box-sizing: border-box !important;
-                }
-                #checkoutPage .checkout-card { 
-                    margin-bottom: clamp(2px, 0.8vh, 5px) !important; 
-                    padding: clamp(4px, 1.2vh, 8px) !important; 
-                }
-                #checkoutPage .input-box { 
-                    margin-bottom: clamp(2px, 0.6vh, 4px) !important; 
-                }
-                #checkoutPage input { 
-                    padding: 2px 6px !important; 
-                    font-size: clamp(10px, 2.8vw, 12px) !important; 
-                    height: clamp(28px, 4vh, 32px) !important; 
-                }
-                #checkoutUpiView { 
-                    padding: 0px !important; 
-                    margin-bottom: clamp(1px, 0.5vh, 3px) !important; 
-                    text-align: center !important; 
-                }
-                #scanToPayHeading { 
-                    display: block !important; 
-                    visibility: visible !important; 
-                    opacity: 1 !important; 
-                    margin: clamp(1px, 0.4vh, 3px) 0 !important; 
-                    font-size: clamp(12px, 3.2vw, 14px) !important; 
-                    font-weight: 800 !important; 
-                    text-align: center !important; 
-                    text-transform: uppercase !important; 
-                    background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; 
-                    -webkit-background-clip: text !important; 
-                    -webkit-text-fill-color: transparent !important; 
-                }
-                #checkoutUpiView img { 
-                    width: clamp(90px, 22vh, 120px) !important; 
-                    height: clamp(90px, 22vh, 120px) !important; 
-                    object-fit: contain !important; 
-                    margin: 1px auto !important; 
-                    padding: 3px !important; 
-                    border-radius: 6px !important; 
-                }
-                .upi-app-btn-grid { 
-                    margin-top: clamp(2px, 0.6vh, 4px) !important; 
-                    gap: 3px !important; 
-                }
-                #checkoutPage .payment-tabs { 
-                    margin-bottom: clamp(2px, 0.6vh, 4px) !important; 
-                }
-                #checkoutPage .submit-btn { 
-                    padding: 2px !important; 
-                    height: clamp(30px, 4.5vh, 36px) !important; 
-                    font-size: clamp(11px, 3vw, 13px) !important; 
-                    margin-top: clamp(2px, 0.6vh, 4px) !important; 
-                }
-                #checkoutPage p, #checkoutPage label { 
-                    margin-bottom: 1px !important; 
-                    font-size: clamp(9px, 2.5vw, 10.5px) !important; 
-                }
-                .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { 
-                    padding: 2px 4px !important; 
-                    font-size: clamp(8.5px, 2.4vw, 9.5px) !important; 
-                    margin-bottom: clamp(1px, 0.5vh, 3px) !important; 
-                    line-height: 1.2 !important;
-                }
-                #payViaUpiAppBtn { 
-                    display: none !important; 
-                }
-            }
+            #checkoutPage { padding: 2px 8px !important; max-width: 440px; margin: 0 auto; }
+            #checkoutPage .checkout-card { margin-bottom: 2px !important; padding: 4px 8px !important; }
+            #checkoutPage .input-box { margin-bottom: 2px !important; }
+            #checkoutPage input { padding: 3px 6px !important; font-size: 11px !important; height: 32px !important; }
+            #checkoutUpiView { padding: 0px !important; margin-bottom: 2px !important; text-align: center; }
+            #scanToPayHeading { display: block !important; visibility: visible !important; opacity: 1 !important; margin: 6px 0 4px 0 !important; font-size: 14px !important; font-weight: 800 !important; text-align: center !important; text-transform: uppercase !important; background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; }
+            #checkoutUpiView img { width: 130px !important; height: 130px !important; object-fit: contain !important; margin: 2px auto !important; padding: 4px !important; border-radius: 8px !important; }
+            .upi-app-btn-grid { margin-top: 4px !important; gap: 4px !important; }
+            #checkoutPage .payment-tabs { margin-bottom: 2px !important; }
+            #checkoutPage .submit-btn { padding: 4px !important; height: 34px !important; font-size: 12px !important; margin-top: 2px !important; }
+            #checkoutPage p, #checkoutPage label { margin-bottom: 1px !important; font-size: 9.5px !important; }
+            .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 2px 6px !important; font-size: 9px !important; margin-bottom: 2px !important; }
+            #payViaUpiAppBtn { display: none !important; }
         `;
         document.head.appendChild(style);
     }

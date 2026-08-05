@@ -659,7 +659,7 @@ function showCheckoutOverlay() {
             #checkoutPage .input-box { margin-bottom: 2px !important; }
             #checkoutPage input { padding: 3px 6px !important; font-size: 11px !important; height: 32px !important; }
             #checkoutUpiView { padding: 0px !important; margin-bottom: 2px !important; text-align: center; }
-            #checkoutUpiView img { width: 130px !important; height: 130px !important; object-fit: contain !important; margin: 0px auto !important; padding: 2px !important; border-radius: 12px !important; }
+            #checkoutUpiView img { width: 110px !important; height: 110px !important; object-fit: contain !important; margin: 0px auto !important; padding: 2px !important; border-radius: 10px !important; }
             .upi-app-btn-grid { margin-top: 4px !important; gap: 4px !important; }
             #checkoutPage .payment-tabs { margin-bottom: 2px !important; }
             #checkoutPage .submit-btn { padding: 4px !important; height: 34px !important; font-size: 12px !important; margin-top: 2px !important; }

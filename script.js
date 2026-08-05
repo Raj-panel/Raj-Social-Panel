@@ -1,3 +1,112 @@
+// =========================================================
+// PERMANENT BROWSER RESPONSIVE & LAYOUT OPTIMIZATION CSS
+// (Prevents Banner resizing on Refresh/Back & removes Checkout scroll)
+// =========================================================
+(function injectPermanentCss() {
+    if (document.getElementById("fixedLayoutCss")) return;
+    const style = document.createElement("style");
+    style.id = "fixedLayoutCss";
+    style.innerHTML = `
+        @media screen and (max-width: 768px) {
+            /* 1. Permanent Fixed Hero Banner Height (Will never change on Back/Refresh) */
+            .hero-banner, .hero-card, .instagram-boost-card {
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+                min-height: auto !important;
+                max-height: 140px !important;
+                box-sizing: border-box !important;
+            }
+            .hero-banner .hero-title, .hero-card h1, .hero-card h2 {
+                margin-top: 0px !important;
+                margin-bottom: 2px !important;
+                font-size: 18px !important;
+            }
+            .hero-banner p, .hero-card p {
+                margin-bottom: 2px !important;
+                font-size: 11px !important;
+            }
+
+            /* Fixed Install Container Position */
+            #installContainer {
+                margin-top: 2px !important;
+                margin-bottom: 4px !important;
+            }
+
+            /* 2. Checkout Ultra-Compact Vertical Height (No Scroll / Minimal Scroll) */
+            #checkoutPage { 
+                padding: 4px 8px !important; 
+                max-width: 440px !important; 
+                margin: 0 auto !important;
+                box-sizing: border-box !important;
+            }
+            #checkoutPage .checkout-card, #checkoutPage .card-box { 
+                margin-bottom: 4px !important; 
+                padding: 4px 8px !important; 
+            }
+            #checkoutPage .input-box { 
+                margin-bottom: 4px !important; 
+            }
+            #checkoutPage input { 
+                padding: 2px 6px !important; 
+                font-size: 11px !important; 
+                height: 30px !important; 
+            }
+            #checkoutUpiView { 
+                padding: 0px !important; 
+                margin-bottom: 2px !important; 
+                text-align: center !important; 
+            }
+            #scanToPayHeading { 
+                display: block !important; 
+                visibility: visible !important; 
+                opacity: 1 !important; 
+                margin: 2px 0 2px 0 !important; 
+                font-size: 12px !important; 
+                font-weight: 800 !important; 
+                text-align: center !important; 
+                text-transform: uppercase !important; 
+                background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; 
+                -webkit-background-clip: text !important; 
+                -webkit-text-fill-color: transparent !important; 
+            }
+            #checkoutUpiView img { 
+                width: 110px !important; 
+                height: 110px !important; 
+                object-fit: contain !important; 
+                margin: 0 auto !important; 
+                padding: 2px !important; 
+                border-radius: 6px !important; 
+            }
+            .upi-app-btn-grid { 
+                margin-top: 2px !important; 
+                gap: 4px !important; 
+            }
+            #checkoutPage .payment-tabs { 
+                margin-bottom: 2px !important; 
+            }
+            #checkoutPage .submit-btn { 
+                padding: 2px !important; 
+                height: 32px !important; 
+                font-size: 12px !important; 
+                margin-top: 4px !important; 
+            }
+            #checkoutPage p, #checkoutPage label { 
+                margin-bottom: 1px !important; 
+                font-size: 9px !important; 
+            }
+            .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { 
+                padding: 2px 4px !important; 
+                font-size: 8.5px !important; 
+                margin-bottom: 2px !important; 
+            }
+            #payViaUpiAppBtn { 
+                display: none !important; 
+            }
+        }
+    `;
+    document.head.appendChild(style);
+})();
+
 const serviceData = {
 
     // ==========================================
@@ -529,8 +638,8 @@ function updateCheckoutQuantityDisplay() {
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
         qrImg.src = qrImageSrc;
-        qrImg.style.width = "105px";
-        qrImg.style.height = "105px";
+        qrImg.style.width = "110px";
+        qrImg.style.height = "110px";
         qrImg.style.objectFit = "contain";
     }
 }
@@ -603,9 +712,9 @@ function showCheckoutOverlay() {
         counterContainer.style.cssText = "display: flex; align-items: center; background: rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 1px 4px; gap: 6px; margin-left: auto;";
         
         counterContainer.innerHTML = `
-            <button type="button" onclick="changeCheckoutMultiplier(-1)" style="background: rgba(255, 255, 255, 0.2); color: #fff; border: none; width: 28px; height: 28px; border-radius: 5px; font-weight: bold; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center;">-</button>
-            <span id="checkoutQtyCount" style="color: #fff; font-weight: bold; font-size: 15px; min-width: 20px; text-align: center;">1</span>
-            <button type="button" onclick="changeCheckoutMultiplier(1)" style="background: rgba(255, 255, 255, 0.2); color: #fff; border: none; width: 28px; height: 28px; border-radius: 5px; font-weight: bold; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
+            <button type="button" onclick="changeCheckoutMultiplier(-1)" style="background: rgba(255, 255, 255, 0.2); color: #fff; border: none; width: 30px; height: 30px; border-radius: 5px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">-</button>
+            <span id="checkoutQtyCount" style="color: #fff; font-weight: bold; font-size: 16px; min-width: 22px; text-align: center;">1</span>
+            <button type="button" onclick="changeCheckoutMultiplier(1)" style="background: rgba(255, 255, 255, 0.2); color: #fff; border: none; width: 30px; height: 30px; border-radius: 5px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
         `;
 
         if (priceParent.style) {
@@ -618,7 +727,7 @@ function showCheckoutOverlay() {
 
     d.multiplier = 1;
 
-    // Ensure "SCAN TO PAY VIA UPI" Heading is displayed right above QR Code
+    // Ensure "SCAN TO PAY VIA UPI" Heading is displayed right above QR Code across all devices
     const upiView = document.getElementById("checkoutUpiView");
     const qrImg = document.getElementById("checkoutQrImg");
     if (upiView) {
@@ -627,7 +736,7 @@ function showCheckoutOverlay() {
             scanHeading = document.createElement("h3");
             scanHeading.id = "scanToPayHeading";
             scanHeading.innerText = "SCAN TO PAY VIA UPI";
-            scanHeading.style.cssText = "margin: 2px 0 1px 0 !important; font-size: 12px !important; font-weight: 800 !important; text-align: center !important; text-transform: uppercase !important; background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; display: block !important; visibility: visible !important; opacity: 1 !important;";
+            scanHeading.style.cssText = "margin: 2px 0 2px 0 !important; font-size: 12px !important; font-weight: 800 !important; text-align: center !important; text-transform: uppercase !important; background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; display: block !important; visibility: visible !important; opacity: 1 !important;";
         }
         if (qrImg && qrImg.parentElement === upiView) {
             upiView.insertBefore(scanHeading, qrImg);
@@ -668,115 +777,6 @@ function showCheckoutOverlay() {
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
 
-    // PERMANENT BROWSER LAYOUT FIXES (HERO BANNER LOCK & COMPACT CHECKOUT)
-    if (!document.getElementById("ultraCompactCss")) {
-        const style = document.createElement("style");
-        style.id = "ultraCompactCss";
-        style.innerHTML = `
-            @media screen and (max-width: 768px) {
-                /* PROBLEM 2 FIX: PERMANENT HERO BANNER HEIGHT LOCK ON REFRESH/BACK */
-                .hero-banner, .hero-card, .instagram-boost-card {
-                    padding-top: 10px !important;
-                    padding-bottom: 10px !important;
-                    min-height: unset !important;
-                    height: auto !important;
-                    max-height: 150px !important;
-                    box-sizing: border-box !important;
-                }
-                .hero-banner .hero-title, .hero-card h1, .hero-card h2 {
-                    margin-top: 0px !important;
-                    margin-bottom: 2px !important;
-                    font-size: 18px !important;
-                }
-                .hero-banner p, .hero-card p {
-                    margin-bottom: 2px !important;
-                    font-size: 11px !important;
-                }
-                #installContainer {
-                    margin-top: 2px !important;
-                    margin-bottom: 2px !important;
-                    padding: 0 !important;
-                }
-
-                /* PROBLEM 1 FIX: ULTRA-COMPACT CHECKOUT PAGE FOR NO SCROLL */
-                #checkoutPage { 
-                    padding: 2px 6px !important; 
-                    max-width: 420px !important; 
-                    margin: 0 auto !important; 
-                }
-                #checkoutPage .checkout-card, #checkoutPage .card-box { 
-                    margin-bottom: 2px !important; 
-                    padding: 3px 6px !important; 
-                }
-                #checkoutPage .input-box { 
-                    margin-bottom: 2px !important; 
-                }
-                #checkoutPage input { 
-                    padding: 2px 6px !important; 
-                    font-size: 11px !important; 
-                    height: 28px !important; 
-                }
-                #checkoutUpiView { 
-                    padding: 0px !important; 
-                    margin-bottom: 1px !important; 
-                    text-align: center !important; 
-                }
-                #scanToPayHeading { 
-                    display: block !important; 
-                    visibility: visible !important; 
-                    opacity: 1 !important; 
-                    margin: 2px 0 1px 0 !important; 
-                    font-size: 12px !important; 
-                    font-weight: 800 !important; 
-                    text-align: center !important; 
-                    text-transform: uppercase !important; 
-                    background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; 
-                    -webkit-background-clip: text !important; 
-                    -webkit-text-fill-color: transparent !important; 
-                }
-                #checkoutUpiView img { 
-                    width: 105px !important; 
-                    height: 105px !important; 
-                    object-fit: contain !important; 
-                    margin: 1px auto !important; 
-                    padding: 1px !important; 
-                    border-radius: 4px !important; 
-                }
-                .upi-app-btn-grid { 
-                    margin-top: 2px !important; 
-                    gap: 3px !important; 
-                }
-                .upi-app-btn-grid button, .upi-app-btn-grid a {
-                    padding: 3px 6px !important;
-                    font-size: 10px !important;
-                    height: 28px !important;
-                }
-                #checkoutPage .payment-tabs { 
-                    margin-bottom: 2px !important; 
-                }
-                #checkoutPage .submit-btn { 
-                    padding: 2px !important; 
-                    height: 32px !important; 
-                    font-size: 12px !important; 
-                    margin-top: 2px !important; 
-                }
-                #checkoutPage p, #checkoutPage label { 
-                    margin-bottom: 1px !important; 
-                    font-size: 9px !important; 
-                }
-                .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { 
-                    padding: 2px 4px !important; 
-                    font-size: 8.5px !important; 
-                    margin-bottom: 2px !important; 
-                }
-                #payViaUpiAppBtn { 
-                    display: none !important; 
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage) {
         checkoutPage.classList.remove("hidden");
@@ -812,7 +812,7 @@ function switchCheckoutPayment(type) {
         if (viewUpi) viewUpi.classList.remove("hidden");
         if (viewBinance) viewBinance.classList.add("hidden");
     } else {
-        if (btnBinance) btnBinance.classList.add("active");
+        if (btnBinance) btnBinance.classList.remove("active");
         if (btnUpi) btnUpi.classList.remove("active");
         if (viewBinance) viewBinance.classList.remove("hidden");
         if (viewUpi) viewUpi.classList.add("hidden");
@@ -842,7 +842,6 @@ function submitOrderToWhatsApp() {
 
     const d = currentCheckoutData;
 
-    // Line breaks explicitly defined as %0A to avoid WebView newline stripping
     const formattedMessage = 
         `🚀 *NEW ORDER SUBMITTED* 🚀%0A%0A` +
         `📌 *Social Media:* ${d.platform || ''}%0A` +
@@ -854,10 +853,7 @@ function submitOrderToWhatsApp() {
         `💳 *Payment Method:* ${payMethod}%0A` +
         `🧾 *Transaction ID / UTR:* ${txnId}`;
 
-    // UTF-8 encoding fix specifically for Android WebView & Web browsers
     const encodedMessage = encodeURIComponent(decodeURIComponent(formattedMessage));
-
-    // Uses https://api.whatsapp.com/send which works 100% reliably in Android WebView Intents
     const waUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedMessage}`;
 
     window.open(waUrl, "_blank");

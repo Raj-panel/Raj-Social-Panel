@@ -521,7 +521,7 @@ function updateCheckoutQuantityDisplay() {
     }
 
     const upiId = "akibur.s@ptyes";
-    const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR`;
+    const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
     
     const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=20&data=${encodeURIComponent(upiUrl)}`;
 
@@ -531,12 +531,35 @@ function updateCheckoutQuantityDisplay() {
         qrImg.style.width = "180px";
         qrImg.style.height = "180px";
     }
+}
 
-    // Pay via UPI App button code removed / hidden as requested
-    const payViaUpiBtn = document.getElementById("payViaUpiAppBtn");
-    if (payViaUpiBtn) {
-        payViaUpiBtn.style.display = "none";
+// Dynamic UPI Deep Link App Trigger
+function triggerUpiPay(appType) {
+    const d = currentCheckoutData;
+    const upiId = "akibur.s@ptyes";
+    const amount = d.price ? d.price.toFixed(2) : "0.00";
+    const name = "RajSocialPanel";
+    const note = encodeURIComponent(d.packageName || "Social Boost Service");
+
+    let deepLink = "";
+
+    if (appType === "paytm") {
+        deepLink = `paytmmp://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
+    } else if (appType === "gpay") {
+        deepLink = `tez://upi/pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
+    } else if (appType === "phonepe") {
+        deepLink = `phonepe://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
+    } else {
+        deepLink = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
     }
+
+    // Attempting direct app execution
+    window.location.href = deepLink;
+
+    // Fallback to standard UPI Intent after timeout
+    setTimeout(() => {
+        window.location.href = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
+    }, 1200);
 }
 
 function changeCheckoutMultiplier(delta) {
@@ -593,12 +616,6 @@ function showCheckoutOverlay() {
         priceParent.appendChild(counterContainer);
     }
 
-    // Dynamic payViaUpiAppBtn injection removed so button won't appear
-    const payViaUpiBtn = document.getElementById("payViaUpiAppBtn");
-    if (payViaUpiBtn) {
-        payViaUpiBtn.style.display = "none";
-    }
-
     d.multiplier = 1;
     updateCheckoutQuantityDisplay();
 
@@ -632,7 +649,7 @@ function showCheckoutOverlay() {
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
 
-    // CSS Styling to keep Paytm, GPay, PhonePe, Other UPI visible while hiding unwanted elements
+    // CSS Styling for compact view
     if (!document.getElementById("ultraCompactCss")) {
         const style = document.createElement("style");
         style.id = "ultraCompactCss";
@@ -642,17 +659,11 @@ function showCheckoutOverlay() {
             #checkoutPage .input-box { margin-bottom: 4px !important; }
             #checkoutPage input { padding: 4px 8px !important; font-size: 11px !important; height: 35px !important; }
             #checkoutUpiView { padding: 4px !important; margin-bottom: 4px !important; text-align: center; }
-            #checkoutUpiView img { width: 110px !important; height: 110px !important; margin: 0px auto !important; background: #fff; padding: 0px; border-radius: 12px; }
             #checkoutPage .payment-tabs { margin-bottom: 4px !important; }
             #checkoutPage .submit-btn { padding: 6px !important; height: 36px !important; font-size: 12px !important; margin-top: 2px !important; }
             #checkoutPage p, #checkoutPage label { margin-bottom: 2px !important; font-size: 10px !important; }
             .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { padding: 4px 8px !important; font-size: 9.5px !important; margin-bottom: 4px !important; }
-            
-            /* Hide Pay via UPI button element if present in HTML */
             #payViaUpiAppBtn { display: none !important; }
-
-            /* Keeping Paytm, GPay, PhonePe, Other UPI fully visible */
-            .pay-apps-icons, [class*="paytm"], [class*="gpay"], [class*="phonepe"] { display: flex !important; }
         `;
         document.head.appendChild(style);
     }

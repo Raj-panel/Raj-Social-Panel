@@ -523,8 +523,8 @@ function updateCheckoutQuantityDisplay() {
     const upiId = "akibur.s@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
     
-    // QR Code Margin set to 0
-    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=0&data=${encodeURIComponent(upiUrl)}`;
+    // QR Code Margin set to 4 (Preserves 4-module Quiet Zone for accurate generation & high-quality download)
+    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&margin=4&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
@@ -658,8 +658,8 @@ function showCheckoutOverlay() {
             #checkoutPage .checkout-card { margin-bottom: 2px !important; padding: 4px 8px !important; }
             #checkoutPage .input-box { margin-bottom: 2px !important; }
             #checkoutPage input { padding: 3px 6px !important; font-size: 11px !important; height: 32px !important; }
-            #checkoutUpiView { padding: 0px !important; margin-bottom: 8px !important; text-align: center; }
-            #checkoutUpiView img { width: 110px !important; height: 110px !important; object-fit: contain !important; margin: 0px auto !important; padding: 2px !important; border-radius: 10px !important; }
+            #checkoutUpiView { padding: 0px !important; margin-bottom: 2px !important; text-align: center; }
+            #checkoutUpiView img { width: 130px !important; height: 130px !important; object-fit: contain !important; margin: 2px auto !important; padding: 4px !important; border-radius: 8px !important; }
             .upi-app-btn-grid { margin-top: 4px !important; gap: 4px !important; }
             #checkoutPage .payment-tabs { margin-bottom: 2px !important; }
             #checkoutPage .submit-btn { padding: 4px !important; height: 34px !important; font-size: 12px !important; margin-top: 2px !important; }

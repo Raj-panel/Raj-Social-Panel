@@ -1,21 +1,19 @@
 // =========================================================
 // PERMANENT LAYOUT LOCK & CHECKOUT SCROLL OPTIMIZATION
-// (Prevents Hero Banner resize on Back/Refresh & Removes Checkout Scroll)
 // =========================================================
 (function injectPermanentCss() {
     if (document.getElementById("fixedLayoutCss")) return;
     const style = document.createElement("style");
     style.id = "fixedLayoutCss";
     style.innerHTML = `
-        /* 1. Permanent Fixed Hero Banner Height Across All States (Normal, Back, Refresh) */
+        /* 1. Adjusted Fixed Hero Banner Height (Prevents text clipping and layout shifts) */
         .hero-banner, .hero-card, .instagram-boost-card {
-            height: 140px !important;
-            min-height: 140px !important;
-            max-height: 140px !important;
-            padding-top: 10px !important;
-            padding-bottom: 10px !important;
+            height: auto !important;
+            min-height: 180px !important;
+            max-height: 200px !important;
+            padding: 12px 14px !important;
             box-sizing: border-box !important;
-            overflow: hidden !important;
+            overflow: visible !important;
         }
         .hero-banner .hero-title, .hero-card h1, .hero-card h2 {
             margin-top: 0px !important;
@@ -23,14 +21,14 @@
             font-size: 18px !important;
         }
         .hero-banner p, .hero-card p {
-            margin-bottom: 2px !important;
+            margin-bottom: 8px !important;
             font-size: 11px !important;
         }
 
         /* Fixed Install Container Position */
         #installContainer {
-            margin-top: 2px !important;
-            margin-bottom: 4px !important;
+            margin-top: 4px !important;
+            margin-bottom: 6px !important;
         }
 
         @media screen and (max-width: 768px) {

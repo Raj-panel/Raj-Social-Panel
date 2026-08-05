@@ -523,14 +523,14 @@ function updateCheckoutQuantityDisplay() {
     const upiId = "akibur.s@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
     
-    // QR Code Margin set to 4 (Preserves 4-module Quiet Zone for accurate generation & high-quality download)
+    // QR Code Margin set to 4
     const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&margin=4&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
         qrImg.src = qrImageSrc;
-        qrImg.style.width = "130px";
-        qrImg.style.height = "130px";
+        qrImg.style.width = "105px";
+        qrImg.style.height = "105px";
         qrImg.style.objectFit = "contain";
     }
 }
@@ -603,9 +603,9 @@ function showCheckoutOverlay() {
         counterContainer.style.cssText = "display: flex; align-items: center; background: rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 1px 4px; gap: 6px; margin-left: auto;";
         
         counterContainer.innerHTML = `
-            <button type="button" onclick="changeCheckoutMultiplier(-1)" style="background: rgba(255, 255, 255, 0.2); color: #fff; border: none; width: 30px; height: 30px; border-radius: 5px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">-</button>
-            <span id="checkoutQtyCount" style="color: #fff; font-weight: bold; font-size: 16px; min-width: 22px; text-align: center;">1</span>
-            <button type="button" onclick="changeCheckoutMultiplier(1)" style="background: rgba(255, 255, 255, 0.2); color: #fff; border: none; width: 30px; height: 30px; border-radius: 5px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
+            <button type="button" onclick="changeCheckoutMultiplier(-1)" style="background: rgba(255, 255, 255, 0.2); color: #fff; border: none; width: 28px; height: 28px; border-radius: 5px; font-weight: bold; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center;">-</button>
+            <span id="checkoutQtyCount" style="color: #fff; font-weight: bold; font-size: 15px; min-width: 20px; text-align: center;">1</span>
+            <button type="button" onclick="changeCheckoutMultiplier(1)" style="background: rgba(255, 255, 255, 0.2); color: #fff; border: none; width: 28px; height: 28px; border-radius: 5px; font-weight: bold; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
         `;
 
         if (priceParent.style) {
@@ -618,7 +618,7 @@ function showCheckoutOverlay() {
 
     d.multiplier = 1;
 
-    // Ensure "SCAN TO PAY VIA UPI" Heading is displayed right above QR Code across all devices
+    // Ensure "SCAN TO PAY VIA UPI" Heading is displayed right above QR Code
     const upiView = document.getElementById("checkoutUpiView");
     const qrImg = document.getElementById("checkoutQrImg");
     if (upiView) {
@@ -627,7 +627,7 @@ function showCheckoutOverlay() {
             scanHeading = document.createElement("h3");
             scanHeading.id = "scanToPayHeading";
             scanHeading.innerText = "SCAN TO PAY VIA UPI";
-            scanHeading.style.cssText = "margin: 4px 0 2px 0 !important; font-size: 14px !important; font-weight: 800 !important; text-align: center !important; text-transform: uppercase !important; background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; display: block !important; visibility: visible !important; opacity: 1 !important;";
+            scanHeading.style.cssText = "margin: 2px 0 1px 0 !important; font-size: 12px !important; font-weight: 800 !important; text-align: center !important; text-transform: uppercase !important; background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; display: block !important; visibility: visible !important; opacity: 1 !important;";
         }
         if (qrImg && qrImg.parentElement === upiView) {
             upiView.insertBefore(scanHeading, qrImg);
@@ -668,61 +668,65 @@ function showCheckoutOverlay() {
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
 
-    // BROWSER ONLY OPTIMIZATION (App Layout / Logic Untouched)
+    // PERMANENT BROWSER LAYOUT FIXES (HERO BANNER LOCK & COMPACT CHECKOUT)
     if (!document.getElementById("ultraCompactCss")) {
         const style = document.createElement("style");
         style.id = "ultraCompactCss";
         style.innerHTML = `
             @media screen and (max-width: 768px) {
-                /* 1. Hero Banner Height Reduction (15-20%) */
+                /* PROBLEM 2 FIX: PERMANENT HERO BANNER HEIGHT LOCK ON REFRESH/BACK */
                 .hero-banner, .hero-card, .instagram-boost-card {
                     padding-top: 10px !important;
                     padding-bottom: 10px !important;
                     min-height: unset !important;
+                    height: auto !important;
+                    max-height: 150px !important;
+                    box-sizing: border-box !important;
                 }
                 .hero-banner .hero-title, .hero-card h1, .hero-card h2 {
-                    margin-top: 2px !important;
-                    margin-bottom: 4px !important;
+                    margin-top: 0px !important;
+                    margin-bottom: 2px !important;
+                    font-size: 18px !important;
                 }
                 .hero-banner p, .hero-card p {
-                    margin-bottom: 4px !important;
+                    margin-bottom: 2px !important;
+                    font-size: 11px !important;
                 }
-
-                /* 2. Install App Button Upper Adjustment */
                 #installContainer {
                     margin-top: 2px !important;
-                    margin-bottom: 4px !important;
+                    margin-bottom: 2px !important;
+                    padding: 0 !important;
                 }
 
-                /* 3. Checkout Page Optimization (Reduced Vertical Spacing) */
+                /* PROBLEM 1 FIX: ULTRA-COMPACT CHECKOUT PAGE FOR NO SCROLL */
                 #checkoutPage { 
-                    padding: 2px 8px !important; 
-                    max-width: 440px !important; 
+                    padding: 2px 6px !important; 
+                    max-width: 420px !important; 
                     margin: 0 auto !important; 
                 }
                 #checkoutPage .checkout-card, #checkoutPage .card-box { 
                     margin-bottom: 2px !important; 
-                    padding: 4px 8px !important; 
+                    padding: 3px 6px !important; 
                 }
                 #checkoutPage .input-box { 
                     margin-bottom: 2px !important; 
                 }
                 #checkoutPage input { 
-                    padding: 3px 6px !important; 
+                    padding: 2px 6px !important; 
                     font-size: 11px !important; 
-                    height: 32px !important; 
+                    height: 28px !important; 
                 }
                 #checkoutUpiView { 
                     padding: 0px !important; 
-                    margin-bottom: 2px !important; 
+                    margin-bottom: 1px !important; 
                     text-align: center !important; 
                 }
                 #scanToPayHeading { 
                     display: block !important; 
                     visibility: visible !important; 
                     opacity: 1 !important; 
-                    margin: 4px 0 2px 0 !important; 
-                    font-size: 13px !important; 
+                    margin: 2px 0 1px 0 !important; 
+                    font-size: 12px !important; 
                     font-weight: 800 !important; 
                     text-align: center !important; 
                     text-transform: uppercase !important; 
@@ -731,33 +735,38 @@ function showCheckoutOverlay() {
                     -webkit-text-fill-color: transparent !important; 
                 }
                 #checkoutUpiView img { 
-                    width: 120px !important; 
-                    height: 120px !important; 
+                    width: 105px !important; 
+                    height: 105px !important; 
                     object-fit: contain !important; 
-                    margin: 2px auto !important; 
-                    padding: 2px !important; 
-                    border-radius: 6px !important; 
+                    margin: 1px auto !important; 
+                    padding: 1px !important; 
+                    border-radius: 4px !important; 
                 }
                 .upi-app-btn-grid { 
-                    margin-top: 4px !important; 
-                    gap: 4px !important; 
+                    margin-top: 2px !important; 
+                    gap: 3px !important; 
+                }
+                .upi-app-btn-grid button, .upi-app-btn-grid a {
+                    padding: 3px 6px !important;
+                    font-size: 10px !important;
+                    height: 28px !important;
                 }
                 #checkoutPage .payment-tabs { 
                     margin-bottom: 2px !important; 
                 }
                 #checkoutPage .submit-btn { 
-                    padding: 4px !important; 
-                    height: 34px !important; 
+                    padding: 2px !important; 
+                    height: 32px !important; 
                     font-size: 12px !important; 
                     margin-top: 2px !important; 
                 }
                 #checkoutPage p, #checkoutPage label { 
                     margin-bottom: 1px !important; 
-                    font-size: 9.5px !important; 
+                    font-size: 9px !important; 
                 }
                 .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { 
-                    padding: 2px 6px !important; 
-                    font-size: 9px !important; 
+                    padding: 2px 4px !important; 
+                    font-size: 8.5px !important; 
                     margin-bottom: 2px !important; 
                 }
                 #payViaUpiAppBtn { 

@@ -63,13 +63,41 @@
     box-shadow: 0 0 30px rgba(0, 150, 255, 1), 0 0 50px rgba(138, 43, 226, 0.9);
     transform: translateY(-2px);
   }
+
+  /* Reference Image Styled UPI Buttons UI */
+  .upi-app-btn-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 12px;
+    width: 100%;
+  }
+  .upi-app-card-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 8px 4px;
+    text-decoration: none;
+    color: #1e293b;
+    font-weight: 700;
+    font-size: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .upi-app-card-btn:active {
+    transform: scale(0.96);
+  }
 </style>
 </head>
 <body>
 <div class="main-wrapper" id="mainHomeView">
   <!-- Header -->
-  <div class="panel-heading">𝑹𝑨𝑱-𝑺𝑶𝑪𝑰𝑨𝑳-𝑷𝑨𝑵𝑬𝑳
-</div>
+  <div class="panel-heading">𝑹𝑨𝑱-𝑺𝑶𝑪𝑰𝑨𝑳-𝑷𝑨𝑵𝑬𝑳</div>
 
   <!-- Support Buttons Header -->
   <div class="hero-actions">
@@ -202,17 +230,32 @@
 
     <!-- UPI Payment Container -->
     <div id="checkoutUpiView" class="payment-view-box">
-      <div class="scan-title">SCAN TO PAY VIA UPI</div>
-      <div class="qr-wrapper">
-        <img id="checkoutQrImg" src="" alt="UPI QR Code" />
-        <a href="#" id="payViaUpiAppBtn" class="pay-app-btn"><i class="fa-solid fa-bolt"></i> PAY via UPI</a>
+      <div class="scan-title" style="font-weight: 800; color: #a855f7; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
+        SCAN TO PAY VIA UPI
       </div>
-      <p class="qr-sub">Scan or enter payment detail into any UPI App</p>
-      <div class="upi-icons-row">
-        <span class="upi-chip">Paytm</span>
-        <span class="upi-chip">GPay</span>
-        <span class="upi-chip">PhonePe</span>
-        <span class="upi-chip">Other UPI</span>
+      <div class="qr-wrapper" style="text-align: center;">
+        <img id="checkoutQrImg" src="" alt="UPI QR Code" style="display: block; margin: 0 auto; border-radius: 12px;" />
+      </div>
+      <p class="qr-sub" style="font-size: 11px; color: #64748b; margin-top: 8px;">
+        Scan or enter payment detail into any UPI App
+      </p>
+      
+      <!-- UPI App Deep Link Buttons -->
+      <div class="upi-app-btn-grid">
+        <a href="#" id="btnPaytm" onclick="triggerUpiPay('paytm'); return false;" class="upi-app-card-btn">
+          <span style="color: #00baf2; font-weight: 900;">Paytm</span>
+        </a>
+        <a href="#" id="btnGPay" onclick="triggerUpiPay('gpay'); return false;" class="upi-app-card-btn">
+          <span style="color: #4285f4; font-weight: 800;">G</span><span style="color: #ea4335; font-weight: 800;">P</span><span style="color: #fbbc05; font-weight: 800;">a</span><span style="color: #34a853; font-weight: 800;">y</span>
+        </a>
+        <a href="#" id="btnPhonePe" onclick="triggerUpiPay('phonepe'); return false;" class="upi-app-card-btn">
+          <i class="fa-solid fa-asterisk" style="color: #5f259f;"></i>
+          <span style="color: #5f259f; font-weight: 800;">PhonePe</span>
+        </a>
+        <a href="#" id="btnOtherUpi" onclick="triggerUpiPay('generic'); return false;" class="upi-app-card-btn">
+          <i class="fa-solid fa-qrcode" style="color: #6366f1;"></i>
+          <span style="color: #1e293b; font-weight: 700;">Other UPI</span>
+        </a>
       </div>
     </div>
 

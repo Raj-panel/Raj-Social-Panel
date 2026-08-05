@@ -673,7 +673,7 @@ function showCheckoutOverlay() {
         const style = document.createElement("style");
         style.id = "ultraCompactCss";
         style.innerHTML = `
-            /* BROWSER ONLY TARGETING (Excludes WebView / Native App Wrappers) */
+            /* BROWSER ONLY TARGETING (Excludes Native WebView / App Viewports) */
             @media screen and (max-width: 768px) {
                 
                 /* 1. HERO BANNER HEIGHT OPTIMIZATION (~18% height reduction for Web Browsers) */

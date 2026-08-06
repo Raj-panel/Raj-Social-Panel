@@ -664,7 +664,9 @@ function triggerUpiPay(appType) {
         `&tn=${encodeURIComponent(note)}`;
 
     if (appType === "phonepe") {
-
+    window.location.href =
+        `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(payeeName)}&am=${encodeURIComponent(amount)}&cu=INR&tn=${encodeURIComponent(note)}`;
+}
         const phonePeIntent =
             `intent://upi/pay?pa=${encodeURIComponent(upiId)}` +
             `&pn=${encodeURIComponent(payeeName)}` +

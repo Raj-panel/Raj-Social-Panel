@@ -73,9 +73,9 @@
                 width: 110px !important; 
                 height: 110px !important; 
                 object-fit: contain !important; 
-                margin: 2 auto !important; 
-                padding: 4px !important; 
-                border-radius: 10px !important; 
+                margin: 0 auto !important; 
+                padding: 2px !important; 
+                border-radius: 6px !important; 
             }
             .upi-app-btn-grid { 
                 margin-top: 2px !important; 
@@ -643,30 +643,30 @@ function updateCheckoutQuantityDisplay() {
     }
 }
 
+// ==========================================
+// UPI PAYMENT INTENT LOGIC (FIXED FOR PHONEPE)
+// ==========================================
+
 function triggerUpiPay(appType) {
     const d = currentCheckoutData;
     const upiId = "akibur.s@ptyes";
     const amount = d.price ? d.price.toFixed(2) : "0.00";
-    const name = "RajSocialPanel";
-    const note = encodeURIComponent(d.packageName || "Social Boost Service");
+    const name = "Sajldur Rahaman";
+    const note = encodeURIComponent(d.packageName || "Social Service");
 
     let deepLink = "";
 
+    // Using standard Universal UPI intent structure so PhonePe opens standard merchant payment screen directly
     if (appType === "paytm") {
-        deepLink = `paytmmp://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
+        deepLink = `paytmmp://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${note}`;
     } else if (appType === "gpay") {
-        deepLink = `tez://upi/pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
-    } else if (appType === "phonepe") {
-        deepLink = `phonepe://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
+        deepLink = `tez://upi/pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${note}`;
     } else {
-        deepLink = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
+        // Fix for PhonePe & General UPI: Standard upi:// scheme opens normal PhonePe payment screen (with Payee, Amount, Message)
+        deepLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${note}`;
     }
 
     window.location.href = deepLink;
-
-    setTimeout(() => {
-        window.location.href = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
-    }, 1200);
 }
 
 function changeCheckoutMultiplier(delta) {

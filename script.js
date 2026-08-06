@@ -649,28 +649,31 @@ function updateCheckoutQuantityDisplay() {
 
 function triggerUpiPay(appType) {
     const d = currentCheckoutData;
-    const upiId = "akibur.s@ptyes"; 
+    const upiId = "akibur.s@ptyes";
     const amount = d.price ? d.price.toFixed(2) : "0.00";
-    
-    // নাম এবং নোট পরিষ্কার ও শর্ট ফরম্যাটে রাখা হয়েছে
+
     const name = encodeURIComponent("Sajldur Rahaman");
     const note = encodeURIComponent("Payment");
+
+    const upiUrl = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
 
     let deepLink = "";
 
     if (appType === "phonepe") {
-        // চ্যাট/মেসেজ স্ক্রিন খোলার জন্য PhonePe ডিপ লিঙ্ক
-        deepLink = `phonepe://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
+        deepLink = `phonepe://upi/pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
     } else if (appType === "paytm") {
         deepLink = `paytmmp://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
     } else if (appType === "gpay") {
         deepLink = `tez://upi/pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
     } else {
-        deepLink = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
+        deepLink = upiUrl;
     }
 
-    // সরাসরি অ্যাপ রিডাইরেক্ট (কোনো setTimeout রাখা হয়নি)
     window.location.href = deepLink;
+
+    setTimeout(() => {
+        window.location.href = upiUrl;
+    }, 800);
 }
 
 function changeCheckoutMultiplier(delta) {

@@ -73,9 +73,9 @@
                 width: 110px !important; 
                 height: 110px !important; 
                 object-fit: contain !important; 
-                margin: 0 auto !important; 
-                padding: 2px !important; 
-                border-radius: 6px !important; 
+                margin: 2 auto !important; 
+                padding: 4px !important; 
+                border-radius: 10px !important; 
             }
             .upi-app-btn-grid { 
                 margin-top: 2px !important; 
@@ -643,67 +643,30 @@ function updateCheckoutQuantityDisplay() {
     }
 }
 
-// ==========================================
-// UPI PAYMENT INTENT LOGIC (FIXED FOR PHONEPE)
-// ==========================================
-
 function triggerUpiPay(appType) {
     const d = currentCheckoutData;
-
     const upiId = "akibur.s@ptyes";
     const amount = d.price ? d.price.toFixed(2) : "0.00";
+    const name = "RajSocialPanel";
+    const note = encodeURIComponent(d.packageName || "Social Boost Service");
 
-    const payeeName = "Sajldur Rahaman";
-    const note = "Payment";
+    let deepLink = "";
 
-    const upiUrl =
-        `upi://pay?pa=${encodeURIComponent(upiId)}` +
-        `&pn=${encodeURIComponent(payeeName)}` +
-        `&am=${encodeURIComponent(amount)}` +
-        `&cu=INR` +
-        `&tn=${encodeURIComponent(note)}`;
-
-    if (appType === "phonepe") {
-    window.location.href =
-        `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(payeeName)}&am=${encodeURIComponent(amount)}&cu=INR&tn=${encodeURIComponent(note)}`;
-}
-        const phonePeIntent =
-            `intent://upi/pay?pa=${encodeURIComponent(upiId)}` +
-            `&pn=${encodeURIComponent(payeeName)}` +
-            `&am=${encodeURIComponent(amount)}` +
-            `&cu=INR` +
-            `&tn=${encodeURIComponent(note)}` +
-            `#Intent;scheme=upi;package=com.phonepe.app;end`;
-
-        window.location.href = phonePeIntent;
-
-        setTimeout(() => {
-            window.location.href = upiUrl;
-        }, 700);
-
+    if (appType === "paytm") {
+        deepLink = `paytmmp://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
     } else if (appType === "gpay") {
-
-        window.location.href =
-            `tez://upi/pay?pa=${encodeURIComponent(upiId)}` +
-            `&pn=${encodeURIComponent(payeeName)}` +
-            `&am=${encodeURIComponent(amount)}` +
-            `&cu=INR` +
-            `&tn=${encodeURIComponent(note)}`;
-
-    } else if (appType === "paytm") {
-
-        window.location.href =
-            `paytmmp://pay?pa=${encodeURIComponent(upiId)}` +
-            `&pn=${encodeURIComponent(payeeName)}` +
-            `&am=${encodeURIComponent(amount)}` +
-            `&cu=INR` +
-            `&tn=${encodeURIComponent(note)}`;
-
+        deepLink = `tez://upi/pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
+    } else if (appType === "phonepe") {
+        deepLink = `phonepe://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
     } else {
-
-        window.location.href = upiUrl;
-
+        deepLink = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
     }
+
+    window.location.href = deepLink;
+
+    setTimeout(() => {
+        window.location.href = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
+    }, 1200);
 }
 
 function changeCheckoutMultiplier(delta) {

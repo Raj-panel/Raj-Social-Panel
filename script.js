@@ -649,20 +649,21 @@ function updateCheckoutQuantityDisplay() {
 
 function triggerUpiPay(appType) {
     const d = currentCheckoutData;
-    const upiId = "akibur.s@ptyes";
+    const upiId = "akibur.s@ptyes"; // আপনার UPI ID
     const amount = d.price ? d.price.toFixed(2) : "0.00";
     const name = "Sajldur Rahaman";
     const note = encodeURIComponent(d.packageName || "Social Service");
 
     let deepLink = "";
 
-    // Using standard Universal UPI intent structure so PhonePe opens standard merchant payment screen directly
-    if (appType === "paytm") {
+    if (appType === "phonepe") {
+        // PhonePe specific scheme to open PhonePe message/payment UI directly
+        deepLink = `phonepe://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${note}`;
+    } else if (appType === "paytm") {
         deepLink = `paytmmp://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${note}`;
     } else if (appType === "gpay") {
         deepLink = `tez://upi/pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${note}`;
     } else {
-        // Fix for PhonePe & General UPI: Standard upi:// scheme opens normal PhonePe payment screen (with Payee, Amount, Message)
         deepLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${note}`;
     }
 

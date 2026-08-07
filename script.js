@@ -239,7 +239,7 @@ const serviceData = {
 };
 
 // ==========================================
-// GLOBAL VARIABLES & BACK NAVIGATION SYSTEM
+// GLOBAL VARIABLES
 // ==========================================
 
 let currentPlatform = "instagram";
@@ -247,100 +247,14 @@ let currentCategory = "";
 let selectedPackage = null;
 let currentCheckoutData = {};
 
-// Helper elements getter for Hamburger Menu
-function getMenuElements() {
-    return {
-        menuBtn: document.getElementById("menuBtn") || document.querySelector(".hamburger-menu") || document.querySelector(".hamburger") || document.getElementById("hamburgerBtn"),
-        menuOverlay: document.getElementById("sideMenu") || document.getElementById("menuOverlay") || document.querySelector(".side-menu") || document.querySelector(".mobile-menu") || document.getElementById("navMenu"),
-        closeBtn: document.getElementById("closeMenuBtn") || document.querySelector(".close-menu") || document.querySelector(".menu-close")
-    };
-}
-
-function isMenuOpen() {
-    const { menuOverlay } = getMenuElements();
-    if (!menuOverlay) return false;
-    return menuOverlay.classList.contains("active") || 
-           menuOverlay.classList.contains("open") || 
-           menuOverlay.style.display === "block" || 
-           menuOverlay.style.left === "0px" || 
-           menuOverlay.style.transform === "none";
-}
-
-function openMenuUI() {
-    const { menuOverlay } = getMenuElements();
-    if (!menuOverlay) return;
-    menuOverlay.classList.add("active", "open");
-    if (menuOverlay.style.display === "none") {
-        menuOverlay.style.display = "block";
-    }
-}
-
-function closeMenuUI() {
-    const { menuOverlay } = getMenuElements();
-    if (!menuOverlay) return;
-    menuOverlay.classList.remove("active", "open");
-    if (menuOverlay.style.display === "block") {
-        menuOverlay.style.display = "none";
-    }
-}
-
-function toggleMenu() {
-    if (isMenuOpen()) {
-        closeMenu();
-    } else {
-        openMenu();
-    }
-}
-
-function openMenu() {
-    if (!isMenuOpen()) {
-        openMenuUI();
-        history.pushState({ menuOpen: true }, "");
-    }
-}
-
-function closeMenu() {
-    if (isMenuOpen()) {
-        closeMenuUI();
-        if (history.state && history.state.menuOpen) {
-            history.back();
-        }
-    }
-}
-
 window.onload = function () {
     switchPlatform("instagram");
-
-    // Initialize Hamburger Menu Listeners cleanly
-    const { menuBtn, closeBtn } = getMenuElements();
-    if (menuBtn) {
-        menuBtn.onclick = function (e) {
-            e.preventDefault();
-            toggleMenu();
-        };
-    }
-    if (closeBtn) {
-        closeBtn.onclick = function (e) {
-            e.preventDefault();
-            closeMenu();
-        };
-    }
 };
 
-// Unified History & Back Navigation Handler
 window.addEventListener('popstate', function (event) {
     const checkoutPage = document.getElementById("checkoutPage");
-    
-    // 1. If Checkout UI is Open -> Priority 1: Close Checkout
-    if (checkoutPage && (checkoutPage.style.display === "block" || !checkoutPage.classList.contains("hidden"))) {
+    if (checkoutPage && checkoutPage.style.display === "block") {
         closeCheckoutUI();
-        return;
-    }
-
-    // 2. If Hamburger Menu is Open -> Priority 2: Close Menu only (No Page/App Exit)
-    if (isMenuOpen()) {
-        closeMenuUI();
-        return;
     }
 });
 
@@ -349,14 +263,6 @@ window.addEventListener('popstate', function (event) {
 // ==========================================
 
 function switchPlatform(platform) {
-    // Prevent History Loop if Menu was open when choosing a platform
-    if (isMenuOpen()) {
-        closeMenuUI();
-        if (history.state && history.state.menuOpen) {
-            history.replaceState(null, "");
-        }
-    }
-
     currentPlatform = platform;
     selectedPackage = null;
 
@@ -398,13 +304,6 @@ function renderCategoryTabs() {
         tabBtn.innerText = cat;
 
         tabBtn.onclick = function () {
-            // Prevent History Loop if selecting category from Menu
-            if (isMenuOpen()) {
-                closeMenuUI();
-                if (history.state && history.state.menuOpen) {
-                    history.replaceState(null, "");
-                }
-            }
             document.querySelectorAll(".cat-tab").forEach(t => t.classList.remove("active"));
             tabBtn.classList.add("active");
             currentCategory = cat;

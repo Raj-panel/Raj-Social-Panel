@@ -1,976 +1,923 @@
-// =========================================================
-// PERMANENT LAYOUT LOCK, HEADER ALIGNMENT & CHECKOUT SCROLL OPTIMIZATION
-// =========================================================
-(function injectPermanentCss() {
-    if (document.getElementById("fixedLayoutCss")) return;
-    const style = document.createElement("style");
-    style.id = "fixedLayoutCss";
-    style.innerHTML = `
-        /* 0. Header & Logo Alignment Fix (Three-line and Text Vertical Centering) */
-        .header-container, .navbar, header, nav, .top-bar {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: flex-start !important;
-            gap: 12px !important;
-            padding: 10px 15px !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
-        }
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
 
-        #hamburgerBtn, .hamburger-btn, .menu-toggle, .navbar-toggler {
-            margin: 0 !important;
-            padding: 0 !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            height: 42px !important;
-            width: 42px !important;
-            flex-shrink: 0 !important;
-        }
-
-        .logo-text, .brand-name, .navbar-brand, header h1, header h2, .logo {
-            margin: 0 !important;
-            padding: 0 !important;
-            line-height: 1 !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            font-size: 20px !important;
-            vertical-align: middle !important;
-        }
-
-        /* 1. Adjusted Fixed Hero Banner Height */
-        .hero-banner, .hero-card, .instagram-boost-card {
-            height: auto !important;
-            min-height: 180px !important;
-            max-height: 200px !important;
-            padding: 12px 14px !important;
-            box-sizing: border-box !important;
-            overflow: visible !important;
-        }
-        .hero-banner .hero-title, .hero-card h1, .hero-card h2 {
-            margin-top: 0px !important;
-            margin-bottom: 2px !important;
-            font-size: 18px !important;
-        }
-        .hero-banner p, .hero-card p {
-            margin-bottom: 8px !important;
-            font-size: 11px !important;
-        }
-
-        /* Fixed Install Container Position */
-        #installContainer {
-            margin-top: 4px !important;
-            margin-bottom: 6px !important;
-        }
-
-        @media screen and (max-width: 768px) {
-            /* 2. Checkout Ultra-Compact Vertical Height */
-            #checkoutPage { 
-                padding: 4px 8px !important; 
-                max-width: 440px !important; 
-                margin: 0 auto !important;
-                box-sizing: border-box !important;
-            }
-            #checkoutPage .checkout-card, #checkoutPage .card-box { 
-                margin-bottom: 4px !important; 
-                padding: 4px 8px !important; 
-            }
-            #checkoutPage .input-box { 
-                margin-bottom: 4px !important; 
-            }
-            #checkoutPage input { 
-                padding: 2px 6px !important; 
-                font-size: 11px !important; 
-                height: 30px !important; 
-            }
-            #checkoutUpiView { 
-                padding: 0px !important; 
-                margin-bottom: 2px !important; 
-                text-align: center !important; 
-            }
-            #scanToPayHeading { 
-                display: block !important; 
-                visibility: visible !important; 
-                opacity: 1 !important; 
-                margin: 2px 0 2px 0 !important; 
-                font-size: 12px !important; 
-                font-weight: 800 !important; 
-                text-align: center !important; 
-                text-transform: uppercase !important; 
-                background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; 
-                -webkit-background-clip: text !important; 
-                -webkit-text-fill-color: transparent !important; 
-            }
-            #checkoutUpiView img { 
-                width: 110px !important; 
-                height: 110px !important; 
-                object-fit: contain !important; 
-                margin: 2 auto !important; 
-                padding: 4px !important; 
-                border-radius: 10px !important; 
-            }
-            .upi-app-btn-grid { 
-                margin-top: 2px !important; 
-                gap: 4px !important; 
-            }
-            #checkoutPage .payment-tabs { 
-                margin-bottom: 2px !important; 
-            }
-            #checkoutPage .submit-btn { 
-                padding: 2px !important; 
-                height: 32px !important; 
-                font-size: 12px !important; 
-                margin-top: 4px !important; 
-            }
-            #checkoutPage p, #checkoutPage label { 
-                margin-bottom: 1px !important; 
-                font-size: 9px !important; 
-            }
-            .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { 
-                padding: 2px 4px !important; 
-                font-size: 8.5px !important; 
-                margin-bottom: 2px !important; 
-            }
-            #payViaUpiAppBtn { 
-                display: none !important; 
-            }
-        }
-    `;
-    document.head.appendChild(style);
-})();
-
-const serviceData = {
-
-    // ==========================================
-    // INSTAGRAM
-    // ==========================================
-    instagram: {
-
-        "Followers Non-Drop": [
-            {
-                type: "custom",
-                name: "Instagram Followers [High Quality] 100% Non-Drop -500K+ Per Day- 10 Minutes Start",
-                providerId: 1192,
-                pricePer1000: 80
-            }
-        ],
-
-        "Followers": [
-            { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo" },
-            { name: "1K Followers", price: 50 },
-            { name: "2K Followers", price: 90 },
-            { name: "3K Followers", price: 129, badge: "⭐ Popular", badgeClass: "badge-popular" },
-            { name: "4K Followers", price: 165 },
-            { name: "5K Followers", price: 199, badge: "🔥 Best Value", badgeClass: "badge-best" },
-            { name: "6K Followers", price: 239 },
-            { name: "7K Followers", price: 279 },
-            { name: "8K Followers", price: 319 },
-            { name: "9K Followers", price: 359 },
-            { name: "10K Followers", price: 399, badge: "🎁 BUY 10K + GET 2K FREE", badgeClass: "badge-super" }
-        ],
-
-        "Likes Lifetime": [
-            { providerId: 675, name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo" },
-            { providerId: 675, name: "500 Likes", price: 25, badge: "Real", badgeClass: "badge-real" },
-            { providerId: 675, name: "1K Likes", price: 30, badge: "Fast", badgeClass: "badge-popular" },
-            { providerId: 675, name: "3K Likes", price: 69, badge: "⭐ Popular", badgeClass: "badge-popular" },
-            { providerId: 675, name: "5K Likes", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" },
-            { providerId: 675, name: "10K Likes", price: 179, badge: "👑 Most Popular", badgeClass: "badge-best" }
-        ],
-
-        "Reels / Video Views": [
-            { providerId: 853, name: "1K Views", price: 5, badge: "DEMO", badgeClass: "badge-demo" },
-            { providerId: 853, name: "5K Views", price: 20, badge: "STARTER", badgeClass: "badge-real" },
-            { providerId: 853, name: "10K Views", price: 25, badge: "BEST VALUE", badgeClass: "badge-best" },
-            { providerId: 853, name: "20K Views", price: 40, badge: "POPULAR", badgeClass: "badge-popular" },
-            { providerId: 853, name: "50K Views", price: 70, badge: "RECOMMENDED", badgeClass: "badge-best" },
-            { providerId: 853, name: "100K Views", price: 99, badge: "🔥 BEST SELLER", badgeClass: "badge-best" },
-            { providerId: 853, name: "500K Views", price: 299, badge: "👑 MOST POPULAR", badgeClass: "badge-best" },
-            { providerId: 853, name: "1M Views", price: 499, badge: "💥 MEGA DEAL", badgeClass: "badge-best" }
-        ],
-
-        "Photo / Post Views": [
-            { providerId: 1030, name: "1K Views", price: 10, badge: "🎯 Demo", badgeClass: "badge-demo" },
-            { providerId: 1030, name: "3K Views", price: 15, badge: "⚡ Starter", badgeClass: "badge-real" },
-            { providerId: 1030, name: "5K Views", price: 25, badge: "⭐ Popular", badgeClass: "badge-popular" },
-            { providerId: 1030, name: "10K Views", price: 40, badge: "🔥 Best Value", badgeClass: "badge-best" },
-            { providerId: 1030, name: "30K Views", price: 79, badge: "💎 Value Pack", badgeClass: "badge-popular" },
-            { providerId: 1030, name: "50K Views", price: 119, badge: "🏆 Recommended", badgeClass: "badge-best" },
-            { providerId: 1030, name: "100K Views", price: 220, badge: "👑 Most Popular", badgeClass: "badge-best" }
-        ],
-
-        "Comments Lifetime": [
-            { providerId: 31, name: "50 Comments", price: 15, badge: "Starter", badgeClass: "badge-demo" },
-            { providerId: 31, name: "100 Comments", price: 20, badge: "Real", badgeClass: "badge-real" },
-            { providerId: 31, name: "500 Comments", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
-            { providerId: 31, name: "1K Comments", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" }
-        ],
-
-        "Repost Lifetime": [
-            { providerId: 505, name: "50 Reposts", price: 15, badge: "Starter", badgeClass: "badge-demo" },
-            { providerId: 505, name: "100 Reposts", price: 20, badge: "Real", badgeClass: "badge-real" },
-            { providerId: 505, name: "500 Reposts", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
-            { providerId: 505, name: "1K Reposts", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" },
-            { providerId: 505, name: "3K Reposts", price: 249, badge: "👑 Most Popular", badgeClass: "badge-best" }
-        ],
-
-        "Shares Lifetime": [
-            { providerId: 50, name: "100 Shares", price: 5, badge: "Starter", badgeClass: "badge-demo" },
-            { providerId: 50, name: "1K Shares", price: 30, badge: "Fast", badgeClass: "badge-popular" },
-            { providerId: 50, name: "5K Shares", price: 69, badge: "🔥 Best Value", badgeClass: "badge-best" },
-            { providerId: 50, name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-best" }
-        ]
-    },
-
-    // ==========================================
-    // FACEBOOK
-    // ==========================================
-    facebook: {
-
-        "Facebook Followers": [
-            { type: "custom", name: "Facebook Followers", pricePer1000: 49 }
-        ],
-
-        "Likes Non-Drop": [
-            { name: "100 Likes", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
-            { name: "500 Likes", price: 25, badge: "REAL", badgeClass: "badge-real" },
-            { name: "1K Likes", price: 39, badge: "FAST", badgeClass: "badge-popular" },
-            { name: "3K Likes", price: 69, badge: "⭐ POPULAR", badgeClass: "badge-popular" },
-            { name: "5K Likes", price: 99, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
-            { name: "10K Likes", price: 179, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
-        ],
-
-        "Reels / Video Views": [
-            { name: "1K Views", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
-            { name: "3K Views", price: 25 },
-            { name: "5K Views", price: 35, badge: "⭐ POPULAR", badgeClass: "badge-popular" },
-            { name: "10K Views", price: 60 },
-            { name: "50K Views", price: 249, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
-            { name: "100K Views", price: 449, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
-        ],
-
-        "Facebook Comments": [
-            { name: "50 Comments", price: 10 },
-            { name: "100 Comments", price: 15 },
-            { name: "300 Comments", price: 25, badge: "⭐ Popular", badgeClass: "badge-popular" },
-            { name: "500 Comments", price: 39, badge: "🔥 Best Value", badgeClass: "badge-best" },
-            { name: "1K Comments", price: 60 },
-            { name: "2K Comments", price: 110, badge: "🏆 Best Deal", badgeClass: "badge-best" },
-            { name: "5K Comments", price: 260, badge: "👑 Most Popular", badgeClass: "badge-best" }
-        ],
-
-        "Facebook Shares": [
-            { name: "100 Shares", price: 15 },
-            { name: "1K Shares", price: 25 },
-            { name: "5K Shares", price: 59, badge: "🔥 Best Value", badgeClass: "badge-best" },
-            { name: "10K Shares", price: 89, badge: "⭐ Popular", badgeClass: "badge-popular" },
-            { name: "20K Shares", price: 149, badge: "🏆 Best Deal", badgeClass: "badge-best" },
-            { name: "100K Shares", price: 399, badge: "👑 Most Popular", badgeClass: "badge-best" }
-        ]
-    }
-};
-
-// ==========================================
-// GLOBAL VARIABLES
-// ==========================================
-
-let currentPlatform = "instagram";
-let currentCategory = "";
-let selectedPackage = null;
-let currentCheckoutData = {};
-
-window.onload = function () {
-    switchPlatform("instagram");
-};
-
-window.addEventListener('popstate', function (event) {
-    const checkoutPage = document.getElementById("checkoutPage");
-    if (checkoutPage && checkoutPage.style.display === "block") {
-        closeCheckoutUI();
-    }
-});
-
-// ==========================================
-// SWITCH INSTAGRAM / FACEBOOK
-// ==========================================
-
-function switchPlatform(platform) {
-    currentPlatform = platform;
-    selectedPackage = null;
-
-    const btnInsta = document.getElementById("btnInsta");
-    const btnFb = document.getElementById("btnFb");
-    if (btnInsta) btnInsta.classList.toggle("active", platform === "instagram");
-    if (btnFb) btnFb.classList.toggle("active", platform === "facebook");
-
-    const heroTitle = document.getElementById("heroTitle");
-    const heroLogoIcon = document.getElementById("heroLogoIcon");
-
-    if (platform === "instagram") {
-        if (heroTitle) heroTitle.innerText = "Instagram Boost";
-        if (heroLogoIcon) heroLogoIcon.innerHTML = '<i class="fa-brands fa-instagram"></i>';
-    } else {
-        if (heroTitle) heroTitle.innerText = "Facebook Boost";
-        if (heroLogoIcon) heroLogoIcon.innerHTML = '<i class="fa-brands fa-facebook"></i>';
-    }
-
-    renderCategoryTabs();
-    toggleInstallButton();
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-// ==========================================
-// RENDER CATEGORY TABS
-// ==========================================
-
-function renderCategoryTabs() {
-    const tabsContainer = document.getElementById("categoryTabs");
-    if (!tabsContainer) return;
-    tabsContainer.innerHTML = "";
-
-    const categories = Object.keys(serviceData[currentPlatform]);
-    currentCategory = categories[0];
-
-    categories.forEach((cat, index) => {
-        const tabBtn = document.createElement("button");
-        tabBtn.className = `cat-tab ${index === 0 ? "active" : ""}`;
-        tabBtn.innerText = cat;
-
-        tabBtn.onclick = function () {
-            document.querySelectorAll(".cat-tab").forEach(t => t.classList.remove("active"));
-            tabBtn.classList.add("active");
-            currentCategory = cat;
-            renderPackages();
-            toggleInstallButton();
-        };
-
-        tabsContainer.appendChild(tabBtn);
-    });
-
-    renderPackages();
+body {
+    background: #fdf2f8;
+    background-image: radial-gradient(circle at 10% 10%, rgba(244, 114, 182, 0.15) 0%, transparent 40%),
+                      radial-gradient(circle at 90% 90%, rgba(192, 132, 252, 0.15) 0%, transparent 40%);
+    color: #1e293b;
+    min-height: 100vh;
+    padding: 12px;
+    display: flex;
+    justify-content: center;
 }
 
-// ==========================================
-// RENDER PACKAGES
-// ==========================================
-
-function renderPackages() {
-    const packageList = document.getElementById("packageList");
-    if (!packageList) return;
-
-    packageList.innerHTML = "";
-    selectedPackage = null;
-
-    const packages = serviceData[currentPlatform][currentCategory];
-    const iconClass = currentPlatform === "instagram" ? "fa-instagram" : "fa-facebook";
-
-    packages.forEach((pkg) => {
-        if (pkg.type === "custom") {
-            const customDiv = document.createElement("div");
-            customDiv.className = "custom-card";
-
-            customDiv.innerHTML = `
-                <div style="margin-bottom: 8px;">
-                    <strong class="custom-title" style="color: #a855f7; font-size: 13px;">
-                        ${pkg.name} (Custom Qty)
-                    </strong>
-                    <p style="font-size: 10px; color: #94a3b8;">
-                        Rate: ₹${pkg.pricePer1000 || 0} per 1000 Qty
-                    </p>
-                </div>
-
-                <div class="input-box">
-                    <input
-                        type="number"
-                        id="customQtyInput"
-                        placeholder="Min 100 (e.g. 1000)"
-                        min="100"
-                        oninput="calculateCustomPrice('${pkg.name}', ${pkg.pricePer1000 || 0}, ${pkg.providerId || "null"})"
-                    >
-                </div>
-
-                <div style="font-size: 11px; color: #ef4444; margin-top: 4px; display: none;" id="customMinWarning">
-                    ⚠️ Minimum Quantity is 100!
-                </div>
-
-                <div style="font-size: 12px; font-weight: 800; color: #22c55e; margin-top: 5px;" id="customPriceDisplay">
-                    Total: ₹<span id="customCalcPrice">0.00</span> INR
-                </div>
-
-                <button class="action-btn" style="margin-top: 10px; width: 100%; padding: 8px; background: #22c55e; color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;" onclick="openCheckoutFromCustom()">
-                    Proceed to Payment
-                </button>
-            `;
-
-            packageList.appendChild(customDiv);
-        } else {
-            const card = document.createElement("div");
-            card.className = "pkg-card";
-
-            card.onclick = function () {
-                const qty = extractQuantity(pkg.name);
-                const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
-                openCheckoutForFixed(
-                    platformCap,
-                    currentCategory,
-                    pkg.name,
-                    qty,
-                    pkg.price,
-                    pkg.badge || 'Popular'
-                );
-            };
-
-            card.innerHTML = `
-                <div class="pkg-left">
-                    <div class="pkg-icon">
-                        <i class="fa-brands ${iconClass}"></i>
-                    </div>
-
-                    <div class="pkg-info">
-                        <div class="pkg-title">
-                            ${pkg.name}
-                            ${pkg.badge ? `<span class="pkg-badge ${pkg.badgeClass || "badge-popular"}">${pkg.badge}</span>` : ""}
-                        </div>
-                        <span class="pkg-sub">
-                            ⚡ Instant Delivery • Premium Quality
-                        </span>
-                    </div>
-                </div>
-
-                <div class="pkg-price-btn">
-                    ₹${pkg.price}
-                </div>
-            `;
-
-            packageList.appendChild(card);
-        }
-    });
+.main-wrapper {
+    width: 100%;
+    max-width: 440px;
 }
 
-// ==========================================
-// CUSTOM PRICE CALCULATOR & MINIMUM 100 CHECK
-// ==========================================
-
-function calculateCustomPrice(serviceName, ratePer1000, providerId) {
-    const qtyInput = document.getElementById("customQtyInput");
-    const qty = parseInt(qtyInput ? qtyInput.value : 0) || 0;
-    const calcPriceSpan = document.getElementById("customCalcPrice");
-    const minWarning = document.getElementById("customMinWarning");
-
-    if (qty > 0 && qty < 100) {
-        if (minWarning) minWarning.style.display = "block";
-        if (calcPriceSpan) calcPriceSpan.innerText = "0.00";
-        selectedPackage = null;
-    } else if (qty >= 100) {
-        if (minWarning) minWarning.style.display = "none";
-        const total = (qty / 1000) * ratePer1000;
-        if (calcPriceSpan) calcPriceSpan.innerText = total.toFixed(2);
-
-        selectedPackage = {
-            name: `${qty} ${serviceName}`,
-            price: total,
-            providerId: providerId,
-            quantity: qty,
-            category: currentCategory
-        };
-    } else {
-        if (minWarning) minWarning.style.display = "none";
-        if (calcPriceSpan) calcPriceSpan.innerText = "0.00";
-        selectedPackage = null;
-    }
+/* Support Header */
+.hero-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 12px;
 }
 
-function extractQuantity(name) {
-    const text = name.toUpperCase().replace(/,/g, "");
-    const match = text.match(/(\d+(?:\.\d+)?)\s*(M|K)?/);
-    if (!match) return 0;
-
-    let number = parseFloat(match[1]);
-    const unit = match[2];
-
-    if (unit === "K") number = number * 1000;
-    else if (unit === "M") number = number * 1000000;
-
-    return Math.floor(number);
+.glass-btn {
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-// =====================================================
-// DYNAMIC LINK LABEL & PLACEHOLDER RULES
-// =====================================================
+.btn-telegram { border: 1px solid rgba(56, 189, 248, 0.4); color: #0284c7; }
+.btn-whatsapp { border: 1px solid rgba(34, 197, 94, 0.4); color: #16a34a; }
 
-function getLinkConfig(platform, category) {
-    const p = (platform || "").toLowerCase();
-    const c = (category || "").toLowerCase();
-
-    if (p === "instagram") {
-        if (c.includes("followers")) {
-            return {
-                label: "Profile Link (Account Must be Public)",
-                placeholder: "https://instagram.com/your_username"
-            };
-        } else if (c.includes("reels") || c.includes("video")) {
-            return {
-                label: "Reel / Video Link",
-                placeholder: "https://www.instagram.com/reel/xxxxxx"
-            };
-        } else {
-            return {
-                label: "Post / Reel Link",
-                placeholder: "https://www.instagram.com/p/xxxxxx"
-            };
-        }
-    } else if (p === "facebook") {
-        if (c.includes("followers")) {
-            return {
-                label: "Profile / Page Link (Must be Public)",
-                placeholder: "https://facebook.com/your_page_or_profile"
-            };
-        } else {
-            return {
-                label: "Post / Video Link",
-                placeholder: "https://facebook.com/permalink.php?story_fbid=..."
-            };
-        }
-    }
-
-    return {
-        label: "Profile Link (Account Must be Public)",
-        placeholder: "https://instagram.com/your_username"
-    };
+/* Platform Switcher Buttons */
+.platform-switch-container {
+    display: flex;
+    gap: 8px;
+    background: #ffffff;
+    padding: 5px;
+    border-radius: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.08);
 }
 
-// =====================================================
-// DYNAMIC PRICE DEDUCTION ENGINE
-// =====================================================
-
-function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUnitQty, baseUnitPrice) {
-    const platformData = serviceData[platformKey.toLowerCase()];
-    if (!platformData || !platformData[categoryKey]) {
-        return (totalQty / baseUnitQty) * baseUnitPrice;
-    }
-
-    const availablePackages = platformData[categoryKey]
-        .filter(p => !p.type) 
-        .map(p => ({
-            qty: extractQuantity(p.name),
-            price: p.price
-        }))
-        .filter(p => p.qty > 0)
-        .sort((a, b) => b.qty - a.qty); 
-
-    const exactMatch = availablePackages.find(p => p.qty === totalQty);
-    if (exactMatch) {
-        return exactMatch.price;
-    }
-
-    let remaining = totalQty;
-    let totalPrice = 0;
-
-    for (let pkg of availablePackages) {
-        if (remaining >= pkg.qty) {
-            let count = Math.floor(remaining / pkg.qty);
-            totalPrice += count * pkg.price;
-            remaining = remaining % pkg.qty;
-        }
-    }
-
-    if (remaining > 0) {
-        let smallestPkg = availablePackages[availablePackages.length - 1];
-        if (smallestPkg) {
-            totalPrice += (remaining / smallestPkg.qty) * smallestPkg.price;
-        } else {
-            totalPrice += (remaining / baseUnitQty) * baseUnitPrice;
-        }
-    }
-
-    return totalPrice;
+.platform-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 13px;
+    background: transparent;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 
-// ==========================================
-// CHECKOUT & QUANTITY COUNTER LOGIC
-// ==========================================
-
-function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge) {
-    currentCheckoutData = {
-        platform: platform,
-        serviceName: serviceName,
-        packageName: packageName,
-        baseQuantity: quantity,
-        quantity: quantity,
-        basePrice: price,
-        price: price,
-        multiplier: 1,
-        badge: badge || 'Popular'
-    };
-
-    showCheckoutOverlay();
+.platform-btn.active {
+    background: linear-gradient(135deg, #d946ef 0%, #8b5cf6 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(217, 70, 239, 0.3);
 }
 
-function openCheckoutFromCustom() {
-    const qtyInput = document.getElementById("customQtyInput");
-    const qty = parseFloat(qtyInput ? qtyInput.value : 0);
-
-    if (!qty || qty < 100) {
-        alert("Minimum order quantity is 100!");
-        return;
-    }
-
-    const calculatedPriceText = document.getElementById("customCalcPrice");
-    const price = parseFloat(calculatedPriceText ? calculatedPriceText.innerText : 0);
-
-    const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
-
-    currentCheckoutData = {
-        platform: platformCap,
-        serviceName: currentCategory,
-        packageName: `${qty.toLocaleString()} Custom Qty`,
-        baseQuantity: qty,
-        quantity: qty,
-        basePrice: price,
-        price: price,
-        multiplier: 1,
-        badge: "Custom"
-    };
-
-    showCheckoutOverlay();
+/* Hero Status Banner */
+.hero-banner {
+    background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+    border-radius: 20px;
+    padding: 18px 16px;
+    color: #ffffff;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(236, 72, 153, 0.25);
 }
 
-function updateCheckoutQuantityDisplay() {
-    const d = currentCheckoutData;
-    
-    d.quantity = d.baseQuantity * d.multiplier;
-
-    d.price = calculateDynamicPriceForQty(
-        d.platform,
-        d.serviceName,
-        d.quantity,
-        d.baseQuantity,
-        d.basePrice
-    );
-
-    const qtyCountDisplay = document.getElementById("checkoutQtyCount");
-    if (qtyCountDisplay) qtyCountDisplay.innerText = d.multiplier;
-
-    const unitsText = document.getElementById("checkoutUnitsText");
-    if (unitsText) unitsText.innerText = `${d.quantity.toLocaleString()} Package`;
-
-    const priceEl = document.getElementById("checkoutPriceText");
-    if (priceEl) priceEl.innerText = `${d.price.toFixed(2)}`;
-
-    if (document.getElementById("checkoutUsdtAmount")) {
-        const usdt = (d.price / 88).toFixed(2);
-        document.getElementById("checkoutUsdtAmount").innerText = `$${usdt} USDT`;
-    }
-
-    const upiId = "akibur.s@ptyes";
-    const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
-    
-    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=${encodeURIComponent(upiUrl)}`;
-
-    const qrImg = document.getElementById("checkoutQrImg");
-    if (qrImg) {
-        qrImg.src = qrImageSrc;
-        qrImg.style.width = "110px";
-        qrImg.style.height = "110px";
-        qrImg.style.objectFit = "contain";
-    }
+.hero-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
 }
 
-function triggerUpiPay(appType) {
-    const d = currentCheckoutData;
-    const upiId = "akibur.s@ptyes";
-    const amount = d.price ? d.price.toFixed(2) : "0.00";
-    const name = "RajSocialPanel";
-    const note = encodeURIComponent(d.packageName || "Social Boost Service");
-
-    let deepLink = "";
-
-    if (appType === "paytm") {
-        deepLink = `paytmmp://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
-    } else if (appType === "gpay") {
-        deepLink = `tez://upi/pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
-    } else if (appType === "phonepe") {
-        deepLink = `phonepe://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
-    } else {
-        deepLink = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
-    }
-
-    window.location.href = deepLink;
-
-    setTimeout(() => {
-        window.location.href = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
-    }, 1200);
+.hero-logo-box {
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    backdrop-filter: blur(5px);
 }
 
-function changeCheckoutMultiplier(delta) {
-    if (!currentCheckoutData.multiplier) currentCheckoutData.multiplier = 1;
-    
-    let newMultiplier = currentCheckoutData.multiplier + delta;
-    if (newMultiplier < 1) newMultiplier = 1;
-
-    currentCheckoutData.multiplier = newMultiplier;
-    updateCheckoutQuantityDisplay();
+.provider-badge {
+    background: rgba(255, 255, 255, 0.25);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 800;
+    backdrop-filter: blur(5px);
 }
 
-function showCheckoutOverlay() {
-    const d = currentCheckoutData;
+.hero-banner h2 { font-size: 20px; font-weight: 800; margin-bottom: 2px; }
+.hero-sub { font-size: 11px; opacity: 0.9; margin-bottom: 14px; }
 
-    history.pushState({ checkoutOpen: true }, "");
+.hero-stats-grid { display: flex; gap: 8px; }
 
-    const iconBox = document.getElementById("checkoutPlatformIcon");
-    if (iconBox) {
-        iconBox.innerHTML = d.platform.toLowerCase() === "facebook"
-            ? `<i class="fa-brands fa-facebook"></i>`
-            : `<i class="fa-brands fa-instagram"></i>`;
-    }
-
-    if (document.getElementById("checkoutServiceTitle"))
-        document.getElementById("checkoutServiceTitle").innerText = `${d.platform} - ${d.serviceName}`;
-
-    if (document.getElementById("checkoutPkgBadgeName"))
-        document.getElementById("checkoutPkgBadgeName").innerText = d.packageName;
-
-    if (document.getElementById("checkoutBadge"))
-        document.getElementById("checkoutBadge").innerText = d.badge;
-
-    let counterContainer = document.getElementById("checkoutQtyCounterBox");
-    const priceEl = document.getElementById("checkoutPriceText");
-    const priceParent = priceEl ? priceEl.parentElement : null;
-
-    if (!counterContainer && priceParent) {
-        counterContainer = document.createElement("div");
-        counterContainer.id = "checkoutQtyCounterBox";
-        counterContainer.style.cssText = "display: flex; align-items: center; background: rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 1px 4px; gap: 6px; margin-left: auto;";
-        
-        counterContainer.innerHTML = `
-            <button type="button" onclick="changeCheckoutMultiplier(-1)" style="background: rgba(255, 255, 255, 0.2); color: #fff; border: none; width: 30px; height: 30px; border-radius: 5px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">-</button>
-            <span id="checkoutQtyCount" style="color: #fff; font-weight: bold; font-size: 16px; min-width: 22px; text-align: center;">1</span>
-            <button type="button" onclick="changeCheckoutMultiplier(1)" style="background: rgba(255, 255, 255, 0.2); color: #fff; border: none; width: 30px; height: 30px; border-radius: 5px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
-        `;
-
-        if (priceParent.style) {
-            priceParent.style.display = "flex";
-            priceParent.style.alignItems = "center";
-            priceParent.style.justifyContent = "space-between";
-        }
-        priceParent.appendChild(counterContainer);
-    }
-
-    d.multiplier = 1;
-
-    const upiView = document.getElementById("checkoutUpiView");
-    const qrImg = document.getElementById("checkoutQrImg");
-    if (upiView) {
-        let scanHeading = document.getElementById("scanToPayHeading");
-        if (!scanHeading) {
-            scanHeading = document.createElement("h3");
-            scanHeading.id = "scanToPayHeading";
-            scanHeading.innerText = "SCAN TO PAY VIA UPI";
-            scanHeading.style.cssText = "margin: 2px 0 2px 0 !important; font-size: 12px !important; font-weight: 800 !important; text-align: center !important; text-transform: uppercase !important; background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; display: block !important; visibility: visible !important; opacity: 1 !important;";
-        }
-        if (qrImg && qrImg.parentElement === upiView) {
-            upiView.insertBefore(scanHeading, qrImg);
-        } else {
-            upiView.prepend(scanHeading);
-        }
-    }
-
-    updateCheckoutQuantityDisplay();
-
-    const priceCard = priceEl ? priceEl.parentElement : null;
-    if (priceCard) {
-        const subSpans = priceCard.querySelectorAll("span");
-        if (subSpans.length > 0) {
-            subSpans.forEach(s => {
-                if (s.id !== "checkoutPriceText" && s.id !== "checkoutQtyCount") {
-                    s.innerText = "You Pay";
-                }
-            });
-        }
-    }
-
-    const allSummaryElements = document.querySelectorAll(".order-summary-box, #orderSummaryBox, [class*='summary']");
-    allSummaryElements.forEach(el => {
-        el.style.display = "none";
-    });
-
-    const linkConfig = getLinkConfig(d.platform, d.serviceName);
-    const linkLabel = document.getElementById("checkoutLinkLabel");
-    const linkInput = document.getElementById("checkoutLinkInput");
-
-    if (linkLabel) {
-        linkLabel.innerText = linkConfig.label;
-    }
-    if (linkInput) {
-        linkInput.value = "";
-        linkInput.placeholder = linkConfig.placeholder;
-    }
-
-    const txnInput = document.getElementById("checkoutTxnId");
-    if (txnInput) txnInput.value = "";
-
-    const checkoutPage = document.getElementById("checkoutPage");
-    if (checkoutPage) {
-        checkoutPage.classList.remove("hidden");
-        checkoutPage.style.display = "block";
-    }
+.stat-card {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 8px;
+    text-align: center;
 }
 
-function closeCheckoutUI() {
-    const checkoutPage = document.getElementById("checkoutPage");
-    if (checkoutPage) {
-        checkoutPage.classList.add("hidden");
-        checkoutPage.style.display = "none";
-    }
-    currentCheckoutData = {}; 
+.stat-icon { font-size: 11px; display: block; margin-bottom: 2px; }
+.stat-num { font-size: 13px; font-weight: 800; display: block; }
+.stat-lbl { font-size: 9px; opacity: 0.8; }
+
+/* Scrollable Horizontal Category Tabs */
+.category-tabs-wrapper {
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-bottom: 14px;
+    padding-bottom: 4px;
+    scrollbar-width: none;
 }
 
-function closeCheckout() {
-    closeCheckoutUI();
-    if (history.state && history.state.checkoutOpen) {
-        history.back();
-    }
+.category-tabs-wrapper::-webkit-scrollbar { display: none; }
+
+.category-tabs { display: inline-flex; gap: 8px; }
+
+.cat-tab {
+    padding: 8px 16px;
+    background: #ffffff;
+    border: 1px solid #f1f5f9;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
 }
 
-function switchCheckoutPayment(type) {
-    const btnUpi = document.getElementById("btnTabUpi");
-    const btnBinance = document.getElementById("btnTabBinance");
-    const viewUpi = document.getElementById("checkoutUpiView");
-    const viewBinance = document.getElementById("checkoutBinanceView");
-
-    if (type === 'upi') {
-        if (btnUpi) btnUpi.classList.add("active");
-        if (btnBinance) btnBinance.classList.remove("active");
-        if (viewUpi) viewUpi.classList.remove("hidden");
-        if (viewBinance) viewBinance.classList.add("hidden");
-    } else {
-        if (btnBinance) btnBinance.classList.remove("active");
-        if (btnUpi) btnUpi.classList.add("active");
-        if (viewBinance) viewBinance.classList.remove("hidden");
-        if (viewUpi) viewUpi.classList.add("hidden");
-    }
+.cat-tab.active {
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
 }
 
-function submitOrderToWhatsApp() {
-    const linkInput = document.getElementById("checkoutLinkInput");
-    const txnInput = document.getElementById("checkoutTxnId");
-
-    const link = linkInput ? linkInput.value.trim() : "";
-    const txnId = txnInput ? txnInput.value.trim() : "";
-
-    if (!link) {
-        alert("Please enter your Social Media Link!");
-        return;
-    }
-
-    if (!txnId) {
-        alert("Please enter Transaction ID / UTR number!");
-        return;
-    }
-
-    const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
-    const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
-    const whatsappNumber = "919239628344";
-
-    const d = currentCheckoutData;
-
-    const formattedMessage = 
-        `🚀 *NEW ORDER SUBMITTED* 🚀\n\n` +
-        `📌 *Social Media:* ${d.platform || ''}\n` +
-        `🛠️ *Service Name:* ${d.serviceName || ''}\n` +
-        `📦 *Package:* ${d.packageName || ''}\n` +
-        `🔢 *Total Quantity:* ${(d.quantity || 0).toLocaleString()}\n` +
-        `💰 *Total Price:* ₹${(d.price || 0).toFixed(2)}\n` +
-        `🔗 *Target Link:* ${link}\n` +
-        `💳 *Payment Method:* ${payMethod}\n` +
-        `🧾 *Transaction ID / UTR:* ${txnId}`;
-
-    const encodedMessage = encodeURIComponent(formattedMessage);
-    const waUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedMessage}`;
-
-    window.open(waUrl, "_blank");
+/* Service Package Cards */
+.package-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
 }
 
-// =====================================================
-// PWA INSTALL APP LOGIC
-// =====================================================
-
-let deferredPrompt = null;
-
-window.addEventListener("beforeinstallprompt", (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    toggleInstallButton();
-});
-
-function toggleInstallButton() {
-    const installContainer = document.getElementById("installContainer");
-    if (!installContainer) return;
-
-    if (
-        currentPlatform === "instagram" &&
-        currentCategory === "Followers Non-Drop" &&
-        deferredPrompt
-    ) {
-        installContainer.style.display = "block";
-    } else {
-        installContainer.style.display = "none";
-    }
+.pkg-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #fae8ff;
+    box-shadow: 0 3px 10px rgba(244, 114, 182, 0.05);
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
-const installBtn = document.getElementById("installBtn");
-if (installBtn) {
-    installBtn.addEventListener("click", async () => {
-        if (!deferredPrompt) return;
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') {
-            deferredPrompt = null;
-            toggleInstallButton();
-        }
-    });
+.pkg-card:hover, .pkg-card.selected {
+    border-color: #d946ef;
+    background: #fdf4ff;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(217, 70, 239, 0.15);
 }
 
-window.addEventListener("appinstalled", () => {
-    const installContainer = document.getElementById("installContainer");
-    if (installContainer) {
-        installContainer.style.display = "none";
-    }
-    deferredPrompt = null;
-});
+.pkg-left { display: flex; align-items: center; gap: 12px; }
 
-// =====================================================
-// SIDEBAR DRAWER TOGGLE FUNCTIONALITY
-// =====================================================
+.pkg-icon {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, #f43f5e, #a855f7);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 18px;
+}
 
-document.addEventListener("DOMContentLoaded", function () {
-  const hamburgerBtn = document.getElementById("hamburgerBtn");
-  const sidebarDrawer = document.getElementById("sidebarDrawer");
-  const sidebarOverlay = document.getElementById("sidebarOverlay");
-  const sidebarCloseBtn = document.getElementById("sidebarCloseBtn");
+.pkg-info { display: flex; flex-direction: column; }
 
-  function openSidebar() {
-    if (sidebarDrawer && sidebarOverlay) {
-      sidebarDrawer.classList.add("active");
-      sidebarOverlay.classList.add("active");
-      document.body.style.overflow = "hidden";
-    }
+.pkg-title {
+    font-size: 13px;
+    font-weight: 800;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pkg-sub { font-size: 10px; color: #94a3b8; margin-top: 1px; }
+
+.pkg-badge {
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 800;
+}
+
+.badge-popular { background: linear-gradient(90deg, #3b82f6, #8b5cf6); }
+.badge-best { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+.badge-demo { background: #94a3b8; }
+.badge-real { background: #6366f1; }
+
+.pkg-price-btn {
+    background: linear-gradient(135deg, #d946ef 0%, #8b5cf6 100%);
+    color: #fff;
+    font-weight: 800;
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 16px;
+}
+
+.custom-card {
+    background: #ffffff;
+    border: 1px solid #d946ef;
+    border-radius: 16px;
+    padding: 14px;
+}
+
+.input-box { margin-bottom: 12px; }
+
+.input-box label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+input {
+    width: 100%;
+    padding: 11px 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 13px;
+    outline: none;
+    color: #0f172a;
+}
+
+input:focus { border-color: #d946ef; background: #ffffff; }
+
+/* Checkout Section (In-page) */
+.checkout-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    margin-bottom: 16px;
+    border: 1px solid #fae8ff;
+}
+
+.checkout-header h3 { font-size: 14px; color: #0f172a; margin-bottom: 10px; }
+
+.order-summary-pill {
+    background: #fdf4ff;
+    border: 1px dashed #d946ef;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    color: #a855f7;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.action-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #d946ef, #8b5cf6);
+    color: #fff;
+    font-weight: 800;
+    font-size: 13px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+/* Payment Switch Tabs */
+.pay-toggle-tabs { display: flex; gap: 8px; margin: 14px 0; }
+
+.pay-tab {
+    flex: 1;
+    padding: 8px;
+    background: #f1f5f9;
+    border: none;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    cursor: pointer;
+}
+
+.pay-tab.active { background: #a855f7; color: #fff; }
+
+.qr-box {
+    text-align: center;
+    background: #f8fafc;
+    padding: 12px;
+    border-radius: 12px;
+}
+
+.qr-box img {
+    width: 170px;
+    height: 170px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.qr-sub { font-size: 10px; color: #64748b; margin-top: 6px; }
+
+/* Binance Box */
+.binance-info-card {
+    background: #fefce8;
+    border: 1px solid #fef08a;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.usdt-badge {
+    display: inline-block;
+    background: #eab308;
+    color: #fff;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.crypto-details-box {
+    margin-top: 10px;
+    font-size: 11px;
+    text-align: left;
+    background: #fff;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #fef08a;
+}
+
+.crypto-details-box p {
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copy-btn {
+    background: #e2e8f0;
+    border: none;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.whatsapp-submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: #22c55e;
+    color: #fff;
+    font-weight: 800;
+    font-size: 13px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.margin-top-15 { margin-top: 12px; }
+
+.footer-note {
+    text-align: center;
+    font-size: 10px;
+    color: #94a3b8;
+    margin-bottom: 20px;
+}
+
+.badge-super{
+    background: linear-gradient(90deg,#ff9800,#ff4081);
+    color:#fff;
+    font-weight:800;
+    animation:pulseBadge 1.8s infinite;
+}
+
+@keyframes pulseBadge{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.05);}
+    100%{transform:scale(1);}
+}
+
+/* ===== SUPER COMBO CARD ===== */
+.pkg-card.super-combo{
+    border:2px solid #ff9800;
+    background:linear-gradient(135deg,#fff8e1,#fff0f7);
+    box-shadow:0 8px 20px rgba(255,152,0,.18);
+    position:relative;
+}
+
+.pkg-card.super-combo::before{
+    content:"🔥 BEST OFFER";
+    position:absolute;
+    top:-10px;
+    right:15px;
+    background:linear-gradient(90deg,#ff9800,#ff4081);
+    color:#fff;
+    font-size:10px;
+    font-weight:800;
+    padding:4px 10px;
+    border-radius:20px;
+}
+
+.combo-free{
+    margin-top:6px;
+    font-size:11px;
+    font-weight:800;
+    color:#16a34a;
+}
+
+/* ===== PWA Install UI ===== */
+.panel-heading{
+ text-align:center;
+ font-size:32px;
+ font-weight:800;
+ color:#8b5cf6;
+ margin:8px 0 14px;
+ letter-spacing:1px;
+}
+#installContainer{
+ display:none;
+ text-align:center;
+ margin:-2px 0 16px;
+}
+.install-btn{
+ border:none;
+ border-radius:999px;
+ padding:14px 28px;
+ background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+ color:#fff;
+ font-size:16px;
+ font-weight:800;
+ cursor:pointer;
+ box-shadow:0 8px 18px rgba(59,130,246,.25);
+ transition:.25s;
+}
+.install-btn:hover{
+ transform:translateY(-2px);
+}
+.install-btn i{margin-right:8px;}
+
+
+/* ==================================================
+    NEW PAYMENT PAGE / CHECKOUT OVERLAY STYLES (UPDATED WITH GLOW & BORDERS)
+   ================================================== */
+.checkout-page-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #faf5ff;
+  background-image: radial-gradient(circle at 50% 0%, rgba(217, 70, 239, 0.12) 0%, transparent 60%);
+  z-index: 999999;
+  overflow-y: auto;
+  box-sizing: border-box;
+  animation: slideInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.checkout-page-overlay.hidden {
+  display: none !important;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.checkout-content {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 18px 16px 40px 16px;
+}
+
+.checkout-nav {
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.back-btn {
+  background: #ffffff;
+  border: 1.5px solid #c084fc;
+  color: #6b21a8;
+  padding: 8px 18px;
+  border-radius: 22px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(192, 132, 252, 0.25);
+}
+
+.checkout-heading-text {
+  flex: 1;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 800;
+  color: #2e1065;
+  margin-right: 50px;
+}
+
+/* Premium Service Card - ছবির মতো গ্রেডিয়েন্ট ও পারফেক্ট গ্লো */
+.premium-service-card {
+  background: linear-gradient(135deg, #4f46e5 0%, #a855f7 50%, #ec4899 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  border-radius: 22px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(217, 70, 239, 0.35), 0 0 15px rgba(168, 85, 247, 0.2);
+  margin-bottom: 18px;
+  color: #fff;
+}
+
+.card-top-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.platform-badge-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #fff;
+}
+
+.card-info h4 {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  margin: 0 0 2px 0;
+}
+
+.badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pkg-name-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.popular-badge {
+  background: #facc15;
+  color: #000;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+}
+
+.units-text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 12px;
+}
+
+.price-text {
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  margin-top: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price-text small {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+}
+
+/* Input Fields inside Checkout */
+.checkout-input-group {
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.checkout-input-group label {
+  display: block;
+  font-size: 12px;
+  color: #4c1d95;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.checkout-input-group input {
+  width: 100%;
+  padding: 12px 14px;
+  background: #ffffff;
+  border: 1.5px solid #c084fc;
+  border-radius: 14px;
+  color: #0f172a;
+  font-size: 13px;
+  outline: none;
+  box-sizing: border-box;
+  box-shadow: 0 0 12px rgba(192, 132, 252, 0.15);
+}
+
+.checkout-input-group input:focus {
+  border-color: #d946ef;
+  box-shadow: 0 0 18px rgba(217, 70, 239, 0.3);
+}
+
+/* Payment Switch Tabs */
+.pay-toggle-tabs {
+  display: flex;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.pay-tab {
+  flex: 1;
+  padding: 11px;
+  background: #ffffff;
+  border: 1.5px solid #c084fc;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b21a8;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(192, 132, 252, 0.12);
+}
+
+.pay-tab.active {
+  background: linear-gradient(135deg, #d946ef, #8b5cf6);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 0 16px rgba(217, 70, 239, 0.4);
+}
+
+/* Payment View Box (QR / UPI Section) */
+.payment-view-box {
+  background: #ffffff;
+  border: 1.5px solid #c084fc;
+  border-radius: 20px;
+  padding: 18px;
+  text-align: center;
+  margin-top: 14px;
+  box-shadow: 0 0 20px rgba(192, 132, 252, 0.2);
+}
+
+.payment-view-box.hidden {
+  display: none;
+}
+
+/* ==================================================
+   SCAN TO PAY VIA UPI - HIDE AS REQUESTED
+   ================================================== */
+.scan-title {
+  display: none !important; /* অপশনটি সম্পূর্ণ হাইড করা হয়েছে */
+}
+
+/* QR Code Image Glowing Border Margin */
+.qr-wrapper {
+  display: inline-block;
+  padding: 10px;
+  background: #ffffff;
+  border: 1.5px solid #d8b4fe;
+  border-radius: 18px;
+  box-shadow: 0 0 22px rgba(168, 85, 247, 0.25);
+  margin: 8px 0 12px 0;
+}
+
+.qr-wrapper img {
+  width: 180px;
+  height: 180px;
+  border-radius: 10px;
+  display: block;
+}
+
+.qr-sub {
+  font-size: 11px;
+  color: #64748b;
+  margin-bottom: 14px;
+}
+
+.pay-app-btn {
+  display: inline-block;
+  margin-top: 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.upi-icons-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.upi-chip {
+  background: #ffffff;
+  border: 1px solid #c084fc;
+  color: #475569;
+  font-size: 10px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight: 700;
+  box-shadow: 0 0 8px rgba(192, 132, 252, 0.15);
+}
+
+.binance-nick-box {
+  border: 1px solid #fef08a;
+  background: #fefce8;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px 0;
+  font-size: 11px;
+  color: #854d0e;
+}
+
+.usdt-badge-box span {
+  background: #eab308;
+  color: #fff;
+  font-weight: 800;
+  padding: 4px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  display: inline-block;
+}
+
+.margin-top-20 {
+  margin-top: 20px;
+}
+
+/* Notice Yellow Glowing Box */
+.notice-yellow-box {
+  background: #fffbeb;
+  border: 1.5px solid #fde047;
+  padding: 12px;
+  border-radius: 14px;
+  text-align: left;
+  margin: 16px 0;
+  font-size: 11px;
+  color: #b45309;
+  line-height: 1.4;
+  font-weight: 600;
+  box-shadow: 0 0 15px rgba(253, 224, 71, 0.3);
+}
+
+/* Confirm Order Button with Glowing Shadow */
+.whatsapp-submit-btn {
+  width: 100%;
+  background: #22c55e;
+  color: #fff;
+  border: none;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 800;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.whatsapp-submit-btn:active {
+  transform: scale(0.98);
+}
+
+/* ==================================================
+   AUTOMATIC SYSTEM DARK MODE DETECTION (ADDED ONLY)
+   ================================================== */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #0f172a !important;
+    background-image: radial-gradient(circle at 10% 10%, rgba(217, 70, 239, 0.15) 0%, transparent 40%),
+                      radial-gradient(circle at 90% 90%, rgba(139, 92, 246, 0.15) 0%, transparent 40%) !important;
+    color: #f1f5f9 !important;
   }
 
-  function closeSidebar() {
-    if (sidebarDrawer && sidebarOverlay) {
-      sidebarDrawer.classList.remove("active");
-      sidebarOverlay.classList.remove("active");
-      document.body.style.overflow = "";
-    }
+  .glass-btn, 
+  .platform-switch-container, 
+  .cat-tab, 
+  .pkg-card, 
+  .custom-card, 
+  .checkout-card, 
+  .payment-view-box, 
+  .qr-wrapper, 
+  .back-btn, 
+  .pay-tab, 
+  .upi-chip, 
+  .crypto-details-box {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
   }
 
-  if (hamburgerBtn) hamburgerBtn.addEventListener("click", openSidebar);
-  if (sidebarCloseBtn) sidebarCloseBtn.addEventListener("click", closeSidebar);
-  if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeSidebar);
+  .pkg-card:hover, .pkg-card.selected {
+    background-color: #2a1b3d !important;
+    border-color: #d946ef !important;
+  }
 
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && sidebarDrawer && sidebarDrawer.classList.contains("active")) {
-      closeSidebar();
-    }
-  });
-});
+  .pkg-title, .checkout-heading-text, .checkout-header h3, label {
+    color: #f8fafc !important;
+  }
+
+  .pkg-sub, .qr-sub, .footer-note {
+    color: #94a3b8 !important;
+  }
+
+  .platform-btn {
+    color: #94a3b8;
+  }
+
+  input {
+    background-color: #0f172a !important;
+    border-color: #334155 !important;
+    color: #ffffff !important;
+  }
+
+  input:focus {
+    border-color: #d946ef !important;
+    background-color: #1e293b !important;
+  }
+
+  .checkout-page-overlay {
+    background-color: #0f172a !important;
+    background-image: radial-gradient(circle at 50% 0%, rgba(217, 70, 239, 0.15) 0%, transparent 60%) !important;
+  }
+
+  .notice-yellow-box {
+    background-color: #271e05 !important;
+    border-color: #854d0e !important;
+    color: #fef08a !important;
+  }
+
+  .binance-nick-box {
+    background-color: #271e05 !important;
+    border-color: #854d0e !important;
+    color: #fef08a !important;
+  }
+
+  .order-summary-pill {
+    background-color: #2a1b3d !important;
+    border-color: #d946ef !important;
+    color: #e9d5ff !important;
+  }
+
+  .pay-app-btn {
+    background-color: #0f172a !important;
+    border-color: #334155 !important;
+    color: #cbd5e1 !important;
+  }
+}

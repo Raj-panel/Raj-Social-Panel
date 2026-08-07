@@ -10,10 +10,16 @@ import {
 const SESSION_KEY = "raj_smm_user_session";
 
 // Global Modal Functions bound to Window for HTML Onclick handlers
-window.openAuthModal = function(tab = 'login') {
+window.openAuthModal = function(tab = 'login', event = null) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  
   const overlay = document.getElementById("authModalOverlay");
   if (overlay) {
     overlay.classList.remove("hidden");
+    overlay.style.display = "flex";
     window.switchAuthTab(tab);
   }
 };
@@ -22,6 +28,7 @@ window.closeAuthModal = function() {
   const overlay = document.getElementById("authModalOverlay");
   if (overlay) {
     overlay.classList.add("hidden");
+    overlay.style.display = "none";
   }
 };
 
@@ -30,13 +37,31 @@ window.switchAuthTab = function(tab) {
   const signupForm = document.getElementById("signupFormSection");
   const forgotForm = document.getElementById("forgotFormSection");
 
-  if (loginForm) loginForm.classList.add("hidden");
-  if (signupForm) signupForm.classList.add("hidden");
-  if (forgotForm) forgotForm.classList.add("hidden");
+  if (loginForm) {
+    loginForm.classList.add("hidden");
+    loginForm.style.display = "none";
+  }
+  if (signupForm) {
+    signupForm.classList.add("hidden");
+    signupForm.style.display = "none";
+  }
+  if (forgotForm) {
+    forgotForm.classList.add("hidden");
+    forgotForm.style.display = "none";
+  }
 
-  if (tab === 'login' && loginForm) loginForm.classList.remove("hidden");
-  if (tab === 'signup' && signupForm) signupForm.classList.remove("hidden");
-  if (tab === 'forgot' && forgotForm) forgotForm.classList.remove("hidden");
+  if (tab === 'login' && loginForm) {
+    loginForm.classList.remove("hidden");
+    loginForm.style.display = "block";
+  }
+  if (tab === 'signup' && signupForm) {
+    signupForm.classList.remove("hidden");
+    signupForm.style.display = "block";
+  }
+  if (tab === 'forgot' && forgotForm) {
+    forgotForm.classList.remove("hidden");
+    forgotForm.style.display = "block";
+  }
 };
 
 // Check Session on Page Load
@@ -49,12 +74,15 @@ function checkUserSession() {
   if (sessionData) {
     try {
       const user = JSON.parse(sessionData);
+      window.firebaseUserUid = user.mobile; // Sync user ID for orders
       updateSidebarForLoggedInUser(user.name, user.mobile);
     } catch (e) {
       localStorage.removeItem(SESSION_KEY);
+      window.firebaseUserUid = null;
       updateSidebarForLoggedOutUser();
     }
   } else {
+    window.firebaseUserUid = null;
     updateSidebarForLoggedOutUser();
   }
 }
@@ -65,7 +93,7 @@ function updateSidebarForLoggedInUser(name, mobile) {
 
   let loginItem = sidebarMenu.querySelector("li:first-child");
   if (loginItem) {
-    loginItem.innerHTML = `<a href="#" onclick="handleLogout(); return false;" style="color: #ef4444;">🚪 Logout (${name || mobile})</a>`;
+    loginItem.innerHTML = `<a href="javascript:void(0);" onclick="handleLogout()" style="color: #ef4444; font-weight: bold;">🚪 Logout (${name || mobile})</a>`;
   }
 }
 
@@ -75,22 +103,29 @@ function updateSidebarForLoggedOutUser() {
 
   let loginItem = sidebarMenu.querySelector("li:first-child");
   if (loginItem) {
-    loginItem.innerHTML = `<a href="#" onclick="openAuthModal('login'); closeSidebar(); return false;">🔐 Login / Create Account</a>`;
+    loginItem.innerHTML = `<a href="javascript:void(0);" onclick="openAuthModal('login', event); if(typeof closeSidebar === 'function') closeSidebar();">🔐 Login / Create Account</a>`;
   }
 }
 
 // 1. CREATE ACCOUNT
 window.handleSignUp = async function() {
-  const name = document.getElementById("signupName").value.trim();
-  const mobile = document.getElementById("signupMobile").value.trim();
-  const password = document.getElementById("signupPassword").value;
-  const confirmPassword = document.getElementById("signupConfirmPassword").value;
+  const nameEl = document.getElementById("signupName");
+  const mobileEl = document.getElementById("signupMobile");
+  const passEl = document.getElementById("signupPassword");
+  const confirmPassEl = document.getElementById("signupConfirmPassword");
+
+  if (!nameEl || !mobileEl || !passEl || !confirmPassEl) return;
+
+  const name = nameEl.value.trim();
+  const mobile = mobileEl.value.trim();
+  const password = passEl.value;
+  const confirmPassword = confirmPassEl.value;
 
   if (!name || !mobile || !password || !confirmPassword) {
     return alert("Please fill in all fields.");
   }
 
-  if (mobile.length !== 10) {
+  if (mobile.length !== 10 || isNaN(mobile)) {
     return alert("Please enter a valid 10-digit mobile number.");
   }
 
@@ -118,13 +153,14 @@ window.handleSignUp = async function() {
 
     alert("Account created successfully! Redirecting to login...");
 
-    document.getElementById("signupName").value = "";
-    document.getElementById("signupMobile").value = "";
-    document.getElementById("signupPassword").value = "";
-    document.getElementById("signupConfirmPassword").value = "";
+    nameEl.value = "";
+    mobileEl.value = "";
+    passEl.value = "";
+    confirmPassEl.value = "";
 
     window.switchAuthTab('login');
-    document.getElementById("loginMobile").value = mobile;
+    const loginMobileEl = document.getElementById("loginMobile");
+    if (loginMobileEl) loginMobileEl.value = mobile;
   } catch (error) {
     alert("Error creating account: " + error.message);
   }
@@ -132,8 +168,13 @@ window.handleSignUp = async function() {
 
 // 2. LOGIN
 window.handleLogin = async function() {
-  const mobile = document.getElementById("loginMobile").value.trim();
-  const password = document.getElementById("loginPassword").value;
+  const mobileEl = document.getElementById("loginMobile");
+  const passEl = document.getElementById("loginPassword");
+
+  if (!mobileEl || !passEl) return;
+
+  const mobile = mobileEl.value.trim();
+  const password = passEl.value;
 
   if (!mobile || !password) {
     return alert("Please enter both Mobile Number and Password.");
@@ -156,6 +197,7 @@ window.handleLogin = async function() {
         loggedInAt: new Date().toISOString()
       };
       localStorage.setItem(SESSION_KEY, JSON.stringify(sessionObj));
+      window.firebaseUserUid = userData.mobile;
 
       alert("Login successful!");
       window.closeAuthModal();
@@ -170,9 +212,15 @@ window.handleLogin = async function() {
 
 // 3. FORGOT PASSWORD
 window.handleResetPassword = async function() {
-  const mobile = document.getElementById("forgotMobile").value.trim();
-  const password = document.getElementById("forgotPassword").value;
-  const confirmPassword = document.getElementById("forgotConfirmPassword").value;
+  const mobileEl = document.getElementById("forgotMobile");
+  const passEl = document.getElementById("forgotPassword");
+  const confirmPassEl = document.getElementById("forgotConfirmPassword");
+
+  if (!mobileEl || !passEl || !confirmPassEl) return;
+
+  const mobile = mobileEl.value.trim();
+  const password = passEl.value;
+  const confirmPassword = confirmPassEl.value;
 
   if (!mobile || !password || !confirmPassword) {
     return alert("Please fill in all fields.");
@@ -194,12 +242,13 @@ window.handleResetPassword = async function() {
 
     alert("Password updated successfully! You can now log in with your new password.");
 
-    document.getElementById("forgotMobile").value = "";
-    document.getElementById("forgotPassword").value = "";
-    document.getElementById("forgotConfirmPassword").value = "";
+    mobileEl.value = "";
+    passEl.value = "";
+    confirmPassEl.value = "";
 
     window.switchAuthTab('login');
-    document.getElementById("loginMobile").value = mobile;
+    const loginMobileEl = document.getElementById("loginMobile");
+    if (loginMobileEl) loginMobileEl.value = mobile;
   } catch (error) {
     alert("Password reset failed: " + error.message);
   }
@@ -209,6 +258,7 @@ window.handleResetPassword = async function() {
 window.handleLogout = function() {
   if (confirm("Are you sure you want to logout?")) {
     localStorage.removeItem(SESSION_KEY);
+    window.firebaseUserUid = null;
     alert("Logged out successfully.");
     checkUserSession();
   }

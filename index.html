@@ -41,7 +41,7 @@
     z-index: 100;
     background: rgba(30, 41, 59, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #ffffff;
+    color: inherit;
     font-size: 18px;
     width: 38px;
     height: 38px;
@@ -110,7 +110,7 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
   }
 
-  /* Left Sidebar Drawer */
+  /* Left Sidebar Drawer & Dark/Light Theme System */
   .sidebar-overlay {
     position: fixed;
     top: 0;
@@ -135,8 +135,9 @@
     left: -290px;
     width: 280px;
     height: 100%;
-    background: #0f172a;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: var(--sidebar-bg, #0f172a);
+    color: var(--sidebar-text, #cbd5e1);
+    border-right: 1px solid var(--sidebar-border, rgba(255, 255, 255, 0.1));
     z-index: 1000;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
@@ -147,12 +148,53 @@
     transform: translateX(290px);
   }
 
+  /* Dark Theme Default Variable Fallback */
+  :root {
+    --sidebar-bg: #0f172a;
+    --sidebar-text: #cbd5e1;
+    --sidebar-border: rgba(255, 255, 255, 0.1);
+    --sidebar-hover: rgba(168, 85, 247, 0.15);
+    --sidebar-hover-text: #ffffff;
+    --sidebar-close: #94a3b8;
+  }
+
+  /* Light Theme Adaptive Fallback */
+  @media (prefers-color-scheme: light) {
+    :root {
+      --sidebar-bg: #ffffff;
+      --sidebar-text: #1e293b;
+      --sidebar-border: rgba(0, 0, 0, 0.1);
+      --sidebar-hover: rgba(168, 85, 247, 0.1);
+      --sidebar-hover-text: #000000;
+      --sidebar-close: #64748b;
+    }
+  }
+
+  /* Manual Light Theme Class Compatibility */
+  body.light-mode, body.light {
+    --sidebar-bg: #ffffff;
+    --sidebar-text: #1e293b;
+    --sidebar-border: rgba(0, 0, 0, 0.1);
+    --sidebar-hover: rgba(168, 85, 247, 0.1);
+    --sidebar-hover-text: #000000;
+    --sidebar-close: #64748b;
+  }
+
+  body.dark-mode, body.dark {
+    --sidebar-bg: #0f172a;
+    --sidebar-text: #cbd5e1;
+    --sidebar-border: rgba(255, 255, 255, 0.1);
+    --sidebar-hover: rgba(168, 85, 247, 0.15);
+    --sidebar-hover-text: #ffffff;
+    --sidebar-close: #94a3b8;
+  }
+
   .sidebar-header {
     padding: 20px 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--sidebar-border);
   }
   .sidebar-title {
     font-family: 'Poppins', sans-serif !important;
@@ -166,7 +208,7 @@
   .sidebar-close-btn {
     background: transparent;
     border: none;
-    color: #94a3b8;
+    color: var(--sidebar-close);
     font-size: 22px;
     cursor: pointer;
   }
@@ -185,57 +227,62 @@
     align-items: center;
     gap: 12px;
     padding: 12px 15px;
-    color: #cbd5e1;
+    color: var(--sidebar-text);
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
     border-radius: 10px;
+    transition: background 0.2s ease, color 0.2s ease;
   }
   .sidebar-menu a:hover {
-    background: rgba(168, 85, 247, 0.15);
-    color: #ffffff;
+    background: var(--sidebar-hover);
+    color: var(--sidebar-hover-text);
   }
 
-  /* Tutorial Footer Section inside Drawer Menu */
-  .sidebar-tutorial-section {
+  /* Watch Tutorials & Banner Styling */
+  .sidebar-footer-media {
     padding: 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--sidebar-border);
+    margin-top: auto;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
   }
+
   .watch-tutorials-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     background: #dc2626;
-    color: #ffffff;
+    color: #ffffff !important;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 14px;
     padding: 12px;
-    border-radius: 10px;
+    border-radius: 8px;
     text-decoration: none;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+    transition: background 0.2s ease, transform 0.2s ease;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
-    transition: background 0.3s ease, transform 0.2s ease;
   }
   .watch-tutorials-btn:hover {
     background: #b91c1c;
     transform: translateY(-1px);
   }
+
   .tutorial-banner-link {
     display: block;
     width: 100%;
-    border-radius: 10px;
+    border-radius: 8px;
     overflow: hidden;
   }
   .tutorial-banner-img {
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 10px;
-    transition: transform 0.3s ease;
+    border-radius: 8px;
+    transition: transform 0.2s ease;
   }
   .tutorial-banner-link:hover .tutorial-banner-img {
     transform: scale(1.02);
@@ -263,13 +310,13 @@
     <li><a href="/pages/about.html">ℹ️ About Us</a></li>
   </ul>
 
-  <!-- Tutorial Section Added at the bottom of the Drawer Menu -->
-  <div class="sidebar-tutorial-section">
-    <a href="https://youtu.be/6WLCJPCjou0?si=f8v4qj-T8TjvqdX-" target="_blank" class="watch-tutorials-btn">
+  <!-- Watch Tutorials & Banner -->
+  <div class="sidebar-footer-media">
+    <a href="https://youtu.be/6WLCJPCjou0?si=f8v4qj-T8TjvqdX-" target="_blank" rel="noopener noreferrer" class="watch-tutorials-btn">
       <i class="fa-brands fa-youtube"></i> Watch Tutorials
     </a>
-    <a href="https://youtu.be/6WLCJPCjou0?si=f8v4qj-T8TjvqdX-" target="_blank" class="tutorial-banner-link">
-      <img src="Thumbnail.png" alt="Tutorial Banner" class="tutorial-banner-img" />
+    <a href="https://youtu.be/6WLCJPCjou0?si=f8v4qj-T8TjvqdX-" target="_blank" rel="noopener noreferrer" class="tutorial-banner-link">
+      <img src="thumbnail.png" alt="Watch Tutorial" class="tutorial-banner-img" />
     </a>
   </div>
 </div>

@@ -49,16 +49,9 @@
       alert('Please fill in all fields');
       return;
     }
-    // Session keep logic / Redirect implementation
     localStorage.setItem('isLoggedIn', 'true');
     localStorage.setItem('userMobile', mobile);
-    
-    const prevPage = document.referrer;
-    if(prevPage && !prevPage.includes('login')) {
-      window.location.href = prevPage;
-    } else {
-      window.location.href = '/';
-    }
+    window.location.href = '/';
   }
 </script>
 </body>

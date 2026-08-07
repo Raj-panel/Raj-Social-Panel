@@ -747,11 +747,13 @@ function showCheckoutOverlay() {
     const priceCard = priceEl ? priceEl.parentElement : null;
     if (priceCard) {
         const subSpans = priceCard.querySelectorAll("span");
-        subSpans.querySelectorAll ? subSpans.forEach(s => {
-            if (s.id !== "checkoutPriceText" && s.id !== "checkoutQtyCount") {
-                s.innerText = "You Pay";
-            }
-        }) : null;
+        if (subSpans.length > 0) {
+            subSpans.forEach(s => {
+                if (s.id !== "checkoutPriceText" && s.id !== "checkoutQtyCount") {
+                    s.innerText = "You Pay";
+                }
+            });
+        }
     }
 
     const allSummaryElements = document.querySelectorAll(".order-summary-box, #orderSummaryBox, [class*='summary']");
@@ -810,7 +812,7 @@ function switchCheckoutPayment(type) {
         if (viewBinance) viewBinance.classList.add("hidden");
     } else {
         if (btnBinance) btnBinance.classList.remove("active");
-        if (btnUpi) btnUpi.classList.remove("active");
+        if (btnUpi) btnUpi.classList.add("active");
         if (viewBinance) viewBinance.classList.remove("hidden");
         if (viewUpi) viewUpi.classList.add("hidden");
     }
@@ -840,17 +842,17 @@ function submitOrderToWhatsApp() {
     const d = currentCheckoutData;
 
     const formattedMessage = 
-        `🚀 *NEW ORDER SUBMITTED* 🚀%0A%0A` +
-        `📌 *Social Media:* ${d.platform || ''}%0A` +
-        `🛠️ *Service Name:* ${d.serviceName || ''}%0A` +
-        `📦 *Package:* ${d.packageName || ''}%0A` +
-        `🔢 *Total Quantity:* ${(d.quantity || 0).toLocaleString()}%0A` +
-        `💰 *Total Price:* ₹${(d.price || 0).toFixed(2)}%0A` +
-        `🔗 *Target Link:* ${link}%0A` +
-        `💳 *Payment Method:* ${payMethod}%0A` +
+        `🚀 *NEW ORDER SUBMITTED* 🚀\n\n` +
+        `📌 *Social Media:* ${d.platform || ''}\n` +
+        `🛠️ *Service Name:* ${d.serviceName || ''}\n` +
+        `📦 *Package:* ${d.packageName || ''}\n` +
+        `🔢 *Total Quantity:* ${(d.quantity || 0).toLocaleString()}\n` +
+        `💰 *Total Price:* ₹${(d.price || 0).toFixed(2)}\n` +
+        `🔗 *Target Link:* ${link}\n` +
+        `💳 *Payment Method:* ${payMethod}\n` +
         `🧾 *Transaction ID / UTR:* ${txnId}`;
 
-    const encodedMessage = encodeURIComponent(decodeURIComponent(formattedMessage));
+    const encodedMessage = encodeURIComponent(formattedMessage);
     const waUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedMessage}`;
 
     window.open(waUrl, "_blank");
@@ -903,7 +905,11 @@ window.addEventListener("appinstalled", () => {
     }
     deferredPrompt = null;
 });
-// Sidebar Drawer Toggle Functionality
+
+// =====================================================
+// SIDEBAR DRAWER TOGGLE FUNCTIONALITY
+// =====================================================
+
 document.addEventListener("DOMContentLoaded", function () {
   const hamburgerBtn = document.getElementById("hamburgerBtn");
   const sidebarDrawer = document.getElementById("sidebarDrawer");

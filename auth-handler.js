@@ -6,29 +6,37 @@ import {
   updateDoc 
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
-// Session LocalStorage Key
+// LocalStorage Session Key
 const SESSION_KEY = "raj_smm_user_session";
 
-// UI Helpers
-window.openAuthModal = (tab = 'login') => {
+// Global Modal Functions bound to Window for HTML Onclick handlers
+window.openAuthModal = function(tab = 'login') {
   const overlay = document.getElementById("authModalOverlay");
-  if (overlay) overlay.classList.remove("hidden");
-  window.switchAuthTab(tab);
+  if (overlay) {
+    overlay.classList.remove("hidden");
+    window.switchAuthTab(tab);
+  }
 };
 
-window.closeAuthModal = () => {
+window.closeAuthModal = function() {
   const overlay = document.getElementById("authModalOverlay");
-  if (overlay) overlay.classList.add("hidden");
+  if (overlay) {
+    overlay.classList.add("hidden");
+  }
 };
 
-window.switchAuthTab = (tab) => {
-  document.getElementById("loginFormSection").classList.add("hidden");
-  document.getElementById("signupFormSection").classList.add("hidden");
-  document.getElementById("forgotFormSection").classList.add("hidden");
+window.switchAuthTab = function(tab) {
+  const loginForm = document.getElementById("loginFormSection");
+  const signupForm = document.getElementById("signupFormSection");
+  const forgotForm = document.getElementById("forgotFormSection");
 
-  if (tab === 'login') document.getElementById("loginFormSection").classList.remove("hidden");
-  if (tab === 'signup') document.getElementById("signupFormSection").classList.remove("hidden");
-  if (tab === 'forgot') document.getElementById("forgotFormSection").classList.remove("hidden");
+  if (loginForm) loginForm.classList.add("hidden");
+  if (signupForm) signupForm.classList.add("hidden");
+  if (forgotForm) forgotForm.classList.add("hidden");
+
+  if (tab === 'login' && loginForm) loginForm.classList.remove("hidden");
+  if (tab === 'signup' && signupForm) signupForm.classList.remove("hidden");
+  if (tab === 'forgot' && forgotForm) forgotForm.classList.remove("hidden");
 };
 
 // Check Session on Page Load
@@ -67,12 +75,12 @@ function updateSidebarForLoggedOutUser() {
 
   let loginItem = sidebarMenu.querySelector("li:first-child");
   if (loginItem) {
-    loginItem.innerHTML = `<a href="#" onclick="openAuthModal('login'); return false;">🔐 Login / Create Account</a>`;
+    loginItem.innerHTML = `<a href="#" onclick="openAuthModal('login'); closeSidebar(); return false;">🔐 Login / Create Account</a>`;
   }
 }
 
 // 1. CREATE ACCOUNT
-window.handleSignUp = async () => {
+window.handleSignUp = async function() {
   const name = document.getElementById("signupName").value.trim();
   const mobile = document.getElementById("signupMobile").value.trim();
   const password = document.getElementById("signupPassword").value;
@@ -98,11 +106,10 @@ window.handleSignUp = async () => {
       return alert("Mobile Number already registered. Please login.");
     }
 
-    // Save user profile in Firestore
     const userData = {
       name: name,
       mobile: mobile,
-      password: password, // Securely saved in Firestore
+      password: password,
       walletBalance: 0,
       createdAt: new Date().toISOString()
     };
@@ -110,15 +117,13 @@ window.handleSignUp = async () => {
     await setDoc(userDocRef, userData);
 
     alert("Account created successfully! Redirecting to login...");
-    
-    // Clear inputs
+
     document.getElementById("signupName").value = "";
     document.getElementById("signupMobile").value = "";
     document.getElementById("signupPassword").value = "";
     document.getElementById("signupConfirmPassword").value = "";
 
-    // Redirect to Login Tab
-    switchAuthTab('login');
+    window.switchAuthTab('login');
     document.getElementById("loginMobile").value = mobile;
   } catch (error) {
     alert("Error creating account: " + error.message);
@@ -126,7 +131,7 @@ window.handleSignUp = async () => {
 };
 
 // 2. LOGIN
-window.handleLogin = async () => {
+window.handleLogin = async function() {
   const mobile = document.getElementById("loginMobile").value.trim();
   const password = document.getElementById("loginPassword").value;
 
@@ -145,7 +150,6 @@ window.handleLogin = async () => {
     const userData = userDoc.data();
 
     if (userData.password === password) {
-      // Save session securely in localStorage
       const sessionObj = {
         name: userData.name,
         mobile: userData.mobile,
@@ -154,7 +158,7 @@ window.handleLogin = async () => {
       localStorage.setItem(SESSION_KEY, JSON.stringify(sessionObj));
 
       alert("Login successful!");
-      closeAuthModal();
+      window.closeAuthModal();
       checkUserSession();
     } else {
       alert("Invalid Mobile Number or Password.");
@@ -165,7 +169,7 @@ window.handleLogin = async () => {
 };
 
 // 3. FORGOT PASSWORD
-window.handleResetPassword = async () => {
+window.handleResetPassword = async function() {
   const mobile = document.getElementById("forgotMobile").value.trim();
   const password = document.getElementById("forgotPassword").value;
   const confirmPassword = document.getElementById("forgotConfirmPassword").value;
@@ -189,13 +193,12 @@ window.handleResetPassword = async () => {
     await updateDoc(userDocRef, { password: password });
 
     alert("Password updated successfully! You can now log in with your new password.");
-    
-    // Clear inputs and switch to login
+
     document.getElementById("forgotMobile").value = "";
     document.getElementById("forgotPassword").value = "";
     document.getElementById("forgotConfirmPassword").value = "";
 
-    switchAuthTab('login');
+    window.switchAuthTab('login');
     document.getElementById("loginMobile").value = mobile;
   } catch (error) {
     alert("Password reset failed: " + error.message);
@@ -203,7 +206,7 @@ window.handleResetPassword = async () => {
 };
 
 // 4. LOGOUT
-window.handleLogout = () => {
+window.handleLogout = function() {
   if (confirm("Are you sure you want to logout?")) {
     localStorage.removeItem(SESSION_KEY);
     alert("Logged out successfully.");

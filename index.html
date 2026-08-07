@@ -292,11 +292,11 @@
 <body>
 
 <!-- Left Sidebar Navigation -->
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar(true)"></div>
 <div class="left-sidebar" id="leftSidebar">
   <div class="sidebar-header">
     <div class="sidebar-title">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
-    <button class="sidebar-close-btn" onclick="closeSidebar()"><i class="fa-solid fa-xmark"></i></button>
+    <button class="sidebar-close-btn" onclick="closeSidebar(true)"><i class="fa-solid fa-xmark"></i></button>
   </div>
   <ul class="sidebar-menu">
     <li><a href="/login/">🔐 Login</a></li>
@@ -516,16 +516,42 @@
 <script type="module" src="auth-handler.js"></script>
 <script>
   function openSidebar() {
-    document.getElementById("leftSidebar").classList.add("active");
-    document.getElementById("sidebarOverlay").classList.add("active");
-    document.body.style.overflow = "hidden";
+    const sidebar = document.getElementById("leftSidebar");
+    const overlay = document.getElementById("sidebarOverlay");
+    
+    if (!sidebar.classList.contains("active")) {
+      sidebar.classList.add("active");
+      overlay.classList.add("active");
+      document.body.style.overflow = "hidden";
+      
+      // ব্রাউজার হিস্টোরিতে কাস্টম স্টেট প্যানেল যুক্ত করা
+      history.pushState({ sidebarOpen: true }, '');
+    }
   }
 
-  function closeSidebar() {
-    document.getElementById("leftSidebar").classList.remove("active");
-    document.getElementById("sidebarOverlay").classList.remove("active");
-    document.body.style.overflow = "auto";
+  function closeSidebar(fromUserAction = false) {
+    const sidebar = document.getElementById("leftSidebar");
+    const overlay = document.getElementById("sidebarOverlay");
+    
+    if (sidebar.classList.contains("active")) {
+      sidebar.classList.remove("active");
+      overlay.classList.remove("active");
+      document.body.style.overflow = "auto";
+      
+      // যদি ব্যবহারকারী ক্লোজ (✕) বাটন বা ওভারলেতে ক্লিক করে বন্ধ করেন, তবে হিস্টোরি স্টেট ক্লিন করা হবে
+      if (fromUserAction && history.state && history.state.sidebarOpen) {
+        history.back();
+      }
+    }
   }
+
+  // মোবাইল ব্যাক বাটন প্রেস ডিটেক্ট করা
+  window.addEventListener("popstate", function (event) {
+    const sidebar = document.getElementById("leftSidebar");
+    if (sidebar && sidebar.classList.contains("active")) {
+      closeSidebar(false);
+    }
+  });
 </script>
 
 <script>

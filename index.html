@@ -299,17 +299,15 @@
     <button class="sidebar-close-btn" onclick="closeSidebar(true)"><i class="fa-solid fa-xmark"></i></button>
   </div>
   <ul class="sidebar-menu">
-    <li><a href="/login/">🔐 Login</a></li>
-    <li><a href="/register/">👤 Create Account</a></li>
-    <li><a href="/reset-password/">🔑 Forgot Password</a></li>
+    <li><a href="/login/">🔐 Login / Create Account</a></li>
     <li><a href="/">🛒 New Order</a></li>
     <li><a href="/orders/">📦 My Orders</a></li>
-     <!--<li><a href="/add-funds/">💳 Add Funds</a></li>-->
+    <li><a href="/add-funds/">💳 Add Funds</a></li>
     <li><a href="/pages/privacy-policy.html">🔒 Privacy Policy</a></li>
     <li><a href="/pages/refund-policy.html">💸 Refund Policy</a></li>
-    <!-- <li><a href="/pages/terms.html">📜 Terms &amp; Conditions</a></li>
+    <li><a href="/pages/terms.html">📜 Terms &amp; Conditions</a></li>
     <li><a href="/pages/contact.html">📞 Contact Us</a></li>
-    <li><a href="/pages/about.html">ℹ️ About Us</a></li>-->
+    <li><a href="/pages/about.html">ℹ️ About Us</a></li>
   </ul>
 
   <!-- Watch Tutorials & Banner -->
@@ -526,7 +524,6 @@
       overlay.classList.add("active");
       document.body.style.overflow = "hidden";
       
-      // ব্রাউজার হিস্টোরিতে কাস্টম স্টেট প্যানেল যুক্ত করা
       history.pushState({ sidebarOpen: true }, '');
     }
   }
@@ -540,14 +537,12 @@
       overlay.classList.remove("active");
       document.body.style.overflow = "auto";
       
-      // যদি ব্যবহারকারী ক্লোজ (✕) বাটন বা ওভারলেতে ক্লিক করে বন্ধ করেন, তবে হিস্টোরি স্টেট ক্লিন করা হবে
       if (fromUserAction && history.state && history.state.sidebarOpen) {
         history.back();
       }
     }
   }
 
-  // মোবাইল ব্যাক বাটন প্রেস ডিটেক্ট করা
   window.addEventListener("popstate", function (event) {
     const sidebar = document.getElementById("leftSidebar");
     if (sidebar && sidebar.classList.contains("active")) {

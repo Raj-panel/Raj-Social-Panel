@@ -833,7 +833,6 @@ function submitOrderToWhatsApp() {
         return;
     }
 
-    // --- FUTURE-READY "MY ORDERS" SYSTEM HOOK ---
     const userIdentifier = (typeof window.firebaseUserUid !== 'undefined' && window.firebaseUserUid) 
         ? window.firebaseUserUid 
         : (() => {
@@ -860,7 +859,6 @@ function submitOrderToWhatsApp() {
     const existingOrders = JSON.parse(localStorage.getItem('raj_smm_orders') || '[]');
     existingOrders.push(newOrder);
     localStorage.setItem('raj_smm_orders', JSON.stringify(existingOrders));
-    // ---------------------------------------------
 
     const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
     const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";

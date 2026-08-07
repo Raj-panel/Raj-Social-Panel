@@ -809,7 +809,7 @@ function switchCheckoutPayment(type) {
         if (viewUpi) viewUpi.classList.remove("hidden");
         if (viewBinance) viewBinance.classList.add("hidden");
     } else {
-        if (btnBinance) btnBinance.classList.remove("active");
+        if (btnBinance) btnBinance.classList.add("active");
         if (btnUpi) btnUpi.classList.remove("active");
         if (viewBinance) viewBinance.classList.remove("hidden");
         if (viewUpi) viewUpi.classList.add("hidden");
@@ -833,6 +833,35 @@ function submitOrderToWhatsApp() {
         return;
     }
 
+    // --- FUTURE-READY "MY ORDERS" SYSTEM HOOK ---
+    const userIdentifier = (typeof window.firebaseUserUid !== 'undefined' && window.firebaseUserUid) 
+        ? window.firebaseUserUid 
+        : (() => {
+            let bid = localStorage.getItem('raj_smm_browser_id');
+            if (!bid) {
+                bid = 'BID_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+                localStorage.setItem('raj_smm_browser_id', bid);
+            }
+            return bid;
+        })();
+
+    const orderIdVal = Math.floor(100000 + Math.random() * 900000);
+    const newOrder = {
+        orderId: orderIdVal,
+        serviceName: `${currentCheckoutData.platform} - ${currentCheckoutData.serviceName} (${currentCheckoutData.packageName})`,
+        link: link,
+        quantity: currentCheckoutData.quantity || 0,
+        amount: currentCheckoutData.price ? currentCheckoutData.price.toFixed(2) : "0.00",
+        orderTimeEpoch: Date.now(),
+        status: 'Pending',
+        userIdentifier: userIdentifier
+    };
+
+    const existingOrders = JSON.parse(localStorage.getItem('raj_smm_orders') || '[]');
+    existingOrders.push(newOrder);
+    localStorage.setItem('raj_smm_orders', JSON.stringify(existingOrders));
+    // ---------------------------------------------
+
     const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
     const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
     const whatsappNumber = "919239628344";
@@ -841,6 +870,7 @@ function submitOrderToWhatsApp() {
 
     const formattedMessage = 
         `🚀 *NEW ORDER SUBMITTED* 🚀%0A%0A` +
+        `🆔 *Order ID:* #${orderIdVal}%0A` +
         `📌 *Social Media:* ${d.platform || ''}%0A` +
         `🛠️ *Service Name:* ${d.serviceName || ''}%0A` +
         `📦 *Package:* ${d.packageName || ''}%0A` +

@@ -1,12 +1,44 @@
 // =========================================================
-// PERMANENT LAYOUT LOCK & CHECKOUT SCROLL OPTIMIZATION
+// PERMANENT LAYOUT LOCK, HEADER ALIGNMENT & CHECKOUT SCROLL OPTIMIZATION
 // =========================================================
 (function injectPermanentCss() {
     if (document.getElementById("fixedLayoutCss")) return;
     const style = document.createElement("style");
     style.id = "fixedLayoutCss";
     style.innerHTML = `
-        /* 1. Adjusted Fixed Hero Banner Height (Prevents text clipping and layout shifts) */
+        /* 0. Header & Logo Alignment Fix (Three-line and Text Vertical Centering) */
+        .header-container, .navbar, header, nav, .top-bar {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            gap: 12px !important;
+            padding: 10px 15px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        #hamburgerBtn, .hamburger-btn, .menu-toggle, .navbar-toggler {
+            margin: 0 !important;
+            padding: 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            height: 42px !important;
+            width: 42px !important;
+            flex-shrink: 0 !important;
+        }
+
+        .logo-text, .brand-name, .navbar-brand, header h1, header h2, .logo {
+            margin: 0 !important;
+            padding: 0 !important;
+            line-height: 1 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            font-size: 20px !important;
+            vertical-align: middle !important;
+        }
+
+        /* 1. Adjusted Fixed Hero Banner Height */
         .hero-banner, .hero-card, .instagram-boost-card {
             height: auto !important;
             min-height: 180px !important;
@@ -32,7 +64,7 @@
         }
 
         @media screen and (max-width: 768px) {
-            /* 2. Checkout Ultra-Compact Vertical Height (No Scroll / Minimal Scroll) */
+            /* 2. Checkout Ultra-Compact Vertical Height */
             #checkoutPage { 
                 padding: 4px 8px !important; 
                 max-width: 440px !important; 
@@ -920,7 +952,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (sidebarDrawer && sidebarOverlay) {
       sidebarDrawer.classList.add("active");
       sidebarOverlay.classList.add("active");
-      document.body.style.overflow = "hidden"; // Prevent background scroll
+      document.body.style.overflow = "hidden";
     }
   }
 
@@ -928,7 +960,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (sidebarDrawer && sidebarOverlay) {
       sidebarDrawer.classList.remove("active");
       sidebarOverlay.classList.remove("active");
-      document.body.style.overflow = ""; // Restore background scroll
+      document.body.style.overflow = "";
     }
   }
 
@@ -936,7 +968,6 @@ document.addEventListener("DOMContentLoaded", function () {
   if (sidebarCloseBtn) sidebarCloseBtn.addEventListener("click", closeSidebar);
   if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeSidebar);
 
-  // Close sidebar on Pressing Escape Key
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && sidebarDrawer && sidebarDrawer.classList.contains("active")) {
       closeSidebar();

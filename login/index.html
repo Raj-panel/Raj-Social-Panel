@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Login - Raj Social Panel</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
 <link href="../style.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 </head>
@@ -17,31 +17,35 @@
     <p style="font-size: 13px; color: #94a3b8; margin: 0;">Enter your mobile number and password to login</p>
   </div>
 
-  <div style="margin-bottom: 16px;">
-    <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Mobile Number</label>
-    <div style="display: flex; align-items: center; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; overflow: hidden;">
-      <span style="padding: 0 12px; font-size: 13px; color: #94a3b8; border-right: 1px solid rgba(255, 255, 255, 0.1);">+91</span>
-      <input type="tel" id="loginMobile" placeholder="Enter 10-digit number" maxlength="10" style="width: 100%; background: transparent; border: none; padding: 12px; color: #ffffff; font-size: 14px; outline: none;">
+  <!-- Form Tag Added for Enter Key support & Clean Event Handling -->
+  <form id="loginForm" onsubmit="event.preventDefault(); window.handleLogin();">
+    <div style="margin-bottom: 16px;">
+      <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Mobile Number</label>
+      <div style="display: flex; align-items: center; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; overflow: hidden;">
+        <span style="padding: 0 12px; font-size: 13px; color: #94a3b8; border-right: 1px solid rgba(255, 255, 255, 0.1);">+91</span>
+        <input type="tel" id="loginMobile" placeholder="Enter 10-digit number" maxlength="10" required style="width: 100%; background: transparent; border: none; padding: 12px; color: #ffffff; font-size: 14px; outline: none;">
+      </div>
     </div>
-  </div>
 
-  <div style="margin-bottom: 16px;">
-    <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Password</label>
-    <input type="password" id="loginPassword" placeholder="Enter password" style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box;">
-  </div>
+    <div style="margin-bottom: 16px;">
+      <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Password</label>
+      <input type="password" id="loginPassword" placeholder="Enter password" required style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box;">
+    </div>
 
-  <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
-    <a href="/reset-password/" style="font-size: 12px; color: #a855f7; text-decoration: none;">Forgot Password?</a>
-  </div>
+    <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+      <a href="../reset-password/index.html" class="nav-link" style="font-size: 12px; color: #a855f7; text-decoration: none;">Forgot Password?</a>
+    </div>
 
-  <button onclick="handleLogin()" style="width: 100%; background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); border: none; border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity 0.3s;">Login</button>
+    <button type="submit" style="width: 100%; background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); border: none; border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity 0.3s;">Login</button>
+  </form>
 
   <p style="text-align: center; font-size: 13px; color: #94a3b8; margin-top: 20px;">
-    Don't have an account? <a href="/register/" style="color: #a855f7; text-decoration: none; font-weight: 600;">Create Account</a>
+    Don't have an account? <a href="../register/index.html" class="nav-link" style="color: #a855f7; text-decoration: none; font-weight: 600;">Create Account</a>
   </p>
 </div>
 
 <!-- Firebase Auth Handler Integration -->
 <script type="module" src="../auth-handler.js"></script>
+
 </body>
 </html>

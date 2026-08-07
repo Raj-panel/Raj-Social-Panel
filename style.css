@@ -557,7 +557,7 @@ input:focus { border-color: #d946ef; background: #ffffff; }
   margin-right: 50px;
 }
 
-/* Premium Service Card - ছবির মতো গ্রেডিয়েন্ট ও পারফেক্ট গ্লো */
+/* Premium Service Card */
 .premium-service-card {
   background: linear-gradient(135deg, #4f46e5 0%, #a855f7 50%, #ec4899 100%);
   border: 1.5px solid rgba(255, 255, 255, 0.5);
@@ -712,11 +712,9 @@ input:focus { border-color: #d946ef; background: #ffffff; }
   display: none;
 }
 
-/* ==================================================
-   SCAN TO PAY VIA UPI - HIDE AS REQUESTED
-   ================================================== */
+/* SCAN TO PAY VIA UPI - HIDE AS REQUESTED */
 .scan-title {
-  display: none !important; /* অপশনটি সম্পূর্ণ হাইড করা হয়েছে */
+  display: none !important;
 }
 
 /* QR Code Image Glowing Border Margin */
@@ -837,7 +835,43 @@ input:focus { border-color: #d946ef; background: #ffffff; }
 }
 
 /* ==================================================
-   AUTOMATIC SYSTEM DARK MODE DETECTION (ADDED ONLY)
+   DRAWER / SLIDE MENU LIGHT MODE STYLES (DEFAULT)
+   ================================================== */
+.hamburger-btn {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #1e293b;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.left-sidebar {
+  background: #ffffff;
+  border-right: 1px solid #e2e8f0;
+}
+
+.sidebar-header {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.sidebar-close-btn {
+  color: #64748b;
+}
+
+.sidebar-menu a {
+  color: #334155;
+}
+
+.sidebar-menu a:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.sidebar-tutorial-section {
+  border-top: 1px solid #f1f5f9;
+}
+
+/* ==================================================
+   AUTOMATIC SYSTEM DARK MODE DETECTION
    ================================================== */
 @media (prefers-color-scheme: dark) {
   body {
@@ -920,7 +954,41 @@ input:focus { border-color: #d946ef; background: #ffffff; }
     border-color: #334155 !important;
     color: #cbd5e1 !important;
   }
+
+  /* DRAWER / SLIDE MENU DARK MODE STYLES */
+  .hamburger-btn {
+    background: rgba(30, 41, 59, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+  }
+
+  .left-sidebar {
+    background: #0f172a !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .sidebar-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .sidebar-close-btn {
+    color: #94a3b8 !important;
+  }
+
+  .sidebar-menu a {
+    color: #cbd5e1 !important;
+  }
+
+  .sidebar-menu a:hover {
+    background: rgba(168, 85, 247, 0.15) !important;
+    color: #ffffff !important;
+  }
+
+  .sidebar-tutorial-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
 }
+
 /* Auth Modal Modern Dark Theme CSS */
 .auth-modal-overlay {
   position: fixed;

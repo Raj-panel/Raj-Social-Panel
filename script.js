@@ -239,7 +239,7 @@ const serviceData = {
 };
 
 // ==========================================
-// GLOBAL VARIABLES
+// GLOBAL VARIABLES & NAVIGATION LOGIC
 // ==========================================
 
 let currentPlatform = "instagram";
@@ -247,14 +247,41 @@ let currentCategory = "";
 let selectedPackage = null;
 let currentCheckoutData = {};
 
+// Initial base state setup (Prevents extra history entry)
+window.addEventListener("DOMContentLoaded", function () {
+    if (!history.state || !history.state.page) {
+        history.replaceState({ page: "home" }, "", window.location.href);
+    }
+});
+
 window.onload = function () {
     switchPlatform("instagram");
 };
 
+// ==========================================
+// UNIVERSAL POPSTATE (BACK BUTTON) HANDLER
+// ==========================================
 window.addEventListener('popstate', function (event) {
+    // ১. Menu Open থাকলে Back চাপলে শুধু Menu বন্ধ হবে
+    const mobileMenu = document.getElementById("mobileMenu") || document.getElementById("mobile-menu");
+    if (mobileMenu && (mobileMenu.classList.contains("active") || mobileMenu.style.display === "block")) {
+        mobileMenu.classList.remove("active");
+        mobileMenu.style.display = "none";
+        return;
+    }
+
+    // ২. Checkout Modal/Page Open থাকলে Back চাপলে UI বন্ধ হবে
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage && checkoutPage.style.display === "block") {
         closeCheckoutUI();
+        return;
+    }
+
+    // ৩. কোনো Category/Service Page-এ থাকলে Back চাপলে Home View/Default-এ নিয়ে যাবে
+    if (event.state && event.state.page === "home") {
+        if (currentPlatform !== "instagram") {
+            switchPlatform("instagram");
+        }
     }
 });
 
@@ -682,7 +709,10 @@ function changeCheckoutMultiplier(delta) {
 function showCheckoutOverlay() {
     const d = currentCheckoutData;
 
-    history.pushState({ checkoutOpen: true }, "");
+    // Duplicate history entry এড়াতে pushState ব্যবহারের সঠিক নিয়ন্ত্রণ
+    if (!history.state || !history.state.checkoutOpen) {
+        history.pushState({ checkoutOpen: true }, "");
+    }
 
     const iconBox = document.getElementById("checkoutPlatformIcon");
     if (iconBox) {

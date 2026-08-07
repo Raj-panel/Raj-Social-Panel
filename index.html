@@ -33,31 +33,18 @@
 <meta content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0" name="twitter:image"/>
 
 <style>
-  /* Top Header Container */
-  .top-header-bar {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 12px;
-    width: 100%;
-    box-sizing: border-box;
-    min-height: 52px;
-  }
-
-  /* Hamburger Button Fixed at Top Left Corner */
+  /* Top Left Hamburger Button */
   .hamburger-btn {
     position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 12px;
+    left: 12px;
     z-index: 100;
     background: rgba(30, 41, 59, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: #ffffff;
-    font-size: 20px;
-    width: 42px;
-    height: 42px;
+    font-size: 18px;
+    width: 38px;
+    height: 38px;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -65,15 +52,9 @@
     cursor: pointer;
     backdrop-filter: blur(8px);
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  }
-  .hamburger-btn:hover {
-    background: rgba(168, 85, 247, 0.3);
-    border-color: #a855f7;
-    transform: translateY(-50%) scale(1.05);
   }
 
-  /* Modern Styling for Heading Text (Centered) */
+  /* Centered Title */
   .panel-heading {
     font-family: 'Poppins', sans-serif !important;
     font-size: 24px !important;
@@ -85,8 +66,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-align: center;
-    margin: 0;
-    line-height: 1.2;
+    margin: 12px 0 20px 0;
     filter: drop-shadow(0px 2px 8px rgba(168, 85, 247, 0.4));
   }
 
@@ -105,7 +85,7 @@
     transform: translateY(-2px);
   }
 
-  /* Reference Image Styled UPI Buttons UI */
+  /* UPI Buttons Grid */
   .upi-app-btn-grid {
     display: flex;
     justify-content: space-between;
@@ -128,13 +108,9 @@
     font-weight: 700;
     font-size: 12px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .upi-app-card-btn:active {
-    transform: scale(0.96);
   }
 
-  /* SIDEBAR STYLES */
+  /* Left Sidebar Drawer */
   .sidebar-overlay {
     position: fixed;
     top: 0;
@@ -165,7 +141,6 @@
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
-    box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5);
     overflow-y: auto;
   }
   .left-sidebar.active {
@@ -178,7 +153,6 @@
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(15, 23, 42, 0.95);
   }
   .sidebar-title {
     font-family: 'Poppins', sans-serif !important;
@@ -188,7 +162,6 @@
     background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: 1px;
   }
   .sidebar-close-btn {
     background: transparent;
@@ -196,11 +169,6 @@
     color: #94a3b8;
     font-size: 22px;
     cursor: pointer;
-    padding: 5px;
-    transition: color 0.2s ease;
-  }
-  .sidebar-close-btn:hover {
-    color: #ffffff;
   }
 
   .sidebar-menu {
@@ -222,15 +190,10 @@
     font-size: 14px;
     font-weight: 600;
     border-radius: 10px;
-    transition: all 0.2s ease;
   }
   .sidebar-menu a:hover {
     background: rgba(168, 85, 247, 0.15);
     color: #ffffff;
-    transform: translateX(4px);
-  }
-  .sidebar-menu a span.menu-emoji {
-    font-size: 16px;
   }
 </style>
 </head>
@@ -244,27 +207,27 @@
     <button class="sidebar-close-btn" onclick="closeSidebar()"><i class="fa-solid fa-xmark"></i></button>
   </div>
   <ul class="sidebar-menu">
-    <li><a href="login.html"><span class="menu-emoji">🔐</span> Login</a></li>
-    <li><a href="index.html"><span class="menu-emoji">🛒</span> New Order</a></li>
-    <li><a href="orders.html"><span class="menu-emoji">📦</span> My Orders</a></li>
-    <li><a href="add-funds.html"><span class="menu-emoji">💳</span> Add Funds</a></li>
-    <li><a href="privacy-policy.html"><span class="menu-emoji">🔒</span> Privacy Policy</a></li>
-    <li><a href="refund-policy.html"><span class="menu-emoji">💸</span> Refund Policy</a></li>
-    <li><a href="terms.html"><span class="menu-emoji">📜</span> Terms &amp; Conditions</a></li>
-    <li><a href="contact.html"><span class="menu-emoji">📞</span> Contact Us</a></li>
-    <li><a href="about.html"><span class="menu-emoji">ℹ️</span> About Us</a></li>
+    <li><a href="login.html">🔐 Login</a></li>
+    <li><a href="index.html">🛒 New Order</a></li>
+    <li><a href="orders.html">📦 My Orders</a></li>
+    <li><a href="add-funds.html">💳 Add Funds</a></li>
+    <li><a href="privacy-policy.html">🔒 Privacy Policy</a></li>
+    <li><a href="refund-policy.html">💸 Refund Policy</a></li>
+    <li><a href="terms.html">📜 Terms &amp; Conditions</a></li>
+    <li><a href="contact.html">📞 Contact Us</a></li>
+    <li><a href="about.html">ℹ️ About Us</a></li>
   </ul>
 </div>
 
-<div class="main-wrapper" id="mainHomeView">
+<div class="main-wrapper" id="mainHomeView" style="position: relative;">
   
-  <!-- Header Bar: Hamburger Button on Top Left Corner & Centered Title -->
-  <div class="top-header-bar">
-    <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
-      <i class="fa-solid fa-bars"></i>
-    </button>
-    <div class="panel-heading">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
-  </div>
+  <!-- Hamburger Button (Top Left) -->
+  <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <!-- Header -->
+  <div class="panel-heading">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
 
   <!-- Support Buttons Header -->
   <div class="hero-actions">
@@ -333,19 +296,15 @@
   </div>
 </div>
 
-<!-- ============================================== -->
-<!-- NEW PAYMENT / CHECKOUT PAGE OVERLAY (Full Screen Drawer) -->
-<!-- ============================================== -->
+<!-- NEW PAYMENT / CHECKOUT PAGE OVERLAY -->
 <div id="checkoutPage" class="checkout-page-overlay hidden">
   <div class="checkout-content">
     
-    <!-- Top Bar with Back Button -->
     <div class="checkout-nav">
       <button class="back-btn" onclick="closeCheckout()"><i class="fa-solid fa-arrow-left"></i> Back</button>
       <div class="checkout-heading-text">Checkout</div>
     </div>
 
-    <!-- Premium Service Card -->
     <div class="premium-service-card">
       <div class="card-top-row">
         <div class="platform-badge-icon" id="checkoutPlatformIcon">
@@ -365,13 +324,11 @@
       </div>
     </div>
 
-    <!-- Social Link Input -->
     <div class="checkout-input-group">
       <label id="checkoutLinkLabel">Enter your Instagram link</label>
       <input type="text" id="checkoutLinkInput" placeholder="https://instagram.com/your_username" />
     </div>
 
-    <!-- Order Summary -->
     <div class="checkout-order-summary">
       <div class="summary-title">Order Summary</div>
       <div class="summary-row">
@@ -385,7 +342,6 @@
       </div>
     </div>
 
-    <!-- Payment Tabs -->
     <div class="pay-toggle-tabs">
       <button class="pay-tab active" id="btnTabUpi" onclick="switchCheckoutPayment('upi')">
         <i class="fa-solid fa-qrcode"></i> UPI QR Code
@@ -395,7 +351,6 @@
       </button>
     </div>
 
-    <!-- UPI Payment Container -->
     <div id="checkoutUpiView" class="payment-view-box">
       <div class="scan-title" style="font-weight: 800; color: #a855f7; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
         SCAN TO PAY VIA UPI
@@ -407,7 +362,6 @@
         Scan or enter payment detail into any UPI App
       </p>
       
-      <!-- UPI App Deep Link Buttons -->
       <div class="upi-app-btn-grid">
         <a href="#" id="btnPaytm" onclick="triggerUpiPay('paytm'); return false;" class="upi-app-card-btn">
           <span style="color: #00baf2; font-weight: 900;">Paytm</span>
@@ -426,7 +380,6 @@
       </div>
     </div>
 
-    <!-- Binance Payment Container -->
     <div id="checkoutBinanceView" class="payment-view-box hidden">
       <div class="scan-title">SCAN TO PAY VIA BINANCE</div>
       <div class="qr-wrapper">
@@ -440,18 +393,15 @@
       </div>
     </div>
 
-    <!-- Transaction ID Input -->
     <div class="checkout-input-group margin-top-15">
       <label>Enter Your UTR number</label>
       <input type="text" id="checkoutTxnId" placeholder="Enter Transaction ID / UTR(e.g. 123456789012)" />
     </div>
 
-    <!-- Notice Box -->
     <div class="notice-yellow-box">
       <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
     </div>
 
-    <!-- WhatsApp Submit Button -->
     <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
       <i class="fa-brands fa-whatsapp"></i> Confirm your order
     </button>
@@ -461,7 +411,6 @@
 
 <script src="script.js"></script>
 
-<!-- Sidebar Toggle Functions -->
 <script>
   function openSidebar() {
     document.getElementById("leftSidebar").classList.add("active");
@@ -476,7 +425,6 @@
   }
 </script>
 
-<!-- Custom Script to Hide Install App on Input Focus -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     document.body.addEventListener("focusin", function (e) {
@@ -495,7 +443,6 @@
   });
 </script>
 
-<!-- Service Worker Registration for PWA -->
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {

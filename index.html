@@ -195,6 +195,51 @@
     background: rgba(168, 85, 247, 0.15);
     color: #ffffff;
   }
+
+  /* Tutorial Footer Section inside Drawer Menu */
+  .sidebar-tutorial-section {
+    padding: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .watch-tutorials-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #dc2626;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  .watch-tutorials-btn:hover {
+    background: #b91c1c;
+    transform: translateY(-1px);
+  }
+  .tutorial-banner-link {
+    display: block;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .tutorial-banner-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+  .tutorial-banner-link:hover .tutorial-banner-img {
+    transform: scale(1.02);
+  }
 </style>
 </head>
 <body>
@@ -217,6 +262,16 @@
     <li><a href="/pages/contact.html">📞 Contact Us</a></li>
     <li><a href="/pages/about.html">ℹ️ About Us</a></li>
   </ul>
+
+  <!-- Tutorial Section Added at the bottom of the Drawer Menu -->
+  <div class="sidebar-tutorial-section">
+    <a href="https://youtu.be/6WLCJPCjou0?si=f8v4qj-T8TjvqdX-" target="_blank" class="watch-tutorials-btn">
+      <i class="fa-brands fa-youtube"></i> Watch Tutorials
+    </a>
+    <a href="https://youtu.be/6WLCJPCjou0?si=f8v4qj-T8TjvqdX-" target="_blank" class="tutorial-banner-link">
+      <img src="Thumbnail.png" alt="Tutorial Banner" class="tutorial-banner-img" />
+    </a>
+  </div>
 </div>
 
 <div class="main-wrapper" id="mainHomeView" style="position: relative;">

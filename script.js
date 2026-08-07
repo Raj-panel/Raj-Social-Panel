@@ -903,3 +903,37 @@ window.addEventListener("appinstalled", () => {
     }
     deferredPrompt = null;
 });
+// Sidebar Drawer Toggle Functionality
+document.addEventListener("DOMContentLoaded", function () {
+  const hamburgerBtn = document.getElementById("hamburgerBtn");
+  const sidebarDrawer = document.getElementById("sidebarDrawer");
+  const sidebarOverlay = document.getElementById("sidebarOverlay");
+  const sidebarCloseBtn = document.getElementById("sidebarCloseBtn");
+
+  function openSidebar() {
+    if (sidebarDrawer && sidebarOverlay) {
+      sidebarDrawer.classList.add("active");
+      sidebarOverlay.classList.add("active");
+      document.body.style.overflow = "hidden"; // Prevent background scroll
+    }
+  }
+
+  function closeSidebar() {
+    if (sidebarDrawer && sidebarOverlay) {
+      sidebarDrawer.classList.remove("active");
+      sidebarOverlay.classList.remove("active");
+      document.body.style.overflow = ""; // Restore background scroll
+    }
+  }
+
+  if (hamburgerBtn) hamburgerBtn.addEventListener("click", openSidebar);
+  if (sidebarCloseBtn) sidebarCloseBtn.addEventListener("click", closeSidebar);
+  if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeSidebar);
+
+  // Close sidebar on Pressing Escape Key
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && sidebarDrawer && sidebarDrawer.classList.contains("active")) {
+      closeSidebar();
+    }
+  });
+});

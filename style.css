@@ -921,3 +921,152 @@ input:focus { border-color: #d946ef; background: #ffffff; }
     color: #cbd5e1 !important;
   }
 }
+/* Auth Modal Modern Dark Theme CSS */
+.auth-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.auth-modal-overlay.hidden {
+  display: none !important;
+}
+
+.auth-modal-box {
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 400px;
+  padding: 25px 20px;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  color: #f8fafc;
+}
+
+.auth-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.auth-title {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 5px;
+  background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.auth-sub {
+  font-size: 13px;
+  color: #94a3b8;
+  margin-bottom: 20px;
+}
+
+.auth-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.auth-input-group label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.phone-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.country-code {
+  padding: 12px;
+  background: #1e293b;
+  color: #a855f7;
+  font-weight: 700;
+  font-size: 14px;
+  border-right: 1px solid #334155;
+}
+
+.phone-input-wrapper input, .auth-input-group input {
+  width: 100%;
+  padding: 12px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 14px;
+  outline: none;
+}
+
+.phone-input-wrapper input {
+  border: none;
+  border-radius: 0;
+}
+
+.auth-extra-row {
+  text-align: right;
+  margin-bottom: 15px;
+}
+
+.forgot-link {
+  color: #a855f7;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.auth-btn.secondary-btn {
+  background: #334155;
+  color: #f8fafc;
+}
+
+.auth-switch-text {
+  font-size: 13px;
+  color: #94a3b8;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.auth-switch-text a {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.margin-top-10 { margin-top: 10px; }

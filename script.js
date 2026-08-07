@@ -107,6 +107,23 @@
     document.head.appendChild(style);
 })();
 
+// ==========================================
+// NAVIGATION FIX FOR LOGIN / CREATE ACCOUNT
+// ==========================================
+document.addEventListener("DOMContentLoaded", function () {
+    // Intercept clicks on sidebar or menu links to allow seamless page switching
+    document.body.addEventListener("click", function (e) {
+        const link = e.target.closest("a");
+        if (link) {
+            const href = link.getAttribute("href");
+            if (href && href !== "#" && !href.startsWith("javascript:")) {
+                e.stopPropagation();
+                window.location.href = href;
+            }
+        }
+    }, true);
+});
+
 const serviceData = {
 
     // ==========================================

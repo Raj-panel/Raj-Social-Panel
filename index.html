@@ -207,7 +207,7 @@
     <button class="sidebar-close-btn" onclick="closeSidebar()"><i class="fa-solid fa-xmark"></i></button>
   </div>
   <ul class="sidebar-menu">
-    <li><a href="login.html">🔐 Login</a></li>
+    <li><a href="#" onclick="openAuthModal('login'); closeSidebar(); return false;">🔐 Login / Create Account</a></li>
     <li><a href="index.html">🛒 New Order</a></li>
     <li><a href="orders.html">📦 My Orders</a></li>
     <li><a href="add-funds.html">💳 Add Funds</a></li>
@@ -409,51 +409,7 @@
   </div>
 </div>
 
-<script src="script.js"></script>
-<script type="module" src="firebase-config.js"></script>
-<script type="module" src="auth-handler.js"></script>
-<script>
-  function openSidebar() {
-    document.getElementById("leftSidebar").classList.add("active");
-    document.getElementById("sidebarOverlay").classList.add("active");
-    document.body.style.overflow = "hidden";
-  }
-
-  function closeSidebar() {
-    document.getElementById("leftSidebar").classList.remove("active");
-    document.getElementById("sidebarOverlay").classList.remove("active");
-    document.body.style.overflow = "auto";
-  }
-</script>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    document.body.addEventListener("focusin", function (e) {
-      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
-        const installBox = document.getElementById("installContainer");
-        if (installBox) installBox.style.display = "none";
-      }
-    });
-
-    document.body.addEventListener("focusout", function (e) {
-      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
-        const installBox = document.getElementById("installContainer");
-        if (installBox) installBox.style.display = "block";
-      }
-    });
-  });
-</script>
-
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then((reg) => console.log('Service Worker Registered Successfully:', reg))
-        .catch((err) => console.log('Service Worker Registration Failed:', err));
-    });
-  }
-</script>
-  <!-- AUTH MODAL SYSTEM (Simple Mobile + Password) -->
+<!-- AUTH MODAL SYSTEM (Simple Mobile + Password) -->
 <div class="auth-modal-overlay hidden" id="authModalOverlay">
   <div class="auth-modal-box">
     <button class="auth-close-btn" onclick="closeAuthModal()"><i class="fa-solid fa-xmark"></i></button>
@@ -554,3 +510,51 @@
 
   </div>
 </div>
+
+<script src="script.js"></script>
+<script type="module" src="firebase-config.js"></script>
+<script type="module" src="auth-handler.js"></script>
+<script>
+  function openSidebar() {
+    document.getElementById("leftSidebar").classList.add("active");
+    document.getElementById("sidebarOverlay").classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeSidebar() {
+    document.getElementById("leftSidebar").classList.remove("active");
+    document.getElementById("sidebarOverlay").classList.remove("active");
+    document.body.style.overflow = "auto";
+  }
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.body.addEventListener("focusin", function (e) {
+      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
+        const installBox = document.getElementById("installContainer");
+        if (installBox) installBox.style.display = "none";
+      }
+    });
+
+    document.body.addEventListener("focusout", function (e) {
+      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
+        const installBox = document.getElementById("installContainer");
+        if (installBox) installBox.style.display = "block";
+      }
+    });
+  });
+</script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then((reg) => console.log('Service Worker Registered Successfully:', reg))
+        .catch((err) => console.log('Service Worker Registration Failed:', err));
+    });
+  }
+</script>
+
+</body>
+</html>

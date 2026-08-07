@@ -75,9 +75,7 @@ function updateSidebarForLoggedOutUser() {
 
   let loginItem = sidebarMenu.querySelector("li:first-child");
   if (loginItem) {
-    loginItem.innerHTML = `<a href="#" <a href="/login/" onclick="closeSidebar()">
-    🔐 Login / Create Account
-</a>>🔐 Login / Create Account</a>`;
+    loginItem.innerHTML = `<a href="#" onclick="openAuthModal('login'); closeSidebar(); return false;">🔐 Login / Create Account</a>`;
   }
 }
 

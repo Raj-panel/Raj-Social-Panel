@@ -1,10 +1,4 @@
-import { auth, db } from "./firebase-config.js";
-import { 
-  RecaptchaVerifier, 
-  signInWithPhoneNumber, 
-  signOut, 
-  onAuthStateChanged 
-} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+import { db } from "./firebase-config.js";
 import { 
   doc, 
   setDoc, 
@@ -12,17 +6,19 @@ import {
   updateDoc 
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
-let confirmationResult = null;
-let currentUserData = null;
+// Session LocalStorage Key
+const SESSION_KEY = "raj_smm_user_session";
 
 // UI Helpers
 window.openAuthModal = (tab = 'login') => {
-  document.getElementById("authModalOverlay").classList.remove("hidden");
+  const overlay = document.getElementById("authModalOverlay");
+  if (overlay) overlay.classList.remove("hidden");
   window.switchAuthTab(tab);
 };
 
 window.closeAuthModal = () => {
-  document.getElementById("authModalOverlay").classList.add("hidden");
+  const overlay = document.getElementById("authModalOverlay");
+  if (overlay) overlay.classList.add("hidden");
 };
 
 window.switchAuthTab = (tab) => {
@@ -35,28 +31,33 @@ window.switchAuthTab = (tab) => {
   if (tab === 'forgot') document.getElementById("forgotFormSection").classList.remove("hidden");
 };
 
-// Persistent Auth Observer
-onAuthStateChanged(auth, async (user) => {
-  const sidebarMenu = document.querySelector(".sidebar-menu");
-  if (user) {
-    const userDoc = await getDoc(doc(db, "users", user.uid));
-    if (userDoc.exists()) {
-      currentUserData = userDoc.data();
-      updateSidebarForLoggedInUser(currentUserData.mobile);
-    }
-  } else {
-    currentUserData = null;
-    updateSidebarForLoggedOutUser();
-  }
+// Check Session on Page Load
+document.addEventListener("DOMContentLoaded", () => {
+  checkUserSession();
 });
 
-function updateSidebarForLoggedInUser(mobile) {
+function checkUserSession() {
+  const sessionData = localStorage.getItem(SESSION_KEY);
+  if (sessionData) {
+    try {
+      const user = JSON.parse(sessionData);
+      updateSidebarForLoggedInUser(user.name, user.mobile);
+    } catch (e) {
+      localStorage.removeItem(SESSION_KEY);
+      updateSidebarForLoggedOutUser();
+    }
+  } else {
+    updateSidebarForLoggedOutUser();
+  }
+}
+
+function updateSidebarForLoggedInUser(name, mobile) {
   const sidebarMenu = document.querySelector(".sidebar-menu");
   if (!sidebarMenu) return;
 
   let loginItem = sidebarMenu.querySelector("li:first-child");
   if (loginItem) {
-    loginItem.innerHTML = `<a href="#" onclick="handleLogout(); return false;" style="color: #ef4444;">🚪 Logout (${mobile})</a>`;
+    loginItem.innerHTML = `<a href="#" onclick="handleLogout(); return false;" style="color: #ef4444;">🚪 Logout (${name || mobile})</a>`;
   }
 }
 
@@ -66,71 +67,61 @@ function updateSidebarForLoggedOutUser() {
 
   let loginItem = sidebarMenu.querySelector("li:first-child");
   if (loginItem) {
-    loginItem.innerHTML = `<a href="#" onclick="openAuthModal('login'); return false;">🔐 Login / Sign Up</a>`;
+    loginItem.innerHTML = `<a href="#" onclick="openAuthModal('login'); return false;">🔐 Login / Create Account</a>`;
   }
 }
 
-// Recaptcha Initializer
-function setupRecaptcha(containerId) {
-  if (!window.recaptchaVerifier) {
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, containerId, {
-      'size': 'invisible',
-      'callback': () => {}
-    });
-  }
-}
-
-// 1. SIGN UP
-window.sendOtpForSignup = async () => {
+// 1. CREATE ACCOUNT
+window.handleSignUp = async () => {
+  const name = document.getElementById("signupName").value.trim();
   const mobile = document.getElementById("signupMobile").value.trim();
-  if (mobile.length !== 10) return alert("Please enter a valid 10-digit mobile number.");
-
-  const formattedPhone = "+91" + mobile;
-
-  try {
-    const userDoc = await getDoc(doc(db, "users_by_phone", mobile));
-    if (userDoc.exists()) {
-      return alert("This mobile number is already registered. Please login.");
-    }
-
-    setupRecaptcha('recaptcha-container-signup');
-    confirmationResult = await signInWithPhoneNumber(auth, formattedPhone, window.recaptchaVerifier);
-    document.getElementById("signupOtpBox").classList.remove("hidden");
-    document.getElementById("btnSendOtpSignup").classList.add("hidden");
-    alert("OTP sent successfully to " + formattedPhone);
-  } catch (error) {
-    alert("Error sending OTP: " + error.message);
-  }
-};
-
-window.verifyOtpAndSignup = async () => {
-  const otp = document.getElementById("signupOtp").value.trim();
   const password = document.getElementById("signupPassword").value;
   const confirmPassword = document.getElementById("signupConfirmPassword").value;
-  const mobile = document.getElementById("signupMobile").value.trim();
 
-  if (!otp || !password) return alert("Please fill all fields.");
-  if (password !== confirmPassword) return alert("Passwords do not match.");
+  if (!name || !mobile || !password || !confirmPassword) {
+    return alert("Please fill in all fields.");
+  }
+
+  if (mobile.length !== 10) {
+    return alert("Please enter a valid 10-digit mobile number.");
+  }
+
+  if (password !== confirmPassword) {
+    return alert("Passwords do not match.");
+  }
 
   try {
-    const result = await confirmationResult.confirm(otp);
-    const user = result.user;
+    const userDocRef = doc(db, "users", mobile);
+    const userDoc = await getDoc(userDocRef);
 
-    // Save User Data to Firestore
-    await setDoc(doc(db, "users", user.uid), {
-      uid: user.uid,
+    if (userDoc.exists()) {
+      return alert("Mobile Number already registered. Please login.");
+    }
+
+    // Save user profile in Firestore
+    const userData = {
+      name: name,
       mobile: mobile,
-      password: password, // Ready for future features (Wallet, Orders, Profile)
+      password: password, // Securely saved in Firestore
       walletBalance: 0,
       createdAt: new Date().toISOString()
-    });
+    };
 
-    await setDoc(doc(db, "users_by_phone", mobile), { uid: user.uid });
+    await setDoc(userDocRef, userData);
 
-    alert("Account created successfully!");
-    closeAuthModal();
+    alert("Account created successfully! Redirecting to login...");
+    
+    // Clear inputs
+    document.getElementById("signupName").value = "";
+    document.getElementById("signupMobile").value = "";
+    document.getElementById("signupPassword").value = "";
+    document.getElementById("signupConfirmPassword").value = "";
+
+    // Redirect to Login Tab
+    switchAuthTab('login');
+    document.getElementById("loginMobile").value = mobile;
   } catch (error) {
-    alert("Invalid OTP or Registration Failed: " + error.message);
+    alert("Error creating account: " + error.message);
   }
 };
 
@@ -139,23 +130,34 @@ window.handleLogin = async () => {
   const mobile = document.getElementById("loginMobile").value.trim();
   const password = document.getElementById("loginPassword").value;
 
-  if (!mobile || !password) return alert("Please fill all fields.");
+  if (!mobile || !password) {
+    return alert("Please enter both Mobile Number and Password.");
+  }
 
   try {
-    const phoneDoc = await getDoc(doc(db, "users_by_phone", mobile));
-    if (!phoneDoc.exists()) {
-      return alert("Mobile number not registered. Please Sign Up.");
+    const userDocRef = doc(db, "users", mobile);
+    const userDoc = await getDoc(userDocRef);
+
+    if (!userDoc.exists()) {
+      return alert("Invalid Mobile Number or Password.");
     }
 
-    const uid = phoneDoc.data().uid;
-    const userDoc = await getDoc(doc(db, "users", uid));
+    const userData = userDoc.data();
 
-    if (userDoc.exists() && userDoc.data().password === password) {
-      alert("Logged in successfully!");
+    if (userData.password === password) {
+      // Save session securely in localStorage
+      const sessionObj = {
+        name: userData.name,
+        mobile: userData.mobile,
+        loggedInAt: new Date().toISOString()
+      };
+      localStorage.setItem(SESSION_KEY, JSON.stringify(sessionObj));
+
+      alert("Login successful!");
       closeAuthModal();
-      location.reload();
+      checkUserSession();
     } else {
-      alert("Incorrect password.");
+      alert("Invalid Mobile Number or Password.");
     }
   } catch (error) {
     alert("Login failed: " + error.message);
@@ -163,55 +165,48 @@ window.handleLogin = async () => {
 };
 
 // 3. FORGOT PASSWORD
-window.sendOtpForForgot = async () => {
+window.handleResetPassword = async () => {
   const mobile = document.getElementById("forgotMobile").value.trim();
-  if (mobile.length !== 10) return alert("Please enter a valid 10-digit mobile number.");
-
-  const formattedPhone = "+91" + mobile;
-
-  try {
-    const phoneDoc = await getDoc(doc(db, "users_by_phone", mobile));
-    if (!phoneDoc.exists()) {
-      return alert("This mobile number is not registered.");
-    }
-
-    setupRecaptcha('recaptcha-container-forgot');
-    confirmationResult = await signInWithPhoneNumber(auth, formattedPhone, window.recaptchaVerifier);
-    document.getElementById("forgotOtpBox").classList.remove("hidden");
-    document.getElementById("btnSendOtpForgot").classList.add("hidden");
-    alert("OTP sent to " + formattedPhone);
-  } catch (error) {
-    alert("Error sending OTP: " + error.message);
-  }
-};
-
-window.verifyOtpAndResetPassword = async () => {
-  const otp = document.getElementById("forgotOtp").value.trim();
   const password = document.getElementById("forgotPassword").value;
   const confirmPassword = document.getElementById("forgotConfirmPassword").value;
-  const mobile = document.getElementById("forgotMobile").value.trim();
 
-  if (!otp || !password) return alert("Please fill all fields.");
-  if (password !== confirmPassword) return alert("Passwords do not match.");
+  if (!mobile || !password || !confirmPassword) {
+    return alert("Please fill in all fields.");
+  }
+
+  if (password !== confirmPassword) {
+    return alert("Passwords do not match.");
+  }
 
   try {
-    await confirmationResult.confirm(otp);
-    const phoneDoc = await getDoc(doc(db, "users_by_phone", mobile));
-    const uid = phoneDoc.data().uid;
+    const userDocRef = doc(db, "users", mobile);
+    const userDoc = await getDoc(userDocRef);
 
-    await updateDoc(doc(db, "users", uid), { password: password });
+    if (!userDoc.exists()) {
+      return alert("Mobile Number not registered.");
+    }
 
-    alert("Password updated successfully! Please Login.");
+    await updateDoc(userDocRef, { password: password });
+
+    alert("Password updated successfully! You can now log in with your new password.");
+    
+    // Clear inputs and switch to login
+    document.getElementById("forgotMobile").value = "";
+    document.getElementById("forgotPassword").value = "";
+    document.getElementById("forgotConfirmPassword").value = "";
+
     switchAuthTab('login');
+    document.getElementById("loginMobile").value = mobile;
   } catch (error) {
-    alert("OTP Verification or Password Reset Failed: " + error.message);
+    alert("Password reset failed: " + error.message);
   }
 };
 
 // 4. LOGOUT
-window.handleLogout = async () => {
+window.handleLogout = () => {
   if (confirm("Are you sure you want to logout?")) {
-    await signOut(auth);
-    location.reload();
+    localStorage.removeItem(SESSION_KEY);
+    alert("Logged out successfully.");
+    checkUserSession();
   }
 };

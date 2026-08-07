@@ -19,52 +19,35 @@
 
   <div style="margin-bottom: 16px;">
     <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Full Name</label>
-    <input type="text" id="regName" placeholder="Enter your full name" style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box;">
+    <input type="text" id="signupName" placeholder="Enter your full name" style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box;">
   </div>
 
   <div style="margin-bottom: 16px;">
     <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Mobile Number</label>
     <div style="display: flex; align-items: center; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; overflow: hidden;">
       <span style="padding: 0 12px; font-size: 13px; color: #94a3b8; border-right: 1px solid rgba(255, 255, 255, 0.1);">+91</span>
-      <input type="tel" id="regMobile" placeholder="Enter 10-digit number" maxlength="10" style="width: 100%; background: transparent; border: none; padding: 12px; color: #ffffff; font-size: 14px; outline: none;">
+      <input type="tel" id="signupMobile" placeholder="Enter 10-digit number" maxlength="10" style="width: 100%; background: transparent; border: none; padding: 12px; color: #ffffff; font-size: 14px; outline: none;">
     </div>
   </div>
 
   <div style="margin-bottom: 16px;">
     <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Password</label>
-    <input type="password" id="regPassword" placeholder="Create password" style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box;">
+    <input type="password" id="signupPassword" placeholder="Create password" style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box;">
   </div>
 
   <div style="margin-bottom: 20px;">
     <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Confirm Password</label>
-    <input type="password" id="regConfirmPassword" placeholder="Confirm password" style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box;">
+    <input type="password" id="signupConfirmPassword" placeholder="Confirm password" style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box;">
   </div>
 
-  <button onclick="handleRegister()" style="width: 100%; background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); border: none; border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity 0.3s;">Create Account</button>
+  <button onclick="handleSignUp()" style="width: 100%; background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); border: none; border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity 0.3s;">Create Account</button>
 
   <p style="text-align: center; font-size: 13px; color: #94a3b8; margin-top: 20px;">
     Already have an account? <a href="/login/" style="color: #a855f7; text-decoration: none; font-weight: 600;">Back to Login</a>
   </p>
 </div>
 
-<script>
-  function handleRegister() {
-    const name = document.getElementById('regName').value;
-    const mobile = document.getElementById('regMobile').value;
-    const password = document.getElementById('regPassword').value;
-    const confirmPassword = document.getElementById('regConfirmPassword').value;
-
-    if(!name || !mobile || !password || !confirmPassword) {
-      alert('Please fill in all fields');
-      return;
-    }
-    if(password !== confirmPassword) {
-      alert('Passwords do not match');
-      return;
-    }
-    alert('Account created successfully!');
-    window.location.href = '/login/';
-  }
-</script>
+<!-- Firebase Auth Handler Integration -->
+<script type="module" src="../auth-handler.js"></script>
 </body>
 </html>

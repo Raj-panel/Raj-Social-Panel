@@ -1,1 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders</title>
+    <!-- Keep your existing global CSS styles linked here if needed -->
+    <style>
+        /* Scoped or utility styles matching your design system */
+        body { font-family: system-ui, -apple-system, sans-serif; background-color: #f9fafb; color: #1f2937; margin: 0; padding: 20px; }
+        .orders-container { max-width: 800px; margin: 0 auto; }
+        .order-card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid #f3f4f6; padding-bottom: 8px; }
+        .order-id { font-weight: 600; color: #4b5563; }
+        .badge { padding: 4px 10px; border-radius: 12px; font-size: 0.85rem; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; }
+        .badge-pending { background: #fef3c7; color: #92400e; }
+        .badge-processing { background: #e0f2fe; color: #0369a1; }
+        .badge-completed { background: #dcfce7; color: #166534; }
+        .order-body p { margin: 6px 0; font-size: 0.95rem; }
+        .no-orders { text-align: center; padding: 40px 20px; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; }
+        .no-orders h3 { margin: 10px 0 5px; }
+        .no-orders p { color: #6b7280; margin: 0; }
+    </style>
+</head>
+<body>
 
+<div class="orders-container">
+    <h1>My Orders</h1>
+    <div id="orders-list-wrapper">
+        <!-- Orders will be dynamically injected here -->
+    </div>
+</div>
+
+<!-- Include the order manager script -->
+<script src="../orders-manager.js"></script>
+<script>
+    function renderOrdersPage() {
+        const wrapper = document.getElementById('orders-list-wrapper');
+        const orders = getAllOrders();
+
+        if (orders.length === 0) {
+            wrapper.innerHTML = `
+                <div class="no-orders">
+                    <div style="font-size: 2.5rem;">📦</div>
+                    <h3>No Orders Found</h3>
+                    <p>You haven't placed any order yet.<br>Place your first order to track it.</p>
+                </div>
+            `;
+            return;
+        }
+
+        let html = '';
+        orders.forEach(order => {
+            let badgeClass = 'badge-pending';
+            let emoji = '🟡';
+            if (order.status === 'Processing') {
+                badgeClass = 'badge-processing';
+                emoji = '🔵';
+            } else if (order.status === 'Completed') {
+                badgeClass = 'badge-completed';
+                emoji = '🟢';
+            }
+
+            html += `
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">${order.orderId}</span>
+                        <span class="badge ${badgeClass}">${emoji} ${order.status}</span>
+                    </div>
+                    <div class="order-body">
+                        <p><strong>Service Name:</strong> ${order.serviceName}</p>
+                        <p><strong>Link:</strong> <a href="${order.link}" target="_blank" rel="noopener noreferrer">${order.link}</a></p>
+                        <p><strong>Quantity:</strong> ${order.quantity}</p>
+                        <p><strong>Amount:</strong> ${order.amount}</p>
+                        <p><strong>Date & Time:</strong> ${order.dateTime}</p>
+                    </div>
+                </div>
+            `;
+        });
+
+        wrapper.innerHTML = html;
+    }
+
+    // Initial render
+    renderOrdersPage();
+
+    // Auto-refresh the view every 30 seconds to catch automatic status shifts without manual reload
+    setInterval(renderOrdersPage, 30000);
+</script>
+
+</body>
+</html>

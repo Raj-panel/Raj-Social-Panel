@@ -21,44 +21,28 @@
     <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Mobile Number</label>
     <div style="display: flex; align-items: center; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; overflow: hidden;">
       <span style="padding: 0 12px; font-size: 13px; color: #94a3b8; border-right: 1px solid rgba(255, 255, 255, 0.1);">+91</span>
-      <input type="tel" id="resetMobile" placeholder="Enter 10-digit number" maxlength="10" style="width: 100%; background: transparent; border: none; padding: 12px; color: #ffffff; font-size: 14px; outline: none;">
+      <input type="tel" id="forgotMobile" placeholder="Enter 10-digit number" maxlength="10" style="width: 100%; background: transparent; border: none; padding: 12px; color: #ffffff; font-size: 14px; outline: none;">
     </div>
   </div>
 
   <div style="margin-bottom: 16px;">
     <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">New Password</label>
-    <input type="password" id="resetNewPassword" placeholder="Enter new password" style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box;">
+    <input type="password" id="forgotPassword" placeholder="Enter new password" style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box;">
   </div>
 
   <div style="margin-bottom: 20px;">
     <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Confirm New Password</label>
-    <input type="password" id="resetConfirmPassword" placeholder="Confirm new password" style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box;">
+    <input type="password" id="forgotConfirmPassword" placeholder="Confirm new password" style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box;">
   </div>
 
-  <button onclick="handleResetPassword()" style="width: 100%; background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); border: none; border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity 0.3s;">Reset Password Button</button>
+  <button onclick="handleResetPassword()" style="width: 100%; background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); border: none; border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity 0.3s;">Reset Password</button>
 
   <p style="text-align: center; font-size: 13px; color: #94a3b8; margin-top: 20px;">
     <a href="/login/" style="color: #a855f7; text-decoration: none; font-weight: 600;">Back to Login</a>
   </p>
 </div>
 
-<script>
-  function handleResetPassword() {
-    const mobile = document.getElementById('resetMobile').value;
-    const newPassword = document.getElementById('resetNewPassword').value;
-    const confirmPassword = document.getElementById('resetConfirmPassword').value;
-
-    if(!mobile || !newPassword || !confirmPassword) {
-      alert('Please fill in all fields');
-      return;
-    }
-    if(newPassword !== confirmPassword) {
-      alert('Passwords do not match');
-      return;
-    }
-    alert('Password reset successfully!');
-    window.location.href = '/login/';
-  }
-</script>
+<!-- Firebase Auth Handler Integration -->
+<script type="module" src="../auth-handler.js"></script>
 </body>
 </html>

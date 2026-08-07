@@ -239,7 +239,7 @@ const serviceData = {
 };
 
 // ==========================================
-// GLOBAL VARIABLES & NAVIGATION LOGIC
+// GLOBAL VARIABLES
 // ==========================================
 
 let currentPlatform = "instagram";
@@ -247,41 +247,70 @@ let currentCategory = "";
 let selectedPackage = null;
 let currentCheckoutData = {};
 
-// Initial base state setup (Prevents extra history entry)
-window.addEventListener("DOMContentLoaded", function () {
-    if (!history.state || !history.state.page) {
-        history.replaceState({ page: "home" }, "", window.location.href);
-    }
-});
-
 window.onload = function () {
+    // Initial home state set up without duplicating history
+    history.replaceState({ page: 'home', menuOpen: false, checkoutOpen: false }, "");
     switchPlatform("instagram");
 };
 
 // ==========================================
-// UNIVERSAL POPSTATE (BACK BUTTON) HANDLER
+// HAMBURGER MENU HISTORY HANDLERS
 // ==========================================
-window.addEventListener('popstate', function (event) {
-    // ১. Menu Open থাকলে Back চাপলে শুধু Menu বন্ধ হবে
-    const mobileMenu = document.getElementById("mobileMenu") || document.getElementById("mobile-menu");
-    if (mobileMenu && (mobileMenu.classList.contains("active") || mobileMenu.style.display === "block")) {
-        mobileMenu.classList.remove("active");
-        mobileMenu.style.display = "none";
-        return;
-    }
 
-    // ২. Checkout Modal/Page Open থাকলে Back চাপলে UI বন্ধ হবে
-    const checkoutPage = document.getElementById("checkoutPage");
-    if (checkoutPage && checkoutPage.style.display === "block") {
-        closeCheckoutUI();
-        return;
+function openMenuUI() {
+    const menuElement = document.getElementById("mobileMenu") || document.getElementById("sideMenu") || document.querySelector(".nav-menu");
+    if (menuElement) {
+        menuElement.classList.add("active");
+        menuElement.style.display = "block";
     }
+}
 
-    // ৩. কোনো Category/Service Page-এ থাকলে Back চাপলে Home View/Default-এ নিয়ে যাবে
-    if (event.state && event.state.page === "home") {
-        if (currentPlatform !== "instagram") {
-            switchPlatform("instagram");
+function closeMenuUI() {
+    const menuElement = document.getElementById("mobileMenu") || document.getElementById("sideMenu") || document.querySelector(".nav-menu");
+    if (menuElement) {
+        menuElement.classList.remove("active");
+        menuElement.style.display = "none";
+    }
+}
+
+function toggleMenu() {
+    const menuElement = document.getElementById("mobileMenu") || document.getElementById("sideMenu") || document.querySelector(".nav-menu");
+    const isCurrentlyOpen = menuElement && (menuElement.classList.contains("active") || menuElement.style.display === "block");
+
+    if (!isCurrentlyOpen) {
+        openMenuUI();
+        history.pushState({ page: 'home', menuOpen: true, checkoutOpen: false }, "");
+    } else {
+        closeMenuUI();
+        if (history.state && history.state.menuOpen) {
+            history.back();
         }
+    }
+}
+
+// ==========================================
+// CENTRAL POPSTATE LISTENER (BROWSER BACK/FORWARD)
+// ==========================================
+
+window.addEventListener('popstate', function (event) {
+    const state = event.state || {};
+
+    // 1. Handle Checkout Overlay Close/Open
+    const checkoutPage = document.getElementById("checkoutPage");
+    if (!state.checkoutOpen) {
+        closeCheckoutUI();
+    } else if (state.checkoutOpen) {
+        if (checkoutPage) {
+            checkoutPage.classList.remove("hidden");
+            checkoutPage.style.display = "block";
+        }
+    }
+
+    // 2. Handle Menu Close/Open
+    if (!state.menuOpen) {
+        closeMenuUI();
+    } else if (state.menuOpen) {
+        openMenuUI();
     }
 });
 
@@ -709,10 +738,14 @@ function changeCheckoutMultiplier(delta) {
 function showCheckoutOverlay() {
     const d = currentCheckoutData;
 
-    // Duplicate history entry এড়াতে pushState ব্যবহারের সঠিক নিয়ন্ত্রণ
-    if (!history.state || !history.state.checkoutOpen) {
-        history.pushState({ checkoutOpen: true }, "");
+    // Preserve menu state if menu was open before proceeding to checkout/service
+    const isMenuOpen = history.state && history.state.menuOpen;
+    
+    // Replace menu state if needed or push checkout state with preserved menu status
+    if (isMenuOpen) {
+        history.replaceState({ page: 'home', menuOpen: true, checkoutOpen: false }, "");
     }
+    history.pushState({ page: 'checkout', menuOpen: isMenuOpen, checkoutOpen: true }, "");
 
     const iconBox = document.getElementById("checkoutPlatformIcon");
     if (iconBox) {
@@ -821,9 +854,10 @@ function closeCheckoutUI() {
 }
 
 function closeCheckout() {
-    closeCheckoutUI();
     if (history.state && history.state.checkoutOpen) {
         history.back();
+    } else {
+        closeCheckoutUI();
     }
 }
 

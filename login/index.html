@@ -41,18 +41,7 @@
   </p>
 </div>
 
-<script>
-  function handleLogin() {
-    const mobile = document.getElementById('loginMobile').value;
-    const password = document.getElementById('loginPassword').value;
-    if(!mobile || !password) {
-      alert('Please fill in all fields');
-      return;
-    }
-    localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('userMobile', mobile);
-    window.location.href = '/';
-  }
-</script>
+<!-- Firebase Auth Handler Integration -->
+<script type="module" src="../auth-handler.js"></script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Reset Password - Raj Social Panel</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
 <link href="../style.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 </head>
@@ -17,32 +17,36 @@
     <p style="font-size: 13px; color: #94a3b8; margin: 0;">Enter your mobile number and new password</p>
   </div>
 
-  <div style="margin-bottom: 16px;">
-    <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Mobile Number</label>
-    <div style="display: flex; align-items: center; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; overflow: hidden;">
-      <span style="padding: 0 12px; font-size: 13px; color: #94a3b8; border-right: 1px solid rgba(255, 255, 255, 0.1);">+91</span>
-      <input type="tel" id="forgotMobile" placeholder="Enter 10-digit number" maxlength="10" style="width: 100%; background: transparent; border: none; padding: 12px; color: #ffffff; font-size: 14px; outline: none;">
+  <!-- Form Tag Added for Enter Key support & Clean Event Handling -->
+  <form id="forgotForm" onsubmit="event.preventDefault(); window.handleResetPassword();">
+    <div style="margin-bottom: 16px;">
+      <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Mobile Number</label>
+      <div style="display: flex; align-items: center; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; overflow: hidden;">
+        <span style="padding: 0 12px; font-size: 13px; color: #94a3b8; border-right: 1px solid rgba(255, 255, 255, 0.1);">+91</span>
+        <input type="tel" id="forgotMobile" placeholder="Enter 10-digit number" maxlength="10" required style="width: 100%; background: transparent; border: none; padding: 12px; color: #ffffff; font-size: 14px; outline: none;">
+      </div>
     </div>
-  </div>
 
-  <div style="margin-bottom: 16px;">
-    <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">New Password</label>
-    <input type="password" id="forgotPassword" placeholder="Enter new password" style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box;">
-  </div>
+    <div style="margin-bottom: 16px;">
+      <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">New Password</label>
+      <input type="password" id="forgotPassword" placeholder="Enter new password" required style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box;">
+    </div>
 
-  <div style="margin-bottom: 20px;">
-    <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Confirm New Password</label>
-    <input type="password" id="forgotConfirmPassword" placeholder="Confirm new password" style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box;">
-  </div>
+    <div style="margin-bottom: 20px;">
+      <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Confirm New Password</label>
+      <input type="password" id="forgotConfirmPassword" placeholder="Confirm new password" required style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box;">
+    </div>
 
-  <button onclick="handleResetPassword()" style="width: 100%; background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); border: none; border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity 0.3s;">Reset Password</button>
+    <button type="submit" style="width: 100%; background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); border: none; border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity 0.3s;">Reset Password</button>
+  </form>
 
   <p style="text-align: center; font-size: 13px; color: #94a3b8; margin-top: 20px;">
-    <a href="/login/" style="color: #a855f7; text-decoration: none; font-weight: 600;">Back to Login</a>
+    <a href="../login/index.html" class="nav-link" style="color: #a855f7; text-decoration: none; font-weight: 600;">Back to Login</a>
   </p>
 </div>
 
 <!-- Firebase Auth Handler Integration -->
 <script type="module" src="../auth-handler.js"></script>
+
 </body>
 </html>

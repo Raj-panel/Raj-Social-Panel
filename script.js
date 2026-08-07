@@ -268,7 +268,7 @@ window.onload = function () {
 
 window.addEventListener('popstate', function (event) {
     const checkoutPage = document.getElementById("checkoutPage");
-    if (checkoutPage && checkoutPage.style.display === "block") {
+    if (checkoutPage && (checkoutPage.style.display === "block" || !checkoutPage.classList.contains("hidden"))) {
         closeCheckoutUI();
     }
 });
@@ -762,11 +762,13 @@ function showCheckoutOverlay() {
     const priceCard = priceEl ? priceEl.parentElement : null;
     if (priceCard) {
         const subSpans = priceCard.querySelectorAll("span");
-        subSpans.querySelectorAll ? subSpans.forEach(s => {
-            if (s.id !== "checkoutPriceText" && s.id !== "checkoutQtyCount") {
-                s.innerText = "You Pay";
-            }
-        }) : null;
+        if (subSpans && subSpans.length) {
+            subSpans.forEach(s => {
+                if (s.id !== "checkoutPriceText" && s.id !== "checkoutQtyCount") {
+                    s.innerText = "You Pay";
+                }
+            });
+        }
     }
 
     const allSummaryElements = document.querySelectorAll(".order-summary-box, #orderSummaryBox, [class*='summary']");
@@ -793,6 +795,7 @@ function showCheckoutOverlay() {
     if (checkoutPage) {
         checkoutPage.classList.remove("hidden");
         checkoutPage.style.display = "block";
+        checkoutPage.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 }
 

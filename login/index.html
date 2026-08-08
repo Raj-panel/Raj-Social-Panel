@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Raj Social Panel</title>
     <link rel="stylesheet" href="../style.css">
 </head>
@@ -14,5 +15,18 @@
         <p><a href="../register/">Create Account</a></p>
         <p><a href="../reset-password/">Forgot Password?</a></p>
     </div>
+    <script type="module">
+        import { loginUser } from "../auth-handler.js";
+        document.getElementById("loginBtn").addEventListener("click", async () => {
+            const mobile = document.getElementById("mobile").value;
+            const password = document.getElementById("password").value;
+            try {
+                await loginUser(mobile, password);
+                window.location.href = "/";
+            } catch (err) {
+                alert("Login failed: " + err.message);
+            }
+        });
+    </script>
 </body>
 </html>

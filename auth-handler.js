@@ -1,4 +1,4 @@
-import { auth, db } from "./firebase-config.js";
+import { auth, db } from "../firebase-config.js";
 import { 
     signInWithEmailAndPassword, 
     createUserWithEmailAndPassword, 
@@ -7,16 +7,18 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 import { doc, setDoc } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
-// Pseudo-email generator
+// Secure Pseudo-email generator (Mobile number based)
 const getPseudoEmail = (mobile) => `${mobile}@rajsmmpanel.in`;
 
 export const registerUser = async (fullName, mobile, password) => {
     const email = getPseudoEmail(mobile);
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    
+    // Store profile info (No password stored)
     await setDoc(doc(db, "users", userCredential.user.uid), {
         fullName,
         mobileNumber: mobile,
-        createdAt: new Date()
+        createdAt: new Date().toISOString()
     });
     return userCredential.user;
 };

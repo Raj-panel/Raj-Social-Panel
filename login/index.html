@@ -4,41 +4,44 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Login - Raj Social Panel</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"/>
 <link href="../style.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 </head>
-<body style="background-color: #0f172a; color: #ffffff; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; font-family: 'Poppins', sans-serif;">
+<body class="auth-page-body">
 
-<div style="width: 100%; max-width: 400px; padding: 30px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; backdrop-filter: blur(10px); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);">
-  
-  <div style="text-align: center; margin-bottom: 24px;">
-    <h2 style="font-size: 22px; font-weight: 800; font-style: italic; background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px;">Welcome Back</h2>
-    <p style="font-size: 13px; color: #94a3b8; margin: 0;">Enter your mobile number and password to login</p>
-  </div>
-
-  <div style="margin-bottom: 16px;">
-    <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Mobile Number</label>
-    <div style="display: flex; align-items: center; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; overflow: hidden;">
-      <span style="padding: 0 12px; font-size: 13px; color: #94a3b8; border-right: 1px solid rgba(255, 255, 255, 0.1);">+91</span>
-      <input type="tel" id="loginMobile" placeholder="Enter 10-digit number" maxlength="10" style="width: 100%; background: transparent; border: none; padding: 12px; color: #ffffff; font-size: 14px; outline: none;">
+<div class="auth-page-wrapper">
+  <div class="auth-card-box">
+    
+    <div style="text-align: center; margin-bottom: 24px;">
+      <h2 class="auth-title">Welcome Back</h2>
+      <p class="auth-sub">Enter your mobile number and password to login</p>
     </div>
+
+    <div class="auth-input-group">
+      <label>Mobile Number</label>
+      <div class="phone-input-wrapper">
+        <span class="country-code">+91</span>
+        <input type="tel" id="loginMobile" placeholder="Enter 10-digit number" maxlength="10">
+      </div>
+    </div>
+
+    <div class="auth-input-group">
+      <label>Password</label>
+      <input type="password" id="loginPassword" placeholder="Enter password">
+    </div>
+
+    <div class="auth-extra-row">
+      <a href="/reset-password/" class="forgot-link">Forgot Password?</a>
+    </div>
+
+    <button onclick="handleLogin()" class="auth-btn">Login</button>
+
+    <p class="auth-switch-text">
+      Don't have an account? <a href="/register/">Create Account</a>
+    </p>
+
   </div>
-
-  <div style="margin-bottom: 16px;">
-    <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Password</label>
-    <input type="password" id="loginPassword" placeholder="Enter password" style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box;">
-  </div>
-
-  <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
-    <a href="/reset-password/" style="font-size: 12px; color: #a855f7; text-decoration: none;">Forgot Password?</a>
-  </div>
-
-  <button onclick="handleLogin()" style="width: 100%; background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); border: none; border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity 0.3s;">Login</button>
-
-  <p style="text-align: center; font-size: 13px; color: #94a3b8; margin-top: 20px;">
-    Don't have an account? <a href="/register/" style="color: #a855f7; text-decoration: none; font-weight: 600;">Create Account</a>
-  </p>
 </div>
 
 <!-- Firebase Auth Handler Integration -->

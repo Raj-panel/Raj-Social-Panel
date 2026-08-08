@@ -34,7 +34,18 @@ function updateSidebarForLoggedInUser(name, mobile) {
   const authItem = document.getElementById("authMenuItem");
   if (!authItem) return;
 
-  authItem.innerHTML = `<a href="#" onclick="handleLogout(); return false;" style="color: #ef4444;">🚪 Logout (${name || mobile})</a>`;
+  // লগআউটের জন্য সঠিক আইডি ও ইভেন্ট লিসেনার সেট করা হলো যাতে ১০০% কাজ করে
+  authItem.innerHTML = `<a href="#" id="dynamicLogoutBtn" style="color: #ef4444;">🚪 Logout (${name || mobile})</a>`;
+
+  setTimeout(() => {
+    const logoutBtn = document.getElementById("dynamicLogoutBtn");
+    if (logoutBtn) {
+      logoutBtn.onclick = function(e) {
+        e.preventDefault();
+        handleLogout();
+      };
+    }
+  }, 50);
 }
 
 function updateSidebarForLoggedOutUser() {
@@ -159,11 +170,9 @@ window.handleResetPassword = async function() {
   const passwordEl = document.getElementById("forgotPassword");
   const confirmPasswordEl = document.getElementById("forgotConfirmPassword");
   
-  // Optional: যদি HTML-এ error বা success দেখানোর জন্য আলাদা element থাকে
   const errorMsgEl = document.getElementById("forgotErrorMsg") || document.getElementById("errorMsg");
   const successMsgEl = document.getElementById("forgotSuccessMsg") || document.getElementById("successMsg");
 
-  // Reset messages helper
   const showError = (msg) => {
     if (errorMsgEl) {
       errorMsgEl.style.color = "red";
@@ -182,7 +191,10 @@ window.handleResetPassword = async function() {
     }
   };
 
-  if (!mobileEl || !passwordEl || !confirmPasswordEl) return;
+  if (!mobileEl || !passwordEl || !confirmPasswordEl) {
+    alert("Form elements not found!");
+    return;
+  }
 
   const mobile = mobileEl.value.trim();
   const password = passwordEl.value;
@@ -212,13 +224,13 @@ window.handleResetPassword = async function() {
       return;
     }
 
-    // Update password in Firestore (Custom Firestore system)
+    // Update password in Firestore
     await updateDoc(userDocRef, { 
       password: password,
       updatedAt: new Date().toISOString()
     });
 
-    // Verify update success by fetching the doc again
+    // Verify update success
     const updatedUserDoc = await getDoc(userDocRef);
     if (updatedUserDoc.exists() && updatedUserDoc.data().password === password) {
       showSuccess("Password successfully updated! Redirecting to login...");
@@ -232,5 +244,14 @@ window.handleResetPassword = async function() {
   } catch (error) {
     console.error("Password reset error:", error);
     showError("Password reset failed: " + error.message);
+  }
+};
+
+// 4. LOGOUT
+window.handleLogout = function() {
+  if (confirm("Are you sure you want to logout?")) {
+    localStorage.removeItem(SESSION_KEY);
+    alert("Logged out successfully.");
+    window.location.href = "/";
   }
 };

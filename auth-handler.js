@@ -158,6 +158,29 @@ window.handleResetPassword = async function() {
   const mobileEl = document.getElementById("forgotMobile");
   const passwordEl = document.getElementById("forgotPassword");
   const confirmPasswordEl = document.getElementById("forgotConfirmPassword");
+  
+  // Optional: যদি HTML-এ error বা success দেখানোর জন্য আলাদা element থাকে
+  const errorMsgEl = document.getElementById("forgotErrorMsg") || document.getElementById("errorMsg");
+  const successMsgEl = document.getElementById("forgotSuccessMsg") || document.getElementById("successMsg");
+
+  // Reset messages helper
+  const showError = (msg) => {
+    if (errorMsgEl) {
+      errorMsgEl.style.color = "red";
+      errorMsgEl.innerText = msg;
+    } else {
+      alert(msg);
+    }
+  };
+
+  const showSuccess = (msg) => {
+    if (successMsgEl) {
+      successMsgEl.style.color = "green";
+      successMsgEl.innerText = msg;
+    } else {
+      alert(msg);
+    }
+  };
 
   if (!mobileEl || !passwordEl || !confirmPasswordEl) return;
 
@@ -166,15 +189,18 @@ window.handleResetPassword = async function() {
   const confirmPassword = confirmPasswordEl.value;
 
   if (!mobile || !password || !confirmPassword) {
-    return alert("Please fill in all fields.");
+    showError("Please fill in all fields.");
+    return;
   }
 
   if (mobile.length !== 10) {
-    return alert("Please enter a valid 10-digit mobile number.");
+    showError("Please enter a valid 10-digit mobile number.");
+    return;
   }
 
   if (password !== confirmPassword) {
-    return alert("Passwords do not match.");
+    showError("Passwords do not match.");
+    return;
   }
 
   try {
@@ -182,19 +208,29 @@ window.handleResetPassword = async function() {
     const userDoc = await getDoc(userDocRef);
 
     if (!userDoc.exists()) {
-      return alert("Mobile Number not registered.");
+      showError("Mobile Number not registered.");
+      return;
     }
 
-    // Update password in Firestore
+    // Update password in Firestore (Custom Firestore system)
     await updateDoc(userDocRef, { 
       password: password,
       updatedAt: new Date().toISOString()
     });
 
-    alert("Password updated successfully! You can now log in with your new password.");
-    window.location.href = `/login/?mobile=${mobile}`;
+    // Verify update success by fetching the doc again
+    const updatedUserDoc = await getDoc(userDocRef);
+    if (updatedUserDoc.exists() && updatedUserDoc.data().password === password) {
+      showSuccess("Password successfully updated! Redirecting to login...");
+      setTimeout(() => {
+        window.location.href = `/login/?mobile=${mobile}`;
+      }, 1500);
+    } else {
+      showError("Password update verification failed. Please try again.");
+    }
+
   } catch (error) {
     console.error("Password reset error:", error);
-    alert("Password reset failed: " + error.message);
+    showError("Password reset failed: " + error.message);
   }
 };

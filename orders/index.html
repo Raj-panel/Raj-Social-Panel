@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Orders - Raj SMM Panel</title>
+    <!-- Tailwind CSS CDN for modern, clean UI consistency -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -12,6 +13,7 @@
 </head>
 <body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
 
+    <!-- Header / Navbar Placeholder -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
             <a href="https://rajsmmpanel.in" class="text-xl font-bold text-indigo-600">Raj SMM Panel</a>
@@ -19,82 +21,145 @@
         </div>
     </header>
 
+    <!-- Main Content Area -->
     <main class="flex-grow max-w-4xl w-full mx-auto px-4 py-8">
         <div class="mb-8">
             <h1 class="text-2xl font-bold tracking-tight text-gray-900">My Orders</h1>
             <p class="text-sm text-gray-500 mt-1">Track your active and completed SMM service orders in real-time.</p>
         </div>
 
+        <!-- Orders Container -->
         <div id="orders-container" class="space-y-4">
-            <!-- Loading State -->
-            <p class="text-center text-gray-500">Loading your orders...</p>
+            <!-- Dynamic Order Cards Will Inject Here -->
         </div>
 
+        <!-- No Orders State (Hidden by Default) -->
         <div id="no-orders-state" class="hidden text-center py-16 px-4 bg-white rounded-xl border border-gray-200 shadow-sm">
             <div class="text-4xl mb-3">📦</div>
             <h3 class="text-lg font-semibold text-gray-800">No Orders Found</h3>
-            <p class="text-sm text-gray-500 mt-1 max-w-sm mx-auto">You haven't placed any order yet.</p>
+            <p class="text-sm text-gray-500 mt-1 max-w-sm mx-auto">You haven't placed any order yet. Explore our services and start growing your social media today!</p>
             <a href="https://rajsmmpanel.in" class="mt-5 inline-block bg-indigo-600 text-white font-medium text-sm px-5 py-2.5 rounded-lg hover:bg-indigo-700 transition-colors">Browse Services</a>
         </div>
     </main>
 
+    <!-- Footer -->
     <footer class="bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-500">
         &copy; 2026 Raj SMM Panel. All rights reserved.
     </footer>
 
-    <!-- Firebase SDKs -->
-    <script type="module">
-        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-        import { collection, query, where, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
-        import { auth, db } from "../firebase-config.js";
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                fetchUserOrders(user.uid);
-            } else {
-                document.getElementById('orders-container').innerHTML = '<p class="text-center text-red-500">Please login to view your orders.</p>';
+    <!-- Order Logic & Management Script -->
+    <script>
+        /**
+         * User Identifier Utility
+         * - Firebase UID: window.firebaseUserUid (or check standard auth state if defined globally)
+         * - Browser ID: Stored in localStorage as 'raj_smm_browser_id' if not logged in.
+         */
+        function getUserIdentifier() {
+            // Future-ready check for Firebase UID
+            if (typeof window.firebaseUserUid !== 'undefined' && window.firebaseUserUid) {
+                return window.firebaseUserUid;
             }
-        });
+            // Check localStorage for persistent anonymous browser identifier
+            let browserId = localStorage.getItem('raj_smm_browser_id');
+            if (!browserId) {
+                browserId = 'BID_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+                localStorage.setItem('raj_smm_browser_id', browserId);
+            }
+            return browserId;
+        }
 
-        function fetchUserOrders(uid) {
+        /**
+         * Calculate Automatic Status based on Order Time
+         * - 0 to 5 minutes: Pending (Yellow)
+         * - 5 minutes to 1 hour: Processing (Blue)
+         * - After 1 hour: Completed (Green)
+         */
+        function calculateOrderStatus(orderTimeEpoch) {
+            const now = Date.now();
+            const elapsedMs = now - orderTimeEpoch;
+            const elapsedMinutes = elapsedMs / (1000 * 60);
+
+            if (elapsedMinutes < 5) {
+                return { label: 'Pending', bg: 'bg-yellow-100', text: 'text-yellow-800', dot: 'bg-yellow-400' };
+            } else if (elapsedMinutes < 60) {
+                return { label: 'Processing', bg: 'bg-blue-100', text: 'text-blue-800', dot: 'bg-blue-400' };
+            } else {
+                return { label: 'Completed', bg: 'bg-green-100', text: 'text-green-800', dot: 'bg-green-400' };
+            }
+        }
+
+        /**
+         * Render Orders Function
+         */
+        function renderOrders() {
             const container = document.getElementById('orders-container');
             const noOrdersState = document.getElementById('no-orders-state');
             
-            const q = query(collection(db, "orders"), where("userId", "==", uid), orderBy("createdAt", "desc"));
-            
-            onSnapshot(q, (snapshot) => {
-                if (snapshot.empty) {
-                    container.innerHTML = '';
-                    noOrdersState.classList.remove('hidden');
-                    return;
-                }
+            const currentUser = getUserIdentifier();
+            const allOrders = JSON.parse(localStorage.getItem('raj_smm_orders') || '[]');
 
-                noOrdersState.classList.add('hidden');
+            // Filter orders belonging strictly to current user identifier
+            const userOrders = allOrders.filter(order => order.userIdentifier === currentUser);
+
+            if (userOrders.length === 0) {
                 container.innerHTML = '';
+                noOrdersState.classList.remove('hidden');
+                return;
+            }
 
-                snapshot.forEach((doc) => {
-                    const order = doc.data();
-                    const card = document.createElement('div');
-                    card.className = 'bg-white rounded-xl border border-gray-200 shadow-sm p-5';
-                    card.innerHTML = `
-                        <div class="flex justify-between items-center pb-4 border-b">
-                            <h4 class="font-bold text-gray-800">Order #${doc.id.slice(-6)}</h4>
-                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">${order.status || 'Pending'}</span>
-                        </div>
-                        <div class="py-4 text-sm">
-                            <p><strong>Service:</strong> ${order.serviceName}</p>
-                            <p><strong>Quantity:</strong> ${order.quantity}</p>
-                            <p><strong>Link:</strong> <a href="${order.link}" class="text-indigo-600 underline">${order.link}</a></p>
-                        </div>
-                        <div class="pt-3 border-t text-xs text-gray-500 flex justify-between">
-                            <span>${order.createdAt?.toDate().toLocaleDateString()}</span>
-                            <span class="font-bold text-gray-900">₹${order.amount}</span>
-                        </div>
-                    `;
-                    container.appendChild(card);
+            noOrdersState.classList.add('hidden');
+            container.innerHTML = '';
+
+            // Sort orders descending (newest first)
+            userOrders.sort((a, b) => b.orderTimeEpoch - a.orderTimeEpoch);
+
+            userOrders.forEach(order => {
+                const status = calculateOrderStatus(order.orderTimeEpoch);
+                const formattedDate = new Date(order.orderTimeEpoch).toLocaleString('en-US', {
+                    month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit'
                 });
+
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl border border-gray-200 shadow-sm p-5 hover:shadow transition-shadow';
+                card.innerHTML = `
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-gray-100">
+                        <div>
+                            <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Order ID</span>
+                            <h4 class="text-base font-bold text-gray-800">#${order.orderId}</h4>
+                        </div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full ${status.bg} ${status.text} text-xs font-semibold w-fit">
+                            <span class="w-2 h-2 rounded-full ${status.dot}"></span>
+                            ${status.label}
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 py-4 text-sm">
+                        <div>
+                            <span class="text-gray-500 block text-xs">Service Name</span>
+                            <span class="font-medium text-gray-800">${order.serviceName}</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500 block text-xs">Quantity</span>
+                            <span class="font-medium text-gray-800">${order.quantity}</span>
+                        </div>
+                        <div class="sm:col-span-2 overflow-hidden text-ellipsis">
+                            <span class="text-gray-500 block text-xs">Instagram Link</span>
+                            <a href="${order.link}" target="_blank" rel="noopener noreferrer" class="font-medium text-indigo-600 hover:underline truncate block">${order.link}</a>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between pt-3 border-t border-gray-100 text-xs text-gray-500">
+                        <span>${formattedDate}</span>
+                        <span class="font-bold text-gray-900 text-sm">₹${order.amount}</span>
+                    </div>
+                `;
+                container.appendChild(card);
             });
         }
+
+        // Initialize render on page load
+        renderOrders();
+
+        // Automatically refresh UI status every 10 seconds without requiring manual page refresh
+        setInterval(renderOrders, 10000);
     </script>
 </body>
 </html>

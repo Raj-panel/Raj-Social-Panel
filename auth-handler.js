@@ -169,6 +169,10 @@ window.handleResetPassword = async function() {
     return alert("Please fill in all fields.");
   }
 
+  if (mobile.length !== 10) {
+    return alert("Please enter a valid 10-digit mobile number.");
+  }
+
   if (password !== confirmPassword) {
     return alert("Passwords do not match.");
   }
@@ -181,20 +185,16 @@ window.handleResetPassword = async function() {
       return alert("Mobile Number not registered.");
     }
 
-    await updateDoc(userDocRef, { password: password });
+    // Update password in Firestore
+    await updateDoc(userDocRef, { 
+      password: password,
+      updatedAt: new Date().toISOString()
+    });
 
     alert("Password updated successfully! You can now log in with your new password.");
     window.location.href = `/login/?mobile=${mobile}`;
   } catch (error) {
+    console.error("Password reset error:", error);
     alert("Password reset failed: " + error.message);
-  }
-};
-
-// 4. LOGOUT
-window.handleLogout = function() {
-  if (confirm("Are you sure you want to logout?")) {
-    localStorage.removeItem(SESSION_KEY);
-    alert("Logged out successfully.");
-    window.location.href = "/";
   }
 };

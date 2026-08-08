@@ -6,10 +6,8 @@ import {
   updateDoc 
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
-// LocalStorage Session Key
 const SESSION_KEY = "raj_smm_user_session";
 
-// Check Session on Page Load (Runs across website pages)
 document.addEventListener("DOMContentLoaded", () => {
   checkUserSession();
   initPageSpecificAuth();
@@ -34,7 +32,6 @@ function updateSidebarForLoggedInUser(name, mobile) {
   const authItem = document.getElementById("authMenuItem");
   if (!authItem) return;
 
-  // লগআউটের জন্য সঠিক আইডি ও ইভেন্ট লিসেনার সেট করা হলো
   authItem.innerHTML = `<a href="#" id="dynamicLogoutBtn" style="color: #ef4444;">🚪 Logout (${name || mobile})</a>`;
 
   setTimeout(() => {
@@ -55,11 +52,8 @@ function updateSidebarForLoggedOutUser() {
   authItem.innerHTML = `<a href="/login/" onclick="closeSidebar();">🔐 Login / Create Account</a>`;
 }
 
-// Page-specific initializations to avoid errors on pages without forms
 function initPageSpecificAuth() {
   const currentPath = window.location.pathname;
-
-  // Auto-fill mobile if redirected from signup/reset
   const urlParams = new URLSearchParams(window.location.search);
   const prefillMobile = urlParams.get('mobile');
 
@@ -164,35 +158,14 @@ window.handleLogin = async function() {
   }
 };
 
-// 3. FORGOT PASSWORD / RESET PASSWORD (ফ্লেক্সিবল আইডি সাপোর্টসহ)
+// 3. RESET / FORGOT PASSWORD (সঠিক আইডি ম্যাপিং সহ)
 window.handleResetPassword = async function() {
-  const mobileEl = document.getElementById("forgotMobile") || document.getElementById("mobile");
-  const passwordEl = document.getElementById("forgotPassword") || document.getElementById("newPassword");
-  const confirmPasswordEl = document.getElementById("forgotConfirmPassword") || document.getElementById("confirmPassword");
-  
-  const errorMsgEl = document.getElementById("forgotErrorMsg") || document.getElementById("errorMsg");
-  const successMsgEl = document.getElementById("forgotSuccessMsg") || document.getElementById("successMsg");
-
-  const showError = (msg) => {
-    if (errorMsgEl) {
-      errorMsgEl.style.color = "red";
-      errorMsgEl.innerText = msg;
-    } else {
-      alert(msg);
-    }
-  };
-
-  const showSuccess = (msg) => {
-    if (successMsgEl) {
-      successMsgEl.style.color = "green";
-      successMsgEl.innerText = msg;
-    } else {
-      alert(msg);
-    }
-  };
+  const mobileEl = document.getElementById("resetMobile") || document.getElementById("forgotMobile") || document.getElementById("mobile");
+  const passwordEl = document.getElementById("resetNewPassword") || document.getElementById("forgotPassword") || document.getElementById("newPassword");
+  const confirmPasswordEl = document.getElementById("resetConfirmPassword") || document.getElementById("forgotConfirmPassword") || document.getElementById("confirmPassword");
 
   if (!mobileEl || !passwordEl || !confirmPasswordEl) {
-    alert("Error: Forgot Password input fields not found in HTML!");
+    alert("Form elements not found! Please check HTML IDs.");
     return;
   }
 
@@ -201,17 +174,17 @@ window.handleResetPassword = async function() {
   const confirmPassword = confirmPasswordEl.value;
 
   if (!mobile || !password || !confirmPassword) {
-    showError("Please fill in all fields.");
+    alert("Please fill in all fields.");
     return;
   }
 
   if (mobile.length !== 10) {
-    showError("Please enter a valid 10-digit mobile number.");
+    alert("Please enter a valid 10-digit mobile number.");
     return;
   }
 
   if (password !== confirmPassword) {
-    showError("Passwords do not match.");
+    alert("Passwords do not match.");
     return;
   }
 
@@ -220,24 +193,23 @@ window.handleResetPassword = async function() {
     const userDoc = await getDoc(userDocRef);
 
     if (!userDoc.exists()) {
-      showError("Mobile Number not registered.");
+      alert("Mobile Number not registered.");
       return;
     }
 
-    // Update password in Firestore
     await updateDoc(userDocRef, { 
       password: password,
       updatedAt: new Date().toISOString()
     });
 
-    showSuccess("Password successfully updated! Redirecting to login...");
+    alert("Password successfully updated! Redirecting to login...");
     setTimeout(() => {
       window.location.href = `/login/?mobile=${mobile}`;
     }, 1500);
 
   } catch (error) {
     console.error("Password reset error:", error);
-    showError("Password reset failed: " + error.message);
+    alert("Password reset failed: " + error.message);
   }
 };
 

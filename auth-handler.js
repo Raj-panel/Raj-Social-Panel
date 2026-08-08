@@ -9,10 +9,39 @@ import {
 // LocalStorage Session Key
 const SESSION_KEY = "raj_smm_user_session";
 
-// Check Session on Page Load (Runs across website pages)
+// Global Modal Functions bound to Window for HTML Onclick handlers
+window.openAuthModal = function(tab = 'login') {
+  const overlay = document.getElementById("authModalOverlay");
+  if (overlay) {
+    overlay.classList.remove("hidden");
+    window.switchAuthTab(tab);
+  }
+};
+
+window.closeAuthModal = function() {
+  const overlay = document.getElementById("authModalOverlay");
+  if (overlay) {
+    overlay.classList.add("hidden");
+  }
+};
+
+window.switchAuthTab = function(tab) {
+  const loginForm = document.getElementById("loginFormSection");
+  const signupForm = document.getElementById("signupFormSection");
+  const forgotForm = document.getElementById("forgotFormSection");
+
+  if (loginForm) loginForm.classList.add("hidden");
+  if (signupForm) signupForm.classList.add("hidden");
+  if (forgotForm) forgotForm.classList.add("hidden");
+
+  if (tab === 'login' && loginForm) loginForm.classList.remove("hidden");
+  if (tab === 'signup' && signupForm) signupForm.classList.remove("hidden");
+  if (tab === 'forgot' && forgotForm) forgotForm.classList.remove("hidden");
+};
+
+// Check Session on Page Load
 document.addEventListener("DOMContentLoaded", () => {
   checkUserSession();
-  initPageSpecificAuth();
 });
 
 function checkUserSession() {
@@ -31,59 +60,31 @@ function checkUserSession() {
 }
 
 function updateSidebarForLoggedInUser(name, mobile) {
-  const authItem = document.getElementById("authMenuItem");
-  if (!authItem) return;
+  const sidebarMenu = document.querySelector(".sidebar-menu");
+  if (!sidebarMenu) return;
 
-  // লগআউটের জন্য সঠিক আইডি ও ইভেন্ট লিসেনার সেট করা হলো যাতে ১০০% কাজ করে
-  authItem.innerHTML = `<a href="#" id="dynamicLogoutBtn" style="color: #ef4444;">🚪 Logout (${name || mobile})</a>`;
-
-  setTimeout(() => {
-    const logoutBtn = document.getElementById("dynamicLogoutBtn");
-    if (logoutBtn) {
-      logoutBtn.onclick = function(e) {
-        e.preventDefault();
-        handleLogout();
-      };
-    }
-  }, 50);
+  let loginItem = sidebarMenu.querySelector("li:first-child");
+  if (loginItem) {
+    loginItem.innerHTML = `<a href="#" onclick="handleLogout(); return false;" style="color: #ef4444;">🚪 Logout (${name || mobile})</a>`;
+  }
 }
 
 function updateSidebarForLoggedOutUser() {
-  const authItem = document.getElementById("authMenuItem");
-  if (!authItem) return;
+  const sidebarMenu = document.querySelector(".sidebar-menu");
+  if (!sidebarMenu) return;
 
-  authItem.innerHTML = `<a href="/login/" onclick="closeSidebar();">🔐 Login / Create Account</a>`;
-}
-
-// Page-specific initializations to avoid errors on pages without forms
-function initPageSpecificAuth() {
-  const currentPath = window.location.pathname;
-
-  // Auto-fill mobile if redirected from signup/reset
-  const urlParams = new URLSearchParams(window.location.search);
-  const prefillMobile = urlParams.get('mobile');
-
-  if (currentPath.includes('/login/') || currentPath === '/login') {
-    const loginMobileInput = document.getElementById("loginMobile");
-    if (loginMobileInput && prefillMobile) {
-      loginMobileInput.value = prefillMobile;
-    }
+  let loginItem = sidebarMenu.querySelector("li:first-child");
+  if (loginItem) {
+    loginItem.innerHTML = `<a href="#" onclick="openAuthModal('login'); closeSidebar(); return false;">🔐 Login / Create Account</a>`;
   }
 }
 
 // 1. CREATE ACCOUNT
 window.handleSignUp = async function() {
-  const nameEl = document.getElementById("signupName");
-  const mobileEl = document.getElementById("signupMobile");
-  const passwordEl = document.getElementById("signupPassword");
-  const confirmPasswordEl = document.getElementById("signupConfirmPassword");
-
-  if (!nameEl || !mobileEl || !passwordEl || !confirmPasswordEl) return;
-
-  const name = nameEl.value.trim();
-  const mobile = mobileEl.value.trim();
-  const password = passwordEl.value;
-  const confirmPassword = confirmPasswordEl.value;
+  const name = document.getElementById("signupName").value.trim();
+  const mobile = document.getElementById("signupMobile").value.trim();
+  const password = document.getElementById("signupPassword").value;
+  const confirmPassword = document.getElementById("signupConfirmPassword").value;
 
   if (!name || !mobile || !password || !confirmPassword) {
     return alert("Please fill in all fields.");
@@ -116,7 +117,14 @@ window.handleSignUp = async function() {
     await setDoc(userDocRef, userData);
 
     alert("Account created successfully! Redirecting to login...");
-    window.location.href = `/login/?mobile=${mobile}`;
+
+    document.getElementById("signupName").value = "";
+    document.getElementById("signupMobile").value = "";
+    document.getElementById("signupPassword").value = "";
+    document.getElementById("signupConfirmPassword").value = "";
+
+    window.switchAuthTab('login');
+    document.getElementById("loginMobile").value = mobile;
   } catch (error) {
     alert("Error creating account: " + error.message);
   }
@@ -124,13 +132,8 @@ window.handleSignUp = async function() {
 
 // 2. LOGIN
 window.handleLogin = async function() {
-  const mobileEl = document.getElementById("loginMobile");
-  const passwordEl = document.getElementById("loginPassword");
-
-  if (!mobileEl || !passwordEl) return;
-
-  const mobile = mobileEl.value.trim();
-  const password = passwordEl.value;
+  const mobile = document.getElementById("loginMobile").value.trim();
+  const password = document.getElementById("loginPassword").value;
 
   if (!mobile || !password) {
     return alert("Please enter both Mobile Number and Password.");
@@ -155,7 +158,8 @@ window.handleLogin = async function() {
       localStorage.setItem(SESSION_KEY, JSON.stringify(sessionObj));
 
       alert("Login successful!");
-      window.location.href = "/";
+      window.closeAuthModal();
+      checkUserSession();
     } else {
       alert("Invalid Mobile Number or Password.");
     }
@@ -164,55 +168,18 @@ window.handleLogin = async function() {
   }
 };
 
-// 3. FORGOT PASSWORD / RESET PASSWORD
+// 3. FORGOT PASSWORD
 window.handleResetPassword = async function() {
-  const mobileEl = document.getElementById("forgotMobile");
-  const passwordEl = document.getElementById("forgotPassword");
-  const confirmPasswordEl = document.getElementById("forgotConfirmPassword");
-  
-  const errorMsgEl = document.getElementById("forgotErrorMsg") || document.getElementById("errorMsg");
-  const successMsgEl = document.getElementById("forgotSuccessMsg") || document.getElementById("successMsg");
-
-  const showError = (msg) => {
-    if (errorMsgEl) {
-      errorMsgEl.style.color = "red";
-      errorMsgEl.innerText = msg;
-    } else {
-      alert(msg);
-    }
-  };
-
-  const showSuccess = (msg) => {
-    if (successMsgEl) {
-      successMsgEl.style.color = "green";
-      successMsgEl.innerText = msg;
-    } else {
-      alert(msg);
-    }
-  };
-
-  if (!mobileEl || !passwordEl || !confirmPasswordEl) {
-    alert("Form elements not found!");
-    return;
-  }
-
-  const mobile = mobileEl.value.trim();
-  const password = passwordEl.value;
-  const confirmPassword = confirmPasswordEl.value;
+  const mobile = document.getElementById("forgotMobile").value.trim();
+  const password = document.getElementById("forgotPassword").value;
+  const confirmPassword = document.getElementById("forgotConfirmPassword").value;
 
   if (!mobile || !password || !confirmPassword) {
-    showError("Please fill in all fields.");
-    return;
-  }
-
-  if (mobile.length !== 10) {
-    showError("Please enter a valid 10-digit mobile number.");
-    return;
+    return alert("Please fill in all fields.");
   }
 
   if (password !== confirmPassword) {
-    showError("Passwords do not match.");
-    return;
+    return alert("Passwords do not match.");
   }
 
   try {
@@ -220,30 +187,21 @@ window.handleResetPassword = async function() {
     const userDoc = await getDoc(userDocRef);
 
     if (!userDoc.exists()) {
-      showError("Mobile Number not registered.");
-      return;
+      return alert("Mobile Number not registered.");
     }
 
-    // Update password in Firestore
-    await updateDoc(userDocRef, { 
-      password: password,
-      updatedAt: new Date().toISOString()
-    });
+    await updateDoc(userDocRef, { password: password });
 
-    // Verify update success
-    const updatedUserDoc = await getDoc(userDocRef);
-    if (updatedUserDoc.exists() && updatedUserDoc.data().password === password) {
-      showSuccess("Password successfully updated! Redirecting to login...");
-      setTimeout(() => {
-        window.location.href = `/login/?mobile=${mobile}`;
-      }, 1500);
-    } else {
-      showError("Password update verification failed. Please try again.");
-    }
+    alert("Password updated successfully! You can now log in with your new password.");
 
+    document.getElementById("forgotMobile").value = "";
+    document.getElementById("forgotPassword").value = "";
+    document.getElementById("forgotConfirmPassword").value = "";
+
+    window.switchAuthTab('login');
+    document.getElementById("loginMobile").value = mobile;
   } catch (error) {
-    console.error("Password reset error:", error);
-    showError("Password reset failed: " + error.message);
+    alert("Password reset failed: " + error.message);
   }
 };
 
@@ -252,6 +210,6 @@ window.handleLogout = function() {
   if (confirm("Are you sure you want to logout?")) {
     localStorage.removeItem(SESSION_KEY);
     alert("Logged out successfully.");
-    window.location.href = "/";
+    checkUserSession();
   }
 };

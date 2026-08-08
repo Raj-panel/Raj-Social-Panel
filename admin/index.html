@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Raj Social Panel</title>
+    <!-- Existing CSS link -->
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7f6;
+            margin: 0;
+            padding: 0;
+        }
+        .admin-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .access-denied {
+            text-align: center;
+            padding: 50px;
+            color: red;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+            font-size: 14px;
+        }
+        th {
+            background: #007bff;
+            color: white;
+        }
+        .btn-approve {
+            background: #28a745;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-reject {
+            background: #dc3545;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        .btn-approve:hover { background: #218838; }
+        .btn-reject:hover { background: #c82333; }
+        .badge-pending { color: #856404; background: #fff3cd; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+        .badge-approved { color: #155724; background: #d4edda; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+        .badge-rejected { color: #721c24; background: #f8d7da; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <!-- Access Denied Wrapper (Hidden by default until auth check) -->
+    <div id="accessDeniedSection" class="access-denied" style="display: none;">
+        Access Denied. You are not authorized to view this page.
+    </div>
+
+    <!-- Admin Panel Main Content (Hidden until admin verified) -->
+    <div id="adminMainContent" class="admin-container" style="display: none;">
+        <h2>Admin Panel - Add Funds Requests</h2>
+        <p>Manage customer payment verification and wallet approvals.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Date & Time</th>
+                    <th>Customer Name / UID</th>
+                    <th>Amount</th>
+                    <th>UTR Number</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="adminRequestsTableBody">
+                <tr>
+                    <td colspan="6" style="text-align: center;">Loading requests...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Firebase Scripts Integration -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, collection, getDocs, query, orderBy, doc, updateDoc, increment, getDoc, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // IMPORTANT: এখানে আপনার আসল Admin UID বসাবেন যা ফায়ারবেস অথ থেকে কপি করেছেন
+        const ADMIN_UID = "3rY4RP3vpkPm7KGkuYUVMGhQ6fP2";
+
+        // Note: আপনার Firebase config এখানে লোড হবে এবং নিচের সিকিউরিটি ও রিকোয়েস্ট হ্যান্ডলিং কাজ করবে।
+    </script>
+</body>
+</html>

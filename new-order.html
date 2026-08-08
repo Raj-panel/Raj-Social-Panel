@@ -1,0 +1,65 @@
+import { doc, collection, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+import { db } from "../firebase-config.js";
+
+// Order Submit Handler with Atomic Wallet Deduction & Transactions Record
+async function handleOrderSubmission(currentUser, serviceName, link, quantity, calculatedCharge) {
+    const userRef = doc(db, "users", currentUser.uid);
+    const newOrderRef = doc(collection(db, "orders"));
+    const transactionRef = doc(collection(db, "walletTransactions"));
+    const generatedOrderId = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
+
+    // Run Atomic Transaction to prevent race conditions and double spending
+    await runTransaction(db, async (transaction) => {
+        const userDoc = await transaction.get(userRef);
+        if (!userDoc.exists()) {
+            throw new Error("User profile not found!");
+        }
+
+        const currentBalance = userDoc.data().walletBalance || 0;
+        const totalSpent = userDoc.data().totalSpent || 0;
+
+        // 1. Wallet Balance Check
+        if (currentBalance < calculatedCharge) {
+            throw new Error("Insufficient Wallet Balance.");
+        }
+
+        // 2. Deduct Balance & Update Total Spent
+        transaction.update(userRef, {
+            walletBalance: currentBalance - calculatedCharge,
+            totalSpent: totalSpent + calculatedCharge
+        });
+
+        // 3. Create Order Document in Firestore
+        transaction.set(newOrderRef, {
+            userId: currentUser.uid,
+            orderId: generatedOrderId,
+            serviceName: serviceName,
+            link: link,
+            quantity: quantity,
+            amount: calculatedCharge,
+            status: "Pending",
+            createdAt: serverTimestamp()
+        });
+
+        // 4. Record Wallet Transaction (Debit)
+        transaction.set(transactionRef, {
+            userId: currentUser.uid,
+            type: "debit",
+            amount: calculatedCharge,
+            reason: "Order",
+            orderId: generatedOrderId,
+            createdAt: serverTimestamp()
+        });
+    });
+
+    // 5. After successful Firebase transaction, update LocalStorage for UI consistency
+    saveNewOrder({
+        orderId: generatedOrderId,
+        serviceName: serviceName,
+        link: link,
+        quantity: quantity,
+        amount: calculatedCharge
+    });
+
+    return generatedOrderId;
+}

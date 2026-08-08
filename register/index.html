@@ -1,1 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Raj Social Panel</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="auth-card">
+        <h2>Create Account</h2>
+        <input type="text" id="fullName" placeholder="Full Name">
+        <input type="text" id="mobile" placeholder="Mobile Number">
+        <input type="password" id="password" placeholder="Password">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password">
+        <button id="registerBtn">Create Account</button>
+        <p>Already have an account? <a href="../login/">Login</a></p>
+    </div>
+    <script type="module">
+        import { registerUser } from "../auth-handler.js";
+        document.getElementById("registerBtn").addEventListener("click", async () => {
+            const fullName = document.getElementById("fullName").value;
+            const mobile = document.getElementById("mobile").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
 
+            if (password !== confirmPassword) return alert("Passwords do not match!");
+            try {
+                await registerUser(fullName, mobile, password);
+                window.location.href = "../login/";
+            } catch (err) {
+                alert("Registration failed: " + err.message);
+            }
+        });
+    </script>
+</body>
+</html>

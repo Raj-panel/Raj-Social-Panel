@@ -31,23 +31,17 @@ function checkUserSession() {
 }
 
 function updateSidebarForLoggedInUser(name, mobile) {
-  const sidebarMenu = document.querySelector(".sidebar-menu");
-  if (!sidebarMenu) return;
+  const authItem = document.getElementById("authMenuItem");
+  if (!authItem) return;
 
-  let loginItem = sidebarMenu.querySelector("li:first-child");
-  if (loginItem) {
-    loginItem.innerHTML = `<a href="#" onclick="handleLogout(); return false;" style="color: #ef4444;">🚪 Logout (${name || mobile})</a>`;
-  }
+  authItem.innerHTML = `<a href="#" onclick="handleLogout(); return false;" style="color: #ef4444;">🚪 Logout (${name || mobile})</a>`;
 }
 
 function updateSidebarForLoggedOutUser() {
-  const sidebarMenu = document.querySelector(".sidebar-menu");
-  if (!sidebarMenu) return;
+  const authItem = document.getElementById("authMenuItem");
+  if (!authItem) return;
 
-  let loginItem = sidebarMenu.querySelector("li:first-child");
-  if (loginItem) {
-    loginItem.innerHTML = `<a href="/login/" onclick="closeSidebar();">🔐 Login / Create Account</a>`;
-  }
+  authItem.innerHTML = `<a href="/login/" onclick="closeSidebar();">🔐 Login / Create Account</a>`;
 }
 
 // Page-specific initializations to avoid errors on pages without forms

@@ -85,7 +85,7 @@
             <thead>
                 <tr>
                     <th>Date & Time</th>
-                    <th>Customer Name / UID</th>
+                    <th>Customer UID</th>
                     <th>Amount</th>
                     <th>UTR Number</th>
                     <th>Status</th>
@@ -100,16 +100,155 @@
         </table>
     </div>
 
-    <!-- Firebase Scripts Integration -->
+    <!-- Firebase Scripts & Admin Logic Integration -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, collection, getDocs, query, orderBy, doc, updateDoc, increment, getDoc, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // IMPORTANT: এখানে আপনার আসল Admin UID বসাবেন যা ফায়ারবেস অথ থেকে কপি করেছেন
+        // আপনার প্রজেক্টের ফায়ারবেস কনফিগারেশন (আপনার কনফিগারেশন অনুযায়ী এখানে ফিলাপ করা আছে)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // আপনার আসল Admin UID যা ফায়ারবেস অথ থেকে দেওয়া হয়েছে
         const ADMIN_UID = "3rY4RP3vpkPm7KGkuYUVMGhQ6fP2";
 
-        // Note: আপনার Firebase config এখানে লোড হবে এবং নিচের সিকিউরিটি ও রিকোয়েস্ট হ্যান্ডলিং কাজ করবে।
+        // ১. অ্যাডমিন অথোরাইজেশন চেক
+        onAuthStateChanged(auth, async (user) => {
+            const deniedSection = document.getElementById("accessDeniedSection");
+            const mainContent = document.getElementById("adminMainContent");
+
+            if (user && user.uid === ADMIN_UID) {
+                if (deniedSection) deniedSection.style.display = "none";
+                if (mainContent) mainContent.style.display = "block";
+                loadPendingTransactions();
+            } else {
+                if (mainContent) mainContent.style.display = "none";
+                if (deniedSection) deniedSection.style.display = "block";
+            }
+        });
+
+        // ২. ট্রানজেকশন রিকোয়েস্ট লোড করার ফাংশন
+        async function loadPendingTransactions() {
+            const tableBody = document.getElementById("adminRequestsTableBody");
+            if (!tableBody) return;
+
+            tableBody.innerHTML = "<tr><td colspan='6' style='text-align: center;'>Loading requests...</td></tr>";
+
+            try {
+                const q = query(collection(db, "walletTransactions"), orderBy("createdAt", "desc"));
+                const querySnapshot = await getDocs(q);
+
+                tableBody.innerHTML = "";
+
+                if (querySnapshot.empty) {
+                    tableBody.innerHTML = "<tr><td colspan='6' style='text-align: center;'>No requests found.</td></tr>";
+                    return;
+                }
+
+                querySnapshot.forEach((documentSnap) => {
+                    const data = documentSnap.data();
+                    const docId = documentSnap.id;
+                    const status = data.status || "PENDING";
+
+                    let badgeClass = "badge-pending";
+                    if (status === "APPROVED") badgeClass = "badge-approved";
+                    if (status === "REJECTED") badgeClass = "badge-rejected";
+
+                    let dateStr = "Just now";
+                    if (data.createdAt && typeof data.createdAt.toDate === "function") {
+                        dateStr = data.createdAt.toDate().toLocaleString();
+                    }
+
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>${dateStr}</td>
+                        <td style="font-size: 11px; word-break: break-all;">${data.uid || 'N/A'}</td>
+                        <td>₹${data.amount || 0}</td>
+                        <td>${data.txnId || data.utr || 'N/A'}</td>
+                        <td><span class="${badgeClass}">${status}</span></td>
+                        <td>
+                            ${status === "PENDING" ? `
+                                <button class="btn-approve" onclick="window.approveDeposit('${docId}', '${data.uid}', ${data.amount})">Approve</button>
+                                <button class="btn-reject" onclick="window.rejectDeposit('${docId}')">Reject</button>
+                            ` : `<span style="color: #666; font-size: 12px;">Completed</span>`}
+                        </td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+            } catch (error) {
+                console.error("Error loading transactions:", error);
+                tableBody.innerHTML = "<tr><td colspan='6' style='text-align: center; color: red;'>Error loading data. Check console.</td></tr>";
+            }
+        }
+
+        // ৩. ডিপোজিট অ্যাপ্রুভ করার লজিক (ওয়ালেটে টাকা যোগ হবে)
+        window.approveDeposit = async function(txId, userId, amount) {
+            if (!confirm(`Are you sure you want to approve ₹${amount} for this user?`)) return;
+
+            try {
+                const userRef = doc(db, "users", userId);
+                const txRef = doc(db, "walletTransactions", txId);
+
+                await runTransaction(db, async (transaction) => {
+                    const userDoc = await transaction.get(userRef);
+                    
+                    if (!userDoc.exists) {
+                        // যদি users কালেকশনে ইউজারের ডেকোরেশন না থাকে তবে ক্রিয়েট করে নেবো
+                        transaction.set(userRef, {
+                            walletBalance: amount,
+                            totalAdded: amount
+                        }, { merge: true });
+                    } else {
+                        const currentBalance = userDoc.data().walletBalance || 0;
+                        const currentTotalAdded = userDoc.data().totalAdded || 0;
+                        
+                        transaction.update(userRef, {
+                            walletBalance: currentBalance + amount,
+                            totalAdded: currentTotalAdded + amount
+                        });
+                    }
+
+                    transaction.update(txRef, {
+                        status: "APPROVED",
+                        approvedAt: serverTimestamp()
+                    });
+                });
+
+                alert("Deposit approved successfully! Funds added to user wallet.");
+                loadPendingTransactions();
+            } catch (error) {
+                alert("Error approving deposit: " + error.message);
+            }
+        };
+
+        // ৪. ডিপোজিট রিজেক্ট করার লজিক
+        window.rejectDeposit = async function(txId) {
+            if (!confirm("Are you sure you want to reject this deposit request?")) return;
+
+            try {
+                const txRef = doc(db, "walletTransactions", txId);
+                await updateDoc(txRef, {
+                    status: "REJECTED",
+                    rejectedAt: serverTimestamp()
+                });
+
+                alert("Deposit request rejected.");
+                loadPendingTransactions();
+            } catch (error) {
+                alert("Error rejecting deposit: " + error.message);
+            }
+        };
     </script>
 </body>
 </html>

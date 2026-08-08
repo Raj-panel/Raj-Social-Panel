@@ -4,66 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Raj Social Panel</title>
-    <!-- Existing CSS link -->
     <link rel="stylesheet" href="../style.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f7f6;
-            margin: 0;
-            padding: 0;
-        }
-        .admin-container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        .access-denied {
-            text-align: center;
-            padding: 50px;
-            color: red;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: left;
-            font-size: 14px;
-        }
-        th {
-            background: #007bff;
-            color: white;
-        }
-        .btn-approve {
-            background: #28a745;
-            color: white;
-            padding: 6px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .btn-reject {
-            background: #dc3545;
-            color: white;
-            padding: 6px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-left: 5px;
-        }
-        .btn-approve:hover { background: #218838; }
-        .btn-reject:hover { background: #c82333; }
+        body { font-family: Arial, sans-serif; background: #f4f7f6; margin: 0; padding: 0; }
+        .admin-container { max-width: 1000px; margin: 40px auto; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .login-box { max-width: 400px; margin: 100px auto; padding: 30px; background: #fff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; }
+        .login-box input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        .login-box button { width: 100%; padding: 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .access-denied { text-align: center; padding: 50px; color: red; font-size: 20px; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; font-size: 14px; }
+        th { background: #007bff; color: white; }
+        .btn-approve { background: #28a745; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn-reject { background: #dc3545; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: 5px; }
         .badge-pending { color: #856404; background: #fff3cd; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
         .badge-approved { color: #155724; background: #d4edda; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
         .badge-rejected { color: #721c24; background: #f8d7da; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
@@ -71,15 +24,28 @@
 </head>
 <body>
 
-    <!-- Access Denied Wrapper (Hidden by default until auth check) -->
-    <div id="accessDeniedSection" class="access-denied" style="display: none;">
-        Access Denied. You are not authorized to view this page.
+    <!-- Admin Login Section (Shown if not logged in) -->
+    <div id="adminLoginSection" class="login-box" style="display: none;">
+        <h2>Admin Login</h2>
+        <p>Enter Admin Credentials</p>
+        <input type="email" id="adminEmail" placeholder="Admin Email">
+        <input type="password" id="adminPassword" placeholder="Admin Password">
+        <button id="adminLoginBtn">Login</button>
+        <p id="loginError" style="color: red; font-size: 14px; margin-top: 10px;"></p>
     </div>
 
-    <!-- Admin Panel Main Content (Hidden until admin verified) -->
+    <!-- Access Denied Section (Shown if logged in user is not admin) -->
+    <div id="accessDeniedSection" class="access-denied" style="display: none;">
+        Access Denied. You are not authorized to view this page.
+        <br><br>
+        <button id="logoutBtn" style="padding: 8px 15px; background: #dc3545; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Logout / Switch Account</button>
+    </div>
+
+    <!-- Admin Panel Main Content (Shown if Admin verified) -->
     <div id="adminMainContent" class="admin-container" style="display: none;">
         <h2>Admin Panel - Add Funds Requests</h2>
         <p>Manage customer payment verification and wallet approvals.</p>
+        <button id="topLogoutBtn" style="float: right; padding: 6px 12px; background: #333; color: #fff; border: none; border-radius: 4px; cursor: pointer; margin-bottom: 10px;">Logout</button>
 
         <table>
             <thead>
@@ -103,10 +69,9 @@
     <!-- Firebase Scripts & Admin Logic Integration -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, collection, getDocs, query, orderBy, doc, updateDoc, increment, getDoc, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, collection, getDocs, query, orderBy, doc, updateDoc, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // আপনার প্রজেক্টের ফায়ারবেস কনফিগারেশন (আপনার কনফিগারেশন অনুযায়ী এখানে ফিলাপ করা আছে)
         const firebaseConfig = {
             apiKey: "AIzaSyCQPiYwDQ7uxi-adcZavlnkYLLPSCA7hu4",
             authDomain: "raj-smm-panel-193ca.firebaseapp.com",
@@ -120,25 +85,55 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // আপনার আসল Admin UID যা ফায়ারবেস অথ থেকে দেওয়া হয়েছে
         const ADMIN_UID = "3rY4RP3vpkPm7KGkuYUVMGhQ6fP2";
 
-        // ১. অ্যাডমিন অথোরাইজেশন চেক
-        onAuthStateChanged(auth, async (user) => {
-            const deniedSection = document.getElementById("accessDeniedSection");
-            const mainContent = document.getElementById("adminMainContent");
+        const loginSection = document.getElementById("adminLoginSection");
+        const deniedSection = document.getElementById("accessDeniedSection");
+        const mainContent = document.getElementById("adminMainContent");
 
-            if (user && user.uid === ADMIN_UID) {
-                if (deniedSection) deniedSection.style.display = "none";
-                if (mainContent) mainContent.style.display = "block";
-                loadPendingTransactions();
+        // Auth State Observer
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                if (user.uid === ADMIN_UID) {
+                    if (loginSection) loginSection.style.display = "none";
+                    if (deniedSection) deniedSection.style.display = "none";
+                    if (mainContent) mainContent.style.display = "block";
+                    loadPendingTransactions();
+                } else {
+                    if (loginSection) loginSection.style.display = "none";
+                    if (mainContent) mainContent.style.display = "none";
+                    if (deniedSection) deniedSection.style.display = "block";
+                }
             } else {
+                if (deniedSection) deniedSection.style.display = "none";
                 if (mainContent) mainContent.style.display = "none";
-                if (deniedSection) deniedSection.style.display = "block";
+                if (loginSection) loginSection.style.display = "block";
             }
         });
 
-        // ২. ট্রানজেকশন রিকোয়েস্ট লোড করার ফাংশন
+        // Admin Login Action
+        document.getElementById("adminLoginBtn").addEventListener("click", async () => {
+            const email = document.getElementById("adminEmail").value;
+            const password = document.getElementById("adminPassword").value;
+            const errorEl = document.getElementById("loginError");
+
+            errorEl.textContent = "Logging in...";
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (error) {
+                errorEl.textContent = error.message;
+            }
+        });
+
+        // Logout Actions
+        const handleLogout = async () => {
+            await signOut(auth);
+        };
+        document.getElementById("logoutBtn").addEventListener("click", handleLogout);
+        document.getElementById("topLogoutBtn").addEventListener("click", handleLogout);
+
+        // Load Transactions
         async function loadPendingTransactions() {
             const tableBody = document.getElementById("adminRequestsTableBody");
             if (!tableBody) return;
@@ -192,7 +187,7 @@
             }
         }
 
-        // ৩. ডিপোজিট অ্যাপ্রুভ করার লজিক (ওয়ালেটে টাকা যোগ হবে)
+        // Approve Deposit Logic
         window.approveDeposit = async function(txId, userId, amount) {
             if (!confirm(`Are you sure you want to approve ₹${amount} for this user?`)) return;
 
@@ -203,8 +198,7 @@
                 await runTransaction(db, async (transaction) => {
                     const userDoc = await transaction.get(userRef);
                     
-                    if (!userDoc.exists) {
-                        // যদি users কালেকশনে ইউজারের ডেকোরেশন না থাকে তবে ক্রিয়েট করে নেবো
+                    if (!userDoc.exists()) {
                         transaction.set(userRef, {
                             walletBalance: amount,
                             totalAdded: amount
@@ -232,7 +226,7 @@
             }
         };
 
-        // ৪. ডিপোজিট রিজেক্ট করার লজিক
+        // Reject Deposit Logic
         window.rejectDeposit = async function(txId) {
             if (!confirm("Are you sure you want to reject this deposit request?")) return;
 

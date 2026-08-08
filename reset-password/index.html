@@ -4,45 +4,167 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Reset Password - Raj Social Panel</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&display=swap" rel="stylesheet"/>
-<link href="../style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  body {
+    background-color: #fdf2f8;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 16px;
+  }
+
+  .auth-card-box {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    border: 1px solid #fae8ff;
+    border-radius: 24px;
+    padding: 32px 24px;
+    box-shadow: 0 10px 30px rgba(244, 114, 182, 0.1);
+  }
+
+  .auth-title {
+    font-size: 24px;
+    font-weight: 800;
+    text-align: center;
+    background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 24px;
+  }
+
+  .auth-input-group {
+    margin-bottom: 16px;
+    text-align: left;
+  }
+
+  .auth-input-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #475569;
+    margin-bottom: 6px;
+  }
+
+  .auth-input-group input {
+    width: 100%;
+    padding: 12px 14px;
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #0f172a;
+    outline: none;
+    transition: all 0.2s;
+  }
+
+  .auth-input-group input:focus {
+    border-color: #d946ef;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.15);
+  }
+
+  .auth-btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    margin-top: 8px;
+    transition: transform 0.1s ease;
+  }
+
+  .auth-btn:active {
+    transform: scale(0.98);
+  }
+
+  .auth-links {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .auth-links a {
+    font-size: 13px;
+    color: #a855f7;
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .auth-links a:hover {
+    text-decoration: underline;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #0b0f19 !important;
+      color: #f1f5f9 !important;
+    }
+    .auth-card-box {
+      background: #111827 !important;
+      border-color: #1f2937 !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+    }
+    .auth-input-group label {
+      color: #cbd5e1 !important;
+    }
+    .auth-input-group input {
+      background: #0b0f19 !important;
+      border-color: #1f2937 !important;
+      color: #ffffff !important;
+    }
+    .auth-input-group input:focus {
+      border-color: #a855f7 !important;
+      background: #111827 !important;
+    }
+  }
+</style>
 </head>
-<body style="background-color: #0f172a; color: #ffffff; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; font-family: 'Poppins', sans-serif;">
+<body>
 
-<div style="width: 100%; max-width: 400px; padding: 30px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; backdrop-filter: blur(10px); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);">
-  
-  <div style="text-align: center; margin-bottom: 24px;">
-    <h2 style="font-size: 22px; font-weight: 800; font-style: italic; background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px;">Reset Password</h2>
-    <p style="font-size: 13px; color: #94a3b8; margin: 0;">Enter your mobile number and new password</p>
+<div class="auth-card-box">
+  <h2 class="auth-title">Reset Password</h2>
+
+  <div class="auth-input-group">
+    <label>Mobile Number</label>
+    <input type="tel" id="resetMobile" placeholder="Mobile Number" maxlength="10">
   </div>
 
-  <div style="margin-bottom: 16px;">
-    <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Mobile Number</label>
-    <div style="display: flex; align-items: center; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; overflow: hidden;">
-      <span style="padding: 0 12px; font-size: 13px; color: #94a3b8; border-right: 1px solid rgba(255, 255, 255, 0.1);">+91</span>
-      <input type="tel" id="forgotMobile" placeholder="Enter 10-digit number" maxlength="10" style="width: 100%; background: transparent; border: none; padding: 12px; color: #ffffff; font-size: 14px; outline: none;">
-    </div>
+  <div class="auth-input-group">
+    <label>New Password</label>
+    <input type="password" id="resetNewPassword" placeholder="New Password">
   </div>
 
-  <div style="margin-bottom: 16px;">
-    <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">New Password</label>
-    <input type="password" id="forgotPassword" placeholder="Enter new password" style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box;">
+  <div class="auth-input-group">
+    <label>Confirm New Password</label>
+    <input type="password" id="resetConfirmPassword" placeholder="Confirm Password">
   </div>
 
-  <div style="margin-bottom: 20px;">
-    <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Confirm New Password</label>
-    <input type="password" id="forgotConfirmPassword" placeholder="Confirm new password" style="width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; outline: none; box-sizing: border-box;">
+  <button onclick="handleResetPassword()" class="auth-btn">Reset Password</button>
+
+  <div class="auth-links">
+    <a href="/login/">Back to Login</a>
   </div>
-
-  <button onclick="handleResetPassword()" style="width: 100%; background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); border: none; border-radius: 10px; padding: 12px; color: #ffffff; font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity 0.3s;">Reset Password</button>
-
-  <p style="text-align: center; font-size: 13px; color: #94a3b8; margin-top: 20px;">
-    <a href="/login/" style="color: #a855f7; text-decoration: none; font-weight: 600;">Back to Login</a>
-  </p>
 </div>
 
-<!-- Firebase Auth Handler Integration -->
 <script type="module" src="../auth-handler.js"></script>
 </body>
 </html>

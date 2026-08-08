@@ -949,3 +949,63 @@ window.addEventListener("appinstalled", () => {
     }
     deferredPrompt = null;
 });
+
+// =========================================================
+// NEW: SECURE WALLET & ORDER DEDUCTION INTEGRATION
+// =========================================================
+async function submitOrderWithWallet() {
+    const linkInput = document.getElementById("checkoutLinkInput");
+    const link = linkInput ? linkInput.value.trim() : "";
+    const orderAmount = currentCheckoutData.price;
+
+    if (!link) {
+        alert("Please enter your Social Media Link!");
+        return;
+    }
+
+    const auth = firebase.auth();
+    const user = auth.currentUser;
+    if (!user) {
+        alert("Please login to use Wallet System.");
+        return;
+    }
+
+    const db = firebase.firestore();
+    const userRef = db.collection('users').doc(user.uid);
+
+    try {
+        await db.runTransaction(async (transaction) => {
+            const userDoc = await transaction.get(userRef);
+            if (!userDoc.exists) throw "User account not found!";
+
+            const userData = userDoc.data();
+            const balance = userData.walletBalance || 0;
+
+            if (balance < orderAmount) {
+                throw "Insufficient Wallet Balance. Please Add Funds first.";
+            }
+
+            // Wallet Deduction & Total Spent Update
+            transaction.update(userRef, {
+                walletBalance: balance - orderAmount,
+                totalSpent: (userData.totalSpent || 0) + orderAmount
+            });
+
+            // Record Debit Transaction
+            const txRef = db.collection('walletTransactions').doc();
+            transaction.set(txRef, {
+                uid: user.uid,
+                type: 'DEBIT',
+                amount: orderAmount,
+                description: `Order: ${currentCheckoutData.packageName}`,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        });
+
+        alert("Order placed successfully using Wallet Balance!");
+        closeCheckoutUI();
+
+    } catch (error) {
+        alert("Error: " + (error.message || error));
+    }
+}

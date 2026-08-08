@@ -1,1 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Funds - Raj Social Panel</title>
+    <!-- Existing CSS link -->
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .add-funds-container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .error-msg {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        .payment-box {
+            display: none;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px dashed #007bff;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .payment-box img {
+            max-width: 180px;
+            margin: 10px 0;
+        }
+        .btn-submit {
+            background: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        .btn-submit:hover {
+            background: #0056b3;
+        }
+        .history-section {
+            margin-top: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+            font-size: 14px;
+        }
+        th {
+            background: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
 
+    <div class="add-funds-container">
+        <h2>Add Funds to Wallet</h2>
+        
+        <!-- Wallet Info Summary -->
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; background: #eef2f7; padding: 15px; border-radius: 6px;">
+            <div>
+                <small>Wallet Balance</small>
+                <h3 id="currentBalance">₹0</h3>
+            </div>
+            <div>
+                <small>Total Added</small>
+                <h3 id="totalAdded">₹0</h3>
+            </div>
+            <div>
+                <small>Total Spent</small>
+                <h3 id="totalSpent">₹0</h3>
+            </div>
+        </div>
+
+        <!-- Add Funds Form -->
+        <div class="form-group">
+            <label for="amountInput">Amount (₹1 - ₹10,000)</label>
+            <input type="number" id="amountInput" placeholder="Enter amount" min="1" max="10000">
+            <div id="amountError" class="error-msg">Please enter a valid amount between ₹1 and ₹10,000.</div>
+        </div>
+
+        <!-- Payment Section (Hidden initially) -->
+        <div id="paymentSection" class="payment-box">
+            <h3>Scan QR or Pay via UPI</h3>
+            <p>UPI ID: <strong>akibur.s@ptyes</strong></p>
+            <p>Amount to Pay: <strong id="displayAmount">₹0</strong></p>
+            <!-- যদি banner.png বা binance-qr.png থাকে, ব্যবহার করতে পারেন -->
+            <img src="../binance-qr.png" alt="QR Code" id="qrCodeImg" onerror="this.style.display='none'">
+            
+            <div class="form-group" style="margin-top: 20px; text-align: left;">
+                <label for="utrInput">Enter 12-Digit UTR / Transaction ID</label>
+                <input type="text" id="utrInput" placeholder="e.g. 123456789012" maxlength="12">
+                <div id="utrError" class="error-msg">UTR must contain exactly 12 digits.</div>
+            </div>
+
+            <button type="button" class="btn-submit" id="submitPaymentBtn">Submit Payment Request</button>
+            <div id="successMsg" style="color: green; margin-top: 10px; font-weight: bold; display: none;">Payment submitted. Waiting for verification.</div>
+        </div>
+
+        <!-- Add Funds History -->
+        <div class="history-section">
+            <h3>Add Funds History</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>Amount</th>
+                        <th>UTR</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="historyTableBody">
+                    <tr>
+                        <td colspan="4" style="text-align: center;">Loading history...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Firebase Scripts Integration -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, collection, add슐, query, where, orderBy, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        // আপনার existing firebase-config.js অথবা সরাসরি ইমপোর্ট করতে পারেন। নিচে বেসিক ফায়ারবেস হ্যান্ডলিং দেওয়া হলো।
+        
+        // Note: আপনার মেইন firebase-config.js থেকে ফায়ারবেস ইনস্ট্যান্স এখানে কানেক্ট করে নিতে হবে।
+    </script>
+    
+    <!-- Main Script Handler -->
+    <script src="../script.js"></script>
+    <script>
+        // Amount validation and UI toggle logic
+        const amountInput = document.getElementById('amountInput');
+        const amountError = document.getElementById('amountError');
+        const paymentSection = document.getElementById('paymentSection');
+        const displayAmount = document.getElementById('displayAmount');
+        const utrInput = document.getElementById('utrInput');
+        const utrError = document.getElementById('utrError');
+        const submitPaymentBtn = document.getElementById('submitPaymentBtn');
+        const successMsg = document.getElementById('successMsg');
+
+        amountInput.addEventListener('input', function() {
+            const val = parseFloat(amountInput.value);
+            if (isNaN(val) || val < 1 || val > 10000) {
+                amountError.style.display = 'block';
+                paymentSection.style.display = 'none';
+            } else {
+                amountError.style.display = 'none';
+                displayAmount.innerText = '₹' + val;
+                paymentSection.style.display = 'block';
+            }
+        });
+
+        utrInput.addEventListener('input', function() {
+            // শুধু সংখ্যা ফিল্টার করা এবং ১২ ডিজিট চেক
+            this.value = this.value.replace(/\D/g, '').slice(0, 12);
+        });
+
+        submitPaymentBtn.addEventListener('click', function() {
+            const utrVal = utrInput.value;
+            if (utrVal.length !== 12) {
+                utrError.style.display = 'block';
+                return;
+            } else {
+                utrError.style.display = 'none';
+            }
+
+            // সাবমিশন লজিক ফায়ারবেস কানেকশনের মাধ্যমে সম্পন্ন হবে
+            successMsg.style.display = 'block';
+            submitPaymentBtn.disabled = true;
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+                submitPaymentBtn.disabled = false;
+                utrInput.value = '';
+                amountInput.value = '';
+                paymentSection.style.display = 'none';
+            }, 4000);
+        });
+    </script>
+</body>
+</html>

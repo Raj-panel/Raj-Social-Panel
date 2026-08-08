@@ -300,21 +300,25 @@
   </div>
   
   <ul class="sidebar-menu">
-    <!-- নতুন যোগ করা Login/Create Account অপশন -->
+    <!-- Login/Create Account অপশন -->
     <li id="authMenuItem">
         <a href="/login/">🔐 Login / Create Account</a>
     </li>
     
     <li><a href="/">🛒 New Order</a></li>
     <li><a href="/orders/">📦 My Orders</a></li>
-    <li><a href="/add-funds/">💳 Add Funds</a></li>
+    
+    <!-- Add Funds অপশনটি এখানে হাইড করে দেওয়া হলো -->
+    <li id="addFundsMenuItem" style="display: none;">
+        <a href="/add-funds/">💳 Add Funds</a>
+    </li>
+    
     <li><a href="/pages/privacy-policy.html">🔒 Privacy Policy</a></li>
     <li><a href="/pages/refund-policy.html">💸 Refund Policy</a></li>
     <li><a href="/pages/terms.html">📜 Terms &amp; Conditions</a></li>
     <li><a href="/pages/contact.html">📞 Contact Us</a></li>
     <li><a href="/pages/about.html">ℹ️ About Us</a></li>
-  </ul>
-
+</ul>
   <!-- বাকি অংশ আগের মতোই থাকবে -->
   <div class="sidebar-footer-media">
     <a href="https://youtu.be/6WLCJPCjou0?si=f8v4qj-T8TjvqdX-" target="_blank" rel="noopener noreferrer" class="watch-tutorials-btn">

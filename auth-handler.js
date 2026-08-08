@@ -24,14 +24,14 @@ function checkUserSession() {
       updateSidebarForLoggedInUser(user.name, user.mobile);
       
       if (addFundsItem) {
-        addFundsItem.style.display = "block";
+        addFundsItem.style.setProperty("display", "block", "important");
       }
     } catch (e) {
       localStorage.removeItem(SESSION_KEY);
       updateSidebarForLoggedOutUser();
       
       if (addFundsItem) {
-        addFundsItem.style.display = "none";
+        addFundsItem.style.setProperty("display", "none", "important");
       }
       checkAddFundsProtection(currentPath, false);
     }
@@ -39,7 +39,7 @@ function checkUserSession() {
     updateSidebarForLoggedOutUser();
     
     if (addFundsItem) {
-      addFundsItem.style.display = "none";
+      addFundsItem.style.setProperty("display", "none", "important");
     }
     checkAddFundsProtection(currentPath, false);
   }

@@ -24,27 +24,27 @@
 </head>
 <body>
 
-    <!-- Admin Login Section (Shown if not logged in) -->
+    <!-- Admin Login Section -->
     <div id="adminLoginSection" class="login-box" style="display: none;">
-        <h2>Admin Login</h2>
+        <h2>Admin Panel Login</h2>
         <p>Enter Admin Credentials</p>
         <input type="email" id="adminEmail" placeholder="Admin Email">
         <input type="password" id="adminPassword" placeholder="Admin Password">
-        <button id="adminLoginBtn">Login</button>
+        <button id="adminLoginBtn">Login as Admin</button>
         <p id="loginError" style="color: red; font-size: 14px; margin-top: 10px;"></p>
     </div>
 
-    <!-- Access Denied Section (Shown if logged in user is not admin) -->
+    <!-- Access Denied Section -->
     <div id="accessDeniedSection" class="access-denied" style="display: none;">
-        Access Denied. You are not authorized to view this page.
+        Access Denied. You are not authorized to view this admin panel.
         <br><br>
         <button id="logoutBtn" style="padding: 8px 15px; background: #dc3545; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Logout / Switch Account</button>
     </div>
 
-    <!-- Admin Panel Main Content (Shown if Admin verified) -->
+    <!-- Admin Panel Main Content -->
     <div id="adminMainContent" class="admin-container" style="display: none;">
         <h2>Admin Panel - Add Funds Requests</h2>
-        <p>Manage customer payment verification and wallet approvals.</p>
+        <p>Manage customer payment verification and wallet approvals securely.</p>
         <button id="topLogoutBtn" style="float: right; padding: 6px 12px; background: #333; color: #fff; border: none; border-radius: 4px; cursor: pointer; margin-bottom: 10px;">Logout</button>
 
         <table>
@@ -68,22 +68,10 @@
 
     <!-- Firebase Scripts & Admin Logic Integration -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, collection, getDocs, query, orderBy, doc, updateDoc, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCQPiYwDQ7uxi-adcZavlnkYLLPSCA7hu4",
-            authDomain: "raj-smm-panel-193ca.firebaseapp.com",
-            projectId: "raj-smm-panel-193ca",
-            storageBucket: "raj-smm-panel-193ca.firebasestorage.app",
-            messagingSenderId: "418522080714",
-            appId: "1:418522080714:web:2206d41977b751c89a1b33"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+        import { collection, getDocs, query, orderBy, doc, updateDoc, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+        
+        import { auth, db } from "../firebase-config.js";
 
         const ADMIN_UID = "3rY4RP3vpkPm7KGkuYUVMGhQ6fP2";
 
@@ -91,7 +79,6 @@
         const deniedSection = document.getElementById("accessDeniedSection");
         const mainContent = document.getElementById("adminMainContent");
 
-        // Auth State Observer
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 if (user.uid === ADMIN_UID) {
@@ -111,7 +98,6 @@
             }
         });
 
-        // Admin Login Action
         document.getElementById("adminLoginBtn").addEventListener("click", async () => {
             const email = document.getElementById("adminEmail").value;
             const password = document.getElementById("adminPassword").value;
@@ -126,14 +112,13 @@
             }
         });
 
-        // Logout Actions
         const handleLogout = async () => {
             await signOut(auth);
         };
         document.getElementById("logoutBtn").addEventListener("click", handleLogout);
         document.getElementById("topLogoutBtn").addEventListener("click", handleLogout);
 
-        // Load Transactions
+        // Load Transactions from addFundsRequests collection
         async function loadPendingTransactions() {
             const tableBody = document.getElementById("adminRequestsTableBody");
             if (!tableBody) return;
@@ -141,7 +126,8 @@
             tableBody.innerHTML = "<tr><td colspan='6' style='text-align: center;'>Loading requests...</td></tr>";
 
             try {
-                const q = query(collection(db, "walletTransactions"), orderBy("createdAt", "desc"));
+                // কালেকশনের নাম এখানে সঠিকভাবে addFundsRequests করা হয়েছে
+                const q = query(collection(db, "addFundsRequests"), orderBy("createdAt", "desc"));
                 const querySnapshot = await getDocs(q);
 
                 tableBody.innerHTML = "";
@@ -154,11 +140,11 @@
                 querySnapshot.forEach((documentSnap) => {
                     const data = documentSnap.data();
                     const docId = documentSnap.id;
-                    const status = data.status || "PENDING";
+                    const status = data.status || "pending";
 
                     let badgeClass = "badge-pending";
-                    if (status === "APPROVED") badgeClass = "badge-approved";
-                    if (status === "REJECTED") badgeClass = "badge-rejected";
+                    if (status === "approved" || status === "APPROVED") badgeClass = "badge-approved";
+                    if (status === "rejected" || status === "REJECTED") badgeClass = "badge-rejected";
 
                     let dateStr = "Just now";
                     if (data.createdAt && typeof data.createdAt.toDate === "function") {
@@ -168,13 +154,13 @@
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
                         <td>${dateStr}</td>
-                        <td style="font-size: 11px; word-break: break-all;">${data.uid || 'N/A'}</td>
+                        <td style="font-size: 11px; word-break: break-all;">${data.userId || data.uid || 'N/A'}</td>
                         <td>₹${data.amount || 0}</td>
-                        <td>${data.txnId || data.utr || 'N/A'}</td>
-                        <td><span class="${badgeClass}">${status}</span></td>
+                        <td>${data.utr || data.txnId || 'N/A'}</td>
+                        <td><span class="${badgeClass}">${status.toUpperCase()}</span></td>
                         <td>
-                            ${status === "PENDING" ? `
-                                <button class="btn-approve" onclick="window.approveDeposit('${docId}', '${data.uid}', ${data.amount})">Approve</button>
+                            ${status.toLowerCase() === "pending" ? `
+                                <button class="btn-approve" onclick="window.approveDeposit('${docId}', '${data.userId || data.uid}', ${data.amount})">Approve</button>
                                 <button class="btn-reject" onclick="window.rejectDeposit('${docId}')">Reject</button>
                             ` : `<span style="color: #666; font-size: 12px;">Completed</span>`}
                         </td>
@@ -193,7 +179,7 @@
 
             try {
                 const userRef = doc(db, "users", userId);
-                const txRef = doc(db, "walletTransactions", txId);
+                const txRef = doc(db, "addFundsRequests", txId);
 
                 await runTransaction(db, async (transaction) => {
                     const userDoc = await transaction.get(userRef);
@@ -214,8 +200,9 @@
                     }
 
                     transaction.update(txRef, {
-                        status: "APPROVED",
-                        approvedAt: serverTimestamp()
+                        status: "approved",
+                        processedAt: serverTimestamp(),
+                        processedBy: ADMIN_UID
                     });
                 });
 
@@ -231,10 +218,11 @@
             if (!confirm("Are you sure you want to reject this deposit request?")) return;
 
             try {
-                const txRef = doc(db, "walletTransactions", txId);
+                const txRef = doc(db, "addFundsRequests", txId);
                 await updateDoc(txRef, {
-                    status: "REJECTED",
-                    rejectedAt: serverTimestamp()
+                    status: "rejected",
+                    processedAt: serverTimestamp(),
+                    processedBy: ADMIN_UID
                 });
 
                 alert("Deposit request rejected.");

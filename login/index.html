@@ -13,33 +13,37 @@
 <div class="auth-page-wrapper">
   <div class="auth-card-box">
     
-    <div style="text-align: center; margin-bottom: 24px;">
-      <h2 class="auth-title">Welcome Back</h2>
-      <p class="auth-sub">Enter your mobile number and password to login</p>
+    <!-- Logo & Title Section -->
+    <div style="text-align: center; margin-bottom: 22px;">
+      <div style="display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+        <span style="display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%); border-radius: 10px; color: #fff; font-size: 16px;">
+          <i class="fa-solid fa-bolt"></i>
+        </span>
+        <span style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px;" class="logo-text">rajsmmp</span>
+      </div>
+      <h2 class="auth-title" style="font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0;">Login Account</h2>
     </div>
 
+    <!-- Input 1: Mobile Number -->
     <div class="auth-input-group">
       <label>Mobile Number</label>
-      <div class="phone-input-wrapper">
-        <span class="country-code">+91</span>
-        <input type="tel" id="loginMobile" placeholder="Enter 10-digit number" maxlength="10">
-      </div>
+      <input type="tel" id="loginMobile" placeholder="Mobile Number" maxlength="10">
     </div>
 
+    <!-- Input 2: Password -->
     <div class="auth-input-group">
       <label>Password</label>
-      <input type="password" id="loginPassword" placeholder="Enter password">
+      <input type="password" id="loginPassword" placeholder="Password">
     </div>
 
-    <div class="auth-extra-row">
-      <a href="/reset-password/" class="forgot-link">Forgot Password?</a>
+    <!-- Login Button -->
+    <button onclick="handleLogin()" class="auth-btn" style="margin-top: 10px; background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%); box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);">Login</button>
+
+    <!-- Links / Navigation -->
+    <div style="text-align: center; margin-top: 16px; display: flex; flex-direction: column; gap: 10px;">
+      <a href="/reset-password/" class="forgot-link" style="font-size: 13px; color: #a855f7; text-decoration: none; font-weight: 600;">Forgot Password?</a>
+      <a href="/register/" style="font-size: 13px; color: #a855f7; text-decoration: none; font-weight: 600;">Create Account</a>
     </div>
-
-    <button onclick="handleLogin()" class="auth-btn">Login</button>
-
-    <p class="auth-switch-text">
-      Don't have an account? <a href="/register/">Create Account</a>
-    </p>
 
   </div>
 </div>

@@ -15,16 +15,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function checkUserSession() {
   const sessionData = localStorage.getItem(SESSION_KEY);
+  const addFundsItem = document.getElementById("addFundsMenuItem");
+  const currentPath = window.location.pathname;
+
   if (sessionData) {
     try {
       const user = JSON.parse(sessionData);
       updateSidebarForLoggedInUser(user.name, user.mobile);
+      
+      if (addFundsItem) {
+        addFundsItem.style.display = "block";
+      }
     } catch (e) {
       localStorage.removeItem(SESSION_KEY);
       updateSidebarForLoggedOutUser();
+      
+      if (addFundsItem) {
+        addFundsItem.style.display = "none";
+      }
+      checkAddFundsProtection(currentPath, false);
     }
   } else {
     updateSidebarForLoggedOutUser();
+    
+    if (addFundsItem) {
+      addFundsItem.style.display = "none";
+    }
+    checkAddFundsProtection(currentPath, false);
+  }
+}
+
+function checkAddFundsProtection(currentPath, isLoggedIn) {
+  if (currentPath.includes('/add-funds') && !isLoggedIn) {
+    window.location.href = "/login/";
   }
 }
 
@@ -56,6 +79,19 @@ function initPageSpecificAuth() {
   const currentPath = window.location.pathname;
   const urlParams = new URLSearchParams(window.location.search);
   const prefillMobile = urlParams.get('mobile');
+
+  const sessionData = localStorage.getItem(SESSION_KEY);
+  let isLoggedIn = false;
+  if (sessionData) {
+    try {
+      JSON.parse(sessionData);
+      isLoggedIn = true;
+    } catch (e) {
+      isLoggedIn = false;
+    }
+  }
+
+  checkAddFundsProtection(currentPath, isLoggedIn);
 
   if (currentPath.includes('/login/') || currentPath === '/login') {
     const loginMobileInput = document.getElementById("loginMobile");
@@ -158,7 +194,7 @@ window.handleLogin = async function() {
   }
 };
 
-// 3. RESET / FORGOT PASSWORD (সঠিক আইডি ম্যাপিং সহ)
+// 3. RESET / FORGOT PASSWORD
 window.handleResetPassword = async function() {
   const mobileEl = document.getElementById("resetMobile") || document.getElementById("forgotMobile") || document.getElementById("mobile");
   const passwordEl = document.getElementById("resetNewPassword") || document.getElementById("forgotPassword") || document.getElementById("newPassword");

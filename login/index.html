@@ -18,12 +18,91 @@
     background-color: #fdf2f8;
     color: #1e293b;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding: 16px;
+    padding: 24px 16px;
   }
 
+  /* Premium Branding / Header Section */
+  .brand-header-section {
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .brand-logo-wrapper {
+    display: inline-block;
+    padding: 4px;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(217, 70, 239, 0.25);
+    margin-bottom: 14px;
+    border: 1px solid #fae8ff;
+  }
+
+  .brand-logo-wrapper img {
+    width: 65px;
+    height: 65px;
+    border-radius: 16px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .brand-main-heading {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .brand-description {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: #64748b;
+    margin-bottom: 14px;
+    padding: 0 10px;
+    font-weight: 600;
+  }
+
+  .brand-social-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .brand-social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #a855f7;
+    font-size: 15px;
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.15);
+    text-decoration: none;
+    transition: transform 0.2s ease;
+    border: 1px solid #f3e8ff;
+  }
+
+  .brand-social-icons a:hover {
+    transform: translateY(-2px);
+  }
+
+  .brand-social-icons a.instagram { color: #e1306c; }
+  .brand-social-icons a.facebook { color: #1877f2; }
+  .brand-social-icons a.youtube { color: #ff0000; }
+
+  /* Auth Card Box */
   .auth-card-box {
     width: 100%;
     max-width: 420px;
@@ -35,7 +114,7 @@
   }
 
   .auth-title {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 800;
     text-align: center;
     background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
@@ -119,6 +198,18 @@
       background-color: #0b0f19 !important;
       color: #f1f5f9 !important;
     }
+    .brand-logo-wrapper {
+      background: #111827 !important;
+      border-color: #1f2937 !important;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4) !important;
+    }
+    .brand-description {
+      color: #94a3b8 !important;
+    }
+    .brand-social-icons a {
+      background: #111827 !important;
+      border-color: #1f2937 !important;
+    }
     .auth-card-box {
       background: #111827 !important;
       border-color: #1f2937 !important;
@@ -140,6 +231,23 @@
 </style>
 </head>
 <body>
+
+<!-- Premium Branding / Header Section -->
+<div class="brand-header-section">
+  <div class="brand-logo-wrapper">
+    <!-- আপনার existing website-এর logo ইমেজ সোর্স এখানে বসাবেন (যেমন: logo.png বা আপনার ওয়েবসাইটের বর্তমান লোগো লিংক) -->
+    <img src="../assets/logo.png" alt="Raj SMM Panel Logo" id="brandLogoImg">
+  </div>
+  <h1 class="brand-main-heading">INDIAN BEST SOCIAL MEDIA SERVICE</h1>
+  <p class="brand-description">
+    Your Ultimate Destination For Social Media Success. Affordable & Reliable Social Media Services for Instagram, YouTube & Facebook.
+  </p>
+  <div class="brand-social-icons">
+    <a href="#" class="instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="#" class="facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="#" class="youtube" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+  </div>
+</div>
 
 <div class="auth-card-box">
   

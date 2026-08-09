@@ -21,16 +21,18 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding: 6px 10px;
-    overflow-x: hidden;
+    padding: 8px 12px;
   }
 
   .page-wrapper {
     width: 100%;
-    max-width: 420px;
+    max-width: 440px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: auto;
   }
 
   /* 1. TOP BRANDING SECTION */
@@ -39,12 +41,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
+    gap: 4px;
   }
 
   .brand-logo {
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     object-fit: contain;
     border-radius: 10px;
     background: #ffffff;
@@ -54,10 +56,10 @@
   }
 
   .brand-heading {
-    font-size: 14px;
+    font-size: 14.5px;
     font-weight: 800;
-    letter-spacing: 0.4px;
-    line-height: 1.1;
+    letter-spacing: 0.5px;
+    line-height: 1.15;
     background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #3b82f6 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -65,16 +67,16 @@
   }
 
   .brand-desc {
-    font-size: 10px;
+    font-size: 10.5px;
     color: #64748b;
-    line-height: 1.25;
-    max-width: 340px;
+    line-height: 1.3;
+    max-width: 350px;
   }
 
   .social-icons-row {
     display: flex;
     gap: 10px;
-    margin-top: 1px;
+    margin-top: 2px;
   }
 
   .social-icons-row a {
@@ -86,7 +88,7 @@
     align-items: center;
     justify-content: center;
     color: #a855f7;
-    font-size: 11px;
+    font-size: 11.5px;
     box-shadow: 0 2px 8px rgba(168, 85, 247, 0.15);
     text-decoration: none;
     transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
@@ -101,33 +103,32 @@
   /* 2. CENTER LOGIN CARD */
   .auth-card-box {
     width: 100%;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.88);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(250, 232, 255, 0.9);
-    border-radius: 24px;
-    padding: 32px 24px;
-    box-shadow: 0 20px 40px rgba(168, 85, 247, 0.08), 0 3px 8px rgba(0, 0, 0, 0.03);
-    margin: 2px auto;
+    border-radius: 18px;
+    padding: 18px 20px;
+    box-shadow: 0 14px 30px rgba(168, 85, 247, 0.08), 0 3px 8px rgba(0, 0, 0, 0.02);
   }
 
   .auth-title {
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 800;
     text-align: center;
     background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
 
   .auth-input-group {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     text-align: left;
   }
 
   .auth-input-group label {
     display: block;
-    font-size: 11px;
+    font-size: 11.5px;
     font-weight: 700;
     color: #475569;
     margin-bottom: 3px;
@@ -135,7 +136,7 @@
 
   .auth-input-group input {
     width: 100%;
-    padding: 8px 12px;
+    padding: 9px 12px;
     background: #f8fafc;
     border: 1.5px solid #e2e8f0;
     border-radius: 9px;
@@ -153,7 +154,7 @@
 
   .auth-btn {
     width: 100%;
-    padding: 10px;
+    padding: 10.5px;
     border: none;
     border-radius: 9px;
     background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
@@ -179,7 +180,7 @@
     margin-top: 10px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 5px;
   }
 
   .auth-links a {
@@ -197,33 +198,39 @@
 
   /* 3. BOTTOM FEATURES SECTION */
   .features-grid {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
+    gap: 7px;
   }
 
   .feature-item {
     background: rgba(255, 255, 255, 0.75);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(241, 245, 249, 0.9);
-    border-radius: 10px;
-    padding: 7px 9px;
+    border-radius: 11px;
+    padding: 8px 10px;
     display: flex;
     align-items: center;
     gap: 7px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s ease;
+  }
+
+  .feature-item:hover {
+    transform: translateY(-2px);
   }
 
   .feature-icon {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     border-radius: 7px;
     background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
     color: #a855f7;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 10px;
+    font-size: 11px;
     flex-shrink: 0;
   }
 
@@ -231,13 +238,13 @@
     font-size: 10.5px;
     font-weight: 700;
     color: #1e293b;
-    margin-bottom: 0px;
+    margin-bottom: 1px;
   }
 
   .feature-text p {
     font-size: 9px;
     color: #64748b;
-    line-height: 1.15;
+    line-height: 1.2;
   }
 
   /* Automatic Dark Mode Support */
@@ -259,9 +266,9 @@
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
     .auth-card-box {
-      background: rgba(17, 24, 39, 0.85) !important;
+      background: rgba(17, 24, 39, 0.88) !important;
       border-color: rgba(31, 41, 55, 0.8) !important;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5) !important;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5) !important;
     }
     .auth-input-group label {
       color: #cbd5e1 !important;
@@ -276,7 +283,7 @@
       background: #111827 !important;
     }
     .features-grid .feature-item {
-      background: rgba(17, 24, 39, 0.6);
+      background: rgba(17, 24, 39, 0.65);
       border-color: rgba(31, 41, 55, 0.6);
     }
     .feature-text h4 {
@@ -312,22 +319,22 @@
     <!-- Title -->
     <h2 class="auth-title">Login Account</h2>
 
-    <!-- Input 1: Mobile Number (আইডি অপরিবর্তিত) -->
+    <!-- Input 1: Mobile Number (আইডি অপরিবর্তিত)[cite: 1] -->
     <div class="auth-input-group">
       <label>Mobile Number</label>
       <input type="tel" id="loginMobile" placeholder="Mobile Number" maxlength="10">
     </div>
 
-    <!-- Input 2: Password (আইডি অপরিবর্তিত) -->
+    <!-- Input 2: Password (আইডি অপরিবর্তিত)[cite: 1] -->
     <div class="auth-input-group">
       <label>Password</label>
       <input type="password" id="loginPassword" placeholder="Password">
     </div>
 
-    <!-- Login Button (ফাংশন এবং আইডি একদম অপরিবর্তিত রাখা হয়েছে) -->
+    <!-- Login Button (ফাংশন এবং আইডি একদম অপরিবর্তিত রাখা হয়েছে)[cite: 1] -->
     <button onclick="handleLogin()" class="auth-btn">Login</button>
 
-    <!-- Links (লিংক অপরিবর্তিত) -->
+    <!-- Links (লিংক অপরিবর্তিত)[cite: 1] -->
     <div class="auth-links">
       <a href="/reset-password/">Forgot Password?</a>
       <a href="/register/">Create Account</a>
@@ -341,7 +348,7 @@
       <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
       <div class="feature-text">
         <h4>Instant Delivery</h4>
-        <p>Orders in seconds</p>
+        <p>Orders start in seconds</p>
       </div>
     </div>
     <div class="feature-item">
@@ -369,7 +376,7 @@
 
 </div>
 
-<!-- Firebase Auth Handler Integration (অপরিবর্তিত) -->
+<!-- Firebase Auth Handler Integration (অপরিবর্তিত)[cite: 1] -->
 <script type="module" src="../auth-handler.js"></script>
 </body>
 </html>

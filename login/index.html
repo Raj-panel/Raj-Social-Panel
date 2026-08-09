@@ -21,15 +21,15 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding: 24px 16px;
+    padding: 10px 12px;
   }
 
   .page-wrapper {
     width: 100%;
-    max-width: 460px;
+    max-width: 440px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 12px;
   }
 
   /* 1. TOP BRANDING SECTION */
@@ -38,24 +38,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 6px;
   }
 
   .brand-logo {
-    width: 72px;
-    height: 72px;
+    width: 52px;
+    height: 52px;
     object-fit: contain;
-    border-radius: 16px;
+    border-radius: 12px;
     background: #ffffff;
-    padding: 8px;
-    box-shadow: 0 8px 20px rgba(168, 85, 247, 0.2);
-    filter: drop-shadow(0 4px 8px rgba(236, 72, 153, 0.15));
+    padding: 6px;
+    box-shadow: 0 6px 16px rgba(168, 85, 247, 0.2);
+    filter: drop-shadow(0 3px 6px rgba(236, 72, 153, 0.15));
   }
 
   .brand-heading {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 800;
     letter-spacing: 0.5px;
+    line-height: 1.2;
     background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #3b82f6 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -63,35 +64,35 @@
   }
 
   .brand-desc {
-    font-size: 13px;
+    font-size: 11.5px;
     color: #64748b;
-    line-height: 1.5;
-    max-width: 380px;
+    line-height: 1.35;
+    max-width: 360px;
   }
 
   .social-icons-row {
     display: flex;
-    gap: 16px;
-    margin-top: 4px;
+    gap: 12px;
+    margin-top: 2px;
   }
 
   .social-icons-row a {
-    width: 36px;
-    height: 36px;
+    width: 30px;
+    height: 30px;
     background: #ffffff;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #a855f7;
-    font-size: 15px;
-    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.15);
+    font-size: 13px;
+    box-shadow: 0 3px 10px rgba(168, 85, 247, 0.15);
     text-decoration: none;
     transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
   }
 
   .social-icons-row a:hover {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
     color: #ffffff;
   }
@@ -102,41 +103,41 @@
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(250, 232, 255, 0.8);
-    border-radius: 24px;
-    padding: 32px 24px;
-    box-shadow: 0 20px 40px rgba(168, 85, 247, 0.08), 0 4px 12px rgba(0, 0, 0, 0.03);
+    border-radius: 20px;
+    padding: 20px 20px;
+    box-shadow: 0 16px 35px rgba(168, 85, 247, 0.08), 0 4px 10px rgba(0, 0, 0, 0.03);
   }
 
   .auth-title {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 800;
     text-align: center;
     background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 24px;
+    margin-bottom: 14px;
   }
 
   .auth-input-group {
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     text-align: left;
   }
 
   .auth-input-group label {
     display: block;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     color: #475569;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
 
   .auth-input-group input {
     width: 100%;
-    padding: 12px 14px;
+    padding: 10px 12px;
     background: #f8fafc;
     border: 1.5px solid #e2e8f0;
-    border-radius: 12px;
-    font-size: 14px;
+    border-radius: 10px;
+    font-size: 13.5px;
     color: #0f172a;
     outline: none;
     transition: all 0.2s;
@@ -145,26 +146,26 @@
   .auth-input-group input:focus {
     border-color: #d946ef;
     background: #ffffff;
-    box-shadow: 0 0 0 4px rgba(217, 70, 239, 0.12);
+    box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.12);
   }
 
   .auth-btn {
     width: 100%;
-    padding: 13px;
+    padding: 11px;
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
     color: #ffffff;
     font-weight: 800;
-    font-size: 15px;
+    font-size: 14px;
     cursor: pointer;
-    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.25);
-    margin-top: 8px;
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.25);
+    margin-top: 4px;
     transition: transform 0.1s ease, box-shadow 0.2s ease;
   }
 
   .auth-btn:hover {
-    box-shadow: 0 10px 25px rgba(168, 85, 247, 0.35);
+    box-shadow: 0 8px 20px rgba(168, 85, 247, 0.35);
   }
 
   .auth-btn:active {
@@ -173,14 +174,14 @@
 
   .auth-links {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 12px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
   }
 
   .auth-links a {
-    font-size: 13px;
+    font-size: 12px;
     color: #a855f7;
     text-decoration: none;
     font-weight: 700;
@@ -196,19 +197,19 @@
   .features-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 8px;
   }
 
   .feature-item {
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(241, 245, 249, 0.9);
-    border-radius: 16px;
-    padding: 14px;
+    border-radius: 12px;
+    padding: 10px;
     display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
     transition: transform 0.2s ease;
   }
 
@@ -217,29 +218,29 @@
   }
 
   .feature-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 10px;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
     background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
     color: #a855f7;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: 12px;
     flex-shrink: 0;
   }
 
   .feature-text h4 {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
     color: #1e293b;
-    margin-bottom: 2px;
+    margin-bottom: 1px;
   }
 
   .feature-text p {
-    font-size: 10.5px;
+    font-size: 9.5px;
     color: #64748b;
-    line-height: 1.4;
+    line-height: 1.25;
   }
 
   /* Automatic Dark Mode Support */
@@ -250,7 +251,7 @@
     }
     .brand-logo {
       background: #111827;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
     }
     .brand-desc {
       color: #94a3b8;
@@ -258,12 +259,12 @@
     .social-icons-row a {
       background: #111827;
       color: #c084fc;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
     }
     .auth-card-box {
       background: rgba(17, 24, 39, 0.85) !important;
       border-color: rgba(31, 41, 55, 0.8) !important;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5) !important;
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.5) !important;
     }
     .auth-input-group label {
       color: #cbd5e1 !important;
@@ -326,10 +327,10 @@
       <input type="password" id="loginPassword" placeholder="Password">
     </div>
 
-    <!-- Login Button (ফাংশন এবং আইডি একদম অপরিবর্তিত রাখা হয়েছে)[cite: 1] -->
+    <!-- Login Button (ফাংশন এবং আইডি একদম অপরিবর্তিত রাখা হয়েছে) -->
     <button onclick="handleLogin()" class="auth-btn">Login</button>
 
-    <!-- Links (লিংক অপরিবর্তিত)[cite: 1] -->
+    <!-- Links (লিংক অপরিবর্তিত) -->
     <div class="auth-links">
       <a href="/reset-password/">Forgot Password?</a>
       <a href="/register/">Create Account</a>
@@ -343,35 +344,35 @@
       <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
       <div class="feature-text">
         <h4>Instant Delivery</h4>
-        <p>Orders start processing in seconds</p>
+        <p>Orders start in seconds</p>
       </div>
     </div>
     <div class="feature-item">
       <div class="feature-icon"><i class="fa-solid fa-tags"></i></div>
       <div class="feature-text">
         <h4>Cheapest Prices</h4>
-        <p>Best rates, no hidden fees</p>
+        <p>Best rates, no fees</p>
       </div>
     </div>
     <div class="feature-item">
       <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
       <div class="feature-text">
         <h4>Secure Payments</h4>
-        <p>UPI, Razorpay & more supported</p>
+        <p>UPI, Razorpay & more</p>
       </div>
     </div>
     <div class="feature-item">
       <div class="feature-icon"><i class="fa-solid fa-headset"></i></div>
       <div class="feature-text">
         <h4>24/7 Support</h4>
-        <p>Real help whenever you need it</p>
+        <p>Real help anytime</p>
       </div>
     </div>
   </div>
 
 </div>
 
-<!-- Firebase Auth Handler Integration (অপরিবর্তিত)[cite: 1] -->
+<!-- Firebase Auth Handler Integration (অপরিবর্তিত) -->
 <script type="module" src="../auth-handler.js"></script>
 </body>
 </html>

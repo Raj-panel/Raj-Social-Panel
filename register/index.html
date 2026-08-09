@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Register - Raj Social Panel</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 <style>
   * {
@@ -15,23 +15,24 @@
   }
 
   body {
-    background-color: #fdf2f8;
+    background: linear-gradient(135deg, #fdf2f8 0%, #f3e8ff 50%, #eff6ff 100%);
     color: #1e293b;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding: 16px;
+    padding: 16px 12px;
   }
 
   .auth-card-box {
     width: 100%;
     max-width: 420px;
-    background: #ffffff;
-    border: 1px solid #fae8ff;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(250, 232, 255, 0.8);
     border-radius: 24px;
     padding: 32px 24px;
-    box-shadow: 0 10px 30px rgba(244, 114, 182, 0.1);
+    box-shadow: 0 20px 40px rgba(168, 85, 247, 0.08), 0 4px 12px rgba(0, 0, 0, 0.03);
   }
 
   .auth-title {
@@ -72,27 +73,7 @@
   .auth-input-group input:focus {
     border-color: #d946ef;
     background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.15);
-  }
-
-  /* Validation helper text style */
-  .auth-helper-text {
-    font-size: 12px;
-    margin-top: 5px;
-    font-weight: 600;
-    display: block;
-  }
-  .text-red {
-    color: #ef4444 !important;
-  }
-  .text-green {
-    color: #10b981 !important;
-  }
-  .input-red {
-    border-color: #ef4444 !important;
-  }
-  .input-green {
-    border-color: #10b981 !important;
+    box-shadow: 0 0 0 4px rgba(217, 70, 239, 0.12);
   }
 
   .auth-btn {
@@ -105,9 +86,13 @@
     font-weight: 800;
     font-size: 15px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.25);
     margin-top: 8px;
-    transition: transform 0.1s ease;
+    transition: transform 0.1s ease, box-shadow 0.2s ease;
+  }
+
+  .auth-btn:hover {
+    box-shadow: 0 10px 25px rgba(168, 85, 247, 0.35);
   }
 
   .auth-btn:active {
@@ -131,17 +116,27 @@
 
   .auth-links a:hover {
     text-decoration: underline;
+    color: #ec4899;
   }
 
+  /* Password Validation Helper Text */
+  .validation-text {
+    font-size: 11.5px;
+    margin-top: 5px;
+    font-weight: 600;
+    display: block;
+  }
+
+  /* Automatic Dark Mode Support */
   @media (prefers-color-scheme: dark) {
     body {
-      background-color: #0b0f19 !important;
+      background: linear-gradient(135deg, #0b0f19 0%, #111827 50%, #0f172a 100%) !important;
       color: #f1f5f9 !important;
     }
     .auth-card-box {
-      background: #111827 !important;
-      border-color: #1f2937 !important;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+      background: rgba(17, 24, 39, 0.85) !important;
+      border-color: rgba(31, 41, 55, 0.8) !important;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5) !important;
     }
     .auth-input-group label {
       color: #cbd5e1 !important;
@@ -161,94 +156,66 @@
 <body>
 
 <div class="auth-card-box">
+  
+  <!-- Title -->
   <h2 class="auth-title">Create Account</h2>
 
+  <!-- Input: Name -->
   <div class="auth-input-group">
     <label>Full Name</label>
     <input type="text" id="signupName" placeholder="Full Name">
   </div>
 
+  <!-- Input: Mobile Number -->
   <div class="auth-input-group">
     <label>Mobile Number</label>
     <input type="tel" id="signupMobile" placeholder="Mobile Number" maxlength="10">
   </div>
 
+  <!-- Input: Password -->
   <div class="auth-input-group">
     <label>Password</label>
-    <input type="password" id="signupPassword" placeholder="Password (Minimum 6 characters)">
-    <small id="passwordHelper" class="auth-helper-text" style="color: #64748b;">Use at least 6 characters</small>
+    <input type="password" id="signupPassword" placeholder="Password" oninput="checkPasswordValidation()">
+    <span id="pwdValidationMsg" class="validation-text" style="color: #ef4444; display: none;">Password must be at least 6 characters</span>
   </div>
 
+  <!-- Input: Confirm Password -->
   <div class="auth-input-group">
     <label>Confirm Password</label>
-    <input type="password" id="signupConfirmPassword" placeholder="Confirm Password (Minimum 6 characters)">
-    <small id="confirmPasswordHelper" class="auth-helper-text" style="color: #64748b;"></small>
+    <input type="password" id="signupConfirmPassword" placeholder="Confirm Password">
   </div>
 
-  <button onclick="handleSignUp()" class="auth-btn">Register</button>
+  <!-- Register Button (onclick দিয়ে সরাসরি handleSignUp কল করা হয়েছে) -->
+  <button type="button" onclick="handleSignUp()" class="auth-btn">Create Account</button>
 
+  <!-- Links -->
   <div class="auth-links">
-    <a href="/login/">Already have an account?</a>
+    <a href="/login/">Already have an account? Login</a>
   </div>
+
 </div>
 
+<!-- Password Validation & Firebase Auth Integration Script -->
 <script>
-  // Live validation script for Password & Confirm Password
-  const passwordInput = document.getElementById('signupPassword');
-  const confirmPasswordInput = document.getElementById('signupConfirmPassword');
-  const passwordHelper = document.getElementById('passwordHelper');
-  const confirmPasswordHelper = document.getElementById('confirmPasswordHelper');
-
-  function validatePassword() {
-    const val = passwordInput.value;
-    if (val.length === 0) {
-      passwordInput.classList.remove('input-red', 'input-green');
-      passwordHelper.textContent = "Use at least 6 characters";
-      passwordHelper.className = "auth-helper-text";
-      passwordHelper.style.color = "#64748b";
-    } else if (val.length > 0 && val.length < 6) {
-      passwordInput.classList.add('input-red');
-      passwordInput.classList.remove('input-green');
-      passwordHelper.textContent = "Invalid Password — Minimum 6 characters required.";
-      passwordHelper.className = "auth-helper-text text-red";
+  function checkPasswordValidation() {
+    const password = document.getElementById('signupPassword').value;
+    const msg = document.getElementById('pwdValidationMsg');
+    
+    if (password.length > 0 && password.length < 6) {
+      msg.style.display = 'block';
+      msg.style.color = '#ef4444';
+      msg.innerText = 'Password must be at least 6 characters (Invalid)';
+    } else if (password.length >= 6) {
+      msg.style.display = 'block';
+      msg.style.color = '#10b981';
+      msg.innerText = 'Valid Password';
     } else {
-      passwordInput.classList.add('input-green');
-      passwordInput.classList.remove('input-red');
-      passwordHelper.textContent = "Password length is valid.";
-      passwordHelper.className = "auth-helper-text text-green";
-    }
-    validateConfirmPassword();
-  }
-
-  function validateConfirmPassword() {
-    const passVal = passwordInput.value;
-    const confirmVal = confirmPasswordInput.value;
-
-    if (confirmVal.length === 0) {
-      confirmPasswordInput.classList.remove('input-red', 'input-green');
-      confirmPasswordHelper.textContent = "";
-    } else if (confirmVal.length < 6) {
-      confirmPasswordInput.classList.add('input-red');
-      confirmPasswordInput.classList.remove('input-green');
-      confirmPasswordHelper.textContent = "Minimum 6 characters required.";
-      confirmPasswordHelper.className = "auth-helper-text text-red";
-    } else if (passVal !== confirmVal) {
-      confirmPasswordInput.classList.add('input-red');
-      confirmPasswordInput.classList.remove('input-green');
-      confirmPasswordHelper.textContent = "Passwords do not match.";
-      confirmPasswordHelper.className = "auth-helper-text text-red";
-    } else {
-      confirmPasswordInput.classList.add('input-green');
-      confirmPasswordInput.classList.remove('input-red');
-      confirmPasswordHelper.textContent = "Passwords match and valid.";
-      confirmPasswordHelper.className = "auth-helper-text text-green";
+      msg.style.display = 'none';
     }
   }
-
-  passwordInput.addEventListener('input', validatePassword);
-  confirmPasswordInput.addEventListener('input', validateConfirmPassword);
 </script>
 
+<!-- Firebase Auth Handler Integration (অপরিবর্তিত) -->
 <script type="module" src="../auth-handler.js"></script>
 </body>
 </html>

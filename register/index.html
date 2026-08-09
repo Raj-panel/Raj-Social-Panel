@@ -75,6 +75,26 @@
     box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.15);
   }
 
+  /* Validation helper text style */
+  .auth-helper-text {
+    font-size: 12px;
+    margin-top: 5px;
+    font-weight: 600;
+    display: block;
+  }
+  .text-red {
+    color: #ef4444 !important;
+  }
+  .text-green {
+    color: #10b981 !important;
+  }
+  .input-red {
+    border-color: #ef4444 !important;
+  }
+  .input-green {
+    border-color: #10b981 !important;
+  }
+
   .auth-btn {
     width: 100%;
     padding: 13px;
@@ -155,12 +175,14 @@
 
   <div class="auth-input-group">
     <label>Password</label>
-    <input type="password" id="signupPassword" placeholder="Password">
+    <input type="password" id="signupPassword" placeholder="Password (Minimum 6 characters)">
+    <small id="passwordHelper" class="auth-helper-text" style="color: #64748b;">Use at least 6 characters</small>
   </div>
 
   <div class="auth-input-group">
     <label>Confirm Password</label>
-    <input type="password" id="signupConfirmPassword" placeholder="Confirm Password">
+    <input type="password" id="signupConfirmPassword" placeholder="Confirm Password (Minimum 6 characters)">
+    <small id="confirmPasswordHelper" class="auth-helper-text" style="color: #64748b;"></small>
   </div>
 
   <button onclick="handleSignUp()" class="auth-btn">Register</button>
@@ -169,6 +191,63 @@
     <a href="/login/">Already have an account?</a>
   </div>
 </div>
+
+<script>
+  // Live validation script for Password & Confirm Password
+  const passwordInput = document.getElementById('signupPassword');
+  const confirmPasswordInput = document.getElementById('signupConfirmPassword');
+  const passwordHelper = document.getElementById('passwordHelper');
+  const confirmPasswordHelper = document.getElementById('confirmPasswordHelper');
+
+  function validatePassword() {
+    const val = passwordInput.value;
+    if (val.length === 0) {
+      passwordInput.classList.remove('input-red', 'input-green');
+      passwordHelper.textContent = "Use at least 6 characters";
+      passwordHelper.className = "auth-helper-text";
+      passwordHelper.style.color = "#64748b";
+    } else if (val.length > 0 && val.length < 6) {
+      passwordInput.classList.add('input-red');
+      passwordInput.classList.remove('input-green');
+      passwordHelper.textContent = "Invalid Password — Minimum 6 characters required.";
+      passwordHelper.className = "auth-helper-text text-red";
+    } else {
+      passwordInput.classList.add('input-green');
+      passwordInput.classList.remove('input-red');
+      passwordHelper.textContent = "Password length is valid.";
+      passwordHelper.className = "auth-helper-text text-green";
+    }
+    validateConfirmPassword();
+  }
+
+  function validateConfirmPassword() {
+    const passVal = passwordInput.value;
+    const confirmVal = confirmPasswordInput.value;
+
+    if (confirmVal.length === 0) {
+      confirmPasswordInput.classList.remove('input-red', 'input-green');
+      confirmPasswordHelper.textContent = "";
+    } else if (confirmVal.length < 6) {
+      confirmPasswordInput.classList.add('input-red');
+      confirmPasswordInput.classList.remove('input-green');
+      confirmPasswordHelper.textContent = "Minimum 6 characters required.";
+      confirmPasswordHelper.className = "auth-helper-text text-red";
+    } else if (passVal !== confirmVal) {
+      confirmPasswordInput.classList.add('input-red');
+      confirmPasswordInput.classList.remove('input-green');
+      confirmPasswordHelper.textContent = "Passwords do not match.";
+      confirmPasswordHelper.className = "auth-helper-text text-red";
+    } else {
+      confirmPasswordInput.classList.add('input-green');
+      confirmPasswordInput.classList.remove('input-red');
+      confirmPasswordHelper.textContent = "Passwords match and valid.";
+      confirmPasswordHelper.className = "auth-helper-text text-green";
+    }
+  }
+
+  passwordInput.addEventListener('input', validatePassword);
+  confirmPasswordInput.addEventListener('input', validateConfirmPassword);
+</script>
 
 <script type="module" src="../auth-handler.js"></script>
 </body>

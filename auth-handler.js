@@ -123,6 +123,10 @@ window.handleSignUp = async function() {
     return alert("Please enter a valid 10-digit mobile number.");
   }
 
+  if (password.length < 6) {
+    return alert("Password must be at least 6 characters.");
+  }
+
   if (password !== confirmPassword) {
     return alert("Passwords do not match.");
   }
@@ -216,6 +220,11 @@ window.handleResetPassword = async function() {
 
   if (mobile.length !== 10) {
     alert("Please enter a valid 10-digit mobile number.");
+    return;
+  }
+
+  if (password.length < 6) {
+    alert("Password must be at least 6 characters.");
     return;
   }
 

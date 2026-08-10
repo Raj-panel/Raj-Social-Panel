@@ -348,7 +348,8 @@
     <a class="glass-btn btn-telegram" href="https://t.me/raj_smm_panel" target="_blank">
       <i class="fa-brands fa-telegram"></i> Telegram Support
     </a>
-    <a class="glass-btn btn-whatsapp" href="https://wa.me/919239628344" target="_blank">
+    <!-- এখানে WhatsApp Support-এ প্রি-ফিল্ড মেসেজ যুক্ত করা হয়েছে -->
+    <a class="glass-btn btn-whatsapp" href="javascript:void(0);" onclick="openWhatsAppSupport()" target="_blank">
       <i class="fa-brands fa-whatsapp"></i> WhatsApp Support
     </a>
   </div>
@@ -527,6 +528,18 @@
 <script type="module" src="firebase-config.js"></script>
 <script type="module" src="auth-handler.js"></script>
 <script>
+  // WhatsApp Support Click Handler Function with Pre-filled Message
+  function openWhatsAppSupport() {
+    const phoneNumber = "919239628344";
+    const message = encodeURIComponent(
+      "Hi 👋 I want to know about your services on rajsmmpanel.in"
+    );
+    window.open(
+      "https://wa.me/" + phoneNumber + "?text=" + message,
+      "_blank"
+    );
+  }
+
   function openSidebar() {
     const sidebar = document.getElementById("leftSidebar");
     const overlay = document.getElementById("sidebarOverlay");

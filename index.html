@@ -36,45 +36,30 @@
 <meta content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0" name="twitter:image"/>
 
 <style>
-  /* ==========================================================
-     DISPLAY-ONLY ELEMENTS TOUCH & SELECTION DISABLE FIX
-     ========================================================== */
+  /* Display-only text & cards protection against selection/tapping/long-press */
   .panel-heading,
+  .hero-banner h2,
   .hero-sub,
-  .provider-badge,
   .stat-lbl,
-  .stat-num,
-  .stat-icon,
+  .provider-badge,
   .footer-note,
-  .summary-title,
-  .qr-sub,
-  .scan-title,
-  .binance-nick-box,
-  .usdt-badge-box,
-  .notice-yellow-box,
   .sidebar-title,
   .checkout-heading-text,
+  .card-info h4,
+  .badge-row,
   .units-text,
   .price-text,
-  .hero-banner h2,
-  .hero-banner p {
-    user-select: none !important;
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    -webkit-touch-callout: none !important;
-    -webkit-tap-highlight-color: transparent !important;
-    pointer-events: none !important;
-  }
-
-  /* Interactive Elements MUST Stay Fully Functional */
-  button, a, input, textarea, select, 
-  .hamburger-btn, .install-btn, .upi-app-card-btn, 
-  .glass-btn, .platform-btn, .whatsapp-submit-btn, 
-  .back-btn, .pay-tab, .sidebar-menu a, .sidebar-close-btn {
-    pointer-events: auto !important;
-    user-select: text !important;
-    -webkit-user-select: text !important;
+  .checkout-order-summary .summary-title,
+  .checkout-order-summary .summary-row span:first-child,
+  .scan-title,
+  .qr-sub,
+  .binance-nick-box,
+  .usdt-badge-box,
+  .notice-yellow-box {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
   }
 
   /* Top Left Hamburger Button */
@@ -344,6 +329,7 @@
   </div>
   
   <ul class="sidebar-menu">
+    <!-- Login/Create Account অপশন -->
     <li id="authMenuItem">
         <a href="/login/">🔐 Login / Create Account</a>
     </li>
@@ -351,17 +337,18 @@
     <li><a href="/">🛒 New Order</a></li>
     <li><a href="/orders/">📦 My Orders</a></li>
     
+    <!-- Add Funds অপশনটি এখানে হাইড করে দেওয়া হলো -->
     <li id="addFundsMenuItem" style="display: none;">
-        <!--<a href="/add-funds/">💳 Add Funds</a>-->
-    </li>
+        <!--<a href="/add-funds/">💳 Add Funds</a>
+    </li>-->
     
     <li><a href="/pages/privacy-policy.html">🔒 Privacy Policy</a></li>
     <li><a href="/pages/refund-policy.html">💸 Refund Policy</a></li>
     <li><a href="/pages/terms.html">📜 Terms &amp; Conditions</a></li>
     <li><a href="/pages/contact.html">📞 Contact Us</a></li>
     <li><a href="/pages/about.html">ℹ️ About Us</a></li>
-  </ul>
-
+</ul>
+  <!-- বাকি অংশ আগের মতোই থাকবে -->
   <div class="sidebar-footer-media">
     <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="watch-tutorials-btn">
       <i class="fa-brands fa-youtube"></i> Watch Tutorials
@@ -387,9 +374,10 @@
     <a class="glass-btn btn-telegram" href="https://t.me/raj_smm_panel" target="_blank">
       <i class="fa-brands fa-telegram"></i> Telegram Support
     </a>
+    <!-- এখানে WhatsApp Support-এ প্রি-ফিল্ড মেসেজ যুক্ত করা হয়েছে -->
     <a class="glass-btn btn-whatsapp" href="javascript:void(0);" onclick="openWhatsAppSupport()">
-      <i class="fa-brands fa-whatsapp"></i> WhatsApp Support
-    </a>
+  <i class="fa-brands fa-whatsapp"></i> WhatsApp Support
+   </a>
   </div>
 
   <!-- Platform Switcher -->
@@ -566,6 +554,7 @@
 <script type="module" src="firebase-config.js"></script>
 <script type="module" src="auth-handler.js"></script>
 <script>
+  // WhatsApp Support Click Handler Function with Pre-filled Message
   function openWhatsAppSupport() {
     const phoneNumber = "919239628344";
     const message = encodeURIComponent(

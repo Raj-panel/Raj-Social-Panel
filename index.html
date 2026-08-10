@@ -36,20 +36,45 @@
 <meta content="https://raj-panel.github.io/Smm-Panel.com/banner.png?v=2.0" name="twitter:image"/>
 
 <style>
-  /* Global User-Select Restriction Logic */
-  .no-select {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-touch-callout: none;
+  /* ==========================================================
+     DISPLAY-ONLY ELEMENTS TOUCH & SELECTION DISABLE FIX
+     ========================================================== */
+  .panel-heading,
+  .hero-sub,
+  .provider-badge,
+  .stat-lbl,
+  .stat-num,
+  .stat-icon,
+  .footer-note,
+  .summary-title,
+  .qr-sub,
+  .scan-title,
+  .binance-nick-box,
+  .usdt-badge-box,
+  .notice-yellow-box,
+  .sidebar-title,
+  .checkout-heading-text,
+  .units-text,
+  .price-text,
+  .hero-banner h2,
+  .hero-banner p {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    -webkit-touch-callout: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+    pointer-events: none !important;
   }
-  /* Ensure form inputs remain selectable */
-  input, textarea, [contenteditable="true"] {
-    -webkit-user-select: text !important;
-    -moz-user-select: text !important;
-    -ms-user-select: text !important;
+
+  /* Interactive Elements MUST Stay Fully Functional */
+  button, a, input, textarea, select, 
+  .hamburger-btn, .install-btn, .upi-app-card-btn, 
+  .glass-btn, .platform-btn, .whatsapp-submit-btn, 
+  .back-btn, .pay-tab, .sidebar-menu a, .sidebar-close-btn {
+    pointer-events: auto !important;
     user-select: text !important;
+    -webkit-user-select: text !important;
   }
 
   /* Top Left Hamburger Button */
@@ -314,12 +339,11 @@
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar(true)"></div>
 <div class="left-sidebar" id="leftSidebar">
   <div class="sidebar-header">
-    <div class="sidebar-title no-select">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
+    <div class="sidebar-title">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
     <button class="sidebar-close-btn" onclick="closeSidebar(true)"><i class="fa-solid fa-xmark"></i></button>
   </div>
   
   <ul class="sidebar-menu">
-    <!-- Login/Create Account অপশন -->
     <li id="authMenuItem">
         <a href="/login/">🔐 Login / Create Account</a>
     </li>
@@ -327,20 +351,19 @@
     <li><a href="/">🛒 New Order</a></li>
     <li><a href="/orders/">📦 My Orders</a></li>
     
-    <!-- Add Funds অপশনটি এখানে হাইড করে দেওয়া হলো -->
     <li id="addFundsMenuItem" style="display: none;">
-        <!--<a href="/add-funds/">💳 Add Funds</a>
-    </li>-->
+        <!--<a href="/add-funds/">💳 Add Funds</a>-->
+    </li>
     
     <li><a href="/pages/privacy-policy.html">🔒 Privacy Policy</a></li>
     <li><a href="/pages/refund-policy.html">💸 Refund Policy</a></li>
     <li><a href="/pages/terms.html">📜 Terms &amp; Conditions</a></li>
     <li><a href="/pages/contact.html">📞 Contact Us</a></li>
     <li><a href="/pages/about.html">ℹ️ About Us</a></li>
-</ul>
-  <!-- বাকি অংশ আগের মতোই থাকবে -->
+  </ul>
+
   <div class="sidebar-footer-media">
-    <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="watch-tutorials-btn no-select">
+    <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="watch-tutorials-btn">
       <i class="fa-brands fa-youtube"></i> Watch Tutorials
     </a>
     <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="tutorial-banner-link">
@@ -357,21 +380,20 @@
   </button>
 
   <!-- Header -->
-  <div class="panel-heading no-select">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
+  <div class="panel-heading">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
 
   <!-- Support Buttons Header -->
   <div class="hero-actions">
     <a class="glass-btn btn-telegram" href="https://t.me/raj_smm_panel" target="_blank">
       <i class="fa-brands fa-telegram"></i> Telegram Support
     </a>
-    <!-- এখানে WhatsApp Support-এ প্রি-ফিল্ড মেসেজ যুক্ত করা হয়েছে -->
     <a class="glass-btn btn-whatsapp" href="javascript:void(0);" onclick="openWhatsAppSupport()">
-  <i class="fa-brands fa-whatsapp"></i> WhatsApp Support
-   </a>
+      <i class="fa-brands fa-whatsapp"></i> WhatsApp Support
+    </a>
   </div>
 
   <!-- Platform Switcher -->
-  <div class="platform-switch-container no-select">
+  <div class="platform-switch-container">
     <button class="platform-btn active" id="btnInsta" onclick="switchPlatform('instagram')">
       <i class="fa-brands fa-instagram"></i> Instagram
     </button>
@@ -381,7 +403,7 @@
   </div>
 
   <!-- Hero Status Banner -->
-  <div class="hero-banner no-select">
+  <div class="hero-banner">
     <div class="hero-top-row">
       <div class="hero-logo-box" id="heroLogoIcon">
         <i class="fa-brands fa-instagram"></i>
@@ -410,14 +432,14 @@
   </div>
 
   <!-- Scrollable Category Tabs -->
-  <div class="category-tabs-wrapper no-select">
+  <div class="category-tabs-wrapper">
     <div class="category-tabs" id="categoryTabs"></div>
   </div>
 
   <!-- Package List Section -->
   <div class="package-list-container" id="packageList"></div>
 
-  <div class="footer-note no-select">
+  <div class="footer-note">
     ⚡ Fast Processing • 100% Refund Guarantee If Failed
   </div>
 
@@ -433,10 +455,10 @@
     
     <div class="checkout-nav">
       <button class="back-btn" onclick="closeCheckout()"><i class="fa-solid fa-arrow-left"></i> Back</button>
-      <div class="checkout-heading-text no-select">Checkout</div>
+      <div class="checkout-heading-text">Checkout</div>
     </div>
 
-    <div class="premium-service-card no-select">
+    <div class="premium-service-card">
       <div class="card-top-row">
         <div class="platform-badge-icon" id="checkoutPlatformIcon">
           <i class="fa-brands fa-instagram"></i>
@@ -456,11 +478,11 @@
     </div>
 
     <div class="checkout-input-group">
-      <label id="checkoutLinkLabel" class="no-select">Enter your Instagram link</label>
+      <label id="checkoutLinkLabel">Enter your Instagram link</label>
       <input type="text" id="checkoutLinkInput" placeholder="https://instagram.com/your_username" />
     </div>
 
-    <div class="checkout-order-summary no-select">
+    <div class="checkout-order-summary">
       <div class="summary-title">Order Summary</div>
       <div class="summary-row">
         <span>Package</span>
@@ -483,13 +505,13 @@
     </div>
 
     <div id="checkoutUpiView" class="payment-view-box">
-      <div class="scan-title no-select" style="font-weight: 800; color: #a855f7; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
+      <div class="scan-title" style="font-weight: 800; color: #a855f7; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
         SCAN TO PAY VIA UPI
       </div>
       <div class="qr-wrapper" style="text-align: center;">
         <img id="checkoutQrImg" src="" alt="UPI QR Code" style="display: block; margin: 0 auto; border-radius: 12px;" />
       </div>
-      <p class="qr-sub no-select" style="font-size: 11px; color: #64748b; margin-top: 8px;">
+      <p class="qr-sub" style="font-size: 11px; color: #64748b; margin-top: 8px;">
         Scan or enter payment detail into any UPI App
       </p>
       
@@ -512,11 +534,11 @@
     </div>
 
     <div id="checkoutBinanceView" class="payment-view-box hidden">
-      <div class="scan-title no-select">SCAN TO PAY VIA BINANCE</div>
+      <div class="scan-title">SCAN TO PAY VIA BINANCE</div>
       <div class="qr-wrapper">
         <img src="binance-qr.png" alt="Binance QR Code" />
       </div>
-      <div class="binance-nick-box no-select">
+      <div class="binance-nick-box">
         Binance Nickname: <strong style="color: #facc15;">Alex-Sahil786</strong>
       </div>
       <div class="usdt-badge-box">
@@ -525,11 +547,11 @@
     </div>
 
     <div class="checkout-input-group margin-top-15">
-      <label class="no-select">Enter Your UTR number</label>
+      <label>Enter Your UTR number</label>
       <input type="text" id="checkoutTxnId" placeholder="Enter Transaction ID / UTR(e.g. 123456789012)" />
     </div>
 
-    <div class="notice-yellow-box no-select">
+    <div class="notice-yellow-box">
       <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
     </div>
 
@@ -544,7 +566,6 @@
 <script type="module" src="firebase-config.js"></script>
 <script type="module" src="auth-handler.js"></script>
 <script>
-  // WhatsApp Support Click Handler Function with Pre-filled Message
   function openWhatsAppSupport() {
     const phoneNumber = "919239628344";
     const message = encodeURIComponent(

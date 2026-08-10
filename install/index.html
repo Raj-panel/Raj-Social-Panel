@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Install Raj SMM Panel - Official App</title>
+    
+    <!-- PWA Manifest & Theme -->
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#8B5CF6">
+    
+    <!-- Tailwind CSS CDN for Modern Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5CF6',
+                        secondary: '#EC4899',
+                        accent: '#3B82F6',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #fdf4ff 0%, #fae8ff 50%, #eff6ff 100%);
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .gradient-btn {
+            background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 50%, #3B82F6 100%);
+            transition: all 0.3s ease;
+        }
+        .gradient-btn:hover {
+            opacity: 0.95;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.4);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4">
+
+    <div class="w-full max-w-md mx-auto rounded-3xl glass-card shadow-2xl p-6 text-center relative overflow-hidden my-4">
+        
+        <!-- Close / Home Button -->
+        <a href="/" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/80 shadow-md flex items-center justify-center text-gray-600 hover:bg-white transition">
+            <i class="fa-solid fa-xmark text-lg"></i>
+        </a>
+
+        <!-- App Logo Section -->
+        <div class="relative inline-block mt-2 mb-4">
+            <div class="w-24 h-24 mx-auto rounded-2xl p-1 bg-gradient-to-tr from-purple-500 via-pink-500 to-blue-500 shadow-xl flex items-center justify-center">
+                <div class="w-full h-full bg-white rounded-xl flex items-center justify-center overflow-hidden p-2">
+                    <img src="../icon-192.png" alt="Raj SMM Panel Logo" class="w-full h-full object-contain rounded-lg">
+                </div>
+            </div>
+            <!-- Verified Badge -->
+            <span class="absolute bottom-0 right-0 bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs shadow-md border-2 border-white">
+                <i class="fa-solid fa-check"></i>
+            </span>
+        </div>
+
+        <!-- App Title & Subtitle -->
+        <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Raj SMM Panel</h1>
+        <p class="text-sm font-medium text-gray-500 mt-0.5">by Raj SMM • Official App</p>
+
+        <!-- Rating & Status Badges -->
+        <div class="flex items-center justify-center gap-2 mt-3 flex-wrap">
+            <div class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 text-xs font-bold shadow-sm">
+                <i class="fa-solid fa-star text-amber-500"></i> 5.1
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> All Services Live
+            </div>
+        </div>
+
+        <!-- Statistics Grid -->
+        <div class="grid grid-cols-4 gap-2 my-5">
+            <div class="bg-white/70 border border-purple-100 rounded-2xl p-2.5 shadow-sm text-center">
+                <div class="text-amber-500 font-extrabold text-sm sm:text-base">5.1<i class="fa-solid fa-star text-[10px] ml-0.5"></i></div>
+                <div class="text-[10px] font-bold text-gray-400 tracking-wider mt-0.5">RATING</div>
+            </div>
+            <div class="bg-white/70 border border-purple-100 rounded-2xl p-2.5 shadow-sm text-center">
+                <div class="text-purple-600 font-extrabold text-sm sm:text-base">20K+</div>
+                <div class="text-[10px] font-bold text-gray-400 tracking-wider mt-0.5">INSTALLS</div>
+            </div>
+            <div class="bg-white/70 border border-purple-100 rounded-2xl p-2.5 shadow-sm text-center">
+                <div class="text-pink-600 font-extrabold text-sm sm:text-base">5.3</div>
+                <div class="text-[10px] font-bold text-gray-400 tracking-wider mt-0.5">REVIEWS</div>
+            </div>
+            <div class="bg-white/70 border border-purple-100 rounded-2xl p-2.5 shadow-sm text-center">
+                <div class="text-emerald-600 font-extrabold text-sm sm:text-base">100%</div>
+                <div class="text-[10px] font-bold text-gray-400 tracking-wider mt-0.5">SECURE</div>
+            </div>
+        </div>
+
+        <!-- Main Install Button -->
+        <button id="installBtn" class="w-full py-3.5 px-6 rounded-2xl gradient-btn text-white font-bold text-base shadow-lg flex items-center justify-center gap-2 cursor-pointer">
+            <i class="fa-solid fa-download"></i> INSTALL APP
+        </button>
+
+        <!-- Security & Delivery Info Line -->
+        <div class="flex items-center justify-center gap-1.5 text-xs text-gray-500 font-medium mt-3">
+            <i class="fa-solid fa-shield-halved text-emerald-500"></i>
+            <span>100% Secure • Instant Delivery • Premium Quality</span>
+        </div>
+
+        <!-- Feature Cards -->
+        <div class="grid grid-cols-3 gap-2.5 mt-5">
+            <div class="bg-white/80 border border-gray-100 rounded-2xl p-3 text-center shadow-sm">
+                <div class="w-9 h-9 mx-auto rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center mb-1.5 shadow-inner">
+                    <i class="fa-solid fa-bolt text-sm"></i>
+                </div>
+                <h3 class="text-xs font-bold text-gray-800">Instant</h3>
+                <p class="text-[10px] text-gray-400 mt-0.5 leading-tight">Order in seconds</p>
+            </div>
+            <div class="bg-white/80 border border-gray-100 rounded-2xl p-3 text-center shadow-sm">
+                <div class="w-9 h-9 mx-auto rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center mb-1.5 shadow-inner">
+                    <i class="fa-solid fa-bell text-sm"></i>
+                </div>
+                <h3 class="text-xs font-bold text-gray-800">Live Track</h3>
+                <p class="text-[10px] text-gray-400 mt-0.5 leading-tight">Status updates</p>
+            </div>
+            <div class="bg-white/80 border border-gray-100 rounded-2xl p-3 text-center shadow-sm">
+                <div class="w-9 h-9 mx-auto rounded-xl bg-emerald-50 text-emerald-500 flex items-center justify-center mb-1.5 shadow-inner">
+                    <i class="fa-solid fa-lock text-sm"></i>
+                </div>
+                <h3 class="text-xs font-bold text-gray-800">Secure</h3>
+                <p class="text-[10px] text-gray-400 mt-0.5 leading-tight">Safe & private</p>
+            </div>
+        </div>
+
+        <!-- Fallback Instruction Modal/Box (Hidden by default) -->
+        <div id="installInstructions" class="hidden mt-4 p-3.5 bg-purple-50 border border-purple-200 rounded-2xl text-left text-xs text-purple-900">
+            <div class="font-bold mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-circle-info text-purple-600"></i> How to install:
+            </div>
+            <p id="instructionText" class="text-gray-600 leading-relaxed"></p>
+        </div>
+
+    </div>
+
+    <!-- PWA Installation Script Integration -->
+    <script>
+        let deferredPrompt;
+        const installBtn = document.getElementById('installBtn');
+        const installInstructions = document.getElementById('installInstructions');
+        const instructionText = document.getElementById('instructionText');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'flex';
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                }
+                deferredPrompt = null;
+                installBtn.style.display = 'none';
+            } else {
+                // Fallback instructions based on device/browser
+                installInstructions.classList.remove('hidden');
+                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+                
+                if (/android/i.test(userAgent)) {
+                    instructionText.innerHTML = "Tap the browser menu (<b>⋮</b>) at the top right and select <b>'Install app'</b> or <b>'Add to Home screen'</b>.";
+                } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                    instructionText.innerHTML = "Tap the <b>Share</b> button <i class='fa-solid fa-arrow-up-from-bracket'></i> at the bottom of your browser and select <b>'Add to Home Screen'</b>.";
+                } else {
+                    instructionText.innerHTML = "To install this app, look for the install icon in your browser's address bar or menu settings.";
+                }
+            }
+        });
+
+        // If already installed, handle display adjustments
+        window.addEventListener('appinstalled', (evt) => {
+            installBtn.innerHTML = '<i class="fa-solid fa-check-circle"></i> App Installed';
+            installBtn.classList.remove('gradient-btn');
+            installBtn.classList.add('bg-emerald-600', 'cursor-default');
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
+

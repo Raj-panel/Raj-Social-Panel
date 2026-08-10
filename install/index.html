@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Install Raj SMM Panel - Official App</title>
+    <title>Install Raj Smm Panel - Official App</title>
     
     <!-- PWA Manifest & Theme -->
     <link rel="manifest" href="../manifest.json">
@@ -49,14 +49,22 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.4);
         }
+        /* Disable text selection and long-press callout for static UI elements */
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
     </style>
 </head>
 <body class="flex items-center justify-center p-4">
 
-    <div class="w-full max-w-md mx-auto rounded-3xl glass-card shadow-2xl p-6 text-center relative overflow-hidden my-4">
+    <div class="w-full max-w-md mx-auto rounded-3xl glass-card shadow-2xl p-6 text-center relative overflow-hidden my-4 no-select">
         
         <!-- Close / Home Button -->
-        <a href="/" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/80 shadow-md flex items-center justify-center text-gray-600 hover:bg-white transition">
+        <a href="/" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/80 shadow-md flex items-center justify-center text-gray-600 hover:bg-white transition cursor-pointer">
             <i class="fa-solid fa-xmark text-lg"></i>
         </a>
 
@@ -64,7 +72,7 @@
         <div class="relative inline-block mt-2 mb-4">
             <div class="w-24 h-24 mx-auto rounded-2xl p-1 bg-gradient-to-tr from-purple-500 via-pink-500 to-blue-500 shadow-xl flex items-center justify-center">
                 <div class="w-full h-full bg-white rounded-xl flex items-center justify-center overflow-hidden p-2">
-                    <img src="../icon-192.png" alt="Raj SMM Panel Logo" class="w-full h-full object-contain rounded-lg">
+                    <img src="../icon-192.png" alt="Raj SMM Panel Logo" class="w-full h-full object-contain rounded-lg pointer-events-none">
                 </div>
             </div>
             <!-- Verified Badge -->
@@ -108,7 +116,7 @@
         </div>
 
         <!-- Main Install Button -->
-        <button id="installBtn" class="w-full py-3.5 px-6 rounded-2xl gradient-btn text-white font-bold text-base shadow-lg flex items-center justify-center gap-2 cursor-pointer">
+        <button id="installBtn" class="w-full py-3.5 px-6 rounded-2xl gradient-btn text-white font-bold text-base shadow-lg flex items-center justify-center gap-2 cursor-pointer relative z-10">
             <i class="fa-solid fa-download"></i> INSTALL APP
         </button>
 

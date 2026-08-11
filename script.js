@@ -129,7 +129,7 @@ const serviceData = {
     // ==========================================
     instagram: {
 
-        "🇮🇳 Followers Non-Drop": [
+        "Followers Non-Drop": [
             {
                 type: "custom",
                 name: "Instagram Followers [High Quality] 100% Non-Drop -500K+ Per Day- 10 Minutes Start",
@@ -204,7 +204,7 @@ const serviceData = {
             { providerId: 50, name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
 
-        "🇮🇳 Reels Combo Service": [
+        "🔥 Reels Combo Service": [
             {
                 name: "Reels Viral Package",
                 price: 99,

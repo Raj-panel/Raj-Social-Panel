@@ -3,12 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:image" content="https://rajsmmpanel.in/og-install.jpg">
-    <title>Install Raj SMM Panel - Official App</title>
     
+    <!-- Primary SEO & Canonical URL -->
+    <title>Install Raj SMM Panel - Official App</title>
+    <meta name="description" content="Install Raj SMM Panel Official App for fast, secure and reliable social media services.">
+    <link rel="canonical" href="https://rajsmmpanel.in/install/">
+
+    <!-- Open Graph / Social Media Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rajsmmpanel.in/install/">
+    <meta property="og:title" content="Install Raj SMM Panel - Official App">
+    <meta property="og:description" content="Install Raj SMM Panel Official App for fast, secure and reliable social media services.">
+    <meta property="og:image" content="https://rajsmmpanel.in/og-install.jpg">
+    <meta property="og:image:secure_url" content="https://rajsmmpanel.in/og-install.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Raj SMM Panel Official App">
+    <meta property="og:site_name" content="Raj SMM Panel">
+
+    <!-- Twitter / X Card Metadata -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rajsmmpanel.in/install/">
+    <meta name="twitter:title" content="Install Raj SMM Panel - Official App">
+    <meta name="twitter:description" content="Install Raj SMM Panel Official App for fast, secure and reliable social media services.">
+    <meta name="twitter:image" content="https://rajsmmpanel.in/og-install.jpg">
+    <meta name="twitter:image:alt" content="Raj SMM Panel Official App">
+
+    <!-- PWA Manifest & Theme -->
     <link rel="manifest" href="../manifest.json">
     <meta name="theme-color" content="#8B5CF6">
     
+    <!-- Tailwind CSS CDN for Modern Styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -24,6 +50,7 @@
         }
     </script>
     
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -32,7 +59,6 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             background: linear-gradient(135deg, #fdf4ff 0%, #fae8ff 50%, #eff6ff 100%);
             min-height: 100vh;
-            /* উপরে মার্জিন কমানোর জন্য এই পরিবর্তন */
             padding-top: 20px;
         }
         .glass-card {
@@ -58,7 +84,7 @@
         }
     </style>
 </head>
-<body class="flex justify-center p-4"> <!-- items-center সরিয়ে দিয়ে ওপরের দিকে রাখা হয়েছে -->
+<body class="flex justify-center p-4">
 
     <div class="w-full max-w-md mx-auto rounded-3xl glass-card shadow-2xl p-6 text-center relative overflow-hidden no-select">
         
@@ -177,13 +203,7 @@
                 installInstructions.classList.remove('hidden');
                 const userAgent = navigator.userAgent || navigator.vendor || window.opera;
                 
-                if (/android/i.test(userAgent)) {
-                    instructionText.innerHTML = "Tap the browser menu (<b>⋮</b>) at the top right and select <b>'Install app'</b> or <b>'Add to Home screen'</b>.";
-                } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                    instructionText.innerHTML = "Tap the <b>Share</b> button <i class='fa-solid fa-arrow-up-from-bracket'></i> at the bottom of your browser and select <b>'Add to Home Screen'</b>.";
-                } else {
-                    instructionText.innerHTML = "To install this app, look for the install icon in your browser's address bar or menu settings.";
-                }
+                /android/i.test(userAgent) ? instructionText.innerHTML = "Tap the browser menu (<b>⋮</b>) at the top right and select <b>'Install app'</b> or <b>'Add to Home screen'</b>." : /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream ? instructionText.innerHTML = "Tap the <b>Share</b> button <i class='fa-solid fa-arrow-up-from-bracket'></i> at the bottom of your browser and select <b>'Add to Home Screen'</b>." : instructionText.innerHTML = "To install this app, look for the install icon in your browser's address bar or menu settings.";
             }
         });
 

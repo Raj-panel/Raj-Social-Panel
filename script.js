@@ -129,84 +129,6 @@ const serviceData = {
     // ==========================================
     instagram: {
 
-        "🔥 Reels Combo Service": [
-            {
-                name: "Reels Viral Package",
-                price: 99,
-                badge: "20% OFF",
-                badgeClass: "badge-best",
-                features: [
-                    "👁️ Reels Views — 12,000",
-                    "❤️ Reels Likes — 2,000",
-                    "💬 Reels Comments — 50",
-                    "💾 Post / Reels Save — 500",
-                    "🔄 Post / Reels Shares — 1,000",
-                    "♻️ Reels Reposts — 100"
-                ],
-                placeholder: "Reel/Video Link (Account Must be Public)"
-            },
-            {
-                name: "Reels Viral Package",
-                price: 199,
-                badge: "30% OFF",
-                badgeClass: "badge-best",
-                features: [
-                    "👁️ Reels Views — 30,000",
-                    "❤️ Reels Likes — 4,000",
-                    "💬 Reels Comments — 100",
-                    "💾 Post / Reels Save — 1,000",
-                    "🔄 Post / Reels Shares — 3,000",
-                    "♻️ Reels Reposts — 250"
-                ],
-                placeholder: "Reel/Video Link (Account Must be Public)"
-            },
-            {
-                name: "Reels Viral Package",
-                price: 299,
-                badge: "40% OFF",
-                badgeClass: "badge-best",
-                features: [
-                    "👁️ Reels Views — 60,000",
-                    "❤️ Reels Likes — 8,000",
-                    "💬 Reels Comments — 300",
-                    "💾 Post / Reels Save — 1,500",
-                    "🔄 Post / Reels Shares — 5,000",
-                    "♻️ Reels Reposts — 400"
-                ],
-                placeholder: "Reel/Video Link (Account Must be Public)"
-            },
-            {
-                name: "Reels Viral Package",
-                price: 399,
-                badge: "45% OFF",
-                badgeClass: "badge-best",
-                features: [
-                    "👁️ Reels Views — 75,000",
-                    "❤️ Reels Likes — 11,000",
-                    "💬 Reels Comments — 400",
-                    "💾 Post / Reels Save — 2,000",
-                    "🔄 Post / Reels Shares — 8,000",
-                    "♻️ Reels Reposts — 600"
-                ],
-                placeholder: "Reel/Video Link (Account Must be Public)"
-            },
-            {
-                name: "Reels Viral Package",
-                price: 499,
-                badge: "50% OFF",
-                badgeClass: "badge-best",
-                features: [
-                    "👁️ Reels Views — 100,000",
-                    "❤️ Reels Likes — 18,000",
-                    "💬 Reels Comments — 600",
-                    "💾 Post / Reels Save — 2,500",
-                    "🔄 Post / Reels Shares — 15,000",
-                    "♻️ Reels Reposts — 800"
-                ],
-                placeholder: "Reel/Video Link (Account Must be Public)"
-            }
-        ],
-
         "Followers Non-Drop": [
             {
                 type: "custom",
@@ -280,6 +202,84 @@ const serviceData = {
             { providerId: 50, name: "1K Shares", price: 30, badge: "Fast", badgeClass: "badge-popular" },
             { providerId: 50, name: "5K Shares", price: 69, badge: "🔥 Best Value", badgeClass: "badge-best" },
             { providerId: 50, name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-best" }
+        ],
+
+        "🔥 Reels Combo Service": [
+            {
+                name: "Reels Viral Package",
+                price: 99,
+                badge: "10% OFF",
+                badgeClass: "badge-best",
+                features: [
+                    "👁️ Reels Views — 12,000",
+                    "❤️ Reels Likes — 2,000",
+                    "💬 Reels Comments — 50",
+                    "💾 Post / Reels Save — 500",
+                    "🔄 Post / Reels Shares — 1,000",
+                    "♻️ Reels Reposts — 100"
+                ],
+                placeholder: "Reel/Video Link (Account Must be Public)"
+            },
+            {
+                name: "Reels Viral Package",
+                price: 199,
+                badge: "20% OFF",
+                badgeClass: "badge-best",
+                features: [
+                    "👁️ Reels Views — 30,000",
+                    "❤️ Reels Likes — 4,000",
+                    "💬 Reels Comments — 100",
+                    "💾 Post / Reels Save — 1,000",
+                    "🔄 Post / Reels Shares — 3,000",
+                    "♻️ Reels Reposts — 250"
+                ],
+                placeholder: "Reel/Video Link (Account Must be Public)"
+            },
+            {
+                name: "Reels Viral Package",
+                price: 299,
+                badge: "30% OFF",
+                badgeClass: "badge-best",
+                features: [
+                    "👁️ Reels Views — 60,000",
+                    "❤️ Reels Likes — 8,000",
+                    "💬 Reels Comments — 300",
+                    "💾 Post / Reels Save — 1,500",
+                    "🔄 Post / Reels Shares — 5,000",
+                    "♻️ Reels Reposts — 400"
+                ],
+                placeholder: "Reel/Video Link (Account Must be Public)"
+            },
+            {
+                name: "Reels Viral Package",
+                price: 399,
+                badge: "40% OFF",
+                badgeClass: "badge-best",
+                features: [
+                    "👁️ Reels Views — 75,000",
+                    "❤️ Reels Likes — 11,000",
+                    "💬 Reels Comments — 400",
+                    "💾 Post / Reels Save — 2,000",
+                    "🔄 Post / Reels Shares — 8,000",
+                    "♻️ Reels Reposts — 600"
+                ],
+                placeholder: "Reel/Video Link (Account Must be Public)"
+            },
+            {
+                name: "Reels Viral Package",
+                price: 499,
+                badge: "50% OFF",
+                badgeClass: "badge-best",
+                features: [
+                    "👁️ Reels Views — 100,000",
+                    "❤️ Reels Likes — 18,000",
+                    "💬 Reels Comments — 600",
+                    "💾 Post / Reels Save — 2,500",
+                    "🔄 Post / Reels Shares — 15,000",
+                    "♻️ Reels Reposts — 800"
+                ],
+                placeholder: "Reel/Video Link (Account Must be Public)"
+            }
         ]
     },
 

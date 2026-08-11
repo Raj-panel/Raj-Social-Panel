@@ -129,6 +129,84 @@ const serviceData = {
     // ==========================================
     instagram: {
 
+        "🔥 Reels Combo Service": [
+            {
+                name: "Reels Viral Package",
+                price: 99,
+                badge: "20% OFF",
+                badgeClass: "badge-best",
+                features: [
+                    "👁️ Reels Views — 12,000",
+                    "❤️ Reels Likes — 2,000",
+                    "💬 Reels Comments — 50",
+                    "💾 Post / Reels Save — 500",
+                    "🔄 Post / Reels Shares — 1,000",
+                    "♻️ Reels Reposts — 100"
+                ],
+                placeholder: "Reel/Video Link (Account Must be Public)"
+            },
+            {
+                name: "Reels Viral Package",
+                price: 199,
+                badge: "30% OFF",
+                badgeClass: "badge-best",
+                features: [
+                    "👁️ Reels Views — 30,000",
+                    "❤️ Reels Likes — 4,000",
+                    "💬 Reels Comments — 100",
+                    "💾 Post / Reels Save — 1,000",
+                    "🔄 Post / Reels Shares — 3,000",
+                    "♻️ Reels Reposts — 250"
+                ],
+                placeholder: "Reel/Video Link (Account Must be Public)"
+            },
+            {
+                name: "Reels Viral Package",
+                price: 299,
+                badge: "40% OFF",
+                badgeClass: "badge-best",
+                features: [
+                    "👁️ Reels Views — 60,000",
+                    "❤️ Reels Likes — 8,000",
+                    "💬 Reels Comments — 300",
+                    "💾 Post / Reels Save — 1,500",
+                    "🔄 Post / Reels Shares — 5,000",
+                    "♻️ Reels Reposts — 400"
+                ],
+                placeholder: "Reel/Video Link (Account Must be Public)"
+            },
+            {
+                name: "Reels Viral Package",
+                price: 399,
+                badge: "45% OFF",
+                badgeClass: "badge-best",
+                features: [
+                    "👁️ Reels Views — 75,000",
+                    "❤️ Reels Likes — 11,000",
+                    "💬 Reels Comments — 400",
+                    "💾 Post / Reels Save — 2,000",
+                    "🔄 Post / Reels Shares — 8,000",
+                    "♻️ Reels Reposts — 600"
+                ],
+                placeholder: "Reel/Video Link (Account Must be Public)"
+            },
+            {
+                name: "Reels Viral Package",
+                price: 499,
+                badge: "50% OFF",
+                badgeClass: "badge-best",
+                features: [
+                    "👁️ Reels Views — 100,000",
+                    "❤️ Reels Likes — 18,000",
+                    "💬 Reels Comments — 600",
+                    "💾 Post / Reels Save — 2,500",
+                    "🔄 Post / Reels Shares — 15,000",
+                    "♻️ Reels Reposts — 800"
+                ],
+                placeholder: "Reel/Video Link (Account Must be Public)"
+            }
+        ],
+
         "Followers Non-Drop": [
             {
                 type: "custom",
@@ -385,6 +463,65 @@ function renderPackages() {
             `;
 
             packageList.appendChild(customDiv);
+        } else if (currentCategory === "🔥 Reels Combo Service") {
+            const card = document.createElement("div");
+            card.className = "pkg-card";
+            card.style.cssText = "display: flex; flex-direction: column; align-items: stretch; padding: 16px; margin-bottom: 12px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; backdrop-filter: blur(10px);";
+
+            card.onclick = function () {
+                const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
+                openCheckoutForFixed(
+                    platformCap,
+                    currentCategory,
+                    pkg.name + " — ₹" + pkg.price,
+                    1,
+                    pkg.price,
+                    pkg.badge || 'Popular'
+                );
+            };
+
+            let featuresHtml = "";
+            if (pkg.features && pkg.features.length) {
+                featuresHtml = `<div style="margin: 10px 0; display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #cbd5e1;">`;
+                pkg.features.forEach(feat => {
+                    featuresHtml += `<div>${feat}</div>`;
+                });
+                featuresHtml += `</div>`;
+            }
+
+            card.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div class="pkg-icon" style="width: 36px; height: 36px; background: rgba(168, 85, 247, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #a855f7;">
+                            <i class="fa-brands ${iconClass}"></i>
+                        </div>
+                        <div>
+                            <div class="pkg-title" style="font-weight: 700; font-size: 15px; color: #fff;">
+                                ${pkg.name}
+                            </div>
+                            <span class="pkg-sub" style="font-size: 11px; color: #94a3b8;">
+                                ⚡ Instant Delivery • Premium Quality
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        ${pkg.badge ? `<span class="pkg-badge ${pkg.badgeClass || "badge-popular"}" style="background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); color: #fff; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 800;">${pkg.badge}</span>` : ""}
+                    </div>
+                </div>
+
+                ${featuresHtml}
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.08); pt-2;">
+                    <div style="font-size: 16px; font-weight: 800; color: #22c55e;">
+                        ₹${pkg.price}
+                    </div>
+                    <button style="background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer;">
+                        Order This Combo →
+                    </button>
+                </div>
+            `;
+
+            packageList.appendChild(card);
         } else {
             const card = document.createElement("div");
             card.className = "pkg-card";
@@ -483,6 +620,13 @@ function extractQuantity(name) {
 function getLinkConfig(platform, category) {
     const p = (platform || "").toLowerCase();
     const c = (category || "").toLowerCase();
+
+    if (c.includes("reels combo service")) {
+        return {
+            label: "Reel/Video Link (Account Must be Public)",
+            placeholder: "Reel/Video Link (Account Must be Public)"
+        };
+    }
 
     if (p === "instagram") {
         if (c.includes("followers")) {

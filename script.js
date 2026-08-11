@@ -154,8 +154,8 @@ const serviceData = {
 
         "Likes Lifetime": [
             { providerId: 675, name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo" },
-            { providerId: 675, name: "500 Likes", price: 25, badge: "Real", badgeClass: "badge-real" },
-            { providerId: 675, name: "1K Likes", price: 30, badge: "Fast", badgeClass: "badge-popular" },
+            { providerId: 675, name: "500 Likes", price: 25 },
+            { providerId: 675, name: "1K Likes", price: 30 },
             { providerId: 675, name: "3K Likes", price: 69, badge: "⭐ Popular", badgeClass: "badge-popular" },
             { providerId: 675, name: "5K Likes", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" },
             { providerId: 675, name: "10K Likes", price: 179, badge: "👑 Most Popular", badgeClass: "badge-best" }
@@ -163,9 +163,9 @@ const serviceData = {
 
         "Reels / Video Views": [
             { providerId: 853, name: "1K Views", price: 5, badge: "DEMO", badgeClass: "badge-demo" },
-            { providerId: 853, name: "5K Views", price: 9, badge: "STARTER", badgeClass: "badge-real" },
+            { providerId: 853, name: "5K Views", price: 9 },
             { providerId: 853, name: "10K Views", price: 15, badge: "BEST VALUE", badgeClass: "badge-best" },
-            { providerId: 853, name: "20K Views", price: 25, badge: "POPULAR", badgeClass: "badge-popular" },
+            { providerId: 853, name: "20K Views", price: 25 },
             { providerId: 853, name: "50K Views", price: 55, badge: "RECOMMENDED", badgeClass: "badge-best" },
             { providerId: 853, name: "100K Views", price: 99, badge: "🔥 BEST SELLER", badgeClass: "badge-best" },
             { providerId: 853, name: "500K Views", price: 299, badge: "👑 MOST POPULAR", badgeClass: "badge-best" },
@@ -174,24 +174,24 @@ const serviceData = {
 
         "Photo / Post Views": [
             { providerId: 1030, name: "1K Views", price: 10, badge: "🎯 Demo", badgeClass: "badge-demo" },
-            { providerId: 1030, name: "3K Views", price: 15, badge: "⚡ Starter", badgeClass: "badge-real" },
+            { providerId: 1030, name: "3K Views", price: 15 },
             { providerId: 1030, name: "5K Views", price: 25, badge: "⭐ Popular", badgeClass: "badge-popular" },
             { providerId: 1030, name: "10K Views", price: 40, badge: "🔥 Best Value", badgeClass: "badge-best" },
-            { providerId: 1030, name: "30K Views", price: 79, badge: "💎 Value Pack", badgeClass: "badge-popular" },
+            { providerId: 1030, name: "30K Views", price: 79 },
             { providerId: 1030, name: "50K Views", price: 119, badge: "🏆 Recommended", badgeClass: "badge-best" },
             { providerId: 1030, name: "100K Views", price: 220, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
 
         "Comments Lifetime": [
             { providerId: 31, name: "50 Comments", price: 15, badge: "Starter", badgeClass: "badge-demo" },
-            { providerId: 31, name: "100 Comments", price: 20, badge: "Real", badgeClass: "badge-real" },
+            { providerId: 31, name: "100 Comments", price: 20 },
             { providerId: 31, name: "500 Comments", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
             { providerId: 31, name: "1K Comments", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" }
         ],
 
         "Repost Lifetime": [
             { providerId: 505, name: "50 Reposts", price: 15, badge: "Starter", badgeClass: "badge-demo" },
-            { providerId: 505, name: "100 Reposts", price: 20, badge: "Real", badgeClass: "badge-real" },
+            { providerId: 505, name: "100 Reposts", price: 20 },
             { providerId: 505, name: "500 Reposts", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
             { providerId: 505, name: "1K Reposts", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" },
             { providerId: 505, name: "3K Reposts", price: 249, badge: "👑 Most Popular", badgeClass: "badge-best" }
@@ -199,12 +199,12 @@ const serviceData = {
 
         "Shares Lifetime": [
             { providerId: 50, name: "100 Shares", price: 5, badge: "Starter", badgeClass: "badge-demo" },
-            { providerId: 50, name: "1K Shares", price: 30, badge: "Fast", badgeClass: "badge-popular" },
+            { providerId: 50, name: "1K Shares", price: 30 },
             { providerId: 50, name: "5K Shares", price: 69, badge: "🔥 Best Value", badgeClass: "badge-best" },
             { providerId: 50, name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
 
-        "🔥 Reels Combo Service": [
+        "🇮🇳 Reels Combo Service": [
             {
                 name: "Reels Viral Package",
                 price: 99,

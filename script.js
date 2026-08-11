@@ -204,7 +204,7 @@ const serviceData = {
             { providerId: 50, name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
 
-        "🔥 Reels Combo Service": [
+        "Reels Combo Service": [
             {
                 name: "Reels Viral Package",
                 price: 99,

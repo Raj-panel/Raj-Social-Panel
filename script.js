@@ -129,7 +129,7 @@ const serviceData = {
     // ==========================================
     instagram: {
 
-        "Followers Non-Drop": [
+        "🇮🇳 Followers Non-Drop": [
             {
                 type: "custom",
                 name: "Instagram Followers [High Quality] 100% Non-Drop -500K+ Per Day- 10 Minutes Start",
@@ -163,10 +163,10 @@ const serviceData = {
 
         "Reels / Video Views": [
             { providerId: 853, name: "1K Views", price: 5, badge: "DEMO", badgeClass: "badge-demo" },
-            { providerId: 853, name: "5K Views", price: 20, badge: "STARTER", badgeClass: "badge-real" },
-            { providerId: 853, name: "10K Views", price: 25, badge: "BEST VALUE", badgeClass: "badge-best" },
-            { providerId: 853, name: "20K Views", price: 40, badge: "POPULAR", badgeClass: "badge-popular" },
-            { providerId: 853, name: "50K Views", price: 70, badge: "RECOMMENDED", badgeClass: "badge-best" },
+            { providerId: 853, name: "5K Views", price: 9, badge: "STARTER", badgeClass: "badge-real" },
+            { providerId: 853, name: "10K Views", price: 15, badge: "BEST VALUE", badgeClass: "badge-best" },
+            { providerId: 853, name: "20K Views", price: 25, badge: "POPULAR", badgeClass: "badge-popular" },
+            { providerId: 853, name: "50K Views", price: 55, badge: "RECOMMENDED", badgeClass: "badge-best" },
             { providerId: 853, name: "100K Views", price: 99, badge: "🔥 BEST SELLER", badgeClass: "badge-best" },
             { providerId: 853, name: "500K Views", price: 299, badge: "👑 MOST POPULAR", badgeClass: "badge-best" },
             { providerId: 853, name: "1M Views", price: 499, badge: "💥 MEGA DEAL", badgeClass: "badge-best" }
@@ -204,7 +204,7 @@ const serviceData = {
             { providerId: 50, name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
 
-        "🔥 Reels Combo Service": [
+        "🇮🇳 Reels Combo Service": [
             {
                 name: "Reels Viral Package",
                 price: 99,
@@ -241,7 +241,7 @@ const serviceData = {
                 badge: "30% OFF",
                 badgeClass: "badge-best",
                 features: [
-                    "👁️ Reels Views — 60,000",
+                    "👁️ Reels Views — 50,000",
                     "❤️ Reels Likes — 8,000",
                     "💬 Reels Comments — 300",
                     "💾 Post / Reels Save — 1,500",
@@ -256,7 +256,7 @@ const serviceData = {
                 badge: "40% OFF",
                 badgeClass: "badge-best",
                 features: [
-                    "👁️ Reels Views — 75,000",
+                    "👁️ Reels Views — 70,000",
                     "❤️ Reels Likes — 11,000",
                     "💬 Reels Comments — 400",
                     "💾 Post / Reels Save — 2,000",

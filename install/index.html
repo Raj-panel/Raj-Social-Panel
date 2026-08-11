@@ -6,29 +6,27 @@
     
     <!-- Primary SEO & Canonical URL -->
     <title>Install Raj SMM Panel - Official App</title>
-    <meta name="description" content="Install Raj SMM Panel Official App for fast, secure and reliable social media services.">
+    <meta name="description" content="Install the official Raj SMM Panel app for fast, secure and easy access to social media services.">
     <link rel="canonical" href="https://rajsmmpanel.in/install/">
+    <meta name="robots" content="index, follow">
 
     <!-- Open Graph / Social Media Metadata -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://rajsmmpanel.in/install/">
     <meta property="og:title" content="Install Raj SMM Panel - Official App">
-    <meta property="og:description" content="Install Raj SMM Panel Official App for fast, secure and reliable social media services.">
+    <meta property="og:description" content="Install the official Raj SMM Panel app for fast, secure and easy access to social media services.">
     <meta property="og:image" content="https://rajsmmpanel.in/og-install.jpg">
     <meta property="og:image:secure_url" content="https://rajsmmpanel.in/og-install.jpg">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Raj SMM Panel Official App">
-    <meta property="og:site_name" content="Raj SMM Panel">
 
     <!-- Twitter / X Card Metadata -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://rajsmmpanel.in/install/">
     <meta name="twitter:title" content="Install Raj SMM Panel - Official App">
-    <meta name="twitter:description" content="Install Raj SMM Panel Official App for fast, secure and reliable social media services.">
+    <meta name="twitter:description" content="Install the official Raj SMM Panel app for fast, secure and easy access to social media services.">
     <meta name="twitter:image" content="https://rajsmmpanel.in/og-install.jpg">
-    <meta name="twitter:image:alt" content="Raj SMM Panel Official App">
 
     <!-- PWA Manifest & Theme -->
     <link rel="manifest" href="../manifest.json">
@@ -203,7 +201,13 @@
                 installInstructions.classList.remove('hidden');
                 const userAgent = navigator.userAgent || navigator.vendor || window.opera;
                 
-                /android/i.test(userAgent) ? instructionText.innerHTML = "Tap the browser menu (<b>⋮</b>) at the top right and select <b>'Install app'</b> or <b>'Add to Home screen'</b>." : /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream ? instructionText.innerHTML = "Tap the <b>Share</b> button <i class='fa-solid fa-arrow-up-from-bracket'></i> at the bottom of your browser and select <b>'Add to Home Screen'</b>." : instructionText.innerHTML = "To install this app, look for the install icon in your browser's address bar or menu settings.";
+                if (/android/i.test(userAgent)) {
+                    instructionText.innerHTML = "Tap the browser menu (<b>⋮</b>) at the top right and select <b>'Install app'</b> or <b>'Add to Home screen'</b>.";
+                } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                    instructionText.innerHTML = "Tap the <b>Share</b> button <i class='fa-solid fa-arrow-up-from-bracket'></i> at the bottom of your browser and select <b>'Add to Home Screen'</b>.";
+                } else {
+                    instructionText.innerHTML = "To install this app, look for the install icon in your browser's address bar or menu settings.";
+                }
             }
         });
 

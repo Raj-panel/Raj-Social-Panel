@@ -466,7 +466,8 @@ function renderPackages() {
         } else if (currentCategory === "🔥 Reels Combo Service") {
             const card = document.createElement("div");
             card.className = "pkg-card";
-            card.style.cssText = "display: flex; flex-direction: column; align-items: stretch; padding: 16px; margin-bottom: 12px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; backdrop-filter: blur(10px);";
+            // Soft Light Pink background matching the panel theme (#fdf2f4 or similar subtle pink tone)
+            card.style.cssText = "display: flex; flex-direction: column; align-items: stretch; padding: 16px; margin-bottom: 12px; background: #fff5f7; border: 1px solid rgba(236, 72, 153, 0.2); border-radius: 12px; backdrop-filter: blur(10px);";
 
             card.onclick = function () {
                 const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
@@ -482,7 +483,7 @@ function renderPackages() {
 
             let featuresHtml = "";
             if (pkg.features && pkg.features.length) {
-                featuresHtml = `<div style="margin: 10px 0; display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #cbd5e1;">`;
+                featuresHtml = `<div style="margin: 10px 0; display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #475569;">`;
                 pkg.features.forEach(feat => {
                     featuresHtml += `<div>${feat}</div>`;
                 });
@@ -496,11 +497,11 @@ function renderPackages() {
                             <i class="fa-brands ${iconClass}"></i>
                         </div>
                         <div>
-                            <div class="pkg-title" style="font-weight: 700; font-size: 15px; color: #fff;">
+                            <div class="pkg-title" style="font-weight: 700; font-size: 15px; color: #1e293b;">
                                 ${pkg.name}
                             </div>
-                            <span class="pkg-sub" style="font-size: 11px; color: #94a3b8;">
-                                ⚡ Instant Delivery • Premium Quality
+                            <span class="pkg-sub" style="font-size: 11px; color: #64748b;">
+                                ⚡ Fast Delivery • Premium Quality
                             </span>
                         </div>
                     </div>
@@ -511,8 +512,8 @@ function renderPackages() {
 
                 ${featuresHtml}
 
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.08); pt-2;">
-                    <div style="font-size: 16px; font-weight: 800; color: #22c55e;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: 1px solid rgba(0, 0, 0, 0.08); padding-top: 8px;">
+                    <div style="font-size: 16px; font-weight: 800; color: #16a34a;">
                         ₹${pkg.price}
                     </div>
                     <button style="background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer;">
@@ -551,7 +552,7 @@ function renderPackages() {
                             ${pkg.badge ? `<span class="pkg-badge ${pkg.badgeClass || "badge-popular"}">${pkg.badge}</span>` : ""}
                         </div>
                         <span class="pkg-sub">
-                            ⚡ Instant Delivery • Premium Quality
+                            ⚡ Fast Delivery • Premium Quality
                         </span>
                     </div>
                 </div>

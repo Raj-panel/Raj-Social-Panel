@@ -155,8 +155,8 @@ const serviceData = {
         "Likes Lifetime": [
             { providerId: 675, name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo" },
             { providerId: 675, name: "500 Likes", price: 25 },
-            { providerId: 675, name: "1K Likes", price: 30 },
-            { providerId: 675, name: "3K Likes", price: 69, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { providerId: 675, name: "1K Likes", price: 30, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { providerId: 675, name: "3K Likes", price: 69 },
             { providerId: 675, name: "5K Likes", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" },
             { providerId: 675, name: "10K Likes", price: 179, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
@@ -166,19 +166,19 @@ const serviceData = {
             { providerId: 853, name: "5K Views", price: 9 },
             { providerId: 853, name: "10K Views", price: 15, badge: "BEST VALUE", badgeClass: "badge-best" },
             { providerId: 853, name: "20K Views", price: 25 },
-            { providerId: 853, name: "50K Views", price: 55, badge: "RECOMMENDED", badgeClass: "badge-best" },
+            { providerId: 853, name: "50K Views", price: 55 },
             { providerId: 853, name: "100K Views", price: 99, badge: "🔥 BEST SELLER", badgeClass: "badge-best" },
-            { providerId: 853, name: "500K Views", price: 299, badge: "👑 MOST POPULAR", badgeClass: "badge-best" },
+            { providerId: 853, name: "500K Views", price: 299 },
             { providerId: 853, name: "1M Views", price: 499, badge: "💥 MEGA DEAL", badgeClass: "badge-best" }
         ],
 
         "Photo / Post Views": [
             { providerId: 1030, name: "1K Views", price: 10, badge: "🎯 Demo", badgeClass: "badge-demo" },
             { providerId: 1030, name: "3K Views", price: 15 },
-            { providerId: 1030, name: "5K Views", price: 25, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { providerId: 1030, name: "5K Views", price: 25 },
             { providerId: 1030, name: "10K Views", price: 40, badge: "🔥 Best Value", badgeClass: "badge-best" },
             { providerId: 1030, name: "30K Views", price: 79 },
-            { providerId: 1030, name: "50K Views", price: 119, badge: "🏆 Recommended", badgeClass: "badge-best" },
+            { providerId: 1030, name: "50K Views", price: 119 },
             { providerId: 1030, name: "100K Views", price: 220, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
 
@@ -204,7 +204,7 @@ const serviceData = {
             { providerId: 50, name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
 
-        "🇮🇳 Reels Combo Service": [
+        "🔥 Reels Combo Service": [
             {
                 name: "Reels Viral Package",
                 price: 99,
@@ -294,9 +294,9 @@ const serviceData = {
 
         "Likes Non-Drop": [
             { name: "100 Likes", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
-            { name: "500 Likes", price: 25, badge: "REAL", badgeClass: "badge-real" },
-            { name: "1K Likes", price: 39, badge: "FAST", badgeClass: "badge-popular" },
-            { name: "3K Likes", price: 69, badge: "⭐ POPULAR", badgeClass: "badge-popular" },
+            { name: "500 Likes", price: 25 },
+            { name: "1K Likes", price: 39, badge: "⭐ POPULAR", badgeClass: "badge-popular" },
+            { name: "3K Likes", price: 69 },
             { name: "5K Likes", price: 99, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
             { name: "10K Likes", price: 179, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
         ],

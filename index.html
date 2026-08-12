@@ -88,7 +88,7 @@
     transform: translateY(-2px);
   }
 
-  /* UPI Buttons Grid (Non-clickable, subtle light styling) */
+  /* UPI Buttons Grid - Soft background & pointer-events disabled */
   .upi-app-btn-grid {
     display: flex;
     justify-content: space-between;
@@ -102,17 +102,23 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 10px;
-    padding: 6px 3px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(226, 232, 240, 0.6);
+    border-radius: 12px;
+    padding: 8px 4px;
     text-decoration: none;
-    color: #94a3b8;
-    font-weight: 600;
-    font-size: 11px;
-    cursor: default;
+    color: #1e293b;
+    font-weight: 700;
+    font-size: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
     pointer-events: none;
-    box-shadow: none;
+    cursor: default;
+  }
+
+  /* Custom input width enhancements for link & txn inputs */
+  .checkout-input-group input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
   }
 
   /* Left Sidebar Drawer & Dark/Light Theme System */
@@ -458,7 +464,7 @@
 
     <div class="pay-toggle-tabs">
       <button class="pay-tab active" id="btnTabUpi" onclick="switchCheckoutPayment('upi')">
-        <i class="fa-solid fa-qrcode"></i> UPI QR Code
+        <i class="fa-solid fa-qrcode"></i> UPI QR Pay
       </button>
       <button class="pay-tab" id="btnTabBinance" onclick="switchCheckoutPayment('binance')">
         <i class="fa-solid fa-wallet"></i> Binance Pay
@@ -466,13 +472,13 @@
     </div>
 
     <div id="checkoutUpiView" class="payment-view-box">
-      <div class="scan-title" style="font-weight: 800; color: #a855f7; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
+      <div class="scan-title" style="font-weight: 800; color: #a855f7; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
         SCAN TO PAY VIA UPI
       </div>
-      <div class="qr-wrapper" style="text-align: center; margin-bottom: 4px;">
-        <img id="checkoutQrImg" src="" alt="UPI QR Code" style="display: block; margin: 0 auto; border-radius: 12px; max-width: 170px; height: auto;" />
+      <div class="qr-wrapper" style="text-align: center; margin-bottom: 2px;">
+        <img id="checkoutQrImg" src="" alt="UPI QR Code" style="display: block; margin: 0 auto; border-radius: 12px;" />
       </div>
-      <p class="qr-sub" style="font-size: 10.5px; color: #64748b; margin-top: 0; margin-bottom: 8px; text-align: center;">
+      <p class="qr-sub" style="font-size: 10px; color: #64748b; margin-top: 2px; margin-bottom: 8px; text-align: center;">
         Scan or enter payment detail into any UPI App
       </p>
       
@@ -484,12 +490,12 @@
           <span style="color: #4285f4; font-weight: 800;">G</span><span style="color: #ea4335; font-weight: 800;">P</span><span style="color: #fbbc05; font-weight: 800;">a</span><span style="color: #34a853; font-weight: 800;">y</span>
         </div>
         <div class="upi-app-card-btn">
-          <i class="fa-solid fa-asterisk" style="color: #5f259f; font-size: 10px;"></i>
+          <i class="fa-solid fa-asterisk" style="color: #5f259f;"></i>
           <span style="color: #5f259f; font-weight: 800;">PhonePe</span>
         </div>
         <div class="upi-app-card-btn">
-          <i class="fa-solid fa-qrcode" style="color: #6366f1; font-size: 10px;"></i>
-          <span style="color: #64748b; font-weight: 700;">Other UPI</span>
+          <i class="fa-solid fa-qrcode" style="color: #6366f1;"></i>
+          <span style="color: #1e293b; font-weight: 700;">Other UPI</span>
         </div>
       </div>
     </div>

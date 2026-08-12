@@ -632,7 +632,7 @@ function getLinkConfig(platform, category) {
     if (p === "instagram") {
         if (c.includes("followers")) {
             return {
-                label: " INSTAGRAM Profile Link (Account Must be Public)",
+                label: "Profile Link (Account Must be Public)",
                 placeholder: "https://instagram.com/your_username"
             };
         } else if (c.includes("reels") || c.includes("video")) {
@@ -649,7 +649,7 @@ function getLinkConfig(platform, category) {
     } else if (p === "facebook") {
         if (c.includes("followers")) {
             return {
-                label: " FACEBOOK Profile / Page Link (Must be Public)",
+                label: "Profile / Page Link (Must be Public)",
                 placeholder: "https://facebook.com/your_page_or_profile"
             };
         } else {
@@ -789,7 +789,7 @@ function updateCheckoutQuantityDisplay() {
         document.getElementById("checkoutUsdtAmount").innerText = `$${usdt} USDT`;
     }
 
-    const upiId = "rajpanel@axl";
+    const upiId = "akibur.s@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
     
     const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=${encodeURIComponent(upiUrl)}`;
@@ -805,7 +805,7 @@ function updateCheckoutQuantityDisplay() {
 
 function triggerUpiPay(appType) {
     const d = currentCheckoutData;
-    const upiId = "rajpanel@axl";
+    const upiId = "akibur.s@ptyes";
     const amount = d.price ? d.price.toFixed(2) : "0.00";
     const name = "RajSocialPanel";
     const note = encodeURIComponent(d.packageName || "Social Boost Service");
@@ -947,7 +947,7 @@ function showCheckoutOverlay() {
 function closeCheckoutUI() {
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage) {
-        checkoutPage.classList.add("hidden");f
+        checkoutPage.classList.add("hidden");
         checkoutPage.style.display = "none";
     }
     currentCheckoutData = {}; 
@@ -1024,7 +1024,7 @@ function submitOrderToWhatsApp() {
     localStorage.setItem('raj_smm_orders', JSON.stringify(existingOrders));
 
     const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
-    const payMethod = isUpi ? "UPI QR Pay" : "Binance Pay";
+    const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
     const whatsappNumber = "919239628344";
 
     const d = currentCheckoutData;

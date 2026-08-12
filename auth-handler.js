@@ -1,22 +1,16 @@
-import { db, auth } from "./firebase-config.js";
+import { db } from "./firebase-config.js";
 import { 
   doc, 
   setDoc, 
   getDoc, 
   updateDoc 
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
-import { 
-  RecaptchaVerifier, 
-  signInWithPhoneNumber 
-} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
 const SESSION_KEY = "raj_smm_user_session";
-let confirmationResultGlobal = null;
 
 document.addEventListener("DOMContentLoaded", () => {
   checkUserSession();
   initPageSpecificAuth();
-  initRecaptcha();
 });
 
 function checkUserSession() {
@@ -107,27 +101,7 @@ function initPageSpecificAuth() {
   }
 }
 
-function initRecaptcha() {
-  const container = document.getElementById("recaptcha-container");
-  if (container && !window.recaptchaVerifier) {
-    try {
-      window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
-        size: "normal",
-        callback: (response) => {
-          // reCAPTCHA solved
-        },
-        "expired-callback": () => {
-          // Response expired
-        }
-      });
-      window.recaptchaVerifier.render();
-    } catch (e) {
-      console.error("Recaptcha init error:", e);
-    }
-  }
-}
-
-// 1. CREATE ACCOUNT (No OTP)
+// 1. CREATE ACCOUNT
 window.handleSignUp = async function() {
   const nameEl = document.getElementById("signupName");
   const mobileEl = document.getElementById("signupMobile");
@@ -178,7 +152,7 @@ window.handleSignUp = async function() {
   }
 };
 
-// 2. LOGIN (No OTP)
+// 2. LOGIN
 window.handleLogin = async function() {
   const mobileEl = document.getElementById("loginMobile");
   const passwordEl = document.getElementById("loginPassword");
@@ -220,85 +194,7 @@ window.handleLogin = async function() {
   }
 };
 
-// 3. FORGOT PASSWORD - STEP A: SEND OTP
-window.handleSendOTP = async function() {
-  const mobileEl = document.getElementById("resetMobile") || document.getElementById("forgotMobile") || document.getElementById("mobile");
-  if (!mobileEl) {
-    alert("Mobile input field not found!");
-    return;
-  }
-
-  const mobile = mobileEl.value.trim();
-  if (!mobile || mobile.length !== 10) {
-    alert("Please enter a valid 10-digit mobile number.");
-    return;
-  }
-
-  try {
-    // Check if user exists in Firestore first
-    const userDocRef = doc(db, "users", mobile);
-    const userDoc = await getDoc(userDocRef);
-
-    if (!userDoc.exists()) {
-      alert("Mobile Number not registered.");
-      return;
-    }
-
-    if (!window.recaptchaVerifier) {
-      initRecaptcha();
-    }
-
-    const formattedPhoneNumber = "+91" + mobile; // Adjust country code if needed (+91 for India)
-    const appVerifier = window.recaptchaVerifier;
-
-    alert("Sending OTP, please complete reCAPTCHA if prompted...");
-    
-    confirmationResultGlobal = await signInWithPhoneNumber(auth, formattedPhoneNumber, appVerifier);
-    alert("OTP sent successfully to your mobile number!");
-
-  } catch (error) {
-    console.error("SMS error:", error);
-    alert("Failed to send OTP: " + error.message);
-  }
-};
-
-// 3. FORGOT PASSWORD - STEP B: VERIFY OTP
-window.handleVerifyOTP = async function() {
-  const otpEl = document.getElementById("resetOtp") || document.getElementById("forgotOtp") || document.getElementById("otp");
-  if (!otpEl) {
-    alert("OTP input field not found!");
-    return;
-  }
-
-  const otpCode = otpEl.value.trim();
-  if (!otpCode || otpCode.length < 6) {
-    alert("Please enter a valid OTP code.");
-    return;
-  }
-
-  if (!confirmationResultGlobal) {
-    alert("Please request OTP first by clicking Send OTP.");
-    return;
-  }
-
-  try {
-    await confirmationResultGlobal.confirm(otpCode);
-    alert("OTP verified successfully! You can now enter your new password.");
-    
-    // Enable password fields and reset button if they were disabled
-    const passwordEl = document.getElementById("resetNewPassword") || document.getElementById("forgotPassword") || document.getElementById("newPassword");
-    const confirmPasswordEl = document.getElementById("resetConfirmPassword") || document.getElementById("forgotConfirmPassword") || document.getElementById("confirmPassword");
-    
-    if (passwordEl) passwordEl.removeAttribute("disabled");
-    if (confirmPasswordEl) confirmPasswordEl.removeAttribute("disabled");
-
-  } catch (error) {
-    console.error("OTP verification error:", error);
-    alert("Invalid OTP! Please enter the correct code.");
-  }
-};
-
-// 3. FORGOT PASSWORD - STEP C: RESET PASSWORD
+// 3. RESET / FORGOT PASSWORD
 window.handleResetPassword = async function() {
   const mobileEl = document.getElementById("resetMobile") || document.getElementById("forgotMobile") || document.getElementById("mobile");
   const passwordEl = document.getElementById("resetNewPassword") || document.getElementById("forgotPassword") || document.getElementById("newPassword");

@@ -16,7 +16,7 @@ import {
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB5mJvSF70gGWv-eFWSNP6rFnbHhFM1oAo",
+  apiKey: "AIzaSyCQPiYwDQ7uxi-adcZavlnkYLLPSCA7hu4",
   authDomain: "raj-smm-panel-193ca.firebaseapp.com",
   projectId: "raj-smm-panel-193ca",
   storageBucket: "raj-smm-panel-193ca.firebasestorage.app",

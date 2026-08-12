@@ -143,21 +143,40 @@
 <div class="auth-card-box">
   <h2 class="auth-title">Reset Password</h2>
 
+  <!-- Mobile Number -->
   <div class="auth-input-group">
     <label>Mobile Number</label>
     <input type="tel" id="resetMobile" placeholder="Mobile Number" maxlength="10">
   </div>
 
+  <!-- Send OTP Button -->
+  <button onclick="handleSendOTP()" class="auth-btn">Send OTP</button>
+
+  <!-- Firebase reCAPTCHA Container -->
+  <div id="recaptcha-container" style="margin: 15px 0;"></div>
+
+  <!-- OTP Input -->
+  <div class="auth-input-group">
+    <label>Enter OTP</label>
+    <input type="text" id="resetOtp" placeholder="Enter 6-digit OTP" maxlength="6">
+  </div>
+
+  <!-- Verify OTP Button -->
+  <button onclick="handleVerifyOTP()" class="auth-btn">Verify OTP</button>
+
+  <!-- New Password -->
   <div class="auth-input-group">
     <label>New Password</label>
-    <input type="password" id="resetNewPassword" placeholder="New Password">
+    <input type="password" id="resetNewPassword" placeholder="New Password" disabled>
   </div>
 
+  <!-- Confirm New Password -->
   <div class="auth-input-group">
     <label>Confirm New Password</label>
-    <input type="password" id="resetConfirmPassword" placeholder="Confirm Password">
+    <input type="password" id="resetConfirmPassword" placeholder="Confirm Password" disabled>
   </div>
 
+  <!-- Reset Password Button -->
   <button onclick="handleResetPassword()" class="auth-btn">Reset Password</button>
 
   <div class="auth-links">

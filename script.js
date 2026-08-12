@@ -1024,7 +1024,7 @@ function submitOrderToWhatsApp() {
     localStorage.setItem('raj_smm_orders', JSON.stringify(existingOrders));
 
     const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
-    const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
+    const payMethod = isUpi ? "UPI QR Pay" : "Binance Pay";
     const whatsappNumber = "919239628344";
 
     const d = currentCheckoutData;

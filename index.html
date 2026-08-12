@@ -2,14 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<!-- Canonical Link added to solve Google Search Console issues -->
 <link rel="canonical" href="https://rajsmmpanel.in/"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Raj SMM Panel – Best India Cheapest SMM Panel for Instagram, Facebook &amp; YouTube</title>
 <meta content="Raj SMM Panel offers affordable social media marketing services for Instagram, Facebook, YouTube and more. Get Followers, Likes, Views, Comments and other SMM services at the best prices." name="description"/>
-<!-- Google Font for Custom Modern Design -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&display=swap" rel="stylesheet"/>
-<!-- PWA / Web App Manifest & Theme -->
 <link href="manifest.json" rel="manifest"/>
 <meta content="#0f172a" name="theme-color"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
@@ -18,7 +15,6 @@
 <link href="icon-192.png" rel="apple-touch-icon"/>
 <link href="style.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<!-- Open Graph Meta Tags -->
 <meta content="website" property="og:type"/>
 <meta content="https://rajsmmpanel.in/" property="og:url"/>
 <meta content="Raj Social Panel - Premium Social Boosting Services" property="og:title"/>
@@ -28,7 +24,6 @@
 <meta content="image/png" property="og:image:type"/>
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
-<!-- Twitter Card Meta Tags -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="https://rajsmmpanel.in/" name="twitter:url"/>
 <meta content="Raj Social Panel - Premium Social Boosting Services" name="twitter:title"/>
@@ -36,291 +31,52 @@
 <meta content="https://rajsmmpanel.in/banner-image.png" name="twitter:image"/>
 
 <style>
-  /* Top Left Hamburger Button */
-  .hamburger-btn {
-    position: absolute;
-    top: 8px;
-    left: 1px;
-    z-index: 100;
-    background: rgba(30, 41, 59, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: inherit;
-    font-size: 18px;
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    backdrop-filter: blur(8px);
-    transition: all 0.3s ease;
-  }
-
-  /* Centered Title */
-  .panel-heading {
-    font-family: 'Poppins', sans-serif !important;
-    font-size: 24px !important;
-    font-weight: 800 !important;
-    font-style: italic !important;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-align: center;
-    margin: 12px 0 20px 0;
-    filter: drop-shadow(0px 2px 8px rgba(168, 85, 247, 0.4));
-  }
-
-  /* Install App Container */
-  #installContainer {
-    text-align: center;
-    margin: 40px 0 30px 0;
-    transition: all 0.3s ease-in-out;
-  }
-  .install-btn {
-    box-shadow: 0 0 20px rgba(0, 150, 255, 0.8), 0 0 40px rgba(138, 43, 226, 0.6);
-    transition: all 0.3s ease-in-out;
-  }
-  .install-btn:hover {
-    box-shadow: 0 0 30px rgba(0, 150, 255, 1), 0 0 50px rgba(138, 43, 226, 0.9);
-    transform: translateY(-2px);
-  }
-
-  /* UPI Buttons Grid */
-  .upi-app-btn-grid {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    margin-top: 6px;
-    width: 100%;
-  }
-  .upi-app-card-btn {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 8px 4px;
-    text-decoration: none;
-    color: #1e293b;
-    font-weight: 700;
-    font-size: 12px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  }
-
-  /* Left Sidebar Drawer & Dark/Light Theme System */
-  .sidebar-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-    z-index: 999;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-  }
-  .sidebar-overlay.active {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .left-sidebar {
-    position: fixed;
-    top: 0;
-    left: -290px;
-    width: 280px;
-    height: 100%;
-    background-color: var(--sidebar-bg, #0f172a);
-    color: var(--sidebar-text, #cbd5e1);
-    border-right: 1px solid var(--sidebar-border, rgba(255, 255, 255, 0.1));
-    z-index: 1000;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-  }
-  .left-sidebar.active {
-    transform: translateX(290px);
-  }
-
-  /* Dark Theme Default Variable Fallback */
-  :root {
-    --sidebar-bg: #0f172a;
-    --sidebar-text: #cbd5e1;
-    --sidebar-border: rgba(255, 255, 255, 0.1);
-    --sidebar-hover: rgba(168, 85, 247, 0.15);
-    --sidebar-hover-text: #ffffff;
-    --sidebar-close: #94a3b8;
-  }
-
-  /* Light Theme Adaptive Fallback */
-  @media (prefers-color-scheme: light) {
-    :root {
-      --sidebar-bg: #ffffff;
-      --sidebar-text: #1e293b;
-      --sidebar-border: rgba(0, 0, 0, 0.1);
-      --sidebar-hover: rgba(168, 85, 247, 0.1);
-      --sidebar-hover-text: #000000;
-      --sidebar-close: #64748b;
-    }
-  }
-
-  /* Manual Light Theme Class Compatibility */
-  body.light-mode, body.light {
-    --sidebar-bg: #ffffff;
-    --sidebar-text: #1e293b;
-    --sidebar-border: rgba(0, 0, 0, 0.1);
-    --sidebar-hover: rgba(168, 85, 247, 0.1);
-    --sidebar-hover-text: #000000;
-    --sidebar-close: #64748b;
-  }
-
-  body.dark-mode, body.dark {
-    --sidebar-bg: #0f172a;
-    --sidebar-text: #cbd5e1;
-    --sidebar-border: rgba(255, 255, 255, 0.1);
-    --sidebar-hover: rgba(168, 85, 247, 0.15);
-    --sidebar-hover-text: #ffffff;
-    --sidebar-close: #94a3b8;
-  }
-
-  .sidebar-header {
-    padding: 20px 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--sidebar-border);
-  }
-  .sidebar-title {
-    font-family: 'Poppins', sans-serif !important;
-    font-size: 18px !important;
-    font-weight: 800 !important;
-    font-style: italic !important;
-    background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .sidebar-close-btn {
-    background: transparent;
-    border: none;
-    color: var(--sidebar-close);
-    font-size: 22px;
-    cursor: pointer;
-  }
-
-  .sidebar-menu {
-    list-style: none;
-    padding: 15px 10px;
-    margin: 0;
-    flex: 1;
-  }
-  .sidebar-menu li {
-    margin-bottom: 6px;
-  }
-  .sidebar-menu a {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 15px;
-    color: var(--sidebar-text);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: 10px;
-    transition: background 0.2s ease, color 0.2s ease;
-  }
-  .sidebar-menu a:hover {
-    background: var(--sidebar-hover);
-    color: var(--sidebar-hover-text);
-  }
-
-  /* Watch Tutorials & Banner Styling */
-  .sidebar-footer-media {
-    padding: 15px;
-    border-top: 1px solid var(--sidebar-border);
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .watch-tutorials-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background: #dc2626;
-    color: #ffffff !important;
-    font-weight: 700;
-    font-size: 14px;
-    padding: 12px;
-    border-radius: 8px;
-    text-decoration: none;
-    text-transform: uppercase;
-    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-    transition: background 0.2s ease, transform 0.2s ease;
-    text-align: center;
-  }
-  .watch-tutorials-btn:hover {
-    background: #b91c1c;
-    transform: translateY(-1px);
-  }
-
-  .tutorial-banner-link {
-    display: block;
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .tutorial-banner-img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 8px;
-    transition: transform 0.2s ease;
-  }
-  .tutorial-banner-link:hover .tutorial-banner-img {
-    transform: scale(1.02);
-  }
+  .hamburger-btn { position: absolute; top: 8px; left: 1px; z-index: 100; background: rgba(30, 41, 59, 0.2); border: 1px solid rgba(255, 255, 255, 0.1); color: inherit; font-size: 18px; width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(8px); transition: all 0.3s ease; }
+  .panel-heading { font-family: 'Poppins', sans-serif !important; font-size: 24px !important; font-weight: 800 !important; font-style: italic !important; text-transform: uppercase; letter-spacing: 1.5px; background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin: 12px 0 20px 0; filter: drop-shadow(0px 2px 8px rgba(168, 85, 247, 0.4)); }
+  #installContainer { text-align: center; margin: 40px 0 30px 0; transition: all 0.3s ease-in-out; }
+  .install-btn { box-shadow: 0 0 20px rgba(0, 150, 255, 0.8), 0 0 40px rgba(138, 43, 226, 0.6); transition: all 0.3s ease-in-out; }
+  .upi-app-btn-grid { display: flex; justify-content: space-between; gap: 8px; margin-top: 6px; width: 100%; }
+  .upi-app-card-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 8px 4px; text-decoration: none; color: #1e293b; font-weight: 700; font-size: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+  .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 999; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+  .sidebar-overlay.active { opacity: 1; visibility: visible; }
+  .left-sidebar { position: fixed; top: 0; left: -290px; width: 280px; height: 100%; background-color: var(--sidebar-bg, #0f172a); color: var(--sidebar-text, #cbd5e1); border-right: 1px solid var(--sidebar-border, rgba(255, 255, 255, 0.1)); z-index: 1000; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; overflow-y: auto; }
+  .left-sidebar.active { transform: translateX(290px); }
+  :root { --sidebar-bg: #0f172a; --sidebar-text: #cbd5e1; --sidebar-border: rgba(255, 255, 255, 0.1); --sidebar-hover: rgba(168, 85, 247, 0.15); --sidebar-hover-text: #ffffff; --sidebar-close: #94a3b8; }
+  @media (prefers-color-scheme: light) { :root { --sidebar-bg: #ffffff; --sidebar-text: #1e293b; --sidebar-border: rgba(0, 0, 0, 0.1); --sidebar-hover: rgba(168, 85, 247, 0.1); --sidebar-hover-text: #000000; --sidebar-close: #64748b; } }
+  body.light-mode, body.light { --sidebar-bg: #ffffff; --sidebar-text: #1e293b; --sidebar-border: rgba(0, 0, 0, 0.1); --sidebar-hover: rgba(168, 85, 247, 0.1); --sidebar-hover-text: #000000; --sidebar-close: #64748b; }
+  body.dark-mode, body.dark { --sidebar-bg: #0f172a; --sidebar-text: #cbd5e1; --sidebar-border: rgba(255, 255, 255, 0.1); --sidebar-hover: rgba(168, 85, 247, 0.15); --sidebar-hover-text: #ffffff; --sidebar-close: #94a3b8; }
+  .sidebar-header { padding: 20px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--sidebar-border); }
+  .sidebar-title { font-family: 'Poppins', sans-serif !important; font-size: 18px !important; font-weight: 800 !important; font-style: italic !important; background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .sidebar-close-btn { background: transparent; border: none; color: var(--sidebar-close); font-size: 22px; cursor: pointer; }
+  .sidebar-menu { list-style: none; padding: 15px 10px; margin: 0; flex: 1; }
+  .sidebar-menu li { margin-bottom: 6px; }
+  .sidebar-menu a { display: flex; align-items: center; gap: 12px; padding: 12px 15px; color: var(--sidebar-text); text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 10px; transition: background 0.2s ease, color 0.2s ease; }
+  .sidebar-menu a:hover { background: var(--sidebar-hover); color: var(--sidebar-hover-text); }
+  .sidebar-footer-media { padding: 15px; border-top: 1px solid var(--sidebar-border); margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+  .watch-tutorials-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: #dc2626; color: #ffffff !important; font-weight: 700; font-size: 14px; padding: 12px; border-radius: 8px; text-decoration: none; text-transform: uppercase; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3); transition: background 0.2s ease, transform 0.2s ease; text-align: center; }
+  .tutorial-banner-link { display: block; width: 100%; border-radius: 8px; overflow: hidden; }
+  .tutorial-banner-img { width: 100%; height: auto; display: block; border-radius: 8px; transition: transform 0.2s ease; }
 </style>
 </head>
 <body>
 
-<!-- Left Sidebar Navigation -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar(true)"></div>
 <div class="left-sidebar" id="leftSidebar">
   <div class="sidebar-header">
     <div class="sidebar-title">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
     <button class="sidebar-close-btn" onclick="closeSidebar(true)"><i class="fa-solid fa-xmark"></i></button>
   </div>
-  
   <ul class="sidebar-menu">
-    <!-- Login/Create Account অপশন -->
-    <li id="authMenuItem">
-        <a href="/login/">🔐 Login / Create Account</a>
-    </li>
-    
+    <li id="authMenuItem"><a href="/login/">🔐 Login / Create Account</a></li>
     <li><a href="/">🛒 New Order</a></li>
     <li><a href="/orders/">📦 My Orders</a></li>
-    
-    <!-- Add Funds অপশনটি এখানে হাইড করে দেওয়া হলো -->
     <li id="addFundsMenuItem" style="display: none;"></li>
-    
     <li><a href="/pages/privacy-policy.html">🔒 Privacy Policy</a></li>
     <li><a href="/pages/refund-policy.html">💸 Refund Policy</a></li>
     <li><a href="/pages/terms.html">📜 Terms &amp; Conditions</a></li>
     <li><a href="/pages/contact.html">📞 Contact Us</a></li>
     <li><a href="/pages/about.html">ℹ️ About Us</a></li>
   </ul>
-
   <div class="sidebar-footer-media">
     <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="watch-tutorials-btn">
       <i class="fa-brands fa-youtube"></i> Watch Tutorials
@@ -332,16 +88,10 @@
 </div>
 
 <div class="main-wrapper" id="mainHomeView" style="position: relative;">
-  
-  <!-- Hamburger Button (Top Left) -->
   <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
     <i class="fa-solid fa-bars"></i>
   </button>
-
-  <!-- Header -->
   <div class="panel-heading">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
-
-  <!-- Support Buttons Header -->
   <div class="hero-actions">
     <a class="glass-btn btn-telegram" href="https://t.me/raj_smm_panel" target="_blank">
       <i class="fa-brands fa-telegram"></i> Telegram Support
@@ -350,8 +100,6 @@
       <i class="fa-brands fa-whatsapp"></i> WhatsApp Support
     </a>
   </div>
-
-  <!-- Platform Switcher -->
   <div class="platform-switch-container">
     <button class="platform-btn active" id="btnInsta" onclick="switchPlatform('instagram')">
       <i class="fa-brands fa-instagram"></i> Instagram
@@ -360,68 +108,36 @@
       <i class="fa-brands fa-facebook"></i> Facebook
     </button>
   </div>
-
-  <!-- Hero Status Banner -->
   <div class="hero-banner">
     <div class="hero-top-row">
-      <div class="hero-logo-box" id="heroLogoIcon">
-        <i class="fa-brands fa-instagram"></i>
-      </div>
+      <div class="hero-logo-box" id="heroLogoIcon"><i class="fa-brands fa-instagram"></i></div>
       <span class="provider-badge">#1 Service Provider</span>
     </div>
     <h2 id="heroTitle">Instagram Boost</h2>
     <p class="hero-sub">Real engagement delivered fast &amp; safely</p>
     <div class="hero-stats-grid">
-      <div class="stat-card">
-        <span class="stat-icon"><i class="fa-solid fa-rocket"></i></span>
-        <span class="stat-num" id="totalOrders">10M</span>
-        <span class="stat-lbl">Orders Delivered</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-icon"><i class="fa-solid fa-headset"></i></span>
-        <span class="stat-num">24/7</span>
-        <span class="stat-lbl">Support</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-icon"><i class="fa-solid fa-shield-halved"></i></span>
-        <span class="stat-num">100%</span>
-        <span class="stat-lbl">Safe &amp; Refundable</span>
-      </div>
+      <div class="stat-card"><span class="stat-icon"><i class="fa-solid fa-rocket"></i></span><span class="stat-num" id="totalOrders">10M</span><span class="stat-lbl">Orders Delivered</span></div>
+      <div class="stat-card"><span class="stat-icon"><i class="fa-solid fa-headset"></i></span><span class="stat-num">24/7</span><span class="stat-lbl">Support</span></div>
+      <div class="stat-card"><span class="stat-icon"><i class="fa-solid fa-shield-halved"></i></span><span class="stat-num">100%</span><span class="stat-lbl">Safe &amp; Refundable</span></div>
     </div>
   </div>
-
-  <!-- Scrollable Category Tabs -->
-  <div class="category-tabs-wrapper">
-    <div class="category-tabs" id="categoryTabs"></div>
-  </div>
-
-  <!-- Package List Section -->
+  <div class="category-tabs-wrapper"><div class="category-tabs" id="categoryTabs"></div></div>
   <div class="package-list-container" id="packageList"></div>
-
-  <div class="footer-note">
-    ⚡ Fast Processing • 100% Refund Guarantee If Failed
-  </div>
-
-  <!-- Install App Button -->
+  <div class="footer-note">⚡ Fast Processing • 100% Refund Guarantee If Failed</div>
   <div id="installContainer" style="display:none;">
     <button class="install-btn" id="installBtn"><i class="fa-solid fa-download"></i> Install App</button>
   </div>
 </div>
 
-<!-- NEW PAYMENT / CHECKOUT PAGE OVERLAY -->
 <div id="checkoutPage" class="checkout-page-overlay hidden">
   <div class="checkout-content">
-    
     <div class="checkout-nav">
       <button class="back-btn" onclick="closeCheckout()"><i class="fa-solid fa-arrow-left"></i> Back</button>
       <div class="checkout-heading-text">Checkout</div>
     </div>
-
     <div class="premium-service-card">
       <div class="card-top-row">
-        <div class="platform-badge-icon" id="checkoutPlatformIcon">
-          <i class="fa-brands fa-instagram"></i>
-        </div>
+        <div class="platform-badge-icon" id="checkoutPlatformIcon"><i class="fa-brands fa-instagram"></i></div>
         <div class="card-info">
           <h4 id="checkoutServiceTitle">Instagram Followers</h4>
           <div class="badge-row">
@@ -431,29 +147,18 @@
         </div>
       </div>
       <div class="units-text" id="checkoutUnitsText">5,000 units</div>
-      <div class="price-text">
-        ₹<span id="checkoutPriceText">199.00</span> <small>one-time</small>
-      </div>
+      <div class="price-text">₹<span id="checkoutPriceText">199.00</span> <small>one-time</small></div>
     </div>
-
     <div class="checkout-input-group">
       <label id="checkoutLinkLabel">Enter your Instagram link</label>
       <input type="text" id="checkoutLinkInput" placeholder="https://instagram.com/your_username" />
     </div>
-
     <div class="checkout-order-summary">
       <div class="summary-title">Order Summary</div>
-      <div class="summary-row">
-        <span>Package</span>
-        <span id="summaryPackageText">5K Followers</span>
-      </div>
+      <div class="summary-row"><span>Package</span><span id="summaryPackageText">5K Followers</span></div>
       <div class="summary-divider"></div>
-      <div class="summary-row pay-row">
-        <span>You Pay</span>
-        <span class="pay-amount">₹<span id="summaryPayAmount">199.00</span></span>
-      </div>
+      <div class="summary-row pay-row"><span>You Pay</span><span class="pay-amount">₹<span id="summaryPayAmount">199.00</span></span></div>
     </div>
-
     <div class="pay-toggle-tabs">
       <button class="pay-tab active" id="btnTabUpi" onclick="switchCheckoutPayment('upi')">
         <i class="fa-solid fa-qrcode"></i> UPI QR Code
@@ -462,62 +167,33 @@
         <i class="fa-solid fa-wallet"></i> Binance Pay
       </button>
     </div>
-
     <div id="checkoutUpiView" class="payment-view-box">
-      <div class="scan-title" style="font-weight: 800; color: #a855f7; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
-        SCAN TO PAY VIA UPI
-      </div>
+      <div class="scan-title" style="font-weight: 800; color: #a855f7; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">SCAN TO PAY VIA UPI</div>
       <div class="qr-wrapper" style="text-align: center;">
         <img id="checkoutQrImg" src="" alt="UPI QR Code" style="display: block; margin: 0 auto; border-radius: 12px;" />
       </div>
-      <p class="qr-sub" style="font-size: 11px; color: #64748b; margin-top: 8px;">
-        Scan or enter payment detail into any UPI App
-      </p>
-      
+      <p class="qr-sub" style="font-size: 11px; color: #64748b; margin-top: 8px;">Scan or enter payment detail into any UPI App</p>
       <div class="upi-app-btn-grid">
-        <a href="#" id="btnPaytm" onclick="triggerUpiPay('paytm'); return false;" class="upi-app-card-btn">
-          <span style="color: #00baf2; font-weight: 900;">Paytm</span>
-        </a>
-        <a href="#" id="btnGPay" onclick="triggerUpiPay('gpay'); return false;" class="upi-app-card-btn">
-          <span style="color: #4285f4; font-weight: 800;">G</span><span style="color: #ea4335; font-weight: 800;">P</span><span style="color: #fbbc05; font-weight: 800;">a</span><span style="color: #34a853; font-weight: 800;">y</span>
-        </a>
-        <a href="#" id="btnPhonePe" onclick="triggerUpiPay('phonepe'); return false;" class="upi-app-card-btn">
-          <i class="fa-solid fa-asterisk" style="color: #5f259f;"></i>
-          <span style="color: #5f259f; font-weight: 800;">PhonePe</span>
-        </a>
-        <a href="#" id="btnOtherUpi" onclick="triggerUpiPay('generic'); return false;" class="upi-app-card-btn">
-          <i class="fa-solid fa-qrcode" style="color: #6366f1;"></i>
-          <span style="color: #1e293b; font-weight: 700;">Other UPI</span>
-        </a>
+        <a href="#" id="btnPaytm" onclick="triggerUpiPay('paytm'); return false;" class="upi-app-card-btn"><span style="color: #00baf2; font-weight: 900;">Paytm</span></a>
+        <a href="#" id="btnGPay" onclick="triggerUpiPay('gpay'); return false;" class="upi-app-card-btn"><span style="color: #4285f4; font-weight: 800;">G</span><span style="color: #ea4335; font-weight: 800;">P</span><span style="color: #fbbc05; font-weight: 800;">a</span><span style="color: #34a853; font-weight: 800;">y</span></a>
+        <a href="#" id="btnPhonePe" onclick="triggerUpiPay('phonepe'); return false;" class="upi-app-card-btn"><i class="fa-solid fa-asterisk" style="color: #5f259f;"></i><span style="color: #5f259f; font-weight: 800;">PhonePe</span></a>
+        <a href="#" id="btnOtherUpi" onclick="triggerUpiPay('generic'); return false;" class="upi-app-card-btn"><i class="fa-solid fa-qrcode" style="color: #6366f1;"></i><span style="color: #1e293b; font-weight: 700;">Other UPI</span></a>
       </div>
     </div>
-
     <div id="checkoutBinanceView" class="payment-view-box hidden">
       <div class="scan-title">SCAN TO PAY VIA BINANCE</div>
-      <div class="qr-wrapper">
-        <img src="binance-qr.png" alt="Binance QR Code" />
-      </div>
-      <div class="binance-nick-box">
-        Binance Nickname: <strong style="color: #facc15;">Alex-Sahil786</strong>
-      </div>
-      <div class="usdt-badge-box">
-        <span id="checkoutUsdtAmount">$0.00 USDT</span>
-      </div>
+      <div class="qr-wrapper"><img src="binance-qr.png" alt="Binance QR Code" /></div>
+      <div class="binance-nick-box">Binance Nickname: <strong style="color: #facc15;">Alex-Sahil786</strong></div>
+      <div class="usdt-badge-box"><span id="checkoutUsdtAmount">$0.00 USDT</span></div>
     </div>
-
     <div class="checkout-input-group margin-top-15">
-      <label>Enter Your UTR number</label>
+      <label id="txnLabel">Enter Your UTR number</label>
       <input type="text" id="checkoutTxnId" placeholder="Enter Transaction ID / UTR(e.g. 123456789012)" />
     </div>
-
-    <div class="notice-yellow-box">
-      <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
-    </div>
-
+    <div class="notice-yellow-box"><strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong></div>
     <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
       <i class="fa-brands fa-whatsapp"></i> Confirm your order
     </button>
-
   </div>
 </div>
 
@@ -525,27 +201,49 @@
 <script type="module" src="firebase-config.js"></script>
 <script type="module" src="auth-handler.js"></script>
 <script>
-  // WhatsApp Support Click Handler Function with Pre-filled Message
+  // Updated Payment Method Switching Logic
+  function switchCheckoutPayment(method) {
+    const upiView = document.getElementById('checkoutUpiView');
+    const binanceView = document.getElementById('checkoutBinanceView');
+    const btnUpi = document.getElementById('btnTabUpi');
+    const btnBinance = document.getElementById('btnTabBinance');
+    const txnLabel = document.getElementById('txnLabel');
+    const txnInput = document.getElementById('checkoutTxnId');
+
+    if (method === 'binance') {
+      upiView.classList.add('hidden');
+      binanceView.classList.remove('hidden');
+      btnUpi.classList.remove('active');
+      btnBinance.classList.add('active');
+      
+      // Update Label and Placeholder
+      txnLabel.innerText = "Enter your Order No";
+      txnInput.placeholder = "Binance Transaction ID / e.g. 1234567890";
+    } else {
+      binanceView.classList.add('hidden');
+      upiView.classList.remove('hidden');
+      btnBinance.classList.remove('active');
+      btnUpi.classList.add('active');
+      
+      // Reset Label and Placeholder
+      txnLabel.innerText = "Enter Your UTR number";
+      txnInput.placeholder = "Enter Transaction ID / UTR(e.g. 123456789012)";
+    }
+  }
+
   function openWhatsAppSupport() {
     const phoneNumber = "919239628344";
-    const message = encodeURIComponent(
-      "Hi 👋 I want to know about your services on rajsmmpanel.in"
-    );
-    window.open(
-      "https://wa.me/" + phoneNumber + "?text=" + message,
-      "_blank"
-    );
+    const message = encodeURIComponent("Hi 👋 I want to know about your services on rajsmmpanel.in");
+    window.open("https://wa.me/" + phoneNumber + "?text=" + message, "_blank");
   }
 
   function openSidebar() {
     const sidebar = document.getElementById("leftSidebar");
     const overlay = document.getElementById("sidebarOverlay");
-    
     if (!sidebar.classList.contains("active")) {
       sidebar.classList.add("active");
       overlay.classList.add("active");
       document.body.style.overflow = "hidden";
-      
       history.pushState({ sidebarOpen: true }, '');
     }
   }
@@ -553,12 +251,10 @@
   function closeSidebar(fromUserAction = false) {
     const sidebar = document.getElementById("leftSidebar");
     const overlay = document.getElementById("sidebarOverlay");
-    
     if (sidebar.classList.contains("active")) {
       sidebar.classList.remove("active");
       overlay.classList.remove("active");
       document.body.style.overflow = "auto";
-      
       if (fromUserAction && history.state && history.state.sidebarOpen) {
         history.back();
       }
@@ -571,9 +267,7 @@
       closeSidebar(false);
     }
   });
-</script>
 
-<script>
   document.addEventListener("DOMContentLoaded", function () {
     document.body.addEventListener("focusin", function (e) {
       if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
@@ -581,7 +275,6 @@
         if (installBox) installBox.style.display = "none";
       }
     });
-
     document.body.addEventListener("focusout", function (e) {
       if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
         const installBox = document.getElementById("installContainer");
@@ -589,9 +282,7 @@
       }
     });
   });
-</script>
 
-<script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./sw.js')

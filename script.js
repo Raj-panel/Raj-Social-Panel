@@ -632,7 +632,7 @@ function getLinkConfig(platform, category) {
     if (p === "instagram") {
         if (c.includes("followers")) {
             return {
-                label: "Profile Link (Account Must be Public)",
+                label: " INSTAGRAM Profile Link (Account Must be Public)",
                 placeholder: "https://instagram.com/your_username"
             };
         } else if (c.includes("reels") || c.includes("video")) {
@@ -649,7 +649,7 @@ function getLinkConfig(platform, category) {
     } else if (p === "facebook") {
         if (c.includes("followers")) {
             return {
-                label: "Profile / Page Link (Must be Public)",
+                label: " FACEBOOK Profile / Page Link (Must be Public)",
                 placeholder: "https://facebook.com/your_page_or_profile"
             };
         } else {

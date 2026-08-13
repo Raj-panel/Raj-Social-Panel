@@ -328,6 +328,66 @@ const serviceData = {
             { name: "20K Shares", price: 149, badge: "🏆 Best Deal", badgeClass: "badge-best" },
             { name: "100K Shares", price: 399, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ]
+    },
+
+    // ==========================================
+    // YOUTUBE SERVICES
+    // ==========================================
+    youtube: {
+        "YouTube Subscribe — Non Drop": [
+            { name: "100 Subscribers — High Quality Indian Subscribers", price: 249 },
+            { name: "500 Subscribers — High Quality Indian Subscribers", price: 1999 },
+            { name: "1K Subscribers — High Quality Indian Subscribers", price: 2499, badge: "⭐ Popular", badgeClass: "badge-popular" }
+        ],
+        "YouTube Likes — Non Drop": [
+            { name: "100 Real Likes — Indian Real Active High Quality", price: 49 },
+            { name: "500 Real Likes — Indian Real Active High Quality", price: 149 },
+            { name: "1K Real Likes — Indian Real Active High Quality", price: 249, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "3K Real Likes — Indian Real Active High Quality", price: 499 },
+            { name: "5K Real Likes — Indian Real Active High Quality", price: 949, badge: "🔥 Best Value", badgeClass: "badge-best" }
+        ],
+        "YouTube Real Shorts / Video Views": [
+            { name: "100 Short Video Views — Indian High Quality", price: 49 },
+            { name: "500 Short Video Views — Indian High Quality", price: 90 },
+            { name: "1K Short Video Views — Indian High Quality", price: 179, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "3K Short Video Views — Indian High Quality", price: 449 },
+            { name: "5K Short Video Views — Indian High Quality", price: 749 },
+            { name: "7K Short Video Views — Indian High Quality", price: 999 },
+            { name: "10K Short Video Views — Indian High Quality", price: 1499, badge: "🔥 Best Value", badgeClass: "badge-best" }
+        ],
+        "YouTube Live Stream Views": [
+            { name: "1K Live Stream Views — Live Views for 15 Minutes", price: 25 },
+            { name: "1K Live Stream Views — Live Views for 30 Minutes", price: 40 },
+            { name: "1K Live Stream Views — Live Views for 60 Minutes", price: 70, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "1K Live Stream Views — Live Views for 90 Minutes", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" }
+        ]
+    },
+
+    // ==========================================
+    // TIKTOK SERVICES
+    // ==========================================
+    tiktok: {
+        "TikTok Followers": [
+            { name: "100 TikTok Followers — 90 Days Refill", price: 20 },
+            { name: "500 TikTok Followers — 90 Days Refill", price: 90 },
+            { name: "1K TikTok Followers — 90 Days Refill", price: 179, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "5K TikTok Followers — 90 Days Refill", price: 799 },
+            { name: "10K TikTok Followers — 90 Days Refill", price: 1599, badge: "🔥 Best Value", badgeClass: "badge-best" }
+        ],
+        "TikTok Likes": [
+            { name: "100 TikTok Likes — Lifetime Auto Refill", price: 10 },
+            { name: "500 TikTok Likes — Lifetime Auto Refill", price: 40 },
+            { name: "1K TikTok Likes — Lifetime Auto Refill", price: 75, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "3K TikTok Likes — Lifetime Auto Refill", price: 199 },
+            { name: "5K TikTok Likes — Lifetime Auto Refill", price: 349, badge: "🔥 Best Value", badgeClass: "badge-best" }
+        ],
+        "TikTok Views": [
+            { name: "100 TikTok Video Views — High Quality Real Views • Lifetime Refill", price: 5 },
+            { name: "500 TikTok Video Views — High Quality Real Views • Lifetime Refill", price: 15 },
+            { name: "1K TikTok Video Views — High Quality Real Views • Lifetime Refill", price: 25, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "5K TikTok Video Views — High Quality Real Views • Lifetime Refill", price: 99 },
+            { name: "10K TikTok Video Views — High Quality Real Views • Lifetime Refill", price: 249, badge: "🔥 Best Value", badgeClass: "badge-best" }
+        ]
     }
 };
 
@@ -352,7 +412,7 @@ window.addEventListener('popstate', function (event) {
 });
 
 // ==========================================
-// SWITCH INSTAGRAM / FACEBOOK
+// SWITCH INSTAGRAM / FACEBOOK / YOUTUBE / TIKTOK
 // ==========================================
 
 function switchPlatform(platform) {
@@ -361,8 +421,13 @@ function switchPlatform(platform) {
 
     const btnInsta = document.getElementById("btnInsta");
     const btnFb = document.getElementById("btnFb");
+    const btnYt = document.getElementById("btnYt");
+    const btnTt = document.getElementById("btnTt");
+
     if (btnInsta) btnInsta.classList.toggle("active", platform === "instagram");
     if (btnFb) btnFb.classList.toggle("active", platform === "facebook");
+    if (btnYt) btnYt.classList.toggle("active", platform === "youtube");
+    if (btnTt) btnTt.classList.toggle("active", platform === "tiktok");
 
     const heroTitle = document.getElementById("heroTitle");
     const heroLogoIcon = document.getElementById("heroLogoIcon");
@@ -370,9 +435,15 @@ function switchPlatform(platform) {
     if (platform === "instagram") {
         if (heroTitle) heroTitle.innerText = "Instagram Boost";
         if (heroLogoIcon) heroLogoIcon.innerHTML = '<i class="fa-brands fa-instagram"></i>';
-    } else {
+    } else if (platform === "facebook") {
         if (heroTitle) heroTitle.innerText = "Facebook Boost";
         if (heroLogoIcon) heroLogoIcon.innerHTML = '<i class="fa-brands fa-facebook"></i>';
+    } else if (platform === "youtube") {
+        if (heroTitle) heroTitle.innerText = "YouTube Boost";
+        if (heroLogoIcon) heroLogoIcon.innerHTML = '<i class="fa-brands fa-youtube"></i>';
+    } else if (platform === "tiktok") {
+        if (heroTitle) heroTitle.innerText = "TikTok Boost";
+        if (heroLogoIcon) heroLogoIcon.innerHTML = '<i class="fa-brands fa-tiktok"></i>';
     }
 
     renderCategoryTabs();
@@ -388,7 +459,9 @@ function renderCategoryTabs() {
     if (!tabsContainer) return;
     tabsContainer.innerHTML = "";
 
-    const categories = Object.keys(serviceData[currentPlatform]);
+    const categories = Object.keys(serviceData[currentPlatform] || {});
+    if (categories.length === 0) return;
+
     currentCategory = categories[0];
 
     categories.forEach((cat, index) => {
@@ -421,8 +494,12 @@ function renderPackages() {
     packageList.innerHTML = "";
     selectedPackage = null;
 
-    const packages = serviceData[currentPlatform][currentCategory];
-    const iconClass = currentPlatform === "instagram" ? "fa-instagram" : "fa-facebook";
+    const packages = serviceData[currentPlatform][currentCategory] || [];
+    
+    let iconClass = "fa-instagram";
+    if (currentPlatform === "facebook") iconClass = "fa-facebook";
+    else if (currentPlatform === "youtube") iconClass = "fa-youtube";
+    else if (currentPlatform === "tiktok") iconClass = "fa-tiktok";
 
     packages.forEach((pkg) => {
         if (pkg.type === "custom") {
@@ -657,6 +734,35 @@ function getLinkConfig(platform, category) {
                 placeholder: "https://facebook.com/permalink.php?story_fbid=..."
             };
         }
+    } else if (p === "youtube") {
+        if (c.includes("subscribe")) {
+            return {
+                label: "YouTube Channel/Profile Link",
+                placeholder: "https://www.youtube.com/@yourchannel"
+            };
+        } else if (c.includes("live stream")) {
+            return {
+                label: "YouTube Live Stream Link",
+                placeholder: "https://www.youtube.com/watch?v=xxxxxxxx"
+            };
+        } else {
+            return {
+                label: "YouTube Video/Short Link",
+                placeholder: "https://www.youtube.com/watch?v=xxxxxxxx"
+            };
+        }
+    } else if (p === "tiktok") {
+        if (c.includes("followers")) {
+            return {
+                label: "TikTok Profile Link",
+                placeholder: "https://www.tiktok.com/@yourusername"
+            };
+        } else {
+            return {
+                label: "TikTok Video Link",
+                placeholder: "https://www.tiktok.com/@user/video/xxxxxx"
+            };
+        }
     }
 
     return {
@@ -845,9 +951,16 @@ function showCheckoutOverlay() {
 
     const iconBox = document.getElementById("checkoutPlatformIcon");
     if (iconBox) {
-        iconBox.innerHTML = d.platform.toLowerCase() === "facebook"
-            ? `<i class="fa-brands fa-facebook"></i>`
-            : `<i class="fa-brands fa-instagram"></i>`;
+        const plat = d.platform.toLowerCase();
+        if (plat === "facebook") {
+            iconBox.innerHTML = `<i class="fa-brands fa-facebook"></i>`;
+        } else if (plat === "youtube") {
+            iconBox.innerHTML = `<i class="fa-brands fa-youtube"></i>`;
+        } else if (plat === "tiktok") {
+            iconBox.innerHTML = `<i class="fa-brands fa-tiktok"></i>`;
+        } else {
+            iconBox.innerHTML = `<i class="fa-brands fa-instagram"></i>`;
+        }
     }
 
     if (document.getElementById("checkoutServiceTitle"))

@@ -47,25 +47,25 @@ body {
 .btn-telegram { border: 1px solid rgba(56, 189, 248, 0.4); color: #0284c7; }
 .btn-whatsapp { border: 1px solid rgba(34, 197, 94, 0.4); color: #16a34a; }
 
-/* Platform Switcher Buttons (উচ্চতা ও প্যাডিং কমানো হয়েছে) */
+/* Platform Switcher Buttons (সাদা অংশের হাইট ও প্যাডিং কমানো হয়েছে) */
 .platform-switch-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 2px;
+    gap: 6px;
     background: #ffffff;
-    padding: 2px;
+    padding: 6px; /* প্যাডিং ৮ পিক্সেল থেকে কমিয়ে ৬ করা হলো */
     border-radius: 16px;
-    margin-bottom: 2px;
+    margin-bottom: 10px;
     box-shadow: 0 4px 15px rgba(236, 72, 153, 0.08);
 }
 
 .platform-btn {
     flex: 1 1 calc(50% - 6px);
-    padding: 2px 4px;
+    padding: 8px 10px;
     border: none;
     border-radius: 10px;
     font-weight: 800;
-    font-size: 10px;
+    font-size: 12px;
     background: transparent;
     color: #64748b;
     cursor: pointer;
@@ -82,13 +82,13 @@ body {
     box-shadow: 0 4px 12px rgba(217, 70, 239, 0.3);
 }
 
-/* Hero Status Banner (উচ্চতা ও প্যাডিং কমানো হয়েছে) */
+/* Hero Status Banner (নিচের অতিরিক্ত গ্যাপ কমিয়ে টাইট করা হয়েছে) */
 .hero-banner {
     background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
-    border-radius: 14px;
-    padding: 2px 14px;
+    border-radius: 16px;
+    padding: 10px 12px; /* প্যাডিং কমানো হলো যাতে নিচের দিকে গ্যাপ না থাকে */
     color: #ffffff;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
     position: relative;
     overflow: hidden;
     box-shadow: 0 6px 20px rgba(236, 72, 153, 0.2);
@@ -103,7 +103,7 @@ body {
 
 .hero-logo-box {
     width: 28px;
-    height: 24px;
+    height: 28px;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     display: flex;
@@ -123,7 +123,7 @@ body {
 }
 
 .hero-banner h2 { font-size: 17px; font-weight: 800; margin-bottom: 2px; }
-.hero-sub { font-size: 10px; opacity: 0.9; margin-bottom: 8px; }
+.hero-sub { font-size: 10px; opacity: 0.9; margin-bottom: 6px; } /* মার্জিন কমানো হলো */
 
 .hero-stats-grid { display: flex; gap: 6px; }
 

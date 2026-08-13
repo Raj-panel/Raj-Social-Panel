@@ -9,8 +9,8 @@
         /* 1. Adjusted Fixed Hero Banner Height */
         .hero-banner, .hero-card, .instagram-boost-card {
             height: auto !important;
-            min-height: 180px !important;
-            max-height: 200px !important;
+            min-height: 160px !important;
+            max-height: 180px !important;
             padding: 12px 14px !important;
             box-sizing: border-box !important;
             overflow: visible !important;

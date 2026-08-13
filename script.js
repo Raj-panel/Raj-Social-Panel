@@ -310,7 +310,7 @@ const serviceData = {
     youtube: {
         "YouTube Subscribe — Non Drop": [
             { name: "100 Subscribers", price: 249, desc: "High Quality Indian Subscribers" },
-            { name: "500 Subscribers", price: 1200, desc: "High Quality Indian Subscribers" },
+            { name: "500 Subscribers", price: 1199, desc: "High Quality Indian Subscribers" },
             { name: "1K Subscribers", price: 2349, desc: "High Quality Indian Subscribers" }
         ],
         "YouTube Likes — Non Drop": [

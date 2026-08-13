@@ -51,9 +51,9 @@ body {
 .platform-switch-container {
     display: flex;
     flex-wrap: wrap;
-    gap: -4px;
+    gap: 6px;
     background: #ffffff;
-    padding: -10px; /* প্যাডিং কমিয়ে ৩px করা হলো যাতে মোটা বর্ডারটি চিকন হয়ে যায় */
+    padding: 4px; /* প্যাডিং কমিয়ে ৩px করা হলো যাতে মোটা বর্ডারটি চিকন হয়ে যায় */
     border-radius: 14px;
     margin-bottom: 10px;
     box-shadow: 0 4px 15px rgba(236, 72, 153, 0.08);

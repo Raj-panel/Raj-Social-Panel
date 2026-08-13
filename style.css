@@ -47,24 +47,25 @@ body {
 .btn-telegram { border: 1px solid rgba(56, 189, 248, 0.4); color: #0284c7; }
 .btn-whatsapp { border: 1px solid rgba(34, 197, 94, 0.4); color: #16a34a; }
 
-/* Platform Switcher Buttons */
+/* Platform Switcher Buttons (উচ্চতা ও প্যাডিং কমানো হয়েছে) */
 .platform-switch-container {
     display: flex;
-    gap: 8px;
+    flex-wrap: wrap;
+    gap: 6px;
     background: #ffffff;
-    padding: 5px;
+    padding: 8px;
     border-radius: 16px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     box-shadow: 0 4px 15px rgba(236, 72, 153, 0.08);
 }
 
 .platform-btn {
-    flex: 1;
-    padding: 10px;
+    flex: 1 1 calc(50% - 6px);
+    padding: 8px 10px;
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     font-weight: 800;
-    font-size: 13px;
+    font-size: 12px;
     background: transparent;
     color: #64748b;
     cursor: pointer;
@@ -81,64 +82,64 @@ body {
     box-shadow: 0 4px 12px rgba(217, 70, 239, 0.3);
 }
 
-/* Hero Status Banner */
+/* Hero Status Banner (উচ্চতা ও প্যাডিং কমানো হয়েছে) */
 .hero-banner {
     background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
-    border-radius: 20px;
-    padding: 18px 16px;
+    border-radius: 16px;
+    padding: 12px 14px;
     color: #ffffff;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 8px 25px rgba(236, 72, 153, 0.25);
+    box-shadow: 0 6px 20px rgba(236, 72, 153, 0.2);
 }
 
 .hero-top-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .hero-logo-box {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: 15px;
     backdrop-filter: blur(5px);
 }
 
 .provider-badge {
     background: rgba(255, 255, 255, 0.25);
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 9px;
     font-weight: 800;
     backdrop-filter: blur(5px);
 }
 
-.hero-banner h2 { font-size: 20px; font-weight: 800; margin-bottom: 2px; }
-.hero-sub { font-size: 11px; opacity: 0.9; margin-bottom: 14px; }
+.hero-banner h2 { font-size: 17px; font-weight: 800; margin-bottom: 2px; }
+.hero-sub { font-size: 10px; opacity: 0.9; margin-bottom: 8px; }
 
-.hero-stats-grid { display: flex; gap: 8px; }
+.hero-stats-grid { display: flex; gap: 6px; }
 
 .stat-card {
     flex: 1;
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    padding: 8px;
+    border-radius: 10px;
+    padding: 6px 4px;
     text-align: center;
 }
 
-.stat-icon { font-size: 11px; display: block; margin-bottom: 2px; }
-.stat-num { font-size: 13px; font-weight: 800; display: block; }
-.stat-lbl { font-size: 9px; opacity: 0.8; }
+.stat-icon { font-size: 10px; display: block; margin-bottom: 1px; }
+.stat-num { font-size: 12px; font-weight: 800; display: block; }
+.stat-lbl { font-size: 8px; opacity: 0.8; }
 
 /* Scrollable Horizontal Category Tabs */
 .category-tabs-wrapper {
@@ -1064,6 +1065,7 @@ input:focus { border-color: #d946ef; background: #ffffff; }
 }
 
 .margin-top-10 { margin-top: 10px; }
+
 /* =================================================_
    RAJ-SMM-PANEL: AUTHENTICATION PAGES UI & THEME
    ================================================= */
@@ -1209,12 +1211,11 @@ body.auth-page {
   font-size: 13px;
 }
 
-
 /* =================================================_
    AUTO DEVICE THEME SWITCHING (DARK / LIGHT)
    ================================================= */
 
-/* LIGHT MODE (Default / prefers-color-scheme: light) */
+/* LIGHT MODE */
 @media (prefers-color-scheme: light) {
   body.auth-page {
     background-color: var(--auth-bg-light);
@@ -1258,7 +1259,7 @@ body.auth-page {
   }
 }
 
-/* DARK MODE (prefers-color-scheme: dark) */
+/* DARK MODE */
 @media (prefers-color-scheme: dark) {
   body.auth-page {
     background-color: var(--auth-bg-dark);
@@ -1302,9 +1303,8 @@ body.auth-page {
   }
 }
 
-
 /* =================================================_
-   MOBILE RESPONSIVENESS (No Overflow / Full Viewport Fit)
+   MOBILE RESPONSIVENESS
    ================================================= */
 @media screen and (max-width: 480px) {
   .auth-container {

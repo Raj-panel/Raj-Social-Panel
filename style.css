@@ -53,15 +53,15 @@ body {
     flex-wrap: wrap;
     gap: 2px;
     background: #ffffff;
-    padding: 0px;
+    padding: 2px;
     border-radius: 16px;
-    margin-bottom: 8px;
+    margin-bottom: 2px;
     box-shadow: 0 4px 15px rgba(236, 72, 153, 0.08);
 }
 
 .platform-btn {
     flex: 1 1 calc(50% - 6px);
-    padding: 6px 8px;
+    padding: 2px 4px;
     border: none;
     border-radius: 10px;
     font-weight: 800;
@@ -86,7 +86,7 @@ body {
 .hero-banner {
     background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
     border-radius: 16px;
-    padding: 4px 14px;
+    padding: 2px 14px;
     color: #ffffff;
     margin-bottom: 8px;
     position: relative;

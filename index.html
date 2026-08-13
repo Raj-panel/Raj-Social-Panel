@@ -2,13 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<!-- Canonical Link added to solve Google Search Console issues -->
+<!-- Canonical Link -->
 <link rel="canonical" href="https://rajsmmpanel.in/"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Raj SMM Panel – Best India Cheapest SMM Panel for Instagram, Facebook &amp; YouTube</title>
 <meta content="Raj SMM Panel offers affordable social media marketing services for Instagram, Facebook, YouTube and more. Get Followers, Likes, Views, Comments and other SMM services at the best prices." name="description"/>
-<!-- Google Font for Custom Modern Design -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&display=swap" rel="stylesheet"/>
+
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
+
 <!-- PWA / Web App Manifest & Theme -->
 <link href="manifest.json" rel="manifest"/>
 <meta content="#0f172a" name="theme-color"/>
@@ -16,8 +20,9 @@
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
 <meta content="SMM Panel" name="apple-mobile-web-app-title"/>
 <link href="icon-192.png" rel="apple-touch-icon"/>
-<link href="style.css?v=1.0.1" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
 <!-- Open Graph Meta Tags -->
 <meta content="website" property="og:type"/>
 <meta content="https://rajsmmpanel.in/" property="og:url"/>
@@ -28,6 +33,7 @@
 <meta content="image/png" property="og:image:type"/>
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
+
 <!-- Twitter Card Meta Tags -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="https://rajsmmpanel.in/" name="twitter:url"/>
@@ -36,7 +42,34 @@
 <meta content="https://rajsmmpanel.in/banner-image.png" name="twitter:image"/>
 
 <style>
-  /* Reference Image Matching Platform Switcher Card Container */
+  :root {
+    --sidebar-bg: #0f172a;
+    --sidebar-text: #cbd5e1;
+    --sidebar-border: rgba(255, 255, 255, 0.1);
+    --sidebar-hover: rgba(168, 85, 247, 0.15);
+    --sidebar-hover-text: #ffffff;
+    --sidebar-close: #94a3b8;
+  }
+
+  body.light-mode, body.light {
+    --sidebar-bg: #ffffff;
+    --sidebar-text: #1e293b;
+    --sidebar-border: rgba(0, 0, 0, 0.1);
+    --sidebar-hover: rgba(168, 85, 247, 0.1);
+    --sidebar-hover-text: #000000;
+    --sidebar-close: #64748b;
+  }
+
+  body.dark-mode, body.dark {
+    --sidebar-bg: #0f172a;
+    --sidebar-text: #cbd5e1;
+    --sidebar-border: rgba(255, 255, 255, 0.1);
+    --sidebar-hover: rgba(168, 85, 247, 0.15);
+    --sidebar-hover-text: #ffffff;
+    --sidebar-close: #94a3b8;
+  }
+
+  /* Platform Switcher Card Container */
   .platform-card-wrapper {
     background: #ffffff !important;
     border: 1px solid rgba(226, 232, 240, 0.8) !important;
@@ -59,7 +92,6 @@
     margin: 0 !important;
   }
 
-  /* Exact Card Button Styling as Reference Image */
   .platform-switch-container .platform-btn {
     width: 100% !important;
     height: 52px !important;
@@ -81,7 +113,6 @@
     margin: 0 !important;
   }
 
-  /* Active State (Instagram Selected Style) */
   .platform-switch-container .platform-btn.active {
     background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%) !important;
     color: #ffffff !important;
@@ -89,7 +120,6 @@
     box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3) !important;
   }
 
-  /* Icon Colors for Non-Active State */
   .platform-switch-container .platform-btn:not(.active) i.fa-instagram { color: #e1306c !important; }
   .platform-switch-container .platform-btn:not(.active) i.fa-facebook { color: #1877f2 !important; }
   .platform-switch-container .platform-btn:not(.active) i.fa-youtube { color: #ff0000 !important; }
@@ -99,7 +129,7 @@
     color: #ffffff !important;
   }
 
-  /* Top Left Hamburger Button */
+  /* Hamburger Button */
   .hamburger-btn {
     position: absolute;
     top: -4px;
@@ -120,11 +150,11 @@
     transition: all 0.3s ease;
   }
 
-  /* Centered Title */
+  /* Panel Heading */
   .panel-heading {
     font-family: 'Poppins', sans-serif !important;
     font-size: 22px !important;
-    font-weight: 400 !important;
+    font-weight: 800 !important;
     font-style: italic !important;
     text-transform: uppercase;
     letter-spacing: 1.5px;
@@ -145,6 +175,7 @@
   .install-btn {
     box-shadow: 0 0 20px rgba(0, 150, 255, 0.8), 0 0 40px rgba(138, 43, 226, 0.6);
     transition: all 0.3s ease-in-out;
+    cursor: pointer;
   }
   .install-btn:hover {
     box-shadow: 0 0 30px rgba(0, 150, 255, 1), 0 0 50px rgba(138, 43, 226, 0.9);
@@ -178,13 +209,12 @@
     cursor: default;
   }
 
-  /* Custom input width enhancements */
   .checkout-input-group input[type="text"] {
     width: 100%;
     box-sizing: border-box;
   }
 
-  /* Left Sidebar Drawer & Dark/Light Theme System */
+  /* Sidebar Drawer Overlay */
   .sidebar-overlay {
     position: fixed;
     top: 0;
@@ -203,61 +233,25 @@
     visibility: visible;
   }
 
+  /* Sidebar Drawer */
   .left-sidebar {
     position: fixed;
     top: 0;
-    left: -290px;
+    left: 0;
     width: 280px;
     height: 100%;
-    background-color: var(--sidebar-bg, #0f172a);
-    color: var(--sidebar-text, #cbd5e1);
-    border-right: 1px solid var(--sidebar-border, rgba(255, 255, 255, 0.1));
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    border-right: 1px solid var(--sidebar-border);
     z-index: 1000;
+    transform: translateX(-100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
     overflow-y: auto;
   }
   .left-sidebar.active {
-    transform: translateX(290px);
-  }
-
-  :root {
-    --sidebar-bg: #0f172a;
-    --sidebar-text: #cbd5e1;
-    --sidebar-border: rgba(255, 255, 255, 0.1);
-    --sidebar-hover: rgba(168, 85, 247, 0.15);
-    --sidebar-hover-text: #ffffff;
-    --sidebar-close: #94a3b8;
-  }
-
-  @media (prefers-color-scheme: light) {
-    :root {
-      --sidebar-bg: #ffffff;
-      --sidebar-text: #1e293b;
-      --sidebar-border: rgba(0, 0, 0, 0.1);
-      --sidebar-hover: rgba(168, 85, 247, 0.1);
-      --sidebar-hover-text: #000000;
-      --sidebar-close: #64748b;
-    }
-  }
-
-  body.light-mode, body.light {
-    --sidebar-bg: #ffffff;
-    --sidebar-text: #1e293b;
-    --sidebar-border: rgba(0, 0, 0, 0.1);
-    --sidebar-hover: rgba(168, 85, 247, 0.1);
-    --sidebar-hover-text: #000000;
-    --sidebar-close: #64748b;
-  }
-
-  body.dark-mode, body.dark {
-    --sidebar-bg: #0f172a;
-    --sidebar-text: #cbd5e1;
-    --sidebar-border: rgba(255, 255, 255, 0.1);
-    --sidebar-hover: rgba(168, 85, 247, 0.15);
-    --sidebar-hover-text: #ffffff;
-    --sidebar-close: #94a3b8;
+    transform: translateX(0);
   }
 
   .sidebar-header {
@@ -357,6 +351,10 @@
   .tutorial-banner-link:hover .tutorial-banner-img {
     transform: scale(1.02);
   }
+  
+  .hidden {
+    display: none !important;
+  }
 </style>
 </head>
 <body>
@@ -366,12 +364,12 @@
 <div class="left-sidebar" id="leftSidebar">
   <div class="sidebar-header">
     <div class="sidebar-title">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
-    <button class="sidebar-close-btn" onclick="closeSidebar(true)"><i class="fa-solid fa-xmark"></i></button>
+    <button class="sidebar-close-btn" onclick="closeSidebar(true)" aria-label="Close Sidebar"><i class="fa-solid fa-xmark"></i></button>
   </div>
   
   <ul class="sidebar-menu">
     <li id="authMenuItem">
-        <a href="/login/">🔐 Login / Create Account</a>
+      <a href="/login/">🔐 Login / Create Account</a>
     </li>
     <li><a href="/">🛒 New Order</a></li>
     <li><a href="/orders/">📦 My Orders</a></li>
@@ -405,7 +403,7 @@
 
   <!-- Support Buttons Header -->
   <div class="hero-actions">
-    <a class="glass-btn btn-telegram" href="https://t.me/raj_smm_panel" target="_blank">
+    <a class="glass-btn btn-telegram" href="https://t.me/raj_smm_panel" target="_blank" rel="noopener noreferrer">
       <i class="fa-brands fa-telegram"></i> Telegram Support
     </a>
     <a class="glass-btn btn-whatsapp" href="javascript:void(0);" onclick="openWhatsAppSupport()">
@@ -413,7 +411,7 @@
     </a>
   </div>
 
-  <!-- Platform Switcher (Matching Reference Image Exact Design) -->
+  <!-- Platform Switcher -->
   <div class="platform-card-wrapper">
     <div class="platform-switch-container">
       <button class="platform-btn active" id="btnInsta" onclick="handlePlatformClick('instagram', this)">
@@ -478,7 +476,7 @@
   </div>
 </div>
 
-<!-- NEW PAYMENT / CHECKOUT PAGE OVERLAY -->
+<!-- CHECKOUT PAGE OVERLAY -->
 <div id="checkoutPage" class="checkout-page-overlay hidden">
   <div class="checkout-content">
     
@@ -576,7 +574,7 @@
     </div>
 
     <div class="checkout-input-group margin-top-15">
-      <label id="txnLabel">Enter 12-Digit UPI UTR / Ref No:</label>
+      <label id="txnLabel" for="checkoutTxnId">Enter 12-Digit UPI UTR / Ref No:</label>
       <input type="text" id="checkoutTxnId" placeholder="e.g. 4029XXXXXXXXXX (12-Digit UTR)" />
     </div>
 
@@ -594,6 +592,7 @@
 <script src="script.js"></script>
 <script type="module" src="firebase-config.js"></script>
 <script type="module" src="auth-handler.js"></script>
+
 <script>
   // Unified Platform Switch Click & Service Loading Handler
   function handlePlatformClick(platform, elem) {
@@ -602,7 +601,6 @@
     });
     elem.classList.add('active');
 
-    // Call existing script.js function safely
     if (typeof switchPlatform === 'function') {
       switchPlatform(platform);
     } else if (typeof loadPlatformServices === 'function') {
@@ -610,7 +608,7 @@
     }
   }
 
-  // Payment Method Switching and Dynamic Label/Placeholder Logic
+  // Payment Method Switching Logic
   function switchCheckoutPayment(method) {
     const upiView = document.getElementById('checkoutUpiView');
     const binanceView = document.getElementById('checkoutBinanceView');
@@ -641,15 +639,11 @@
   // WhatsApp Support Click Handler
   function openWhatsAppSupport() {
     const phoneNumber = "919239628344";
-    const message = encodeURIComponent(
-      "Hi 👋 I want to know about your services on rajsmmpanel.in"
-    );
-    window.open(
-      "https://wa.me/" + phoneNumber + "?text=" + message,
-      "_blank"
-    );
+    const message = encodeURIComponent("Hi 👋 I want to know about your services on rajsmmpanel.in");
+    window.open("https://wa.me/" + phoneNumber + "?text=" + message, "_blank");
   }
 
+  // Sidebar Controls
   function openSidebar() {
     const sidebar = document.getElementById("leftSidebar");
     const overlay = document.getElementById("sidebarOverlay");
@@ -684,9 +678,8 @@
       closeSidebar(false);
     }
   });
-</script>
 
-<script>
+  // Input Focus App Banner Toggle
   document.addEventListener("DOMContentLoaded", function () {
     document.body.addEventListener("focusin", function (e) {
       if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
@@ -702,9 +695,8 @@
       }
     });
   });
-</script>
 
-<script>
+  // Service Worker Registration
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./sw.js')

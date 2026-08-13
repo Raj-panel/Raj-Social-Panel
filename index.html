@@ -1,238 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<!-- Canonical Link added to solve Google Search Console issues -->
-<link rel="canonical" href="https://rajsmmpanel.in/"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Raj SMM Panel – Best India Cheapest SMM Panel for Instagram, Facebook &amp; YouTube</title>
-<meta content="Raj SMM Panel offers affordable social media marketing services for Instagram, Facebook, YouTube and more. Get Followers, Likes, Views, Comments and other SMM services at the best prices." name="description"/>
-<!-- Google Font for Custom Modern Design -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&display=swap" rel="stylesheet"/>
-<!-- PWA / Web App Manifest & Theme -->
-<link href="manifest.json" rel="manifest"/>
-<meta content="#0f172a" name="theme-color"/>
-<meta content="yes" name="apple-mobile-web-app-capable"/>
-<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
-<meta content="SMM Panel" name="apple-mobile-web-app-title"/>
-<link href="icon-192.png" rel="apple-touch-icon"/>
-<link href="style.css" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<!-- Open Graph Meta Tags -->
-<meta content="website" property="og:type"/>
-<meta content="https://rajsmmpanel.in/" property="og:url"/>
-<meta content="Raj Social Panel - Premium Social Boosting Services" property="og:title"/>
-<meta content="Get instant Followers, Likes, Views for Instagram and Facebook at lowest prices!" property="og:description"/>
-<meta content="https://rajsmmpanel.in/banner-image.png" property="og:image"/>
-<meta content="https://rajsmmpanel.in/banner-image.png" property="og:image:secure_url"/>
-<meta content="image/png" property="og:image:type"/>
-<meta content="1200" property="og:image:width"/>
-<meta content="630" property="og:image:height"/>
-<!-- Twitter Card Meta Tags -->
-<meta content="summary_large_image" name="twitter:card"/>
-<meta content="https://rajsmmpanel.in/" name="twitter:url"/>
-<meta content="Raj Social Panel - Premium Social Boosting Services" name="twitter:title"/>
-<meta content="Instant Delivery &amp; Premium Quality Social Media Services." name="twitter:description"/>
-<meta content="https://rajsmmpanel.in/banner-image.png" name="twitter:image"/>
+  <meta charset="utf-8"/>
+  <!-- Canonical Link -->
+  <link rel="canonical" href="https://rajsmmpanel.in/"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Raj SMM Panel – Best India Cheapest SMM Panel for Instagram, Facebook &amp; YouTube</title>
+  <meta content="Raj SMM Panel offers affordable social media marketing services for Instagram, Facebook, YouTube and more. Get Followers, Likes, Views, Comments and other SMM services at the best prices." name="description"/>
+  
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
+  
+  <!-- PWA Manifest & Theme -->
+  <link href="manifest.json" rel="manifest"/>
+  <meta content="#0f172a" name="theme-color"/>
+  <meta content="yes" name="apple-mobile-web-app-capable"/>
+  <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+  <meta content="SMM Panel" name="apple-mobile-web-app-title"/>
+  <link href="icon-192.png" rel="apple-touch-icon"/>
+  
+  <!-- External Libraries -->
+  <link href="style.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 
-<style>
-  /* Reference Image Matching Platform Switcher Card Container */
-  .platform-card-wrapper {
-    background: #ffffff !important;
-    border: 1px solid rgba(226, 232, 240, 0.8) !important;
-    border-radius: 20px !important;
-    padding: 14px !important;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01) !important;
-    margin-bottom: 20px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-  }
+  <!-- Open Graph Meta Tags -->
+  <meta content="website" property="og:type"/>
+  <meta content="https://rajsmmpanel.in/" property="og:url"/>
+  <meta content="Raj Social Panel - Premium Social Boosting Services" property="og:title"/>
+  <meta content="Get instant Followers, Likes, Views for Instagram and Facebook at lowest prices!" property="og:description"/>
+  <meta content="https://rajsmmpanel.in/banner-image.png" property="og:image"/>
+  <meta content="https://rajsmmpanel.in/banner-image.png" property="og:image:secure_url"/>
+  <meta content="image/png" property="og:image:type"/>
+  <meta content="1200" property="og:image:width"/>
+  <meta content="630" property="og:image:height"/>
 
-  .platform-switch-container {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    overflow-x: visible !important;
-    white-space: normal !important;
-    margin: 0 !important;
-  }
+  <!-- Twitter Card Meta Tags -->
+  <meta content="summary_large_image" name="twitter:card"/>
+  <meta content="https://rajsmmpanel.in/" name="twitter:url"/>
+  <meta content="Raj Social Panel - Premium Social Boosting Services" name="twitter:title"/>
+  <meta content="Instant Delivery &amp; Premium Quality Social Media Services." name="twitter:description"/>
+  <meta content="https://rajsmmpanel.in/banner-image.png" name="twitter:image"/>
 
-  /* Exact Card Button Styling as Reference Image */
-  .platform-switch-container .platform-btn {
-    width: 100% !important;
-    height: 52px !important;
-    background: #ffffff !important;
-    color: #1e293b !important;
-    border: 1px solid #f1f5f9 !important;
-    border-radius: 14px !important;
-    font-size: 15px !important;
-    font-weight: 700 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 10px !important;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
-    cursor: pointer !important;
-    transition: all 0.2s ease-in-out !important;
-    box-sizing: border-box !important;
-    padding: 0 12px !important;
-    margin: 0 !important;
-  }
-
-  /* Active State (Instagram Selected Style) */
-  .platform-switch-container .platform-btn.active {
-    background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%) !important;
-    color: #ffffff !important;
-    border: none !important;
-    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3) !important;
-  }
-
-  /* Icon Colors for Non-Active State */
-  .platform-switch-container .platform-btn:not(.active) i.fa-instagram { color: #e1306c !important; }
-  .platform-switch-container .platform-btn:not(.active) i.fa-facebook { color: #1877f2 !important; }
-  .platform-switch-container .platform-btn:not(.active) i.fa-youtube { color: #ff0000 !important; }
-  .platform-switch-container .platform-btn:not(.active) i.fa-tiktok { color: #000000 !important; }
-
-  .platform-switch-container .platform-btn.active i {
-    color: #ffffff !important;
-  }
-
-  /* Top Left Hamburger Button */
-  .hamburger-btn {
-    position: absolute;
-    top: -4px;
-    left: -8px;
-    z-index: 100;
-    background: rgba(30, 41, 59, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: inherit;
-    font-size: 18px;
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    backdrop-filter: blur(8px);
-    transition: all 0.3s ease;
-  }
-
-  /* Centered Title */
-  .panel-heading {
-    font-family: 'Poppins', sans-serif !important;
-    font-size: 22px !important;
-    font-weight: 400 !important;
-    font-style: italic !important;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-align: center;
-    margin: -6px 0 10px 0;
-    filter: drop-shadow(0px 2px 8px rgba(168, 85, 247, 0.4));
-  }
-
-  /* Install App Container */
-  #installContainer {
-    text-align: center;
-    margin: 40px 0 30px 0;
-    transition: all 0.3s ease-in-out;
-  }
-  .install-btn {
-    box-shadow: 0 0 20px rgba(0, 150, 255, 0.8), 0 0 40px rgba(138, 43, 226, 0.6);
-    transition: all 0.3s ease-in-out;
-  }
-  .install-btn:hover {
-    box-shadow: 0 0 30px rgba(0, 150, 255, 1), 0 0 50px rgba(138, 43, 226, 0.9);
-    transform: translateY(-2px);
-  }
-
-  /* UPI Buttons Grid */
-  .upi-app-btn-grid {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    margin-top: 4px;
-    width: 100%;
-  }
-  .upi-app-card-btn {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(226, 232, 240, 0.6);
-    border-radius: 12px;
-    padding: 8px 4px;
-    text-decoration: none;
-    color: #1e293b;
-    font-weight: 700;
-    font-size: 12px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-    pointer-events: none;
-    cursor: default;
-  }
-
-  /* Custom input width enhancements */
-  .checkout-input-group input[type="text"] {
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  /* Left Sidebar Drawer & Dark/Light Theme System */
-  .sidebar-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-    z-index: 999;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-  }
-  .sidebar-overlay.active {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .left-sidebar {
-    position: fixed;
-    top: 0;
-    left: -290px;
-    width: 280px;
-    height: 100%;
-    background-color: var(--sidebar-bg, #0f172a);
-    color: var(--sidebar-text, #cbd5e1);
-    border-right: 1px solid var(--sidebar-border, rgba(255, 255, 255, 0.1));
-    z-index: 1000;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-  }
-  .left-sidebar.active {
-    transform: translateX(290px);
-  }
-
-  :root {
-    --sidebar-bg: #0f172a;
-    --sidebar-text: #cbd5e1;
-    --sidebar-border: rgba(255, 255, 255, 0.1);
-    --sidebar-hover: rgba(168, 85, 247, 0.15);
-    --sidebar-hover-text: #ffffff;
-    --sidebar-close: #94a3b8;
-  }
-
-  @media (prefers-color-scheme: light) {
+  <style>
     :root {
+      --sidebar-bg: #0f172a;
+      --sidebar-text: #cbd5e1;
+      --sidebar-border: rgba(255, 255, 255, 0.1);
+      --sidebar-hover: rgba(168, 85, 247, 0.15);
+      --sidebar-hover-text: #ffffff;
+      --sidebar-close: #94a3b8;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --sidebar-bg: #ffffff;
+        --sidebar-text: #1e293b;
+        --sidebar-border: rgba(0, 0, 0, 0.1);
+        --sidebar-hover: rgba(168, 85, 247, 0.1);
+        --sidebar-hover-text: #000000;
+        --sidebar-close: #64748b;
+      }
+    }
+
+    body.light-mode, body.light {
       --sidebar-bg: #ffffff;
       --sidebar-text: #1e293b;
       --sidebar-border: rgba(0, 0, 0, 0.1);
@@ -240,124 +70,300 @@
       --sidebar-hover-text: #000000;
       --sidebar-close: #64748b;
     }
-  }
 
-  body.light-mode, body.light {
-    --sidebar-bg: #ffffff;
-    --sidebar-text: #1e293b;
-    --sidebar-border: rgba(0, 0, 0, 0.1);
-    --sidebar-hover: rgba(168, 85, 247, 0.1);
-    --sidebar-hover-text: #000000;
-    --sidebar-close: #64748b;
-  }
+    body.dark-mode, body.dark {
+      --sidebar-bg: #0f172a;
+      --sidebar-text: #cbd5e1;
+      --sidebar-border: rgba(255, 255, 255, 0.1);
+      --sidebar-hover: rgba(168, 85, 247, 0.15);
+      --sidebar-hover-text: #ffffff;
+      --sidebar-close: #94a3b8;
+    }
 
-  body.dark-mode, body.dark {
-    --sidebar-bg: #0f172a;
-    --sidebar-text: #cbd5e1;
-    --sidebar-border: rgba(255, 255, 255, 0.1);
-    --sidebar-hover: rgba(168, 85, 247, 0.15);
-    --sidebar-hover-text: #ffffff;
-    --sidebar-close: #94a3b8;
-  }
+    /* Platform Switcher Container */
+    .platform-card-wrapper {
+      background: #ffffff !important;
+      border: 1px solid rgba(226, 232, 240, 0.8) !important;
+      border-radius: 20px !important;
+      padding: 14px !important;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01) !important;
+      margin-bottom: 20px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
 
-  .sidebar-header {
-    padding: 20px 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--sidebar-border);
-  }
-  .sidebar-title {
-    font-family: 'Poppins', sans-serif !important;
-    font-size: 18px !important;
-    font-weight: 800 !important;
-    font-style: italic !important;
-    background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .sidebar-close-btn {
-    background: transparent;
-    border: none;
-    color: var(--sidebar-close);
-    font-size: 22px;
-    cursor: pointer;
-  }
+    .platform-switch-container {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 12px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      overflow-x: visible !important;
+      white-space: normal !important;
+      margin: 0 !important;
+    }
 
-  .sidebar-menu {
-    list-style: none;
-    padding: 15px 10px;
-    margin: 0;
-    flex: 1;
-  }
-  .sidebar-menu li {
-    margin-bottom: 6px;
-  }
-  .sidebar-menu a {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 15px;
-    color: var(--sidebar-text);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: 10px;
-    transition: background 0.2s ease, color 0.2s ease;
-  }
-  .sidebar-menu a:hover {
-    background: var(--sidebar-hover);
-    color: var(--sidebar-hover-text);
-  }
+    .platform-switch-container .platform-btn {
+      width: 100% !important;
+      height: 52px !important;
+      background: #ffffff !important;
+      color: #1e293b !important;
+      border: 1px solid #f1f5f9 !important;
+      border-radius: 14px !important;
+      font-size: 15px !important;
+      font-weight: 700 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 10px !important;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease-in-out !important;
+      box-sizing: border-box !important;
+      padding: 0 12px !important;
+      margin: 0 !important;
+    }
 
-  .sidebar-footer-media {
-    padding: 15px;
-    border-top: 1px solid var(--sidebar-border);
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+    .platform-switch-container .platform-btn.active {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%) !important;
+      color: #ffffff !important;
+      border: none !important;
+      box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3) !important;
+    }
 
-  .watch-tutorials-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background: #dc2626;
-    color: #ffffff !important;
-    font-weight: 700;
-    font-size: 14px;
-    padding: 12px;
-    border-radius: 8px;
-    text-decoration: none;
-    text-transform: uppercase;
-    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-    transition: background 0.2s ease, transform 0.2s ease;
-    text-align: center;
-  }
-  .watch-tutorials-btn:hover {
-    background: #b91c1c;
-    transform: translateY(-1px);
-  }
+    .platform-switch-container .platform-btn:not(.active) i.fa-instagram { color: #e1306c !important; }
+    .platform-switch-container .platform-btn:not(.active) i.fa-facebook { color: #1877f2 !important; }
+    .platform-switch-container .platform-btn:not(.active) i.fa-youtube { color: #ff0000 !important; }
+    .platform-switch-container .platform-btn:not(.active) i.fa-tiktok { color: #000000 !important; }
 
-  .tutorial-banner-link {
-    display: block;
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .tutorial-banner-img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 8px;
-    transition: transform 0.2s ease;
-  }
-  .tutorial-banner-link:hover .tutorial-banner-img {
-    transform: scale(1.02);
-  }
-</style>
+    .platform-switch-container .platform-btn.active i {
+      color: #ffffff !important;
+    }
+
+    /* Top Left Hamburger Button */
+    .hamburger-btn {
+      position: absolute;
+      top: -4px;
+      left: -8px;
+      z-index: 100;
+      background: rgba(30, 41, 59, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: inherit;
+      font-size: 18px;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+    }
+
+    /* Centered Title */
+    .panel-heading {
+      font-family: 'Poppins', sans-serif !important;
+      font-size: 22px !important;
+      font-weight: 400 !important;
+      font-style: italic !important;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+      margin: -6px 0 10px 0;
+      filter: drop-shadow(0px 2px 8px rgba(168, 85, 247, 0.4));
+    }
+
+    /* Install App Container */
+    #installContainer {
+      text-align: center;
+      margin: 40px 0 30px 0;
+      transition: all 0.3s ease-in-out;
+    }
+    .install-btn {
+      box-shadow: 0 0 20px rgba(0, 150, 255, 0.8), 0 0 40px rgba(138, 43, 226, 0.6);
+      transition: all 0.3s ease-in-out;
+    }
+    .install-btn:hover {
+      box-shadow: 0 0 30px rgba(0, 150, 255, 1), 0 0 50px rgba(138, 43, 226, 0.9);
+      transform: translateY(-2px);
+    }
+
+    /* UPI Buttons Grid */
+    .upi-app-btn-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 4px;
+      width: 100%;
+    }
+    .upi-app-card-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(226, 232, 240, 0.6);
+      border-radius: 12px;
+      padding: 8px 4px;
+      text-decoration: none;
+      color: #1e293b;
+      font-weight: 700;
+      font-size: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .checkout-input-group input[type="text"] {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Left Sidebar Overlay & Panel */
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .sidebar-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .left-sidebar {
+      position: fixed;
+      top: 0;
+      left: -290px;
+      width: 280px;
+      height: 100%;
+      background-color: var(--sidebar-bg, #0f172a);
+      color: var(--sidebar-text, #cbd5e1);
+      border-right: 1px solid var(--sidebar-border, rgba(255, 255, 255, 0.1));
+      z-index: 1000;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .left-sidebar.active {
+      transform: translateX(290px);
+    }
+
+    .sidebar-header {
+      padding: 20px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--sidebar-border);
+    }
+    .sidebar-title {
+      font-family: 'Poppins', sans-serif !important;
+      font-size: 18px !important;
+      font-weight: 800 !important;
+      font-style: italic !important;
+      background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .sidebar-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--sidebar-close);
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      padding: 15px 10px;
+      margin: 0;
+      flex: 1;
+    }
+    .sidebar-menu li {
+      margin-bottom: 6px;
+    }
+    .sidebar-menu a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 15px;
+      color: var(--sidebar-text);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 10px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .sidebar-menu a:hover {
+      background: var(--sidebar-hover);
+      color: var(--sidebar-hover-text);
+    }
+
+    .sidebar-footer-media {
+      padding: 15px;
+      border-top: 1px solid var(--sidebar-border);
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .watch-tutorials-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #dc2626;
+      color: #ffffff !important;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+      transition: background 0.2s ease, transform 0.2s ease;
+      text-align: center;
+    }
+    .watch-tutorials-btn:hover {
+      background: #b91c1c;
+      transform: translateY(-1px);
+    }
+
+    .tutorial-banner-link {
+      display: block;
+      width: 100%;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .tutorial-banner-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+      transition: transform 0.2s ease;
+    }
+    .tutorial-banner-link:hover .tutorial-banner-img {
+      transform: scale(1.02);
+    }
+    
+    .hidden {
+      display: none !important;
+    }
+  </style>
 </head>
 <body>
 
@@ -413,7 +419,7 @@
     </a>
   </div>
 
-  <!-- Platform Switcher (Matching Reference Image Exact Design) -->
+  <!-- Platform Switcher -->
   <div class="platform-card-wrapper">
     <div class="platform-switch-container">
       <button class="platform-btn active" id="btnInsta" onclick="handlePlatformClick('instagram', this)">
@@ -478,7 +484,7 @@
   </div>
 </div>
 
-<!-- NEW PAYMENT / CHECKOUT PAGE OVERLAY -->
+<!-- CHECKOUT PAGE OVERLAY -->
 <div id="checkoutPage" class="checkout-page-overlay hidden">
   <div class="checkout-content">
     
@@ -594,6 +600,7 @@
 <script src="script.js"></script>
 <script type="module" src="firebase-config.js"></script>
 <script type="module" src="auth-handler.js"></script>
+
 <script>
   // Unified Platform Switch Click & Service Loading Handler
   function handlePlatformClick(platform, elem) {
@@ -602,7 +609,6 @@
     });
     elem.classList.add('active');
 
-    // Call existing script.js function safely
     if (typeof switchPlatform === 'function') {
       switchPlatform(platform);
     } else if (typeof loadPlatformServices === 'function') {
@@ -650,6 +656,7 @@
     );
   }
 
+  // Navigation Drawer Control Logic
   function openSidebar() {
     const sidebar = document.getElementById("leftSidebar");
     const overlay = document.getElementById("sidebarOverlay");
@@ -684,9 +691,8 @@
       closeSidebar(false);
     }
   });
-</script>
 
-<script>
+  // UI Adjustment on Focus
   document.addEventListener("DOMContentLoaded", function () {
     document.body.addEventListener("focusin", function (e) {
       if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
@@ -702,9 +708,8 @@
       }
     });
   });
-</script>
 
-<script>
+  // Service Worker Registration
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./sw.js')

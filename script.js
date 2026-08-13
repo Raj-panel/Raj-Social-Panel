@@ -385,7 +385,7 @@ const serviceData = {
             { name: "100 TikTok Video Views", price: 5, desc: "High Quality Real Views • Lifetime Refill" },
             { name: "500 TikTok Video Views", price: 15, desc: "High Quality Real Views • Lifetime Refill" },
             { name: "1K TikTok Video Views", price: 25, desc: "High Quality Real Views • Lifetime Refill" },
-            { name: "5K TikTok Video Views", price: 99, desc: "High Quality Real Views • Lifetime Refill" },
+            { name: "5K TikTok Video Views", price: 199, desc: "High Quality Real Views • Lifetime Refill" },
             { name: "10K TikTok Video Views", price: 249, desc: "High Quality Real Views • Lifetime Refill" }
         ]
     }

@@ -36,6 +36,23 @@
 <meta content="https://rajsmmpanel.in/banner-image.png" name="twitter:image"/>
 
 <style>
+  /* STRICT 2-COLUMN GRID FOR PLATFORM SWITCHER */
+  .platform-switch-container {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: visible !important;
+    white-space: normal !important;
+    margin-bottom: 15px !important;
+  }
+
+  .platform-switch-container .platform-btn {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
   /* Top Left Hamburger Button */
   .hamburger-btn {
     position: absolute;
@@ -359,7 +376,7 @@
     </a>
   </div>
 
-  <!-- Platform Switcher -->
+  <!-- Platform Switcher (Strict 2-Column Row Layout) -->
   <div class="platform-switch-container">
     <button class="platform-btn active" id="btnInsta" onclick="switchPlatform('instagram')">
       <i class="fa-brands fa-instagram"></i> Instagram

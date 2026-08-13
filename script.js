@@ -6,7 +6,7 @@
     const style = document.createElement("style");
     style.id = "fixedLayoutCss";
     style.innerHTML = `
-        /* 1. Adjusted Fixed Hero Banner Height (Prevents text clipping and layout shifts) */
+        /* 1. Adjusted Fixed Hero Banner Height */
         .hero-banner, .hero-card, .instagram-boost-card {
             height: auto !important;
             min-height: 180px !important;
@@ -32,7 +32,7 @@
         }
 
         @media screen and (max-width: 768px) {
-            /* 2. Checkout Ultra-Compact Vertical Height (No Scroll / Minimal Scroll) */
+            /* 2. Checkout Ultra-Compact Vertical Height */
             #checkoutPage { 
                 padding: 4px 8px !important; 
                 max-width: 440px !important; 
@@ -73,7 +73,7 @@
                 width: 110px !important; 
                 height: 110px !important; 
                 object-fit: contain !important; 
-                margin: 2 auto !important; 
+                margin: 2px auto !important; 
                 padding: 4px !important; 
                 border-radius: 10px !important; 
             }
@@ -123,12 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 const serviceData = {
-
-    // ==========================================
-    // INSTAGRAM
-    // ==========================================
     instagram: {
-
         "Followers Non-Drop": [
             {
                 type: "custom",
@@ -137,7 +132,6 @@ const serviceData = {
                 pricePer1000: 80
             }
         ],
-
         "Followers": [
             { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo" },
             { name: "1K Followers", price: 50 },
@@ -151,7 +145,6 @@ const serviceData = {
             { name: "9K Followers", price: 359 },
             { name: "10K Followers", price: 399, badge: "🎁 BUY 10K + GET 2K FREE", badgeClass: "badge-super" }
         ],
-
         "Likes Lifetime": [
             { providerId: 675, name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo" },
             { providerId: 675, name: "500 Likes", price: 25 },
@@ -160,7 +153,6 @@ const serviceData = {
             { providerId: 675, name: "5K Likes", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" },
             { providerId: 675, name: "10K Likes", price: 179, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
-
         "REAL Reels / Video Views": [
             { providerId: 853, name: "1K Views", price: 5, badge: "DEMO", badgeClass: "badge-demo" },
             { providerId: 853, name: "5K Views", price: 9 },
@@ -171,7 +163,6 @@ const serviceData = {
             { providerId: 853, name: "500K Views", price: 299 },
             { providerId: 853, name: "1M Views", price: 499, badge: "💥 MEGA DEAL", badgeClass: "badge-best" }
         ],
-
         "REAL Photo / Post Views": [
             { providerId: 1030, name: "1K Views", price: 10, badge: "🎯 Demo", badgeClass: "badge-demo" },
             { providerId: 1030, name: "3K Views", price: 15 },
@@ -181,14 +172,12 @@ const serviceData = {
             { providerId: 1030, name: "50K Views", price: 119 },
             { providerId: 1030, name: "100K Views", price: 220, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
-
         "REAL Comments Lifetime": [
             { providerId: 31, name: "50 Comments", price: 15, badge: "Starter", badgeClass: "badge-demo" },
             { providerId: 31, name: "100 Comments", price: 20 },
             { providerId: 31, name: "500 Comments", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
             { providerId: 31, name: "1K Comments", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" }
         ],
-
         "REAL Repost Lifetime": [
             { providerId: 505, name: "50 Reposts", price: 15, badge: "Starter", badgeClass: "badge-demo" },
             { providerId: 505, name: "100 Reposts", price: 20 },
@@ -196,14 +185,12 @@ const serviceData = {
             { providerId: 505, name: "1K Reposts", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" },
             { providerId: 505, name: "3K Reposts", price: 249, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
-
         "REAL Shares Lifetime": [
             { providerId: 50, name: "100 Shares", price: 5, badge: "Starter", badgeClass: "badge-demo" },
             { providerId: 50, name: "1K Shares", price: 30 },
             { providerId: 50, name: "5K Shares", price: 69, badge: "🔥 Best Value", badgeClass: "badge-best" },
             { providerId: 50, name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
-
         "🔥 Reels Combo Service": [
             {
                 name: "Reels Viral Package",
@@ -282,16 +269,10 @@ const serviceData = {
             }
         ]
     },
-
-    // ==========================================
-    // FACEBOOK
-    // ==========================================
     facebook: {
-
         "Facebook Followers": [
             { type: "custom", name: "Facebook Followers", pricePer1000: 49 }
         ],
-
         "Likes Non-Drop": [
             { name: "100 Likes", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
             { name: "500 Likes", price: 25 },
@@ -300,7 +281,6 @@ const serviceData = {
             { name: "5K Likes", price: 99, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
             { name: "10K Likes", price: 179, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
         ],
-
         "Reels / Video Views": [
             { name: "1K Views", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
             { name: "3K Views", price: 25 },
@@ -309,7 +289,6 @@ const serviceData = {
             { name: "50K Views", price: 249, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
             { name: "100K Views", price: 449, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
         ],
-
         "Facebook Comments": [
             { name: "50 Comments", price: 10 },
             { name: "100 Comments", price: 15 },
@@ -319,7 +298,6 @@ const serviceData = {
             { name: "2K Comments", price: 110, badge: "🏆 Best Deal", badgeClass: "badge-best" },
             { name: "5K Comments", price: 260, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
-
         "Facebook Shares": [
             { name: "100 Shares", price: 15 },
             { name: "1K Shares", price: 25 },
@@ -329,10 +307,6 @@ const serviceData = {
             { name: "100K Shares", price: 399, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ]
     },
-
-    // ==========================================
-    // YOUTUBE SERVICES
-    // ==========================================
     youtube: {
         "YouTube Subscribe — Non Drop": [
             { name: "100 Subscribers", price: 249, desc: "High Quality Indian Subscribers" },
@@ -362,10 +336,6 @@ const serviceData = {
             { name: "1K Live Stream Views — 90 Mins", price: 99, desc: "Live Views for 90 Minutes" }
         ]
     },
-
-    // ==========================================
-    // TIKTOK SERVICES
-    // ==========================================
     tiktok: {
         "TikTok Followers": [
             { name: "100 TikTok Followers", price: 20, desc: "90 Days Refill" },
@@ -391,10 +361,7 @@ const serviceData = {
     }
 };
 
-// ==========================================
-// GLOBAL VARIABLES
-// ==========================================
-
+// Global Application State
 let currentPlatform = "instagram";
 let currentCategory = "";
 let selectedPackage = null;
@@ -404,55 +371,46 @@ window.onload = function () {
     switchPlatform("instagram");
 };
 
-window.addEventListener('popstate', function (event) {
+window.addEventListener('popstate', function () {
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage && (checkoutPage.style.display === "block" || !checkoutPage.classList.contains("hidden"))) {
         closeCheckoutUI();
     }
 });
 
-// ==========================================
-// SWITCH PLATFORM (INSTAGRAM / FACEBOOK / YOUTUBE / TIKTOK)
-// ==========================================
-
 function switchPlatform(platform) {
     currentPlatform = platform;
     selectedPackage = null;
 
-    const btnInsta = document.getElementById("btnInsta");
-    const btnFb = document.getElementById("btnFb");
-    const btnYt = document.getElementById("btnYt");
-    const btnTt = document.getElementById("btnTt");
+    const btnMap = {
+        instagram: document.getElementById("btnInsta"),
+        facebook: document.getElementById("btnFb"),
+        youtube: document.getElementById("btnYt"),
+        tiktok: document.getElementById("btnTt")
+    };
 
-    if (btnInsta) btnInsta.classList.toggle("active", platform === "instagram");
-    if (btnFb) btnFb.classList.toggle("active", platform === "facebook");
-    if (btnYt) btnYt.classList.toggle("active", platform === "youtube");
-    if (btnTt) btnTt.classList.toggle("active", platform === "tiktok");
+    Object.keys(btnMap).forEach(p => {
+        if (btnMap[p]) btnMap[p].classList.toggle("active", p === platform);
+    });
 
     const heroTitle = document.getElementById("heroTitle");
     const heroLogoIcon = document.getElementById("heroLogoIcon");
 
-    if (platform === "instagram") {
-        if (heroTitle) heroTitle.innerText = "Instagram Boost";
-        if (heroLogoIcon) heroLogoIcon.innerHTML = '<i class="fa-brands fa-instagram"></i>';
-    } else if (platform === "facebook") {
-        if (heroTitle) heroTitle.innerText = "Facebook Boost";
-        if (heroLogoIcon) heroLogoIcon.innerHTML = '<i class="fa-brands fa-facebook"></i>';
-    } else if (platform === "youtube") {
-        if (heroTitle) heroTitle.innerText = "YouTube Boost";
-        if (heroLogoIcon) heroLogoIcon.innerHTML = '<i class="fa-brands fa-youtube"></i>';
-    } else if (platform === "tiktok") {
-        if (heroTitle) heroTitle.innerText = "TikTok Boost";
-        if (heroLogoIcon) heroLogoIcon.innerHTML = '<i class="fa-brands fa-tiktok"></i>';
+    const platformConfigs = {
+        instagram: { title: "Instagram Boost", icon: '<i class="fa-brands fa-instagram"></i>' },
+        facebook: { title: "Facebook Boost", icon: '<i class="fa-brands fa-facebook"></i>' },
+        youtube: { title: "YouTube Boost", icon: '<i class="fa-brands fa-youtube"></i>' },
+        tiktok: { title: "TikTok Boost", icon: '<i class="fa-brands fa-tiktok"></i>' }
+    };
+
+    if (platformConfigs[platform]) {
+        if (heroTitle) heroTitle.innerText = platformConfigs[platform].title;
+        if (heroLogoIcon) heroLogoIcon.innerHTML = platformConfigs[platform].icon;
     }
 
     renderCategoryTabs();
     toggleInstallButton();
 }
-
-// ==========================================
-// RENDER CATEGORY TABS
-// ==========================================
 
 function renderCategoryTabs() {
     const tabsContainer = document.getElementById("categoryTabs");
@@ -482,10 +440,6 @@ function renderCategoryTabs() {
     renderPackages();
 }
 
-// ==========================================
-// RENDER PACKAGES
-// ==========================================
-
 function renderPackages() {
     const packageList = document.getElementById("packageList");
     if (!packageList) return;
@@ -494,10 +448,13 @@ function renderPackages() {
     selectedPackage = null;
 
     const packages = serviceData[currentPlatform]?.[currentCategory] || [];
-    let iconClass = "fa-instagram";
-    if (currentPlatform === "facebook") iconClass = "fa-facebook";
-    else if (currentPlatform === "youtube") iconClass = "fa-youtube";
-    else if (currentPlatform === "tiktok") iconClass = "fa-tiktok";
+    const iconClassMap = {
+        facebook: "fa-facebook",
+        youtube: "fa-youtube",
+        tiktok: "fa-tiktok",
+        instagram: "fa-instagram"
+    };
+    const iconClass = iconClassMap[currentPlatform] || "fa-instagram";
 
     packages.forEach((pkg) => {
         if (pkg.type === "custom") {
@@ -614,7 +571,6 @@ function renderPackages() {
                 );
             };
 
-            // Dynamic Subtitle Text Engine
             const subtitleText = pkg.desc ? pkg.desc : "⚡ Fast Delivery • Premium Quality";
 
             card.innerHTML = `
@@ -644,10 +600,6 @@ function renderPackages() {
     });
 }
 
-// ==========================================
-// CUSTOM PRICE CALCULATOR & MINIMUM 100 CHECK
-// ==========================================
-
 function calculateCustomPrice(serviceName, ratePer1000, providerId) {
     const qtyInput = document.getElementById("customQtyInput");
     const qty = parseInt(qtyInput ? qtyInput.value : 0) || 0;
@@ -664,7 +616,7 @@ function calculateCustomPrice(serviceName, ratePer1000, providerId) {
         if (calcPriceSpan) calcPriceSpan.innerText = total.toFixed(2);
 
         selectedPackage = {
-            name: `${qty} ${serviceName}`,
+            name: `${qty.toLocaleString()} ${serviceName}`,
             price: total,
             providerId: providerId,
             quantity: qty,
@@ -690,10 +642,6 @@ function extractQuantity(name) {
 
     return Math.floor(number);
 }
-
-// =====================================================
-// DYNAMIC LINK LABEL & PLACEHOLDER RULES
-// =====================================================
 
 function getLinkConfig(platform, category) {
     const p = (platform || "").toLowerCase();
@@ -772,10 +720,6 @@ function getLinkConfig(platform, category) {
     };
 }
 
-// =====================================================
-// DYNAMIC PRICE DEDUCTION ENGINE
-// =====================================================
-
 function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUnitQty, baseUnitPrice) {
     const platformData = serviceData[platformKey.toLowerCase()];
     if (!platformData || !platformData[categoryKey]) {
@@ -818,10 +762,6 @@ function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUni
 
     return totalPrice;
 }
-
-// ==========================================
-// CHECKOUT & QUANTITY COUNTER LOGIC
-// ==========================================
 
 function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge) {
     currentCheckoutData = {
@@ -870,6 +810,7 @@ function openCheckoutFromCustom() {
 
 function updateCheckoutQuantityDisplay() {
     const d = currentCheckoutData;
+    if (!d || !d.baseQuantity) return;
     
     d.quantity = d.baseQuantity * d.multiplier;
 
@@ -890,9 +831,10 @@ function updateCheckoutQuantityDisplay() {
     const priceEl = document.getElementById("checkoutPriceText");
     if (priceEl) priceEl.innerText = `${d.price.toFixed(2)}`;
 
-    if (document.getElementById("checkoutUsdtAmount")) {
+    const usdtEl = document.getElementById("checkoutUsdtAmount");
+    if (usdtEl) {
         const usdt = (d.price / 88).toFixed(2);
-        document.getElementById("checkoutUsdtAmount").innerText = `$${usdt} USDT`;
+        usdtEl.innerText = `$${usdt} USDT`;
     }
 
     const upiId = "rajpanel@axl";
@@ -916,7 +858,7 @@ function triggerUpiPay(appType) {
     const name = "RajSocialPanel";
     const note = encodeURIComponent(d.packageName || "Social Boost Service");
 
-    let deepLink = "";
+    let deepLink = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
 
     if (appType === "paytm") {
         deepLink = `paytmmp://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
@@ -924,14 +866,14 @@ function triggerUpiPay(appType) {
         deepLink = `tez://upi/pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
     } else if (appType === "phonepe") {
         deepLink = `phonepe://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
-    } else {
-        deepLink = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
     }
 
     window.location.href = deepLink;
 
     setTimeout(() => {
-        window.location.href = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
+        if (!document.hidden) {
+            window.location.href = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
+        }
     }, 1200);
 }
 
@@ -952,26 +894,23 @@ function showCheckoutOverlay() {
 
     const iconBox = document.getElementById("checkoutPlatformIcon");
     if (iconBox) {
-        const pLower = d.platform.toLowerCase();
-        if (pLower === "facebook") {
-            iconBox.innerHTML = `<i class="fa-brands fa-facebook"></i>`;
-        } else if (pLower === "youtube") {
-            iconBox.innerHTML = `<i class="fa-brands fa-youtube"></i>`;
-        } else if (pLower === "tiktok") {
-            iconBox.innerHTML = `<i class="fa-brands fa-tiktok"></i>`;
-        } else {
-            iconBox.innerHTML = `<i class="fa-brands fa-instagram"></i>`;
-        }
+        const pLower = (d.platform || "").toLowerCase();
+        const iconClasses = {
+            facebook: '<i class="fa-brands fa-facebook"></i>',
+            youtube: '<i class="fa-brands fa-youtube"></i>',
+            tiktok: '<i class="fa-brands fa-tiktok"></i>'
+        };
+        iconBox.innerHTML = iconClasses[pLower] || '<i class="fa-brands fa-instagram"></i>';
     }
 
-    if (document.getElementById("checkoutServiceTitle"))
-        document.getElementById("checkoutServiceTitle").innerText = `${d.platform} - ${d.serviceName}`;
+    const titleEl = document.getElementById("checkoutServiceTitle");
+    if (titleEl) titleEl.innerText = `${d.platform} - ${d.serviceName}`;
 
-    if (document.getElementById("checkoutPkgBadgeName"))
-        document.getElementById("checkoutPkgBadgeName").innerText = d.packageName;
+    const badgeNameEl = document.getElementById("checkoutPkgBadgeName");
+    if (badgeNameEl) badgeNameEl.innerText = d.packageName;
 
-    if (document.getElementById("checkoutBadge"))
-        document.getElementById("checkoutBadge").innerText = d.badge;
+    const badgeEl = document.getElementById("checkoutBadge");
+    if (badgeEl) badgeEl.innerText = d.badge;
 
     let counterContainer = document.getElementById("checkoutQtyCounterBox");
     const priceEl = document.getElementById("checkoutPriceText");
@@ -1038,9 +977,7 @@ function showCheckoutOverlay() {
     const linkLabel = document.getElementById("checkoutLinkLabel");
     const linkInput = document.getElementById("checkoutLinkInput");
 
-    if (linkLabel) {
-        linkLabel.innerText = linkConfig.label;
-    }
+    if (linkLabel) linkLabel.innerText = linkConfig.label;
     if (linkInput) {
         linkInput.value = "";
         linkInput.placeholder = linkConfig.placeholder;
@@ -1092,6 +1029,15 @@ function switchCheckoutPayment(type) {
     }
 }
 
+function isValidUrl(string) {
+    try {
+        new URL(string);
+        return true;
+    } catch (_) {
+        return false;
+    }
+}
+
 function submitOrderToWhatsApp() {
     const linkInput = document.getElementById("checkoutLinkInput");
     const txnInput = document.getElementById("checkoutTxnId");
@@ -1101,6 +1047,11 @@ function submitOrderToWhatsApp() {
 
     if (!link) {
         alert("Please enter your Social Media Link!");
+        return;
+    }
+
+    if (!isValidUrl(link) && !link.includes("http")) {
+        alert("Please enter a valid URL (starting with http:// or https://)");
         return;
     }
 
@@ -1143,26 +1094,21 @@ function submitOrderToWhatsApp() {
     const d = currentCheckoutData;
 
     const formattedMessage = 
-        `🚀 *NEW ORDER SUBMITTED* 🚀%0A%0A` +
-        `🆔 *Order ID:* #${orderIdVal}%0A` +
-        `📌 *Social Media:* ${d.platform || ''}%0A` +
-        `🛠️ *Service Name:* ${d.serviceName || ''}%0A` +
-        `📦 *Package:* ${d.packageName || ''}%0A` +
-        `🔢 *Total Quantity:* ${(d.quantity || 0).toLocaleString()}%0A` +
-        `💰 *Total Price:* ₹${(d.price || 0).toFixed(2)}%0A` +
-        `🔗 *Target Link:* ${link}%0A` +
-        `💳 *Payment Method:* ${payMethod}%0A` +
+        `🚀 *NEW ORDER SUBMITTED* 🚀\n\n` +
+        `🆔 *Order ID:* #${orderIdVal}\n` +
+        `📌 *Social Media:* ${d.platform || ''}\n` +
+        `🛠️ *Service Name:* ${d.serviceName || ''}\n` +
+        `📦 *Package:* ${d.packageName || ''}\n` +
+        `🔢 *Total Quantity:* ${(d.quantity || 0).toLocaleString()}\n` +
+        `💰 *Total Price:* ₹${(d.price || 0).toFixed(2)}\n` +
+        `🔗 *Target Link:* ${link}\n` +
+        `💳 *Payment Method:* ${payMethod}\n` +
         `🧾 *Transaction ID / UTR:* ${txnId}`;
 
-    const encodedMessage = encodeURIComponent(decodeURIComponent(formattedMessage));
-    const waUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedMessage}`;
+    const waUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(formattedMessage)}`;
 
     window.open(waUrl, "_blank");
 }
-
-// =====================================================
-// PWA INSTALL APP LOGIC
-// =====================================================
 
 let deferredPrompt = null;
 
@@ -1208,16 +1154,24 @@ window.addEventListener("appinstalled", () => {
     deferredPrompt = null;
 });
 
-// =========================================================
-// NEW: SECURE WALLET & ORDER DEDUCTION INTEGRATION
-// =========================================================
 async function submitOrderWithWallet() {
     const linkInput = document.getElementById("checkoutLinkInput");
+    const walletBtn = document.getElementById("submitWalletBtn");
     const link = linkInput ? linkInput.value.trim() : "";
     const orderAmount = currentCheckoutData.price;
 
     if (!link) {
         alert("Please enter your Social Media Link!");
+        return;
+    }
+
+    if (!isValidUrl(link) && !link.includes("http")) {
+        alert("Please enter a valid URL (starting with http:// or https://)");
+        return;
+    }
+
+    if (typeof firebase === 'undefined' || !firebase.auth) {
+        alert("Authentication system unavailable.");
         return;
     }
 
@@ -1228,28 +1182,28 @@ async function submitOrderWithWallet() {
         return;
     }
 
+    if (walletBtn) walletBtn.disabled = true;
+
     const db = firebase.firestore();
     const userRef = db.collection('users').doc(user.uid);
 
     try {
         await db.runTransaction(async (transaction) => {
             const userDoc = await transaction.get(userRef);
-            if (!userDoc.exists) throw "User account not found!";
+            if (!userDoc.exists) throw new Error("User account not found!");
 
             const userData = userDoc.data();
             const balance = userData.walletBalance || 0;
 
             if (balance < orderAmount) {
-                throw "Insufficient Wallet Balance. Please Add Funds first.";
+                throw new Error("Insufficient Wallet Balance. Please Add Funds first.");
             }
 
-            // Wallet Deduction & Total Spent Update
             transaction.update(userRef, {
                 walletBalance: balance - orderAmount,
                 totalSpent: (userData.totalSpent || 0) + orderAmount
             });
 
-            // Record Debit Transaction
             const txRef = db.collection('walletTransactions').doc();
             transaction.set(txRef, {
                 uid: user.uid,
@@ -1265,5 +1219,7 @@ async function submitOrderWithWallet() {
 
     } catch (error) {
         alert("Error: " + (error.message || error));
+    } finally {
+        if (walletBtn) walletBtn.disabled = false;
     }
 }

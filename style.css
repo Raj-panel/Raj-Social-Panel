@@ -65,7 +65,7 @@ body {
     border: none;
     border-radius: 10px;
     font-weight: 800;
-    font-size: 12px;
+    font-size: 10px;
     background: transparent;
     color: #64748b;
     cursor: pointer;
@@ -85,10 +85,10 @@ body {
 /* Hero Status Banner (উচ্চতা ও প্যাডিং কমানো হয়েছে) */
 .hero-banner {
     background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
-    border-radius: 16px;
+    border-radius: 14px;
     padding: 2px 14px;
     color: #ffffff;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     position: relative;
     overflow: hidden;
     box-shadow: 0 6px 20px rgba(236, 72, 153, 0.2);
@@ -103,7 +103,7 @@ body {
 
 .hero-logo-box {
     width: 28px;
-    height: 2px;
+    height: 24px;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     display: flex;

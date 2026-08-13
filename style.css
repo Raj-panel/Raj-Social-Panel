@@ -658,7 +658,7 @@ input:focus { border-color: #d946ef; background: #ffffff; }
 
 .checkout-input-group input {
   width: 100%;
-  padding: 12px 14px;
+  padding: 16px 14px;
   background: #ffffff;
   border: 1.5px solid #c084fc;
   border-radius: 14px;
@@ -722,7 +722,7 @@ input:focus { border-color: #d946ef; background: #ffffff; }
 
 .qr-wrapper {
   display: inline-block;
-  padding: 10px;
+  padding: 2px;
   background: #ffffff;
   border: 1.5px solid #d8b4fe;
   border-radius: 18px;
@@ -731,8 +731,8 @@ input:focus { border-color: #d946ef; background: #ffffff; }
 }
 
 .qr-wrapper img {
-  width: 180px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   border-radius: 10px;
   display: block;
 }

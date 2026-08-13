@@ -41,7 +41,7 @@
             }
             #checkoutPage .checkout-card, #checkoutPage .card-box { 
                 margin-bottom: 4px !important; 
-                padding: 4px 8px !important; 
+                padding: 6px 8px !important; 
             }
             #checkoutPage .input-box { 
                 margin-bottom: 4px !important; 
@@ -49,7 +49,7 @@
             #checkoutPage input { 
                 padding: 2px 6px !important; 
                 font-size: 11px !important; 
-                height: 30px !important; 
+                height: 36px !important; 
             }
             #checkoutUpiView { 
                 padding: 0px !important; 
@@ -70,11 +70,11 @@
                 -webkit-text-fill-color: transparent !important; 
             }
             #checkoutUpiView img { 
-                width: 110px !important; 
-                height: 110px !important; 
+                width: 120px !important; 
+                height: 120px !important; 
                 object-fit: contain !important; 
                 margin: 2px auto !important; 
-                padding: 4px !important; 
+                padding: 0px !important; 
                 border-radius: 10px !important; 
             }
             .upi-app-btn-grid { 

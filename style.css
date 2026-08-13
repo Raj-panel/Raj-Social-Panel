@@ -50,14 +50,13 @@ body {
 /* Platform Switcher Container (১. Outer Container Border পাতলা 1px করা হলো) */
 .platform-switch-container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
+    gap: 8px;
     background: #ffffff;
-    padding: 3px !important;
-    border-radius: 14px;
-    margin-bottom: 10px;
-    border: 1px solid #e2e8f0 !important; /* Subtle thin 1px border */
+    padding: 1px;
+    border-radius: 16px;
+    margin-bottom: 12px;
     box-shadow: 0 4px 15px rgba(236, 72, 153, 0.08);
+}
 }
 
 .platform-btn {
@@ -86,13 +85,13 @@ body {
 /* Hero Status Banner (২. তিনটি বক্সের নিচের empty space কমানো হলো) */
 .hero-banner {
     background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
-    border-radius: 16px;
-    padding: 10px 12px 2px 12px !important; /* Bottom padding কমিয়ে 2px করা হলো */
+    border-radius: 20px;
+    padding: 18px 16px 8px;
     color: #ffffff;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 6px 20px rgba(236, 72, 153, 0.2);
+    box-shadow: 0 8px 25px rgba(236, 72, 153, 0.25);
 }
 
 .hero-top-row {

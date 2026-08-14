@@ -1,207 +1,236 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn" data-platform="instagram">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Media Growth Panel</title>
-    <!-- Font Awesome Icons -->
+    <title>Raj SMM Panel - Social Media Services</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#d946ef">
+
+    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Main Style Sheet -->
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body data-platform="instagram">
+<body>
 
     <div class="main-wrapper">
 
-        <!-- Top Header & Support Actions -->
+        <!-- Heading / Branding -->
+        <h1 class="panel-heading">RAJ SMM PANEL</h1>
+
+        <!-- Install PWA Button Container -->
+        <div id="installContainer">
+            <button id="installBtn" class="install-btn">
+                <i class="fa-solid fa-download"></i> App InStall
+            </button>
+        </div>
+
+        <!-- Support Header / Top Actions -->
         <div class="hero-actions">
-            <a href="https://t.me/your_telegram" target="_blank" class="glass-btn btn-telegram">
-                <i class="fa-brands fa-telegram"></i> Telegram
+            <a href="https://t.me/rajsmmpanel" target="_blank" class="glass-btn btn-telegram">
+                <i class="fa-brands fa-telegram"></i> Telegram Support
             </a>
             <a href="https://wa.me/910000000000" target="_blank" class="glass-btn btn-whatsapp">
-                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp Support
             </a>
         </div>
 
-        <!-- Platform Switcher Header -->
+        <!-- Platform Switcher Buttons -->
         <div class="platform-switch-container">
-            <button id="btnInsta" class="platform-btn active" onclick="handlePlatformClick('instagram', this)">
+            <button class="platform-btn active" id="btnInsta" onclick="switchPlatform('instagram')">
                 <i class="fa-brands fa-instagram"></i> Instagram
             </button>
-            <button id="btnFb" class="platform-btn" onclick="handlePlatformClick('facebook', this)">
+            <button class="platform-btn" id="btnFb" onclick="switchPlatform('facebook')">
                 <i class="fa-brands fa-facebook"></i> Facebook
             </button>
-            <button id="btnYt" class="platform-btn" onclick="handlePlatformClick('youtube', this)">
+            <button class="platform-btn" id="btnYt" onclick="switchPlatform('youtube')">
                 <i class="fa-brands fa-youtube"></i> YouTube
             </button>
-            <button id="btnTt" class="platform-btn" onclick="handlePlatformClick('tiktok', this)">
+            <button class="platform-btn" id="btnTt" onclick="switchPlatform('tiktok')">
                 <i class="fa-brands fa-tiktok"></i> TikTok
             </button>
         </div>
 
-        <!-- Hero Status Banner -->
+        <!-- Dynamic Hero Status Banner -->
         <div class="hero-banner">
             <div class="hero-top-row">
-                <div class="hero-logo-box">
-                    <i id="heroLogoIcon" class="fa-brands fa-instagram"></i>
+                <div class="hero-logo-box" id="heroLogoIcon">
+                    <i class="fa-brands fa-instagram"></i>
                 </div>
-                <span class="provider-badge">INSTANT SERVICE</span>
+                <span class="provider-badge">AUTOMATED PANEL</span>
             </div>
-            <h2 id="heroTitle">Instagram Boost</h2>
-            <p class="hero-sub">Fast delivery, non-drop quality & 24/7 service support.</p>
-            
+            <h2 id="heroTitle">Instagram Growth Services</h2>
+            <p class="hero-sub">Fast Delivery & Guaranteed Best Rate</p>
+
             <div class="hero-stats-grid">
                 <div class="stat-card">
-                    <i class="fa-solid fa-bolt stat-icon"></i>
-                    <span class="stat-num">0-5m</span>
-                    <span class="stat-lbl">Speed</span>
+                    <span class="stat-icon"><i class="fa-solid fa-bolt"></i></span>
+                    <span class="stat-num">Instant</span>
+                    <span class="stat-lbl">Start</span>
                 </div>
                 <div class="stat-card">
-                    <i class="fa-solid fa-shield-halved stat-icon"></i>
+                    <span class="stat-icon"><i class="fa-solid fa-shield-halved"></i></span>
                     <span class="stat-num">100%</span>
-                    <span class="stat-lbl">Safe</span>
+                    <span class="stat-lbl">Refill Safe</span>
                 </div>
                 <div class="stat-card">
-                    <i class="fa-solid fa-headset stat-icon"></i>
+                    <span class="stat-icon"><i class="fa-solid fa-headset"></i></span>
                     <span class="stat-num">24/7</span>
-                    <span class="stat-lbl">Support</span>
+                    <span class="stat-lbl">Live Help</span>
                 </div>
             </div>
         </div>
 
         <!-- Horizontal Scrollable Category Tabs -->
         <div class="category-tabs-wrapper">
-            <div id="categoryTabs" class="category-tabs">
-                <!-- Dynamically Populated by script.js -->
+            <div class="category-tabs" id="categoryTabs">
+                <!-- Dynamically Rendered by script.js -->
             </div>
         </div>
 
-        <!-- PWA Install Prompt Button Container -->
-        <div id="installContainer">
-            <button id="installBtn" class="install-btn">
-                <i class="fa-solid fa-download"></i> Install App
-            </button>
+        <!-- Dynamic Service Package Container -->
+        <div class="package-list-container" id="packageList">
+            <!-- Dynamically Rendered by script.js -->
         </div>
 
-        <!-- Service Package List Container -->
-        <div id="packageList" class="package-list-container">
-            <!-- Dynamically Populated by script.js -->
-        </div>
-
+        <!-- Footer Info -->
         <div class="footer-note">
-            <p>🔒 Secure 256-Bit SSL Encrypted Transactions</p>
+            <p>© RAJ SMM PANEL - Secure & Fast Processing</p>
         </div>
 
     </div>
 
-    <!-- ==================================================
-         CHECKOUT OVERLAY (IN-PAGE MODAL)
-       ================================================== -->
+    <!-- Full In-Page Checkout Overlay Modal -->
     <div id="checkoutPage" class="checkout-page-overlay hidden">
         <div class="checkout-content">
-            
-            <!-- Checkout Header / Navigation -->
             <div class="checkout-nav">
-                <button class="back-btn" onclick="closeCheckoutUI()">
+                <button class="back-btn" onclick="closeCheckoutOverlay()">
                     <i class="fa-solid fa-arrow-left"></i> Back
                 </button>
-                <div class="checkout-heading-text">Checkout</div>
+                <div class="checkout-heading-text">Checkout Order</div>
             </div>
 
-            <!-- Premium Service Summary Card -->
+            <!-- Premium Selected Service Card -->
             <div class="premium-service-card">
                 <div class="card-top-row">
-                    <div class="platform-badge-icon">
-                        <i id="checkoutPlatformIcon" class="fa-brands fa-instagram"></i>
+                    <div class="platform-badge-icon" id="checkoutPlatformIcon">
+                        <i class="fa-brands fa-instagram"></i>
                     </div>
                     <div class="card-info">
                         <h4 id="checkoutServiceTitle">Instagram Followers</h4>
                         <div class="badge-row">
-                            <span id="checkoutPkgBadgeName" class="pkg-name-badge">Standard Service</span>
-                            <span id="checkoutBadge" class="popular-badge">POPULAR</span>
+                            <span class="pkg-name-badge" id="checkoutPkgBadgeName">Package Selected</span>
+                            <span class="popular-badge" id="checkoutBadge">INSTANT</span>
                         </div>
                     </div>
                 </div>
-                
-                <div id="checkoutUnitsText" class="units-text">Quantity: 1000 Units</div>
-                
+                <div class="units-text" id="checkoutUnitsText">Quantity: Select Below</div>
                 <div class="price-text">
-                    <span id="checkoutPriceText">₹199</span>
-                    <small>Tax Included</small>
+                    <span id="checkoutPriceText">₹0.00</span>
+                    <small>Tax & Fees Included</small>
                 </div>
             </div>
 
-            <!-- Input Fields for Checkout -->
+            <!-- Target Link/Username Input -->
             <div class="checkout-input-group">
-                <label id="checkoutLinkLabel" for="checkoutLinkInput">Target Link / Username *</label>
-                <input type="text" id="checkoutLinkInput" placeholder="https://instagram.com/your_username" required>
+                <label id="inputLabel">Enter Profile Link or Username:</label>
+                <input type="text" id="targetInput" placeholder="https://instagram.com/username or @username" required>
             </div>
 
-            <div id="checkoutCustomQtyBox" class="checkout-input-group hidden">
-                <label for="checkoutCustomQtyInput">Enter Custom Quantity *</label>
-                <input type="number" id="checkoutCustomQtyInput" placeholder="e.g. 500" oninput="updateCheckoutQuantityDisplay(this.value)">
+            <!-- Dynamic Custom Quantity Input (Hidden for fixed packages) -->
+            <div class="checkout-input-group hidden" id="customQtyBox">
+                <label>Enter Custom Quantity:</label>
+                <input type="number" id="customQtyInput" placeholder="e.g. 500" oninput="updateCheckoutQuantityDisplay()">
             </div>
 
             <!-- Payment Switch Tabs -->
             <div class="pay-toggle-tabs">
-                <button id="payTabUpi" class="pay-tab active" onclick="switchCheckoutPayment('upi')">
-                    <i class="fa-solid fa-qrcode"></i> UPI / QR
+                <button class="pay-tab active" id="tabUpi" onclick="switchPaymentMethod('upi')">
+                    <i class="fa-solid fa-qrcode"></i> UPI / QR Code
                 </button>
-                <button id="payTabCrypto" class="pay-tab" onclick="switchCheckoutPayment('crypto')">
-                    <i class="fa-brands fa-bitcoin"></i> Binance / USDT
+                <button class="pay-tab" id="tabBinance" onclick="switchPaymentMethod('binance')">
+                    <i class="fa-solid fa-wallet"></i> Binance / USDT
                 </button>
             </div>
 
-            <!-- UPI QR Payment View -->
-            <div id="paymentViewUpi" class="payment-view-box">
+            <!-- UPI Payment View Box -->
+            <div id="upiPayBox" class="payment-view-box">
                 <div class="qr-wrapper">
                     <img id="checkoutQrImg" src="" alt="UPI Payment QR Code">
                 </div>
-                <p class="qr-sub">Scan using any UPI App (GPay, PhonePe, Paytm, BHIM)</p>
-
+                <p class="qr-sub">Scan using GPay, PhonePe, Paytm or Any UPI App</p>
                 <div class="upi-icons-row">
-                    <span class="upi-chip"><i class="fa-solid fa-bolt"></i> Instant Auto-Verification</span>
-                </div>
-
-                <div class="margin-top-15">
-                    <a id="btnPaytmDeepLink" class="pay-app-btn" href="#" onclick="triggerUpiPay('paytm')">Open Paytm</a>
-                    <a id="btnGpayDeepLink" class="pay-app-btn" href="#" onclick="triggerUpiPay('gpay')">Open GPay</a>
-                    <a id="btnPhonePeDeepLink" class="pay-app-btn" href="#" onclick="triggerUpiPay('phonepe')">Open PhonePe</a>
+                    <span class="upi-chip">GPay</span>
+                    <span class="upi-chip">PhonePe</span>
+                    <span class="upi-chip">Paytm</span>
+                    <span class="upi-chip">BHIM</span>
                 </div>
             </div>
 
-            <!-- Binance / Crypto Payment View -->
-            <div id="paymentViewCrypto" class="payment-view-box hidden">
+            <!-- Binance Payment View Box -->
+            <div id="binancePayBox" class="payment-view-box hidden">
                 <div class="binance-nick-box">
-                    <strong>Binance Pay ID / USDT TRC20</strong>
+                    <p>Pay via USDT / Binance Pay ID</p>
+                    <div class="usdt-badge-box">
+                        <span>Binance Pay Active</span>
+                    </div>
                 </div>
-                <div class="usdt-badge-box">
-                    <span>USDT TRC-20</span>
-                </div>
-                <div class="crypto-details-box margin-top-10">
+                <div class="crypto-details-box">
                     <p>
-                        <span>Binance Pay ID: <strong>882910394</strong></span>
-                        <button class="copy-btn" onclick="navigator.clipboard.writeText('882910394')">Copy</button>
+                        <strong>Binance Pay ID:</strong>
+                        <span>987654321</span>
+                        <button class="copy-btn" onclick="navigator.clipboard.writeText('987654321')">Copy</button>
                     </p>
                     <p>
-                        <span>Network: <strong>TRON (TRC20)</strong></span>
+                        <strong>USDT TRC20:</strong>
+                        <span>TXXXXXXXXXXXXXX</span>
+                        <button class="copy-btn" onclick="navigator.clipboard.writeText('TXXXXXXXXXXXXXX')">Copy</button>
                     </p>
                 </div>
             </div>
 
+            <!-- Notice Box -->
             <div class="notice-yellow-box">
-                ⚠️ Complete the payment first, then click the button below to submit your order details via WhatsApp!
+                ⚠️ Payment Confirmation Note: After completing payment, click the WhatsApp button below and send screenshot for instant activation!
             </div>
 
-            <!-- Submit Order Action Buttons -->
-            <button id="btnSubmitWhatsApp" class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
-                <i class="fa-brands fa-whatsapp"></i> Submit Order Details
+            <!-- Submit Order WhatsApp Button -->
+            <button class="whatsapp-submit-btn margin-top-20" onclick="submitOrderToWhatsApp()">
+                <i class="fa-brands fa-whatsapp"></i> Submit Order & Confirm Payment
             </button>
 
         </div>
     </div>
 
-    <!-- Main JavaScript Logic File -->
+    <!-- Auth Modal Overlay -->
+    <div id="authModalOverlay" class="auth-modal-overlay hidden">
+        <div class="auth-modal-box">
+            <button class="auth-close-btn" onclick="closeAuthModal()">&times;</button>
+            <h2 class="auth-title">Login / Register</h2>
+            <p class="auth-sub">Enter credentials to manage orders & wallet</p>
+            
+            <div class="auth-input-group">
+                <label>Phone Number</label>
+                <div class="phone-input-wrapper">
+                    <span class="country-code">+91</span>
+                    <input type="tel" id="authPhone" placeholder="Enter Mobile Number">
+                </div>
+            </div>
+            
+            <div class="auth-input-group">
+                <label>Password</label>
+                <input type="password" id="authPassword" placeholder="Enter Password">
+            </div>
+
+            <button class="auth-btn" onclick="handleAuthSubmit()">Submit</button>
+        </div>
+    </div>
+
+    <!-- Custom JS -->
     <script src="script.js"></script>
 </body>
 </html>

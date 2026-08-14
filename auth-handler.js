@@ -3,10 +3,15 @@ import {
   doc, 
   setDoc, 
   getDoc, 
-  updateDoc 
+  updateDoc,
+  collection,
+  query,
+  where,
+  getDocs
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
 const SESSION_KEY = "raj_smm_user_session";
+const ORDER_STORAGE_KEY = "user_local_orders";
 
 document.addEventListener("DOMContentLoaded", () => {
   checkUserSession();
@@ -101,6 +106,65 @@ function initPageSpecificAuth() {
   }
 }
 
+/**
+ * AUTOMATIC GUEST ORDER CLAIM FUNCTION
+ * Transfer all guest orders linked to the current device's guestSessionId to the user account
+ */
+async function claimGuestOrdersForUser(userMobile) {
+  const guestSessionId = localStorage.getItem("raj_smm_guest_session_id");
+  if (!guestSessionId) return;
+
+  try {
+    // 1. Claim in Firestore
+    const q = query(
+      collection(db, "orders"), 
+      where("guestSessionId", "==", guestSessionId),
+      where("ownerType", "==", "guest")
+    );
+    const querySnapshot = await getDocs(q);
+
+    const claimPromises = [];
+    querySnapshot.forEach((docSnap) => {
+      const orderRef = doc(db, "orders", docSnap.id);
+      claimPromises.push(
+        updateDoc(orderRef, {
+          ownerType: "user",
+          userId: userMobile,
+          claimedAt: new Date().toISOString()
+        })
+      );
+    });
+
+    await Promise.all(claimPromises);
+
+    // 2. Claim in LocalStorage
+    let localOrders = [];
+    try {
+      localOrders = JSON.parse(localStorage.getItem(ORDER_STORAGE_KEY) || '[]');
+    } catch(e) {}
+
+    let updated = false;
+    localOrders = localOrders.map(order => {
+      if (order.guestSessionId === guestSessionId && order.ownerType === "guest") {
+        updated = true;
+        return {
+          ...order,
+          ownerType: "user",
+          userId: userMobile,
+          claimedAt: new Date().toISOString()
+        };
+      }
+      return order;
+    });
+
+    if (updated) {
+      localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(localOrders));
+    }
+  } catch (error) {
+    console.error("Error claiming guest orders:", error);
+  }
+}
+
 // 1. CREATE ACCOUNT
 window.handleSignUp = async function() {
   const nameEl = document.getElementById("signupName");
@@ -145,6 +209,9 @@ window.handleSignUp = async function() {
 
     await setDoc(userDocRef, userData);
 
+    // Claim guest orders upon creation
+    await claimGuestOrdersForUser(mobile);
+
     alert("Account created successfully! Redirecting to login...");
     window.location.href = `/login/?mobile=${mobile}`;
   } catch (error) {
@@ -184,6 +251,9 @@ window.handleLogin = async function() {
       };
       localStorage.setItem(SESSION_KEY, JSON.stringify(sessionObj));
 
+      // Automatically claim any guest orders created in this browser
+      await claimGuestOrdersForUser(userData.mobile);
+
       alert("Login successful!");
       window.location.href = "/";
     } else {
@@ -221,7 +291,6 @@ window.handleResetPassword = async function() {
 
   if (password !== confirmPassword) {
     alert("Passwords do not match.");
-    return;
   }
 
   try {

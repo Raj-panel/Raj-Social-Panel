@@ -1,12 +1,12 @@
 // =========================================================
-// UPDATED SCRIPT.JS - WITH DYNAMIC THEME CLASS SWITCHING
+// PERMANENT LAYOUT LOCK & CHECKOUT SCROLL OPTIMIZATION
 // =========================================================
-
 (function injectPermanentCss() {
     if (document.getElementById("fixedLayoutCss")) return;
     const style = document.createElement("style");
     style.id = "fixedLayoutCss";
     style.innerHTML = `
+        /* 1. Adjusted Fixed Hero Banner Height */
         .hero-banner, .hero-card, .instagram-boost-card {
             height: auto !important;
             min-height: 160px !important;
@@ -24,11 +24,15 @@
             margin-bottom: 8px !important;
             font-size: 11px !important;
         }
+
+        /* Fixed Install Container Position */
         #installContainer {
             margin-top: 4px !important;
             margin-bottom: 6px !important;
         }
+
         @media screen and (max-width: 768px) {
+            /* 2. Checkout Ultra-Compact Vertical Height */
             #checkoutPage { 
                 padding: 4px 8px !important; 
                 max-width: 440px !important; 
@@ -61,6 +65,9 @@
                 font-weight: 800 !important; 
                 text-align: center !important; 
                 text-transform: uppercase !important; 
+                background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; 
+                -webkit-background-clip: text !important; 
+                -webkit-text-fill-color: transparent !important; 
             }
             #checkoutUpiView img { 
                 width: 120px !important; 
@@ -100,6 +107,9 @@
     document.head.appendChild(style);
 })();
 
+// ==========================================
+// NAVIGATION FIX FOR LOGIN / CREATE ACCOUNT
+// ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     document.body.addEventListener("click", function (e) {
         const link = e.target.closest("a");
@@ -351,6 +361,7 @@ const serviceData = {
     }
 };
 
+// Global Application State
 let currentPlatform = "instagram";
 let currentCategory = "";
 let selectedPackage = null;
@@ -370,10 +381,6 @@ window.addEventListener('popstate', function () {
 function switchPlatform(platform) {
     currentPlatform = platform;
     selectedPackage = null;
-
-    // Dynamically update body class for active platform theme
-    document.body.className = document.body.className.replace(/\btheme-\S+/g, '').trim();
-    document.body.classList.add(`theme-${platform}`);
 
     const btnMap = {
         instagram: document.getElementById("btnInsta"),
@@ -456,7 +463,7 @@ function renderPackages() {
 
             customDiv.innerHTML = `
                 <div style="margin-bottom: 8px;">
-                    <strong class="custom-title" style="font-size: 13px;">
+                    <strong class="custom-title" style="color: #a855f7; font-size: 13px;">
                         ${pkg.name} (Custom Qty)
                     </strong>
                     <p style="font-size: 10px; color: #94a3b8;">
@@ -491,7 +498,7 @@ function renderPackages() {
         } else if (currentCategory === "🔥 Reels Combo Service") {
             const card = document.createElement("div");
             card.className = "pkg-card";
-            card.style.cssText = "display: flex; flex-direction: column; align-items: stretch; padding: 16px; margin-bottom: 12px; border-radius: 12px;";
+            card.style.cssText = "display: flex; flex-direction: column; align-items: stretch; padding: 16px; margin-bottom: 12px; background: #fff5f7; border: 1px solid rgba(236, 72, 153, 0.2); border-radius: 12px; backdrop-filter: blur(10px);";
 
             card.onclick = function () {
                 const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
@@ -517,7 +524,7 @@ function renderPackages() {
             card.innerHTML = `
                 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                     <div style="display: flex; align-items: center; gap: 10px;">
-                        <div class="pkg-icon">
+                        <div class="pkg-icon" style="width: 36px; height: 36px; background: rgba(168, 85, 247, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #a855f7;">
                             <i class="fa-brands ${iconClass}"></i>
                         </div>
                         <div>
@@ -530,7 +537,7 @@ function renderPackages() {
                         </div>
                     </div>
                     <div>
-                        ${pkg.badge ? `<span class="pkg-badge">${pkg.badge}</span>` : ""}
+                        ${pkg.badge ? `<span class="pkg-badge ${pkg.badgeClass || "badge-popular"}" style="background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); color: #fff; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 800;">${pkg.badge}</span>` : ""}
                     </div>
                 </div>
 
@@ -540,7 +547,7 @@ function renderPackages() {
                     <div style="font-size: 16px; font-weight: 800; color: #16a34a;">
                         ₹${pkg.price}
                     </div>
-                    <button class="pkg-price-btn">
+                    <button style="background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer;">
                         Order This Combo →
                     </button>
                 </div>
@@ -575,7 +582,7 @@ function renderPackages() {
                     <div class="pkg-info">
                         <div class="pkg-title">
                             ${pkg.name}
-                            ${pkg.badge ? `<span class="pkg-badge">${pkg.badge}</span>` : ""}
+                            ${pkg.badge ? `<span class="pkg-badge ${pkg.badgeClass || "badge-popular"}">${pkg.badge}</span>` : ""}
                         </div>
                         <span class="pkg-sub">
                             ${subtitleText}
@@ -938,6 +945,7 @@ function showCheckoutOverlay() {
             scanHeading = document.createElement("h3");
             scanHeading.id = "scanToPayHeading";
             scanHeading.innerText = "SCAN TO PAY VIA UPI";
+            scanHeading.style.cssText = "margin: 2px 0 2px 0 !important; font-size: 12px !important; font-weight: 800 !important; text-align: center !important; text-transform: uppercase !important; background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; display: block !important; visibility: visible !important; opacity: 1 !important;";
         }
         if (qrImg && qrImg.parentElement === upiView) {
             upiView.insertBefore(scanHeading, qrImg);
@@ -1021,6 +1029,7 @@ function switchCheckoutPayment(type) {
     }
 }
 
+// Check standard URL validity
 function isValidUrl(string) {
     try {
         new URL(string);
@@ -1030,6 +1039,7 @@ function isValidUrl(string) {
     }
 }
 
+// Function to validate and process Profile Link / Username for Instagram
 function processProfileOrLink(input, platform) {
     const trimmed = (input || "").trim();
     if (!trimmed) {
@@ -1042,6 +1052,7 @@ function processProfileOrLink(input, platform) {
         const usernameRegex = /^[a-zA-Z0-9._]{1,30}$/;
         const instaUrlRegex = /^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]{1,30}\/?(\?.*)?$/i;
 
+        // If user entered a plain username
         if (usernameRegex.test(trimmed)) {
             return {
                 isValid: true,
@@ -1049,6 +1060,7 @@ function processProfileOrLink(input, platform) {
             };
         }
 
+        // If user entered a valid Instagram profile URL
         if (instaUrlRegex.test(trimmed)) {
             return {
                 isValid: true,
@@ -1056,6 +1068,7 @@ function processProfileOrLink(input, platform) {
             };
         }
 
+        // Other Instagram URLs (Reels/Posts) or general HTTP URLs
         if (isValidUrl(trimmed) && trimmed.toLowerCase().includes("instagram.com")) {
             return {
                 isValid: true,
@@ -1068,6 +1081,7 @@ function processProfileOrLink(input, platform) {
             message: "Please enter a valid Instagram username or Instagram profile URL!"
         };
     } else {
+        // Validation for other platforms
         if (!isValidUrl(trimmed) && !trimmed.includes("http")) {
             return {
                 isValid: false,

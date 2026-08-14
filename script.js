@@ -77,6 +77,11 @@
                 padding: 4px !important; 
                 border-radius: 8px !important; 
             }
+            #checkoutBinanceView img {
+                width: 100px !important;
+                height: 100px !important;
+                object-fit: contain !important;
+            }
             .upi-app-btn-grid { 
                 margin-top: 2px !important; 
                 gap: 4px !important; 

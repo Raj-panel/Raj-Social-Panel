@@ -1,0 +1,90 @@
+:root {
+  --sidebar-bg: #0f172a;
+  --sidebar-text: #cbd5e1;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-hover: rgba(168, 85, 247, 0.15);
+  --sidebar-hover-text: #ffffff;
+  --sidebar-close: #94a3b8;
+}
+
+body.light-mode, body.light {
+  --sidebar-bg: #ffffff;
+  --sidebar-text: #1e293b;
+  --sidebar-border: rgba(0, 0, 0, 0.1);
+  --sidebar-hover: rgba(168, 85, 247, 0.1);
+  --sidebar-hover-text: #000000;
+  --sidebar-close: #64748b;
+}
+
+body.dark-mode, body.dark {
+  --sidebar-bg: #0f172a;
+  --sidebar-text: #cbd5e1;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-hover: rgba(168, 85, 247, 0.15);
+  --sidebar-hover-text: #ffffff;
+  --sidebar-close: #94a3b8;
+}
+
+/* Standalone Checkout Page Wrapper Override */
+body.checkout-standalone-body {
+  margin: 0;
+  padding: 0;
+  background-color: #0f172a;
+  font-family: 'Poppins', sans-serif;
+}
+
+.checkout-page-overlay.standalone-checkout {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  background: transparent;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 1;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+/* UPI Buttons Grid */
+.upi-app-btn-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 2px;
+  margin-top: 4px;
+  width: 100%;
+}
+
+.upi-app-card-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(226, 232, 240, 0.6);
+  border-radius: 12px;
+  padding: 8px 4px;
+  text-decoration: none;
+  color: #1e293b;
+  font-weight: 700;
+  font-size: 12px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+  pointer-events: none;
+  cursor: default;
+}
+
+.checkout-input-group input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.margin-top-15 {
+  margin-top: 15px;
+}
+
+.hidden {
+  display: none !important;
+}

@@ -6,7 +6,6 @@
     const style = document.createElement("style");
     style.id = "fixedLayoutCss";
     style.innerHTML = `
-        /* 1. Adjusted Fixed Hero Banner Height */
         .hero-banner, .hero-card, .instagram-boost-card {
             height: auto !important;
             min-height: 160px !important;
@@ -24,15 +23,11 @@
             margin-bottom: 8px !important;
             font-size: 11px !important;
         }
-
-        /* Fixed Install Container Position */
         #installContainer {
             margin-top: 4px !important;
             margin-bottom: 6px !important;
         }
-
         @media screen and (max-width: 768px) {
-            /* 2. Checkout Ultra-Compact Vertical Height */
             #checkoutPage { 
                 padding: 4px 8px !important; 
                 max-width: 440px !important; 
@@ -43,9 +38,7 @@
                 margin-bottom: 4px !important; 
                 padding: 6px 8px !important; 
             }
-            #checkoutPage .input-box { 
-                margin-bottom: 4px !important; 
-            }
+            #checkoutPage .input-box { margin-bottom: 4px !important; }
             #checkoutPage input { 
                 padding: 2px 6px !important; 
                 font-size: 11px !important; 
@@ -77,13 +70,8 @@
                 padding: 4px !important; 
                 border-radius: 8px !important; 
             }
-            .upi-app-btn-grid { 
-                margin-top: 2px !important; 
-                gap: 4px !important; 
-            }
-            #checkoutPage .payment-tabs { 
-                margin-bottom: 2px !important; 
-            }
+            .upi-app-btn-grid { margin-top: 2px !important; gap: 4px !important; }
+            #checkoutPage .payment-tabs { margin-bottom: 2px !important; }
             #checkoutPage .submit-btn { 
                 padding: 2px !important; 
                 height: 32px !important; 
@@ -99,16 +87,14 @@
                 font-size: 8.5px !important; 
                 margin-bottom: 2px !important; 
             }
-            #payViaUpiAppBtn { 
-                display: none !important; 
-            }
+            #payViaUpiAppBtn { display: none !important; }
         }
     `;
     document.head.appendChild(style);
 })();
 
 // ==========================================
-// NAVIGATION FIX FOR LOGIN / CREATE ACCOUNT
+// NAVIGATION & LINK HANDLING
 // ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     document.body.addEventListener("click", function (e) {
@@ -125,12 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
 const serviceData = {
     instagram: {
         "Followers Non-Drop": [
-            {
-                type: "custom",
-                name: "Instagram Followers [High Quality] 100% Non-Drop -500K+ Per Day- 10 Minutes Start",
-                providerId: 1192,
-                pricePer1000: 80
-            }
+            { type: "custom", name: "Instagram Followers [High Quality] 100% Non-Drop -500K+ Per Day- 10 Minutes Start", providerId: 1192, pricePer1000: 80 }
         ],
         "Followers": [
             { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo" },
@@ -145,7 +126,7 @@ const serviceData = {
             { name: "9K Followers", price: 359 },
             { name: "10K Followers", price: 399, badge: "🎁 BUY 10K + GET 2K FREE", badgeClass: "badge-super" }
         ],
-        "Likes Non-Drop": [
+        "Likes Lifetime": [
             { providerId: 675, name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo" },
             { providerId: 675, name: "500 Likes", price: 25 },
             { providerId: 675, name: "1K Likes", price: 30, badge: "⭐ Popular", badgeClass: "badge-popular" },
@@ -153,7 +134,7 @@ const serviceData = {
             { providerId: 675, name: "5K Likes", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" },
             { providerId: 675, name: "10K Likes", price: 179, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
-        "REAL Reels / Video Views Non-Drop": [
+        "REAL Reels / Video Views": [
             { providerId: 853, name: "1K Views", price: 5, badge: "DEMO", badgeClass: "badge-demo" },
             { providerId: 853, name: "5K Views", price: 9 },
             { providerId: 853, name: "10K Views", price: 15, badge: "BEST VALUE", badgeClass: "badge-best" },
@@ -163,7 +144,7 @@ const serviceData = {
             { providerId: 853, name: "500K Views", price: 299 },
             { providerId: 853, name: "1M Views", price: 499, badge: "💥 MEGA DEAL", badgeClass: "badge-best" }
         ],
-        "REAL Photo / Post Views Non-Drop": [
+        "REAL Photo / Post Views": [
             { providerId: 1030, name: "1K Views", price: 10, badge: "🎯 Demo", badgeClass: "badge-demo" },
             { providerId: 1030, name: "3K Views", price: 15 },
             { providerId: 1030, name: "5K Views", price: 25 },
@@ -172,26 +153,26 @@ const serviceData = {
             { providerId: 1030, name: "50K Views", price: 119 },
             { providerId: 1030, name: "100K Views", price: 220, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
-        "REAL Comments Non-Drop": [
+        "REAL Comments Lifetime": [
             { providerId: 31, name: "50 Comments", price: 15, badge: "Starter", badgeClass: "badge-demo" },
             { providerId: 31, name: "100 Comments", price: 20 },
             { providerId: 31, name: "500 Comments", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
             { providerId: 31, name: "1K Comments", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" }
         ],
-        "REAL Repost Non-Drop": [
+        "REAL Repost Lifetime": [
             { providerId: 505, name: "50 Reposts", price: 15, badge: "Starter", badgeClass: "badge-demo" },
             { providerId: 505, name: "100 Reposts", price: 20 },
             { providerId: 505, name: "500 Reposts", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
             { providerId: 505, name: "1K Reposts", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" },
             { providerId: 505, name: "3K Reposts", price: 249, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
-        "REAL Shares Non-Drop": [
+        "REAL Shares Lifetime": [
             { providerId: 50, name: "100 Shares", price: 5, badge: "Starter", badgeClass: "badge-demo" },
             { providerId: 50, name: "1K Shares", price: 30 },
             { providerId: 50, name: "5K Shares", price: 69, badge: "🔥 Best Value", badgeClass: "badge-best" },
             { providerId: 50, name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
-        "🔥 Reels Combo Service Non-Drop": [
+        "🔥 Reels Combo Service": [
             {
                 name: "Reels Viral Package",
                 price: 99,
@@ -204,8 +185,7 @@ const serviceData = {
                     "💾 Post / Reels Save — 500",
                     "🔄 Post / Reels Shares — 1,000",
                     "♻️ Reels Reposts — 100"
-                ],
-                placeholder: "Reel/Video Link (Account Must be Public)"
+                ]
             },
             {
                 name: "Reels Viral Package",
@@ -219,8 +199,7 @@ const serviceData = {
                     "💾 Post / Reels Save — 1,000",
                     "🔄 Post / Reels Shares — 3,000",
                     "♻️ Reels Reposts — 250"
-                ],
-                placeholder: "Reel/Video Link (Account Must be Public)"
+                ]
             },
             {
                 name: "Reels Viral Package",
@@ -234,8 +213,7 @@ const serviceData = {
                     "💾 Post / Reels Save — 1,500",
                     "🔄 Post / Reels Shares — 5,000",
                     "♻️ Reels Reposts — 400"
-                ],
-                placeholder: "Reel/Video Link (Account Must be Public)"
+                ]
             },
             {
                 name: "Reels Viral Package",
@@ -249,8 +227,7 @@ const serviceData = {
                     "💾 Post / Reels Save — 2,000",
                     "🔄 Post / Reels Shares — 8,000",
                     "♻️ Reels Reposts — 600"
-                ],
-                placeholder: "Reel/Video Link (Account Must be Public)"
+                ]
             },
             {
                 name: "Reels Viral Package",
@@ -264,15 +241,12 @@ const serviceData = {
                     "💾 Post / Reels Save — 2,500",
                     "🔄 Post / Reels Shares — 15,000",
                     "♻️ Reels Reposts — 800"
-                ],
-                placeholder: "Reel/Video Link (Account Must be Public)"
+                ]
             }
         ]
     },
     facebook: {
-        "Facebook Followers Non-Drop": [
-            { type: "custom", name: "Facebook Followers", pricePer1000: 49 }
-        ],
+        "Facebook Followers": [{ type: "custom", name: "Facebook Followers", pricePer1000: 49 }],
         "Likes Non-Drop": [
             { name: "100 Likes", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
             { name: "500 Likes", price: 25 },
@@ -281,7 +255,7 @@ const serviceData = {
             { name: "5K Likes", price: 99, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
             { name: "10K Likes", price: 179, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
         ],
-        "Reels / Video Views Non-Drop": [
+        "Reels / Video Views": [
             { name: "1K Views", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
             { name: "3K Views", price: 25 },
             { name: "5K Views", price: 35, badge: "⭐ POPULAR", badgeClass: "badge-popular" },
@@ -289,7 +263,7 @@ const serviceData = {
             { name: "50K Views", price: 249, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
             { name: "100K Views", price: 449, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
         ],
-        "Facebook Comments Non-Drop": [
+        "Facebook Comments": [
             { name: "50 Comments", price: 10 },
             { name: "100 Comments", price: 15 },
             { name: "300 Comments", price: 25, badge: "⭐ Popular", badgeClass: "badge-popular" },
@@ -298,7 +272,7 @@ const serviceData = {
             { name: "2K Comments", price: 110, badge: "🏆 Best Deal", badgeClass: "badge-best" },
             { name: "5K Comments", price: 260, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
-        "Facebook Shares Non-Drop": [
+        "Facebook Shares": [
             { name: "100 Shares", price: 15 },
             { name: "1K Shares", price: 25 },
             { name: "5K Shares", price: 59, badge: "🔥 Best Value", badgeClass: "badge-best" },
@@ -313,14 +287,14 @@ const serviceData = {
             { name: "500 Subscribers", price: 1199, desc: "High Quality Indian Subscribers" },
             { name: "1K Subscribers", price: 2349, desc: "High Quality Indian Subscribers" }
         ],
-        "YT Likes — Non Drop": [
+        "YouTube Likes — Non Drop": [
             { name: "100 Real Likes", price: 49, desc: "Indian Real Active High Quality" },
             { name: "500 Real Likes", price: 149, desc: "Indian Real Active High Quality" },
             { name: "1K Real Likes", price: 249, desc: "Indian Real Active High Quality" },
             { name: "3K Real Likes", price: 499, desc: "Indian Real Active High Quality" },
             { name: "5K Real Likes", price: 949, desc: "Indian Real Active High Quality" }
         ],
-        "YT Shorts / Video Views Non-Drop": [
+        "YouTube Shorts / Video Views": [
             { name: "100 Short Video Views", price: 49, desc: "Indian High Quality" },
             { name: "500 Short Video Views", price: 90, desc: "Indian High Quality" },
             { name: "1K Short Video Views", price: 179, desc: "Indian High Quality" },
@@ -329,7 +303,7 @@ const serviceData = {
             { name: "7K Short Video Views", price: 999, desc: "Indian High Quality" },
             { name: "10K Short Video Views", price: 1499, desc: "Indian High Quality" }
         ],
-        "YT Live Stream Views Non-Drop": [
+        "YouTube Live Stream Views": [
             { name: "1K Live Stream Views — 15 Mins", price: 25, desc: "Live Views for 15 Minutes" },
             { name: "1K Live Stream Views — 30 Mins", price: 40, desc: "Live Views for 30 Minutes" },
             { name: "1K Live Stream Views — 60 Mins", price: 70, desc: "Live Views for 60 Minutes" },
@@ -344,14 +318,14 @@ const serviceData = {
             { name: "5K TikTok Followers", price: 799, desc: "90 Days Refill" },
             { name: "10K TikTok Followers", price: 1599, desc: "90 Days Refill" }
         ],
-        "TikTok Likes Non-Drop": [
+        "TikTok Likes": [
             { name: "100 TikTok Likes", price: 10, desc: "Lifetime Auto Refill" },
             { name: "500 TikTok Likes", price: 40, desc: "Lifetime Auto Refill" },
             { name: "1K TikTok Likes", price: 75, desc: "Lifetime Auto Refill" },
             { name: "3K TikTok Likes", price: 199, desc: "Lifetime Auto Refill" },
             { name: "5K TikTok Likes", price: 349, desc: "Lifetime Auto Refill" }
         ],
-        "TikTok Views Non-Drop": [
+        "TikTok Views": [
             { name: "100 TikTok Video Views", price: 9, desc: "High Quality Real Views • Lifetime Refill" },
             { name: "500 TikTok Video Views", price: 20, desc: "High Quality Real Views • Lifetime Refill" },
             { name: "1K TikTok Video Views", price: 35, desc: "High Quality Real Views • Lifetime Refill" },
@@ -361,7 +335,7 @@ const serviceData = {
     }
 };
 
-// Global Application State
+// Application State
 let currentPlatform = "instagram";
 let currentCategory = "";
 let selectedPackage = null;
@@ -532,7 +506,7 @@ function renderPackages() {
                                 ${pkg.name}
                             </div>
                             <span class="pkg-sub" style="font-size: 11px; color: #64748b;">
-                                First delivery Indian high quality
+                                ⚡ Fast Delivery • Premium Quality
                             </span>
                         </div>
                     </div>
@@ -571,19 +545,7 @@ function renderPackages() {
                 );
             };
 
-            let subtitleText = pkg.desc ? pkg.desc : "⚡ Fast Delivery • Premium Quality";
-
-            if (currentPlatform === "instagram") {
-                if (currentCategory === "REAL Reels / Video Views") {
-                    subtitleText = "Indian views premium quality";
-                } else if (currentCategory === "REAL Photo / Post Views") {
-                    subtitleText = "High quality Indian views";
-                } else if (currentCategory === "REAL Repost Lifetime") {
-                    subtitleText = "Indian repost high premium quality";
-                } else if (currentCategory === "REAL Shares Lifetime") {
-                    subtitleText = "Premium quality Indian share";
-                }
-            }
+            const subtitleText = pkg.desc ? pkg.desc : "⚡ Fast Delivery • Premium Quality";
 
             card.innerHTML = `
                 <div class="pkg-left">
@@ -728,7 +690,7 @@ function getLinkConfig(platform, category) {
 
     return {
         label: "Profile Link (Account Must be Public)",
-        placeholder: "mr_rocky_x_888 or https://instagram.com/your_username"
+        placeholder: "https://instagram.com/your_username"
     };
 }
 
@@ -1041,7 +1003,6 @@ function switchCheckoutPayment(type) {
     }
 }
 
-// Check standard URL validity
 function isValidUrl(string) {
     try {
         new URL(string);
@@ -1051,7 +1012,6 @@ function isValidUrl(string) {
     }
 }
 
-// Function to validate and process Profile Link / Username for Instagram
 function processProfileOrLink(input, platform) {
     const trimmed = (input || "").trim();
     if (!trimmed) {
@@ -1061,26 +1021,16 @@ function processProfileOrLink(input, platform) {
     const isInsta = (platform || "").toLowerCase() === "instagram";
 
     if (isInsta) {
-        const usernameRegex = /^[a-zA-Z0-9._]{1,30}$/;
-        const instaUrlRegex = /^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]{1,30}\/?(\?.*)?$/i;
+        const usernameRegex = /^@?([a-zA-Z0-9._]{1,30})$/;
+        const match = trimmed.match(usernameRegex);
 
-        // If user entered a plain username
-        if (usernameRegex.test(trimmed)) {
+        if (match) {
             return {
                 isValid: true,
-                url: `https://www.instagram.com/${trimmed}`
+                url: `https://www.instagram.com/${match[1]}`
             };
         }
 
-        // If user entered a valid Instagram profile URL
-        if (instaUrlRegex.test(trimmed)) {
-            return {
-                isValid: true,
-                url: trimmed
-            };
-        }
-
-        // Other Instagram URLs (Reels/Posts) or general HTTP URLs
         if (isValidUrl(trimmed) && trimmed.toLowerCase().includes("instagram.com")) {
             return {
                 isValid: true,
@@ -1090,11 +1040,10 @@ function processProfileOrLink(input, platform) {
 
         return {
             isValid: false,
-            message: "Please enter a valid Instagram username or Instagram profile URL!"
+            message: "Please enter a valid Instagram username or profile/post link!"
         };
     } else {
-        // Validation for other platforms
-        if (!isValidUrl(trimmed) && !trimmed.includes("http")) {
+        if (!isValidUrl(trimmed) && !trimmed.startsWith("http")) {
             return {
                 isValid: false,
                 message: "Please enter a valid URL (starting with http:// or https://)"

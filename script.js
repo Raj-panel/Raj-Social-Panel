@@ -532,7 +532,7 @@ function renderPackages() {
                                 ${pkg.name}
                             </div>
                             <span class="pkg-sub" style="font-size: 11px; color: #64748b;">
-                                ⚡ Fast Delivery • Premium Quality
+                                First delivery Indian high quality
                             </span>
                         </div>
                     </div>
@@ -571,7 +571,19 @@ function renderPackages() {
                 );
             };
 
-            const subtitleText = pkg.desc ? pkg.desc : "⚡ Fast Delivery • Premium Quality";
+            let subtitleText = pkg.desc ? pkg.desc : "⚡ Fast Delivery • Premium Quality";
+
+            if (currentPlatform === "instagram") {
+                if (currentCategory === "REAL Reels / Video Views") {
+                    subtitleText = "Indian views premium quality";
+                } else if (currentCategory === "REAL Photo / Post Views") {
+                    subtitleText = "High quality Indian views";
+                } else if (currentCategory === "REAL Repost Lifetime") {
+                    subtitleText = "Indian repost high premium quality";
+                } else if (currentCategory === "REAL Shares Lifetime") {
+                    subtitleText = "Premium quality Indian share";
+                }
+            }
 
             card.innerHTML = `
                 <div class="pkg-left">

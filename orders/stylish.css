@@ -1,0 +1,385 @@
+/* ==========================================
+   STYLE 08 — MY ORDERS DESIGN SYSTEM
+   ========================================== */
+
+:root {
+  /* Core Theme Colors (Light Mode) */
+  --bg-primary: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.85);
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-color: rgba(216, 180, 254, 0.3);
+  
+  /* Accent Colors */
+  --accent-purple: #a855f7;
+  --accent-pink: #ec4899;
+  --gradient-primary: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  --gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(243, 232, 255, 0.4));
+  
+  /* Status Colors */
+  --status-completed-bg: rgba(34, 197, 94, 0.12);
+  --status-completed-text: #15803d;
+  --status-processing-bg: rgba(168, 85, 247, 0.12);
+  --status-processing-text: #7e22ce;
+  --status-pending-bg: rgba(245, 158, 11, 0.12);
+  --status-pending-text: #b45309;
+  --status-failed-bg: rgba(239, 68, 68, 0.12);
+  --status-failed-text: #b91c1c;
+
+  /* Shadow & Glow */
+  --shadow-card: 0 10px 30px -10px rgba(168, 85, 247, 0.08);
+  --glow-effect: none;
+}
+
+/* Dark Mode Overrides (Auto-detected via class or media query) */
+body.dark-mode, [data-theme="dark"] {
+  --bg-primary: #0b071e;
+  --bg-card: rgba(23, 15, 48, 0.7);
+  --bg-glass: rgba(18, 11, 38, 0.8);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-color: rgba(168, 85, 247, 0.25);
+  
+  --gradient-card: linear-gradient(145deg, rgba(29, 18, 62, 0.8), rgba(18, 11, 38, 0.9));
+  
+  --status-completed-bg: rgba(34, 197, 94, 0.2);
+  --status-completed-text: #4ade80;
+  --status-processing-bg: rgba(168, 85, 247, 0.25);
+  --status-processing-text: #c084fc;
+  --status-pending-bg: rgba(245, 158, 11, 0.2);
+  --status-pending-text: #fbbf24;
+  --status-failed-bg: rgba(239, 68, 68, 0.2);
+  --status-failed-text: #f87171;
+
+  --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+  --glow-effect: 0 0 20px rgba(168, 85, 247, 0.15);
+}
+
+/* Page Layout */
+.orders-page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem 1rem;
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+  color: var(--text-main);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-sizing: border-box;
+}
+
+/* Style 08 Header */
+.orders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.brand-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+.btn-back-store {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.btn-back-store:hover {
+  color: var(--accent-purple);
+  border-color: var(--accent-purple);
+}
+
+/* Title & Description Header Card */
+.orders-banner {
+  background: var(--gradient-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-card), var(--glow-effect);
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.banner-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 8px 16px rgba(168, 85, 247, 0.3);
+}
+
+.banner-text h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem 0;
+}
+
+.banner-text p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Search Box Area */
+.search-filter-wrapper {
+  margin-bottom: 1.25rem;
+}
+
+.search-input-box {
+  position: relative;
+  width: 100%;
+}
+
+.search-input-box input {
+  width: 100%;
+  padding: 0.875rem 1rem 0.875rem 2.75rem;
+  border-radius: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.search-input-box input:focus {
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
+}
+
+.search-input-box svg {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  width: 18px;
+  height: 18px;
+}
+
+/* Filter Tabs / Badges */
+.filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  scrollbar-width: none;
+}
+
+.filter-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-btn {
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.tab-btn.active, .tab-btn:hover {
+  background: var(--gradient-primary);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+}
+
+/* Order Cards Container */
+.order-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Individual Order Card (Style 08 Layout) */
+.order-card {
+  background: var(--gradient-card);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: 1.25rem;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-card), var(--glow-effect);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.order-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(168, 85, 247, 0.5);
+}
+
+.order-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.875rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.order-id {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-main);
+  letter-spacing: 0.5px;
+}
+
+.status-badge {
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.status-completed {
+  background: var(--status-completed-bg);
+  color: var(--status-completed-text);
+}
+
+.status-processing {
+  background: var(--status-processing-bg);
+  color: var(--status-processing-text);
+}
+
+.status-pending {
+  background: var(--status-pending-bg);
+  color: var(--status-pending-text);
+}
+
+.status-failed, .status-cancelled {
+  background: var(--status-failed-bg);
+  color: var(--status-failed-text);
+}
+
+.order-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.service-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--text-main);
+}
+
+.order-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  background: rgba(0, 0, 0, 0.03);
+  padding: 0.75rem;
+  border-radius: 12px;
+}
+
+body.dark-mode .order-details-grid,
+[data-theme="dark"] .order-details-grid {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.15rem;
+}
+
+.detail-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+  word-break: break-all;
+}
+
+.quantity-badge {
+  display: inline-block;
+  background: rgba(168, 85, 247, 0.15);
+  color: var(--accent-purple);
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  font-weight: 700;
+  width: fit-content;
+}
+
+.order-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.875rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.order-price {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+/* Mobile Responsiveness Guard */
+@media (max-width: 480px) {
+  .orders-page-container {
+    padding: 1rem 0.75rem 2rem 0.75rem;
+  }
+
+  .orders-banner {
+    padding: 1rem;
+  }
+
+  .banner-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .banner-text h1 {
+    font-size: 1.2rem;
+  }
+
+  .order-details-grid {
+    grid-template-columns: 1fr;
+  }
+}

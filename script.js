@@ -78,8 +78,8 @@
                 border-radius: 8px !important; 
             }
             #checkoutBinanceView img {
-                width: 100px !important;
-                height: 100px !important;
+                width: 130px !important;
+                height: 130px !important;
                 object-fit: contain !important;
                 margin: 4px auto !important; 
                 padding: 4px !important;

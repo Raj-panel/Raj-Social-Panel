@@ -73,9 +73,9 @@
                 width: 120px !important; 
                 height: 120px !important; 
                 object-fit: contain !important; 
-                margin: 2px auto !important; 
-                padding: 2px !important; 
-                border-radius: 10px !important; 
+                margin: 4px auto !important; 
+                padding: 4px !important; 
+                border-radius: 8px !important; 
             }
             .upi-app-btn-grid { 
                 margin-top: 2px !important; 

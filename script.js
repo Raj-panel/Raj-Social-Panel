@@ -115,9 +115,23 @@
     document.head.appendChild(style);
 })();
 
-// ==========================================
+// Helper to get or create Cryptographically Secure Guest Session ID
+function getOrCreateGuestSessionId() {
+    let sessionId = localStorage.getItem('raj_smm_guest_session_id');
+    if (!sessionId) {
+        if (window.crypto && window.crypto.randomUUID) {
+            sessionId = 'gs_' + window.crypto.randomUUID();
+        } else {
+            const array = new Uint8Array(16);
+            window.crypto.getRandomValues(array);
+            sessionId = 'gs_' + Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+        }
+        localStorage.setItem('raj_smm_guest_session_id', sessionId);
+    }
+    return sessionId;
+}
+
 // NAVIGATION FIX FOR LOGIN / CREATE ACCOUNT
-// ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     document.body.addEventListener("click", function (e) {
         const link = e.target.closest("a");
@@ -343,7 +357,7 @@ const serviceData = {
             { name: "1K Live Stream Views — 60 Mins", price: 70, desc: "Live Views for 60 Minutes" },
             { name: "1K Live Stream Views — 90 Mins", price: 99, desc: "Live Views for 90 Minutes" }
         ],
-            "YouTube Subscribe — Non Drop": [
+        "YouTube Subscribe — Non Drop": [
             { name: "100 Subscribers", price: 249, desc: "High Quality Indian Subscribers" },
             { name: "500 Subscribers", price: 1199, desc: "High Quality Indian Subscribers" },
             { name: "1K Subscribers", price: 2349, desc: "High Quality Indian Subscribers" }
@@ -1130,18 +1144,18 @@ function submitOrderToWhatsApp() {
         return;
     }
 
-    const userIdentifier = (typeof window.firebaseUserUid !== 'undefined' && window.firebaseUserUid) 
-        ? window.firebaseUserUid 
-        : (() => {
-            let bid = localStorage.getItem('raj_smm_browser_id');
-            if (!bid) {
-                bid = 'BID_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-                localStorage.setItem('raj_smm_browser_id', bid);
-            }
-            return bid;
-        })();
+    const sessionData = localStorage.getItem("raj_smm_user_session");
+    let loggedInUserMobile = null;
+    if (sessionData) {
+        try {
+            const parsedSession = JSON.parse(sessionData);
+            loggedInUserMobile = parsedSession.mobile || null;
+        } catch(e) {}
+    }
 
+    const guestSessionId = getOrCreateGuestSessionId();
     const orderIdVal = Math.floor(100000 + Math.random() * 900000);
+    
     const newOrder = {
         orderId: orderIdVal,
         serviceName: `${currentCheckoutData.platform} - ${currentCheckoutData.serviceName} (${currentCheckoutData.packageName})`,
@@ -1149,13 +1163,22 @@ function submitOrderToWhatsApp() {
         quantity: currentCheckoutData.quantity || 0,
         amount: currentCheckoutData.price ? currentCheckoutData.price.toFixed(2) : "0.00",
         orderTimeEpoch: Date.now(),
+        createdTimestamp: Date.now(),
+        dateTime: new Date().toLocaleString(),
         status: 'Pending',
-        userIdentifier: userIdentifier
+        ownerType: loggedInUserMobile ? "user" : "guest",
+        userId: loggedInUserMobile || null,
+        guestSessionId: guestSessionId,
+        txnId: txnId
     };
 
-    const existingOrders = JSON.parse(localStorage.getItem('raj_smm_orders') || '[]');
-    existingOrders.push(newOrder);
-    localStorage.setItem('raj_smm_orders', JSON.stringify(existingOrders));
+    const existingOrders = JSON.parse(localStorage.getItem('user_local_orders') || '[]');
+    existingOrders.unshift(newOrder);
+    localStorage.setItem('user_local_orders', JSON.stringify(existingOrders));
+
+    if (window.saveOrderToFirestore) {
+        window.saveOrderToFirestore(newOrder);
+    }
 
     const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
     const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";

@@ -528,18 +528,18 @@ input:focus { border-color: var(--focus-color); background: #ffffff; }
 #installContainer{
  display:none;
  text-align:center;
- margin:-10px 0 14px;
+ margin:10px 0 14px;
 }
 .install-btn{
  border:none;
  border-radius:999px;
- padding:14px 28px;
+ padding:10px 20px;
  background:linear-gradient(135deg,#3b82f6,#8b5cf6);
  color:#fff;
- font-size:16px;
+ font-size:14px;
  font-weight:800;
  cursor:pointer;
- box-shadow:0 8px 18px rgba(59,130,246,.25);
+ box-shadow:0 6px 14px rgba(59,130,246,.25);
  transition:.25s;
 }
 .install-btn:hover{

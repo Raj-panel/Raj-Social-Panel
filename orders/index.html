@@ -4,62 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Orders - Raj SMM Panel</title>
-    <!-- Tailwind CSS CDN for modern, clean UI consistency -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-    </style>
+    <!-- STYLE 08 EXTERNAL STYLESHEET (NO INLINE CSS) -->
+    <link rel="stylesheet" href="./stylish.css">
 </head>
-<body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+<body>
 
     <!-- Header / Navbar Placeholder -->
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="https://rajsmmpanel.in" class="text-xl font-bold text-indigo-600">Raj SMM Panel</a>
-            <a href="https://rajsmmpanel.in" class="text-sm text-gray-600 hover:text-indigo-600 font-medium">← Back to Store</a>
+    <header class="orders-navbar">
+        <div class="navbar-inner">
+            <a href="https://rajsmmpanel.in" class="brand-logo">Raj SMM Panel</a>
+            <a href="https://rajsmmpanel.in" class="btn-back-store">
+                <span>←</span> Back to Store
+            </a>
         </div>
     </header>
 
     <!-- Main Content Area -->
-    <main class="flex-grow max-w-4xl w-full mx-auto px-4 py-8">
-        <div class="mb-8">
-            <h1 class="text-2xl font-bold tracking-tight text-gray-900">My Orders</h1>
-            <p class="text-sm text-gray-500 mt-1">Track your active and completed SMM service orders in real-time.</p>
+    <main class="orders-page-wrapper">
+        
+        <!-- Style 08 Banner Hero -->
+        <section class="style08-banner">
+            <div class="banner-icon-wrapper">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                </svg>
+            </div>
+            <div>
+                <h1 class="banner-title">My Orders</h1>
+                <p class="banner-subtitle">Track your active and completed SMM service orders in real-time.</p>
+            </div>
+        </section>
+
+        <!-- Search & Filter Controls -->
+        <section class="controls-wrapper">
+            <div class="search-box-container">
+                <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <input type="text" id="orderSearchInput" onkeyup="filterOrdersBySearch()" placeholder="Search by Order ID or Service Name..." class="search-input">
+            </div>
+
+            <div class="filter-tabs-container">
+                <button onclick="filterOrdersByStatus('all')" class="tab-btn active" data-filter="all">All Orders</button>
+                <button onclick="filterOrdersByStatus('Completed')" class="tab-btn" data-filter="Completed">Completed</button>
+                <button onclick="filterOrdersByStatus('Pending')" class="tab-btn" data-filter="Pending">Pending</button>
+                <button onclick="filterOrdersByStatus('Processing')" class="tab-btn" data-filter="Processing">Processing</button>
+            </div>
+        </section>
+
+        <!-- Orders Container (IDs Preserved for JavaScript Rendering) -->
+        <div id="orders-container" class="orders-list-container">
+            <!-- Dynamic Order Cards Inject Here -->
         </div>
 
-        <!-- Orders Container -->
-        <div id="orders-container" class="space-y-4">
-            <!-- Dynamic Order Cards Will Inject Here -->
-        </div>
-
-        <!-- No Orders State (Hidden by Default) -->
-        <div id="no-orders-state" class="hidden text-center py-16 px-4 bg-white rounded-xl border border-gray-200 shadow-sm">
-            <div class="text-4xl mb-3">📦</div>
-            <h3 class="text-lg font-semibold text-gray-800">No Orders Found</h3>
-            <p class="text-sm text-gray-500 mt-1 max-w-sm mx-auto">You haven't placed any order yet. Explore our services and start growing your social media today!</p>
-            <a href="https://rajsmmpanel.in" class="mt-5 inline-block bg-indigo-600 text-white font-medium text-sm px-5 py-2.5 rounded-lg hover:bg-indigo-700 transition-colors">Browse Services</a>
+        <!-- No Orders State (Hidden by Default - ID Preserved) -->
+        <div id="no-orders-state" class="no-orders-card hidden">
+            <div class="no-orders-icon">📦</div>
+            <h3 class="no-orders-title">No Orders Found</h3>
+            <p class="no-orders-desc">You haven't placed any order yet. Explore our services and start growing your social media today!</p>
+            <a href="https://rajsmmpanel.in" class="btn-browse-services">Browse Services</a>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-500">
+    <footer class="page-footer">
         &copy; 2026 Raj SMM Panel. All rights reserved.
     </footer>
 
-    <!-- Order Logic & Management Script -->
+    <!-- Order Logic & Management Script (ORIGINAL BUSINESS LOGIC) -->
     <script>
         /**
          * User Identifier Utility
-         * - Firebase UID: window.firebaseUserUid (or check standard auth state if defined globally)
-         * - Browser ID: Stored in localStorage as 'raj_smm_browser_id' if not logged in.
+         * - Firebase UID: window.firebaseUserUid
+         * - Browser ID: Stored in localStorage as 'raj_smm_browser_id'
          */
         function getUserIdentifier() {
-            // Future-ready check for Firebase UID
             if (typeof window.firebaseUserUid !== 'undefined' && window.firebaseUserUid) {
                 return window.firebaseUserUid;
             }
-            // Check localStorage for persistent anonymous browser identifier
             let browserId = localStorage.getItem('raj_smm_browser_id');
             if (!browserId) {
                 browserId = 'BID_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
@@ -70,9 +92,9 @@
 
         /**
          * Calculate Automatic Status based on Order Time
-         * - 0 to 5 minutes: Pending (Yellow)
-         * - 5 minutes to 1 hour: Processing (Blue)
-         * - After 1 hour: Completed (Green)
+         * - 0 to 5 minutes: Pending
+         * - 5 minutes to 1 hour: Processing
+         * - After 1 hour: Completed
          */
         function calculateOrderStatus(orderTimeEpoch) {
             const now = Date.now();
@@ -80,11 +102,11 @@
             const elapsedMinutes = elapsedMs / (1000 * 60);
 
             if (elapsedMinutes < 5) {
-                return { label: 'Pending', bg: 'bg-yellow-100', text: 'text-yellow-800', dot: 'bg-yellow-400' };
+                return { label: 'Pending', cssClass: 'status-pill-Pending' };
             } else if (elapsedMinutes < 60) {
-                return { label: 'Processing', bg: 'bg-blue-100', text: 'text-blue-800', dot: 'bg-blue-400' };
+                return { label: 'Processing', cssClass: 'status-pill-Processing' };
             } else {
-                return { label: 'Completed', bg: 'bg-green-100', text: 'text-green-800', dot: 'bg-green-400' };
+                return { label: 'Completed', cssClass: 'status-pill-Completed' };
             }
         }
 
@@ -120,45 +142,94 @@
                 });
 
                 const card = document.createElement('div');
-                card.className = 'bg-white rounded-xl border border-gray-200 shadow-sm p-5 hover:shadow transition-shadow';
+                card.className = 'order-card order-item-node';
+                card.setAttribute('data-status', status.label);
+                card.setAttribute('data-id', order.orderId || '');
+                card.setAttribute('data-service', (order.serviceName || '').toLowerCase());
+
                 card.innerHTML = `
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-gray-100">
-                        <div>
-                            <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Order ID</span>
-                            <h4 class="text-base font-bold text-gray-800">#${order.orderId}</h4>
+                    <div class="card-header-row">
+                        <div class="order-id-wrapper">
+                            <span class="order-id-label">Order ID</span>
+                            <h4 class="order-id-value">#${order.orderId}</h4>
                         </div>
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full ${status.bg} ${status.text} text-xs font-semibold w-fit">
-                            <span class="w-2 h-2 rounded-full ${status.dot}"></span>
+                        <div class="status-pill ${status.cssClass}">
+                            <span class="status-pill-dot"></span>
                             ${status.label}
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 py-4 text-sm">
-                        <div>
-                            <span class="text-gray-500 block text-xs">Service Name</span>
-                            <span class="font-medium text-gray-800">${order.serviceName}</span>
+
+                    <div class="card-body-content">
+                        <div class="detail-block-full">
+                            <span class="detail-label">Service Name</span>
+                            <span class="service-title-value">${order.serviceName}</span>
                         </div>
-                        <div>
-                            <span class="text-gray-500 block text-xs">Quantity</span>
-                            <span class="font-medium text-gray-800">${order.quantity}</span>
-                        </div>
-                        <div class="sm:col-span-2 overflow-hidden text-ellipsis">
-                            <span class="text-gray-500 block text-xs">Instagram Link</span>
-                            <a href="${order.link}" target="_blank" rel="noopener noreferrer" class="font-medium text-indigo-600 hover:underline truncate block">${order.link}</a>
+
+                        <div class="card-details-grid">
+                            <div class="detail-block-full">
+                                <span class="detail-label">Quantity</span>
+                                <span class="quantity-value-badge">${order.quantity}</span>
+                            </div>
+                            <div class="target-link-wrapper">
+                                <span class="detail-label">Target Link</span>
+                                <a href="${order.link}" target="_blank" rel="noopener noreferrer" class="target-link-anchor">${order.link}</a>
+                            </div>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between pt-3 border-t border-gray-100 text-xs text-gray-500">
+
+                    <div class="card-footer-row">
                         <span>${formattedDate}</span>
-                        <span class="font-bold text-gray-900 text-sm">₹${order.amount}</span>
+                        <span class="price-tag-value">₹${order.amount}</span>
                     </div>
                 `;
                 container.appendChild(card);
             });
         }
 
+        /**
+         * Optional Search Filter for UI
+         */
+        function filterOrdersBySearch() {
+            const query = document.getElementById('orderSearchInput').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.order-item-node');
+            cards.forEach(card => {
+                const id = card.getAttribute('data-id').toLowerCase();
+                const service = card.getAttribute('data-service').toLowerCase();
+                if (id.includes(query) || service.includes(query)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+
+        /**
+         * Optional Status Tab Filter for UI
+         */
+        function filterOrdersByStatus(status) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => {
+                if (tab.getAttribute('data-filter') === status) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+
+            const cards = document.querySelectorAll('.order-item-node');
+            cards.forEach(card => {
+                if (status === 'all' || card.getAttribute('data-status') === status) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+
         // Initialize render on page load
         renderOrders();
 
-        // Automatically refresh UI status every 10 seconds without requiring manual page refresh
+        // Refresh UI status every 10 seconds without requiring page refresh
         setInterval(renderOrders, 10000);
     </script>
 </body>

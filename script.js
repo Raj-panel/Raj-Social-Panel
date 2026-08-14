@@ -79,7 +79,7 @@
             }
             #checkoutBinanceView img {
                 width: 150px !important;
-                height: 150px !important;
+                height: 160px !important;
                 object-fit: contain !important;
                 margin: 2px auto !important; 
                 padding: 2px !important;

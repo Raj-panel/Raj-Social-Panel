@@ -81,6 +81,8 @@
                 width: 100px !important;
                 height: 100px !important;
                 object-fit: contain !important;
+                margin: 4px auto !important; 
+                padding: 4px !important;
             }
             .upi-app-btn-grid { 
                 margin-top: 2px !important; 

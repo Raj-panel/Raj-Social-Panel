@@ -1301,3 +1301,20 @@ body.auth-page {
     color: var(--auth-text-secondary-dark);
   }
 }
+
+/* MOBILE RESPONSIVENESS */
+@media screen and (max-width: 480px) {
+  .auth-container {
+    padding: 12px;
+  }
+  
+  .auth-card {
+    padding: 24px 16px;
+    border-radius: 12px;
+  }
+
+  body.auth-page {
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+}

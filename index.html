@@ -114,10 +114,10 @@
   }
 
   .platform-switch-container .platform-btn.active {
-    background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%) !important;
+    background: var(--platform-active-gradient, linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%)) !important;
     color: #ffffff !important;
     border: none !important;
-    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3) !important;
+    box-shadow: 0 4px 15px var(--platform-active-shadow, rgba(236, 72, 153, 0.3)) !important;
   }
 
   .platform-switch-container .platform-btn:not(.active) i.fa-instagram { color: #e1306c !important; }
@@ -158,12 +158,12 @@
     font-style: italic !important;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
+    background: var(--platform-primary-gradient, linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-align: center;
     margin: -6px 0 10px 0;
-    filter: drop-shadow(0px 2px 8px rgba(168, 85, 247, 0.4));
+    filter: drop-shadow(0px 2px 8px var(--platform-glow-color, rgba(168, 85, 247, 0.4)));
   }
 
   /* Install App Container */
@@ -266,7 +266,7 @@
     font-size: 18px !important;
     font-weight: 800 !important;
     font-style: italic !important;
-    background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
+    background: var(--platform-primary-gradient, linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -357,7 +357,7 @@
   }
 </style>
 </head>
-<body>
+<body data-platform="instagram">
 
 <!-- Left Sidebar Navigation -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar(true)"></div>
@@ -533,7 +533,7 @@
     </div>
 
     <div id="checkoutUpiView" class="payment-view-box">
-      <div class="scan-title" style="font-weight: 800; color: #a855f7; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
+      <div class="scan-title" style="font-weight: 800; color: var(--platform-primary, #a855f7); font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
         SCAN TO PAY VIA UPI
       </div>
       <div class="qr-wrapper" style="text-align: center; margin-bottom: 2px;">
@@ -595,12 +595,22 @@
 <script type="module" src="auth-handler.js"></script>
 
 <script>
+  // Dynamic Platform Theme Switcher Integration
+  function applyPlatformTheme(platform) {
+    if (!platform) return;
+    const p = platform.toLowerCase();
+    document.body.setAttribute('data-platform', p);
+  }
+
   // Unified Platform Switch Click & Service Loading Handler
   function handlePlatformClick(platform, elem) {
     document.querySelectorAll('.platform-switch-container .platform-btn').forEach(btn => {
       btn.classList.remove('active');
     });
     elem.classList.add('active');
+
+    // Automatically change theme based on platform
+    applyPlatformTheme(platform);
 
     if (typeof switchPlatform === 'function') {
       switchPlatform(platform);
@@ -682,6 +692,9 @@
 
   // Input Focus App Banner Toggle
   document.addEventListener("DOMContentLoaded", function () {
+    // Default initial theme setup
+    applyPlatformTheme('instagram');
+
     document.body.addEventListener("focusin", function (e) {
       if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
         const installBox = document.getElementById("installContainer");

@@ -528,7 +528,7 @@ input:focus { border-color: var(--focus-color); background: #ffffff; }
 #installContainer{
  display:none;
  text-align:center;
- margin:-2px 0 16px;
+ margin:-10px 0 14px;
 }
 .install-btn{
  border:none;

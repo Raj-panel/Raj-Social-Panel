@@ -78,12 +78,12 @@
                 border-radius: 8px !important; 
             }
             #checkoutBinanceView img {
-                width: 130px !important;
-                height: 130px !important;
+                width: 150px !important;
+                height: 150px !important;
                 object-fit: contain !important;
                 margin: 2px auto !important; 
-                padding: 4px !important;
-                border-radius: 8px !important;
+                padding: 2px !important;
+                border-radius: 10px !important;
             }
             .upi-app-btn-grid { 
                 margin-top: 2px !important; 

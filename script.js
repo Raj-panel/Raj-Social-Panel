@@ -27,7 +27,7 @@
 
         /* Fixed Install Container Position */
         #installContainer {
-            margin-top: 8px !important;
+            margin-top: 50px !important;
             margin-bottom: 4px !important;
         }
 

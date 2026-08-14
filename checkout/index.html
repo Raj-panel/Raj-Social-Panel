@@ -1,1 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<!-- Canonical Link -->
+<link rel="canonical" href="https://rajsmmpanel.in/checkout/"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout – Raj SMM Panel</title>
+<meta content="Checkout page for Raj SMM Panel services." name="description"/>
 
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
+
+<!-- PWA / Web App Manifest & Theme -->
+<link href="../manifest.json" rel="manifest"/>
+<meta content="#0f172a" name="theme-color"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="SMM Panel" name="apple-mobile-web-app-title"/>
+<link href="../icon-192.png" rel="apple-touch-icon"/>
+
+<!-- Main Global Stylesheet & Custom Checkout Stylesheet -->
+<link href="../style.css" rel="stylesheet"/>
+<link href="./style.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+<!-- Open Graph Meta Tags -->
+<meta content="website" property="og:type"/>
+<meta content="https://rajsmmpanel.in/checkout/" property="og:url"/>
+<meta content="Checkout - Raj Social Panel" property="og:title"/>
+<meta content="Complete your social boosting order quickly and securely." property="og:description"/>
+<meta content="https://rajsmmpanel.in/banner-image.png" property="og:image"/>
+
+</head>
+<body data-platform="instagram" class="checkout-standalone-body">
+
+<div id="checkoutPage" class="checkout-page-overlay standalone-checkout">
+  <div class="checkout-content">
+    
+    <div class="checkout-nav">
+      <button class="back-btn" onclick="closeCheckout()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+      <div class="checkout-heading-text">Checkout</div>
+    </div>
+
+    <div class="premium-service-card">
+      <div class="card-top-row">
+        <div class="platform-badge-icon" id="checkoutPlatformIcon">
+          <i class="fa-brands fa-instagram"></i>
+        </div>
+        <div class="card-info">
+          <h4 id="checkoutServiceTitle">Instagram Followers</h4>
+          <div class="badge-row">
+            <span class="pkg-name-badge" id="checkoutPkgBadgeName">5K Followers</span>
+            <span class="popular-badge" id="checkoutBadge">Best Value</span>
+          </div>
+        </div>
+      </div>
+      <div class="units-text" id="checkoutUnitsText">5,000 units</div>
+      <div class="price-text">
+        ₹<span id="checkoutPriceText">199.00</span> <small>one-time</small>
+      </div>
+    </div>
+
+    <div class="checkout-input-group">
+      <label id="checkoutLinkLabel">Enter your Instagram link</label>
+      <input type="text" id="checkoutLinkInput" placeholder="https://instagram.com/your_username" />
+    </div>
+
+    <div class="checkout-order-summary">
+      <div class="summary-title">Order Summary</div>
+      <div class="summary-row">
+        <span>Package</span>
+        <span id="summaryPackageText">5K Followers</span>
+      </div>
+      <div class="summary-divider"></div>
+      <div class="summary-row pay-row">
+        <span>You Pay</span>
+        <span class="pay-amount">₹<span id="summaryPayAmount">199.00</span></span>
+      </div>
+    </div>
+
+    <div class="pay-toggle-tabs">
+      <button class="pay-tab active" id="btnTabUpi" onclick="switchCheckoutPayment('upi')">
+        <i class="fa-solid fa-qrcode"></i> UPI QR Pay
+      </button>
+      <button class="pay-tab" id="btnTabBinance" onclick="switchCheckoutPayment('binance')">
+        <i class="fa-solid fa-wallet"></i> Binance Pay
+      </button>
+    </div>
+
+    <div id="checkoutUpiView" class="payment-view-box">
+      <div class="scan-title" style="font-weight: 800; color: var(--platform-primary, #a855f7); font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
+        SCAN TO PAY VIA UPI
+      </div>
+      <div class="qr-wrapper" style="text-align: center; margin-bottom: 2px;">
+        <img id="checkoutQrImg" src="" alt="UPI QR Code" style="display: block; margin: 0 auto; border-radius: 12px;" />
+      </div>
+      <p class="qr-sub" style="font-size: 10px; color: #64748b; margin-top: 2px; margin-bottom: 8px; text-align: center;">
+        Scan or enter payment detail into any UPI App
+      </p>
+      
+      <div class="upi-app-btn-grid">
+        <div class="upi-app-card-btn">
+          <span style="color: #00baf2; font-weight: 900;">Paytm</span>
+        </div>
+        <div class="upi-app-card-btn">
+          <span style="color: #4285f4; font-weight: 800;">G</span><span style="color: #ea4335; font-weight: 800;">P</span><span style="color: #fbbc05; font-weight: 800;">a</span><span style="color: #34a853; font-weight: 800;">y</span>
+        </div>
+        <div class="upi-app-card-btn">
+          <i class="fa-solid fa-asterisk" style="color: #5f259f;"></i>
+          <span style="color: #5f259f; font-weight: 800;">PhonePe</span>
+        </div>
+        <div class="upi-app-card-btn">
+          <i class="fa-solid fa-qrcode" style="color: #6366f1;"></i>
+          <span style="color: #1e293b; font-weight: 700;">Other UPI</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="checkoutBinanceView" class="payment-view-box hidden">
+      <div class="scan-title">SCAN TO PAY VIA BINANCE</div>
+      <div class="qr-wrapper">
+        <img src="../binance-qr.png" alt="Binance QR Code" />
+      </div>
+      <div class="binance-nick-box">
+        Binance Nickname: <strong style="color: #facc15;">Alex-Sahil786</strong>
+      </div>
+      <div class="usdt-badge-box">
+        <span id="checkoutUsdtAmount">$0.00 USDT</span>
+      </div>
+    </div>
+
+    <div class="checkout-input-group margin-top-15">
+      <label id="txnLabel" for="checkoutTxnId">Enter 12-Digit UPI UTR / Ref No:</label>
+      <input type="text" id="checkoutTxnId" placeholder="e.g. 4029XXXXXXXXXX (12-Digit UTR)" />
+    </div>
+
+    <div class="notice-yellow-box">
+      <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
+    </div>
+
+    <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
+      <i class="fa-brands fa-whatsapp"></i> Confirm your order
+    </button>
+
+  </div>
+</div>
+
+<script src="../script.js"></script>
+<script type="module" src="../firebase-config.js"></script>
+<script type="module" src="../auth-handler.js"></script>
+<script src="./script.js"></script>
+
+</body>
+</html>

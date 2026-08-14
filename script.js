@@ -687,7 +687,7 @@ function getLinkConfig(platform, category) {
         if (c.includes("followers")) {
             return {
                 label: "Profile Link (Account Must be Public)",
-                placeholder: "https://instagram.com/your_username"
+                placeholder: "mr_rocky_x_888 or https://instagram.com/your_username"
             };
         } else if (c.includes("reels") || c.includes("video")) {
             return {
@@ -716,7 +716,7 @@ function getLinkConfig(platform, category) {
 
     return {
         label: "Profile Link (Account Must be Public)",
-        placeholder: "https://instagram.com/your_username"
+        placeholder: "mr_rocky_x_888 or https://instagram.com/your_username"
     };
 }
 
@@ -1029,6 +1029,7 @@ function switchCheckoutPayment(type) {
     }
 }
 
+// Check standard URL validity
 function isValidUrl(string) {
     try {
         new URL(string);
@@ -1038,22 +1039,76 @@ function isValidUrl(string) {
     }
 }
 
+// Function to validate and process Profile Link / Username for Instagram
+function processProfileOrLink(input, platform) {
+    const trimmed = (input || "").trim();
+    if (!trimmed) {
+        return { isValid: false, message: "Please enter your Social Media Link or Username!" };
+    }
+
+    const isInsta = (platform || "").toLowerCase() === "instagram";
+
+    if (isInsta) {
+        const usernameRegex = /^[a-zA-Z0-9._]{1,30}$/;
+        const instaUrlRegex = /^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]{1,30}\/?(\?.*)?$/i;
+
+        // If user entered a plain username
+        if (usernameRegex.test(trimmed)) {
+            return {
+                isValid: true,
+                url: `https://www.instagram.com/${trimmed}`
+            };
+        }
+
+        // If user entered a valid Instagram profile URL
+        if (instaUrlRegex.test(trimmed)) {
+            return {
+                isValid: true,
+                url: trimmed
+            };
+        }
+
+        // Other Instagram URLs (Reels/Posts) or general HTTP URLs
+        if (isValidUrl(trimmed) && trimmed.toLowerCase().includes("instagram.com")) {
+            return {
+                isValid: true,
+                url: trimmed
+            };
+        }
+
+        return {
+            isValid: false,
+            message: "Please enter a valid Instagram username or Instagram profile URL!"
+        };
+    } else {
+        // Validation for other platforms
+        if (!isValidUrl(trimmed) && !trimmed.includes("http")) {
+            return {
+                isValid: false,
+                message: "Please enter a valid URL (starting with http:// or https://)"
+            };
+        }
+        return {
+            isValid: true,
+            url: trimmed
+        };
+    }
+}
+
 function submitOrderToWhatsApp() {
     const linkInput = document.getElementById("checkoutLinkInput");
     const txnInput = document.getElementById("checkoutTxnId");
 
-    const link = linkInput ? linkInput.value.trim() : "";
+    const rawLink = linkInput ? linkInput.value.trim() : "";
     const txnId = txnInput ? txnInput.value.trim() : "";
 
-    if (!link) {
-        alert("Please enter your Social Media Link!");
+    const validation = processProfileOrLink(rawLink, currentCheckoutData.platform);
+    if (!validation.isValid) {
+        alert(validation.message);
         return;
     }
 
-    if (!isValidUrl(link) && !link.includes("http")) {
-        alert("Please enter a valid URL (starting with http:// or https://)");
-        return;
-    }
+    const link = validation.url;
 
     if (!txnId) {
         alert("Please enter Transaction ID / UTR number!");
@@ -1157,18 +1212,16 @@ window.addEventListener("appinstalled", () => {
 async function submitOrderWithWallet() {
     const linkInput = document.getElementById("checkoutLinkInput");
     const walletBtn = document.getElementById("submitWalletBtn");
-    const link = linkInput ? linkInput.value.trim() : "";
+    const rawLink = linkInput ? linkInput.value.trim() : "";
     const orderAmount = currentCheckoutData.price;
 
-    if (!link) {
-        alert("Please enter your Social Media Link!");
+    const validation = processProfileOrLink(rawLink, currentCheckoutData.platform);
+    if (!validation.isValid) {
+        alert(validation.message);
         return;
     }
 
-    if (!isValidUrl(link) && !link.includes("http")) {
-        alert("Please enter a valid URL (starting with http:// or https://)");
-        return;
-    }
+    const link = validation.url;
 
     if (typeof firebase === 'undefined' || !firebase.auth) {
         alert("Authentication system unavailable.");

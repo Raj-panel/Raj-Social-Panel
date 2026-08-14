@@ -27,9 +27,8 @@
 
         /* Fixed Install Container Position */
         #installContainer {
-            margin-top: 20px !important;
-            margin-bottom: 10px !important;
-            text-align: center !important;
+            margin-top: 8px !important;
+            margin-bottom: 4px !important;
         }
 
         @media screen and (max-width: 768px) {

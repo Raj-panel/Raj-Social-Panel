@@ -199,7 +199,7 @@ const serviceData = {
             { providerId: 50, name: "5K Shares", price: 69, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "Premium quality Indian share" },
             { providerId: 50, name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "Premium quality Indian share" }
         ],
-        "🔥 Reels Combo Service Non-Drop": [
+        "🔥 Reels Combo Service": [
             {
                 name: "Reels Viral Package",
                 price: 99,

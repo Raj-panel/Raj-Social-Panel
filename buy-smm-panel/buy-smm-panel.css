@@ -1,0 +1,293 @@
+/* ==================================================
+   STYLE 04 DESIGN SYSTEM - GLOWING 3D GLASSMorphism
+   ================================================== */
+
+:root {
+    /* Style 04 Light Glowing Theme */
+    --bg-main: #f0f4fd;
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --card-border: rgba(255, 255, 255, 0.9);
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --primary-blue: #2563eb;
+    
+    /* 3D Glowing Shadows */
+    --card-shadow: 0 15px 35px -5px rgba(37, 99, 235, 0.12), 
+                   0 0 15px 0 rgba(37, 99, 235, 0.05);
+    --box-glow: 0 10px 20px -5px rgba(37, 99, 235, 0.25),
+                0 0 12px 0 rgba(37, 99, 235, 0.15);
+    
+    --button-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    --button-glow: 0 8px 25px rgba(37, 99, 235, 0.4);
+}
+
+/* 🌙 Automatic Dark Mode Glowing Theme */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-main: #0a0f1d;
+        --card-bg: rgba(30, 41, 59, 0.75);
+        --card-border: rgba(255, 255, 255, 0.12);
+        --text-primary: #f8fafc;
+        --text-secondary: #94a3b8;
+        --primary-blue: #3b82f6;
+        
+        /* Dark Mode Intense Glow */
+        --card-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7),
+                       0 0 20px 0 rgba(59, 130, 246, 0.15);
+        --box-glow: 0 10px 25px -5px rgba(59, 130, 246, 0.4),
+                    0 0 15px 0 rgba(59, 130, 246, 0.25);
+        
+        --button-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        --button-glow: 0 8px 25px rgba(59, 130, 246, 0.5);
+    }
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    padding: 30px 15px;
+    -webkit-font-smoothing: antialiased;
+}
+
+.buy-panel-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Glassmorphism Main Base Cards */
+.hero-card, .features-section, .cta-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 35px 30px;
+    box-shadow: var(--card-shadow);
+}
+
+/* Hero Section Style */
+.hero-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.highlight-blue {
+    color: var(--primary-blue);
+    text-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+}
+
+.hero-subtitle {
+    font-size: 1.15rem;
+    color: var(--primary-blue);
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.hero-description {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Glowing 3D Hero Icon Box */
+.graphic-box {
+    width: 95px;
+    height: 95px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(37, 99, 235, 0.05) 100%);
+    border: 1px solid rgba(37, 99, 235, 0.3);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.8rem;
+    box-shadow: var(--box-glow);
+    transform: perspective(500px) rotateY(-10deg) rotateX(10deg);
+    transition: transform 0.3s ease;
+}
+
+.graphic-box:hover {
+    transform: perspective(500px) rotateY(0deg) rotateX(0deg) scale(1.05);
+}
+
+/* Features Grid */
+.section-title {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: var(--text-primary);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+}
+
+/* 3D Glowing Feature Cards */
+.feature-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 18px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+/* Glowing 3D Effect on Hover */
+.feature-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: rgba(37, 99, 235, 0.4);
+    box-shadow: var(--box-glow);
+}
+
+/* Glowing Icon Box inside Card */
+.icon-wrapper {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.12) 0%, rgba(37, 99, 235, 0.03) 100%);
+    border: 1px solid rgba(37, 99, 235, 0.2);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.5), 0 4px 10px rgba(37, 99, 235, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover .icon-wrapper {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.25) 0%, rgba(37, 99, 235, 0.08) 100%);
+}
+
+.feature-text {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* CTA & Contact Section */
+.cta-card {
+    text-align: center;
+}
+
+.cta-heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.cta-subtext {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+}
+
+.contact-info-row {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-bottom: 25px;
+}
+
+.info-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.info-name, .info-phone {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+/* Glowing 3D Button */
+.whatsapp-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: var(--button-gradient);
+    color: #ffffff !important;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 14px 40px;
+    border-radius: 30px;
+    text-decoration: none;
+    box-shadow: var(--button-glow);
+    transition: all 0.3s ease;
+}
+
+.whatsapp-button:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(37, 99, 235, 0.6);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 580px) {
+    .hero-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 25px 20px;
+    }
+
+    .hero-title {
+        font-size: 1.75rem;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .contact-info-row {
+        gap: 20px;
+    }
+
+    .whatsapp-button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}

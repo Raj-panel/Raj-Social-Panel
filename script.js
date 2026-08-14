@@ -687,7 +687,7 @@ function getLinkConfig(platform, category) {
         if (c.includes("followers")) {
             return {
                 label: "Profile Link (Account Must be Public)",
-                placeholder: "mr_rocky_x_888 or https://instagram.com/your_username"
+                placeholder: "https://instagram.com/your_username"
             };
         } else if (c.includes("reels") || c.includes("video")) {
             return {

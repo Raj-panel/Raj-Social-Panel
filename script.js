@@ -70,8 +70,8 @@
                 -webkit-text-fill-color: transparent !important; 
             }
             #checkoutUpiView img { 
-                width: 120px !important; 
-                height: 120px !important; 
+                width: 130px !important; 
+                height: 130px !important; 
                 object-fit: contain !important; 
                 margin: 4px auto !important; 
                 padding: 4px !important; 

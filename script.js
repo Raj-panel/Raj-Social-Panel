@@ -115,23 +115,9 @@
     document.head.appendChild(style);
 })();
 
-// Helper to get or create Cryptographically Secure Guest Session ID
-function getOrCreateGuestSessionId() {
-    let sessionId = localStorage.getItem('raj_smm_guest_session_id');
-    if (!sessionId) {
-        if (window.crypto && window.crypto.randomUUID) {
-            sessionId = 'gs_' + window.crypto.randomUUID();
-        } else {
-            const array = new Uint8Array(16);
-            window.crypto.getRandomValues(array);
-            sessionId = 'gs_' + Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
-        }
-        localStorage.setItem('raj_smm_guest_session_id', sessionId);
-    }
-    return sessionId;
-}
-
+// ==========================================
 // NAVIGATION FIX FOR LOGIN / CREATE ACCOUNT
+// ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     document.body.addEventListener("click", function (e) {
         const link = e.target.closest("a");
@@ -357,7 +343,7 @@ const serviceData = {
             { name: "1K Live Stream Views — 60 Mins", price: 70, desc: "Live Views for 60 Minutes" },
             { name: "1K Live Stream Views — 90 Mins", price: 99, desc: "Live Views for 90 Minutes" }
         ],
-        "YouTube Subscribe — Non Drop": [
+            "YouTube Subscribe — Non Drop": [
             { name: "100 Subscribers", price: 249, desc: "High Quality Indian Subscribers" },
             { name: "500 Subscribers", price: 1199, desc: "High Quality Indian Subscribers" },
             { name: "1K Subscribers", price: 2349, desc: "High Quality Indian Subscribers" }
@@ -1058,7 +1044,6 @@ function switchCheckoutPayment(type) {
     }
 }
 
-// Check standard URL validity
 function isValidUrl(string) {
     try {
         new URL(string);
@@ -1068,7 +1053,6 @@ function isValidUrl(string) {
     }
 }
 
-// Function to validate and process Profile Link / Username for Instagram
 function processProfileOrLink(input, platform) {
     const trimmed = (input || "").trim();
     if (!trimmed) {
@@ -1081,7 +1065,6 @@ function processProfileOrLink(input, platform) {
         const usernameRegex = /^[a-zA-Z0-9._]{1,30}$/;
         const instaUrlRegex = /^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]{1,30}\/?(\?.*)?$/i;
 
-        // If user entered a plain username
         if (usernameRegex.test(trimmed)) {
             return {
                 isValid: true,
@@ -1089,7 +1072,6 @@ function processProfileOrLink(input, platform) {
             };
         }
 
-        // If user entered a valid Instagram profile URL
         if (instaUrlRegex.test(trimmed)) {
             return {
                 isValid: true,
@@ -1097,7 +1079,6 @@ function processProfileOrLink(input, platform) {
             };
         }
 
-        // Other Instagram URLs (Reels/Posts) or general HTTP URLs
         if (isValidUrl(trimmed) && trimmed.toLowerCase().includes("instagram.com")) {
             return {
                 isValid: true,
@@ -1110,7 +1091,6 @@ function processProfileOrLink(input, platform) {
             message: "Please enter a valid Instagram username or Instagram profile URL!"
         };
     } else {
-        // Validation for other platforms
         if (!isValidUrl(trimmed) && !trimmed.includes("http")) {
             return {
                 isValid: false,
@@ -1124,7 +1104,7 @@ function processProfileOrLink(input, platform) {
     }
 }
 
-function submitOrderToWhatsApp() {
+async function submitOrderToWhatsApp() {
     const linkInput = document.getElementById("checkoutLinkInput");
     const txnInput = document.getElementById("checkoutTxnId");
 
@@ -1144,40 +1124,18 @@ function submitOrderToWhatsApp() {
         return;
     }
 
-    const sessionData = localStorage.getItem("raj_smm_user_session");
-    let loggedInUserMobile = null;
-    if (sessionData) {
-        try {
-            const parsedSession = JSON.parse(sessionData);
-            loggedInUserMobile = parsedSession.mobile || null;
-        } catch(e) {}
-    }
-
-    const guestSessionId = getOrCreateGuestSessionId();
     const orderIdVal = Math.floor(100000 + Math.random() * 900000);
-    
-    const newOrder = {
+    const orderPayload = {
         orderId: orderIdVal,
         serviceName: `${currentCheckoutData.platform} - ${currentCheckoutData.serviceName} (${currentCheckoutData.packageName})`,
         link: link,
         quantity: currentCheckoutData.quantity || 0,
         amount: currentCheckoutData.price ? currentCheckoutData.price.toFixed(2) : "0.00",
-        orderTimeEpoch: Date.now(),
-        createdTimestamp: Date.now(),
-        dateTime: new Date().toLocaleString(),
-        status: 'Pending',
-        ownerType: loggedInUserMobile ? "user" : "guest",
-        userId: loggedInUserMobile || null,
-        guestSessionId: guestSessionId,
-        txnId: txnId
+        createdTimestamp: Date.now()
     };
 
-    const existingOrders = JSON.parse(localStorage.getItem('user_local_orders') || '[]');
-    existingOrders.unshift(newOrder);
-    localStorage.setItem('user_local_orders', JSON.stringify(existingOrders));
-
-    if (window.saveOrderToFirestore) {
-        window.saveOrderToFirestore(newOrder);
+    if (typeof window.saveNewOrder === 'function') {
+        await window.saveNewOrder(orderPayload);
     }
 
     const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
@@ -1304,6 +1262,18 @@ async function submitOrderWithWallet() {
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             });
         });
+
+        const orderIdVal = Math.floor(100000 + Math.random() * 900000);
+        if (typeof window.saveNewOrder === 'function') {
+            await window.saveNewOrder({
+                orderId: orderIdVal,
+                serviceName: `${currentCheckoutData.platform} - ${currentCheckoutData.serviceName} (${currentCheckoutData.packageName})`,
+                link: link,
+                quantity: currentCheckoutData.quantity || 0,
+                amount: currentCheckoutData.price ? currentCheckoutData.price.toFixed(2) : "0.00",
+                createdTimestamp: Date.now()
+            });
+        }
 
         alert("Order placed successfully using Wallet Balance!");
         closeCheckoutUI();

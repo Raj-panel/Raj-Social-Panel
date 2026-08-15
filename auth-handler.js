@@ -5,7 +5,6 @@ import {
   getDoc, 
   updateDoc 
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
-import { claimGuestOrdersToAccount } from "./orders-manager.js";
 
 const SESSION_KEY = "raj_smm_user_session";
 
@@ -27,9 +26,6 @@ function checkUserSession() {
       if (addFundsItem) {
         addFundsItem.style.setProperty("display", "block", "important");
       }
-      
-      // Claim guest orders silently on session verification
-      claimGuestOrdersToAccount(user.mobile);
     } catch (e) {
       localStorage.removeItem(SESSION_KEY);
       updateSidebarForLoggedOutUser();
@@ -149,9 +145,6 @@ window.handleSignUp = async function() {
 
     await setDoc(userDocRef, userData);
 
-    // Claim guest orders upon creation
-    await claimGuestOrdersToAccount(mobile);
-
     alert("Account created successfully! Redirecting to login...");
     window.location.href = `/login/?mobile=${mobile}`;
   } catch (error) {
@@ -190,9 +183,6 @@ window.handleLogin = async function() {
         loggedInAt: new Date().toISOString()
       };
       localStorage.setItem(SESSION_KEY, JSON.stringify(sessionObj));
-
-      // Claim guest orders upon login
-      await claimGuestOrdersToAccount(userData.mobile);
 
       alert("Login successful!");
       window.location.href = "/";

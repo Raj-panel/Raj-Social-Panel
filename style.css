@@ -1370,148 +1370,131 @@ body.auth-page {
   }
 }
 /* ==========================================
-   1-SECOND 3D NEON PORTAL INTRO ANIMATION
+   RAJ PANEL: 1-SECOND 3D NEON INTRO (IMPROVED)
    ========================================== */
-.raj-intro-overlay {
+#rajIntroOverlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: #090d16;
-    z-index: 999999;
+    background: #0d1117; /* গাঢ় ব্যাকগ্রাউন্ড */
+    z-index: 1000000; /* যেন সবকিছুর ওপরে থাকে */
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
     overflow: hidden;
-    perspective: 1000px;
-    opacity: 1;
-    transition: opacity 0.3s ease-out;
+    color: white;
 }
 
-.raj-intro-overlay.raj-fade-out {
+#rajIntroOverlay.fade-out {
     opacity: 0;
-    pointer-events: none;
+    visibility: hidden;
 }
 
-.raj-portal-container {
+/* ৩D এফেক্ট এবং ট্রানজিশন */
+.raj-portal-wrapper {
+    perspective: 1000px;
+}
+
+.raj-neon-portal {
     position: relative;
     width: 300px;
     height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     transform-style: preserve-3d;
-    animation: rajPortalWarp 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    animation: rajPortalWarp 1s ease-out forwards;
 }
 
-/* Neon Rings */
-.raj-neon-ring {
-    position: absolute;
-    border-radius: 50%;
-    border: 2px solid transparent;
-    box-sizing: border-box;
-}
-
-.ring-1 {
-    width: 180px;
-    height: 180px;
-    border-top-color: #a855f7;
-    border-bottom-color: #ec4899;
-    box-shadow: 0 0 25px #a855f7, inset 0 0 25px #ec4899;
-    animation: rajSpinRing 1s linear infinite;
-}
-
-.ring-2 {
-    width: 240px;
-    height: 240px;
-    border-left-color: #3b82f6;
-    border-right-color: #06b6d4;
-    box-shadow: 0 0 30px #3b82f6;
-    animation: rajSpinRingRev 1s linear infinite;
-}
-
-.ring-3 {
-    width: 290px;
-    height: 290px;
-    border: 1px dashed rgba(168, 85, 247, 0.5);
-    animation: rajPulse 0.5s ease-in-out infinite alternate;
-}
-
-/* 3D Logo */
+/* ৩D লোগো */
 .raj-3d-logo {
-    position: relative;
-    z-index: 10;
-    text-align: center;
-    transform: translateZ(40px);
-}
-
-.raj-logo-glow {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 120px;
-    height: 120px;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.8) 0%, rgba(236, 72, 153, 0) 70%);
-    filter: blur(15px);
+    width: 150px;
+    height: 150px;
+    transform-style: preserve-3d;
 }
 
-.raj-logo-text {
-    font-size: 26px;
-    font-weight: 900;
+.raj-logo-letter {
+    font-size: 72px;
+    font-weight: 800;
     font-family: 'Poppins', sans-serif;
-    letter-spacing: 2px;
-    background: linear-gradient(135deg, #ffffff 0%, #a855f7 50%, #ec4899 100%);
+    color: white;
+    background: linear-gradient(135deg, #ec4899, #a855f7);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+    display: block;
+    text-align: center;
+    line-height: 150px;
+    transform: translateZ(50px); /* সামনে আনা */
 }
 
-/* Floating Social Icons */
-.raj-floating-icons i {
+.raj-logo-glow {
     position: absolute;
-    font-size: 22px;
-    opacity: 0.9;
-    animation: rajFloatPop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.8) 0%, rgba(236, 72, 153, 0) 70%);
+    border-radius: 50%;
+    filter: blur(10px);
 }
 
-.icon-insta { color: #e1306c; top: 15%; left: 15%; }
-.icon-fb { color: #1877f2; top: 15%; right: 15%; }
-.icon-yt { color: #ff0000; bottom: 15%; left: 15%; }
-.icon-tt { color: #00f2fe; bottom: 15%; right: 15%; }
+/* ৩D সোশ্যাল আইকন অরবিট */
+.raj-social-icons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    animation: rajOrbitRotate 1s linear infinite;
+}
 
-/* Keyframe Animations */
+.icon-orbit {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: white;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transform: translateZ(30px);
+}
+
+.icon-insta { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); top: 10px; left: 130px; animation: rajFloatPop 0.8s 0s backwards cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.icon-fb { background: #1877f2; top: 130px; right: 10px; animation: rajFloatPop 0.8s 0.2s backwards cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.icon-yt { background: #ff0000; bottom: 10px; left: 130px; animation: rajFloatPop 0.8s 0.4s backwards cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.icon-tiktok { background: #000000; top: 130px; left: 10px; animation: rajFloatPop 0.8s 0.6s backwards cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+/* কীফ্রেম অ্যানিমেশন */
 @keyframes rajPortalWarp {
-    0% {
-        transform: scale(0.2) rotateX(45deg) translateZ(-500px);
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1.1) rotateX(0deg) translateZ(0);
-        opacity: 1;
-    }
-}
-
-@keyframes rajSpinRing {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes rajSpinRingRev {
-    0% { transform: rotate(360deg); }
-    100% { transform: rotate(0deg); }
-}
-
-@keyframes rajPulse {
-    0% { transform: scale(0.95); opacity: 0.4; }
-    100% { transform: scale(1.05); opacity: 0.8; }
+    0% { transform: scale(0.1) rotateX(45deg); opacity: 0; }
+    100% { transform: scale(1) rotateX(0deg); opacity: 1; }
 }
 
 @keyframes rajFloatPop {
     0% { transform: scale(0) translateZ(-100px); opacity: 0; }
-    100% { transform: scale(1) translateZ(20px); opacity: 1; }
+    100% { transform: scale(1) translateZ(30px); opacity: 1; }
+}
+
+@keyframes rajOrbitRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* পার্টিকেল কন্টেইনার */
+.raj-splash-particle-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.2), transparent);
 }

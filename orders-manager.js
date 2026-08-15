@@ -1,5 +1,6 @@
 /**
- * Orders Manager - Handles Local Storage persistence, Firestore sync, and time-based status automation.
+ * Orders Manager - Handles Secure Guest Ownership, Account Claiming, 
+ * Firestore Persistence, and Dynamic Status Calculations.
  */
 
 import { db } from "./firebase-config.js";
@@ -9,143 +10,212 @@ import {
   setDoc, 
   getDocs, 
   query, 
-  where 
+  where, 
+  writeBatch 
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
 const ORDER_STORAGE_KEY = 'user_local_orders';
+const GUEST_DEVICE_KEY = 'raj_smm_guest_device_id';
+const SESSION_KEY = "raj_smm_user_session";
 
 /**
- * Get current Guest Session ID from LocalStorage
+ * Gets or creates a securely generated random guest device identifier.
+ * Uses Crypto API to prevent predictability.
  */
-function getGuestSessionId() {
-    return localStorage.getItem('raj_smm_guest_session_id') || null;
+export function getGuestDeviceId() {
+  let guestId = localStorage.getItem(GUEST_DEVICE_KEY);
+  if (!guestId) {
+    const array = new Uint8Array(24);
+    window.crypto.getRandomValues(array);
+    guestId = 'gdev_' + Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+    localStorage.setItem(GUEST_DEVICE_KEY, guestId);
+  }
+  return guestId;
 }
 
 /**
- * Get current logged in user mobile number
+ * Gets currently logged in user mobile from session, or null if guest.
  */
-function getLoggedInUserMobile() {
-    const sessionData = localStorage.getItem("raj_smm_user_session");
-    if (!sessionData) return null;
-    try {
-        const parsed = JSON.parse(sessionData);
-        return parsed.mobile || null;
-    } catch(e) {
-        return null;
-    }
+export function getCurrentUserMobile() {
+  const sessionData = localStorage.getItem(SESSION_KEY);
+  if (!sessionData) return null;
+  try {
+    const user = JSON.parse(sessionData);
+    return user.mobile || null;
+  } catch (e) {
+    return null;
+  }
 }
 
 /**
- * Saves a new order to Local Storage and Firestore.
- * @param {Object} orderData - Details from the successful checkout.
- */
-export async function saveNewOrder(orderData) {
-    const orders = getAllOrders();
-    const guestSessionId = getGuestSessionId();
-    const loggedInMobile = getLoggedInUserMobile();
-
-    const newOrder = {
-        orderId: orderData.orderId || Math.floor(100000 + Math.random() * 900000),
-        serviceName: orderData.serviceName,
-        link: orderData.link,
-        quantity: orderData.quantity,
-        amount: orderData.amount,
-        dateTime: orderData.dateTime || new Date().toLocaleString(),
-        createdTimestamp: orderData.createdTimestamp || Date.now(),
-        ownerType: loggedInMobile ? "user" : "guest",
-        userId: loggedInMobile || null,
-        guestSessionId: guestSessionId,
-        status: 'Pending'
-    };
-
-    orders.unshift(newOrder);
-    localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(orders));
-
-    try {
-        await setDoc(doc(db, "orders", String(newOrder.orderId)), newOrder);
-    } catch(e) {
-        console.error("Firestore order save error:", e);
-    }
-}
-
-window.saveOrderToFirestore = function(orderData) {
-    saveNewOrder(orderData);
-};
-
-/**
- * Retrieves all orders for the current viewer (Guest Session ID or Logged-in Account).
- * Time-based status rules:
+ * Calculates dynamic order status according to requirements:
  * - Pending: < 5 minutes
  * - Processing: >= 5 minutes AND < 60 minutes
- * - Completed: >= 60 minutes
+ * - Complete: >= 60 minutes
  */
-export function getAllOrders() {
-    const data = localStorage.getItem(ORDER_STORAGE_KEY);
-    const loggedInMobile = getLoggedInUserMobile();
-    const guestSessionId = getGuestSessionId();
-    
-    if (!data) return [];
-    
-    try {
-        const orders = JSON.parse(data);
-        const currentTime = Date.now();
-
-        const filteredOrders = orders.filter(order => {
-            if (loggedInMobile) {
-                return order.ownerType === "user" && order.userId === loggedInMobile;
-            } else {
-                return order.ownerType === "guest" && order.guestSessionId === guestSessionId;
-            }
-        });
-
-        return filteredOrders.map(order => {
-            const elapsedMinutes = (currentTime - order.createdTimestamp) / (1000 * 60);
-            let status = order.status || 'Pending';
-
-            if (elapsedMinutes >= 60) {
-                status = 'Completed';
-            } else if (elapsedMinutes >= 5) {
-                status = 'Processing';
-            }
-
-            return { ...order, status };
-        });
-    } catch (e) {
-        console.error("Error parsing orders from Local Storage", e);
-        return [];
-    }
+export function calculateOrderStatus(createdTimestamp) {
+  const elapsedMinutes = (Date.now() - Number(createdTimestamp)) / (1000 * 60);
+  if (elapsedMinutes >= 60) {
+    return 'Complete';
+  } else if (elapsedMinutes >= 5) {
+    return 'Processing';
+  }
+  return 'Pending';
 }
 
 /**
- * Fetch latest claimed/user orders from Firestore on account login
+ * Saves a new order to Firestore and Local Storage.
  */
-export async function syncUserOrdersFromFirestore() {
-    const loggedInMobile = getLoggedInUserMobile();
-    if (!loggedInMobile) return;
+export async function saveNewOrder(orderData) {
+  const guestDeviceId = getGuestDeviceId();
+  const userMobile = getCurrentUserMobile();
+  const isAccount = Boolean(userMobile);
 
-    try {
-        const q = query(collection(db, "orders"), where("userId", "==", loggedInMobile), where("ownerType", "==", "user"));
-        const querySnapshot = await getDocs(q);
-        
-        let localOrders = [];
-        try {
-            localOrders = JSON.parse(localStorage.getItem(ORDER_STORAGE_KEY) || '[]');
-        } catch(e) {}
+  const orderIdStr = String(orderData.orderId || Math.floor(100000 + Math.random() * 900000));
+  const createdTimestamp = orderData.createdTimestamp || Date.now();
 
-        const existingMap = new Map();
-        localOrders.forEach(o => existingMap.set(String(o.orderId), o));
+  const record = {
+    orderId: orderIdStr,
+    serviceName: orderData.serviceName || '',
+    link: orderData.link || '',
+    quantity: Number(orderData.quantity) || 0,
+    amount: String(orderData.amount || '0.00'),
+    dateTime: orderData.dateTime || new Date().toLocaleString(),
+    createdTimestamp: createdTimestamp,
+    ownerType: isAccount ? 'account' : 'guest',
+    guestDeviceId: guestDeviceId,
+    userMobile: isAccount ? userMobile : ''
+  };
 
-        querySnapshot.forEach((docSnap) => {
-            const data = docSnap.data();
-            existingMap.set(String(data.orderId), data);
-        });
+  // 1. Save to Local Storage
+  const localOrders = getLocalOrdersRaw();
+  const existingIdx = localOrders.findIndex(o => String(o.orderId) === orderIdStr);
+  if (existingIdx >= 0) {
+    localOrders[existingIdx] = record;
+  } else {
+    localOrders.unshift(record);
+  }
+  localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(localOrders));
 
-        const updatedOrders = Array.from(existingMap.values()).sort((a,b) => (b.createdTimestamp || 0) - (a.createdTimestamp || 0));
-        localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(updatedOrders));
-    } catch(e) {
-        console.error("Error syncing orders from Firestore:", e);
-    }
+  // 2. Sync to Firestore
+  try {
+    const orderDocRef = doc(db, 'orders', orderIdStr);
+    await setDoc(orderDocRef, record, { merge: true });
+  } catch (err) {
+    console.error("Firestore order save error:", err);
+  }
+
+  return record;
 }
 
+/**
+ * Helper to get raw local orders.
+ */
+function getLocalOrdersRaw() {
+  const data = localStorage.getItem(ORDER_STORAGE_KEY);
+  if (!data) return [];
+  try {
+    return JSON.parse(data);
+  } catch (e) {
+    return [];
+  }
+}
+
+/**
+ * Retrieves all valid orders for the current user/device with calculated status.
+ */
+export async function getAllOrders() {
+  const guestDeviceId = getGuestDeviceId();
+  const userMobile = getCurrentUserMobile();
+
+  let fetchedOrders = [];
+
+  try {
+    const ordersRef = collection(db, 'orders');
+    let q;
+
+    if (userMobile) {
+      q = query(ordersRef, where('userMobile', '==', userMobile));
+    } else {
+      q = query(ordersRef, where('guestDeviceId', '==', guestDeviceId), where('ownerType', '==', 'guest'));
+    }
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((docSnap) => {
+      fetchedOrders.push(docSnap.data());
+    });
+  } catch (err) {
+    console.warn("Using local order fallback:", err);
+    fetchedOrders = getLocalOrdersRaw().filter(o => {
+      if (userMobile) {
+        return o.userMobile === userMobile || (o.guestDeviceId === guestDeviceId && o.ownerType === 'guest');
+      } else {
+        return o.guestDeviceId === guestDeviceId && o.ownerType === 'guest';
+      }
+    });
+  }
+
+  // Update local storage cache
+  localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(fetchedOrders));
+
+  // Apply dynamic status calculation
+  return fetchedOrders.map(order => ({
+    ...order,
+    status: calculateOrderStatus(order.createdTimestamp)
+  })).sort((a, b) => b.createdTimestamp - a.createdTimestamp);
+}
+
+/**
+ * Claims guest orders created on this browser/device and links them to the logged-in user account.
+ */
+export async function claimGuestOrdersToAccount(userMobile) {
+  if (!userMobile) return;
+
+  const guestDeviceId = getGuestDeviceId();
+
+  // 1. Update Local Storage records
+  const localOrders = getLocalOrdersRaw();
+  let updatedLocal = false;
+
+  localOrders.forEach(order => {
+    if (order.guestDeviceId === guestDeviceId && order.ownerType === 'guest') {
+      order.ownerType = 'account';
+      order.userMobile = userMobile;
+      updatedLocal = true;
+    }
+  });
+
+  if (updatedLocal) {
+    localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(localOrders));
+  }
+
+  // 2. Query and update Firestore records in batch
+  try {
+    const ordersRef = collection(db, 'orders');
+    const q = query(
+      ordersRef, 
+      where('guestDeviceId', '==', guestDeviceId), 
+      where('ownerType', '==', 'guest')
+    );
+
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      const batch = writeBatch(db);
+      querySnapshot.forEach((docSnap) => {
+        batch.update(docSnap.ref, {
+          ownerType: 'account',
+          userMobile: userMobile
+        });
+      });
+      await batch.commit();
+    }
+  } catch (err) {
+    console.error("Error claiming guest orders in Firestore:", err);
+  }
+}
+
+// Window global bindings for legacy inline compatibility
+window.saveNewOrder = saveNewOrder;
 window.getAllOrders = getAllOrders;
-window.syncUserOrdersFromFirestore = syncUserOrdersFromFirestore;
+window.claimGuestOrdersToAccount = claimGuestOrdersToAccount;
+window.getGuestDeviceId = getGuestDeviceId;

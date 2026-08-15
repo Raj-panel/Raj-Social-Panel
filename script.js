@@ -70,7 +70,7 @@
                 -webkit-text-fill-color: transparent !important; 
             }
             #checkoutUpiView img { 
-                width: 130px !important; 
+                width: 140px !important; 
                 height: 130px !important; 
                 object-fit: contain !important; 
                 margin: 4px auto !important; 
@@ -79,7 +79,7 @@
             }
             #checkoutBinanceView img {
                 width: 150px !important;
-                height: 150px !important;
+                height: 160px !important;
                 object-fit: contain !important;
                 margin: 2px auto !important; 
                 padding: 2px !important;
@@ -153,7 +153,7 @@ const serviceData = {
             { name: "9K Followers", price: 359 },
             { name: "10K Followers", price: 399, badge: "🎁 BUY 10K + GET 2K FREE", badgeClass: "badge-super" }
         ],
-        "Likes Lifetime": [
+        "Likes Non-Drop": [
             { providerId: 675, name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo" },
             { providerId: 675, name: "500 Likes", price: 25 },
             { providerId: 675, name: "1K Likes", price: 30, badge: "⭐ Popular", badgeClass: "badge-popular" },
@@ -161,7 +161,7 @@ const serviceData = {
             { providerId: 675, name: "5K Likes", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" },
             { providerId: 675, name: "10K Likes", price: 179, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
-        "REAL Reels / Video Views": [
+        "REAL Reels / Video Views Non-Drop": [
             { providerId: 853, name: "1K Views", price: 5, badge: "DEMO", badgeClass: "badge-demo", desc: "Indian views premium quality" },
             { providerId: 853, name: "5K Views", price: 9, desc: "Indian views premium quality" },
             { providerId: 853, name: "10K Views", price: 15, badge: "BEST VALUE", badgeClass: "badge-best", desc: "Indian views premium quality" },
@@ -171,7 +171,7 @@ const serviceData = {
             { providerId: 853, name: "500K Views", price: 299, desc: "Indian views premium quality" },
             { providerId: 853, name: "1M Views", price: 499, badge: "💥 MEGA DEAL", badgeClass: "badge-best", desc: "Indian views premium quality" }
         ],
-        "REAL Photo / Post Views": [
+        "REAL Photo / Post Views Non-Drop": [
             { providerId: 1030, name: "1K Views", price: 10, badge: "🎯 Demo", badgeClass: "badge-demo", desc: "High quality Indian views" },
             { providerId: 1030, name: "3K Views", price: 15, desc: "High quality Indian views" },
             { providerId: 1030, name: "5K Views", price: 25, desc: "High quality Indian views" },
@@ -180,20 +180,20 @@ const serviceData = {
             { providerId: 1030, name: "50K Views", price: 119, desc: "High quality Indian views" },
             { providerId: 1030, name: "100K Views", price: 220, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "High quality Indian views" }
         ],
-        "REAL Comments Lifetime": [
+        "REAL Comments Non-Drop": [
             { providerId: 31, name: "50 Comments", price: 15, badge: "Starter", badgeClass: "badge-demo" },
             { providerId: 31, name: "100 Comments", price: 20 },
             { providerId: 31, name: "500 Comments", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
             { providerId: 31, name: "1K Comments", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" }
         ],
-        "REAL Repost Lifetime": [
+        "REAL Repost Non-Drop": [
             { providerId: 505, name: "50 Reposts", price: 15, badge: "Starter", badgeClass: "badge-demo", desc: "Indian repost high premium quality" },
             { providerId: 505, name: "100 Reposts", price: 20, desc: "Indian repost high premium quality" },
             { providerId: 505, name: "500 Reposts", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "Indian repost high premium quality" },
             { providerId: 505, name: "1K Reposts", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "Indian repost high premium quality" },
             { providerId: 505, name: "3K Reposts", price: 249, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "Indian repost high premium quality" }
         ],
-        "REAL Shares Lifetime": [
+        "REAL Shares Non-Drop": [
             { providerId: 50, name: "100 Shares", price: 5, badge: "Starter", badgeClass: "badge-demo", desc: "Premium quality Indian share" },
             { providerId: 50, name: "1K Shares", price: 30, desc: "Premium quality Indian share" },
             { providerId: 50, name: "5K Shares", price: 69, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "Premium quality Indian share" },
@@ -294,7 +294,7 @@ const serviceData = {
             { name: "5K Likes", price: 99, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
             { name: "10K Likes", price: 179, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
         ],
-        "Reels / Video Views": [
+        "Reels / Video Views Non-Drop": [
             { name: "1K Views", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
             { name: "3K Views", price: 25 },
             { name: "5K Views", price: 35, badge: "⭐ POPULAR", badgeClass: "badge-popular" },
@@ -302,7 +302,7 @@ const serviceData = {
             { name: "50K Views", price: 249, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
             { name: "100K Views", price: 449, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
         ],
-        "Facebook Comments": [
+        "POST / VIDEO Comments Non-Drop": [
             { name: "50 Comments", price: 10 },
             { name: "100 Comments", price: 15 },
             { name: "300 Comments", price: 25, badge: "⭐ Popular", badgeClass: "badge-popular" },
@@ -311,7 +311,7 @@ const serviceData = {
             { name: "2K Comments", price: 110, badge: "🏆 Best Deal", badgeClass: "badge-best" },
             { name: "5K Comments", price: 260, badge: "👑 Most Popular", badgeClass: "badge-best" }
         ],
-        "Facebook Shares": [
+        "POST / VIDEO Shares Non-Drop": [
             { name: "100 Shares", price: 15 },
             { name: "1K Shares", price: 25 },
             { name: "5K Shares", price: 59, badge: "🔥 Best Value", badgeClass: "badge-best" },
@@ -321,11 +321,6 @@ const serviceData = {
         ]
     },
     youtube: {
-        "YouTube Subscribe — Non Drop": [
-            { name: "100 Subscribers", price: 249, desc: "High Quality Indian Subscribers" },
-            { name: "500 Subscribers", price: 1199, desc: "High Quality Indian Subscribers" },
-            { name: "1K Subscribers", price: 2349, desc: "High Quality Indian Subscribers" }
-        ],
         "YouTube Likes — Non Drop": [
             { name: "100 Real Likes", price: 49, desc: "Indian Real Active High Quality" },
             { name: "500 Real Likes", price: 149, desc: "Indian Real Active High Quality" },
@@ -333,7 +328,7 @@ const serviceData = {
             { name: "3K Real Likes", price: 499, desc: "Indian Real Active High Quality" },
             { name: "5K Real Likes", price: 949, desc: "Indian Real Active High Quality" }
         ],
-        "YouTube Shorts / Video Views": [
+        "YT Shorts / Video Views Non-Drop": [
             { name: "100 Short Video Views", price: 49, desc: "Indian High Quality" },
             { name: "500 Short Video Views", price: 90, desc: "Indian High Quality" },
             { name: "1K Short Video Views", price: 179, desc: "Indian High Quality" },
@@ -342,11 +337,16 @@ const serviceData = {
             { name: "7K Short Video Views", price: 999, desc: "Indian High Quality" },
             { name: "10K Short Video Views", price: 1499, desc: "Indian High Quality" }
         ],
-        "YouTube Live Stream Views": [
+        "YT Live Stream Views Non-Drop": [
             { name: "1K Live Stream Views — 15 Mins", price: 25, desc: "Live Views for 15 Minutes" },
             { name: "1K Live Stream Views — 30 Mins", price: 40, desc: "Live Views for 30 Minutes" },
             { name: "1K Live Stream Views — 60 Mins", price: 70, desc: "Live Views for 60 Minutes" },
             { name: "1K Live Stream Views — 90 Mins", price: 99, desc: "Live Views for 90 Minutes" }
+        ],
+        "YouTube Subscribe — Non Drop": [
+            { name: "100 Subscribers", price: 249, desc: "High Quality Indian Subscribers" },
+            { name: "500 Subscribers", price: 1199, desc: "High Quality Indian Subscribers" },
+            { name: "1K Subscribers", price: 2349, desc: "High Quality Indian Subscribers" }
         ]
     },
     tiktok: {
@@ -357,14 +357,14 @@ const serviceData = {
             { name: "5K TikTok Followers", price: 799, desc: "90 Days Refill" },
             { name: "10K TikTok Followers", price: 1599, desc: "90 Days Refill" }
         ],
-        "TikTok Likes": [
+        "TikTok Likes Non-Drop": [
             { name: "100 TikTok Likes", price: 10, desc: "Lifetime Auto Refill" },
             { name: "500 TikTok Likes", price: 40, desc: "Lifetime Auto Refill" },
             { name: "1K TikTok Likes", price: 75, desc: "Lifetime Auto Refill" },
             { name: "3K TikTok Likes", price: 199, desc: "Lifetime Auto Refill" },
             { name: "5K TikTok Likes", price: 349, desc: "Lifetime Auto Refill" }
         ],
-        "TikTok Views": [
+        "TikTok Views Non-Drop": [
             { name: "100 TikTok Video Views", price: 9, desc: "High Quality Real Views • Lifetime Refill" },
             { name: "500 TikTok Video Views", price: 20, desc: "High Quality Real Views • Lifetime Refill" },
             { name: "1K TikTok Video Views", price: 35, desc: "High Quality Real Views • Lifetime Refill" },
@@ -1037,7 +1037,7 @@ function switchCheckoutPayment(type) {
         if (viewUpi) viewUpi.classList.remove("hidden");
         if (viewBinance) viewBinance.classList.add("hidden");
     } else {
-        if (btnBinance) btnBinance.classList.add("active");
+        if (btnBinance) btnBinance.classList.remove("active");
         if (btnUpi) btnUpi.classList.remove("active");
         if (viewBinance) viewBinance.classList.remove("hidden");
         if (viewUpi) viewUpi.classList.add("hidden");
@@ -1180,11 +1180,16 @@ function submitOrderToWhatsApp() {
     window.open(waUrl, "_blank");
 }
 
+// ==========================================
+// PWA INSTALL LOGIC & SCOPE MANAGEMENT
+// ==========================================
+// ১. টপ লেভেলে (Global Scope) গ্লোবাল ভেরিয়েবল ঘোষণা
 let deferredPrompt = null;
 
+// ২. ইভেন্ট লিসেনারে ইন্সটল প্রম্পট ক্যাপচার করা
 window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
-    deferredPrompt = e;
+    deferredPrompt = e; // টপ-লেভেল ভেরিয়েবলে অ্যাসাইন করা হলো
     toggleInstallButton();
 });
 
@@ -1203,25 +1208,33 @@ function toggleInstallButton() {
     }
 }
 
+// ৩. ইন্সটল বাটন ক্লিক হ্যান্ডলার
 const installBtn = document.getElementById("installBtn");
 if (installBtn) {
     installBtn.addEventListener("click", async () => {
         if (!deferredPrompt) return;
+        
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
+        
         if (outcome === 'accepted') {
-            deferredPrompt = null;
-            toggleInstallButton();
+            console.log("ইউজার PWA ইন্সটল এক্সেপ্ট করেছে");
         }
+        
+        // ডায়ালগ একবার প্রম্পট হওয়ার পর মেমোরি ক্লিয়ার করা
+        deferredPrompt = null;
+        toggleInstallButton();
     });
 }
 
+// ৪. অ্যাপ ইন্সটল সম্পন্ন হলে বাটন ও মেমোরি হাইড/ক্লিয়ার করা
 window.addEventListener("appinstalled", () => {
+    deferredPrompt = null;
     const installContainer = document.getElementById("installContainer");
     if (installContainer) {
         installContainer.style.display = "none";
     }
-    deferredPrompt = null;
+    console.log("PWA সফলভাবে ইন্সটল সম্পন্ন হয়েছে!");
 });
 
 async function submitOrderWithWallet() {

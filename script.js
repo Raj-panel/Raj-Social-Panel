@@ -1291,36 +1291,3 @@ async function submitOrderWithWallet() {
         if (walletBtn) walletBtn.disabled = false;
     }
 }
-/* ==========================================
-   RAJ PANEL: 1-SECOND SPLASH INTRO LOGIC
-   ========================================== */
-(function() {
-    function runIntro() {
-        // ১. চেক করা যে সেশন চলাকালীন কি আগেই অ্যানিমেশন দেখানো হয়েছে (একবার দেখানোর জন্য)
-        if (sessionStorage.getItem('raj_intro_shown')) {
-            const overlay = document.getElementById('rajIntroOverlay');
-            if (overlay) {
-                overlay.style.display = 'none'; // আগের দেখানো থাকলে সেশন থেকেই হাইড করা
-            }
-            return; 
-        }
-
-        // ২. অ্যানিমেশন শেষ করে সরানো এবং সেশন রিমাইন্ডার সেট করা
-        const overlay = document.getElementById('rajIntroOverlay');
-        if (overlay) {
-            setTimeout(() => {
-                overlay.classList.add('fade-out'); // ১ সেঃ পরে ফেড আউট এফেক্ট
-                
-                // সেশন স্টোরেজে সেভ করা যেন প্রতিবার পেজ রিলোড বা নেভিগেটে বারবার ইন্ট্রো না আসে
-                sessionStorage.setItem('raj_intro_shown', 'true');
-            }, 1000); // ১ সেকেন্ড সময়
-        }
-    }
-
-    // DOM লোড হওয়ার পরেই রান করা
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', runIntro);
-    } else {
-        runIntro();
-    }
-})();

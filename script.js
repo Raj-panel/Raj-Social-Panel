@@ -343,7 +343,7 @@ const serviceData = {
             { name: "1K Live Stream Views — 60 Mins", price: 70, desc: "Live Views for 60 Minutes" },
             { name: "1K Live Stream Views — 90 Mins", price: 99, desc: "Live Views for 90 Minutes" }
         ],
-        "YouTube Subscribe — Non Drop": [
+            "YouTube Subscribe — Non Drop": [
             { name: "100 Subscribers", price: 249, desc: "High Quality Indian Subscribers" },
             { name: "500 Subscribers", price: 1199, desc: "High Quality Indian Subscribers" },
             { name: "1K Subscribers", price: 2349, desc: "High Quality Indian Subscribers" }
@@ -1037,7 +1037,7 @@ function switchCheckoutPayment(type) {
         if (viewUpi) viewUpi.classList.remove("hidden");
         if (viewBinance) viewBinance.classList.add("hidden");
     } else {
-        if (btnBinance) btnBinance.classList.remove("active");
+        if (btnBinance) btnBinance.classList.add("active");
         if (btnUpi) btnUpi.classList.remove("active");
         if (viewBinance) viewBinance.classList.remove("hidden");
         if (viewUpi) viewUpi.classList.add("hidden");
@@ -1180,46 +1180,48 @@ function submitOrderToWhatsApp() {
     window.open(waUrl, "_blank");
 }
 
-// ==========================================
-// PWA INSTALL LOGIC & SCOPE MANAGEMENT
-// ==========================================
-// ১. গ্লোবাল স্কোপে একবারই ডিক্লেয়ার করা হলো
 let deferredPrompt = null;
 
-// ২. ইভেন্ট লিসেনারের ভেতর রি-অ্যাসাইন (Re-assign) করা হলো (let ছাড়া)
 window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
-    deferredPrompt = e; // Correct: updating the existing variable
+    deferredPrompt = e;
     toggleInstallButton();
 });
 
-// ৩. ইউজার ক্লিক করলে প্রম্পট দেখানো এবং পরে মেমোরি ক্লিয়ার করা
+function toggleInstallButton() {
+    const installContainer = document.getElementById("installContainer");
+    if (!installContainer) return;
+
+    if (
+        currentPlatform === "instagram" &&
+        currentCategory === "Followers Non-Drop" &&
+        deferredPrompt
+    ) {
+        installContainer.style.display = "block";
+    } else {
+        installContainer.style.display = "none";
+    }
+}
+
 const installBtn = document.getElementById("installBtn");
 if (installBtn) {
     installBtn.addEventListener("click", async () => {
         if (!deferredPrompt) return;
-        
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
-        
         if (outcome === 'accepted') {
-            console.log("User accepted the install prompt");
+            deferredPrompt = null;
+            toggleInstallButton();
         }
-        
-        // ডায়ালগ একবার প্রম্পট হওয়ার পর মেমোরি ফ্রী করা
-        deferredPrompt = null;
-        toggleInstallButton();
     });
 }
 
-// ৪. অ্যাপ ইন্সটল সম্পন্ন হলে বাটন ও মেমোরি হাইড/ক্লিয়ার করা
 window.addEventListener("appinstalled", () => {
-    deferredPrompt = null;
     const installContainer = document.getElementById("installContainer");
     if (installContainer) {
         installContainer.style.display = "none";
     }
-    console.log("PWA সফলভাবে ইন্সটল সম্পন্ন হয়েছে!");
+    deferredPrompt = null;
 });
 
 async function submitOrderWithWallet() {

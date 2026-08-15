@@ -14,12 +14,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
 
 <!-- PWA / Web App Manifest & Theme -->
-<link href="manifest.json" rel="manifest"/>
+<link rel="manifest" href="manifest.json"/>
 <meta content="#0f172a" name="theme-color"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
-<meta content="SMM Panel" name="apple-mobile-web-app-title"/>
+<meta content="Raj SMM Panel" name="apple-mobile-web-app-title"/>
 <link href="icon-192.png" rel="apple-touch-icon"/>
+
+<!-- Stylesheets -->
 <link href="style.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 
@@ -472,7 +474,7 @@
   </div>
 
   <!-- Install App Button -->
-  <div id="installContainer" style="display:none;">
+  <div id="installContainer">
     <button class="install-btn" id="installBtn"><i class="fa-solid fa-download"></i> Install App</button>
   </div>
 </div>
@@ -710,7 +712,29 @@
     });
   });
 
-  // Service Worker Registration
+  // PWA Service Worker & BeforeInstallPrompt Event Logic
+  let deferredPrompt;
+  const installBtn = document.getElementById('installBtn');
+  const installContainer = document.getElementById('installContainer');
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (installContainer) installContainer.style.display = 'block';
+  });
+
+  if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`User response to install prompt: ${outcome}`);
+        deferredPrompt = null;
+        if (installContainer) installContainer.style.display = 'none';
+      }
+    });
+  }
+
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./sw.js')

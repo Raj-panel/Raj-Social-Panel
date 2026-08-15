@@ -1183,32 +1183,17 @@ function submitOrderToWhatsApp() {
 // ==========================================
 // PWA INSTALL LOGIC & SCOPE MANAGEMENT
 // ==========================================
-// ১. টপ লেভেলে (Global Scope) গ্লোবাল ভেরিয়েবল ঘোষণা
+// ১. গ্লোবাল স্কোপে একবারই ডিক্লেয়ার করা হলো
 let deferredPrompt = null;
 
-// ২. ইভেন্ট লিসেনারে ইন্সটল প্রম্পট ক্যাপচার করা
+// ২. ইভেন্ট লিসেনারের ভেতর রি-অ্যাসাইন (Re-assign) করা হলো (let ছাড়া)
 window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
-    deferredPrompt = e; // টপ-লেভেল ভেরিয়েবলে অ্যাসাইন করা হলো
+    deferredPrompt = e; // Correct: updating the existing variable
     toggleInstallButton();
 });
 
-function toggleInstallButton() {
-    const installContainer = document.getElementById("installContainer");
-    if (!installContainer) return;
-
-    if (
-        currentPlatform === "instagram" &&
-        currentCategory === "Followers Non-Drop" &&
-        deferredPrompt
-    ) {
-        installContainer.style.display = "block";
-    } else {
-        installContainer.style.display = "none";
-    }
-}
-
-// ৩. ইন্সটল বাটন ক্লিক হ্যান্ডলার
+// ৩. ইউজার ক্লিক করলে প্রম্পট দেখানো এবং পরে মেমোরি ক্লিয়ার করা
 const installBtn = document.getElementById("installBtn");
 if (installBtn) {
     installBtn.addEventListener("click", async () => {
@@ -1218,10 +1203,10 @@ if (installBtn) {
         const { outcome } = await deferredPrompt.userChoice;
         
         if (outcome === 'accepted') {
-            console.log("ইউজার PWA ইন্সটল এক্সেপ্ট করেছে");
+            console.log("User accepted the install prompt");
         }
         
-        // ডায়ালগ একবার প্রম্পট হওয়ার পর মেমোরি ক্লিয়ার করা
+        // ডায়ালগ একবার প্রম্পট হওয়ার পর মেমোরি ফ্রী করা
         deferredPrompt = null;
         toggleInstallButton();
     });

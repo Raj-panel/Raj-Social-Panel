@@ -1044,6 +1044,7 @@ function switchCheckoutPayment(type) {
     }
 }
 
+// Check standard URL validity
 function isValidUrl(string) {
     try {
         new URL(string);
@@ -1053,6 +1054,7 @@ function isValidUrl(string) {
     }
 }
 
+// Function to validate and process Profile Link / Username for Instagram
 function processProfileOrLink(input, platform) {
     const trimmed = (input || "").trim();
     if (!trimmed) {
@@ -1065,6 +1067,7 @@ function processProfileOrLink(input, platform) {
         const usernameRegex = /^[a-zA-Z0-9._]{1,30}$/;
         const instaUrlRegex = /^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]{1,30}\/?(\?.*)?$/i;
 
+        // If user entered a plain username
         if (usernameRegex.test(trimmed)) {
             return {
                 isValid: true,
@@ -1072,6 +1075,7 @@ function processProfileOrLink(input, platform) {
             };
         }
 
+        // If user entered a valid Instagram profile URL
         if (instaUrlRegex.test(trimmed)) {
             return {
                 isValid: true,
@@ -1079,6 +1083,7 @@ function processProfileOrLink(input, platform) {
             };
         }
 
+        // Other Instagram URLs (Reels/Posts) or general HTTP URLs
         if (isValidUrl(trimmed) && trimmed.toLowerCase().includes("instagram.com")) {
             return {
                 isValid: true,
@@ -1091,6 +1096,7 @@ function processProfileOrLink(input, platform) {
             message: "Please enter a valid Instagram username or Instagram profile URL!"
         };
     } else {
+        // Validation for other platforms
         if (!isValidUrl(trimmed) && !trimmed.includes("http")) {
             return {
                 isValid: false,
@@ -1104,7 +1110,7 @@ function processProfileOrLink(input, platform) {
     }
 }
 
-async function submitOrderToWhatsApp() {
+function submitOrderToWhatsApp() {
     const linkInput = document.getElementById("checkoutLinkInput");
     const txnInput = document.getElementById("checkoutTxnId");
 
@@ -1124,19 +1130,32 @@ async function submitOrderToWhatsApp() {
         return;
     }
 
+    const userIdentifier = (typeof window.firebaseUserUid !== 'undefined' && window.firebaseUserUid) 
+        ? window.firebaseUserUid 
+        : (() => {
+            let bid = localStorage.getItem('raj_smm_browser_id');
+            if (!bid) {
+                bid = 'BID_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+                localStorage.setItem('raj_smm_browser_id', bid);
+            }
+            return bid;
+        })();
+
     const orderIdVal = Math.floor(100000 + Math.random() * 900000);
-    const orderPayload = {
+    const newOrder = {
         orderId: orderIdVal,
         serviceName: `${currentCheckoutData.platform} - ${currentCheckoutData.serviceName} (${currentCheckoutData.packageName})`,
         link: link,
         quantity: currentCheckoutData.quantity || 0,
         amount: currentCheckoutData.price ? currentCheckoutData.price.toFixed(2) : "0.00",
-        createdTimestamp: Date.now()
+        orderTimeEpoch: Date.now(),
+        status: 'Pending',
+        userIdentifier: userIdentifier
     };
 
-    if (typeof window.saveNewOrder === 'function') {
-        await window.saveNewOrder(orderPayload);
-    }
+    const existingOrders = JSON.parse(localStorage.getItem('raj_smm_orders') || '[]');
+    existingOrders.push(newOrder);
+    localStorage.setItem('raj_smm_orders', JSON.stringify(existingOrders));
 
     const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
     const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
@@ -1262,18 +1281,6 @@ async function submitOrderWithWallet() {
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             });
         });
-
-        const orderIdVal = Math.floor(100000 + Math.random() * 900000);
-        if (typeof window.saveNewOrder === 'function') {
-            await window.saveNewOrder({
-                orderId: orderIdVal,
-                serviceName: `${currentCheckoutData.platform} - ${currentCheckoutData.serviceName} (${currentCheckoutData.packageName})`,
-                link: link,
-                quantity: currentCheckoutData.quantity || 0,
-                amount: currentCheckoutData.price ? currentCheckoutData.price.toFixed(2) : "0.00",
-                createdTimestamp: Date.now()
-            });
-        }
 
         alert("Order placed successfully using Wallet Balance!");
         closeCheckoutUI();

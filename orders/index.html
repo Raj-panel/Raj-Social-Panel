@@ -71,142 +71,27 @@
         &copy; 2026 Raj SMM Panel. All rights reserved.
     </footer>
 
-    <!-- Order Logic & Management Script (ORIGINAL BUSINESS LOGIC) -->
-    <script>
-        /**
-         * User Identifier Utility
-         * - Firebase UID: window.firebaseUserUid
-         * - Browser ID: Stored in localStorage as 'raj_smm_browser_id'
-         */
-        function getUserIdentifier() {
-            if (typeof window.firebaseUserUid !== 'undefined' && window.firebaseUserUid) {
-                return window.firebaseUserUid;
-            }
-            let browserId = localStorage.getItem('raj_smm_browser_id');
-            if (!browserId) {
-                browserId = 'BID_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-                localStorage.setItem('raj_smm_browser_id', browserId);
-            }
-            return browserId;
-        }
+    <!-- Firebase / Auth / Order Management Integration (ES6 Module) -->
+    <script type="module">
+        import { renderOrders, getUserIdentifier } from './orders-manager.js';
 
-        /**
-         * Calculate Automatic Status based on Order Time
-         * - 0 to 5 minutes: Pending
-         * - 5 minutes to 1 hour: Processing
-         * - After 1 hour: Completed
-         */
-        function calculateOrderStatus(orderTimeEpoch) {
-            const now = Date.now();
-            const elapsedMs = now - orderTimeEpoch;
-            const elapsedMinutes = elapsedMs / (1000 * 60);
-
-            if (elapsedMinutes < 5) {
-                return { label: 'Pending', cssClass: 'status-pill-Pending' };
-            } else if (elapsedMinutes < 60) {
-                return { label: 'Processing', cssClass: 'status-pill-Processing' };
-            } else {
-                return { label: 'Completed', cssClass: 'status-pill-Completed' };
-            }
-        }
-
-        /**
-         * Render Orders Function
-         */
-        function renderOrders() {
-            const container = document.getElementById('orders-container');
-            const noOrdersState = document.getElementById('no-orders-state');
-            
-            const currentUser = getUserIdentifier();
-            const allOrders = JSON.parse(localStorage.getItem('raj_smm_orders') || '[]');
-
-            // Filter orders belonging strictly to current user identifier
-            const userOrders = allOrders.filter(order => order.userIdentifier === currentUser);
-
-            if (userOrders.length === 0) {
-                container.innerHTML = '';
-                noOrdersState.classList.remove('hidden');
-                return;
-            }
-
-            noOrdersState.classList.add('hidden');
-            container.innerHTML = '';
-
-            // Sort orders descending (newest first)
-            userOrders.sort((a, b) => b.orderTimeEpoch - a.orderTimeEpoch);
-
-            userOrders.forEach(order => {
-                const status = calculateOrderStatus(order.orderTimeEpoch);
-                const formattedDate = new Date(order.orderTimeEpoch).toLocaleString('en-US', {
-                    month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit'
-                });
-
-                const card = document.createElement('div');
-                card.className = 'order-card order-item-node';
-                card.setAttribute('data-status', status.label);
-                card.setAttribute('data-id', order.orderId || '');
-                card.setAttribute('data-service', (order.serviceName || '').toLowerCase());
-
-                card.innerHTML = `
-                    <div class="card-header-row">
-                        <div class="order-id-wrapper">
-                            <span class="order-id-label">Order ID</span>
-                            <h4 class="order-id-value">#${order.orderId}</h4>
-                        </div>
-                        <div class="status-pill ${status.cssClass}">
-                            <span class="status-pill-dot"></span>
-                            ${status.label}
-                        </div>
-                    </div>
-
-                    <div class="card-body-content">
-                        <div class="detail-block-full">
-                            <span class="detail-label">Service Name</span>
-                            <span class="service-title-value">${order.serviceName}</span>
-                        </div>
-
-                        <div class="card-details-grid">
-                            <div class="detail-block-full">
-                                <span class="detail-label">Quantity</span>
-                                <span class="quantity-value-badge">${order.quantity}</span>
-                            </div>
-                            <div class="target-link-wrapper">
-                                <span class="detail-label">Target Link</span>
-                                <a href="${order.link}" target="_blank" rel="noopener noreferrer" class="target-link-anchor">${order.link}</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-footer-row">
-                        <span>${formattedDate}</span>
-                        <span class="price-tag-value">₹${order.amount}</span>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        /**
-         * Optional Search Filter for UI
-         */
-        function filterOrdersBySearch() {
+        // 1. Search Filter Logic
+        window.filterOrdersBySearch = function() {
             const query = document.getElementById('orderSearchInput').value.toLowerCase().trim();
             const cards = document.querySelectorAll('.order-item-node');
             cards.forEach(card => {
-                const id = card.getAttribute('data-id').toLowerCase();
-                const service = card.getAttribute('data-service').toLowerCase();
+                const id = card.getAttribute('data-id') ? card.getAttribute('data-id').toLowerCase() : '';
+                const service = card.getAttribute('data-service') ? card.getAttribute('data-service').toLowerCase() : '';
                 if (id.includes(query) || service.includes(query)) {
                     card.style.display = "block";
                 } else {
                     card.style.display = "none";
                 }
             });
-        }
+        };
 
-        /**
-         * Optional Status Tab Filter for UI
-         */
-        function filterOrdersByStatus(status) {
+        // 2. Status Tab Filter Logic
+        window.filterOrdersByStatus = function(status) {
             const tabs = document.querySelectorAll('.tab-btn');
             tabs.forEach(tab => {
                 if (tab.getAttribute('data-filter') === status) {
@@ -224,13 +109,14 @@
                     card.style.display = "none";
                 }
             });
-        }
+        };
 
-        // Initialize render on page load
-        renderOrders();
-
-        // Refresh UI status every 10 seconds without requiring page refresh
-        setInterval(renderOrders, 10000);
+        // DOM লোড হওয়ার পর অর্ডার রেন্ডার শুরু করা
+        document.addEventListener('DOMContentLoaded', () => {
+            renderOrders();
+            // অটোমেটিক ১০ সেকেন্ড পর পর আপডেট রাখা
+            setInterval(renderOrders, 10000);
+        });
     </script>
 </body>
 </html>

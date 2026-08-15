@@ -1291,3 +1291,59 @@ async function submitOrderWithWallet() {
         if (walletBtn) walletBtn.disabled = false;
     }
 }
+// ==========================================
+// 1-SECOND 3D NEON PORTAL INTRO CONTROLLER
+// ==========================================
+(function handleRajIntroPortal() {
+    function initIntro() {
+        // ১. চেক করা যে সেশন চলাকালীন কি আগেই অ্যানিমেশন দেখানো হয়েছে
+        if (sessionStorage.getItem('raj_intro_shown')) {
+            return; 
+        }
+
+        // ২. DOM এ ইন্টারফেস উপাদানগুলো তৈরি করা
+        const overlay = document.createElement('div');
+        overlay.className = 'raj-intro-overlay';
+        overlay.id = 'rajIntroOverlay';
+
+        overlay.innerHTML = `
+            <div class="raj-portal-container">
+                <div class="raj-neon-ring ring-1"></div>
+                <div class="raj-neon-ring ring-2"></div>
+                <div class="raj-neon-ring ring-3"></div>
+                <div class="raj-particles-field"></div>
+                <div class="raj-floating-icons">
+                    <i class="fa-brands fa-instagram icon-insta"></i>
+                    <i class="fa-brands fa-facebook icon-fb"></i>
+                    <i class="fa-brands fa-youtube icon-yt"></i>
+                    <i class="fa-brands fa-tiktok icon-tt"></i>
+                </div>
+                <div class="raj-3d-logo">
+                    <div class="raj-logo-glow"></div>
+                    <span class="raj-logo-text">RAJ PANEL</span>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        // ৩. ১ সেকেন্ডের মধ্যে অ্যানিমেশন শেষ করে সরানো এবং সেশন রিমাইন্ডার সেট করা
+        setTimeout(() => {
+            overlay.classList.add('raj-fade-out');
+            setTimeout(() => {
+                if (overlay.parentNode) {
+                    overlay.parentNode.removeChild(overlay);
+                }
+            }, 300); // স্মুথ ট্রানজিশনের জন্য ৩০০মিঃসেঃ ফেডআউট সময়
+            
+            // সেশন স্টোরেজে সেভ করা যেন প্রতিবার পেজ রিলোড বা নেভিগেটে বারবার ইন্ট্রো না আসে
+            sessionStorage.setItem('raj_intro_shown', 'true');
+        }, 1000); // ঠিক ১ সেকেন্ড পর ডিসএবল হবে
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initIntro);
+    } else {
+        initIntro();
+    }
+})();

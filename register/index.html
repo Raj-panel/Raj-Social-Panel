@@ -75,6 +75,29 @@
     box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.15);
   }
 
+  /* Error Styles */
+  .auth-input-group input.input-error {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+  }
+
+  .error-text {
+    color: #ef4444;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 4px;
+    display: none;
+  }
+
+  .general-error {
+    color: #ef4444;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 12px;
+    display: none;
+  }
+
   .auth-btn {
     width: 100%;
     padding: 13px;
@@ -143,24 +166,18 @@
 <div class="auth-card-box">
   <h2 class="auth-title">Create Account</h2>
 
-  <div class="auth-input-group">
-    <label>Full Name</label>
-    <input type="text" id="signupName" placeholder="Full Name">
-  </div>
+  <div id="generalError" class="general-error"></div>
 
   <div class="auth-input-group">
     <label>Mobile Number</label>
     <input type="tel" id="signupMobile" placeholder="Mobile Number" maxlength="10">
+    <div id="mobileError" class="error-text">Please enter a valid 10-digit mobile number.</div>
   </div>
 
   <div class="auth-input-group">
     <label>Password</label>
-    <input type="password" id="signupPassword" placeholder="Password">
-  </div>
-
-  <div class="auth-input-group">
-    <label>Confirm Password</label>
-    <input type="password" id="signupConfirmPassword" placeholder="Confirm Password">
+    <input type="password" id="signupPassword" placeholder="Create password (Minimum 6 characters)">
+    <div id="passwordError" class="error-text">Password must be at least 6 characters.</div>
   </div>
 
   <button onclick="handleSignUp()" class="auth-btn">Register</button>

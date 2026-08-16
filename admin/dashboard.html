@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RAJ Admin - Master Dashboard</title>
+  
+  <!-- Manifest & Theme -->
+  <link rel="manifest" href="admin-manifest.json">
+  <meta name="theme-color" content="#0f172a">
+  
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="admin-style.css">
+  
+  <!-- Inline Extra Dashboard Styles -->
+  <style>
+    .dashboard-header {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 16px;
+      width: 100%;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .stat-icon {
+      font-size: 2.2rem;
+      background: rgba(59, 130, 246, 0.1);
+      padding: 12px;
+      border-radius: 12px;
+    }
+
+    .stat-info h4 {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .stat-info h2 {
+      font-size: 1.5rem;
+      color: var(--text-main);
+    }
+
+    /* Tabs */
+    .admin-tabs {
+      display: flex;
+      gap: 10px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 20px;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 12px 20px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      color: var(--accent-blue);
+      border-bottom-color: var(--accent-blue);
+    }
+
+    .tab-content {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Data Table */
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.9rem;
+    }
+
+    th {
+      background: rgba(15, 23, 42, 0.4);
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Search & Action Bar */
+    .action-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      padding: 10px 14px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-main);
+      width: 100%;
+      max-width: 300px;
+      outline: none;
+    }
+
+    .btn-action {
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--accent-blue);
+      color: white;
+    }
+
+    .btn-logout {
+      background: #dc2626;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-logout:hover {
+      background: #b91c1c;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="dashboard-header">
+    <div class="logo-area">
+      <h2 style="font-size: 1.25rem;">👑 RAJ ADMIN PANEL</h2>
+    </div>
+    <div class="user-area" style="display: flex; align-items: center; gap: 12px;">
+      <span id="adminGreeting" style="font-size: 0.9rem; color: var(--text-muted);">স্বাগতম, অ্যাডমিন</span>
+      <button class="btn-logout" onclick="handleAdminLogout()">🚪 Logout</button>
+    </div>
+  </header>
+
+  <main class="dashboard-container">
+
+    <!-- Overview Stats -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-info">
+          <h4>মোট ব্যবহারকারী</h4>
+          <h2 id="totalUsersCount">0</h2>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1);">💰</div>
+        <div class="stat-info">
+          <h4>মোট ওয়ালেট ডিস্ট্রিবিউশন</h4>
+          <h2 id="totalWalletBalance">₹0.00</h2>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1);">📦</div>
+        <div class="stat-info">
+          <h4>অ্যাক্টিভ সার্ভিস</h4>
+          <h2 id="totalServicesCount">0</h2>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <nav class="admin-tabs">
+      <button class="tab-btn active" onclick="switchTab('usersTab', this)">👥 ইউজার কন্ট্রোল</button>
+      <button class="tab-btn" onclick="switchTab('servicesTab', this)">🛠️ সার্ভিস ও প্রাইসিং</button>
+      <button class="tab-btn" onclick="switchTab('ordersTab', this)">📊 অর্ডার লিস্ট</button>
+    </nav>
+
+    <!-- TAB 1: USER MANAGEMENT -->
+    <section id="usersTab" class="tab-content active">
+      <div class="action-bar">
+        <h3>সমস্ত নিবন্ধিত ব্যবহারকারী</h3>
+        <input type="text" id="userSearchInput" class="search-input" placeholder="মোবাইল বা নাম দিয়ে খুঁজুন..." oninput="filterUsersTable()" />
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>নাম</th>
+              <th>মোবাইল নম্বর</th>
+              <th>বর্তমান ব্যালেন্স</th>
+              <th>তৈরির তারিখ</th>
+              <th>অ্যাকশন</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody">
+            <tr>
+              <td colspan="5" style="text-align: center; color: var(--text-muted);">ডাটা লোড হচ্ছে...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 2: SERVICES MANAGEMENT -->
+    <section id="servicesTab" class="tab-content">
+      <div class="action-bar">
+        <h3>সার্ভিস তালিকা ও প্রাইসিং কন্ট্রোল</h3>
+      </div>
+      <div id="servicesContainer">
+        <p style="color: var(--text-muted);">সার্ভিস ডাটা লোড হচ্ছে...</p>
+      </div>
+    </section>
+
+    <!-- TAB 3: ORDERS MANAGEMENT -->
+    <section id="ordersTab" class="tab-content">
+      <div class="action-bar">
+        <h3>অর্ডার ম্যানেজমেন্ট</h3>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>অর্ডার আইডি</th>
+              <th>ইউজার</th>
+              <th>সার্ভিস</th>
+              <th>পরিমাণ</th>
+              <th>স্ট্যাটাস</th>
+              <th>আপডেট</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTableBody">
+            <tr>
+              <td colspan="6" style="text-align: center; color: var(--text-muted);">কোনো অর্ডার পাওয়া যায়নি।</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- External Scripts -->
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-app.js"></script>
+
+  <script>
+    // Tab Switching Logic
+    function switchTab(tabId, btnElement) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      btnElement.classList.add('active');
+    }
+  </script>
+</body>
+</html>

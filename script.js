@@ -352,7 +352,7 @@ const serviceData = {
             { name: "1K Live Stream Views — 60 Mins", price: 70, desc: "Live Views for 60 Minutes" },
             { name: "1K Live Stream Views — 90 Mins", price: 99, desc: "Live Views for 90 Minutes" }
         ],
-            "YouTube Subscribe — Non Drop": [
+        "YouTube Subscribe — Non Drop": [
             { name: "100 Subscribers", price: 249, desc: "High Quality Indian Subscribers" },
             { name: "500 Subscribers", price: 1199, desc: "High Quality Indian Subscribers" },
             { name: "1K Subscribers", price: 2349, desc: "High Quality Indian Subscribers" }
@@ -583,7 +583,8 @@ function renderPackages() {
             card.className = "pkg-card";
 
             card.onclick = function () {
-                const qty = extractQuantity(pkg.name);
+                let qty = extractQuantity(pkg.name);
+                if (!qty || qty <= 0) qty = 1;
                 const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
                 openCheckoutForFixed(
                     platformCap,
@@ -656,7 +657,7 @@ function calculateCustomPrice(serviceName, ratePer1000, providerId) {
 function extractQuantity(name) {
     const text = name.toUpperCase().replace(/,/g, "");
     const match = text.match(/(\d+(?:\.\d+)?)\s*(M|K)?/);
-    if (!match) return 0;
+    if (!match) return 1;
 
     let number = parseFloat(match[1]);
     const unit = match[2];
@@ -664,7 +665,7 @@ function extractQuantity(name) {
     if (unit === "K") number = number * 1000;
     else if (unit === "M") number = number * 1000000;
 
-    return Math.floor(number);
+    return Math.floor(number) || 1;
 }
 
 function getLinkConfig(platform, category) {
@@ -747,7 +748,7 @@ function getLinkConfig(platform, category) {
 function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUnitQty, baseUnitPrice) {
     const platformData = serviceData[platformKey.toLowerCase()];
     if (!platformData || !platformData[categoryKey]) {
-        return (totalQty / baseUnitQty) * baseUnitPrice;
+        return (totalQty / (baseUnitQty || 1)) * baseUnitPrice;
     }
 
     const availablePackages = platformData[categoryKey]
@@ -758,6 +759,10 @@ function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUni
         }))
         .filter(p => p.qty > 0)
         .sort((a, b) => b.qty - a.qty); 
+
+    if (availablePackages.length === 0) {
+        return (totalQty / (baseUnitQty || 1)) * baseUnitPrice;
+    }
 
     const exactMatch = availablePackages.find(p => p.qty === totalQty);
     if (exactMatch) {
@@ -780,7 +785,7 @@ function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUni
         if (smallestPkg) {
             totalPrice += (remaining / smallestPkg.qty) * smallestPkg.price;
         } else {
-            totalPrice += (remaining / baseUnitQty) * baseUnitPrice;
+            totalPrice += (remaining / (baseUnitQty || 1)) * baseUnitPrice;
         }
     }
 
@@ -788,12 +793,13 @@ function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUni
 }
 
 function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge) {
+    // FRESH STATE INSTANTIATION TO PREVENT STALE STATE
     currentCheckoutData = {
         platform: platform,
         serviceName: serviceName,
         packageName: packageName,
-        baseQuantity: quantity,
-        quantity: quantity,
+        baseQuantity: quantity || 1,
+        quantity: quantity || 1,
         basePrice: price,
         price: price,
         multiplier: 1,
@@ -817,6 +823,7 @@ function openCheckoutFromCustom() {
 
     const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
 
+    // FRESH STATE INSTANTIATION TO PREVENT STALE STATE
     currentCheckoutData = {
         platform: platformCap,
         serviceName: currentCategory,
@@ -836,7 +843,7 @@ function updateCheckoutQuantityDisplay() {
     const d = currentCheckoutData;
     if (!d || !d.baseQuantity) return;
     
-    d.quantity = d.baseQuantity * d.multiplier;
+    d.quantity = d.baseQuantity * (d.multiplier || 1);
 
     d.price = calculateDynamicPriceForQty(
         d.platform,
@@ -847,7 +854,7 @@ function updateCheckoutQuantityDisplay() {
     );
 
     const qtyCountDisplay = document.getElementById("checkoutQtyCount");
-    if (qtyCountDisplay) qtyCountDisplay.innerText = d.multiplier;
+    if (qtyCountDisplay) qtyCountDisplay.innerText = d.multiplier || 1;
 
     const unitsText = document.getElementById("checkoutUnitsText");
     if (unitsText) unitsText.innerText = `${d.quantity.toLocaleString()} Package`;
@@ -1024,6 +1031,14 @@ function closeCheckoutUI() {
         checkoutPage.classList.add("hidden");
         checkoutPage.style.display = "none";
     }
+    
+    // RESET INPUT VALUES
+    const linkInput = document.getElementById("checkoutLinkInput");
+    if (linkInput) linkInput.value = "";
+    const txnInput = document.getElementById("checkoutTxnId");
+    if (txnInput) txnInput.value = "";
+    
+    // PURGE STALE STATE
     currentCheckoutData = {}; 
 }
 

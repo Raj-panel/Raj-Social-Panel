@@ -2,16 +2,17 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getFirestore, collection, onSnapshot, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// Existing Firebase Config
+// Existing Firebase Config (Replace apiKey, messagingSenderId, and appId with your real credentials from Firebase Console)
 const firebaseConfig = {
-    apiKey: "AIzaSy...",
+    apiKey: "YOUR_ACTUAL_FIREBASE_API_KEY",
     authDomain: "rajsmmpanel.firebaseapp.com",
     projectId: "rajsmmpanel",
     storageBucket: "rajsmmpanel.appspot.com",
-    messagingSenderId: "1234567890",
-    appId: "1:1234567890:web:abc123def456"
+    messagingSenderId: "YOUR_ACTUAL_MESSAGING_SENDER_ID",
+    appId: "YOUR_ACTUAL_APP_ID"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 

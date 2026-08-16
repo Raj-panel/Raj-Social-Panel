@@ -2,17 +2,17 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getFirestore, collection, onSnapshot, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// Existing Firebase Config (Replace apiKey, messagingSenderId, and appId with your real credentials from Firebase Console)
+// Your Actual Firebase Config
 const firebaseConfig = {
-        apiKey: "AIzaSyCQPiYwDQ7uxi-adcZavlnkYLLPSCA7hu4",
-        authDomain: "raj-smm-panel-193ca.firebaseapp.com",
-       projectId: "raj-smm-panel-193ca",
-       storageBucket: "raj-smm-panel-193ca.firebasestorage.app",
-       messagingSenderId: "418522080714",
-       appId: "1:418522080714:web:2206d41977b751c89a1b33",
+    apiKey: "AIzaSyCQPiYwDQ7uxi-adcZavlnkYLLPSCA7hu4",
+    authDomain: "raj-smm-panel-193ca.firebaseapp.com",
+    projectId: "raj-smm-panel-193ca",
+    storageBucket: "raj-smm-panel-193ca.firebasestorage.app",
+    messagingSenderId: "418522080714",
+    appId: "1:418522080714:web:2206d41977b751c89a1b33",
+    measurementId: "G-1J8G5W5D7Y"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 

@@ -379,6 +379,94 @@ const serviceData = {
             { name: "1K TikTok Video Views", price: 35, desc: "High Quality Real Views • Lifetime Refill" },
             { name: "5K TikTok Video Views", price: 119, desc: "High Quality Real Views • Lifetime Refill" },
             { name: "10K TikTok Video Views", price: 249, desc: "High Quality Real Views • Lifetime Refill" }
+        ],
+        "TikTok Share — Lifetime Refill": [
+            { name: "100 Share", price: 15, badge: "Starter", badgeClass: "badge-demo", desc: "🇧🇩 Bangladesh High Quality Real Service • 18 Minute Start" },
+            { name: "500 Share", price: 22, desc: "🇧🇩 Bangladesh High Quality Real Service • 18 Minute Start" },
+            { name: "1K Share", price: 30, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🇧🇩 Bangladesh High Quality Real Service • 18 Minute Start" },
+            { name: "3K Share", price: 75, desc: "🇧🇩 Bangladesh High Quality Real Service • 18 Minute Start" },
+            { name: "5K Share", price: 115, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🇧🇩 Bangladesh High Quality Real Service • 18 Minute Start" },
+            { name: "10K Share", price: 200, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🇧🇩 Bangladesh High Quality Real Service • 18 Minute Start" }
+        ],
+        "TikTok Save — Lifetime Refill": [
+            { name: "100 Save", price: 10, badge: "Starter", badgeClass: "badge-demo", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
+            { name: "500 Save", price: 18, desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
+            { name: "1K Save", price: 25, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
+            { name: "3K Save", price: 65, desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
+            { name: "5K Save", price: 95, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
+            { name: "10K Save", price: 175, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" }
+        ],
+        "🔥 TikTok Combo Service — Non-Drop": [
+            {
+                name: "Video Viral Package",
+                price: 159,
+                badge: "10% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇧🇩 Fast Delivery • 20 Minute Start • Premium Quality",
+                features: [
+                    "👁️ Video Views — 1,300",
+                    "❤️ Video Likes — 1,500",
+                    "🔄 Video Shares — 1,200",
+                    "💾 Video Saves — 1,500"
+                ],
+                placeholder: "TikTok Video Link (Account Must be Public)"
+            },
+            {
+                name: "Video Viral Package",
+                price: 249,
+                badge: "20% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇧🇩 Fast Delivery • 20 Minute Start • Premium Quality",
+                features: [
+                    "👁️ Video Views — 3,000",
+                    "❤️ Video Likes — 2,500",
+                    "🔄 Video Shares — 2,000",
+                    "💾 Video Saves — 2,500"
+                ],
+                placeholder: "TikTok Video Link (Account Must be Public)"
+            },
+            {
+                name: "Video Viral Package",
+                price: 399,
+                badge: "30% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇧🇩 Fast Delivery • 20 Minute Start • Premium Quality",
+                features: [
+                    "👁️ Video Views — 5,000",
+                    "❤️ Video Likes — 4,000",
+                    "🔄 Video Shares — 3,000",
+                    "💾 Video Saves — 4,000"
+                ],
+                placeholder: "TikTok Video Link (Account Must be Public)"
+            },
+            {
+                name: "Video Viral Package",
+                price: 699,
+                badge: "40% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇧🇩 Fast Delivery • 20 Minute Start • Premium Quality",
+                features: [
+                    "👁️ Video Views — 10,000",
+                    "❤️ Video Likes — 7,000",
+                    "🔄 Video Shares — 5,000",
+                    "💾 Video Saves — 7,000"
+                ],
+                placeholder: "TikTok Video Link (Account Must be Public)"
+            },
+            {
+                name: "Video Viral Package",
+                price: 999,
+                badge: "50% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇧🇩 Fast Delivery • 20 Minute Start • Premium Quality",
+                features: [
+                    "👁️ Video Views — 13,000",
+                    "❤️ Video Likes — 10,000",
+                    "🔄 Video Shares — 10,000",
+                    "💾 Video Saves — 13,000"
+                ],
+                placeholder: "TikTok Video Link (Account Must be Public)"
+            }
         ]
     }
 };
@@ -517,7 +605,7 @@ function renderPackages() {
             `;
 
             packageList.appendChild(customDiv);
-        } else if (currentCategory === "🔥 Reels Combo Service") {
+        } else if (currentCategory.includes("Combo Service")) {
             const card = document.createElement("div");
             card.className = "pkg-card";
             card.style.cssText = "display: flex; flex-direction: column; align-items: stretch; padding: 16px; margin-bottom: 12px; background: #fff5f7; border: 1px solid rgba(236, 72, 153, 0.2); border-radius: 12px; backdrop-filter: blur(10px);";
@@ -672,10 +760,10 @@ function getLinkConfig(platform, category) {
     const p = (platform || "").toLowerCase();
     const c = (category || "").toLowerCase();
 
-    if (c.includes("reels combo service")) {
+    if (c.includes("combo service")) {
         return {
-            label: "Reel/Video Link (Account Must be Public)",
-            placeholder: "Reel/Video Link (Account Must be Public)"
+            label: "Video Link (Account Must be Public)",
+            placeholder: "Video Link (Account Must be Public)"
         };
     }
 
@@ -1083,17 +1171,17 @@ function isValidUrl(string) {
     }
 }
 
-// Function to validate and process Profile Link / Username for Instagram
+// Function to validate and process Profile Link / Username for Instagram & Other Platforms
 function processProfileOrLink(input, platform, serviceName) {
     const trimmed = (input || "").trim();
     if (!trimmed) {
         return { isValid: false, message: "Please enter your Social Media Link or Username!" };
     }
 
-    const isInsta = (platform || "").toLowerCase() === "instagram";
+    const pName = (platform || "").toLowerCase();
     const sName = (serviceName || "").toLowerCase();
 
-    if (isInsta) {
+    if (pName === "instagram") {
         const usernameRegex = /^[a-zA-Z0-9._]{1,30}$/;
         const instaUrlRegex = /^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]{1,30}\/?(\?.*)?$/i;
 
@@ -1137,6 +1225,39 @@ function processProfileOrLink(input, platform, serviceName) {
         return {
             isValid: false,
             message: "Please enter a valid Instagram Link!"
+        };
+    } else if (pName === "tiktok") {
+        const usernameRegex = /^@?[a-zA-Z0-9._]{2,24}$/;
+        if (sName.includes("followers")) {
+            if (usernameRegex.test(trimmed)) {
+                const cleaned = trimmed.startsWith("@") ? trimmed.slice(1) : trimmed;
+                return {
+                    isValid: true,
+                    url: `https://www.tiktok.com/@${cleaned}`
+                };
+            }
+            if (isValidUrl(trimmed) && trimmed.toLowerCase().includes("tiktok.com")) {
+                return {
+                    isValid: true,
+                    url: trimmed
+                };
+            }
+            return {
+                isValid: false,
+                message: "Please enter a valid TikTok Profile Link or Username!"
+            };
+        }
+
+        if (isValidUrl(trimmed) && trimmed.toLowerCase().includes("tiktok.com")) {
+            return {
+                isValid: true,
+                url: trimmed
+            };
+        }
+
+        return {
+            isValid: false,
+            message: "Please enter a valid TikTok Video Link!"
         };
     } else {
         // Validation for other platforms

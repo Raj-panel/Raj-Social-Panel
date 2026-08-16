@@ -75,28 +75,6 @@
     box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.15);
   }
 
-  .auth-input-group input.input-error {
-    border-color: #ef4444 !important;
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
-  }
-
-  .error-text {
-    color: #ef4444;
-    font-size: 12px;
-    font-weight: 600;
-    margin-top: 4px;
-    display: none;
-  }
-
-  .general-error {
-    color: #ef4444;
-    font-size: 13px;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 12px;
-    display: none;
-  }
-
   .auth-btn {
     width: 100%;
     padding: 13px;
@@ -135,18 +113,6 @@
     text-decoration: underline;
   }
 
-  .step-box {
-    display: none;
-  }
-
-  .step-box.active {
-    display: block;
-  }
-
-  #recaptcha-container {
-    margin-bottom: 12px;
-  }
-
   @media (prefers-color-scheme: dark) {
     body {
       background-color: #0b0f19 !important;
@@ -175,47 +141,24 @@
 <body>
 
 <div class="auth-card-box">
-  <h2 class="auth-title">Forgot Password</h2>
+  <h2 class="auth-title">Reset Password</h2>
 
-  <div id="generalError" class="general-error"></div>
-
-  <!-- Step 1: Enter Mobile & Request OTP -->
-  <div id="stepSendOtp" class="step-box active">
-    <div class="auth-input-group">
-      <label>Mobile Number</label>
-      <input type="tel" id="resetMobile" placeholder="Mobile Number" maxlength="10">
-      <div id="resetMobileError" class="error-text">Please enter a valid 10-digit mobile number.</div>
-    </div>
-    <div id="recaptcha-container"></div>
-    <button onclick="handleSendOTP()" class="auth-btn">Send OTP</button>
+  <div class="auth-input-group">
+    <label>Mobile Number</label>
+    <input type="tel" id="resetMobile" placeholder="Mobile Number" maxlength="10">
   </div>
 
-  <!-- Step 2: Verify OTP -->
-  <div id="stepVerifyOtp" class="step-box">
-    <div class="auth-input-group">
-      <label>Enter 6-Digit OTP</label>
-      <input type="text" id="otpInput" placeholder="Enter OTP" maxlength="6">
-      <div id="otpError" class="error-text">Please enter valid 6-digit OTP.</div>
-    </div>
-    <button onclick="handleVerifyOTP()" class="auth-btn">Verify OTP</button>
+  <div class="auth-input-group">
+    <label>New Password</label>
+    <input type="password" id="resetNewPassword" placeholder="New Password">
   </div>
 
-  <!-- Step 3: Create & Confirm New Password -->
-  <div id="stepNewPassword" class="step-box">
-    <div class="auth-input-group">
-      <label>New Password</label>
-      <input type="password" id="resetNewPassword" placeholder="Create new password (Minimum 6 characters)">
-      <div id="resetNewPasswordError" class="error-text">Password must be at least 6 characters.</div>
-    </div>
-
-    <div class="auth-input-group">
-      <label>Confirm New Password</label>
-      <input type="password" id="resetConfirmPassword" placeholder="Confirm Password">
-      <div id="resetConfirmPasswordError" class="error-text">Passwords do not match.</div>
-    </div>
-
-    <button onclick="handleResetPassword()" class="auth-btn">Reset Password</button>
+  <div class="auth-input-group">
+    <label>Confirm New Password</label>
+    <input type="password" id="resetConfirmPassword" placeholder="Confirm Password">
   </div>
+
+  <button onclick="handleResetPassword()" class="auth-btn">Reset Password</button>
 
   <div class="auth-links">
     <a href="/login/">Back to Login</a>

@@ -274,7 +274,6 @@
             getFirestore, 
             collection, 
             addDoc, 
-            getDocs, 
             doc, 
             updateDoc, 
             deleteDoc, 
@@ -284,14 +283,15 @@
             serverTimestamp 
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Your existing Firebase Configuration
+        // Your Actual Firebase Configuration
         const firebaseConfig = {
-            apiKey: "AIzaSy..." /* Automated matching from main JS if available, or replace with your standard config */,
-            authDomain: "rajsmmpanel.firebaseapp.com",
-            projectId: "rajsmmpanel",
-            storageBucket: "rajsmmpanel.appspot.com",
-            messagingSenderId: "1234567890",
-            appId: "1:1234567890:web:abc123def456"
+            apiKey: "AIzaSyCQPiYwDQ7uxi-adcZavlnkYLLPSCA7hu4",
+            authDomain: "raj-smm-panel-193ca.firebaseapp.com",
+            projectId: "raj-smm-panel-193ca",
+            storageBucket: "raj-smm-panel-193ca.firebasestorage.app",
+            messagingSenderId: "418522080714",
+            appId: "1:418522080714:web:2206d41977b751c89a1b33",
+            measurementId: "G-1J8G5W5D7Y"
         };
 
         // Initialize Firebase
@@ -485,10 +485,8 @@
 
             try {
                 if (docId) {
-                    // Update existing
                     await updateDoc(doc(db, "services", docId), serviceData);
                 } else {
-                    // Add new
                     await addDoc(collection(db, "services"), serviceData);
                 }
                 hideModal();

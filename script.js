@@ -367,11 +367,11 @@ const serviceData = {
             { name: "10K TikTok Followers", price: 1599, desc: "90 Days Refill" }
         ],
         "TikTok Likes Non-Drop": [
-            { name: "100 TikTok Likes", price: 10, desc: "Lifetime Auto Refill" },
-            { name: "500 TikTok Likes", price: 40, desc: "Lifetime Auto Refill" },
-            { name: "1K TikTok Likes", price: 75, desc: "Lifetime Auto Refill" },
-            { name: "3K TikTok Likes", price: 199, desc: "Lifetime Auto Refill" },
-            { name: "5K TikTok Likes", price: 349, desc: "Lifetime Auto Refill" }
+            { name: "100 TikTok Likes", price: 15, desc: "Lifetime Auto Refill" },
+            { name: "500 TikTok Likes", price: 30, desc: "Lifetime Auto Refill" },
+            { name: "1K TikTok Likes", price: 50, desc: "Lifetime Auto Refill" },
+            { name: "3K TikTok Likes", price: 139, desc: "Lifetime Auto Refill" },
+            { name: "5K TikTok Likes", price: 219, desc: "Lifetime Auto Refill" }
         ],
         "TikTok Views Non-Drop": [
             { name: "100 TikTok Video Views", price: 9, desc: "High Quality Real Views • Lifetime Refill" },

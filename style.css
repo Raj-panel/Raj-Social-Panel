@@ -1369,3 +1369,65 @@ body.auth-page {
     padding-top: 20px;
   }
 }
+/* =========================================================
+   PREMIUM 3D / GLOSSY COMBO PERCENTAGE BADGE
+   ========================================================= */
+.badge-best, .pkg-badge.badge-best {
+    position: relative;
+    display: inline-block;
+    padding: 5px 12px !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    letter-spacing: 0.5px;
+    border-radius: 20px !important;
+    background: linear-gradient(135deg, #ec4899 0%, #a855f7 50%, #6366f1 100%) !important;
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    backdrop-filter: blur(8px);
+    overflow: hidden;
+    text-transform: uppercase;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Glass Shine Highlight Animation */
+.badge-best::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        60deg,
+        rgba(255, 255, 255, 0) 20%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0) 80%
+    );
+    transform: rotate(30deg);
+    animation: glossyShine 3s infinite ease-in-out;
+}
+
+@keyframes glossyShine {
+    0% {
+        transform: translateX(-100%) rotate(30deg);
+    }
+    20%, 100% {
+        transform: translateX(100%) rotate(30deg);
+    }
+}
+
+/* Light Mode Hover Effect */
+.badge-best:hover {
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 0 6px 16px rgba(236, 72, 153, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Dark Mode Strong Glowing Effect */
+body.dark-mode .badge-best,
+[data-theme="dark"] .badge-best {
+    background: linear-gradient(135deg, #f43f5e 0%, #d946ef 50%, #8b5cf6 100%) !important;
+    box-shadow: 0 0 15px rgba(217, 70, 239, 0.6), 0 0 5px rgba(244, 63, 94, 0.8), inset 0 1px 2px rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+}

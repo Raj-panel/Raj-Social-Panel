@@ -31,18 +31,10 @@
             margin-bottom: 4px !important;
         }
 
-        /* Checkout Input Field Labels (Slightly Larger & Highly Readable) */
+        /* FIXED: Target Link & UTR Field Labels Color & Contrast for Light/Dark Mode */
         #checkoutPage label[for="checkoutLinkInput"],
         #checkoutPage .target-input-label,
-        #checkoutLinkLabel {
-            font-size: 13px !important;
-            font-weight: 700 !important;
-            line-height: 1.4 !important;
-            margin-bottom: 4px !important;
-            display: block !important;
-            color: #e2e8f0 !important;
-        }
-
+        #checkoutLinkLabel,
         #checkoutPage label[for="checkoutTxnId"],
         #checkoutPage .utr-label,
         #checkoutPage .input-box label {
@@ -51,7 +43,21 @@
             line-height: 1.4 !important;
             margin-bottom: 4px !important;
             display: block !important;
-            color: #e2e8f0 !important;
+            color: #0f172a !important; /* Always readable Dark Navy text for white/light backgrounds */
+            text-shadow: 0 0 1px rgba(255, 255, 255, 0.8) !important;
+        }
+
+        /* Dark Mode Fallback */
+        @media (prefers-color-scheme: dark) {
+            #checkoutPage label[for="checkoutLinkInput"],
+            #checkoutPage .target-input-label,
+            #checkoutLinkLabel,
+            #checkoutPage label[for="checkoutTxnId"],
+            #checkoutPage .utr-label,
+            #checkoutPage .input-box label {
+                color: #f8fafc !important; /* Bright crisp text in native system dark mode */
+                text-shadow: none !important;
+            }
         }
 
         @media screen and (min-width: 768px) {
@@ -83,6 +89,9 @@
                 padding: 2px 6px !important; 
                 font-size: 11px !important; 
                 height: 36px !important; 
+                color: #0f172a !important;
+                background-color: #ffffff !important;
+                border: 1px solid #cbd5e1 !important;
             }
             #checkoutUpiView { 
                 padding: 0px !important; 

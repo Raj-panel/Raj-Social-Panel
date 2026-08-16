@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,40 +21,29 @@
       <div class="brand-header">
         <div class="logo-icon">🔐</div>
         <h2>RAJ ADMIN PANEL</h2>
-        <p>অ্যাডমিন এক্সেস পাওয়ার জন্য লগইন করুন</p>
+        <p>Login to access the admin panel</p>
       </div>
 
       <!-- Login Form -->
       <form id="adminLoginForm" onsubmit="event.preventDefault();">
         
         <div class="form-group">
-          <label for="adminMobile">মোবাইল নম্বর</label>
+          <label for="adminEmail">Email Address</label>
           <input 
-            type="tel" 
-            id="adminMobile" 
-            placeholder="10 ডিজিটের নম্বর লিখুন" 
-            maxlength="10" 
+            type="email" 
+            id="adminEmail" 
+            placeholder="Enter your admin email" 
             required 
             autocomplete="off"
           />
         </div>
 
         <div class="form-group">
-          <label for="adminPassword">অ্যাডমিন পাসওয়ার্ড</label>
+          <label for="adminPassword">Admin Password</label>
           <input 
             type="password" 
             id="adminPassword" 
-            placeholder="আপনার পাসওয়ার্ড দিন" 
-            required 
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="adminSecretKey">সিক্রেট সিকিউরিটি কী (Admin Key)</label>
-          <input 
-            type="password" 
-            id="adminSecretKey" 
-            placeholder="প্রদত্ত Secret Key লিখুন" 
+            placeholder="Enter your password" 
             required 
           />
         </div>
@@ -63,13 +52,13 @@
         <div id="loginAlert" class="alert-box" style="display: none;"></div>
 
         <button type="button" id="adminLoginBtn" class="btn-primary" onclick="handleAdminLogin()">
-          লগইন করুন ➔
+          Login ➔
         </button>
 
       </form>
 
       <div class="card-footer">
-        <a href="../" class="back-link">⬅ মূল ওয়েবসাইটে ফিরে যান</a>
+        <a href="../" class="back-link">⬅ Back to Main Website</a>
       </div>
 
     </div>

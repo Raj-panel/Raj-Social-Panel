@@ -115,9 +115,7 @@
     document.head.appendChild(style);
 })();
 
-// ==========================================
-// NAVIGATION FIX FOR LOGIN / CREATE ACCOUNT
-// ==========================================
+// Navigation event handler for clean routing
 document.addEventListener("DOMContentLoaded", function () {
     document.body.addEventListener("click", function (e) {
         const link = e.target.closest("a");
@@ -223,7 +221,7 @@ const serviceData = {
                     "🔄 Post / Reels Shares — 1,000",
                     "♻️ Reels Reposts — 100"
                 ],
-                placeholder: "Reel/Video Link (Account Must be Public)"
+                placeholder: "Enter Profile Username or Link"
             },
             {
                 name: "Reels Viral Package 2",
@@ -239,7 +237,7 @@ const serviceData = {
                     "🔄 Post / Reels Shares — 3,000",
                     "♻️ Reels Reposts — 250"
                 ],
-                placeholder: "Reel/Video Link (Account Must be Public)"
+                placeholder: "Enter Profile Username or Link"
             },
             {
                 name: "Reels Viral Package 3",
@@ -255,7 +253,7 @@ const serviceData = {
                     "🔄 Post / Reels Shares — 5,000",
                     "♻️ Reels Reposts — 400"
                 ],
-                placeholder: "Reel/Video Link (Account Must be Public)"
+                placeholder: "Enter Profile Username or Link"
             },
             {
                 name: "Reels Viral Package 4",
@@ -271,7 +269,7 @@ const serviceData = {
                     "🔄 Post / Reels Shares — 8,000",
                     "♻️ Reels Reposts — 600"
                 ],
-                placeholder: "Reel/Video Link (Account Must be Public)"
+                placeholder: "Enter Profile Username or Link"
             },
             {
                 name: "Reels Viral Package 5",
@@ -287,7 +285,7 @@ const serviceData = {
                     "🔄 Post / Reels Shares — 15,000",
                     "♻️ Reels Reposts — 800"
                 ],
-                placeholder: "Reel/Video Link (Account Must be Public)"
+                placeholder: "Enter Profile Username or Link"
             }
         ]
     },
@@ -391,10 +389,10 @@ const serviceData = {
         "TikTok Save — Lifetime Refill": [
             { name: "100 Save", price: 10, badge: "Starter", badgeClass: "badge-demo", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
             { name: "500 Save", price: 18, desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
-            { name: "1K Save", price: 25, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
-            { name: "3K Save", price: 65, desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
-            { name: "5K Save", price: 95, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
-            { name: "10K Save", price: 175, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" }
+            { name: "1K Save", price: 25, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🇧🇩 Bangladesh High Quality Real Service • 15 Minute Start" },
+            { name: "3K Save", price: 65, desc: "🇧🇩 Bangladesh High Quality Real Service • 15 Minute Start" },
+            { name: "5K Save", price: 95, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🇧🇩 Bangladesh High Quality Real Service • 15 Minute Start" },
+            { name: "10K Save", price: 175, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🇧🇩 Bangladesh High Quality Real Service • 15 Minute Start" }
         ],
         "🔥 TikTok Combo Service — Non-Drop": [
             {
@@ -409,7 +407,7 @@ const serviceData = {
                     "🔄 Video Shares — 1,200",
                     "💾 Video Saves — 1,500"
                 ],
-                placeholder: "TikTok Video Link (Account Must be Public)"
+                placeholder: "Enter Profile Username or Link"
             },
             {
                 name: "Video Viral Package 2",
@@ -423,7 +421,7 @@ const serviceData = {
                     "🔄 Video Shares — 2,000",
                     "💾 Video Saves — 2,500"
                 ],
-                placeholder: "TikTok Video Link (Account Must be Public)"
+                placeholder: "Enter Profile Username or Link"
             },
             {
                 name: "Video Viral Package 3",
@@ -437,7 +435,7 @@ const serviceData = {
                     "🔄 Video Shares — 3,000",
                     "💾 Video Saves — 4,000"
                 ],
-                placeholder: "TikTok Video Link (Account Must be Public)"
+                placeholder: "Enter Profile Username or Link"
             },
             {
                 name: "Video Viral Package 4",
@@ -451,7 +449,7 @@ const serviceData = {
                     "🔄 Video Shares — 5,000",
                     "💾 Video Saves — 7,000"
                 ],
-                placeholder: "TikTok Video Link (Account Must be Public)"
+                placeholder: "Enter Profile Username or Link"
             },
             {
                 name: "Video Viral Package 5",
@@ -465,7 +463,7 @@ const serviceData = {
                     "🔄 Video Shares — 10,000",
                     "💾 Video Saves — 13,000"
                 ],
-                placeholder: "TikTok Video Link (Account Must be Public)"
+                placeholder: "Enter Profile Username or Link"
             }
         ]
     }
@@ -649,7 +647,7 @@ function renderPackages() {
                         </div>
                     </div>
                     <div>
-                        ${pkg.badge ? `<span class="pkg-badge ${pkg.badgeClass || "badge-popular"}" style="background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); color: #fff; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 800;">${pkg.badge}</span>` : ""}
+                        ${pkg.badge ? `<span class="pkg-badge ${pkg.badgeClass || "badge-popular"}">${pkg.badge}</span>` : ""}
                     </div>
                 </div>
 
@@ -756,22 +754,26 @@ function extractQuantity(name) {
     return Math.floor(number) || 1;
 }
 
+// Configured label and placeholder generator for target links
 function getLinkConfig(platform, category) {
     const p = (platform || "").toLowerCase();
     const c = (category || "").toLowerCase();
 
+    // Universal placeholder requirement for profile & general services
+    const defaultPlaceholder = "Enter Profile Username or Link";
+
     if (c.includes("combo service")) {
         return {
-            label: "Video Link (Account Must be Public)",
-            placeholder: "Video Link (Account Must be Public)"
+            label: "Enter Profile Username or Video Link",
+            placeholder: defaultPlaceholder
         };
     }
 
     if (p === "youtube") {
         if (c.includes("subscribe")) {
             return {
-                label: "YouTube Channel/Profile Link",
-                placeholder: "https://www.youtube.com/@channelname"
+                label: "YouTube Channel / Handle or Link",
+                placeholder: defaultPlaceholder
             };
         } else if (c.includes("live")) {
             return {
@@ -780,61 +782,56 @@ function getLinkConfig(platform, category) {
             };
         } else {
             return {
-                label: "YouTube Video/Short Link",
+                label: "YouTube Video / Short Link",
                 placeholder: "https://www.youtube.com/watch?v=xxxxxx"
             };
         }
     } else if (p === "tiktok") {
         if (c.includes("followers")) {
             return {
-                label: "TikTok Profile Link",
-                placeholder: "https://www.tiktok.com/@username"
+                label: "TikTok Username or Profile Link",
+                placeholder: defaultPlaceholder
             };
         } else {
             return {
-                label: "TikTok Video Link",
-                placeholder: "https://www.tiktok.com/@username/video/xxxxxx"
+                label: "TikTok Username or Video Link",
+                placeholder: defaultPlaceholder
             };
         }
     } else if (p === "instagram") {
-        if (c.includes("100% real") || c.includes("blue")) {
+        if (c.includes("followers") || c.includes("100% real") || c.includes("blue")) {
             return {
-                label: "Instagram Profile Link",
-                placeholder: "https://instagram.com/your_username"
-            };
-        } else if (c.includes("followers")) {
-            return {
-                label: "Profile Link (Account Must be Public)",
-                placeholder: "https://instagram.com/your_username"
+                label: "Instagram Username or Profile Link",
+                placeholder: defaultPlaceholder
             };
         } else if (c.includes("reels") || c.includes("video")) {
             return {
-                label: "Reel / Video Link",
-                placeholder: "https://www.instagram.com/reel/xxxxxx"
+                label: "Instagram Username or Reel/Video Link",
+                placeholder: defaultPlaceholder
             };
         } else {
             return {
-                label: "Post / Reel Link",
-                placeholder: "https://www.instagram.com/p/xxxxxx"
+                label: "Instagram Username or Post/Reel Link",
+                placeholder: defaultPlaceholder
             };
         }
     } else if (p === "facebook") {
         if (c.includes("followers")) {
             return {
-                label: "Profile / Page Link (Must be Public)",
-                placeholder: "https://facebook.com/your_page_or_profile"
+                label: "Facebook Username or Profile/Page Link",
+                placeholder: defaultPlaceholder
             };
         } else {
             return {
-                label: "Post / Video Link",
+                label: "Facebook Post / Video Link",
                 placeholder: "https://facebook.com/permalink.php?story_fbid=..."
             };
         }
     }
 
     return {
-        label: "Profile Link (Account Must be Public)",
-        placeholder: "https://instagram.com/your_username"
+        label: "Profile Username or Target Link",
+        placeholder: defaultPlaceholder
     };
 }
 
@@ -885,8 +882,9 @@ function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUni
     return totalPrice;
 }
 
+// Open Checkout and Reset State
 function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge) {
-    // FRESH STATE INSTANTIATION TO PREVENT STALE STATE
+    // PURGE ANY PREVIOUS STATE COMPLETELY
     currentCheckoutData = {
         platform: platform,
         serviceName: serviceName,
@@ -916,7 +914,7 @@ function openCheckoutFromCustom() {
 
     const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
 
-    // FRESH STATE INSTANTIATION TO PREVENT STALE STATE
+    // PURGE ANY PREVIOUS STATE COMPLETELY
     currentCheckoutData = {
         platform: platformCap,
         serviceName: currentCategory,
@@ -1129,13 +1127,12 @@ function closeCheckoutUI() {
         checkoutPage.style.display = "none";
     }
     
-    // RESET INPUT VALUES
+    // RESET INPUT VALUES & PURGE STALE STATE
     const linkInput = document.getElementById("checkoutLinkInput");
     if (linkInput) linkInput.value = "";
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
     
-    // PURGE STALE STATE
     currentCheckoutData = {}; 
 }
 
@@ -1165,7 +1162,6 @@ function switchCheckoutPayment(type) {
     }
 }
 
-// Check standard URL validity
 function isValidUrl(string) {
     try {
         new URL(string);
@@ -1175,50 +1171,31 @@ function isValidUrl(string) {
     }
 }
 
-// Function to validate and process Profile Link / Username for Instagram & Other Platforms
+// Normalized input handler accepting Username, @Username, or Full URL safely
 function processProfileOrLink(input, platform, serviceName) {
-    const trimmed = (input || "").trim();
+    let trimmed = (input || "").trim();
     if (!trimmed) {
-        return { isValid: false, message: "Please enter your Social Media Link or Username!" };
+        return { isValid: false, message: "Please enter your Username or Link!" };
+    }
+
+    // Strip leading '@' if present
+    if (trimmed.startsWith("@")) {
+        trimmed = trimmed.substring(1).trim();
     }
 
     const pName = (platform || "").toLowerCase();
     const sName = (serviceName || "").toLowerCase();
 
+    const usernameRegex = /^[a-zA-Z0-9._]{1,30}$/;
+
     if (pName === "instagram") {
-        const usernameRegex = /^[a-zA-Z0-9._]{1,30}$/;
-        const instaUrlRegex = /^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]{1,30}\/?(\?.*)?$/i;
-
-        // If service is Followers or Blue Tick / 100% Real, handle profile URL / username
-        if (sName.includes("followers") || sName.includes("100% real") || sName.includes("blue")) {
-            if (usernameRegex.test(trimmed)) {
-                return {
-                    isValid: true,
-                    url: `https://www.instagram.com/${trimmed}`
-                };
-            }
-
-            if (instaUrlRegex.test(trimmed)) {
-                return {
-                    isValid: true,
-                    url: trimmed
-                };
-            }
-
-            if (isValidUrl(trimmed) && trimmed.toLowerCase().includes("instagram.com")) {
-                return {
-                    isValid: true,
-                    url: trimmed
-                };
-            }
-
+        if (usernameRegex.test(trimmed)) {
             return {
-                isValid: false,
-                message: "Please enter a valid Instagram username or Instagram profile URL!"
+                isValid: true,
+                url: `https://www.instagram.com/${trimmed}`
             };
         }
 
-        // Generic URL check for other Instagram services (Posts, Reels, Likes, etc.)
         if (isValidUrl(trimmed) && trimmed.toLowerCase().includes("instagram.com")) {
             return {
                 isValid: true,
@@ -1228,27 +1205,13 @@ function processProfileOrLink(input, platform, serviceName) {
 
         return {
             isValid: false,
-            message: "Please enter a valid Instagram Link!"
+            message: "Please enter a valid Instagram Username or Profile/Post Link!"
         };
     } else if (pName === "tiktok") {
-        const usernameRegex = /^@?[a-zA-Z0-9._]{2,24}$/;
-        if (sName.includes("followers")) {
-            if (usernameRegex.test(trimmed)) {
-                const cleaned = trimmed.startsWith("@") ? trimmed.slice(1) : trimmed;
-                return {
-                    isValid: true,
-                    url: `https://www.tiktok.com/@${cleaned}`
-                };
-            }
-            if (isValidUrl(trimmed) && trimmed.toLowerCase().includes("tiktok.com")) {
-                return {
-                    isValid: true,
-                    url: trimmed
-                };
-            }
+        if (usernameRegex.test(trimmed)) {
             return {
-                isValid: false,
-                message: "Please enter a valid TikTok Profile Link or Username!"
+                isValid: true,
+                url: `https://www.tiktok.com/@${trimmed}`
             };
         }
 
@@ -1261,19 +1224,56 @@ function processProfileOrLink(input, platform, serviceName) {
 
         return {
             isValid: false,
-            message: "Please enter a valid TikTok Video Link!"
+            message: "Please enter a valid TikTok Username or Video Link!"
+        };
+    } else if (pName === "facebook") {
+        if (usernameRegex.test(trimmed)) {
+            return {
+                isValid: true,
+                url: `https://www.facebook.com/${trimmed}`
+            };
+        }
+
+        if (isValidUrl(trimmed) && trimmed.toLowerCase().includes("facebook.com")) {
+            return {
+                isValid: true,
+                url: trimmed
+            };
+        }
+
+        return {
+            isValid: false,
+            message: "Please enter a valid Facebook Username or Link!"
+        };
+    } else if (pName === "youtube") {
+        if (usernameRegex.test(trimmed)) {
+            return {
+                isValid: true,
+                url: `https://www.youtube.com/@${trimmed}`
+            };
+        }
+
+        if (isValidUrl(trimmed) && (trimmed.toLowerCase().includes("youtube.com") || trimmed.toLowerCase().includes("youtu.be"))) {
+            return {
+                isValid: true,
+                url: trimmed
+            };
+        }
+
+        return {
+            isValid: false,
+            message: "Please enter a valid YouTube Handle or Video Link!"
         };
     } else {
-        // Validation for other platforms
-        if (!isValidUrl(trimmed) && !trimmed.includes("http")) {
+        if (isValidUrl(trimmed)) {
             return {
-                isValid: false,
-                message: "Please enter a valid URL (starting with http:// or https://)"
+                isValid: true,
+                url: trimmed
             };
         }
         return {
-            isValid: true,
-            url: trimmed
+            isValid: false,
+            message: "Please enter a valid Link!"
         };
     }
 }
@@ -1396,7 +1396,6 @@ async function submitOrderWithWallet() {
     const linkInput = document.getElementById("checkoutLinkInput");
     const walletBtn = document.getElementById("submitWalletBtn");
     const rawLink = linkInput ? linkInput.value.trim() : "";
-    const orderAmount = currentCheckoutData.price;
 
     const validation = processProfileOrLink(rawLink, currentCheckoutData.platform, currentCheckoutData.serviceName);
     if (!validation.isValid) {
@@ -1405,6 +1404,7 @@ async function submitOrderWithWallet() {
     }
 
     const link = validation.url;
+    const orderAmount = currentCheckoutData.price;
 
     if (typeof firebase === 'undefined' || !firebase.auth) {
         alert("Authentication system unavailable.");

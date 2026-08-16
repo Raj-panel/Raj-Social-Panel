@@ -263,7 +263,7 @@
 
     <!-- Firebase SDK Modular Scripts -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
             getAuth, 
             onAuthStateChanged, 
@@ -278,24 +278,21 @@
             updateDoc, 
             deleteDoc, 
             onSnapshot, 
-            query, 
-            orderBy, 
             serverTimestamp 
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Your Actual Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyCQPiYwDQ7uxi-adcZavlnkYLLPSCA7hu4",
-            authDomain: "raj-smm-panel-193ca.firebaseapp.com",
-            projectId: "raj-smm-panel-193ca",
-            storageBucket: "raj-smm-panel-193ca.firebasestorage.app",
-            messagingSenderId: "418522080714",
-            appId: "1:418522080714:web:2206d41977b751c89a1b33",
-            measurementId: "G-1J8G5W5D7Y"
-        };
+        // Reuse existing Firebase App if initialized or fallback configuration
+        let app;
+        if (!getApps().length) {
+            app = initializeApp({
+                projectId: "rajsmmpanel",
+                authDomain: "rajsmmpanel.firebaseapp.com",
+                storageBucket: "rajsmmpanel.appspot.com"
+            });
+        } else {
+            app = getApps()[0];
+        }
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
@@ -374,14 +371,16 @@
             await signOut(auth);
         });
 
-        // Firestore Real-time Service Listener
+        // Firestore Real-time Service Listener without complex sorting requirements
         function listenToServices() {
-            const q = query(collection(db, "services"), orderBy("displayOrder", "asc"));
-            onSnapshot(q, (snapshot) => {
+            const servicesRef = collection(db, "services");
+            onSnapshot(servicesRef, (snapshot) => {
                 allServices = [];
                 snapshot.forEach((doc) => {
                     allServices.push({ id: doc.id, ...doc.data() });
                 });
+                // In-memory sort by displayOrder
+                allServices.sort((a, b) => (Number(a.displayOrder) || 1) - (Number(b.displayOrder) || 1));
                 renderServices();
             }, (err) => {
                 console.error("Firestore Listen Error:", err);

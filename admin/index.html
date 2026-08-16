@@ -281,14 +281,21 @@
             serverTimestamp 
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Reuse existing Firebase App if initialized or fallback configuration
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCQPiYwDQ7uxi-adcZavlnkYLLPSCA7hu4",
+            authDomain: "raj-smm-panel-193ca.firebaseapp.com",
+            projectId: "raj-smm-panel-193ca",
+            storageBucket: "raj-smm-panel-193ca.firebasestorage.app",
+            messagingSenderId: "418522080714",
+            appId: "1:418522080714:web:2206d41977b751c89a1b33",
+            measurementId: "G-1J8G5W5D7Y"
+        };
+
+        // Initialize Firebase
         let app;
         if (!getApps().length) {
-            app = initializeApp({
-                projectId: "rajsmmpanel",
-                authDomain: "rajsmmpanel.firebaseapp.com",
-                storageBucket: "rajsmmpanel.appspot.com"
-            });
+            app = initializeApp(firebaseConfig);
         } else {
             app = getApps()[0];
         }
@@ -371,7 +378,7 @@
             await signOut(auth);
         });
 
-        // Firestore Real-time Service Listener without complex sorting requirements
+        // Firestore Real-time Service Listener
         function listenToServices() {
             const servicesRef = collection(db, "services");
             onSnapshot(servicesRef, (snapshot) => {

@@ -141,63 +141,63 @@ const serviceData = {
             }
         ],
         "Followers": [
-            { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo" },
-            { name: "1K Followers", price: 50 },
-            { name: "2K Followers", price: 90 },
-            { name: "3K Followers", price: 129, badge: "⭐ Popular", badgeClass: "badge-popular" },
-            { name: "4K Followers", price: 165 },
-            { name: "5K Followers", price: 199, badge: "🔥 Best Value", badgeClass: "badge-best" },
-            { name: "6K Followers", price: 239 },
-            { name: "7K Followers", price: 279 },
-            { name: "8K Followers", price: 319 },
-            { name: "9K Followers", price: 359 },
-            { name: "10K Followers", price: 399, badge: "🎁 BUY 10K + GET 2K FREE", badgeClass: "badge-super" }
+            { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "1K Followers", price: 50, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "2K Followers", price: 90, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "3K Followers", price: 129, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "4K Followers", price: 165, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "5K Followers", price: 199, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "6K Followers", price: 239, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "7K Followers", price: 279, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "8K Followers", price: 319, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "9K Followers", price: 359, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "10K Followers", price: 399, badge: "🎁 BUY 10K + GET 2K FREE", badgeClass: "badge-super", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" }
         ],
         "Likes Non-Drop": [
-            { providerId: 675, name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo" },
-            { providerId: 675, name: "500 Likes", price: 25 },
-            { providerId: 675, name: "1K Likes", price: 30, badge: "⭐ Popular", badgeClass: "badge-popular" },
-            { providerId: 675, name: "3K Likes", price: 69 },
-            { providerId: 675, name: "5K Likes", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" },
-            { providerId: 675, name: "10K Likes", price: 179, badge: "👑 Most Popular", badgeClass: "badge-best" }
+            { providerId: 675, name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo", desc: "⚡ Best Quality • Mix Account • Starts in 5 Min" },
+            { providerId: 675, name: "500 Likes", price: 25, desc: "⚡ Best Quality • Mix Account • Starts in 5 Min" },
+            { providerId: 675, name: "1K Likes", price: 30, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "⚡ Best Quality • Mix Account • Starts in 5 Min" },
+            { providerId: 675, name: "3K Likes", price: 69, desc: "⚡ Best Quality • Mix Account • Starts in 5 Min" },
+            { providerId: 675, name: "5K Likes", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "⚡ Best Quality • Mix Account • Starts in 5 Min" },
+            { providerId: 675, name: "10K Likes", price: 179, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "⚡ Best Quality • Mix Account • Starts in 5 Min" }
         ],
         "REAL Reels / Video Views Non-Drop": [
-            { providerId: 853, name: "1K Views", price: 5, badge: "DEMO", badgeClass: "badge-demo", desc: "Indian views premium quality" },
-            { providerId: 853, name: "5K Views", price: 9, desc: "Indian views premium quality" },
-            { providerId: 853, name: "10K Views", price: 15, badge: "BEST VALUE", badgeClass: "badge-best", desc: "Indian views premium quality" },
-            { providerId: 853, name: "20K Views", price: 25, desc: "Indian views premium quality" },
-            { providerId: 853, name: "50K Views", price: 55, desc: "Indian views premium quality" },
-            { providerId: 853, name: "100K Views", price: 99, badge: "🔥 BEST SELLER", badgeClass: "badge-best", desc: "Indian views premium quality" },
-            { providerId: 853, name: "500K Views", price: 299, desc: "Indian views premium quality" },
-            { providerId: 853, name: "1M Views", price: 499, badge: "💥 MEGA DEAL", badgeClass: "badge-best", desc: "Indian views premium quality" }
+            { providerId: 853, name: "1K Views", price: 5, badge: "DEMO", badgeClass: "badge-demo", desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
+            { providerId: 853, name: "5K Views", price: 9, desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
+            { providerId: 853, name: "10K Views", price: 15, badge: "BEST VALUE", badgeClass: "badge-best", desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
+            { providerId: 853, name: "20K Views", price: 25, desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
+            { providerId: 853, name: "50K Views", price: 55, desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
+            { providerId: 853, name: "100K Views", price: 99, badge: "🔥 BEST SELLER", badgeClass: "badge-best", desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
+            { providerId: 853, name: "500K Views", price: 299, desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
+            { providerId: 853, name: "1M Views", price: 499, badge: "💥 MEGA DEAL", badgeClass: "badge-best", desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" }
         ],
         "REAL Photo / Post Views Non-Drop": [
-            { providerId: 1030, name: "1K Views", price: 10, badge: "🎯 Demo", badgeClass: "badge-demo", desc: "High quality Indian views" },
-            { providerId: 1030, name: "3K Views", price: 15, desc: "High quality Indian views" },
-            { providerId: 1030, name: "5K Views", price: 25, desc: "High quality Indian views" },
-            { providerId: 1030, name: "10K Views", price: 40, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "High quality Indian views" },
-            { providerId: 1030, name: "30K Views", price: 79, desc: "High quality Indian views" },
-            { providerId: 1030, name: "50K Views", price: 119, desc: "High quality Indian views" },
-            { providerId: 1030, name: "100K Views", price: 220, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "High quality Indian views" }
+            { providerId: 1030, name: "1K Views", price: 10, badge: "🎯 Demo", badgeClass: "badge-demo", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
+            { providerId: 1030, name: "3K Views", price: 15, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
+            { providerId: 1030, name: "5K Views", price: 25, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
+            { providerId: 1030, name: "10K Views", price: 40, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
+            { providerId: 1030, name: "30K Views", price: 79, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
+            { providerId: 1030, name: "50K Views", price: 119, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
+            { providerId: 1030, name: "100K Views", price: 220, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" }
         ],
         "REAL Comments Non-Drop": [
-            { providerId: 31, name: "50 Comments", price: 15, badge: "Starter", badgeClass: "badge-demo" },
-            { providerId: 31, name: "100 Comments", price: 20 },
-            { providerId: 31, name: "500 Comments", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
-            { providerId: 31, name: "1K Comments", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" }
+            { providerId: 31, name: "50 Comments", price: 15, badge: "Starter", badgeClass: "badge-demo", desc: "💬High Quality • Custom Random Comments start in 10 min" },
+            { providerId: 31, name: "100 Comments", price: 20, desc: "💬High Quality • Custom Random Comments start in 10 min" },
+            { providerId: 31, name: "500 Comments", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "💬High Quality • Custom Random Comments start in 10 min" },
+            { providerId: 31, name: "1K Comments", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "💬High Quality • Custom Random Comments start in 10 min" }
         ],
         "REAL Repost Non-Drop": [
-            { providerId: 505, name: "50 Reposts", price: 15, badge: "Starter", badgeClass: "badge-demo", desc: "Indian repost high premium quality" },
-            { providerId: 505, name: "100 Reposts", price: 20, desc: "Indian repost high premium quality" },
-            { providerId: 505, name: "500 Reposts", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "Indian repost high premium quality" },
-            { providerId: 505, name: "1K Reposts", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "Indian repost high premium quality" },
-            { providerId: 505, name: "3K Reposts", price: 249, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "Indian repost high premium quality" }
+            { providerId: 505, name: "50 Reposts", price: 15, badge: "Starter", badgeClass: "badge-demo", desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" },
+            { providerId: 505, name: "100 Reposts", price: 20, desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" },
+            { providerId: 505, name: "500 Reposts", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" },
+            { providerId: 505, name: "1K Reposts", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" },
+            { providerId: 505, name: "3K Reposts", price: 249, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" }
         ],
         "REAL Shares Non-Drop": [
-            { providerId: 50, name: "100 Shares", price: 5, badge: "Starter", badgeClass: "badge-demo", desc: "Premium quality Indian share" },
-            { providerId: 50, name: "1K Shares", price: 30, desc: "Premium quality Indian share" },
-            { providerId: 50, name: "5K Shares", price: 69, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "Premium quality Indian share" },
-            { providerId: 50, name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "Premium quality Indian share" }
+            { providerId: 50, name: "100 Shares", price: 5, badge: "Starter", badgeClass: "badge-demo", desc: "🔗 REAL Shares ♻️Life-Time •Start in 20 Min" },
+            { providerId: 50, name: "1K Shares", price: 30, desc: "🔗 REAL Shares ♻️Life-Time •Start in 20 Min" },
+            { providerId: 50, name: "5K Shares", price: 69, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🔗 REAL Shares ♻️Life-Time •Start in 20 Min" },
+            { providerId: 50, name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🔗 REAL Shares ♻️Life-Time •Start in 20 Min" }
         ],
         "Instagram Blue VERIFY": [
             { 
@@ -210,11 +210,11 @@ const serviceData = {
         ],
         "🔥 Reels Combo Service": [
             {
-                name: "Reels Viral Package",
+                name: "Reels Viral Package 1",
                 price: 99,
                 badge: "10% OFF",
                 badgeClass: "badge-best",
-                subtitle: "First delivery Indian high quality",
+                subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
                     "👁️ Reels Views — 12,000",
                     "❤️ Reels Likes — 2,000",
@@ -226,11 +226,11 @@ const serviceData = {
                 placeholder: "Reel/Video Link (Account Must be Public)"
             },
             {
-                name: "Reels Viral Package",
+                name: "Reels Viral Package 2",
                 price: 199,
                 badge: "20% OFF",
                 badgeClass: "badge-best",
-                subtitle: "First delivery Indian high quality",
+                subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
                     "👁️ Reels Views — 30,000",
                     "❤️ Reels Likes — 4,000",
@@ -242,11 +242,11 @@ const serviceData = {
                 placeholder: "Reel/Video Link (Account Must be Public)"
             },
             {
-                name: "Reels Viral Package",
+                name: "Reels Viral Package 3",
                 price: 299,
                 badge: "30% OFF",
                 badgeClass: "badge-best",
-                subtitle: "First delivery Indian high quality",
+                subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
                     "👁️ Reels Views — 50,000",
                     "❤️ Reels Likes — 8,000",
@@ -258,11 +258,11 @@ const serviceData = {
                 placeholder: "Reel/Video Link (Account Must be Public)"
             },
             {
-                name: "Reels Viral Package",
+                name: "Reels Viral Package 4",
                 price: 399,
                 badge: "40% OFF",
                 badgeClass: "badge-best",
-                subtitle: "First delivery Indian high quality",
+                subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
                     "👁️ Reels Views — 70,000",
                     "❤️ Reels Likes — 11,000",
@@ -274,11 +274,11 @@ const serviceData = {
                 placeholder: "Reel/Video Link (Account Must be Public)"
             },
             {
-                name: "Reels Viral Package",
+                name: "Reels Viral Package 5",
                 price: 499,
                 badge: "50% OFF",
                 badgeClass: "badge-best",
-                subtitle: "First delivery Indian high quality",
+                subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
                     "👁️ Reels Views — 100,000",
                     "❤️ Reels Likes — 18,000",
@@ -360,25 +360,25 @@ const serviceData = {
     },
     tiktok: {
         "TikTok Followers": [
-            { name: "100 TikTok Followers", price: 20, desc: "90 Days Refill" },
-            { name: "500 TikTok Followers", price: 90, desc: "90 Days Refill" },
-            { name: "1K TikTok Followers", price: 179, desc: "90 Days Refill" },
-            { name: "5K TikTok Followers", price: 799, desc: "90 Days Refill" },
-            { name: "10K TikTok Followers", price: 1599, desc: "90 Days Refill" }
+            { name: "100 TikTok Followers", price: 20, desc: "👤 Premium Mixed Followers • Starts in 10 Min" },
+            { name: "500 TikTok Followers", price: 90, desc: "👤 Premium Mixed Followers • Starts in 10 Min" },
+            { name: "1K TikTok Followers", price: 179, desc: "👤 Premium Mixed Followers • Starts in 10 Min" },
+            { name: "5K TikTok Followers", price: 799, desc: "👤 Premium Mixed Followers • Starts in 10 Min" },
+            { name: "10K TikTok Followers", price: 1599, desc: "👤 Premium Mixed Followers • Starts in 10 Min" }
         ],
         "TikTok Likes Non-Drop": [
-            { name: "100 TikTok Likes", price: 15, desc: "Lifetime Auto Refill" },
-            { name: "500 TikTok Likes", price: 30, desc: "Lifetime Auto Refill" },
-            { name: "1K TikTok Likes", price: 50, desc: "Lifetime Auto Refill" },
-            { name: "3K TikTok Likes", price: 139, desc: "Lifetime Auto Refill" },
-            { name: "5K TikTok Likes", price: 219, desc: "Lifetime Auto Refill" }
+            { name: "100 TikTok Likes", price: 15, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" },
+            { name: "500 TikTok Likes", price: 30, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" },
+            { name: "1K TikTok Likes", price: 50, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" },
+            { name: "3K TikTok Likes", price: 139, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" },
+            { name: "5K TikTok Likes", price: 219, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" }
         ],
         "TikTok Views Non-Drop": [
-            { name: "100 TikTok Video Views", price: 9, desc: "High Quality Real Views • Lifetime Refill" },
-            { name: "500 TikTok Video Views", price: 20, desc: "High Quality Real Views • Lifetime Refill" },
-            { name: "1K TikTok Video Views", price: 35, desc: "High Quality Real Views • Lifetime Refill" },
-            { name: "5K TikTok Video Views", price: 119, desc: "High Quality Real Views • Lifetime Refill" },
-            { name: "10K TikTok Video Views", price: 249, desc: "High Quality Real Views • Lifetime Refill" }
+            { name: "100 TikTok Video Views", price: 9, desc: "🇧🇩 Real Views • High Quality • Lifetime Refill Start in 10 Min" },
+            { name: "500 TikTok Video Views", price: 20, desc: "🇧🇩 Real Views • High Quality • Lifetime Refill Start in 10 Min" },
+            { name: "1K TikTok Video Views", price: 35, desc: "🇧🇩 Real Views • High Quality • Lifetime Refill Start in 10 Min" },
+            { name: "5K TikTok Video Views", price: 119, desc: "🇧🇩 Real Views • High Quality • Lifetime Refill Start in 10 Min" },
+            { name: "10K TikTok Video Views", price: 249, desc: "🇧🇩 Real Views • High Quality • Lifetime Refill Start in 10 Min" }
         ],
         "TikTok Share — Lifetime Refill": [
             { name: "100 Share", price: 15, badge: "Starter", badgeClass: "badge-demo", desc: "🇧🇩 Bangladesh High Quality Real Service • 18 Minute Start" },
@@ -398,7 +398,7 @@ const serviceData = {
         ],
         "🔥 TikTok Combo Service — Non-Drop": [
             {
-                name: "Video Viral Package",
+                name: "Video Viral Package 1",
                 price: 159,
                 badge: "10% OFF",
                 badgeClass: "badge-best",
@@ -412,7 +412,7 @@ const serviceData = {
                 placeholder: "TikTok Video Link (Account Must be Public)"
             },
             {
-                name: "Video Viral Package",
+                name: "Video Viral Package 2",
                 price: 249,
                 badge: "20% OFF",
                 badgeClass: "badge-best",
@@ -426,7 +426,7 @@ const serviceData = {
                 placeholder: "TikTok Video Link (Account Must be Public)"
             },
             {
-                name: "Video Viral Package",
+                name: "Video Viral Package 3",
                 price: 399,
                 badge: "30% OFF",
                 badgeClass: "badge-best",
@@ -440,7 +440,7 @@ const serviceData = {
                 placeholder: "TikTok Video Link (Account Must be Public)"
             },
             {
-                name: "Video Viral Package",
+                name: "Video Viral Package 4",
                 price: 699,
                 badge: "40% OFF",
                 badgeClass: "badge-best",
@@ -454,7 +454,7 @@ const serviceData = {
                 placeholder: "TikTok Video Link (Account Must be Public)"
             },
             {
-                name: "Video Viral Package",
+                name: "Video Viral Package 5",
                 price: 999,
                 badge: "50% OFF",
                 badgeClass: "badge-best",
@@ -641,7 +641,7 @@ function renderPackages() {
                         </div>
                         <div>
                             <div class="pkg-title" style="font-weight: 700; font-size: 15px; color: #1e293b;">
-                                ${pkg.name}
+                                ${pkg.name.replace(/\s\d+$/, '')}
                             </div>
                             <span class="pkg-sub" style="font-size: 11px; color: #64748b;">
                                 ${comboSubText}
@@ -935,16 +935,20 @@ function openCheckoutFromCustom() {
 function updateCheckoutQuantityDisplay() {
     const d = currentCheckoutData;
     if (!d || !d.baseQuantity) return;
-    
-    d.quantity = d.baseQuantity * (d.multiplier || 1);
 
-    d.price = calculateDynamicPriceForQty(
-        d.platform,
-        d.serviceName,
-        d.quantity,
-        d.baseQuantity,
-        d.basePrice
-    );
+    if (d.serviceName && d.serviceName.includes("Combo Service")) {
+        d.quantity = d.baseQuantity * (d.multiplier || 1);
+        d.price = d.basePrice * (d.multiplier || 1);
+    } else {
+        d.quantity = d.baseQuantity * (d.multiplier || 1);
+        d.price = calculateDynamicPriceForQty(
+            d.platform,
+            d.serviceName,
+            d.quantity,
+            d.baseQuantity,
+            d.basePrice
+        );
+    }
 
     const qtyCountDisplay = document.getElementById("checkoutQtyCount");
     if (qtyCountDisplay) qtyCountDisplay.innerText = d.multiplier || 1;
@@ -1154,7 +1158,7 @@ function switchCheckoutPayment(type) {
         if (viewUpi) viewUpi.classList.remove("hidden");
         if (viewBinance) viewBinance.classList.add("hidden");
     } else {
-        if (btnBinance) btnBinance.classList.add("active");
+        if (btnBinance) btnBinance.classList.remove("active");
         if (btnUpi) btnUpi.classList.remove("active");
         if (viewBinance) viewBinance.classList.remove("hidden");
         if (viewUpi) viewUpi.classList.add("hidden");

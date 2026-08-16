@@ -1,192 +1,437 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Register - Raj Social Panel</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-  }
+import { db, auth } from "./firebase-config.js";
+import { 
+  RecaptchaVerifier, 
+  signInWithPhoneNumber 
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+import { 
+  doc, 
+  setDoc, 
+  getDoc, 
+  updateDoc 
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
-  body {
-    background-color: #fdf2f8;
-    color: #1e293b;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 16px;
-  }
+const SESSION_KEY = "raj_smm_user_session";
+let confirmationResultGlobal = null;
 
-  .auth-card-box {
-    width: 100%;
-    max-width: 420px;
-    background: #ffffff;
-    border: 1px solid #fae8ff;
-    border-radius: 24px;
-    padding: 32px 24px;
-    box-shadow: 0 10px 30px rgba(244, 114, 182, 0.1);
-  }
+// Helper: Secure SHA-256 Hash Function (Password Encryption)
+async function hashPassword(password) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(password);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
 
-  .auth-title {
-    font-size: 26px;
-    font-weight: 800;
-    text-align: center;
-    background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 24px;
-  }
+document.addEventListener("DOMContentLoaded", () => {
+  checkUserSession();
+  initPageSpecificAuth();
+  setupRealtimeValidations();
+});
 
-  .auth-input-group {
-    margin-bottom: 16px;
-    text-align: left;
-  }
+function checkUserSession() {
+  const sessionData = localStorage.getItem(SESSION_KEY);
+  const addFundsItem = document.getElementById("addFundsMenuItem");
+  const currentPath = window.location.pathname;
 
-  .auth-input-group label {
-    display: block;
-    font-size: 13px;
-    font-weight: 700;
-    color: #475569;
-    margin-bottom: 6px;
-  }
-
-  .auth-input-group input {
-    width: 100%;
-    padding: 12px 14px;
-    background: #f8fafc;
-    border: 1.5px solid #e2e8f0;
-    border-radius: 12px;
-    font-size: 14px;
-    color: #0f172a;
-    outline: none;
-    transition: all 0.2s;
-  }
-
-  .auth-input-group input:focus {
-    border-color: #d946ef;
-    background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.15);
-  }
-
-  /* Error Styles */
-  .auth-input-group input.input-error {
-    border-color: #ef4444 !important;
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
-  }
-
-  .error-text {
-    color: #ef4444;
-    font-size: 12px;
-    font-weight: 600;
-    margin-top: 4px;
-    display: none;
-  }
-
-  .general-error {
-    color: #ef4444;
-    font-size: 13px;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 12px;
-    display: none;
-  }
-
-  .auth-btn {
-    width: 100%;
-    padding: 13px;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
-    color: #ffffff;
-    font-weight: 800;
-    font-size: 15px;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-    margin-top: 8px;
-    transition: transform 0.1s ease;
-  }
-
-  .auth-btn:active {
-    transform: scale(0.98);
-  }
-
-  .auth-links {
-    text-align: center;
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .auth-links a {
-    font-size: 13px;
-    color: #a855f7;
-    text-decoration: none;
-    font-weight: 700;
-  }
-
-  .auth-links a:hover {
-    text-decoration: underline;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    body {
-      background-color: #0b0f19 !important;
-      color: #f1f5f9 !important;
+  if (sessionData) {
+    try {
+      const user = JSON.parse(sessionData);
+      updateSidebarForLoggedInUser(user.name, user.mobile);
+      
+      if (addFundsItem) {
+        addFundsItem.style.setProperty("display", "block", "important");
+      }
+    } catch (e) {
+      localStorage.removeItem(SESSION_KEY);
+      updateSidebarForLoggedOutUser();
+      
+      if (addFundsItem) {
+        addFundsItem.style.setProperty("display", "none", "important");
+      }
+      checkAddFundsProtection(currentPath, false);
     }
-    .auth-card-box {
-      background: #111827 !important;
-      border-color: #1f2937 !important;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+  } else {
+    updateSidebarForLoggedOutUser();
+    
+    if (addFundsItem) {
+      addFundsItem.style.setProperty("display", "none", "important");
     }
-    .auth-input-group label {
-      color: #cbd5e1 !important;
+    checkAddFundsProtection(currentPath, false);
+  }
+}
+
+function checkAddFundsProtection(currentPath, isLoggedIn) {
+  if (currentPath.includes('/add-funds') && !isLoggedIn) {
+    window.location.href = "/login/";
+  }
+}
+
+function updateSidebarForLoggedInUser(name, mobile) {
+  const authItem = document.getElementById("authMenuItem");
+  if (!authItem) return;
+
+  authItem.innerHTML = `<a href="#" id="dynamicLogoutBtn" style="color: #ef4444;">🚪 Logout (${name || mobile})</a>`;
+
+  setTimeout(() => {
+    const logoutBtn = document.getElementById("dynamicLogoutBtn");
+    if (logoutBtn) {
+      logoutBtn.onclick = function(e) {
+        e.preventDefault();
+        handleLogout();
+      };
     }
-    .auth-input-group input {
-      background: #0b0f19 !important;
-      border-color: #1f2937 !important;
-      color: #ffffff !important;
-    }
-    .auth-input-group input:focus {
-      border-color: #a855f7 !important;
-      background: #111827 !important;
+  }, 50);
+}
+
+function updateSidebarForLoggedOutUser() {
+  const authItem = document.getElementById("authMenuItem");
+  if (!authItem) return;
+
+  authItem.innerHTML = `<a href="/login/" onclick="closeSidebar();">🔐 Login / Create Account</a>`;
+}
+
+function initPageSpecificAuth() {
+  const currentPath = window.location.pathname;
+  const urlParams = new URLSearchParams(window.location.search);
+  const prefillMobile = urlParams.get('mobile');
+
+  const sessionData = localStorage.getItem(SESSION_KEY);
+  let isLoggedIn = false;
+  if (sessionData) {
+    try {
+      JSON.parse(sessionData);
+      isLoggedIn = true;
+    } catch (e) {
+      isLoggedIn = false;
     }
   }
-</style>
-</head>
-<body>
 
-<div class="auth-card-box">
-  <h2 class="auth-title">Create Account</h2>
+  checkAddFundsProtection(currentPath, isLoggedIn);
 
-  <div id="generalError" class="general-error"></div>
+  if (currentPath.includes('/login/') || currentPath === '/login') {
+    const loginMobileInput = document.getElementById("loginMobile");
+    if (loginMobileInput && prefillMobile) {
+      loginMobileInput.value = prefillMobile;
+    }
+  }
 
-  <div class="auth-input-group">
-    <label>Mobile Number</label>
-    <input type="tel" id="signupMobile" placeholder="Mobile Number" maxlength="10">
-    <div id="mobileError" class="error-text">Please enter a valid 10-digit mobile number.</div>
-  </div>
+  if (document.getElementById("recaptcha-container")) {
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+      'size': 'invisible'
+    });
+  }
+}
 
-  <div class="auth-input-group">
-    <label>Password</label>
-    <input type="password" id="signupPassword" placeholder="Create password (Minimum 6 characters)">
-    <div id="passwordError" class="error-text">Password must be at least 6 characters.</div>
-  </div>
+// Setup real-time password length validation (< 6 chars)
+function setupRealtimeValidations() {
+  const signupPass = document.getElementById("signupPassword");
+  if (signupPass) {
+    signupPass.addEventListener("input", () => {
+      const errEl = document.getElementById("passwordError");
+      if (signupPass.value.length > 0 && signupPass.value.length < 6) {
+        signupPass.classList.add("input-error");
+        if (errEl) errEl.style.display = "block";
+      } else {
+        signupPass.classList.remove("input-error");
+        if (errEl) errEl.style.display = "none";
+      }
+    });
+  }
 
-  <button onclick="handleSignUp()" class="auth-btn">Register</button>
+  const loginPass = document.getElementById("loginPassword");
+  if (loginPass) {
+    loginPass.addEventListener("input", () => {
+      const errEl = document.getElementById("passwordError");
+      if (loginPass.value.length > 0 && loginPass.value.length < 6) {
+        loginPass.classList.add("input-error");
+        if (errEl) errEl.style.display = "block";
+      } else {
+        loginPass.classList.remove("input-error");
+        if (errEl) errEl.style.display = "none";
+      }
+    });
+  }
 
-  <div class="auth-links">
-    <a href="/login/">Already have an account?</a>
-  </div>
-</div>
+  const resetPass = document.getElementById("resetNewPassword");
+  if (resetPass) {
+    resetPass.addEventListener("input", () => {
+      const errEl = document.getElementById("resetNewPasswordError");
+      if (resetPass.value.length > 0 && resetPass.value.length < 6) {
+        resetPass.classList.add("input-error");
+        if (errEl) errEl.style.display = "block";
+      } else {
+        resetPass.classList.remove("input-error");
+        if (errEl) errEl.style.display = "none";
+      }
+    });
+  }
+}
 
-<script type="module" src="../auth-handler.js"></script>
-</body>
-</html>
+// Helper to show error messages
+function showGeneralError(msg) {
+  const genErr = document.getElementById("generalError");
+  if (genErr) {
+    genErr.innerText = msg;
+    genErr.style.display = "block";
+  } else {
+    alert(msg);
+  }
+}
+
+function clearGeneralError() {
+  const genErr = document.getElementById("generalError");
+  if (genErr) {
+    genErr.innerText = "";
+    genErr.style.display = "none";
+  }
+}
+
+// 1. CREATE ACCOUNT (NO OTP)
+window.handleSignUp = async function() {
+  clearGeneralError();
+  const mobileEl = document.getElementById("signupMobile");
+  const passwordEl = document.getElementById("signupPassword");
+  const mobileError = document.getElementById("mobileError");
+  const passwordError = document.getElementById("passwordError");
+
+  if (!mobileEl || !passwordEl) return;
+
+  const mobile = mobileEl.value.trim();
+  const password = passwordEl.value;
+  let hasError = false;
+
+  if (mobile.length !== 10) {
+    mobileEl.classList.add("input-error");
+    if (mobileError) mobileError.style.display = "block";
+    hasError = true;
+  } else {
+    mobileEl.classList.remove("input-error");
+    if (mobileError) mobileError.style.display = "none";
+  }
+
+  if (password.length < 6) {
+    passwordEl.classList.add("input-error");
+    if (passwordError) passwordError.style.display = "block";
+    hasError = true;
+  } else {
+    passwordEl.classList.remove("input-error");
+    if (passwordError) passwordError.style.display = "none";
+  }
+
+  if (hasError) return;
+
+  try {
+    const userDocRef = doc(db, "users", mobile);
+    const userDoc = await getDoc(userDocRef);
+
+    if (userDoc.exists()) {
+      showGeneralError("Mobile Number already registered. Please login.");
+      return;
+    }
+
+    const hashedPassword = await hashPassword(password);
+
+    const userData = {
+      mobile: mobile,
+      password: hashedPassword,
+      walletBalance: 0,
+      createdAt: new Date().toISOString()
+    };
+
+    await setDoc(userDocRef, userData);
+
+    alert("Account created successfully!");
+    window.location.href = `/login/?mobile=${mobile}`;
+  } catch (error) {
+    showGeneralError("Error creating account: " + error.message);
+  }
+};
+
+// 2. LOGIN (NO OTP)
+window.handleLogin = async function() {
+  clearGeneralError();
+  const mobileEl = document.getElementById("loginMobile");
+  const passwordEl = document.getElementById("loginPassword");
+  const mobileError = document.getElementById("mobileError");
+  const passwordError = document.getElementById("passwordError");
+
+  if (!mobileEl || !passwordEl) return;
+
+  const mobile = mobileEl.value.trim();
+  const password = passwordEl.value;
+  let hasError = false;
+
+  if (mobile.length !== 10) {
+    mobileEl.classList.add("input-error");
+    if (mobileError) mobileError.style.display = "block";
+    hasError = true;
+  } else {
+    mobileEl.classList.remove("input-error");
+    if (mobileError) mobileError.style.display = "none";
+  }
+
+  if (password.length < 6) {
+    passwordEl.classList.add("input-error");
+    if (passwordError) passwordError.innerText = "Password must be at least 6 characters.";
+    if (passwordError) passwordError.style.display = "block";
+    hasError = true;
+  } else {
+    passwordEl.classList.remove("input-error");
+    if (passwordError) passwordError.style.display = "none";
+  }
+
+  if (hasError) return;
+
+  try {
+    const userDocRef = doc(db, "users", mobile);
+    const userDoc = await getDoc(userDocRef);
+
+    if (!userDoc.exists()) {
+      showGeneralError("Invalid Mobile Number or Password.");
+      return;
+    }
+
+    const userData = userDoc.data();
+    const inputHashedPassword = await hashPassword(password);
+
+    if (userData.password === inputHashedPassword || userData.password === password) {
+      const sessionObj = {
+        name: userData.name || mobile,
+        mobile: userData.mobile,
+        loggedInAt: new Date().toISOString()
+      };
+      localStorage.setItem(SESSION_KEY, JSON.stringify(sessionObj));
+
+      window.location.href = "/";
+    } else {
+      showGeneralError("Invalid Mobile Number or Password.");
+    }
+  } catch (error) {
+    showGeneralError("Login failed: " + error.message);
+  }
+};
+
+// 3. FORGOT PASSWORD (OTP FLOW)
+window.handleSendOTP = async function() {
+  clearGeneralError();
+  const mobileEl = document.getElementById("resetMobile");
+  const mobileError = document.getElementById("resetMobileError");
+  if (!mobileEl) return;
+
+  const mobile = mobileEl.value.trim();
+  if (mobile.length !== 10) {
+    mobileEl.classList.add("input-error");
+    if (mobileError) mobileError.style.display = "block";
+    return;
+  } else {
+    mobileEl.classList.remove("input-error");
+    if (mobileError) mobileError.style.display = "none";
+  }
+
+  try {
+    const userDocRef = doc(db, "users", mobile);
+    const userDoc = await getDoc(userDocRef);
+
+    if (!userDoc.exists()) {
+      showGeneralError("Mobile Number is not registered.");
+      return;
+    }
+
+    const phoneNumber = "+91" + mobile;
+    const appVerifier = window.recaptchaVerifier;
+
+    const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
+    confirmationResultGlobal = confirmationResult;
+
+    document.getElementById("stepSendOtp").classList.remove("active");
+    document.getElementById("stepVerifyOtp").classList.add("active");
+    alert("OTP sent to your mobile number.");
+  } catch (error) {
+    showGeneralError("OTP Send Failed: " + error.message);
+  }
+};
+
+window.handleVerifyOTP = async function() {
+  clearGeneralError();
+  const otpInput = document.getElementById("otpInput");
+  const otpError = document.getElementById("otpError");
+  if (!otpInput) return;
+
+  const otp = otpInput.value.trim();
+  if (otp.length !== 6) {
+    otpInput.classList.add("input-error");
+    if (otpError) otpError.style.display = "block";
+    return;
+  } else {
+    otpInput.classList.remove("input-error");
+    if (otpError) otpError.style.display = "none";
+  }
+
+  try {
+    await confirmationResultGlobal.confirm(otp);
+    document.getElementById("stepVerifyOtp").classList.remove("active");
+    document.getElementById("stepNewPassword").classList.add("active");
+  } catch (error) {
+    showGeneralError("Invalid OTP. Please try again.");
+  }
+};
+
+window.handleResetPassword = async function() {
+  clearGeneralError();
+  const mobileEl = document.getElementById("resetMobile");
+  const passwordEl = document.getElementById("resetNewPassword");
+  const confirmPasswordEl = document.getElementById("resetConfirmPassword");
+  const passErr = document.getElementById("resetNewPasswordError");
+  const confirmErr = document.getElementById("resetConfirmPasswordError");
+
+  if (!mobileEl || !passwordEl || !confirmPasswordEl) return;
+
+  const mobile = mobileEl.value.trim();
+  const password = passwordEl.value;
+  const confirmPassword = confirmPasswordEl.value;
+  let hasError = false;
+
+  if (password.length < 6) {
+    passwordEl.classList.add("input-error");
+    if (passErr) passErr.style.display = "block";
+    hasError = true;
+  } else {
+    passwordEl.classList.remove("input-error");
+    if (passErr) passErr.style.display = "none";
+  }
+
+  if (password !== confirmPassword) {
+    confirmPasswordEl.classList.add("input-error");
+    if (confirmErr) confirmErr.style.display = "block";
+    hasError = true;
+  } else {
+    confirmPasswordEl.classList.remove("input-error");
+    if (confirmErr) confirmErr.style.display = "none";
+  }
+
+  if (hasError) return;
+
+  try {
+    const userDocRef = doc(db, "users", mobile);
+    const hashedPassword = await hashPassword(password);
+
+    await updateDoc(userDocRef, { 
+      password: hashedPassword,
+      updatedAt: new Date().toISOString()
+    });
+
+    alert("Password successfully updated! Redirecting to login...");
+    window.location.href = `/login/?mobile=${mobile}`;
+  } catch (error) {
+    showGeneralError("Password reset failed: " + error.message);
+  }
+};
+
+// 4. LOGOUT
+window.handleLogout = function() {
+  if (confirm("Are you sure you want to logout?")) {
+    localStorage.removeItem(SESSION_KEY);
+    alert("Logged out successfully.");
+    window.location.href = "/";
+  }
+};

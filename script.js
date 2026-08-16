@@ -202,7 +202,7 @@ const serviceData = {
         "Instagram Blue VERIFY": [
             { 
                 name: "Blue Tick →", 
-                price: 199, 
+                price: 249, 
                 badge: "100% REAL", 
                 badgeClass: "badge-popular", 
                 desc: "Real blue Trick verified ✓" 
@@ -709,7 +709,12 @@ function getLinkConfig(platform, category) {
             };
         }
     } else if (p === "instagram") {
-        if (c.includes("followers")) {
+        if (c.includes("100% real") || c.includes("blue")) {
+            return {
+                label: "Instagram Profile Link",
+                placeholder: "https://instagram.com/your_username"
+            };
+        } else if (c.includes("followers")) {
             return {
                 label: "Profile Link (Account Must be Public)",
                 placeholder: "https://instagram.com/your_username"
@@ -1079,35 +1084,49 @@ function isValidUrl(string) {
 }
 
 // Function to validate and process Profile Link / Username for Instagram
-function processProfileOrLink(input, platform) {
+function processProfileOrLink(input, platform, serviceName) {
     const trimmed = (input || "").trim();
     if (!trimmed) {
         return { isValid: false, message: "Please enter your Social Media Link or Username!" };
     }
 
     const isInsta = (platform || "").toLowerCase() === "instagram";
+    const sName = (serviceName || "").toLowerCase();
 
     if (isInsta) {
         const usernameRegex = /^[a-zA-Z0-9._]{1,30}$/;
         const instaUrlRegex = /^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]{1,30}\/?(\?.*)?$/i;
 
-        // If user entered a plain username
-        if (usernameRegex.test(trimmed)) {
+        // If service is Followers or Blue Tick / 100% Real, handle profile URL / username
+        if (sName.includes("followers") || sName.includes("100% real") || sName.includes("blue")) {
+            if (usernameRegex.test(trimmed)) {
+                return {
+                    isValid: true,
+                    url: `https://www.instagram.com/${trimmed}`
+                };
+            }
+
+            if (instaUrlRegex.test(trimmed)) {
+                return {
+                    isValid: true,
+                    url: trimmed
+                };
+            }
+
+            if (isValidUrl(trimmed) && trimmed.toLowerCase().includes("instagram.com")) {
+                return {
+                    isValid: true,
+                    url: trimmed
+                };
+            }
+
             return {
-                isValid: true,
-                url: `https://www.instagram.com/${trimmed}`
+                isValid: false,
+                message: "Please enter a valid Instagram username or Instagram profile URL!"
             };
         }
 
-        // If user entered a valid Instagram profile URL
-        if (instaUrlRegex.test(trimmed)) {
-            return {
-                isValid: true,
-                url: trimmed
-            };
-        }
-
-        // Other Instagram URLs (Reels/Posts) or general HTTP URLs
+        // Generic URL check for other Instagram services (Posts, Reels, Likes, etc.)
         if (isValidUrl(trimmed) && trimmed.toLowerCase().includes("instagram.com")) {
             return {
                 isValid: true,
@@ -1117,7 +1136,7 @@ function processProfileOrLink(input, platform) {
 
         return {
             isValid: false,
-            message: "Please enter a valid Instagram username or Instagram profile URL!"
+            message: "Please enter a valid Instagram Link!"
         };
     } else {
         // Validation for other platforms
@@ -1141,7 +1160,7 @@ function submitOrderToWhatsApp() {
     const rawLink = linkInput ? linkInput.value.trim() : "";
     const txnId = txnInput ? txnInput.value.trim() : "";
 
-    const validation = processProfileOrLink(rawLink, currentCheckoutData.platform);
+    const validation = processProfileOrLink(rawLink, currentCheckoutData.platform, currentCheckoutData.serviceName);
     if (!validation.isValid) {
         alert(validation.message);
         return;
@@ -1254,7 +1273,7 @@ async function submitOrderWithWallet() {
     const rawLink = linkInput ? linkInput.value.trim() : "";
     const orderAmount = currentCheckoutData.price;
 
-    const validation = processProfileOrLink(rawLink, currentCheckoutData.platform);
+    const validation = processProfileOrLink(rawLink, currentCheckoutData.platform, currentCheckoutData.serviceName);
     if (!validation.isValid) {
         alert(validation.message);
         return;

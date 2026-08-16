@@ -5,7 +5,7 @@ import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.17.1/firebase
 const ADMIN_SESSION_KEY = "raj_admin_active_session";
 
 // ⚠️ এটি আপনার সিক্রেট সিকিউরিটি কী (আপনি প্রয়োজনমতো পরিবর্তন করতে পারেন)
-const ADMIN_SECRET_KEY = "RAJ_PANEL_ADMIN_2026";
+const ADMIN_SECRET_KEY = "AIzaSyCQPiYwDQ7uxi-adcZavlnkYLLPSCA7hu4";
 
 document.addEventListener("DOMContentLoaded", () => {
   // ড্যাশবোর্ড বা অন্যান্য সিকিউর পেজে থাকলে সেশন অটোমেটিক চেক করবে

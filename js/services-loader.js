@@ -1,34 +1,36 @@
 // Dynamic Services Loader from Firestore for Customer Site
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, collection, onSnapshot, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// Your Actual Firebase Config
-const firebaseConfig = {
-    apiKey: "AIzaSyCQPiYwDQ7uxi-adcZavlnkYLLPSCA7hu4",
-    authDomain: "raj-smm-panel-193ca.firebaseapp.com",
-    projectId: "raj-smm-panel-193ca",
-    storageBucket: "raj-smm-panel-193ca.firebasestorage.app",
-    messagingSenderId: "418522080714",
-    appId: "1:418522080714:web:2206d41977b751c89a1b33",
-    measurementId: "G-1J8G5W5D7Y"
-};
+let app;
+if (!getApps().length) {
+    app = initializeApp({
+        projectId: "rajsmmpanel",
+        authDomain: "rajsmmpanel.firebaseapp.com",
+        storageBucket: "rajsmmpanel.appspot.com"
+    });
+} else {
+    app = getApps()[0];
+}
 
-const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // Fetch Active Services Live
 export function listenToActiveServices(callback) {
-    const q = query(
-        collection(db, "services"),
-        where("status", "==", "Active"),
-        orderBy("displayOrder", "asc")
-    );
+    const servicesRef = collection(db, "services");
 
-    onSnapshot(q, (snapshot) => {
+    onSnapshot(servicesRef, (snapshot) => {
         const activeServices = [];
         snapshot.forEach((doc) => {
-            activeServices.push({ id: doc.id, ...doc.data() });
+            const data = doc.data();
+            if (data.status === "Active") {
+                activeServices.push({ id: doc.id, ...data });
+            }
         });
+        
+        // Sort in memory by displayOrder
+        activeServices.sort((a, b) => (Number(a.displayOrder) || 1) - (Number(b.displayOrder) || 1));
+
         if (typeof callback === 'function') {
             callback(activeServices);
         }

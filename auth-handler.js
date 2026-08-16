@@ -114,12 +114,6 @@ function initPageSpecificAuth() {
       loginMobileInput.value = prefillMobile;
     }
   }
-
-  if (document.getElementById("recaptcha-container")) {
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-      'size': 'invisible'
-    });
-  }
 }
 
 // Setup real-time password length validation (< 6 chars)
@@ -186,7 +180,9 @@ function clearGeneralError() {
   }
 }
 
+// ========================================
 // 1. CREATE ACCOUNT (NO OTP)
+// ========================================
 window.handleSignUp = async function() {
   clearGeneralError();
   const mobileEl = document.getElementById("signupMobile");
@@ -200,7 +196,7 @@ window.handleSignUp = async function() {
   const password = passwordEl.value;
   let hasError = false;
 
-  if (mobile.length !== 10) {
+  if (mobile.length !== 10 || !/^\d{10}$/.test(mobile)) {
     mobileEl.classList.add("input-error");
     if (mobileError) mobileError.style.display = "block";
     hasError = true;
@@ -247,7 +243,9 @@ window.handleSignUp = async function() {
   }
 };
 
+// ========================================
 // 2. LOGIN (NO OTP)
+// ========================================
 window.handleLogin = async function() {
   clearGeneralError();
   const mobileEl = document.getElementById("loginMobile");
@@ -261,7 +259,7 @@ window.handleLogin = async function() {
   const password = passwordEl.value;
   let hasError = false;
 
-  if (mobile.length !== 10) {
+  if (mobile.length !== 10 || !/^\d{10}$/.test(mobile)) {
     mobileEl.classList.add("input-error");
     if (mobileError) mobileError.style.display = "block";
     hasError = true;
@@ -272,8 +270,10 @@ window.handleLogin = async function() {
 
   if (password.length < 6) {
     passwordEl.classList.add("input-error");
-    if (passwordError) passwordError.innerText = "Password must be at least 6 characters.";
-    if (passwordError) passwordError.style.display = "block";
+    if (passwordError) {
+      passwordError.innerText = "Password must be at least 6 characters.";
+      passwordError.style.display = "block";
+    }
     hasError = true;
   } else {
     passwordEl.classList.remove("input-error");
@@ -294,6 +294,7 @@ window.handleLogin = async function() {
     const userData = userDoc.data();
     const inputHashedPassword = await hashPassword(password);
 
+    // Supports both SHA-256 hashed password and old legacy plaintext password fallback
     if (userData.password === inputHashedPassword || userData.password === password) {
       const sessionObj = {
         name: userData.name || mobile,
@@ -311,7 +312,9 @@ window.handleLogin = async function() {
   }
 };
 
+// ========================================
 // 3. FORGOT PASSWORD (OTP FLOW)
+// ========================================
 window.handleSendOTP = async function() {
   clearGeneralError();
   const mobileEl = document.getElementById("resetMobile");
@@ -319,7 +322,7 @@ window.handleSendOTP = async function() {
   if (!mobileEl) return;
 
   const mobile = mobileEl.value.trim();
-  if (mobile.length !== 10) {
+  if (mobile.length !== 10 || !/^\d{10}$/.test(mobile)) {
     mobileEl.classList.add("input-error");
     if (mobileError) mobileError.style.display = "block";
     return;
@@ -338,6 +341,13 @@ window.handleSendOTP = async function() {
     }
 
     const phoneNumber = "+91" + mobile;
+
+    if (!window.recaptchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+        'size': 'invisible'
+      });
+    }
+
     const appVerifier = window.recaptchaVerifier;
 
     const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
@@ -345,9 +355,25 @@ window.handleSendOTP = async function() {
 
     document.getElementById("stepSendOtp").classList.remove("active");
     document.getElementById("stepVerifyOtp").classList.add("active");
-    alert("OTP sent to your mobile number.");
+    alert("OTP sent successfully to +91 " + mobile);
+
   } catch (error) {
-    showGeneralError("OTP Send Failed: " + error.message);
+    console.error("SMS Send Error:", error);
+
+    if (window.recaptchaVerifier && typeof window.recaptchaVerifier.clear === 'function') {
+      window.recaptchaVerifier.clear();
+      window.recaptchaVerifier = null;
+    }
+
+    if (error.code === 'auth/invalid-phone-number') {
+      showGeneralError("Invalid Phone Number format.");
+    } else if (error.code === 'auth/captcha-check-failed') {
+      showGeneralError("reCAPTCHA verification failed. Please try again.");
+    } else if (error.code === 'auth/too-many-requests') {
+      showGeneralError("Too many OTP requests. Please try again later.");
+    } else {
+      showGeneralError("Failed to send OTP: " + (error.message || "Unknown error"));
+    }
   }
 };
 
@@ -358,7 +384,7 @@ window.handleVerifyOTP = async function() {
   if (!otpInput) return;
 
   const otp = otpInput.value.trim();
-  if (otp.length !== 6) {
+  if (otp.length !== 6 || !/^\d{6}$/.test(otp)) {
     otpInput.classList.add("input-error");
     if (otpError) otpError.style.display = "block";
     return;
@@ -427,7 +453,9 @@ window.handleResetPassword = async function() {
   }
 };
 
+// ========================================
 // 4. LOGOUT
+// ========================================
 window.handleLogout = function() {
   if (confirm("Are you sure you want to logout?")) {
     localStorage.removeItem(SESSION_KEY);

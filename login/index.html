@@ -144,7 +144,7 @@
     font-size: 14px;
     color: #0f172a;
     outline: none;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s;
   }
 
   .auth-input-group input:focus {
@@ -152,137 +152,6 @@
     background: #ffffff;
     box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.12);
   }
-
-  /* ==================================================
-     VIDEO LIKE PASSWORD INTERACTION EFFECT
-     ================================================== */
-
-  .password-input-wrapper {
-    position: relative;
-    width: 100%;
-  }
-
-  .password-input-wrapper input {
-    padding-right: 44px !important;
-  }
-
-  .password-toggle-btn {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: #94a3b8;
-    cursor: pointer;
-    font-size: 15px;
-    padding: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.2s ease, transform 0.1s ease;
-    z-index: 2;
-  }
-
-  .password-toggle-btn:hover {
-    color: #d946ef;
-  }
-
-  /* Strength Display Card */
-  .strength-card {
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    margin-top: 0;
-    padding: 0 12px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(226, 232, 240, 0.8);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .strength-card.active {
-    max-height: 70px;
-    opacity: 1;
-    margin-top: 10px;
-    padding: 10px 12px;
-  }
-
-  .strength-bars {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 6px;
-  }
-
-  .strength-bars .bar {
-    height: 5px;
-    flex: 1;
-    border-radius: 6px;
-    background-color: #e2e8f0;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-  }
-
-  .strength-status {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .status-text {
-    font-size: 11.5px;
-    font-weight: 700;
-    transition: color 0.3s ease;
-  }
-
-  /* Dynamic Glow & Bar States */
-  /* 1. WEAK STATE (Red/Orange Glow) */
-  .strength-weak .password-input-wrapper input {
-    border-color: #ef4444 !important;
-    box-shadow: 0 0 15px rgba(239, 68, 68, 0.4), 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
-  }
-  .strength-weak .bar-1 { 
-    background-color: #ef4444; 
-    box-shadow: 0 0 8px rgba(239, 68, 68, 0.5); 
-  }
-  .strength-weak .status-text { color: #ef4444; }
-
-  /* 2. MEDIUM STATE (Orange/Yellow Glow) */
-  .strength-medium .password-input-wrapper input {
-    border-color: #f59e0b !important;
-    box-shadow: 0 0 15px rgba(245, 158, 11, 0.4), 0 0 0 3px rgba(245, 158, 11, 0.15) !important;
-  }
-  .strength-medium .bar-1, 
-  .strength-medium .bar-2 { 
-    background-color: #f59e0b; 
-    box-shadow: 0 0 8px rgba(245, 158, 11, 0.5); 
-  }
-  .strength-medium .status-text { color: #f59e0b; }
-
-  /* 3. STRONG STATE (Emerald Green Glow) */
-  .strength-strong .password-input-wrapper input {
-    border-color: #10b981 !important;
-    box-shadow: 0 0 18px rgba(16, 185, 129, 0.45), 0 0 0 3px rgba(16, 185, 129, 0.15) !important;
-  }
-  .strength-strong .bar-1, 
-  .strength-strong .bar-2, 
-  .strength-strong .bar-3 { 
-    background-color: #10b981; 
-    box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); 
-  }
-  .strength-strong .status-text { color: #10b981; }
-
-  /* 4. VERY STRONG STATE (Vibrant Pink-Green Glow) */
-  .strength-very-strong .password-input-wrapper input {
-    border-color: #10b981 !important;
-    box-shadow: 0 0 22px rgba(16, 185, 129, 0.6), 0 0 12px rgba(217, 70, 239, 0.3) !important;
-  }
-  .strength-very-strong .bar { 
-    background-color: #10b981; 
-    box-shadow: 0 0 8px rgba(16, 185, 129, 0.6); 
-  }
-  .strength-very-strong .status-text { color: #10b981; font-weight: 800; }
-
 
   .auth-btn {
     width: 100%;
@@ -419,13 +288,6 @@
     .feature-text p {
       color: #94a3b8;
     }
-    .strength-card {
-      background: rgba(15, 23, 42, 0.8);
-      border-color: rgba(51, 65, 85, 0.8);
-    }
-    .strength-bars .bar {
-      background-color: #334155;
-    }
   }
 </style>
 </head>
@@ -459,28 +321,10 @@
       <input type="tel" id="loginMobile" placeholder="Mobile Number" maxlength="10">
     </div>
 
-    <!-- Input 2: Password With Dynamic Strength Effect -->
-    <div class="auth-input-group" id="passwordGroup">
+    <!-- Input 2: Password -->
+    <div class="auth-input-group">
       <label>Password</label>
-      <div class="password-input-wrapper">
-        <input type="password" id="loginPassword" placeholder="Password">
-        <button type="button" class="password-toggle-btn" id="togglePasswordBtn" aria-label="Toggle Password Visibility">
-          <i class="fa-regular fa-eye" id="toggleIcon"></i>
-        </button>
-      </div>
-
-      <!-- Password Strength Visual Card -->
-      <div class="strength-card" id="strengthCard">
-        <div class="strength-bars">
-          <span class="bar bar-1"></span>
-          <span class="bar bar-2"></span>
-          <span class="bar bar-3"></span>
-          <span class="bar bar-4"></span>
-        </div>
-        <div class="strength-status">
-          <span class="status-text" id="strengthText">Start typing your password</span>
-        </div>
-      </div>
+      <input type="password" id="loginPassword" placeholder="Password">
     </div>
 
     <!-- Login Button -->
@@ -527,69 +371,6 @@
   </div>
 
 </div>
-
-<!-- Password Effect Logic -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const passwordInput = document.getElementById('loginPassword');
-    const toggleBtn = document.getElementById('togglePasswordBtn');
-    const toggleIcon = document.getElementById('toggleIcon');
-    const passwordGroup = document.getElementById('passwordGroup');
-    const strengthCard = document.getElementById('strengthCard');
-    const strengthText = document.getElementById('strengthText');
-
-    // Eye toggle button functionality
-    if (toggleBtn && passwordInput) {
-      toggleBtn.addEventListener('click', () => {
-        const isPassword = passwordInput.getAttribute('type') === 'password';
-        passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
-        toggleIcon.className = isPassword ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
-      });
-    }
-
-    // Password strength logic
-    function getStrength(val) {
-      if (!val) return { score: 0, text: 'Start typing your password' };
-      
-      let score = 0;
-      if (val.length >= 6) score += 1;
-      if (val.length >= 10) score += 1;
-      if (/[A-Z]/.test(val)) score += 1;
-      if (/[0-9]/.test(val)) score += 1;
-      if (/[^A-Za-z0-9]/.test(val)) score += 1;
-
-      if (score <= 2) {
-        return { text: 'Weak password', class: 'strength-weak' };
-      } else if (score === 3) {
-        return { text: 'Medium password', class: 'strength-medium' };
-      } else if (score === 4) {
-        return { text: 'Strong password', class: 'strength-strong' };
-      } else {
-        return { text: 'Very strong password', class: 'strength-very-strong' };
-      }
-    }
-
-    // Live typing reaction
-    if (passwordInput) {
-      passwordInput.addEventListener('input', (e) => {
-        const val = e.target.value;
-
-        // Reset classes
-        passwordGroup.classList.remove('strength-weak', 'strength-medium', 'strength-strong', 'strength-very-strong');
-
-        if (!val || val.trim() === '') {
-          strengthCard.classList.remove('active');
-          return;
-        }
-
-        const res = getStrength(val);
-        strengthCard.classList.add('active');
-        passwordGroup.classList.add(res.class);
-        strengthText.textContent = res.text;
-      });
-    }
-  });
-</script>
 
 <!-- Firebase Auth Handler Integration -->
 <script type="module" src="../auth-handler.js"></script>

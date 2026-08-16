@@ -1,236 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Raj Social Panel</title>
-    <link rel="stylesheet" href="../style.css">
-    <style>
-        body { font-family: Arial, sans-serif; background: #f4f7f6; margin: 0; padding: 0; }
-        .admin-container { max-width: 1000px; margin: 40px auto; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .login-box { max-width: 400px; margin: 100px auto; padding: 30px; background: #fff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; }
-        .login-box input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        .login-box button { width: 100%; padding: 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        .access-denied { text-align: center; padding: 50px; color: red; font-size: 20px; font-weight: bold; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; font-size: 14px; }
-        th { background: #007bff; color: white; }
-        .btn-approve { background: #28a745; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        .btn-reject { background: #dc3545; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: 5px; }
-        .badge-pending { color: #856404; background: #fff3cd; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
-        .badge-approved { color: #155724; background: #d4edda; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
-        .badge-rejected { color: #721c24; background: #f8d7da; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RAJ Admin - Control Panel Login</title>
+  
+  <!-- Manifest & Theme -->
+  <link rel="manifest" href="admin-manifest.json">
+  <meta name="theme-color" content="#0f172a">
+  
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="admin-style.css">
 </head>
 <body>
 
-    <!-- Admin Login Section -->
-    <div id="adminLoginSection" class="login-box" style="display: none;">
-        <h2>Admin Panel Login</h2>
-        <p>Enter Admin Credentials</p>
-        <input type="email" id="adminEmail" placeholder="Admin Email">
-        <input type="password" id="adminPassword" placeholder="Admin Password">
-        <button id="adminLoginBtn">Login as Admin</button>
-        <p id="loginError" style="color: red; font-size: 14px; margin-top: 10px;"></p>
-    </div>
+  <div class="admin-login-wrapper">
+    <div class="admin-login-card">
+      
+      <!-- Panel Header -->
+      <div class="brand-header">
+        <div class="logo-icon">🔐</div>
+        <h2>RAJ ADMIN PANEL</h2>
+        <p>অ্যাডমিন এক্সেস পাওয়ার জন্য লগইন করুন</p>
+      </div>
 
-    <!-- Access Denied Section -->
-    <div id="accessDeniedSection" class="access-denied" style="display: none;">
-        Access Denied. You are not authorized to view this admin panel.
-        <br><br>
-        <button id="logoutBtn" style="padding: 8px 15px; background: #dc3545; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Logout / Switch Account</button>
-    </div>
-
-    <!-- Admin Panel Main Content -->
-    <div id="adminMainContent" class="admin-container" style="display: none;">
-        <h2>Admin Panel - Add Funds Requests</h2>
-        <p>Manage customer payment verification and wallet approvals securely.</p>
-        <button id="topLogoutBtn" style="float: right; padding: 6px 12px; background: #333; color: #fff; border: none; border-radius: 4px; cursor: pointer; margin-bottom: 10px;">Logout</button>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Date & Time</th>
-                    <th>Customer UID</th>
-                    <th>Amount</th>
-                    <th>UTR Number</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="adminRequestsTableBody">
-                <tr>
-                    <td colspan="6" style="text-align: center;">Loading requests...</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Firebase Scripts & Admin Logic Integration -->
-    <script type="module">
-        import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-        import { collection, getDocs, query, orderBy, doc, updateDoc, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+      <!-- Login Form -->
+      <form id="adminLoginForm" onsubmit="event.preventDefault();">
         
-        import { auth, db } from "../firebase-config.js";
+        <div class="form-group">
+          <label for="adminMobile">মোবাইল নম্বর</label>
+          <input 
+            type="tel" 
+            id="adminMobile" 
+            placeholder="10 ডিজিটের নম্বর লিখুন" 
+            maxlength="10" 
+            required 
+            autocomplete="off"
+          />
+        </div>
 
-        const ADMIN_UID = "3rY4RP3vpkPm7KGkuYUVMGhQ6fP2";
+        <div class="form-group">
+          <label for="adminPassword">অ্যাডমিন পাসওয়ার্ড</label>
+          <input 
+            type="password" 
+            id="adminPassword" 
+            placeholder="আপনার পাসওয়ার্ড দিন" 
+            required 
+          />
+        </div>
 
-        const loginSection = document.getElementById("adminLoginSection");
-        const deniedSection = document.getElementById("accessDeniedSection");
-        const mainContent = document.getElementById("adminMainContent");
+        <div class="form-group">
+          <label for="adminSecretKey">সিক্রেট সিকিউরিটি কী (Admin Key)</label>
+          <input 
+            type="password" 
+            id="adminSecretKey" 
+            placeholder="প্রদত্ত Secret Key লিখুন" 
+            required 
+          />
+        </div>
 
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                if (user.uid === ADMIN_UID) {
-                    if (loginSection) loginSection.style.display = "none";
-                    if (deniedSection) deniedSection.style.display = "none";
-                    if (mainContent) mainContent.style.display = "block";
-                    loadPendingTransactions();
-                } else {
-                    if (loginSection) loginSection.style.display = "none";
-                    if (mainContent) mainContent.style.display = "none";
-                    if (deniedSection) deniedSection.style.display = "block";
-                }
-            } else {
-                if (deniedSection) deniedSection.style.display = "none";
-                if (mainContent) mainContent.style.display = "none";
-                if (loginSection) loginSection.style.display = "block";
-            }
-        });
+        <!-- Alert Message Box -->
+        <div id="loginAlert" class="alert-box" style="display: none;"></div>
 
-        document.getElementById("adminLoginBtn").addEventListener("click", async () => {
-            const email = document.getElementById("adminEmail").value;
-            const password = document.getElementById("adminPassword").value;
-            const errorEl = document.getElementById("loginError");
+        <button type="button" id="adminLoginBtn" class="btn-primary" onclick="handleAdminLogin()">
+          লগইন করুন ➔
+        </button>
 
-            errorEl.textContent = "Logging in...";
+      </form>
 
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-            } catch (error) {
-                errorEl.textContent = error.message;
-            }
-        });
+      <div class="card-footer">
+        <a href="../" class="back-link">⬅ মূল ওয়েবসাইটে ফিরে যান</a>
+      </div>
 
-        const handleLogout = async () => {
-            await signOut(auth);
-        };
-        document.getElementById("logoutBtn").addEventListener("click", handleLogout);
-        document.getElementById("topLogoutBtn").addEventListener("click", handleLogout);
+    </div>
+  </div>
 
-        // Load Transactions from addFundsRequests collection
-        async function loadPendingTransactions() {
-            const tableBody = document.getElementById("adminRequestsTableBody");
-            if (!tableBody) return;
-
-            tableBody.innerHTML = "<tr><td colspan='6' style='text-align: center;'>Loading requests...</td></tr>";
-
-            try {
-                // কালেকশনের নাম এখানে সঠিকভাবে addFundsRequests করা হয়েছে
-                const q = query(collection(db, "addFundsRequests"), orderBy("createdAt", "desc"));
-                const querySnapshot = await getDocs(q);
-
-                tableBody.innerHTML = "";
-
-                if (querySnapshot.empty) {
-                    tableBody.innerHTML = "<tr><td colspan='6' style='text-align: center;'>No requests found.</td></tr>";
-                    return;
-                }
-
-                querySnapshot.forEach((documentSnap) => {
-                    const data = documentSnap.data();
-                    const docId = documentSnap.id;
-                    const status = data.status || "pending";
-
-                    let badgeClass = "badge-pending";
-                    if (status === "approved" || status === "APPROVED") badgeClass = "badge-approved";
-                    if (status === "rejected" || status === "REJECTED") badgeClass = "badge-rejected";
-
-                    let dateStr = "Just now";
-                    if (data.createdAt && typeof data.createdAt.toDate === "function") {
-                        dateStr = data.createdAt.toDate().toLocaleString();
-                    }
-
-                    const tr = document.createElement("tr");
-                    tr.innerHTML = `
-                        <td>${dateStr}</td>
-                        <td style="font-size: 11px; word-break: break-all;">${data.userId || data.uid || 'N/A'}</td>
-                        <td>₹${data.amount || 0}</td>
-                        <td>${data.utr || data.txnId || 'N/A'}</td>
-                        <td><span class="${badgeClass}">${status.toUpperCase()}</span></td>
-                        <td>
-                            ${status.toLowerCase() === "pending" ? `
-                                <button class="btn-approve" onclick="window.approveDeposit('${docId}', '${data.userId || data.uid}', ${data.amount})">Approve</button>
-                                <button class="btn-reject" onclick="window.rejectDeposit('${docId}')">Reject</button>
-                            ` : `<span style="color: #666; font-size: 12px;">Completed</span>`}
-                        </td>
-                    `;
-                    tableBody.appendChild(tr);
-                });
-            } catch (error) {
-                console.error("Error loading transactions:", error);
-                tableBody.innerHTML = "<tr><td colspan='6' style='text-align: center; color: red;'>Error loading data. Check console.</td></tr>";
-            }
-        }
-
-        // Approve Deposit Logic
-        window.approveDeposit = async function(txId, userId, amount) {
-            if (!confirm(`Are you sure you want to approve ₹${amount} for this user?`)) return;
-
-            try {
-                const userRef = doc(db, "users", userId);
-                const txRef = doc(db, "addFundsRequests", txId);
-
-                await runTransaction(db, async (transaction) => {
-                    const userDoc = await transaction.get(userRef);
-                    
-                    if (!userDoc.exists()) {
-                        transaction.set(userRef, {
-                            walletBalance: amount,
-                            totalAdded: amount
-                        }, { merge: true });
-                    } else {
-                        const currentBalance = userDoc.data().walletBalance || 0;
-                        const currentTotalAdded = userDoc.data().totalAdded || 0;
-                        
-                        transaction.update(userRef, {
-                            walletBalance: currentBalance + amount,
-                            totalAdded: currentTotalAdded + amount
-                        });
-                    }
-
-                    transaction.update(txRef, {
-                        status: "approved",
-                        processedAt: serverTimestamp(),
-                        processedBy: ADMIN_UID
-                    });
-                });
-
-                alert("Deposit approved successfully! Funds added to user wallet.");
-                loadPendingTransactions();
-            } catch (error) {
-                alert("Error approving deposit: " + error.message);
-            }
-        };
-
-        // Reject Deposit Logic
-        window.rejectDeposit = async function(txId) {
-            if (!confirm("Are you sure you want to reject this deposit request?")) return;
-
-            try {
-                const txRef = doc(db, "addFundsRequests", txId);
-                await updateDoc(txRef, {
-                    status: "rejected",
-                    processedAt: serverTimestamp(),
-                    processedBy: ADMIN_UID
-                });
-
-                alert("Deposit request rejected.");
-                loadPendingTransactions();
-            } catch (error) {
-                alert("Error rejecting deposit: " + error.message);
-            }
-        };
-    </script>
+  <!-- Firebase & Admin Auth Scripts -->
+  <script type="module" src="admin-auth.js"></script>
 </body>
 </html>

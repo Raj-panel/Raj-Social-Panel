@@ -334,7 +334,7 @@ const serviceData = {
         ]
     },
     facebook: {
-        "Facebook Followers": [
+        "PAGE/PROFILE Followers": [
             { type: "custom", name: "High Quality Facebook Followers • ♻️ Lifetime Refill • 100K+/Day •Start in 30 Min", pricePer1000: 49 }
         ],
         "Likes Non-Drop": [
@@ -346,11 +346,11 @@ const serviceData = {
             { name: "10K Likes", price: 499, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
         ],
         "Reels / Video Views Non-Drop": [
-            { name: "1K Views", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
-            { name: "3K Views", price: 25 },
-            { name: "5K Views", price: 35, badge: "⭐ POPULAR", badgeClass: "badge-popular" },
-            { name: "10K Views", price: 60 },
-            { name: "50K Views", price: 249, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
+            { name: "1K Views", price: 15, badge: "STARTER", badgeClass: "badge-demo" },
+            { name: "3K Views", price: 30 },
+            { name: "5K Views", price: 50, badge: "⭐ POPULAR", badgeClass: "badge-popular" },
+            { name: "10K Views", price: 90 },
+            { name: "50K Views", price: 349, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
             { name: "100K Views", price: 449, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
         ],
         "POST / VIDEO Comments Non-Drop": [

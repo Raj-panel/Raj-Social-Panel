@@ -335,7 +335,7 @@ const serviceData = {
     },
     facebook: {
         "Facebook Followers": [
-            { type: "custom", name: "Facebook Followers", pricePer1000: 49 }
+            { type: "custom", name: "High Quality Facebook Followers • ♻️ Lifetime Refill • 100K+/Day •Start in 30 Min", pricePer1000: 49 }
         ],
         "Likes Non-Drop": [
             { name: "100 Likes", price: 10, badge: "STARTER", badgeClass: "badge-demo" },

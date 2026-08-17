@@ -354,14 +354,14 @@ const serviceData = {
             { name: "50K Views", price: 349, badge: "🔥 BEST VALUE", badgeClass: "badge-best", desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" },
             { name: "100K Views", price: 449, badge: "👑 MOST POPULAR", badgeClass: "badge-best", desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" }
         ],
-        "POST / VIDEO Comments Non-Drop": [
+        /*"POST / VIDEO Comments Non-Drop": [
             { name: "50 Comments", price: 10 },
             { name: "100 Comments", price: 15 },
             { name: "300 Comments", price: 25, badge: "⭐ Popular", badgeClass: "badge-popular" },
             { name: "500 Comments", price: 39, badge: "🔥 Best Value", badgeClass: "badge-best" },
             { name: "1K Comments", price: 60 },
             { name: "2K Comments", price: 110, badge: "🏆 Best Deal", badgeClass: "badge-best" },
-            { name: "5K Comments", price: 260, badge: "👑 Most Popular", badgeClass: "badge-best" }
+            { name: "5K Comments", price: 260, badge: "👑 Most Popular", badgeClass: "badge-best" }*/
         ],
         "POST / VIDEO Shares Non-Drop": [
             { name: "100 Shares", price: 15, desc: "🔗 Real Quality Shares • ♻️ Lifetime Refill • Start In 20 Min" },

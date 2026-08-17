@@ -177,8 +177,7 @@ const serviceData = {
         "Followers Non-Drop": [
             {
                 type: "custom",
-                name: "Instagram Followers [High Quality] ♻️Life-time Refill -500K+ Per Day- Start in 10 Min",
-                providerId: 1192,
+                name: "Instagram Followers [High Quality] Life-time Refill♻️ -300K+ Per Day- Start in 10 Min",
                 pricePer1000: 80
             }
         ],
@@ -223,7 +222,7 @@ const serviceData = {
             { providerId: 1030, name: "100K Views", price: 220, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" }
         ],
         "REAL Comments Non-Drop": [
-            { providerId: 31, name: "20 Comment (Start) 10", price: 10, desc: "💬High Quality • Custom Random Comments start in 10 min" },
+            { providerId: 31, name: "20 Comment (Start)", price: 10, desc: "💬High Quality • Custom Random Comments start in 10 min" },
             { providerId: 31, name: "50 Comments", price: 20, desc: "💬High Quality • Custom Random Comments start in 10 min" },
             { providerId: 31, name: "100 Comments", price: 30, desc: "💬High Quality • Custom Random Comments start in 10 min" },
             { providerId: 31, name: "500 Comments", price: 70, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "💬High Quality • Custom Random Comments start in 10 min" },

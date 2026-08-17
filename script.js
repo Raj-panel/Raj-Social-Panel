@@ -339,11 +339,11 @@ const serviceData = {
         ],
         "Likes Non-Drop": [
             { name: "100 Likes", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
-            { name: "500 Likes", price: 25 },
-            { name: "1K Likes", price: 39, badge: "⭐ POPULAR", badgeClass: "badge-popular" },
-            { name: "3K Likes", price: 69 },
-            { name: "5K Likes", price: 99, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
-            { name: "10K Likes", price: 179, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
+            { name: "500 Likes", price: 35 },
+            { name: "1K Likes", price: 70, badge: "⭐ POPULAR", badgeClass: "badge-popular" },
+            { name: "3K Likes", price: 140 },
+            { name: "5K Likes", price: 260, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
+            { name: "10K Likes", price: 499, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
         ],
         "Reels / Video Views Non-Drop": [
             { name: "1K Views", price: 10, badge: "STARTER", badgeClass: "badge-demo" },

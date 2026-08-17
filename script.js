@@ -181,7 +181,7 @@ const serviceData = {
                 pricePer1000: 80
             }
         ],
-        "Followers": [
+        "Followers 30% Extra Less Drop": [
             { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "1K Followers", price: 50, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "2K Followers", price: 90, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },

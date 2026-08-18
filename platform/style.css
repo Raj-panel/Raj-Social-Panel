@@ -1,395 +1,81 @@
-/* ==========================================================================
-   CUSTOMIZABLE CSS VARIABLES (সহজে সাইজ পরিবর্তন করার জন্য)
-   ========================================================================== */
+/* ==================================================
+   3D GLASSMORPHISM PREMIUM PLATFORM STYLESHEET
+   ================================================== */
+
 :root {
-    --platform-card-width: 100%;
-    --platform-card-max-width: 400px;
-    --platform-card-min-height: 220px;
-    --platform-logo-size: 52px;
-    --platform-icon-size: 26px;
-    --platform-title-size: 1.35rem;
-    --platform-subtitle-size: 0.95rem;
-    --platform-btn-text-size: 0.9rem;
-    --platform-gap: 20px;
-    --platform-padding: 20px;
-    --platform-border-radius: 16px;
-    
-    /* Theme Colors - Light Mode Default */
-    --bg-page: #f4f7fb;
-    --bg-card: rgba(255, 255, 255, 0.85);
-    --card-border: rgba(220, 226, 235, 0.8);
-    --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+  --platform-bg: #f5ebfa;
+  --platform-glass-bg: rgba(255, 255, 255, 0.45);
+  --platform-glass-border: rgba(255, 255, 255, 0.75);
+  --platform-glass-shadow: 0 12px 32px rgba(216, 120, 240, 0.22), inset 0 2px 4px rgba(255, 255, 255, 0.9);
+  --platform-text-main: #2d123d;
+  --platform-text-sub: #7b598b;
+  
+  /* Size Variables for Easy Adjustment */
+  --platform-logo-size: 52px;
+  --platform-card-padding: 12px 14px;
+  --platform-card-gap: 10px;
+  --platform-icon-size: 20px;
+  --platform-title-size: 13.5px;
+  --platform-button-height: 40px;
+  --platform-radius: 20px;
 
-    /* Original App Brand Colors */
-    --brand-instagram: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-    --brand-facebook: #1877f2;
-    --brand-youtube: #ff0000;
-    --brand-tiktok: #000000;
+  /* Sidebar Theme Variables */
+  --sidebar-bg: #0f172a;
+  --sidebar-text: #cbd5e1;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-hover: rgba(168, 85, 247, 0.15);
+  --sidebar-hover-text: #ffffff;
+  --sidebar-close: #94a3b8;
 }
 
-/* Dark Mode Overrides - System & Class Compatible */
+/* Dark Mode Support */
 @media (prefers-color-scheme: dark) {
-    :root {
-        --bg-page: #0f172a;
-        --bg-card: rgba(30, 41, 59, 0.7);
-        --card-border: rgba(255, 255, 255, 0.1);
-        --text-primary: #f8fafc;
-        --text-secondary: #94a3b8;
-        --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
-    }
+  :root {
+    --platform-bg: #0f0714;
+    --platform-glass-bg: rgba(30, 15, 42, 0.65);
+    --platform-glass-border: rgba(255, 255, 255, 0.15);
+    --platform-glass-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    --platform-text-main: #f5e8ff;
+    --platform-text-sub: #c084fc;
+  }
 }
 
-body.dark-mode, body[data-theme="dark"] {
-    --bg-page: #0f172a;
-    --bg-card: rgba(30, 41, 59, 0.7);
-    --card-border: rgba(255, 255, 255, 0.1);
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+body.dark-mode, body.dark {
+  --platform-bg: #0f0714;
+  --platform-glass-bg: rgba(30, 15, 42, 0.65);
+  --platform-glass-border: rgba(255, 255, 255, 0.15);
+  --platform-glass-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+  --platform-text-main: #f5e8ff;
+  --platform-text-sub: #c084fc;
 }
 
-/* ==========================================================================
-   BASE & LAYOUT STYLES
-   ========================================================================== */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    background-color: var(--bg-page);
-    color: var(--text-primary);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: var(--platform-padding);
-    transition: background-color 0.3s ease, color 0.3s ease;
+  background: var(--platform-bg);
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(244, 114, 182, 0.35), transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.35), transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(192, 132, 252, 0.2), transparent 60%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  color: var(--platform-text-main);
+  padding: 8px 12px;
 }
 
+/* Mobile Frame Wrapper */
 .platform-container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.platform-header {
-    text-align: center;
-    margin-bottom: 35px;
-}
-
-.platform-main-title {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: var(--text-primary);
-}
-
-.platform-sub-title {
-    font-size: var(--platform-subtitle-size);
-    color: var(--text-secondary);
-}
-
-.platform-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--platform-gap);
-    justify-items: center;
-}
-
-/* ==========================================================================
-   CARD STYLES
-   ========================================================================== */
-.platform-card {
-    background: var(--bg-card);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--card-border);
-    border-radius: var(--platform-border-radius);
-    padding: var(--platform-padding);
-    width: var(--platform-card-width);
-    max-width: var(--platform-card-max-width);
-    box-shadow: var(--shadow-soft);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-}
-
-.platform-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 14px 35px -5px rgba(0, 0, 0, 0.12);
-}
-
-.card-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 20px;
-}
-
-.logo-wrapper {
-    width: var(--platform-logo-size);
-    height: var(--platform-logo-size);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: var(--platform-icon-size);
-    color: #ffffff;
-    flex-shrink: 0;
-}
-
-.title-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.platform-name {
-    font-size: var(--platform-title-size);
-    font-weight: 600;
-    line-height: 1.2;
-}
-
-.badge {
-    font-size: 0.72rem;
-    font-weight: 600;
-    padding: 3px 8px;
-    border-radius: 20px;
-    width: fit-content;
-}
-
-.badge-in {
-    background: rgba(255, 153, 51, 0.15);
-    color: #e65100;
-    border: 1px solid rgba(255, 153, 51, 0.3);
-}
-
-.badge-bd {
-    background: rgba(0, 106, 78, 0.15);
-    color: #006a4e;
-    border: 1px solid rgba(0, 106, 78, 0.3);
-}
-
-.badge-yt {
-    background: rgba(255, 0, 0, 0.1);
-    color: #d32f2f;
-    border: 1px solid rgba(255, 0, 0, 0.2);
-}
-
-/* ==========================================================================
-   FLAG COLOR TREATMENTS (ORGANIC / INDIA & BANGLADESH)
-   ========================================================================== */
-
-/* Instagram Indian Flag Inspired Styling */
-.card-instagram .logo-instagram {
-    background: linear-gradient(135deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
-    color: #000080; /* Ashoka Chakra Navy Blue accent for icon */
-    box-shadow: 0 4px 12px rgba(255, 153, 51, 0.25);
-}
-
-.card-instagram:hover {
-    border-color: rgba(255, 153, 51, 0.5);
-}
-
-/* Facebook Indian Flag Inspired Styling */
-.card-facebook .logo-facebook {
-    background: linear-gradient(135deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
-    color: #000080;
-    box-shadow: 0 4px 12px rgba(19, 136, 8 0.2);
-}
-
-.card-facebook:hover {
-    border-color: rgba(19, 136, 8, 0.4);
-}
-
-/* YouTube Standard Styling */
-.card-youtube .logo-youtube {
-    background: var(--brand-youtube);
-    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.25);
-}
-
-.card-youtube:hover {
-    border-color: rgba(255, 0, 0, 0.4);
-}
-
-/* TikTok Bangladesh Flag Inspired Styling */
-.card-tiktok .logo-tiktok {
-    background: #006A4E;
-    position: relative;
-    box-shadow: 0 4px 12px rgba(0, 106, 78, 0.3);
-}
-
-.card-tiktok .logo-tiktok::after {
-    content: '';
-    position: absolute;
-    width: 22px;
-    height: 22px;
-    background-color: #F42A41;
-    border-radius: 50%;
-    z-index: 1;
-}
-
-.card-tiktok .logo-tiktok i {
-    z-index: 2;
-    color: #ffffff;
-}
-
-.card-tiktok:hover {
-    border-color: rgba(244, 42, 65, 0.4);
-}
-
-/* ==========================================================================
-   BUTTON OPTIONS STYLES
-   ========================================================================== */
-.option-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.option-btn {
-    width: 100%;
-    padding: 12px 14px;
-    border-radius: 10px;
-    border: 1px solid var(--card-border);
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text-primary);
-    font-size: var(--platform-btn-text-size);
-    font-weight: 500;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.btn-organic {
-    background: rgba(15, 23, 42, 0.03);
-}
-
-body.dark-mode .btn-organic, body[data-theme="dark"] .btn-organic {
-    background: rgba(255, 255, 255, 0.04);
-}
-
-.btn-organic:hover {
-    background: #1877f2;
-    color: #ffffff;
-    border-color: #1877f2;
-}
-
-/* High Quality Option - Uses Original Branding Styling */
-.btn-high-quality {
-    opacity: 0.85;
-    background: transparent;
-    border-style: dashed;
-}
-
-.btn-high-quality:hover {
-    opacity: 1;
-    background: rgba(0, 0, 0, 0.03);
-    border-style: solid;
-}
-
-.btn-tag {
-    font-size: 0.7rem;
-    padding: 2px 6px;
-    border-radius: 4px;
-    background: rgba(0, 0, 0, 0.06);
-    color: var(--text-secondary);
-}
-
-body.dark-mode .btn-tag, body[data-theme="dark"] .btn-tag {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-/* Individual Platform HQ Original Color Highlights */
-.card-instagram .btn-high-quality .btn-tag { background: #cc2366; color: #fff; }
-.card-facebook .btn-high-quality .btn-tag { background: #1877f2; color: #fff; }
-.card-youtube .btn-high-quality .btn-tag { background: #ff0000; color: #fff; }
-.card-tiktok .btn-high-quality .btn-tag { background: #000000; color: #fff; }
-
-/* ==========================================================================
-   MODAL / NOTICE STYLES
-   ========================================================================== */
-.hq-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    opacity: 1;
-    transition: opacity 0.2s ease;
-}
-
-.hq-modal.hidden {
-    display: none;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.hq-modal-content {
-    background: var(--bg-card);
-    border: 1px solid var(--card-border);
-    padding: 30px;
-    border-radius: 16px;
-    text-align: center;
-    max-width: 320px;
-    width: 90%;
-    position: relative;
-    box-shadow: var(--shadow-soft);
-}
-
-.hq-modal-close {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 20px;
-    cursor: pointer;
-    color: var(--text-secondary);
-}
-
-.hq-icon {
-    font-size: 2.5rem;
-    color: #f59e0b;
-    margin-bottom: 12px;
-}
-
-.hq-modal-content h3 {
-    margin-bottom: 8px;
-    font-size: 1.25rem;
-}
-
-.hq-modal-content p {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    margin-bottom: 20px;
-}
-
-.hq-modal-btn {
-    background: #1877f2;
-    color: white;
-    border: none;
-    padding: 8px 24px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-}
-
-/* Responsive adjustments */
-@media (max-width: 480px) {
-    .platform-grid {
-        grid-template-columns: 1fr;
-    }
-}
+  width: 100%;
+  max-width: 390px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--platform-card-gap);

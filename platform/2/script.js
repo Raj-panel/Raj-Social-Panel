@@ -1,6 +1,4 @@
-// ===============================================
-// SERVICE DATA CONFIGURATION (এখানে পরবর্তীতে Price পরিবর্তন করবেন)
-// ===============================================
+// Services Data
 const servicesData = {
   instagram: {
     "Instagram Followers": [
@@ -15,88 +13,6 @@ const servicesData = {
         quality: "Real Profiles",
         speed: "10K/Day",
         description: "High quality Instagram followers with non-drop guarantee."
-      },
-      {
-        id: 102,
-        name: "Instagram Followers [Instant]",
-        pricePer1k: 0.00,
-        min: 500,
-        max: 100000,
-        refill: "60 Days Refill",
-        drop: "Zero Drop",
-        quality: "HQ Premium",
-        speed: "Instant",
-        description: "Instant delivery followers for fast growth."
-      }
-    ],
-    "Instagram Likes": [
-      {
-        id: 103,
-        name: "Instagram Likes [Real Users]",
-        pricePer1k: 0.00,
-        min: 50,
-        max: 20000,
-        refill: "No Refill",
-        drop: "Non Drop",
-        quality: "Active Users",
-        speed: "Super Fast",
-        description: "Instant high-quality likes on your posts."
-      }
-    ],
-    "Instagram Views": [
-      {
-        id: 104,
-        name: "Instagram Reel Views",
-        pricePer1k: 0.00,
-        min: 1000,
-        max: 1000000,
-        refill: "Auto Refill",
-        drop: "Non Drop",
-        quality: "High Retention",
-        speed: "100K/Hour",
-        description: "Boost video/reel ranking rapidly."
-      }
-    ],
-    "Instagram Comments": [
-      {
-        id: 105,
-        name: "Instagram Custom Comments",
-        pricePer1k: 0.00,
-        min: 10,
-        max: 500,
-        refill: "N/A",
-        drop: "No Drop",
-        quality: "Custom Text",
-        speed: "Fast",
-        description: "Provide your own custom comments."
-      }
-    ],
-    "Instagram Shares": [
-      {
-        id: 106,
-        name: "Instagram Post Shares",
-        pricePer1k: 0.00,
-        min: 100,
-        max: 10000,
-        refill: "N/A",
-        drop: "No Drop",
-        quality: "Real Accounts",
-        speed: "Fast",
-        description: "Increase content reach and explore visibility."
-      }
-    ],
-    "Instagram Repost": [
-      {
-        id: 107,
-        name: "Instagram Content Repost",
-        pricePer1k: 0.00,
-        min: 10,
-        max: 200,
-        refill: "N/A",
-        drop: "No Drop",
-        quality: "Organic",
-        speed: "1-2 Hours",
-        description: "Get real users to share/repost your content."
       }
     ]
   },
@@ -114,54 +30,57 @@ const servicesData = {
         speed: "2K/Day",
         description: "High quality page followers and likes."
       }
-    ],
-    "Facebook Likes": [
-      {
-        id: 202,
-        name: "Facebook Post Likes / Reactions",
-        pricePer1k: 0.00,
-        min: 100,
-        max: 20000,
-        refill: "No Refill",
-        drop: "Non Drop",
-        quality: "Mixed Reactions",
-        speed: "Instant",
-        description: "Post reactions including Like, Love, etc."
-      }
-    ],
-    "Facebook Views": [
-      {
-        id: 203,
-        name: "Facebook Video Views",
-        pricePer1k: 0.00,
-        min: 1000,
-        max: 500000,
-        refill: "Non Drop",
-        drop: "Zero Drop",
-        quality: "Monetizable",
-        speed: "50K/Day",
-        description: "Safe views for video watch time."
-      }
-    ],
-    "Facebook Comments": [
-      {
-        id: 204,
-        name: "Facebook Custom Comments",
-        pricePer1k: 0.00,
-        min: 10,
-        max: 500,
-        refill: "N/A",
-        drop: "No Drop",
-        quality: "Positive English",
-        speed: "Natural",
-        description: "Custom comments on posts/photos."
-      }
     ]
   }
 };
 
 let currentPlatform = 'instagram';
 
+// Dark / Light Theme Logic
+function initTheme() {
+  const savedTheme = localStorage.getItem('theme') || 'dark-theme';
+  document.body.className = savedTheme;
+  updateThemeUI(savedTheme);
+}
+
+function toggleTheme() {
+  if (document.body.classList.contains('dark-theme')) {
+    document.body.className = 'light-theme';
+    localStorage.setItem('theme', 'light-theme');
+    updateThemeUI('light-theme');
+  } else {
+    document.body.className = 'dark-theme';
+    localStorage.setItem('theme', 'dark-theme');
+    updateThemeUI('dark-theme');
+  }
+}
+
+function updateThemeUI(theme) {
+  const isDark = theme === 'dark-theme';
+  const iconClass = isDark ? 'fa-moon' : 'fa-sun';
+  const text = isDark ? 'Dark Mode' : 'Light Mode';
+
+  const themeIcon = document.getElementById('themeIcon');
+  const headerThemeIcon = document.getElementById('headerThemeIcon');
+  const themeText = document.getElementById('themeText');
+
+  if(themeIcon) themeIcon.className = `fa-solid ${iconClass}`;
+  if(headerThemeIcon) headerThemeIcon.className = `fa-solid ${iconClass}`;
+  if(themeText) themeText.innerText = text;
+}
+
+// Sidebar Drawer Control
+function openSidebar() {
+  document.getElementById('leftSidebar').classList.add('active');
+  document.getElementById('sidebarOverlay').classList.add('active');
+}
+
+function closeSidebar() {
+  document.getElementById('leftSidebar').classList.remove('active');
+  document.getElementById('sidebarOverlay').classList.remove('active');
+}
+
+// Platform Switcher
 function switchPlatform(platform) {
   currentPlatform = platform;
   document.getElementById('tab-instagram').classList.toggle('active', platform === 'instagram');
@@ -172,7 +91,7 @@ function switchPlatform(platform) {
 function loadCategories() {
   const catSelect = document.getElementById('categorySelect');
   catSelect.innerHTML = '';
-  const categories = Object.keys(servicesData[currentPlatform]);
+  const categories = Object.keys(servicesData[currentPlatform] || {});
 
   categories.forEach(cat => {
     const opt = document.createElement('option');
@@ -189,7 +108,7 @@ function loadServices() {
   const servSelect = document.getElementById('serviceSelect');
   servSelect.innerHTML = '';
 
-  const services = servicesData[currentPlatform][cat] || [];
+  const services = (servicesData[currentPlatform] && servicesData[currentPlatform][cat]) || [];
   services.forEach((s, idx) => {
     const opt = document.createElement('option');
     opt.value = idx;
@@ -203,7 +122,7 @@ function loadServices() {
 function getActiveService() {
   const cat = document.getElementById('categorySelect').value;
   const idx = document.getElementById('serviceSelect').value;
-  return servicesData[currentPlatform][cat][idx];
+  return servicesData[currentPlatform]?.[cat]?.[idx];
 }
 
 function updateDetails() {
@@ -239,18 +158,10 @@ function placeOrder() {
     alert('Please enter a target link!');
     return;
   }
-  alert('Order placed successfully (Demo mode)!');
+  alert('Order placed successfully!');
 }
 
-// Sidebar Functions
-function openSidebar() {
-  document.getElementById('leftSidebar').classList.add('active');
-  document.getElementById('sidebarOverlay').classList.add('active');
-}
-
-function closeSidebar() {
-  document.getElementById('leftSidebar').classList.remove('active');
-  document.getElementById('sidebarOverlay').classList.remove('active');
-}
-
-document.addEventListener('DOMContentLoaded', loadCategories);
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  loadCategories();
+});

@@ -3,10 +3,10 @@
   --bg-main: #f1f5f9;
   --bg-gradient: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
   --text-main: #0f172a;
-  --text-sub: #475569;
-  --card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.5) 100%);
-  --card-border: rgba(255, 255, 255, 0.9);
-  --card-shadow: 0 10px 25px rgba(148, 163, 184, 0.25);
+  --text-sub: #64748b;
+  --card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.6) 100%);
+  --card-border: rgba(255, 255, 255, 0.95);
+  --card-shadow: 0 4px 15px rgba(148, 163, 184, 0.15);
   
   --sidebar-bg: #ffffff;
   --sidebar-text: #1e293b;
@@ -15,7 +15,7 @@
   --sidebar-hover-text: #000000;
   --sidebar-close: #64748b;
   
-  --btn-hamburger-bg: rgba(255, 255, 255, 0.7);
+  --btn-hamburger-bg: rgba(255, 255, 255, 0.8);
   --btn-hamburger-border: rgba(0, 0, 0, 0.1);
   --btn-hamburger-text: #0f172a;
   
@@ -29,9 +29,9 @@
     --bg-gradient: linear-gradient(180deg, #0d1117 0%, #161b22 100%);
     --text-main: #ffffff;
     --text-sub: #cbd5e1;
-    --card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.05) 100%);
-    --card-border: rgba(255, 255, 255, 0.25);
-    --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    --card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
+    --card-border: rgba(255, 255, 255, 0.18);
+    --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     
     --sidebar-bg: #0f172a;
     --sidebar-text: #cbd5e1;
@@ -40,8 +40,8 @@
     --sidebar-hover-text: #ffffff;
     --sidebar-close: #94a3b8;
     
-    --btn-hamburger-bg: rgba(255, 255, 255, 0.2);
-    --btn-hamburger-border: rgba(255, 255, 255, 0.3);
+    --btn-hamburger-bg: rgba(255, 255, 255, 0.15);
+    --btn-hamburger-border: rgba(255, 255, 255, 0.25);
     --btn-hamburger-text: #ffffff;
     
     --modal-bg: #1e293b;
@@ -63,83 +63,84 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 15px 10px;
+  padding: 8px 10px;
   transition: background 0.3s ease, color 0.3s ease;
 }
 
 .platform-container {
   width: 100%;
-  max-width: 420px;
+  max-width: 400px;
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 8px; /* গ্যাপ অনেক কমানো হয়েছে */
 }
 
+/* Hamburger Menu Button */
 .hamburger-btn {
   position: absolute;
-  top: -4px;
-  left: -8px;
-  z-index: 100;
+  top: 6px;
+  left: 6px;
+  z-index: 10;
   background: var(--btn-hamburger-bg);
   border: 1px solid var(--btn-hamburger-border);
   color: var(--btn-hamburger-text);
-  font-size: 18px;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
+  font-size: 15px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(8px);
   transition: all 0.3s ease;
 }
 
-/* Glassmorphic Top Image Header Card */
+/* Header Card & Image Styling (Sleek & Compact) */
 .glass-header-card {
   background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   border: 1px solid var(--card-border);
-  border-radius: 28px;
-  padding: 20px 15px;
+  border-radius: 16px;
+  padding: 8px;
   text-align: center;
   box-shadow: var(--card-shadow);
   position: relative;
-  margin-top: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 140px;
-  transition: all 0.3s ease;
+  overflow: hidden;
 }
 
 .header-platform-img {
   width: 100%;
-  max-width: 300px;
+  max-width: 270px;
   height: auto;
+  max-height: 110px; /* ইমেজের সাইজ কমপ্যাক্ট করা হয়েছে */
   display: block;
   object-fit: contain;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
+  border-radius: 10px;
 }
 
+/* Social Media Grid Section */
 .social-icons-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin: 5px 0;
+  gap: 8px;
+  margin: 2px 0;
 }
 
 .social-box {
-  height: 52px;
-  border-radius: 16px;
+  height: 42px; /* সোশ্যাল আইকন বক্সে সাইজ ছোট করা হলো */
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 20px;
   color: #ffffff;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
   cursor: default;
   pointer-events: none;
   user-select: none;
@@ -150,13 +151,14 @@ body {
 .social-box.yt { background: linear-gradient(135deg, #ff0000, #cc0000); }
 .social-box.tiktok { background: linear-gradient(135deg, #000000, #111111); border: 1px solid rgba(255,255,255,0.2); }
 
+/* Service Card Styles */
 .glass-service-card {
   background: var(--card-bg);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--card-border);
-  border-radius: 20px;
-  padding: 14px 18px;
+  border-radius: 14px;
+  padding: 8px 12px; /* প্যাডিং ছোট ও টাইট করা হয়েছে */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -164,7 +166,48 @@ body {
   color: var(--text-main);
   cursor: pointer;
   box-shadow: var(--card-shadow);
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* =========================================
+   GLOWING EFFECTS FOR SERVICE BUTTONS
+   ========================================= */
+
+/* 1. Indian Flag Glow (Best Quality Followers) */
+.glass-service-card.glow-indian {
+  box-shadow: 0 0 12px rgba(255, 153, 51, 0.35), 0 0 4px rgba(19, 136, 8, 0.25);
+  border: 1px solid rgba(255, 153, 51, 0.5);
+  animation: pulseIndianGlow 3s infinite alternate;
+}
+
+@keyframes pulseIndianGlow {
+  0% { box-shadow: 0 0 8px rgba(255, 153, 51, 0.3), 0 0 3px rgba(19, 136, 8, 0.2); }
+  100% { box-shadow: 0 0 16px rgba(255, 153, 51, 0.55), 0 0 8px rgba(19, 136, 8, 0.4); }
+}
+
+/* 2. Premium Vibrant Purple Glow (Premium Quality Followers) */
+.glass-service-card.glow-premium {
+  box-shadow: 0 0 12px rgba(192, 132, 252, 0.4), 0 0 5px rgba(147, 51, 234, 0.3);
+  border: 1px solid rgba(192, 132, 252, 0.5);
+  animation: pulsePremiumGlow 3s infinite alternate;
+}
+
+@keyframes pulsePremiumGlow {
+  0% { box-shadow: 0 0 8px rgba(192, 132, 252, 0.3); }
+  100% { box-shadow: 0 0 18px rgba(192, 132, 252, 0.65); }
+}
+
+/* 3. Golden Emerald Glow (Lowest Price Followers) */
+.glass-service-card.glow-budget {
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.4), 0 0 5px rgba(245, 158, 11, 0.3);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  animation: pulseBudgetGlow 3s infinite alternate;
+}
+
+@keyframes pulseBudgetGlow {
+  0% { box-shadow: 0 0 8px rgba(16, 185, 129, 0.3); }
+  100% { box-shadow: 0 0 18px rgba(245, 158, 11, 0.5); }
 }
 
 .glass-service-card:hover {
@@ -174,35 +217,34 @@ body {
 .card-left {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
 }
 
+/* Multi Icon Boxes */
 .multi-icon-box {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  padding: 6px;
-  gap: 4px;
+  padding: 4px;
+  gap: 3px;
   align-items: center;
   justify-items: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.18);
   flex-shrink: 0;
 }
 
 .multi-icon-box i {
-  font-size: 13px;
+  font-size: 11px;
 }
 
 .indian-theme-box {
   background: linear-gradient(135deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
   border: 1px solid rgba(255, 255, 255, 0.8);
 }
-.indian-theme-box i {
-  color: #000080;
-}
+.indian-theme-box i { color: #000080; }
 
 .real-color-box {
   background: rgba(255, 255, 255, 0.95);
@@ -217,59 +259,63 @@ body {
   background: linear-gradient(135deg, #10b981 0%, #047857 100%);
   border-radius: 50%;
   border: 1.5px solid #f59e0b;
-  box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
 }
-.unique-budget-box i {
-  color: #ffffff;
-}
+.unique-budget-box i { color: #ffffff; }
 
 .card-text h3 {
-  font-size: 15px;
+  font-size: 13.5px;
   font-weight: 700;
   color: var(--text-main);
+  line-height: 1.2;
 }
 
 .card-text p {
-  font-size: 12px;
+  font-size: 10.5px;
   color: var(--text-sub);
+  margin-top: 2px;
 }
 
 .card-arrow {
-  font-size: 16px;
+  font-size: 13px;
   color: #9333ea;
 }
 
+/* Watch Tutorials Button (Compact) */
 .watch-tutorials-main-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   background: #e11d48;
   color: #ffffff !important;
-  font-weight: 800;
-  font-size: 15px;
-  padding: 12px;
-  border-radius: 12px;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 9px;
+  border-radius: 10px;
   text-decoration: none;
-  box-shadow: 0 6px 20px rgba(225, 29, 72, 0.4);
-  margin-top: 5px;
+  box-shadow: 0 4px 15px rgba(225, 29, 72, 0.35);
+  margin-top: 2px;
 }
 
+/* Banner Image Box (Compact Height) */
 .tutorial-banner-box {
   display: block;
   width: 100%;
-  border-radius: 20px;
+  border-radius: 14px;
   overflow: hidden;
   border: 1px solid var(--card-border);
   box-shadow: var(--card-shadow);
+  max-height: 120px;
 }
 
 .tutorial-banner-box img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
 }
 
+/* Drawer Sidebar Styles */
 .sidebar-overlay {
   position: fixed;
   top: 0;
@@ -283,16 +329,13 @@ body {
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
-.sidebar-overlay.active {
-  opacity: 1;
-  visibility: visible;
-}
+.sidebar-overlay.active { opacity: 1; visibility: visible; }
 
 .left-sidebar {
   position: fixed;
   top: 0;
   left: 0;
-  width: 280px;
+  width: 260px;
   height: 100%;
   background-color: var(--sidebar-bg);
   color: var(--sidebar-text);
@@ -304,19 +347,17 @@ body {
   flex-direction: column;
   overflow-y: auto;
 }
-.left-sidebar.active {
-  transform: translateX(0);
-}
+.left-sidebar.active { transform: translateX(0); }
 
 .sidebar-header {
-  padding: 20px 15px;
+  padding: 15px 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--sidebar-border);
 }
 .sidebar-title {
-  font-size: 18px !important;
+  font-size: 16px !important;
   font-weight: 800 !important;
   font-style: italic !important;
   background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
@@ -327,30 +368,28 @@ body {
   background: transparent;
   border: none;
   color: var(--sidebar-close);
-  font-size: 22px;
+  font-size: 20px;
   cursor: pointer;
 }
 
 .sidebar-menu {
   list-style: none;
-  padding: 15px 10px;
+  padding: 10px 8px;
   margin: 0;
   flex: 1;
 }
-.sidebar-menu li {
-  margin-bottom: 6px;
-}
+.sidebar-menu li { margin-bottom: 4px; }
 .sidebar-menu a {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 15px;
+  gap: 10px;
+  padding: 10px 12px;
   color: var(--sidebar-text);
   text-decoration: none;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
-  border-radius: 10px;
-  transition: background 0.2s ease, color 0.2s ease;
+  border-radius: 8px;
+  transition: background 0.2s ease;
 }
 .sidebar-menu a:hover {
   background: var(--sidebar-hover);
@@ -358,24 +397,24 @@ body {
 }
 
 .sidebar-footer-media {
-  padding: 15px;
+  padding: 12px;
   border-top: 1px solid var(--sidebar-border);
   margin-top: auto;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .watch-tutorials-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   background: #dc2626;
   color: #ffffff !important;
   font-weight: 700;
-  font-size: 14px;
-  padding: 12px;
+  font-size: 13px;
+  padding: 10px;
   border-radius: 8px;
   text-decoration: none;
   text-transform: uppercase;
@@ -387,12 +426,9 @@ body {
   border-radius: 8px;
   overflow: hidden;
 }
-.tutorial-banner-img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
+.tutorial-banner-img { width: 100%; height: auto; display: block; }
 
+/* Modal Alert Box */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -400,7 +436,7 @@ body {
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(4px);
   z-index: 2000;
   display: flex;
   align-items: center;
@@ -410,46 +446,28 @@ body {
   transition: all 0.3s ease;
 }
 
-.modal-overlay.active {
-  opacity: 1;
-  visibility: visible;
-}
+.modal-overlay.active { opacity: 1; visibility: visible; }
 
 .modal-card {
   background: var(--modal-bg);
   border: 1px solid var(--card-border);
-  padding: 25px;
-  border-radius: 20px;
+  padding: 20px;
+  border-radius: 16px;
   text-align: center;
-  width: 85%;
-  max-width: 320px;
+  width: 80%;
+  max-width: 300px;
   box-shadow: var(--card-shadow);
 }
 
-.modal-icon {
-  font-size: 38px;
-  color: #c084fc;
-  margin-bottom: 8px;
-}
-
-.modal-card h2 {
-  font-size: 20px;
-  margin-bottom: 6px;
-  color: var(--text-main);
-}
-
-.modal-card p {
-  font-size: 13px;
-  color: var(--text-sub);
-  margin-bottom: 18px;
-}
-
+.modal-icon { font-size: 32px; color: #c084fc; margin-bottom: 6px; }
+.modal-card h2 { font-size: 18px; margin-bottom: 4px; color: var(--text-main); }
+.modal-card p { font-size: 12px; color: var(--text-sub); margin-bottom: 14px; }
 .modal-card button {
   background: linear-gradient(135deg, #c084fc, #9333ea);
   color: #ffffff;
   border: none;
-  padding: 10px 25px;
-  border-radius: 10px;
+  padding: 8px 20px;
+  border-radius: 8px;
   font-weight: 700;
   cursor: pointer;
 }

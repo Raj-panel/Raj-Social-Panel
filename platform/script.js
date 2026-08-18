@@ -1,86 +1,61 @@
-document.addEventListener("DOMContentLoaded", function () {
-  // DOM Elements
-  const menuToggleBtn = document.getElementById("menuToggleBtn");
-  const leftSidebar = document.getElementById("leftSidebar");
-  const sidebarOverlay = document.getElementById("sidebarOverlay");
-  const sidebarCloseBtn = document.getElementById("sidebarCloseBtn");
-
-  const organicServicesSection = document.getElementById("organicServicesSection");
-  const premiumServicesSection = document.getElementById("premiumServicesSection");
-
-  const comingSoonModal = document.getElementById("comingSoonModal");
-  const closeModalBtn = document.getElementById("closeModalBtn");
-  const modalOkBtn = document.getElementById("modalOkBtn");
-
-  const watchTutorialBtn = document.getElementById("watchTutorialBtn");
-  const tutorialCard = document.getElementById("tutorialCard");
-
-  /* ==================================================
-     1. SIDEBAR MENU LOGIC (REUSING MAIN PANEL SYSTEM)
-     ================================================== */
-  function openSidebar() {
-    if (leftSidebar && sidebarOverlay) {
-      leftSidebar.classList.add("active");
-      sidebarOverlay.classList.add("active");
-    }
-  }
-
-  function closeSidebar() {
-    if (leftSidebar && sidebarOverlay) {
-      leftSidebar.classList.remove("active");
-      sidebarOverlay.classList.remove("active");
-    }
-  }
-
-  if (menuToggleBtn) menuToggleBtn.addEventListener("click", openSidebar);
-  if (sidebarCloseBtn) sidebarCloseBtn.addEventListener("click", closeSidebar);
-  if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeSidebar);
-
-  /* ==================================================
-     2. FIRST OPTION: 100% REAL ORGANIC SERVICE
-     Connects seamlessly to existing main website services
-     ================================================== */
-  if (organicServicesSection) {
-    organicServicesSection.addEventListener("click", function () {
-      window.location.href = "../#order";
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. Organic / Existing Service Navigation Logic
+    const organicButtons = document.querySelectorAll('.btn-organic');
+    
+    organicButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const targetUrl = button.getAttribute('data-target');
+            if (targetUrl) {
+                // Navigate safely to existing home/service section
+                window.location.href = targetUrl;
+            }
+        });
     });
-  }
 
-  /* ==================================================
-     3. SECOND OPTION: SUPER FAST PREMIUM QUALITY
-     Opens the Coming Soon Modal
-     ================================================== */
-  function openComingSoonModal() {
-    if (comingSoonModal) comingSoonModal.classList.add("active");
-  }
+    // 2. High Quality Service Placeholder Logic (UI Only)
+    const hqButtons = document.querySelectorAll('.btn-high-quality');
+    const modal = document.getElementById('hqNoticeModal');
+    const closeX = document.querySelector('.hq-modal-close');
+    const closeBtn = document.getElementById('hqCloseBtn');
 
-  function closeComingSoonModal() {
-    if (comingSoonModal) comingSoonModal.classList.remove("active");
-  }
+    const openModal = () => {
+        if (modal) modal.classList.remove('hidden');
+    };
 
-  if (premiumServicesSection) {
-    premiumServicesSection.addEventListener("click", openComingSoonModal);
-  }
+    const closeModal = () => {
+        if (modal) modal.classList.add('hidden');
+    };
 
-  if (closeModalBtn) closeModalBtn.addEventListener("click", closeComingSoonModal);
-  if (modalOkBtn) modalOkBtn.addEventListener("click", closeComingSoonModal);
-
-  if (comingSoonModal) {
-    comingSoonModal.addEventListener("click", function (e) {
-      if (e.target === comingSoonModal) {
-        closeComingSoonModal();
-      }
+    hqButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Show alert notice without executing any checkout/price logic
+            openModal();
+        });
     });
-  }
 
-  /* ==================================================
-     4. TUTORIAL THUMBNAIL CLICK ACTION
-     ================================================== */
-  if (tutorialCard) {
-    tutorialCard.addEventListener("click", function () {
-      if (watchTutorialBtn) {
-        window.open(watchTutorialBtn.href, "_blank");
-      }
+    if (closeX) closeX.addEventListener('click', closeModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    
+    // Close modal on outside backdrop click
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
     });
-  }
+
+    // 3. Dynamic Dark Mode Compatibility Check with Main Site
+    // Detects if main website sets dark mode via class or attribute
+    const checkDarkModeSync = () => {
+        const isDarkMode = document.body.classList.contains('dark-mode') || 
+                           document.documentElement.getAttribute('data-theme') === 'dark' ||
+                           window.matchMedia('(prefers-color-scheme: dark)').matches;
+                           
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+        }
+    };
+
+    checkDarkModeSync();
 });

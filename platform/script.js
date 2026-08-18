@@ -1,61 +1,80 @@
-document.addEventListener('DOMContentLoaded', () => {
+/* ==================================================
+   PLATFORM PAGE INTERACTION & CONNECTOR SCRIPT
+   ================================================== */
+
+// Existing Menu Sidebar Drawer Logic Integration
+function openSidebar() {
+  const sidebar = document.getElementById("leftSidebar");
+  const overlay = document.getElementById("sidebarOverlay");
+  
+  if (sidebar && !sidebar.classList.contains("active")) {
+    sidebar.classList.add("active");
+    overlay.classList.add("active");
+    document.body.style.overflow = "hidden";
+    history.pushState({ sidebarOpen: true }, '');
+  }
+}
+
+function closeSidebar(fromUserAction = false) {
+  const sidebar = document.getElementById("leftSidebar");
+  const overlay = document.getElementById("sidebarOverlay");
+  
+  if (sidebar && sidebar.classList.contains("active")) {
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
+    document.body.style.overflow = "auto";
     
-    // 1. Organic / Existing Service Navigation Logic
-    const organicButtons = document.querySelectorAll('.btn-organic');
-    
-    organicButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            const targetUrl = button.getAttribute('data-target');
-            if (targetUrl) {
-                // Navigate safely to existing home/service section
-                window.location.href = targetUrl;
-            }
-        });
-    });
+    if (fromUserAction && history.state && history.state.sidebarOpen) {
+      history.back();
+    }
+  }
+}
 
-    // 2. High Quality Service Placeholder Logic (UI Only)
-    const hqButtons = document.querySelectorAll('.btn-high-quality');
-    const modal = document.getElementById('hqNoticeModal');
-    const closeX = document.querySelector('.hq-modal-close');
-    const closeBtn = document.getElementById('hqCloseBtn');
-
-    const openModal = () => {
-        if (modal) modal.classList.remove('hidden');
-    };
-
-    const closeModal = () => {
-        if (modal) modal.classList.add('hidden');
-    };
-
-    hqButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.preventDefault();
-            // Show alert notice without executing any checkout/price logic
-            openModal();
-        });
-    });
-
-    if (closeX) closeX.addEventListener('click', closeModal);
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    
-    // Close modal on outside backdrop click
-    window.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
-
-    // 3. Dynamic Dark Mode Compatibility Check with Main Site
-    // Detects if main website sets dark mode via class or attribute
-    const checkDarkModeSync = () => {
-        const isDarkMode = document.body.classList.contains('dark-mode') || 
-                           document.documentElement.getAttribute('data-theme') === 'dark' ||
-                           window.matchMedia('(prefers-color-scheme: dark)').matches;
-                           
-        if (isDarkMode) {
-            document.body.classList.add('dark-mode');
-        }
-    };
-
-    checkDarkModeSync();
+window.addEventListener("popstate", function (event) {
+  const sidebar = document.getElementById("leftSidebar");
+  if (sidebar && sidebar.classList.contains("active")) {
+    closeSidebar(false);
+  }
 });
+
+// App Click Handler
+function selectApp(platformName) {
+  // Directs user to main site with selected platform
+  window.location.href = "../index.html?platform=" + encodeURIComponent(platformName);
+}
+
+// Option 1 Logic: REAL_ORGANIC_SERVICES
+function handleOrganicService() {
+  // Connects directly to existing website services
+  window.location.href = "../index.html#services";
+}
+
+// Option 2 Logic: PREMIUM_QUALITY_SERVICES
+function handlePremiumService() {
+  // Displays "COMING SOON" popup
+  const modal = document.getElementById("comingSoonModal");
+  if (modal) {
+    modal.classList.add("active");
+  }
+}
+
+// Close Modal Handler
+function closeComingSoonModal(event) {
+  if (!event || event.target.id === "comingSoonModal" || event.target.tagName === "BUTTON") {
+    const modal = document.getElementById("comingSoonModal");
+    if (modal) {
+      modal.classList.remove("active");
+    }
+  }
+}
+
+// Future Extensibility Structure
+const REAL_ORGANIC_SERVICES = {
+  active: true,
+  redirectUrl: "../index.html"
+};
+
+const PREMIUM_QUALITY_SERVICES = {
+  active: false,
+  launchMessage: "Coming Soon"
+};

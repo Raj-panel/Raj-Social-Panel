@@ -15,7 +15,7 @@
   --sidebar-hover-text: #000000;
   --sidebar-close: #64748b;
   
-  --btn-hamburger-bg: rgba(255, 255, 255, 0.85);
+  --btn-hamburger-bg: rgba(255, 255, 255, 0.9);
   --btn-hamburger-border: rgba(0, 0, 0, 0.1);
   --btn-hamburger-text: #0f172a;
   
@@ -76,53 +76,50 @@ body {
   gap: 12px;
 }
 
-/* Hamburger Menu Button */
+/* Hamburger Menu Button Positioned Above Header Card */
 .hamburger-btn {
-  position: absolute;
-  top: -2px;
-  left: -8px;
-  z-index: 100;
+  align-self: flex-start;
+  z-index: 10;
   background: var(--btn-hamburger-bg);
   border: 1px solid var(--btn-hamburger-border);
   color: var(--btn-hamburger-text);
   font-size: 16px;
-  width: 35px;
-  height: 35px;
-  border-radius: 9px;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   transition: all 0.3s ease;
+  margin-bottom: 2px;
 }
 
-/* Header Card & Platform Image Section (Slightly Larger & Balanced) */
+/* Glass Header Card & Image Styling (Fits Image Perfectly) */
 .glass-header-card {
   background: var(--card-bg);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   border: 1px solid var(--card-border);
   border-radius: 20px;
-  padding: 16px 12px;
+  padding: 10px;
   text-align: center;
   box-shadow: var(--card-shadow);
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  margin-top: 4px;
+  width: 100%;
 }
 
 .header-platform-img {
-  width: 150%;
-  max-width: 8020px;
+  width: 100%;
   height: auto;
-  max-height: 160px; /* সুন্দর সাইজে অ্যাডজাস্ট করা হয়েছে */
   display: block;
-  object-fit: contain;
-  border-radius: 4px;
+  object-fit: cover;
+  border-radius: 14px;
 }
 
 /* Social Media Grid Section */
@@ -152,7 +149,7 @@ body {
 .social-box.yt { background: linear-gradient(135deg, #ff0000, #cc0000); }
 .social-box.tiktok { background: linear-gradient(135deg, #000000, #111111); border: 1px solid rgba(255,255,255,0.2); }
 
-/* Service Card Styles (Balanced Size & Padding) */
+/* Service Card Styles */
 .glass-service-card {
   background: var(--card-bg);
   backdrop-filter: blur(12px);
@@ -292,20 +289,27 @@ body {
   margin-top: 2px;
 }
 
-/* Full Thumbnail Banner Section (Uncut / Full Image) */
-.tutorial-banner-box {
-  display: block;
-  width: 100%;
-  border-radius: 16px;
-  overflow: hidden;
+/* Bottom Glass Card for Thumbnail (Same as Header Glass Border) */
+.glass-banner-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 10px;
   box-shadow: var(--card-shadow);
+  display: block;
+  text-decoration: none;
+  overflow: hidden;
+  width: 100%;
 }
 
-.tutorial-banner-box img {
+.glass-banner-card img {
   width: 100%;
-  height: auto; /* কাটবে না, পুরো থাম্বনেল শো করবে */
+  height: auto;
   display: block;
+  border-radius: 14px;
+  object-fit: cover;
 }
 
 /* Drawer Sidebar Styles */

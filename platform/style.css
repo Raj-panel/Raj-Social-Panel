@@ -96,46 +96,32 @@ body {
   transition: all 0.3s ease;
 }
 
+/* Glassmorphic Top Image Header Card */
 .glass-header-card {
   background: var(--card-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--card-border);
   border-radius: 28px;
-  padding: 35px 20px 25px 20px;
+  padding: 20px 15px;
   text-align: center;
   box-shadow: var(--card-shadow);
   position: relative;
   margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
   transition: all 0.3s ease;
 }
 
-.crown-icon {
-  font-size: 32px;
-  color: #c084fc;
-  margin-bottom: -5px;
-  filter: drop-shadow(0 2px 8px rgba(192, 132, 252, 0.6));
-}
-
-.main-title-logo {
-  font-size: 68px;
-  font-weight: 800;
-  font-style: italic;
-  line-height: 0.9;
-  background: linear-gradient(180deg, #f0abfc 0%, #c084fc 50%, #9333ea 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 12px rgba(192, 132, 252, 0.5));
-}
-
-.sub-title-logo {
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  color: var(--text-main);
-  text-transform: uppercase;
-  margin-top: 8px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+.header-platform-img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
 }
 
 .social-icons-grid {
@@ -191,9 +177,6 @@ body {
   gap: 15px;
 }
 
-/* =========================================
-   CUSTOM 4-APP COMBINATION ICON STYLES
-   ========================================= */
 .multi-icon-box {
   width: 48px;
   height: 48px;
@@ -213,16 +196,14 @@ body {
   font-size: 13px;
 }
 
-/* 1. Indian Flag Theme (Best Quality Followers) */
 .indian-theme-box {
   background: linear-gradient(135deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
   border: 1px solid rgba(255, 255, 255, 0.8);
 }
 .indian-theme-box i {
-  color: #000080; /* Ashoka Chakra Navy Blue Color for crisp visibility */
+  color: #000080;
 }
 
-/* 2. Original Real Colors Theme (Premium Quality Followers) */
 .real-color-box {
   background: rgba(255, 255, 255, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.6);
@@ -232,10 +213,9 @@ body {
 .real-color-box .icon-yt { color: #ff0000; }
 .real-color-box .icon-tt { color: #000000; }
 
-/* 3. Unique Golden Circular Theme (Lowest Price Followers) */
 .unique-budget-box {
   background: linear-gradient(135deg, #10b981 0%, #047857 100%);
-  border-radius: 50%; /* Rounded circular style for a unique look */
+  border-radius: 50%;
   border: 1.5px solid #f59e0b;
   box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
 }

@@ -1,8 +1,8 @@
 /* ==================================================
-   PLATFORM PAGE INTERACTION & CONNECTOR SCRIPT
+   PLATFORM PAGE FUNCTIONALITY & CONNECTOR
    ================================================== */
 
-// Existing Menu Sidebar Drawer Logic Integration
+// Open Left Sidebar Drawer (Reusing existing menu logic)
 function openSidebar() {
   const sidebar = document.getElementById("leftSidebar");
   const overlay = document.getElementById("sidebarOverlay");
@@ -15,6 +15,7 @@ function openSidebar() {
   }
 }
 
+// Close Left Sidebar Drawer
 function closeSidebar(fromUserAction = false) {
   const sidebar = document.getElementById("leftSidebar");
   const overlay = document.getElementById("sidebarOverlay");
@@ -30,6 +31,7 @@ function closeSidebar(fromUserAction = false) {
   }
 }
 
+// Handle Browser Back Button for Sidebar Close
 window.addEventListener("popstate", function (event) {
   const sidebar = document.getElementById("leftSidebar");
   if (sidebar && sidebar.classList.contains("active")) {
@@ -37,21 +39,15 @@ window.addEventListener("popstate", function (event) {
   }
 });
 
-// App Click Handler
-function selectApp(platformName) {
-  // Directs user to main site with selected platform
-  window.location.href = "../index.html?platform=" + encodeURIComponent(platformName);
-}
-
-// Option 1 Logic: REAL_ORGANIC_SERVICES
+// Option 1 Handler: 100% Real Organic Service
 function handleOrganicService() {
-  // Connects directly to existing website services
+  // Directly redirects to existing website main page / services section
   window.location.href = "../index.html#services";
 }
 
-// Option 2 Logic: PREMIUM_QUALITY_SERVICES
+// Option 2 Handler: Superfast Premium Quality Service
 function handlePremiumService() {
-  // Displays "COMING SOON" popup
+  // Opens 3D Glass Coming Soon Popup
   const modal = document.getElementById("comingSoonModal");
   if (modal) {
     modal.classList.add("active");
@@ -68,13 +64,13 @@ function closeComingSoonModal(event) {
   }
 }
 
-// Future Extensibility Structure
+// Future Service Category Connection Structure
 const REAL_ORGANIC_SERVICES = {
-  active: true,
-  redirectUrl: "../index.html"
+  enabled: true,
+  targetUrl: "../index.html#services"
 };
 
 const PREMIUM_QUALITY_SERVICES = {
-  active: false,
-  launchMessage: "Coming Soon"
+  enabled: false,
+  targetUrl: null
 };

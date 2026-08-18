@@ -1,37 +1,80 @@
 // Services Data
 const servicesData = {
-  instagram: {
-    "Instagram Followers": [
-      {
-        id: 101,
-        name: "Instagram Followers [High Quality]",
-        pricePer1k: 0.00,
-        min: 100,
-        max: 50000,
-        refill: "30 Days Refill",
-        drop: "Low Drop",
-        quality: "Real Profiles",
-        speed: "10K/Day",
-        description: "High quality Instagram followers with non-drop guarantee."
-      }
-    ]
-  },
-  facebook: {
-    "Facebook Followers": [
-      {
-        id: 201,
-        name: "Facebook Page Followers",
-        pricePer1k: 0.00,
-        min: 100,
-        max: 50000,
-        refill: "30 Days Refill",
-        drop: "Low Drop",
-        quality: "Real Profiles",
-        speed: "2K/Day",
-        description: "High quality page followers and likes."
-      }
-    ]
-  }
+    instagram: {
+        "Followers Non-Drop": [
+            { type: "custom", name: "Instagram Non-Drop Followers", pricePer1000: 80 }
+        ],
+        "Followers": [
+            { name: "1K Followers", price: 50, badge: "Starter", badgeClass: "badge-demo" },
+            { name: "2K Followers", price: 90 },
+            { name: "3K Followers", price: 129, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "4K Followers", price: 165 },
+            { name: "5K Followers", price: 199, badge: "🔥 Best Value", badgeClass: "badge-best" },
+            { name: "6K Followers", price: 239 },
+            { name: "7K Followers", price: 279 },
+            { name: "8K Followers", price: 319 },
+            { name: "9K Followers", price: 359 },
+            { name: "10K Followers", price: 399, badge: "👑 Most Popular", badgeClass: "badge-best" }
+        ],
+        "Likes Lifetime": [
+            { name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo" },
+            { name: "500 Likes", price: 25, badge: "Real", badgeClass: "badge-real" },
+            { name: "1K Likes", price: 30, badge: "Fast", badgeClass: "badge-popular" },
+            { name: "3K Likes", price: 69, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "5K Likes", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" },
+            { name: "10K Likes", price: 179, badge: "👑 Most Popular", badgeClass: "badge-best" }
+        ],
+        "Reels / Video Views": [
+            { name: "1K Views", price: 10, badge: "DEMO", badgeClass: "badge-demo" },
+            { name: "5K Views", price: 20, badge: "STARTER", badgeClass: "badge-real" },
+            { name: "10K Views", price: 30, badge: "BEST VALUE", badgeClass: "badge-best" },
+            { name: "20K Views", price: 40, badge: "POPULAR", badgeClass: "badge-popular" },
+            { name: "50K Views", price: 70, badge: "RECOMMENDED", badgeClass: "badge-best" },
+            { name: "100K Views", price: 99, badge: "🔥 BEST SELLER", badgeClass: "badge-best" },
+            { name: "500K Views", price: 299, badge: "👑 MOST POPULAR", badgeClass: "badge-best" },
+            { name: "1M Views", price: 499, badge: "💥 MEGA DEAL", badgeClass: "badge-best" }
+        ],
+        "Comments Lifetime": [
+            { name: "50 Comments", price: 15, badge: "Starter", badgeClass: "badge-demo" },
+            { name: "100 Comments", price: 20, badge: "Real", badgeClass: "badge-real" },
+            { name: "500 Comments", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "1K Comments", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" }
+        ],
+        "Repost Lifetime": [
+            { name: "50 Reposts", price: 15, badge: "Starter", badgeClass: "badge-demo" },
+            { name: "100 Reposts", price: 20, badge: "Real", badgeClass: "badge-real" },
+            { name: "500 Reposts", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular" },
+            { name: "1K Reposts", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best" },
+            { name: "3K Reposts", price: 249, badge: "👑 Most Popular", badgeClass: "badge-best" }
+        ],
+        "Shares Lifetime": [
+            { name: "100 Shares", price: 10, badge: "Starter", badgeClass: "badge-demo" },
+            { name: "1K Shares", price: 30, badge: "Fast", badgeClass: "badge-popular" },
+            { name: "5K Shares", price: 69, badge: "🔥 Best Value", badgeClass: "badge-best" },
+            { name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-best" }
+        ]
+    },
+    facebook: {
+        "Facebook Followers": [
+            { type: "custom", name: "Facebook Followers", pricePer1000: 49 }
+        ],
+        "Likes Non-Drop": [
+            { name: "100 Likes", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
+            { name: "500 Likes", price: 25, badge: "REAL", badgeClass: "badge-real" },
+            { name: "1K Likes", price: 39, badge: "FAST", badgeClass: "badge-popular" },
+            { name: "3K Likes", price: 69, badge: "⭐ POPULAR", badgeClass: "badge-popular" },
+            { name: "5K Likes", price: 99, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
+            { name: "10K Likes", price: 179, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
+        ],
+        "Reels / Video Views": [
+            { name: "1K Views", price: 10, badge: "STARTER", badgeClass: "badge-demo" },
+            { name: "3K Views", price: 25 },
+            { name: "5K Views", price: 35, badge: "⭐ POPULAR", badgeClass: "badge-popular" },
+            { name: "10K Views", price: 60 },
+            { name: "50K Views", price: 249, badge: "🔥 BEST VALUE", badgeClass: "badge-best" },
+            { name: "100K Views", price: 449, badge: "👑 MOST POPULAR", badgeClass: "badge-best" }
+        ]
+    }
 };
 
 let currentPlatform = 'instagram';

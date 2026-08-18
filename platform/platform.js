@@ -1,34 +1,60 @@
-document.addEventListener('DOMContentLoaded', () => {
-
-    // 1. Hamburger Menu Trigger
-    const menuBtn = document.getElementById('platformMenuBtn');
-    if (menuBtn) {
-        menuBtn.addEventListener('click', () => {
-            // আপনার ওয়েবসাইটের বিদ্যমান মেনু খোলার ফাংশন ডাকার চেষ্টা করা হচ্ছে
-            if (typeof openNav === 'function') {
-                openNav();
-            } else if (typeof toggleMenu === 'function') {
-                toggleMenu();
-            } else {
-                alert('আপনার মেইন ওয়েবসাইটের Hamburger Menu-এর JavaScript ফাংশনের নাম শেয়ার করলে সেটি এখানে সঠিকভাবে যুক্ত করে দেব।');
-            }
-        });
+// Reused Existing Sidebar Drawer Functions from index.html
+function openSidebar() {
+    const sidebar = document.getElementById("leftSidebar");
+    const overlay = document.getElementById("sidebarOverlay");
+    
+    if (sidebar && !sidebar.classList.contains("active")) {
+        sidebar.classList.add("active");
+        if (overlay) overlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+        
+        history.pushState({ sidebarOpen: true }, '');
     }
+}
 
-    // 2. High Quality Service Modal
-    const hqCard = document.getElementById('platformHqServiceCard');
-    const modal = document.getElementById('platformModal');
-    const modalClose = document.getElementById('platformModalClose');
+function closeSidebar(fromUserAction = false) {
+    const sidebar = document.getElementById("leftSidebar");
+    const overlay = document.getElementById("sidebarOverlay");
+    
+    if (sidebar && sidebar.classList.contains("active")) {
+        sidebar.classList.remove("active");
+        if (overlay) overlay.classList.remove("active");
+        document.body.style.overflow = "auto";
+        
+        if (fromUserAction && history.state && history.state.sidebarOpen) {
+            history.back();
+        }
+    }
+}
+
+window.addEventListener("popstate", function (event) {
+    const sidebar = document.getElementById("leftSidebar");
+    if (sidebar && sidebar.classList.contains("active")) {
+        closeSidebar(false);
+    }
+});
+
+// Platform Modal Logic for High Quality Service
+document.addEventListener("DOMContentLoaded", function () {
+    const hqCard = document.getElementById("platformHqCard");
+    const modal = document.getElementById("platformModal");
+    const modalClose = document.getElementById("platformModalClose");
 
     if (hqCard && modal) {
-        hqCard.addEventListener('click', () => modal.classList.add('active'));
+        hqCard.addEventListener("click", function () {
+            modal.classList.add("active");
+        });
     }
 
     if (modalClose && modal) {
-        modalClose.addEventListener('click', () => modal.classList.remove('active'));
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) modal.classList.remove('active');
+        modalClose.addEventListener("click", function () {
+            modal.classList.remove("active");
+        });
+
+        modal.addEventListener("click", function (e) {
+            if (e.target === modal) {
+                modal.classList.remove("active");
+            }
         });
     }
-
 });

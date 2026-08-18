@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Raj SMM Panel - Platform Services</title>
+<link rel="canonical" href="https://rajsmmpanel.in/platform/"/>
+
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
+
+<!-- Stylesheets -->
+<link href="../style.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+<style>
+  :root {
+    --sidebar-bg: #0f172a;
+    --sidebar-text: #cbd5e1;
+    --sidebar-border: rgba(255, 255, 255, 0.1);
+    --sidebar-hover: rgba(168, 85, 247, 0.15);
+    --sidebar-hover-text: #ffffff;
+    --sidebar-close: #94a3b8;
+  }
+
+  body {
+    background-color: #0f172a;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Main Container Layout */
+  .main-wrapper {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 15px;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  /* Hamburger Button */
+  .hamburger-btn {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 100;
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    font-size: 18px;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+  }
+
+  /* Glassmorphic Brand Banner Header */
+  .brand-hero-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 24px;
+    padding: 25px 15px 20px 15px;
+    text-align: center;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  /* Custom Logo Image / Text Styling */
+  .brand-logo-img {
+    max-width: 220px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    filter: drop-shadow(0 4px 10px rgba(168, 85, 247, 0.5));
+  }
+
+  /* Fallback Brand Title (If image is not present) */
+  .panel-heading {
+    font-size: 32px !important;
+    font-weight: 800 !important;
+    font-style: italic !important;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    background: linear-gradient(135deg, #e879f9 0%, #a855f7 50%, #6366f1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin: 10px 0 0 0;
+    filter: drop-shadow(0px 2px 10px rgba(168, 85, 247, 0.5));
+  }
+
+  /* Social Icons Grid */
+  .social-icons-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .social-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 55px;
+    border-radius: 16px;
+    font-size: 26px;
+    color: #ffffff;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .social-icon-btn:active {
+    transform: scale(0.95);
+  }
+
+  .btn-fb { background: linear-gradient(135deg, #1877f2, #0052cc); }
+  .btn-insta { background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+  .btn-yt { background: linear-gradient(135deg, #ff0000, #c40000); }
+  .btn-tt { background: linear-gradient(135deg, #000000, #25f4ee); color: #ffffff; }
+
+  /* Interactive Service Cards */
+  .service-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .service-card:hover {
+    border-color: rgba(168, 85, 247, 0.6);
+    transform: translateY(-2px);
+  }
+
+  .service-card-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .service-icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #ffffff;
+    flex-shrink: 0;
+  }
+
+  .icon-organic {
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    box-shadow: 0 4px 10px rgba(255, 126, 95, 0.3);
+  }
+
+  .icon-quality {
+    background: linear-gradient(135deg, #e879f9, #a855f7);
+    box-shadow: 0 4px 10px rgba(168, 85, 247, 0.3);
+  }
+
+  .service-info-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .service-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 2px;
+  }
+
+  .service-desc {
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: 400;
+  }
+
+  .service-arrow {
+    color: #e2e8f0;
+    font-size: 16px;
+  }
+
+  /* Watch Tutorials Button */
+  .watch-tutorials-main-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #dc2626;
+    color: #ffffff !important;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 12px;
+    border-radius: 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+    margin: 18px 0;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .watch-tutorials-main-btn:hover {
+    background: #b91c1c;
+    transform: translateY(-1px);
+  }
+
+  /* Banner Card Styling */
+  .tutorial-banner-card {
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+  }
+
+  .tutorial-banner-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Sidebar Drawer Overlay */
+  .sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Sidebar Drawer Structure */
+  .left-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100%;
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    border-right: 1px solid var(--sidebar-border);
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .left-sidebar.active {
+    transform: translateX(0);
+  }
+
+  .sidebar-header {
+    padding: 20px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--sidebar-border);
+  }
+  .sidebar-title {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    font-style: italic !important;
+    background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .sidebar-close-btn {
+    background: transparent;
+    border: none;
+    color: var(--sidebar-close);
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  .sidebar-menu {
+    list-style: none;
+    padding: 15px 10px;
+    margin: 0;
+    flex: 1;
+  }
+  .sidebar-menu li {
+    margin-bottom: 6px;
+  }
+  .sidebar-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .sidebar-menu a:hover {
+    background: var(--sidebar-hover);
+    color: var(--sidebar-hover-text);
+  }
+
+  /* Custom Coming Soon Popup Alert Modal */
+  .custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .custom-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .custom-modal-box {
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 25px;
+    width: 85%;
+    max-width: 320px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+  }
+
+  .custom-modal-overlay.active .custom-modal-box {
+    transform: scale(1);
+  }
+
+  .modal-icon {
+    font-size: 40px;
+    color: #a855f7;
+    margin-bottom: 10px;
+  }
+
+  .modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #ffffff;
+  }
+
+  .modal-desc {
+    font-size: 13px;
+    color: #cbd5e1;
+    margin-bottom: 20px;
+  }
+
+  .modal-close-btn {
+    background: linear-gradient(135deg, #a855f7, #6366f1);
+    color: #ffffff;
+    border: none;
+    padding: 10px 24px;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Left Sidebar Navigation Menu -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar(true)"></div>
+<div class="left-sidebar" id="leftSidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-title">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
+    <button class="sidebar-close-btn" onclick="closeSidebar(true)" aria-label="Close Sidebar"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  
+  <ul class="sidebar-menu">
+    <li><a href="https://rajsmmpanel.in/login/">🔐 Login / Create Account</a></li>
+    <li><a href="https://rajsmmpanel.in/">🛒 New Order</a></li>
+    <li><a href="https://rajsmmpanel.in/orders/">📦 My Orders</a></li>
+    <li><a href="https://rajsmmpanel.in/pages/privacy-policy.html">🔒 Privacy Policy</a></li>
+    <li><a href="https://rajsmmpanel.in/pages/refund-policy.html">💸 Refund Policy</a></li>
+    <li><a href="https://rajsmmpanel.in/pages/terms.html">📜 Terms &amp; Conditions</a></li>
+    <li><a href="https://rajsmmpanel.in/pages/contact.html">📞 Contact Us</a></li>
+    <li><a href="https://rajsmmpanel.in/pages/about.html">ℹ️ About Us</a></li>
+    <li><a href="https://rajsmmpanel.in/buy-smm-panel">🛒 Buy SMM Panel</a></li>
+  </ul>
+</div>
+
+<!-- Main UI Wrapper -->
+<div class="main-wrapper">
+  
+  <!-- Navigation Hamburger Icon -->
+  <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <!-- Top Glassmorphic Logo Container -->
+  <div class="brand-hero-card">
+    <div class="panel-heading">𝐑𝐚𝐣<br><span style="font-size: 20px; font-weight: 600;">SMM PANEL</span></div>
+  </div>
+
+  <!-- Social Icons List Grid -->
+  <div class="social-icons-grid">
+    <a href="https://rajsmmpanel.in/" class="social-icon-btn btn-fb"><i class="fa-brands fa-facebook-f"></i></a>
+    <a href="https://rajsmmpanel.in/" class="social-icon-btn btn-insta"><i class="fa-brands fa-instagram"></i></a>
+    <a href="https://rajsmmpanel.in/" class="social-icon-btn btn-yt"><i class="fa-brands fa-youtube"></i></a>
+    <a href="https://rajsmmpanel.in/" class="social-icon-btn btn-tt"><i class="fa-brands fa-tiktok"></i></a>
+  </div>
+
+  <!-- 100% Real Organic Service Button -->
+  <a href="https://rajsmmpanel.in/" class="service-card">
+    <div class="service-card-left">
+      <div class="service-icon-box icon-organic">
+        <i class="fa-solid fa-shield-check"></i>
+      </div>
+      <div class="service-info-text">
+        <span class="service-title">100% Real Organic Service</span>
+        <span class="service-desc">100% Real &amp; Organic Followers</span>
+      </div>
+    </div>
+    <i class="fa-solid fa-chevron-right service-arrow"></i>
+  </a>
+
+  <!-- High Quality Service Button -->
+  <div class="service-card" onclick="showComingSoonModal()">
+    <div class="service-card-left">
+      <div class="service-icon-box icon-quality">
+        <i class="fa-solid fa-gem"></i>
+      </div>
+      <div class="service-info-text">
+        <span class="service-title">High Quality Service</span>
+        <span class="service-desc">Best Quality Followers</span>
+      </div>
+    </div>
+    <i class="fa-solid fa-chevron-right service-arrow"></i>
+  </div>
+
+  <!-- Watch Tutorials Button -->
+  <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="watch-tutorials-main-btn">
+    <i class="fa-brands fa-youtube"></i> Watch Tutorials
+  </a>
+
+  <!-- Banner Card Image Section -->
+  <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="tutorial-banner-card">
+    <img src="../thumbnail.png" alt="Raj SMM Panel Tutorial Banner" />
+  </a>
+
+</div>
+
+<!-- Custom Coming Soon Modal Popup -->
+<div class="custom-modal-overlay" id="comingSoonModal">
+  <div class="custom-modal-box">
+    <div class="modal-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+    <div class="modal-title">Coming Soon!</div>
+    <div class="modal-desc">This service section will be available very soon. Stay tuned!</div>
+    <button class="modal-close-btn" onclick="hideComingSoonModal()">OK</button>
+  </div>
+</div>
+
+<script>
+  // Sidebar Logic
+  function openSidebar() {
+    const sidebar = document.getElementById("leftSidebar");
+    const overlay = document.getElementById("sidebarOverlay");
+    sidebar.classList.add("active");
+    overlay.classList.add("active");
+    document.body.style.overflow = "hidden";
+    history.pushState({ sidebarOpen: true }, '');
+  }
+
+  function closeSidebar(fromUserAction = false) {
+    const sidebar = document.getElementById("leftSidebar");
+    const overlay = document.getElementById("sidebarOverlay");
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
+    document.body.style.overflow = "auto";
+    if (fromUserAction && history.state && history.state.sidebarOpen) {
+      history.back();
+    }
+  }
+
+  window.addEventListener("popstate", function () {
+    const sidebar = document.getElementById("leftSidebar");
+    if (sidebar && sidebar.classList.contains("active")) {
+      closeSidebar(false);
+    }
+  });
+
+  // Modal Alert Logic for High Quality Service
+  function showComingSoonModal() {
+    document.getElementById("comingSoonModal").classList.add("active");
+  }
+
+  function hideComingSoonModal() {
+    document.getElementById("comingSoonModal").classList.remove("active");
+  }
+</script>
+
+</body>
+</html>

@@ -403,19 +403,21 @@ const serviceData = {
         ]
     },
     tiktok: {
-        "TikTok Followers": [
-            { name: "100 TikTok Followers", price: 20, desc: "👤 Premium Mixed Followers • Starts in 10 Min" },
-            { name: "500 TikTok Followers", price: 90, desc: "👤 Premium Mixed Followers • Starts in 10 Min" },
-            { name: "1K TikTok Followers", price: 179, desc: "👤 Premium Mixed Followers • Starts in 10 Min" },
-            { name: "5K TikTok Followers", price: 799, desc: "👤 Premium Mixed Followers • Starts in 10 Min" },
-            { name: "10K TikTok Followers", price: 1599, desc: "👤 Premium Mixed Followers • Starts in 10 Min" }
+        "TikTok Followers 30 Day Refill♻️": [
+            { name: "100 TikTok Followers", price: 39, desc: "👤 Premium Mixed Followers • Starts in 30 Min" },
+            { name: "200 TikTok Followers", price: 59, desc: "👤 Premium Mixed Followers • Starts in 30 Min" },
+            { name: "300 TikTok Followers", price: 79, desc: "👤 Premium Mixed Followers • Starts in 30 Min" },
+            { name: "500 TikTok Followers", price: 99, desc: "👤 Premium Mixed Followers • Starts in 30 Min" },
+            { name: "500 TikTok Followers", price: 119, desc: "👤 Premium Mixed Followers • Starts in 30 Min" },
+            { name: "700 TikTok Followers", price: 179, desc: "👤 Premium Mixed Followers • Starts in 30 Min" },
+            { name: "1K TikTok Followers", price: 249, desc: "👤 Premium Mixed Followers • Starts in 30 Min" }
         ],
         "TikTok Likes Non-Drop": [
-            { name: "100 TikTok Likes", price: 15, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" },
-            { name: "500 TikTok Likes", price: 30, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" },
-            { name: "1K TikTok Likes", price: 50, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" },
-            { name: "3K TikTok Likes", price: 139, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" },
-            { name: "5K TikTok Likes", price: 219, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" }
+            { name: "100 TikTok Likes", price: 35, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" },
+            { name: "500 TikTok Likes", price: 40, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" },
+            { name: "1K TikTok Likes", price: 70, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" },
+            { name: "3K TikTok Likes", price: 179, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" },
+            { name: "5K TikTok Likes", price: 269, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" }
         ],
         "TikTok Views Non-Drop": [
             { name: "100 TikTok Video Views", price: 9, desc: "🇧🇩 Real Views • High Quality • Lifetime Refill Start in 10 Min" },
@@ -433,12 +435,12 @@ const serviceData = {
             { name: "10K Share", price: 200, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🇧🇩 Bangladesh High Quality Real Service • 18 Minute Start" }
         ],
         "TikTok Save — Lifetime Refill": [
-            { name: "100 Save", price: 10, badge: "Starter", badgeClass: "badge-demo", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
-            { name: "500 Save", price: 18, desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
-            { name: "1K Save", price: 25, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
-            { name: "3K Save", price: 65, desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
-            { name: "5K Save", price: 95, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
-            { name: "10K Save", price: 175, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" }
+            { name: "100 Save", price: 15, badge: "Starter", badgeClass: "badge-demo", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
+            { name: "500 Save", price: 25, desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
+            { name: "1K Save", price: 35, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
+            { name: "3K Save", price: 85, desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
+            { name: "5K Save", price: 110, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
+            { name: "10K Save", price: 199, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" }
         ],
         "🔥 TikTok Combo Service — Non-Drop": [
             {

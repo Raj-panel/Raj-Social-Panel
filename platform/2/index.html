@@ -1,119 +1,125 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Platform Services 2 - Raj SMM Panel</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Premium Quality Followers - Raj SMM Panel</title>
+  
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
+  
+  <!-- Font Awesome Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Main Container -->
-    <div class="container">
-        
-        <!-- Header Section -->
-        <header class="page-header">
-            <h1>Special Services</h1>
-            <p>Select a platform and customize your service order</p>
-        </header>
+  <!-- Left Sidebar Drawer Navigation -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar(true)"></div>
+  <div class="left-sidebar" id="leftSidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
+      <button class="sidebar-close-btn" onclick="closeSidebar(true)" aria-label="Close Sidebar">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    
+    <ul class="sidebar-menu">
+      <li id="authMenuItem"><a href="/login/">🔐 Login / Create Account</a></li>
+      <li><a href="/">🛒 New Order</a></li>
+      <li><a href="/orders/">📦 My Orders</a></li>
+      <li><a href="/pages/privacy-policy.html">🔒 Privacy Policy</a></li>
+      <li><a href="/pages/refund-policy.html">💸 Refund Policy</a></li>
+      <li><a href="/pages/terms.html">📜 Terms &amp; Conditions</a></li>
+      <li><a href="/pages/contact.html">📞 Contact Us</a></li>
+      <li><a href="/pages/about.html">ℹ️ About Us</a></li>
+      <li><a href="/buy-smm-panel">🛒 Buy SMM Panel</a></li>
+    </ul>
 
-        <!-- Platform Tabs (Instagram & Facebook Only) -->
-        <div class="platform-tabs">
-            <button class="tab-btn active" onclick="switchPlatform('instagram')">
-                <i class="fa-brands fa-instagram"></i> Instagram
-            </button>
-            <button class="tab-btn" onclick="switchPlatform('facebook')">
-                <i class="fa-brands fa-facebook"></i> Facebook
-            </button>
-        </div>
+    <div class="sidebar-footer-media">
+      <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="watch-tutorials-btn">
+        <i class="fa-brands fa-youtube"></i> Watch Tutorials
+      </a>
+    </div>
+  </div>
 
-        <!-- Main Content Grid -->
-        <div class="content-grid">
-            
-            <!-- Left Side: Service Categories & Selection -->
-            <div class="service-selection-box">
-                
-                <div class="form-group">
-                    <label for="categorySelect">Category</label>
-                    <select id="categorySelect" onchange="loadServices()">
-                        <!-- Dynamic Categories -->
-                    </select>
-                </div>
+  <!-- Main Container -->
+  <div class="platform-container">
+    
+    <!-- Hamburger Button -->
+    <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
 
-                <div class="form-group">
-                    <label for="serviceSelect">Service</label>
-                    <select id="serviceSelect" onchange="updateServiceDetails()">
-                        <!-- Dynamic Services -->
-                    </select>
-                </div>
+    <div class="header-title-card">
+      <h2>🔥 Premium Quality Followers</h2>
+      <p>Select platform & customize your order</p>
+    </div>
 
-                <div class="form-group">
-                    <label for="targetLink">Link / Username</label>
-                    <input type="url" id="targetLink" placeholder="Enter target link here..." required>
-                </div>
+    <!-- Platform Selector Tabs -->
+    <div class="platform-tabs">
+      <button class="tab-btn active" id="tab-instagram" onclick="switchPlatform('instagram')">
+        <i class="fa-brands fa-instagram"></i> Instagram
+      </button>
+      <button class="tab-btn" id="tab-facebook" onclick="switchPlatform('facebook')">
+        <i class="fa-brands fa-facebook-f"></i> Facebook
+      </button>
+    </div>
 
-                <div class="form-group">
-                    <label for="quantity">Quantity</label>
-                    <input type="number" id="quantity" value="1000" oninput="calculateTotal()" min="1">
-                    <small id="minMaxInfo" class="info-text">Min: 0 | Max: 0</small>
-                </div>
+    <!-- Service Selection Form -->
+    <div class="service-box">
+      
+      <div class="form-group">
+        <label for="categorySelect">Category</label>
+        <select id="categorySelect" onchange="loadServices()"></select>
+      </div>
 
-                <div class="price-box">
-                    <span>Total Charge:</span>
-                    <strong id="totalPrice">₹0.00</strong>
-                </div>
+      <div class="form-group">
+        <label for="serviceSelect">Service</label>
+        <select id="serviceSelect" onchange="updateDetails()"></select>
+      </div>
 
-                <button class="submit-btn" onclick="submitOrder()">Submit Order</button>
+      <div class="form-group">
+        <label for="targetLink">Link / Username</label>
+        <input type="text" id="targetLink" placeholder="Enter post/profile link here...">
+      </div>
 
-            </div>
+      <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" oninput="calculateTotal()" value="1000">
+        <small id="minMaxText" class="info-text">Min: 0 | Max: 0</small>
+      </div>
 
-            <!-- Right Side: Service Details Box -->
-            <div class="service-details-box">
-                <h2>Service Specifications</h2>
-                <hr>
-                
-                <div class="detail-item">
-                    <span><i class="fa-solid fa-tag"></i> Service Name:</span>
-                    <strong id="detailName">-</strong>
-                </div>
+      <div class="price-display">
+        <span>Total Price:</span>
+        <strong id="totalPrice">₹0.00</strong>
+      </div>
 
-                <div class="detail-item">
-                    <span><i class="fa-solid fa-indian-rupee-sign"></i> Price per 1K:</span>
-                    <strong id="detailPrice">₹0.00</strong>
-                </div>
-
-                <div class="detail-item">
-                    <span><i class="fa-solid fa-arrows-rotate"></i> Refill:</span>
-                    <span id="detailRefill" class="badge">-</span>
-                </div>
-
-                <div class="detail-item">
-                    <span><i class="fa-solid fa-chart-line-down"></i> Drop Rate:</span>
-                    <span id="detailDrop" class="badge">-</span>
-                </div>
-
-                <div class="detail-item">
-                    <span><i class="fa-solid fa-star"></i> Quality:</span>
-                    <span id="detailQuality" class="badge">-</span>
-                </div>
-
-                <div class="detail-item">
-                    <span><i class="fa-solid fa-clock"></i> Delivery Time:</span>
-                    <span id="detailSpeed">-</span>
-                </div>
-
-                <div class="description-container">
-                    <h3><i class="fa-solid fa-circle-info"></i> Description</h3>
-                    <p id="detailDescription">Select a service to see details.</p>
-                </div>
-            </div>
-
-        </div>
+      <button class="order-btn" onclick="placeOrder()">Place Order</button>
 
     </div>
 
-    <script src="script.js"></script>
+    <!-- Details Box -->
+    <div class="details-card">
+      <h3><i class="fa-solid fa-circle-info"></i> Service Details</h3>
+      <div class="detail-row"><span>Service Name:</span> <strong id="dName">-</strong></div>
+      <div class="detail-row"><span>Price / 1K:</span> <strong id="dPrice">₹0.00</strong></div>
+      <div class="detail-row"><span>Refill:</span> <span id="dRefill" class="tag">-</span></div>
+      <div class="detail-row"><span>Drop Rate:</span> <span id="dDrop" class="tag">-</span></div>
+      <div class="detail-row"><span>Quality:</span> <span id="dQuality" class="tag">-</span></div>
+      <div class="detail-row"><span>Delivery Time:</span> <span id="dSpeed" class="tag">-</span></div>
+      <div class="description-box">
+        <h4>Description:</h4>
+        <p id="dDesc">Select a service to see details.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

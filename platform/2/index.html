@@ -139,7 +139,7 @@
     filter: drop-shadow(0px 2px 8px var(--platform-glow-color, rgba(168, 85, 247, 0.4)));
   }
 
-  /* Custom Order Form Styles matching main site card UI */
+  /* Custom Order Form Styles */
   .p2-card {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--sidebar-border);
@@ -218,8 +218,8 @@
   .upi-app-btn-grid {
     display: flex;
     justify-content: space-between;
-    gap: 2px;
-    margin-top: 4px;
+    gap: 6px;
+    margin-top: 10px;
     width: 100%;
   }
 
@@ -228,18 +228,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.95);
     border: 1px solid rgba(226, 232, 240, 0.6);
     border-radius: 12px;
-    padding: 8px 4px;
+    padding: 10px 4px;
     text-decoration: none;
     color: #1e293b;
     font-weight: 700;
     font-size: 12px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-    pointer-events: none;
-    cursor: default;
   }
 
   /* Sidebar Drawer Overlay */
@@ -358,11 +355,11 @@
 <body data-platform="instagram">
 
 <!-- Left Sidebar Navigation -->
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar(true)"></div>
-<div class="left-sidebar" id="leftSidebar">
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<div class="left-sidebar" id="leftSidebar" aria-hidden="true">
   <div class="sidebar-header">
     <div class="sidebar-title">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
-    <button class="sidebar-close-btn" onclick="closeSidebar(true)" aria-label="Close Sidebar"><i class="fa-solid fa-xmark"></i></button>
+    <button class="sidebar-close-btn" onclick="closeSidebar()" aria-label="Close Sidebar"><i class="fa-solid fa-xmark"></i></button>
   </div>
   
   <ul class="sidebar-menu">
@@ -462,7 +459,7 @@
 
     <div class="form-group">
       <label for="quantity">Quantity</label>
-      <input type="number" id="quantity" class="form-control" placeholder="Enter quantity">
+      <input type="number" id="quantity" class="form-control" placeholder="Enter quantity" oninput="calculateTotal()">
       <small id="minMaxText" style="color: #94a3b8; font-size: 11px; margin-top: 4px; display: block;"></small>
     </div>
 
@@ -511,7 +508,7 @@
     </div>
 
     <div id="checkoutUpiView" class="payment-view-box">
-      <div class="scan-title" style="font-weight: 800; color: var(--platform-primary, #a855f7); font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
+      <div class="scan-title" style="font-weight: 800; color: #a855f7; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
         SCAN TO PAY VIA UPI
       </div>
       <div class="qr-wrapper" style="text-align: center; margin-bottom: 2px;">
@@ -538,7 +535,7 @@
     </div>
 
     <div class="notice-yellow-box" style="margin-top: 10px;">
-      <strong>⚠️ After payment, enter the UTR/TxID & confirm.</strong>
+      <strong>⚠️ After payment, enter the UTR/TxID &amp; confirm.</strong>
     </div>
 
     <button class="whatsapp-submit-btn" style="margin-top: 15px;" onclick="submitOrderToWhatsApp()">
@@ -551,6 +548,9 @@
 <script src="script.js"></script>
 
 <script>
+  let currentTotalAmount = "0.00";
+  const upiID = "merchant@upi"; // Replace with your actual merchant UPI ID
+
   function applyPlatformTheme(platform) {
     if (!platform) return;
     document.body.setAttribute('data-platform', platform.toLowerCase());
@@ -566,6 +566,21 @@
     if (typeof switchPlatform === 'function') {
       switchPlatform(platform);
     }
+  }
+
+  function calculateTotal() {
+    const qty = parseFloat(document.getElementById("quantity").value) || 0;
+    // Example rate calculation logic, update with actual service rate
+    const ratePerUnit = 0.10; 
+    const total = (qty * ratePerUnit).toFixed(2);
+    currentTotalAmount = total;
+    document.getElementById("totalPrice").innerText = "₹" + total;
+  }
+
+  function generateDynamicUPIQR(amount) {
+    const qrImg = document.getElementById("checkoutQrImg");
+    const upiUrl = `upi://pay?pa=${upiID}&pn=Raj%20SMM%20Panel&am=${amount}&cu=INR`;
+    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
   }
 
   function switchCheckoutPayment(method) {
@@ -601,21 +616,62 @@
 
   function openSidebar() {
     document.getElementById("leftSidebar").classList.add("active");
+    document.getElementById("leftSidebar").setAttribute("aria-hidden", "false");
     document.getElementById("sidebarOverlay").classList.add("active");
   }
 
   function closeSidebar() {
     document.getElementById("leftSidebar").classList.remove("active");
+    document.getElementById("leftSidebar").setAttribute("aria-hidden", "true");
     document.getElementById("sidebarOverlay").classList.remove("active");
   }
 
   function openCheckoutModal() {
+    const link = document.getElementById("targetLink").value.trim();
+    const qty = document.getElementById("quantity").value;
+
+    if (!link || !qty || qty <= 0) {
+      alert("Please enter a valid link/username and quantity.");
+      return;
+    }
+
+    document.getElementById("summaryPayAmount").innerText = currentTotalAmount;
+    generateDynamicUPIQR(currentTotalAmount);
     document.getElementById("checkoutPage").classList.remove("hidden");
   }
 
   function closeCheckout() {
     document.getElementById("checkoutPage").classList.add("hidden");
   }
+
+  function submitOrderToWhatsApp() {
+    const txnId = document.getElementById("checkoutTxnId").value.trim();
+    const link = document.getElementById("targetLink").value.trim();
+    const qty = document.getElementById("quantity").value;
+
+    if (!txnId) {
+      alert("Please enter the UTR/TxID number to confirm your order.");
+      return;
+    }
+
+    const message = encodeURIComponent(
+      `*New Order Request - Platform 2*\n` +
+      `Link/Username: ${link}\n` +
+      `Quantity: ${qty}\n` +
+      `Amount: ₹${currentTotalAmount}\n` +
+      `Transaction/UTR ID: ${txnId}`
+    );
+
+    window.open(`https://wa.me/919239628344?text=${message}`, "_blank");
+  }
+
+  // Close modals on Escape key press
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeSidebar();
+      closeCheckout();
+    }
+  });
 </script>
 </body>
 </html>

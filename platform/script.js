@@ -40,3 +40,18 @@ function openComingSoonModal() {
 function closeComingSoonModal() {
   document.getElementById("comingSoonModal").classList.remove("active");
 }
+// Premium Quality Followers কার্ড খুঁজে বের করে /platform/2/ লিঙ্ক যুক্ত করা
+document.addEventListener('DOMContentLoaded', function() {
+  // সার্ভিস কার্ডগুলোর মধ্য থেকে "Premium Quality Followers" টেক্সটটি খোঁজা
+  const cards = document.querySelectorAll('.service-card, .card, .service-item'); // আপনার কার্ডের ক্লাসের নাম দিন
+  
+  cards.forEach(card => {
+    if (card.innerText.includes('Premium Quality Followers')) {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', function(e) {
+        // ব্রাউজারকে সরাসরি নতুন লিংকে পাঠাবে
+        window.location.href = '/platform/2/';
+      });
+    }
+  });
+});

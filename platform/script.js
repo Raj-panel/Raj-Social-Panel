@@ -1,4 +1,3 @@
-// Left Sidebar Controls (আপনার মূল ফাইল থেকে নেওয়া লজিক)
 function openSidebar() {
   const sidebar = document.getElementById("leftSidebar");
   const overlay = document.getElementById("sidebarOverlay");
@@ -34,7 +33,6 @@ window.addEventListener("popstate", function (event) {
   }
 });
 
-// Modal Logic for High Quality Service (Coming Soon)
 function openComingSoonModal() {
   document.getElementById("comingSoonModal").classList.add("active");
 }

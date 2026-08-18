@@ -224,15 +224,38 @@ function calculateTotal() {
 }
 
 function placeOrder() {
-    const link = document.getElementById('targetLink').value;
-    if(!link) {
+    const link = document.getElementById('targetLink').value.trim();
+    const service = getActiveService();
+    const qty = parseInt(document.getElementById('quantity').value) || 0;
+    
+    // মোট টাকা হিসাব
+    let total = 0;
+    if (service.type === "custom") {
+        total = (qty / 1000) * service.pricePer1000;
+    } else {
+        total = service.price;
+    }
+
+    if (!link) {
         alert('Please enter a target link or username!');
         return;
     }
-    alert('Order placed successfully!');
-}
 
-document.addEventListener('DOMContentLoaded', () => {
-    initTheme();
-    loadCategories();
-});
+    if (total <= 0) {
+        alert('Invalid order amount!');
+        return;
+    }
+
+    // পেমেন্টের জন্য অর্ডারের ডাটা LocalStorage এ সেভ করা হচ্ছে
+    const orderData = {
+        serviceName: service.name,
+        link: link,
+        quantity: qty,
+        amount: total.toFixed(2)
+    };
+
+    localStorage.setItem('pendingOrder', JSON.stringify(orderData));
+
+    // Checkout পেজে পাঠানো হচ্ছে
+    window.location.href = "https://rajsmmpanel.in/platform/2/checkout";
+}

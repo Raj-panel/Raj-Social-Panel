@@ -22,7 +22,7 @@
   --modal-bg: #ffffff;
 }
 
-/* System Dark Mode (যখন ফোনে ডার্ক মোড অন থাকবে) */
+/* System Dark Mode (মোবাইলে ডার্ক মোড অন থাকলে) */
 @media (prefers-color-scheme: dark) {
   :root {
     --bg-main: #0d1117;
@@ -141,7 +141,7 @@ body {
   text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-/* Social Icons Section Grid */
+/* Social Icons Section Grid (Non-Clickable) */
 .social-icons-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -157,13 +157,10 @@ body {
   justify-content: center;
   font-size: 24px;
   color: #ffffff;
-  text-decoration: none;
   box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-  transition: transform 0.2s ease;
-}
-
-.social-box:active {
-  transform: scale(0.95);
+  cursor: default;
+  pointer-events: none;
+  user-select: none;
 }
 
 .social-box.fb { background: linear-gradient(135deg, #1877f2, #0052cc); }

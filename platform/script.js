@@ -1,76 +1,86 @@
-/* ==================================================
-   PLATFORM PAGE FUNCTIONALITY & CONNECTOR
-   ================================================== */
+document.addEventListener("DOMContentLoaded", function () {
+  // DOM Elements
+  const menuToggleBtn = document.getElementById("menuToggleBtn");
+  const leftSidebar = document.getElementById("leftSidebar");
+  const sidebarOverlay = document.getElementById("sidebarOverlay");
+  const sidebarCloseBtn = document.getElementById("sidebarCloseBtn");
 
-// Open Left Sidebar Drawer (Reusing existing menu logic)
-function openSidebar() {
-  const sidebar = document.getElementById("leftSidebar");
-  const overlay = document.getElementById("sidebarOverlay");
-  
-  if (sidebar && !sidebar.classList.contains("active")) {
-    sidebar.classList.add("active");
-    overlay.classList.add("active");
-    document.body.style.overflow = "hidden";
-    history.pushState({ sidebarOpen: true }, '');
-  }
-}
+  const organicServicesSection = document.getElementById("organicServicesSection");
+  const premiumServicesSection = document.getElementById("premiumServicesSection");
 
-// Close Left Sidebar Drawer
-function closeSidebar(fromUserAction = false) {
-  const sidebar = document.getElementById("leftSidebar");
-  const overlay = document.getElementById("sidebarOverlay");
-  
-  if (sidebar && sidebar.classList.contains("active")) {
-    sidebar.classList.remove("active");
-    overlay.classList.remove("active");
-    document.body.style.overflow = "auto";
-    
-    if (fromUserAction && history.state && history.state.sidebarOpen) {
-      history.back();
+  const comingSoonModal = document.getElementById("comingSoonModal");
+  const closeModalBtn = document.getElementById("closeModalBtn");
+  const modalOkBtn = document.getElementById("modalOkBtn");
+
+  const watchTutorialBtn = document.getElementById("watchTutorialBtn");
+  const tutorialCard = document.getElementById("tutorialCard");
+
+  /* ==================================================
+     1. SIDEBAR MENU LOGIC (REUSING MAIN PANEL SYSTEM)
+     ================================================== */
+  function openSidebar() {
+    if (leftSidebar && sidebarOverlay) {
+      leftSidebar.classList.add("active");
+      sidebarOverlay.classList.add("active");
     }
   }
-}
 
-// Handle Browser Back Button for Sidebar Close
-window.addEventListener("popstate", function (event) {
-  const sidebar = document.getElementById("leftSidebar");
-  if (sidebar && sidebar.classList.contains("active")) {
-    closeSidebar(false);
+  function closeSidebar() {
+    if (leftSidebar && sidebarOverlay) {
+      leftSidebar.classList.remove("active");
+      sidebarOverlay.classList.remove("active");
+    }
+  }
+
+  if (menuToggleBtn) menuToggleBtn.addEventListener("click", openSidebar);
+  if (sidebarCloseBtn) sidebarCloseBtn.addEventListener("click", closeSidebar);
+  if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeSidebar);
+
+  /* ==================================================
+     2. FIRST OPTION: 100% REAL ORGANIC SERVICE
+     Connects seamlessly to existing main website services
+     ================================================== */
+  if (organicServicesSection) {
+    organicServicesSection.addEventListener("click", function () {
+      window.location.href = "../#order";
+    });
+  }
+
+  /* ==================================================
+     3. SECOND OPTION: SUPER FAST PREMIUM QUALITY
+     Opens the Coming Soon Modal
+     ================================================== */
+  function openComingSoonModal() {
+    if (comingSoonModal) comingSoonModal.classList.add("active");
+  }
+
+  function closeComingSoonModal() {
+    if (comingSoonModal) comingSoonModal.classList.remove("active");
+  }
+
+  if (premiumServicesSection) {
+    premiumServicesSection.addEventListener("click", openComingSoonModal);
+  }
+
+  if (closeModalBtn) closeModalBtn.addEventListener("click", closeComingSoonModal);
+  if (modalOkBtn) modalOkBtn.addEventListener("click", closeComingSoonModal);
+
+  if (comingSoonModal) {
+    comingSoonModal.addEventListener("click", function (e) {
+      if (e.target === comingSoonModal) {
+        closeComingSoonModal();
+      }
+    });
+  }
+
+  /* ==================================================
+     4. TUTORIAL THUMBNAIL CLICK ACTION
+     ================================================== */
+  if (tutorialCard) {
+    tutorialCard.addEventListener("click", function () {
+      if (watchTutorialBtn) {
+        window.open(watchTutorialBtn.href, "_blank");
+      }
+    });
   }
 });
-
-// Option 1 Handler: 100% Real Organic Service
-function handleOrganicService() {
-  // Directly redirects to existing website main page / services section
-  window.location.href = "../index.html#services";
-}
-
-// Option 2 Handler: Superfast Premium Quality Service
-function handlePremiumService() {
-  // Opens 3D Glass Coming Soon Popup
-  const modal = document.getElementById("comingSoonModal");
-  if (modal) {
-    modal.classList.add("active");
-  }
-}
-
-// Close Modal Handler
-function closeComingSoonModal(event) {
-  if (!event || event.target.id === "comingSoonModal" || event.target.tagName === "BUTTON") {
-    const modal = document.getElementById("comingSoonModal");
-    if (modal) {
-      modal.classList.remove("active");
-    }
-  }
-}
-
-// Future Service Category Connection Structure
-const REAL_ORGANIC_SERVICES = {
-  enabled: true,
-  targetUrl: "../index.html#services"
-};
-
-const PREMIUM_QUALITY_SERVICES = {
-  enabled: false,
-  targetUrl: null
-};

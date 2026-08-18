@@ -210,6 +210,7 @@ body {
 
 .organic-icon { background: linear-gradient(135deg, #f43f5e, #e11d48); }
 .quality-icon { background: linear-gradient(135deg, #c084fc, #9333ea); }
+.lowest-icon { background: linear-gradient(135deg, #10b981, #059669); }
 
 .card-text h3 {
   font-size: 15px;

@@ -353,17 +353,6 @@ const serviceData = {
             { name: "50K Views", price: 349, badge: "🔥 BEST VALUE", badgeClass: "badge-best", desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" },
             { name: "100K Views", price: 449, badge: "👑 MOST POPULAR", badgeClass: "badge-best", desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" }
         ],
-        /*
-        "POST / VIDEO Comments Non-Drop": [
-            { name: "50 Comments", price: 10 },
-            { name: "100 Comments", price: 15 },
-            { name: "300 Comments", price: 25, badge: "⭐ Popular", badgeClass: "badge-popular" },
-            { name: "500 Comments", price: 39, badge: "🔥 Best Value", badgeClass: "badge-best" },
-            { name: "1K Comments", price: 60 },
-            { name: "2K Comments", price: 110, badge: "🏆 Best Deal", badgeClass: "badge-best" },
-            { name: "5K Comments", price: 260, badge: "👑 Most Popular", badgeClass: "badge-best" }
-        ],
-        */
         "POST / VIDEO Shares Non-Drop": [
             { name: "100 Shares", price: 15, desc: "🔗 Real Quality Shares • ♻️ Lifetime Refill • Start In 20 Min" },
             { name: "1K Shares", price: 25, desc: "🔗 Real Quality Shares • ♻️ Lifetime Refill • Start In 20 Min" },
@@ -404,13 +393,11 @@ const serviceData = {
     },
     tiktok: {
         "TikTok Followers 30 Day Refill♻️": [
-            { name: "100 TikTok Followers", price: 39, desc: "👤 Premium Mixed Followers • Starts in 30 Min" },
-            { name: "200 TikTok Followers", price: 59, desc: "👤 Premium Mixed Followers • Starts in 30 Min" },
-            { name: "300 TikTok Followers", price: 79, desc: "👤 Premium Mixed Followers • Starts in 30 Min" },
-            { name: "500 TikTok Followers", price: 99, desc: "👤 Premium Mixed Followers • Starts in 30 Min" },
-            { name: "500 TikTok Followers", price: 119, desc: "👤 Premium Mixed Followers • Starts in 30 Min" },
-            { name: "700 TikTok Followers", price: 179, desc: "👤 Premium Mixed Followers • Starts in 30 Min" },
-            { name: "1K TikTok Followers", price: 249, desc: "👤 Premium Mixed Followers • Starts in 30 Min" }
+            {
+                type: "custom",
+                name: "TikTok Followers Premium Mixed • Starts in 30 Min",
+                pricePer1000: 249
+            }
         ],
         "TikTok Likes Non-Drop": [
             { name: "100 TikTok Likes", price: 35, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" },

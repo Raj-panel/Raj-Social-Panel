@@ -116,13 +116,13 @@ body {
 }
 
 .header-platform-img {
-  width: 100%;
-  max-width: 320px;
+  width: 150%;
+  max-width: 520px;
   height: auto;
   max-height: 160px; /* সুন্দর সাইজে অ্যাডজাস্ট করা হয়েছে */
   display: block;
   object-fit: contain;
-  border-radius: 12px;
+  border-radius: 4px;
 }
 
 /* Social Media Grid Section */

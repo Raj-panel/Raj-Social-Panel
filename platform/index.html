@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Platform - Raj SMM Panel</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for Platform Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <main class="platform-container">
+        <header class="platform-header">
+            <h1 class="platform-main-title">আমাদের প্ল্যাটফর্ম নির্বাচন করুন</h1>
+            <p class="platform-sub-title">আপনার কাঙ্ক্ষিত সোশ্যাল মিডিয়া সার্ভিস বেছে নিন</p>
+        </header>
+
+        <section class="platform-grid">
+
+            <!-- INSTAGRAM CARD -->
+            <article class="platform-card card-instagram" data-platform="instagram">
+                <div class="card-header">
+                    <div class="logo-wrapper logo-instagram">
+                        <i class="fa-brands fa-instagram"></i>
+                    </div>
+                    <div class="title-wrapper">
+                        <h2 class="platform-name">Instagram</h2>
+                        <span class="badge badge-in">🇮🇳 India</span>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <button class="option-btn btn-organic" data-type="organic" data-target="../#instagram">
+                        <span class="btn-text">100% Real Organic Service</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+
+                    <button class="option-btn btn-high-quality" data-type="hq">
+                        <span class="btn-text">High Quality Service</span>
+                        <span class="btn-tag">Original</span>
+                    </button>
+                </div>
+            </article>
+
+            <!-- FACEBOOK CARD -->
+            <article class="platform-card card-facebook" data-platform="facebook">
+                <div class="card-header">
+                    <div class="logo-wrapper logo-facebook">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </div>
+                    <div class="title-wrapper">
+                        <h2 class="platform-name">Facebook</h2>
+                        <span class="badge badge-in">🇮🇳 India</span>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <button class="option-btn btn-organic" data-type="organic" data-target="../#facebook">
+                        <span class="btn-text">100% Real Organic Service</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+
+                    <button class="option-btn btn-high-quality" data-type="hq">
+                        <span class="btn-text">High Quality Service</span>
+                        <span class="btn-tag">Original</span>
+                    </button>
+                </div>
+            </article>
+
+            <!-- YOUTUBE CARD -->
+            <article class="platform-card card-youtube" data-platform="youtube">
+                <div class="card-header">
+                    <div class="logo-wrapper logo-youtube">
+                        <i class="fa-brands fa-youtube"></i>
+                    </div>
+                    <div class="title-wrapper">
+                        <h2 class="platform-name">YouTube</h2>
+                        <span class="badge badge-yt">Existing Services</span>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <button class="option-btn btn-organic" data-type="organic" data-target="../#youtube">
+                        <span class="btn-text">Existing YouTube Service</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+
+                    <button class="option-btn btn-high-quality" data-type="hq">
+                        <span class="btn-text">High Quality Service</span>
+                        <span class="btn-tag">Original</span>
+                    </button>
+                </div>
+            </article>
+
+            <!-- TIKTOK CARD -->
+            <article class="platform-card card-tiktok" data-platform="tiktok">
+                <div class="card-header">
+                    <div class="logo-wrapper logo-tiktok">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </div>
+                    <div class="title-wrapper">
+                        <h2 class="platform-name">TikTok</h2>
+                        <span class="badge badge-bd">🇧🇩 Bangladesh</span>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <button class="option-btn btn-organic" data-type="organic" data-target="../#tiktok">
+                        <span class="btn-text">100% Real Organic Service</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+
+                    <button class="option-btn btn-high-quality" data-type="hq">
+                        <span class="btn-text">High Quality Service</span>
+                        <span class="btn-tag">Original</span>
+                    </button>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- HIGH QUALITY MODAL / NOTICE -->
+        <div id="hqNoticeModal" class="hq-modal hidden">
+            <div class="hq-modal-content">
+                <span class="hq-modal-close">&times;</span>
+                <i class="fa-solid fa-clock-rotate-left hq-icon"></i>
+                <h3>Coming Soon!</h3>
+                <p>High Quality Services will be available soon.</p>
+                <button class="hq-modal-btn" id="hqCloseBtn">ঠিক আছে</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

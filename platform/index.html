@@ -1,137 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Platform - Raj SMM Panel</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome for Platform Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Raj SMM Panel – Premium Platform</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-    <main class="platform-container">
-        <header class="platform-header">
-            <h1 class="platform-main-title">আমাদের প্ল্যাটফর্ম নির্বাচন করুন</h1>
-            <p class="platform-sub-title">আপনার কাঙ্ক্ষিত সোশ্যাল মিডিয়া সার্ভিস বেছে নিন</p>
-        </header>
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar(true)"></div>
+  <div class="left-sidebar" id="leftSidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
+      <button class="sidebar-close-btn" onclick="closeSidebar(true)" aria-label="Close Sidebar">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    
+    <ul class="sidebar-menu">
+      <li id="authMenuItem">
+        <a href="../login/">🔐 Login / Create Account</a>
+      </li>
+      <li><a href="../">🛒 New Order</a></li>
+      <li><a href="../orders/">📦 My Orders</a></li>
+      <li><a href="../pages/privacy-policy.html">🔒 Privacy Policy</a></li>
+      <li><a href="../pages/refund-policy.html">💸 Refund Policy</a></li>
+      <li><a href="../pages/terms.html">📜 Terms &amp; Conditions</a></li>
+      <li><a href="../pages/contact.html">📞 Contact Us</a></li>
+      <li><a href="../pages/about.html">ℹ️ About Us</a></li>
+      <li><a href="../buy-smm-panel">🛒 Buy SMM Panel</a></li>
+    </ul>
 
-        <section class="platform-grid">
+    <div class="sidebar-footer-media">
+      <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="watch-tutorials-btn">
+        <i class="fa-brands fa-youtube"></i> Watch Tutorials
+      </a>
+      <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="tutorial-banner-link">
+        <img src="../thumbnail.png" alt="Watch Tutorial" class="tutorial-banner-img" />
+      </a>
+    </div>
+  </div>
 
-            <!-- INSTAGRAM CARD -->
-            <article class="platform-card card-instagram" data-platform="instagram">
-                <div class="card-header">
-                    <div class="logo-wrapper logo-instagram">
-                        <i class="fa-brands fa-instagram"></i>
-                    </div>
-                    <div class="title-wrapper">
-                        <h2 class="platform-name">Instagram</h2>
-                        <span class="badge badge-in">🇮🇳 India</span>
-                    </div>
-                </div>
+  <div class="platform-container">
+    
+    <header class="platform-header">
+      <button class="platform-menu-button" onclick="openSidebar()" aria-label="Open Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </header>
 
-                <div class="option-group">
-                    <button class="option-btn btn-organic" data-type="organic" data-target="../#instagram">
-                        <span class="btn-text">100% Real Organic Service</span>
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </button>
+    <div class="platform-branding-card">
+      <div class="platform-crown-icon">👑</div>
+      <h1 class="platform-logo-text">Raj</h1>
+      <div class="platform-logo-sub">SMM PANEL</div>
+    </div>
 
-                    <button class="option-btn btn-high-quality" data-type="hq">
-                        <span class="btn-text">High Quality Service</span>
-                        <span class="btn-tag">Original</span>
-                    </button>
-                </div>
-            </article>
+    <div class="platform-app-grid">
+      <div class="platform-app-card insta-card" onclick="selectApp('instagram')">
+        <i class="fa-brands fa-instagram"></i>
+      </div>
+      <div class="platform-app-card fb-card" onclick="selectApp('facebook')">
+        <i class="fa-brands fa-facebook-f"></i>
+      </div>
+      <div class="platform-app-card yt-card" onclick="selectApp('youtube')">
+        <i class="fa-brands fa-youtube"></i>
+      </div>
+      <div class="platform-app-card tt-card" onclick="selectApp('tiktok')">
+        <i class="fa-brands fa-tiktok"></i>
+      </div>
+    </div>
 
-            <!-- FACEBOOK CARD -->
-            <article class="platform-card card-facebook" data-platform="facebook">
-                <div class="card-header">
-                    <div class="logo-wrapper logo-facebook">
-                        <i class="fa-brands fa-facebook-f"></i>
-                    </div>
-                    <div class="title-wrapper">
-                        <h2 class="platform-name">Facebook</h2>
-                        <span class="badge badge-in">🇮🇳 India</span>
-                    </div>
-                </div>
-
-                <div class="option-group">
-                    <button class="option-btn btn-organic" data-type="organic" data-target="../#facebook">
-                        <span class="btn-text">100% Real Organic Service</span>
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </button>
-
-                    <button class="option-btn btn-high-quality" data-type="hq">
-                        <span class="btn-text">High Quality Service</span>
-                        <span class="btn-tag">Original</span>
-                    </button>
-                </div>
-            </article>
-
-            <!-- YOUTUBE CARD -->
-            <article class="platform-card card-youtube" data-platform="youtube">
-                <div class="card-header">
-                    <div class="logo-wrapper logo-youtube">
-                        <i class="fa-brands fa-youtube"></i>
-                    </div>
-                    <div class="title-wrapper">
-                        <h2 class="platform-name">YouTube</h2>
-                        <span class="badge badge-yt">Existing Services</span>
-                    </div>
-                </div>
-
-                <div class="option-group">
-                    <button class="option-btn btn-organic" data-type="organic" data-target="../#youtube">
-                        <span class="btn-text">Existing YouTube Service</span>
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </button>
-
-                    <button class="option-btn btn-high-quality" data-type="hq">
-                        <span class="btn-text">High Quality Service</span>
-                        <span class="btn-tag">Original</span>
-                    </button>
-                </div>
-            </article>
-
-            <!-- TIKTOK CARD -->
-            <article class="platform-card card-tiktok" data-platform="tiktok">
-                <div class="card-header">
-                    <div class="logo-wrapper logo-tiktok">
-                        <i class="fa-brands fa-tiktok"></i>
-                    </div>
-                    <div class="title-wrapper">
-                        <h2 class="platform-name">TikTok</h2>
-                        <span class="badge badge-bd">🇧🇩 Bangladesh</span>
-                    </div>
-                </div>
-
-                <div class="option-group">
-                    <button class="option-btn btn-organic" data-type="organic" data-target="../#tiktok">
-                        <span class="btn-text">100% Real Organic Service</span>
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </button>
-
-                    <button class="option-btn btn-high-quality" data-type="hq">
-                        <span class="btn-text">High Quality Service</span>
-                        <span class="btn-tag">Original</span>
-                    </button>
-                </div>
-            </article>
-
-        </section>
-
-        <!-- HIGH QUALITY MODAL / NOTICE -->
-        <div id="hqNoticeModal" class="hq-modal hidden">
-            <div class="hq-modal-content">
-                <span class="hq-modal-close">&times;</span>
-                <i class="fa-solid fa-clock-rotate-left hq-icon"></i>
-                <h3>Coming Soon!</h3>
-                <p>High Quality Services will be available soon.</p>
-                <button class="hq-modal-btn" id="hqCloseBtn">ঠিক আছে</button>
-            </div>
+    <div class="platform-quality-wrapper">
+      
+      <div class="platform-quality-card platform-organic-card" onclick="handleOrganicService()">
+        <div class="platform-card-left">
+          <div class="platform-card-icon shield-icon">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div class="platform-card-text">
+            <h3>100% Real Organic Service</h3>
+            <p>100% Real &amp; Organic Followers</p>
+          </div>
         </div>
-    </main>
+        <div class="platform-card-arrow">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
 
-    <script src="script.js"></script>
+      <div class="platform-quality-card platform-premium-card" onclick="handlePremiumService()">
+        <div class="platform-card-left">
+          <div class="platform-card-icon diamond-icon">
+            <i class="fa-solid fa-gem"></i>
+          </div>
+          <div class="platform-card-text">
+            <h3>Superfast Premium Quality</h3>
+            <p>Premium Quality Service</p>
+          </div>
+        </div>
+        <div class="platform-card-arrow">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="platform-tutorial">
+      <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="platform-tutorial-btn">
+        <i class="fa-brands fa-youtube"></i> WATCH TUTORIALS
+      </a>
+      <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="platform-tutorial-card">
+        <img src="../thumbnail.png" alt="Raj SMM Panel Tutorial" class="platform-tutorial-img" />
+      </a>
+    </div>
+
+  </div>
+
+  <div class="platform-modal-overlay" id="comingSoonModal" onclick="closeComingSoonModal(event)">
+    <div class="platform-coming-soon-card">
+      <div class="platform-modal-icon">💎</div>
+      <h2>COMING SOON</h2>
+      <p>Premium Quality Services Launching Soon!</p>
+      <button class="platform-modal-close-btn" onclick="closeComingSoonModal()">Got It</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
 </body>
 </html>

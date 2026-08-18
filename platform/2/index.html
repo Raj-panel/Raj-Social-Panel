@@ -1,1 +1,119 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform Services 2 - Raj SMM Panel</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
 
+    <!-- Main Container -->
+    <div class="container">
+        
+        <!-- Header Section -->
+        <header class="page-header">
+            <h1>Special Services</h1>
+            <p>Select a platform and customize your service order</p>
+        </header>
+
+        <!-- Platform Tabs (Instagram & Facebook Only) -->
+        <div class="platform-tabs">
+            <button class="tab-btn active" onclick="switchPlatform('instagram')">
+                <i class="fa-brands fa-instagram"></i> Instagram
+            </button>
+            <button class="tab-btn" onclick="switchPlatform('facebook')">
+                <i class="fa-brands fa-facebook"></i> Facebook
+            </button>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="content-grid">
+            
+            <!-- Left Side: Service Categories & Selection -->
+            <div class="service-selection-box">
+                
+                <div class="form-group">
+                    <label for="categorySelect">Category</label>
+                    <select id="categorySelect" onchange="loadServices()">
+                        <!-- Dynamic Categories -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="serviceSelect">Service</label>
+                    <select id="serviceSelect" onchange="updateServiceDetails()">
+                        <!-- Dynamic Services -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="targetLink">Link / Username</label>
+                    <input type="url" id="targetLink" placeholder="Enter target link here..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" id="quantity" value="1000" oninput="calculateTotal()" min="1">
+                    <small id="minMaxInfo" class="info-text">Min: 0 | Max: 0</small>
+                </div>
+
+                <div class="price-box">
+                    <span>Total Charge:</span>
+                    <strong id="totalPrice">₹0.00</strong>
+                </div>
+
+                <button class="submit-btn" onclick="submitOrder()">Submit Order</button>
+
+            </div>
+
+            <!-- Right Side: Service Details Box -->
+            <div class="service-details-box">
+                <h2>Service Specifications</h2>
+                <hr>
+                
+                <div class="detail-item">
+                    <span><i class="fa-solid fa-tag"></i> Service Name:</span>
+                    <strong id="detailName">-</strong>
+                </div>
+
+                <div class="detail-item">
+                    <span><i class="fa-solid fa-indian-rupee-sign"></i> Price per 1K:</span>
+                    <strong id="detailPrice">₹0.00</strong>
+                </div>
+
+                <div class="detail-item">
+                    <span><i class="fa-solid fa-arrows-rotate"></i> Refill:</span>
+                    <span id="detailRefill" class="badge">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span><i class="fa-solid fa-chart-line-down"></i> Drop Rate:</span>
+                    <span id="detailDrop" class="badge">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span><i class="fa-solid fa-star"></i> Quality:</span>
+                    <span id="detailQuality" class="badge">-</span>
+                </div>
+
+                <div class="detail-item">
+                    <span><i class="fa-solid fa-clock"></i> Delivery Time:</span>
+                    <span id="detailSpeed">-</span>
+                </div>
+
+                <div class="description-container">
+                    <h3><i class="fa-solid fa-circle-info"></i> Description</h3>
+                    <p id="detailDescription">Select a service to see details.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,140 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Platform - Raj SMM Panel</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link rel="stylesheet" href="style.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Platform Selection - Raj SMM Panel</title>
+
+<!-- Fonts & FontAwesome -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800;1,900&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+<!-- Website Base Styles -->
+<link href="../style.css" rel="stylesheet"/>
+<!-- Dedicated Platform Page Styles -->
+<link href="platform.css" rel="stylesheet"/>
 </head>
-<body>
+<body class="platform-body">
 
-    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar(true)"></div>
-    <div class="left-sidebar" id="leftSidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-title">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
-            <button class="sidebar-close-btn" onclick="closeSidebar(true)" aria-label="Close Sidebar">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-        
-        <ul class="sidebar-menu">
-            <li id="authMenuItem">
-                <a href="/login/">🔐 Login / Create Account</a>
-            </li>
-            <li><a href="/">🛒 New Order</a></li>
-            <li><a href="/orders/">📦 My Orders</a></li>
-            <li id="addFundsMenuItem" style="display: none;"></li>
-            <li><a href="/pages/privacy-policy.html">🔒 Privacy Policy</a></li>
-            <li><a href="/pages/refund-policy.html">💸 Refund Policy</a></li>
-            <li><a href="/pages/terms.html">📜 Terms &amp; Conditions</a></li>
-            <li><a href="/pages/contact.html">📞 Contact Us</a></li>
-            <li><a href="/pages/about.html">ℹ️ About Us</a></li>
-            <li><a href="/buy-smm-panel">🛒 Buy SMM Panel</a></li>
-        </ul>
+<!-- Sidebar Overlay (Reused from Main Site) -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar(true)"></div>
 
-        <div class="sidebar-footer-media">
-            <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="watch-tutorials-btn">
-                <i class="fa-brands fa-youtube"></i> Watch Tutorials
-            </a>
-            <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="tutorial-banner-link">
-                <img src="/thumbnail.png" alt="Watch Tutorial" class="tutorial-banner-img" />
-            </a>
-        </div>
+<!-- Left Sidebar Navigation Drawer (Reused from Main Site) -->
+<div class="left-sidebar" id="leftSidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-title">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
+    <button class="sidebar-close-btn" onclick="closeSidebar(true)" aria-label="Close Sidebar"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  
+  <ul class="sidebar-menu">
+    <li id="authMenuItem">
+      <a href="/login/">🔐 Login / Create Account</a>
+    </li>
+    <li><a href="/">🛒 New Order</a></li>
+    <li><a href="/orders/">📦 My Orders</a></li>
+    <li id="addFundsMenuItem" style="display: none;"></li>
+    <li><a href="/pages/privacy-policy.html">🔒 Privacy Policy</a></li>
+    <li><a href="/pages/refund-policy.html">💸 Refund Policy</a></li>
+    <li><a href="/pages/terms.html">📜 Terms &amp; Conditions</a></li>
+    <li><a href="/pages/contact.html">📞 Contact Us</a></li>
+    <li><a href="/pages/about.html">ℹ️ About Us</a></li>
+    <li><a href="/buy-smm-panel">🛒 Buy SMM Panel</a></li>
+  </ul>
+
+  <div class="sidebar-footer-media">
+    <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="watch-tutorials-btn">
+      <i class="fa-brands fa-youtube"></i> Watch Tutorials
+    </a>
+    <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="tutorial-banner-link">
+      <img src="../thumbnail.png" alt="Watch Tutorial" class="tutorial-banner-img" />
+    </a>
+  </div>
+</div>
+
+<!-- Main Container -->
+<div class="platform-page">
+
+  <!-- Top Navigation Header -->
+  <div class="platform-header">
+    <button class="platform-hamburger-btn" onclick="openSidebar()" aria-label="Open Menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- Hero Glass Card Section -->
+  <div class="platform-hero-card">
+    <div class="platform-hero-glow"></div>
+    <div class="platform-crown">
+      <i class="fa-solid fa-crown"></i>
+    </div>
+    <div class="platform-logo-3d">Raj</div>
+    <div class="platform-sub-logo">SMM PANEL</div>
+  </div>
+
+  <!-- Social Media Icons Row -->
+  <div class="platform-social-grid">
+    <a href="/" class="platform-social-icon platform-fb" aria-label="Facebook">
+      <i class="fa-brands fa-facebook-f"></i>
+    </a>
+    <a href="/" class="platform-social-icon platform-insta" aria-label="Instagram">
+      <i class="fa-brands fa-instagram"></i>
+    </a>
+    <a href="/" class="platform-social-icon platform-yt" aria-label="YouTube">
+      <i class="fa-brands fa-youtube"></i>
+    </a>
+    <a href="/" class="platform-social-icon platform-tt" aria-label="TikTok">
+      <i class="fa-brands fa-tiktok"></i>
+    </a>
+  </div>
+
+  <!-- Service Cards Section -->
+  <div class="platform-services-container">
+    
+    <!-- Card 1: 100% Real Organic Service -->
+    <a href="/" class="platform-service-card">
+      <div class="platform-card-icon-wrapper platform-organic-icon">
+        <i class="fa-solid fa-shield-check"></i>
+      </div>
+      <div class="platform-card-text">
+        <div class="platform-card-title">100% Real Organic Service</div>
+        <div class="platform-card-subtitle">100% Real & Organic Followers</div>
+      </div>
+      <div class="platform-card-arrow">
+        <i class="fa-solid fa-chevron-right"></i>
+      </div>
+    </a>
+
+    <!-- Card 2: High Quality Service (Coming Soon Toggle) -->
+    <div class="platform-service-card" id="platformHqCard" onclick="openHqModal()">
+      <div class="platform-card-icon-wrapper platform-hq-icon">
+        <i class="fa-solid fa-gem"></i>
+      </div>
+      <div class="platform-card-text">
+        <div class="platform-card-title">High Quality Service</div>
+        <div class="platform-card-subtitle">Best Quality Followers</div>
+      </div>
+      <div class="platform-card-arrow">
+        <i class="fa-solid fa-chevron-right"></i>
+      </div>
     </div>
 
-    <div class="platform-app-wrapper">
-        
-        <header class="top-nav">
-            <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-        </header>
+  </div>
 
-        <section class="hero-3d-section">
-            <div class="glass-stage">
-                <div class="crown-icon">
-                    <i class="fa-solid fa-crown"></i>
-                </div>
-                <h1 class="logo-3d-text">Raj</h1>
-                <div class="logo-sub-text">SMM PANEL</div>
-            </div>
-        </section>
+  <!-- Tutorial Button -->
+  <div class="platform-tutorial-wrapper">
+    <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="platform-tutorial-btn">
+      <i class="fa-solid fa-circle-play"></i> WATCH TUTORIALS
+    </a>
+  </div>
 
-        <section class="social-logos-row">
-            <div class="social-icon-box fb">
-                <i class="fa-brands fa-facebook"></i>
-            </div>
-            <div class="social-icon-box insta">
-                <i class="fa-brands fa-instagram"></i>
-            </div>
-            <div class="social-icon-box yt">
-                <i class="fa-brands fa-youtube"></i>
-            </div>
-            <div class="social-icon-box tt">
-                <i class="fa-brands fa-tiktok"></i>
-            </div>
-        </section>
+</div>
 
-        <section class="service-cards-container">
-            
-            <div class="service-glass-card organic-card" onclick="navigateToOrganicServices()">
-                <div class="card-left-icon shield-bg">
-                    <i class="fa-solid fa-shield-halved"></i>
-                </div>
-                <div class="card-details">
-                    <h3>100% Real Organic Service</h3>
-                    <p>100% Real &amp; Organic Followers</p>
-                </div>
-                <div class="card-arrow">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </div>
-            </div>
+<!-- Coming Soon Glass Modal -->
+<div class="platform-modal-overlay" id="hqModalOverlay" onclick="closeHqModal(event)">
+  <div class="platform-modal-card">
+    <div class="platform-modal-icon">💎</div>
+    <div class="platform-modal-title">HIGH QUALITY SERVICE</div>
+    <div class="platform-modal-badge">Coming Soon</div>
+    <p class="platform-modal-desc">
+      Premium high-quality services are coming soon.<br/>Stay tuned!
+    </p>
+    <button class="platform-modal-close-btn" onclick="closeHqModal()">Got It</button>
+  </div>
+</div>
 
-            <div class="service-glass-card premium-card" onclick="openComingSoonModal()">
-                <div class="card-left-icon diamond-bg">
-                    <i class="fa-solid fa-gem"></i>
-                </div>
-                <div class="card-details">
-                    <h3>Superfast Premium Quality</h3>
-                    <p>Premium Quality Service</p>
-                </div>
-                <div class="card-arrow">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </div>
-            </div>
-
-        </section>
-
-        <section class="tutorials-section">
-            <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" class="watch-yt-btn">
-                <i class="fa-brands fa-youtube"></i> WATCH TUTORIALS
-            </a>
-
-            <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" class="tutorial-card-banner">
-                <img src="/thumbnail.png" alt="RAJ SMM PANEL Website Tutorial" />
-            </a>
-        </section>
-
-    </div>
-
-    <div class="modal-overlay" id="comingSoonModal">
-        <div class="modal-glass-box">
-            <div class="modal-icon">
-                <i class="fa-solid fa-gem"></i>
-            </div>
-            <h2>COMING SOON</h2>
-            <p>Premium Quality Services Launching Soon!</p>
-            <button class="modal-close-btn" onclick="closeComingSoonModal()">Got It</button>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+<!-- Scripts -->
+<script src="../script.js"></script>
+<script src="platform.js"></script>
 </body>
 </html>

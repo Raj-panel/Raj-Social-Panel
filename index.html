@@ -2,18 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<!-- Canonical Link -->
 <link rel="canonical" href="https://rajsmmpanel.in/"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Raj SMM Panel – Best India Cheapest SMM Panel for Instagram, Facebook &amp; YouTube</title>
 <meta content="Raj SMM Panel offers affordable social media marketing services for Instagram, Facebook, YouTube and more. Get Followers, Likes, Views, Comments and other SMM services at the best prices." name="description"/>
 
-<!-- Google Font -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
 
-<!-- PWA / Web App Manifest & Theme -->
 <link href="manifest.json" rel="manifest"/>
 <meta content="#0f172a" name="theme-color"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
@@ -23,7 +20,6 @@
 <link href="style.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 
-<!-- Open Graph Meta Tags -->
 <meta content="website" property="og:type"/>
 <meta content="https://rajsmmpanel.in/" property="og:url"/>
 <meta content="Raj Social Panel - Premium Social Boosting Services" property="og:title"/>
@@ -34,7 +30,6 @@
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
 
-<!-- Twitter Card Meta Tags -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="https://rajsmmpanel.in/" name="twitter:url"/>
 <meta content="Raj Social Panel - Premium Social Boosting Services" name="twitter:title"/>
@@ -359,7 +354,6 @@
 </head>
 <body data-platform="instagram">
 
-<!-- Left Sidebar Navigation -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar(true)"></div>
 <div class="left-sidebar" id="leftSidebar">
   <div class="sidebar-header">
@@ -394,15 +388,12 @@
 
 <div class="main-wrapper" id="mainHomeView" style="position: relative;">
   
-  <!-- Hamburger Button -->
   <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
     <i class="fa-solid fa-bars"></i>
   </button>
 
-  <!-- Header -->
   <div class="panel-heading">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
 
-  <!-- Support Buttons Header -->
   <div class="hero-actions">
     <a class="glass-btn btn-telegram" href="https://t.me/raj_smm_panel" target="_blank" rel="noopener noreferrer">
       <i class="fa-brands fa-telegram"></i> Telegram Support
@@ -412,7 +403,6 @@
     </a>
   </div>
 
-  <!-- Platform Switcher -->
   <div class="platform-card-wrapper">
     <div class="platform-switch-container">
       <button class="platform-btn active" id="btnInsta" onclick="handlePlatformClick('instagram', this)">
@@ -430,7 +420,6 @@
     </div>
   </div>
 
-  <!-- Hero Status Banner -->
   <div class="hero-banner">
     <div class="hero-top-row">
       <div class="hero-logo-box" id="heroLogoIcon">
@@ -459,25 +448,21 @@
     </div>
   </div>
 
-  <!-- Scrollable Category Tabs -->
   <div class="category-tabs-wrapper">
     <div class="category-tabs" id="categoryTabs"></div>
   </div>
 
-  <!-- Package List Section -->
   <div class="package-list-container" id="packageList"></div>
 
   <div class="footer-note">
     ⚡ Fast Processing • 100% Refund Guarantee If Failed
   </div>
 
-  <!-- Install App Button -->
   <div id="installContainer" style="display:none;">
     <button class="install-btn" id="installBtn"><i class="fa-solid fa-download"></i> Install App</button>
   </div>
 </div>
 
-<!-- CHECKOUT PAGE OVERLAY -->
 <div id="checkoutPage" class="checkout-page-overlay hidden">
   <div class="checkout-content">
     
@@ -622,103 +607,4 @@
   // Payment Method Switching Logic
   function switchCheckoutPayment(method) {
     const upiView = document.getElementById('checkoutUpiView');
-    const binanceView = document.getElementById('checkoutBinanceView');
-    const btnUpi = document.getElementById('btnTabUpi');
-    const btnBinance = document.getElementById('btnTabBinance');
-    const txnLabel = document.getElementById('txnLabel');
-    const txnInput = document.getElementById('checkoutTxnId');
-
-    if (method === 'binance') {
-      upiView.classList.add('hidden');
-      binanceView.classList.remove('hidden');
-      btnUpi.classList.remove('active');
-      btnBinance.classList.add('active');
-      
-      txnLabel.innerText = "Enter Binance TxID / Order ID:";
-      txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
-    } else {
-      binanceView.classList.add('hidden');
-      upiView.classList.remove('hidden');
-      btnBinance.classList.remove('active');
-      btnUpi.classList.add('active');
-      
-      txnLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
-      txnInput.placeholder = "e.g. 4029XXXXXXXXXX (12-Digit UTR)";
-    }
-  }
-
-  // WhatsApp Support Click Handler
-  function openWhatsAppSupport() {
-    const phoneNumber = "919239628344";
-    const message = encodeURIComponent("Hi 👋 I want to know about your services on rajsmmpanel.in");
-    window.open("https://wa.me/" + phoneNumber + "?text=" + message, "_blank");
-  }
-
-  // Sidebar Controls
-  function openSidebar() {
-    const sidebar = document.getElementById("leftSidebar");
-    const overlay = document.getElementById("sidebarOverlay");
-    
-    if (!sidebar.classList.contains("active")) {
-      sidebar.classList.add("active");
-      overlay.classList.add("active");
-      document.body.style.overflow = "hidden";
-      
-      history.pushState({ sidebarOpen: true }, '');
-    }
-  }
-
-  function closeSidebar(fromUserAction = false) {
-    const sidebar = document.getElementById("leftSidebar");
-    const overlay = document.getElementById("sidebarOverlay");
-    
-    if (sidebar.classList.contains("active")) {
-      sidebar.classList.remove("active");
-      overlay.classList.remove("active");
-      document.body.style.overflow = "auto";
-      
-      if (fromUserAction && history.state && history.state.sidebarOpen) {
-        history.back();
-      }
-    }
-  }
-
-  window.addEventListener("popstate", function (event) {
-    const sidebar = document.getElementById("leftSidebar");
-    if (sidebar && sidebar.classList.contains("active")) {
-      closeSidebar(false);
-    }
-  });
-
-  // Input Focus App Banner Toggle
-  document.addEventListener("DOMContentLoaded", function () {
-    // Default initial theme setup
-    applyPlatformTheme('instagram');
-
-    document.body.addEventListener("focusin", function (e) {
-      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
-        const installBox = document.getElementById("installContainer");
-        if (installBox) installBox.style.display = "none";
-      }
-    });
-
-    document.body.addEventListener("focusout", function (e) {
-      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
-        const installBox = document.getElementById("installContainer");
-        if (installBox) installBox.style.display = "block";
-      }
-    });
-  });
-
-  // Service Worker Registration
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then((reg) => console.log('Service Worker Registered Successfully:', reg))
-        .catch((err) => console.log('Service Worker Registration Failed:', err));
-    });
-  }
-</script>
-<script type="module" src="js/services-loader.js"></script>
-</body>
-</html>
+    const binanceView = document

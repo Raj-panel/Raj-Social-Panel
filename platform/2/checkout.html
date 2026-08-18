@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout & Payment - Raj SMM Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background-color: #0f172a; color: #f8fafc; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
+    .checkout-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; width: 100%; max-width: 420px; padding: 20px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+    h2 { font-size: 1.2rem; margin-bottom: 15px; color: #38bdf8; }
+    .order-summary { background: #0f172a; border: 1px solid #334155; padding: 12px; border-radius: 8px; font-size: 0.85rem; text-align: left; margin-bottom: 15px; }
+    .summary-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+    .summary-row strong { color: #10b981; }
+    .qr-box { background: #ffffff; padding: 15px; border-radius: 12px; display: inline-block; margin: 10px 0; }
+    .qr-box img { width: 180px; height: 180px; display: block; margin: 0 auto; }
+    .upi-id { font-size: 0.85rem; color: #94a3b8; margin-top: 5px; font-weight: 600; }
+    .form-group { text-align: left; margin-top: 15px; }
+    .form-group label { display: block; font-size: 0.8rem; color: #cbd5e1; margin-bottom: 5px; }
+    .form-group input { width: 100%; padding: 10px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; font-size: 0.9rem; outline: none; }
+    .form-group input:focus { border-color: #38bdf8; }
+    .submit-btn { width: 100%; padding: 12px; background: #10b981; border: none; color: #fff; font-weight: bold; border-radius: 6px; margin-top: 15px; cursor: pointer; font-size: 0.95rem; }
+    .submit-btn:hover { background: #059669; }
+    .back-btn { display: inline-block; margin-top: 10px; color: #94a3b8; font-size: 0.8rem; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <div class="checkout-card">
+    <h2><i class="fa-solid fa-qrcode"></i> Complete Payment</h2>
+    
+    <!-- Order Summary -->
+    <div class="order-summary">
+      <div class="summary-row"><span>Service:</span> <span id="summaryService">-</span></div>
+      <div class="summary-row"><span>Quantity:</span> <span id="summaryQty">-</span></div>
+      <div class="summary-row"><span>Total Payable:</span> <strong id="summaryAmount">₹0.00</strong></div>
+    </div>
+
+    <p style="font-size: 0.8rem; color: #94a3b8;">Scan & Pay using any UPI App (GPay, PhonePe, Paytm)</p>
+
+    <!-- Dynamic QR Code -->
+    <div class="qr-box">
+      <img id="qrImage" src="" alt="Payment QR Code"/>
+    </div>
+    <div class="upi-id">UPI ID: rajpanel@axl</div>
+
+    <!-- UTR / Transaction Input -->
+    <form id="paymentForm" onsubmit="submitPayment(event)">
+      <div class="form-group">
+        <label for="utrInput">Input Your 12 Digit UTR / Transaction ID</label>
+        <input type="text" id="utrInput" placeholder="Ex: 423456789012" maxlength="12" pattern="\d{12}" required>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit Payment</button>
+    </form>
+
+    <a href="https://rajsmmpanel.in/platform/" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Cancel and Go Back</a>
+  </div>
+
+  <script>
+    const upiId = "rajpanel@axl";
+    const payeeName = "Raj SMM Panel";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // LocalStorage থেকে ডাটা রিড করা
+      const orderData = JSON.parse(localStorage.getItem('pendingOrder'));
+
+      if (!orderData || !orderData.amount) {
+        alert("No order found! Redirecting back...");
+        window.location.href = "https://rajsmmpanel.in/platform/";
+        return;
+      }
+
+      document.getElementById('summaryService').innerText = orderData.serviceName;
+      document.getElementById('summaryQty').innerText = orderData.quantity;
+      document.getElementById('summaryAmount').innerText = "₹" + orderData.amount;
+
+      // UPI QR Code URL তৈরি করা (অটোমেটিক অর্ডারের সঠিক টাকা কিউআর কোডে যুক্ত হবে)
+      const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${orderData.amount}&cu=INR`;
+      const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
+
+      document.getElementById('qrImage').src = qrApi;
+    });
+
+    function submitPayment(e) {
+      e.preventDefault();
+      const utr = document.getElementById('utrInput').value.trim();
+
+      if (utr.length !== 12 || isNaN(utr)) {
+        alert("Please enter a valid 12-digit UTR/Transaction Number.");
+        return;
+      }
+
+      alert("Payment UTR submitted successfully! Your order is being verified.");
+      localStorage.removeItem('pendingOrder'); // Clear order state
+      window.location.href = "https://rajsmmpanel.in/platform/";
+    }
+  </script>
+</body>
+</html>

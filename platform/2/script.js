@@ -172,42 +172,74 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// ==========================================
-// EXACT SERVICE DATA WITH ACCURATE RATES & AVG TIME
-// ==========================================
+// =========================================================
+// SERVICE DATA WITH ACCURATE AVERAGE TIMES
+// =========================================================
 const serviceData = {
     instagram: {
         "Instagram Followers — Working Service": [
-            { type: "custom", name: "1220 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 60D Refill 🔄", pricePer1000: 65.358, avgTime: "0–10 Minutes" },
-            { type: "custom", name: "1221 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 90D Refill 🔄", pricePer1000: 67.929, avgTime: "0–10 Minutes" },
-            { type: "custom", name: "1222 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 365D Refill 🔄", pricePer1000: 70.501, avgTime: "0–10 Minutes" },
-            { type: "custom", name: "1223 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - Lifetime Refill ♻️", pricePer1000: 73.072, avgTime: "0–10 Minutes" }
+            { 
+                id: "1220", 
+                name: "1220 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 60D Refill 🔄 - ₹65.358", 
+                pricePer1000: 65.358, 
+                avgTime: "0–10 Minutes" 
+            },
+            { 
+                id: "1221", 
+                name: "1221 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 90D Refill 🔄 - ₹67.929", 
+                pricePer1000: 67.929, 
+                avgTime: "0–10 Minutes" 
+            },
+            { 
+                id: "1222", 
+                name: "1222 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 365D Refill 🔄 - ₹70.501", 
+                pricePer1000: 70.501, 
+                avgTime: "0–10 Minutes" 
+            },
+            { 
+                id: "1223", 
+                name: "1223 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - Lifetime Refill ♻️ - ₹73.072", 
+                pricePer1000: 73.072, 
+                avgTime: "0–10 Minutes" 
+            }
         ],
         "Instagram followers Non-Drop": [
-            { type: "custom", name: "1072 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - No Refill 🔄", pricePer1000: 67.929, avgTime: "0–2 Minutes" },
-            { type: "custom", name: "1073 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 30D Refill 🔄", pricePer1000: 73.072, avgTime: "0–2 Minutes" },
-            { type: "custom", name: "1074 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 60D Refill 🔄", pricePer1000: 75.644, avgTime: "0–2 Minutes" },
-            { type: "custom", name: "1075 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 90D Refill 🔄", pricePer1000: 78.215, avgTime: "0–2 Minutes" },
-            { type: "custom", name: "1076 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 365D Refill 🔄", pricePer1000: 79.858, avgTime: "0–2 Minutes" },
-            { type: "custom", name: "1077 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - Lifetime Refill ♻️", pricePer1000: 83.358, avgTime: "0–2 Minutes" }
-        ]
-    },
-    facebook: {
-        "PAGE/PROFILE Followers": [
-            { type: "custom", name: "Facebook Page/Profile Followers", pricePer1000: 40, avgTime: "10–30 Minutes" }
-        ],
-        "Likes Life-Time Refill ♻️": [
-            { type: "custom", name: "Facebook Likes Life-Time Refill", pricePer1000: 1000, avgTime: "5–15 Minutes" }
-        ]
-    },
-    youtube: {
-        "YouTube Subscribe — Non Drop": [
-            { type: "custom", name: "YouTube Subscribers Non Drop", pricePer1000: 1000, avgTime: "1–2 Hours" }
-        ]
-    },
-    tiktok: {
-        "TikTok Followers 30 Day Refill♻️": [
-            { type: "custom", name: "TikTok Followers Premium", pricePer1000: 1000, avgTime: "15–30 Minutes" }
+            { 
+                id: "1072", 
+                name: "1072 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - No Refill 🔄 - ₹67.929", 
+                pricePer1000: 67.929, 
+                avgTime: "0–2 Minutes" 
+            },
+            { 
+                id: "1073", 
+                name: "1073 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 30D Refill 🔄 - ₹73.072", 
+                pricePer1000: 73.072, 
+                avgTime: "0–2 Minutes" 
+            },
+            { 
+                id: "1074", 
+                name: "1074 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 60D Refill 🔄 - ₹75.644", 
+                pricePer1000: 75.644, 
+                avgTime: "0–2 Minutes" 
+            },
+            { 
+                id: "1075", 
+                name: "1075 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 90D Refill 🔄 - ₹78.215", 
+                pricePer1000: 78.215, 
+                avgTime: "0–2 Minutes" 
+            },
+            { 
+                id: "1076", 
+                name: "1076 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 365D Refill 🔄 - ₹79.858", 
+                pricePer1000: 79.858, 
+                avgTime: "0–2 Minutes" 
+            },
+            { 
+                id: "1077", 
+                name: "1077 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - Lifetime Refill ♻️ - ₹83.358", 
+                pricePer1000: 83.358, 
+                avgTime: "0–2 Minutes" 
+            }
         ]
     }
 };

@@ -174,11 +174,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const serviceData = {
     instagram: {
-        "Followers Non-Drop": [
-            { type: "custom", name: "Instagram Followers [High Quality] Life-time Refill♻️", pricePer1000: 1000 }
-        ],
-        "Followers 30% Extra Less Drop": [
-            { type: "custom", name: "Instagram Followers (30% Extra Less Drop)", pricePer1000: 1000 }
+        "Followers": [
+            { type: "custom", name: "Instagram Followers (20% Extra Less Drop)", pricePer50: 1000 }
         ],
         "Likes Non-Drop": [
             { type: "custom", name: "Instagram Likes Non-Drop", pricePer1000: 1000 }
@@ -197,15 +194,12 @@ const serviceData = {
         ],
         "REAL Shares Non-Drop": [
             { type: "custom", name: "Instagram REAL Shares Non-Drop", pricePer1000: 1000 }
-        ],
-        "Instagram Blue VERIFY": [
-            { type: "custom", name: "Instagram Blue Tick Verification Service", pricePer1000: 1000 }
         ]
-        
+       
     },
     facebook: {
         "PAGE/PROFILE Followers": [
-            { type: "custom", name: "Facebook Page/Profile Followers", pricePer1000: 1000 }
+            { type: "custom", name: "Facebook Page/Profile Followers", pricePer1000: 40 }
         ],
         "Likes Life-Time Refill ♻️": [
             { type: "custom", name: "Facebook Likes Life-Time Refill", pricePer1000: 1000 }
@@ -233,7 +227,7 @@ const serviceData = {
     },
     tiktok: {
         "TikTok Followers 30 Day Refill♻️": [
-            { type: "custom", name: "TikTok Followers Premium", pricePer1000: 1000 }
+            { type: "custom", name: "TikTok Followers Premium", pricePer199: 1000 }
         ],
         "TikTok Likes Non-Drop": [
             { type: "custom", name: "TikTok Likes Non-Drop", pricePer1000: 1000 }

@@ -204,5 +204,55 @@
 
   <!-- External JS File (Contains original WhatsApp & Order Logic) -->
   <script src="script.js"></script>
+
+  <!-- Navigation Drawer Hardware Back Button Handling Script -->
+  <script>
+    let isSidebarPushed = false;
+
+    // ১. সাইডবার ওপেন করার ফাংশন
+    function openSidebar() {
+      const sidebar = document.getElementById("leftSidebar");
+      const overlay = document.getElementById("sidebarOverlay");
+
+      if (sidebar && overlay) {
+        sidebar.classList.add("active"); // আপনার CSS অনুযায়ী ক্লাস সেট করুন (যেমন 'active' বা 'open')
+        overlay.classList.add("active");
+        
+        // হিস্ট্রিতে ভুয়া স্টেট পুশ করা হচ্ছে
+        if (!isSidebarPushed) {
+          history.pushState({ sidebarOpen: true }, "", "#sidebar-open");
+          isSidebarPushed = true;
+        }
+      }
+    }
+
+    // ২. সাইডবার বন্ধ করার ইন্টারনাল ফাংশন
+    function hideSidebarUI() {
+      const sidebar = document.getElementById("leftSidebar");
+      const overlay = document.getElementById("sidebarOverlay");
+
+      if (sidebar && overlay) {
+        sidebar.classList.remove("active");
+        overlay.classList.remove("active");
+      }
+    }
+
+    // ৩. ম্যানুয়ালি বন্ধ করার ফাংশন (ক্রস বাটন বা ওভারলেতে ক্লিক করলে)
+    function closeSidebar() {
+      hideSidebarUI();
+      if (isSidebarPushed) {
+        isSidebarPushed = false;
+        history.back(); // হিস্ট্রি স্টেট রিমুভ করা
+      }
+    }
+
+    // ৪. ব্যাক বাটন চাপলে হিস্ট্রি চেঞ্জ হ্যান্ডেল করা
+    window.addEventListener("popstate", function (event) {
+      if (isSidebarPushed) {
+        isSidebarPushed = false;
+        hideSidebarUI(); // পেজ ব্যাক না হয়ে শুধু সাইডবার বন্ধ হবে
+      }
+    });
+  </script>
 </body>
 </html>

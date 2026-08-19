@@ -14,6 +14,35 @@
   padding: 0;
 }
 
+.service-desc-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #8b5cf6;
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 10px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.desc-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6366f1;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.desc-content {
+  font-size: 12px;
+  color: #334155;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
 body {
   background-color: var(--bg-color);
   color: var(--text-dark);

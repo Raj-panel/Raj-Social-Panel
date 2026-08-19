@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#111a35">
+  <meta name="description" content="Raj SMM Panel - Social Media Services">
+  <title>RAJ-SMM-PANEL</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="app-shell">
+
+    <header class="topbar">
+      <button class="icon-btn menu-btn" id="menu" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="brand">RAJ-SMM-PANEL</div>
+    </header>
+
+    <div class="drawer-overlay" id="shade"></div>
+    <aside class="drawer" id="drawer">
+      <div class="drawer-head">
+        <strong>RAJ-SMM-PANEL</strong>
+        <button class="close-drawer" id="closeDrawer">×</button>
+      </div>
+      <a href="./" class="drawer-link">🏠 Home</a>
+      <a href="#services" class="drawer-link">🛒 Services</a>
+      <a href="#support" class="drawer-link">💬 Support</a>
+    </aside>
+
+    <main>
+      <section class="support-row" id="support">
+        <a class="support-btn telegram" href="https://t.me/raj_smm_panel" target="_blank" rel="noopener">
+          <span class="support-icon">➤</span> Telegram Support
+        </a>
+        <a class="support-btn whatsapp" href="#" id="whatsappLink">
+          <span class="support-icon">◔</span> WhatsApp Support
+        </a>
+      </section>
+
+      <section class="platform-card">
+        <button class="platform active" data-platform="instagram">
+          <span class="platform-icon instagram-icon">◎</span>Instagram
+        </button>
+        <button class="platform" data-platform="facebook">
+          <span class="platform-icon facebook-icon">f</span>Facebook
+        </button>
+        <button class="platform" data-platform="youtube">
+          <span class="platform-icon youtube-icon">▶</span>YouTube
+        </button>
+        <button class="platform" data-platform="tiktok">
+          <span class="platform-icon tiktok-icon">♪</span>TikTok
+        </button>
+      </section>
+
+      <section class="hero-card" id="heroCard">
+        <div class="hero-top">
+          <div class="hero-social-icon" id="heroIcon">◎</div>
+          <div class="hero-badge">#1 Service Provider</div>
+        </div>
+        <h1 id="heroTitle">Instagram Boost</h1>
+        <p id="heroSub">⚡ Real Engagement • Fast &amp; Safe Delivery</p>
+        <div class="stats-grid">
+          <div class="stat">
+            <strong>10M</strong>
+            <span>Orders Delivered</span>
+          </div>
+          <div class="stat">
+            <strong>24/7</strong>
+            <span>Support</span>
+          </div>
+          <div class="stat">
+            <strong>100%</strong>
+            <span>Safe &amp; Refundable</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="order-card" id="services">
+        <label for="category">Category</label>
+        <div class="select-wrap">
+          <select id="category"></select>
+        </div>
+
+        <label for="service">Service</label>
+        <div class="select-wrap">
+          <select id="service"></select>
+        </div>
+
+        <div class="average-time">⚡ Average Time: <strong id="averageTime">10 Minutes</strong></div>
+
+        <label for="profileLink" id="profileLabel">Link Instagram profile</label>
+        <input id="profileLink" class="input" type="url" placeholder="https://" autocomplete="off">
+
+        <label for="quantity">Quantity</label>
+        <input id="quantity" class="input" type="number" min="100" step="100" value="1000">
+
+        <div class="order-summary">
+          <span>Total</span>
+          <strong id="totalPrice">₹100.00</strong>
+        </div>
+
+        <button class="buy-btn" id="buyBtn">🛒 Buy Now</button>
+      </section>
+    </main>
+  </div>
+
+  <!-- Checkout -->
+  <div class="checkout-screen" id="checkoutScreen" aria-hidden="true">
+    <div class="checkout-header">
+      <button class="back-btn" id="backBtn">← Back</button>
+      <h2>Checkout</h2>
+      <div class="header-space"></div>
+    </div>
+
+    <div class="checkout-content">
+      <section class="checkout-product">
+        <div class="checkout-product-icon" id="checkoutIcon">◎</div>
+        <div class="checkout-product-info">
+          <h3 id="checkoutName">Instagram - Followers 30% Extra Less Drop</h3>
+          <div class="checkout-qty-text"><span id="checkoutQty">200</span> Followers</div>
+          <span class="starter-badge">STARTER</span>
+          <div class="package-row">
+            <span><span id="packageQty">200</span> Package</span>
+            <strong id="checkoutPrice">₹20.00</strong>
+            <small>one-time</small>
+          </div>
+        </div>
+        <div class="mini-quantity">
+          <button id="minus">−</button>
+          <span id="miniQty">1</span>
+          <button id="plus">+</button>
+        </div>
+      </section>
+
+      <label for="checkoutLink">Instagram Profile Link</label>
+      <input id="checkoutLink" class="input checkout-input" type="text" placeholder="Enter Instagram username or profile link">
+
+      <div class="payTabs">
+        <button class="payTab active" data-pay="upi">▦ UPI QR Pay</button>
+        <button class="payTab" data-pay="binance">▣ Binance Pay</button>
+      </div>
+
+      <section class="payment-panel" id="upiPanel">
+        <h3>SCAN TO PAY VIA UPI</h3>
+        <div class="qr-frame">
+          <div id="qr" class="qr-code"></div>
+        </div>
+        <p>Scan or enter payment detail into any UPI App</p>
+        <div class="upi-apps">
+          <button class="upiApp" data-upi="paytm">Paytm</button>
+          <button class="upiApp" data-upi="gpay"><span>G</span> <span>P</span><span>a</span><span>y</span></button>
+          <button class="upiApp" data-upi="phonepe">✱ PhonePe</button>
+          <button class="upiApp" data-upi="other">▦ Other UPI</button>
+        </div>
+      </section>
+
+      <section class="payment-panel hidden" id="binancePanel">
+        <h3>PAY VIA BINANCE</h3>
+        <div class="binance-box">
+          <div class="binance-logo">▣</div>
+          <strong>Binance Pay</strong>
+          <p>Use your Binance Pay details to complete payment.</p>
+          <button id="binancePayBtn">Open Binance Pay</button>
+        </div>
+      </section>
+
+      <label for="utr">Enter 12-Digit UPI UTR / Ref No:</label>
+      <input id="utr" class="input checkout-input" inputmode="numeric" maxlength="12"
+             placeholder="e.g. 4029XXXXXXXX (12-Digit UTR)">
+
+      <div class="warning">
+        ⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.
+      </div>
+
+      <button class="confirm-btn" id="confirm">◔ Confirm your order</button>
+      <div class="checkout-message" id="msg"></div>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

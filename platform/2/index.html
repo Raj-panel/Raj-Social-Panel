@@ -371,7 +371,6 @@
     <li id="authMenuItem">
       <a href="/login/">🔐 Login / Create Account</a>
     </li>
-    <!-- New Order Link Updated Below -->
     <li><a href="https://rajsmmpanel.in/platform/">🛒 New Order</a></li>
     <li><a href="https://rajsmmpanel.in/">⚡ Platform 1</a></li>
     <li><a href="/orders/">📦 My Orders</a></li>
@@ -461,13 +460,48 @@
     </div>
   </div>
 
-  <!-- Scrollable Category Tabs -->
-  <div class="category-tabs-wrapper">
-    <div class="category-tabs" id="categoryTabs"></div>
-  </div>
+  <!-- Dynamic SMM Order Form Container -->
+  <div class="smm-form-card">
+    <!-- Category Selector -->
+    <div class="form-group">
+      <label for="categorySelect"><strong>Category</strong></label>
+      <select id="categorySelect" class="form-control" onchange="onCategoryChange()"></select>
+    </div>
 
-  <!-- Package List Section -->
-  <div class="package-list-container" id="packageList"></div>
+    <!-- Service Selector -->
+    <div class="form-group">
+      <label for="serviceSelect"><strong>Service</strong></label>
+      <select id="serviceSelect" class="form-control" onchange="onServiceChange()"></select>
+    </div>
+
+    <!-- Average Time Box -->
+    <div class="avg-time-box">
+      <span>⚡ Average Time:</span> <strong id="avgTimeText">10 Minutes</strong>
+    </div>
+
+    <!-- Dynamic Link Field -->
+    <div class="form-group">
+      <label id="dynamicLinkLabel" for="serviceLink"><strong>Link Instagram profile</strong></label>
+      <input type="text" id="serviceLink" class="form-control" placeholder="https://" />
+    </div>
+
+    <!-- Custom Quantity Input Field -->
+    <div class="form-group">
+      <label for="quantityInput"><strong>Quantity</strong></label>
+      <input type="number" id="quantityInput" class="form-control" value="1000" placeholder="Minimum 100" oninput="calculateTotal()" />
+      <small id="qtyErrorMsg" class="qty-error-msg hidden">⚠️ Minimum order quantity is 100!</small>
+    </div>
+
+    <!-- Total Price Display -->
+    <div class="total-price-box">
+      <span>Total: </span><strong id="totalPriceText">₹0.00 INR</strong>
+    </div>
+
+    <!-- Proceed To Payment Button -->
+    <button class="proceed-payment-btn" onclick="openCheckoutFromDynamicForm()">
+      Proceed to Payment
+    </button>
+  </div>
 
   <div class="footer-note">
     ⚡ Fast Processing • 100% Refund Guarantee If Failed
@@ -649,6 +683,14 @@
     }
   }
 
+  // Close Checkout Modal
+  function closeCheckout() {
+    const checkoutPage = document.getElementById('checkoutPage');
+    if (checkoutPage) {
+      checkoutPage.classList.add('hidden');
+    }
+  }
+
   // WhatsApp Support Click Handler
   function openWhatsAppSupport() {
     const phoneNumber = "919239628344";
@@ -698,14 +740,14 @@
     applyPlatformTheme('instagram');
 
     document.body.addEventListener("focusin", function (e) {
-      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
+      if (e.target && (e.target.id === "quantityInput" || e.target.id === "serviceLink" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
         const installBox = document.getElementById("installContainer");
         if (installBox) installBox.style.display = "none";
       }
     });
 
     document.body.addEventListener("focusout", function (e) {
-      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
+      if (e.target && (e.target.id === "quantityInput" || e.target.id === "serviceLink" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
         const installBox = document.getElementById("installContainer");
         if (installBox) installBox.style.display = "block";
       }

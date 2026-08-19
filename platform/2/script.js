@@ -2,7 +2,7 @@
 let currentPlatform = 'instagram';
 let calculatedPrice = 0;
 
-// All Platform & Service Data
+// All Platform & Service Data (Cleaned & Updated according to your request)
 const platformData = {
   instagram: {
     title: "Instagram Boost",
@@ -10,18 +10,23 @@ const platformData = {
     linkPlaceholder: "Link Instagram profile",
     categories: {
       "working": {
-        name: "Instagram Followers | Working Refill 🔄",
+        name: "Instagram Followers — Working Service",
         services: [
-          { id: "1220", name: "1220 - Instagram Followers | 60D Refill 🔄", rate: 65.358 },
-          { id: "1221", name: "1221 - Instagram Followers | 90D Refill 🔄", rate: 67.929 },
-          { id: "1222", name: "1222 - Instagram Followers | 365D Refill 🔄", rate: 70.501 }
+          { id: "1220", name: "1220 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 60D Refill 🔄", rate: 65.358, avgTime: "0–10 Min Start" },
+          { id: "1221", name: "1221 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 90D Refill 🔄", rate: 67.929, avgTime: "0–10 Min Start" },
+          { id: "1222", name: "1222 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 365D Refill 🔄", rate: 70.501, avgTime: "0–10 Min Start" },
+          { id: "1223", name: "1223 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - Lifetime Refill ♻️", rate: 73.072, avgTime: "0–10 Min Start" }
         ]
       },
       "nondrop": {
-        name: "Instagram Followers | Non Drop ♻️",
+        name: "Instagram followers Non-Drop",
         services: [
-          { id: "1072", name: "1072 - Instagram Followers | Non Drop - No Refill 🔄", rate: 67.929 },
-          { id: "1073", name: "1073 - Instagram Followers | Non Drop - 30D Refill 🔄", rate: 73.072 }
+          { id: "1072", name: "1072 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - No Refill 🔄", rate: 67.929, avgTime: "0–2 Min Start" },
+          { id: "1073", name: "1073 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 30D Refill 🔄", rate: 73.072, avgTime: "0–2 Min Start" },
+          { id: "1074", name: "1074 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 60D Refill 🔄", rate: 75.644, avgTime: "0–2 Min Start" },
+          { id: "1075", name: "1075 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 90D Refill 🔄", rate: 78.215, avgTime: "0–2 Min Start" },
+          { id: "1076", name: "1076 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 365D Refill 🔄", rate: 79.858, avgTime: "0–2 Min Start" },
+          { id: "1077", name: "1077 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - Lifetime Refill ♻️", rate: 83.358, avgTime: "0–2 Min Start" }
         ]
       }
     }
@@ -30,43 +35,19 @@ const platformData = {
     title: "Facebook Boost",
     icon: "fa-brands fa-facebook",
     linkPlaceholder: "Link Facebook page or profile",
-    categories: {
-      "fb_followers": {
-        name: "Facebook Page Followers / Likes 👍",
-        services: [
-          { id: "201", name: "201 - Facebook Page Followers | Real - Instant", rate: 85.00 },
-          { id: "202", name: "202 - Facebook Profile Followers | Non Drop 30D", rate: 90.50 }
-        ]
-      }
-    }
+    categories: {}
   },
   youtube: {
     title: "YouTube Boost",
     icon: "fa-brands fa-youtube",
     linkPlaceholder: "Link YouTube channel or video",
-    categories: {
-      "yt_subs": {
-        name: "YouTube Subscribers 🔴",
-        services: [
-          { id: "301", name: "301 - YouTube Subscribers | Non Drop - Speed 500/Day", rate: 250.00 },
-          { id: "302", name: "302 - YouTube Views | High Retention", rate: 110.00 }
-        ]
-      }
-    }
+    categories: {}
   },
   tiktok: {
     title: "TikTok Boost",
     icon: "fa-brands fa-tiktok",
     linkPlaceholder: "Link TikTok account or video",
-    categories: {
-      "tiktok_followers": {
-        name: "TikTok Followers / Likes ♪",
-        services: [
-          { id: "401", name: "401 - TikTok Followers | Fast Delivery", rate: 120.00 },
-          { id: "402", name: "402 - TikTok Video Likes | Instant", rate: 45.00 }
-        ]
-      }
-    }
+    categories: {}
   }
 };
 
@@ -99,11 +80,17 @@ function selectPlatform(platform) {
   updateServices();
 }
 
-// Service Options Update
+// Service Options & Average Time Update Logic
 function updateServices() {
   const categoryKey = document.getElementById("categorySelect").value;
   const serviceSelect = document.getElementById("serviceSelect");
   serviceSelect.innerHTML = "";
+
+  if (!categoryKey || !platformData[currentPlatform].categories[categoryKey]) {
+    document.querySelector('.time-box').innerHTML = `⚡ Average Time: <strong>N/A</strong>`;
+    calculatePrice();
+    return;
+  }
 
   const services = platformData[currentPlatform].categories[categoryKey].services;
 
@@ -111,18 +98,38 @@ function updateServices() {
     const option = document.createElement("option");
     option.value = service.id;
     option.setAttribute("data-rate", service.rate);
+    option.setAttribute("data-avgtime", service.avgTime);
     option.textContent = `${service.name} - ₹${service.rate}`;
     serviceSelect.appendChild(option);
   });
 
+  updateAverageTime();
   calculatePrice();
+}
+
+// Dynamic Average Time Display
+function updateAverageTime() {
+  const serviceSelect = document.getElementById("serviceSelect");
+  const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
+  
+  if (selectedOption) {
+    const avgTime = selectedOption.getAttribute("data-avgtime");
+    document.querySelector('.time-box').innerHTML = `⚡ Average Time: <strong>${avgTime}</strong>`;
+  } else {
+    document.querySelector('.time-box').innerHTML = `⚡ Average Time: <strong>N/A</strong>`;
+  }
 }
 
 // Calculate Price Logic
 function calculatePrice() {
   const serviceSelect = document.getElementById("serviceSelect");
   const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
-  if (!selectedOption) return;
+  
+  if (!selectedOption) {
+    document.getElementById("totalPriceText").innerText = "0.00";
+    calculatedPrice = "0.00";
+    return;
+  }
 
   const ratePer1000 = parseFloat(selectedOption.getAttribute("data-rate"));
   const quantityInput = document.getElementById("mainQuantityInput").value;
@@ -130,6 +137,8 @@ function calculatePrice() {
 
   calculatedPrice = ((ratePer1000 / 1000) * quantity).toFixed(2);
   document.getElementById("totalPriceText").innerText = calculatedPrice;
+  
+  updateAverageTime();
 }
 
 // Checkout Navigation
@@ -151,7 +160,7 @@ function openCheckout() {
   const serviceSelect = document.getElementById("serviceSelect");
   const selectedText = serviceSelect.options[serviceSelect.selectedIndex].textContent;
 
-  document.getElementById("checkoutServiceTitle").innerText = selectedText.split(' - ')[0];
+  document.getElementById("checkoutServiceTitle").innerText = selectedText.split(' - ₹')[0];
   document.getElementById("checkoutPriceText").innerText = calculatedPrice;
 
   // UPI Dynamic QR Code

@@ -1,184 +1,750 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#111a35">
-  <meta name="description" content="Raj SMM Panel - Social Media Services">
-  <title>RAJ-SMM-PANEL</title>
-  <link rel="stylesheet" href="./style.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Raj SMM Panel – Platform 2</title>
+
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+<style>
+  :root {
+    --bg-color: #fcebf4;
+    --card-bg: #ffffff;
+    --primary-gradient: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
+    --banner-gradient: linear-gradient(135deg, #ff3b70 0%, #a855f7 50%, #ff8c42 100%);
+    --sidebar-bg: #ffffff;
+    --sidebar-text: #1e293b;
+    --sidebar-border: rgba(0, 0, 0, 0.1);
+    --sidebar-hover: rgba(168, 85, 247, 0.1);
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+  }
+
+  * {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-dark);
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 10px;
+  }
+
+  .main-wrapper {
+    width: 100%;
+    max-width: 480px;
+    position: relative;
+    padding-bottom: 20px;
+  }
+
+  /* Hamburger Button */
+  .hamburger-btn {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+    background: #e2e8f0;
+    border: none;
+    color: var(--text-dark);
+    font-size: 20px;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  /* Header */
+  .panel-heading {
+    font-size: 20px;
+    font-weight: 800;
+    font-style: italic;
+    color: #6366f1;
+    text-align: center;
+    margin-bottom: 12px;
+    padding-top: 6px;
+  }
+
+  /* Support Buttons Header */
+  .hero-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  .glass-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px;
+    border-radius: 30px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+  }
+  .btn-telegram { color: #0088cc; }
+  .btn-whatsapp { color: #25d366; }
+
+  /* Platform Switcher Grid */
+  .platform-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  .platform-btn {
+    height: 45px;
+    background: #ffffff;
+    color: var(--text-dark);
+    border: 1px solid #f1f5f9;
+    border-radius: 16px;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    cursor: pointer;
+  }
+  .platform-btn.active {
+    background: var(--primary-gradient);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+  }
+
+  /* Hero Status Banner */
+  .hero-banner {
+    background: var(--banner-gradient);
+    border-radius: 20px;
+    padding: 16px;
+    color: #ffffff;
+    margin-bottom: 15px;
+    box-shadow: 0 10px 20px rgba(236, 72, 153, 0.2);
+  }
+  .hero-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .hero-logo-box {
+    width: 36px;
+    height: 36px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+  .provider-badge {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .hero-banner h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .hero-sub {
+    font-size: 12px;
+    opacity: 0.9;
+    margin-bottom: 12px;
+  }
+  .hero-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .stat-card {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 8px 4px;
+    text-align: center;
+    backdrop-filter: blur(5px);
+  }
+  .stat-card .stat-num {
+    display: block;
+    font-size: 15px;
+    font-weight: 800;
+  }
+  .stat-card .stat-lbl {
+    font-size: 9px;
+    opacity: 0.9;
+  }
+
+  /* Form Container */
+  .form-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  }
+  .form-group {
+    margin-bottom: 14px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .form-control {
+    width: 100%;
+    padding: 12px 14px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 13px;
+    color: var(--text-dark);
+    outline: none;
+    appearance: none;
+  }
+  select.form-control {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+  }
+  .time-box {
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 14px;
+  }
+  .submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+  }
+
+  /* Checkout Overlay */
+  .checkout-page-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #fcebf4;
+    z-index: 2000;
+    overflow-y: auto;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+  }
+  .checkout-content {
+    width: 100%;
+    max-width: 480px;
+  }
+  .checkout-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+  .back-btn {
+    background: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    color: #6366f1;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+  .checkout-heading-text {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1e1b4b;
+  }
+
+  .premium-service-card {
+    background: var(--banner-gradient);
+    border-radius: 20px;
+    padding: 16px;
+    color: white;
+    margin-bottom: 15px;
+  }
+  .card-top-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .platform-badge-icon {
+    width: 40px; height: 40px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .card-info h4 { font-size: 15px; }
+  .pkg-name-badge {
+    background: #facc15;
+    color: #000;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .price-text {
+    font-size: 24px;
+    font-weight: 800;
+  }
+  .price-text small { font-size: 12px; font-weight: 400; opacity: 0.9; }
+
+  .pay-toggle-tabs {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+  }
+  .pay-tab {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    background: #ffffff;
+    font-weight: 700;
+    color: var(--text-dark);
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+  }
+  .pay-tab.active {
+    background: var(--primary-gradient);
+    color: white;
+  }
+
+  .payment-view-box {
+    background: white;
+    border-radius: 20px;
+    padding: 16px;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  .upi-app-btn-grid {
+    display: flex;
+    gap: 4px;
+    margin-top: 10px;
+  }
+  .upi-app-card-btn {
+    flex: 1;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 6px 2px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .notice-yellow-box {
+    background: #fef9c3;
+    border: 1px solid #fde047;
+    border-radius: 12px;
+    padding: 10px;
+    font-size: 11px;
+    color: #854d0e;
+    margin-bottom: 15px;
+  }
+  .whatsapp-submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: #25d366;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  /* Drawer Sidebar */
+  .sidebar-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    opacity: 0; visibility: hidden;
+    transition: all 0.3s ease;
+  }
+  .sidebar-overlay.active { opacity: 1; visibility: visible; }
+  .left-sidebar {
+    position: fixed;
+    top: 0; left: 0; width: 280px; height: 100%;
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    display: flex; flex-direction: column;
+    padding: 15px;
+  }
+  .left-sidebar.active { transform: translateX(0); }
+  .sidebar-header {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--sidebar-border);
+    padding-bottom: 10px; margin-bottom: 10px;
+  }
+  .sidebar-title { font-weight: 800; font-style: italic; color: #a855f7; }
+  .sidebar-close-btn { background: none; border: none; font-size: 20px; cursor: pointer; }
+  .sidebar-menu { list-style: none; }
+  .sidebar-menu li a {
+    display: block; padding: 10px; color: var(--sidebar-text);
+    text-decoration: none; font-weight: 600; border-radius: 8px;
+  }
+  .sidebar-menu li a:hover { background: var(--sidebar-hover); }
+
+  .hidden { display: none !important; }
+</style>
 </head>
 <body>
-  <div class="app-shell">
 
-    <header class="topbar">
-      <button class="icon-btn menu-btn" id="menu" aria-label="Open menu">
-        <span></span><span></span><span></span>
+<!-- Left Sidebar Navigation -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar(true)"></div>
+<div class="left-sidebar" id="leftSidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-title">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
+    <button class="sidebar-close-btn" onclick="closeSidebar(true)"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  
+  <ul class="sidebar-menu">
+    <li><a href="/login/">🔐 Login / Create Account</a></li>
+    <li><a href="https://rajsmmpanel.in/platform/">🛒 New Order</a></li>
+    <li><a href="https://rajsmmpanel.in/platform/2/">⚡ Platform 2</a></li>
+    <li><a href="/orders/">📦 My Orders</a></li>
+    <li><a href="/pages/privacy-policy.html">🔒 Privacy Policy</a></li>
+    <li><a href="/pages/refund-policy.html">💸 Refund Policy</a></li>
+    <li><a href="/pages/terms.html">📜 Terms &amp; Conditions</a></li>
+    <li><a href="/pages/contact.html">📞 Contact Us</a></li>
+    <li><a href="/pages/about.html">ℹ️ About Us</a></li>
+    <li><a href="/buy-smm-panel">🛒 Buy SMM Panel</a></li>
+  </ul>
+</div>
+
+<div class="main-wrapper">
+  
+  <!-- Hamburger Button -->
+  <button class="hamburger-btn" onclick="openSidebar()">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <!-- Header -->
+  <div class="panel-heading">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
+
+  <!-- Support Buttons Header -->
+  <div class="hero-actions">
+    <a class="glass-btn btn-telegram" href="https://t.me/raj_smm_panel" target="_blank">
+      <i class="fa-brands fa-telegram"></i> Telegram Support
+    </a>
+    <a class="glass-btn btn-whatsapp" href="javascript:void(0);" onclick="openWhatsAppSupport()">
+      <i class="fa-brands fa-whatsapp"></i> WhatsApp Support
+    </a>
+  </div>
+
+  <!-- Platform Switcher -->
+  <div class="platform-grid">
+    <button class="platform-btn active"><i class="fa-brands fa-instagram" style="color: #e1306c;"></i> Instagram</button>
+    <button class="platform-btn"><i class="fa-brands fa-facebook" style="color: #1877f2;"></i> Facebook</button>
+    <button class="platform-btn"><i class="fa-brands fa-youtube" style="color: #ff0000;"></i> YouTube</button>
+    <button class="platform-btn"><i class="fa-brands fa-tiktok" style="color: #000000;"></i> TikTok</button>
+  </div>
+
+  <!-- Hero Status Banner -->
+  <div class="hero-banner">
+    <div class="hero-top-row">
+      <div class="hero-logo-box"><i class="fa-brands fa-instagram"></i></div>
+      <span class="provider-badge">#1 Service Provider</span>
+    </div>
+    <h2>Instagram Boost</h2>
+    <p class="hero-sub">⚡ Real Engagement • Fast &amp; Safe Delivery</p>
+    <div class="hero-stats-grid">
+      <div class="stat-card">
+        <span class="stat-num"><i class="fa-solid fa-rocket"></i> 10M</span>
+        <span class="stat-lbl">Orders Delivered</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num"><i class="fa-solid fa-headset"></i> 24/7</span>
+        <span class="stat-lbl">Support</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num"><i class="fa-solid fa-shield-halved"></i> 100%</span>
+        <span class="stat-lbl">Safe &amp; Refundable</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Order Form -->
+  <div class="form-card">
+    <div class="form-group">
+      <label>Category</label>
+      <select class="form-control" id="categorySelect" onchange="updateServices()">
+        <option value="working">Instagram Followers — Working Service</option>
+        <option value="nondrop">Instagram followers Non-Drop</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Service</label>
+      <select class="form-control" id="serviceSelect" onchange="calculatePrice()">
+        <!-- Services Populated via JS -->
+      </select>
+    </div>
+
+    <div class="time-box">
+      ⚡ Average Time: <strong>10 Minutes</strong>
+    </div>
+
+    <div class="form-group">
+      <label>Link Instagram profile</label>
+      <input type="text" class="form-control" id="mainLinkInput" placeholder="https://" />
+    </div>
+
+    <div class="form-group">
+      <label>Quantity</label>
+      <input type="number" class="form-control" id="mainQuantityInput" value="1000" oninput="calculatePrice()" />
+    </div>
+
+    <button class="submit-btn" onclick="openCheckout()">
+      PROCEED TO PAYMENT
+    </button>
+  </div>
+
+</div>
+
+<!-- CHECKOUT PAGE OVERLAY -->
+<div id="checkoutPage" class="checkout-page-overlay hidden">
+  <div class="checkout-content">
+    
+    <div class="checkout-nav">
+      <button class="back-btn" onclick="closeCheckout()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+      <div class="checkout-heading-text">Checkout</div>
+    </div>
+
+    <div class="premium-service-card">
+      <div class="card-top-row">
+        <div class="platform-badge-icon">
+          <i class="fa-brands fa-instagram"></i>
+        </div>
+        <div class="card-info">
+          <h4 id="checkoutServiceTitle">Instagram Followers</h4>
+          <span class="pkg-name-badge">STARTER</span>
+        </div>
+      </div>
+      <div class="price-text">
+        ₹<span id="checkoutPriceText">0.00</span> <small>one-time</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label style="font-size:12px; font-weight:700;">Instagram Profile Link</label>
+      <input type="text" class="form-control" id="checkoutLinkInput" placeholder="Enter Instagram username or profile link" />
+    </div>
+
+    <div class="pay-toggle-tabs">
+      <button class="pay-tab active" id="btnTabUpi" onclick="switchCheckoutPayment('upi')">
+        <i class="fa-solid fa-qrcode"></i> UPI QR Pay
       </button>
-      <div class="brand">RAJ-SMM-PANEL</div>
-    </header>
-
-    <div class="drawer-overlay" id="shade"></div>
-    <aside class="drawer" id="drawer">
-      <div class="drawer-head">
-        <strong>RAJ-SMM-PANEL</strong>
-        <button class="close-drawer" id="closeDrawer">×</button>
-      </div>
-      <a href="./" class="drawer-link">🏠 Home</a>
-      <a href="#services" class="drawer-link">🛒 Services</a>
-      <a href="#support" class="drawer-link">💬 Support</a>
-    </aside>
-
-    <main>
-      <section class="support-row" id="support">
-        <a class="support-btn telegram" href="https://t.me/raj_smm_panel" target="_blank" rel="noopener">
-          <span class="support-icon">➤</span> Telegram Support
-        </a>
-        <a class="support-btn whatsapp" href="#" id="whatsappLink">
-          <span class="support-icon">◔</span> WhatsApp Support
-        </a>
-      </section>
-
-      <section class="platform-card">
-        <button class="platform active" data-platform="instagram">
-          <span class="platform-icon instagram-icon">◎</span>Instagram
-        </button>
-        <button class="platform" data-platform="facebook">
-          <span class="platform-icon facebook-icon">f</span>Facebook
-        </button>
-        <button class="platform" data-platform="youtube">
-          <span class="platform-icon youtube-icon">▶</span>YouTube
-        </button>
-        <button class="platform" data-platform="tiktok">
-          <span class="platform-icon tiktok-icon">♪</span>TikTok
-        </button>
-      </section>
-
-      <section class="hero-card" id="heroCard">
-        <div class="hero-top">
-          <div class="hero-social-icon" id="heroIcon">◎</div>
-          <div class="hero-badge">#1 Service Provider</div>
-        </div>
-        <h1 id="heroTitle">Instagram Boost</h1>
-        <p id="heroSub">⚡ Real Engagement • Fast &amp; Safe Delivery</p>
-        <div class="stats-grid">
-          <div class="stat">
-            <strong>10M</strong>
-            <span>Orders Delivered</span>
-          </div>
-          <div class="stat">
-            <strong>24/7</strong>
-            <span>Support</span>
-          </div>
-          <div class="stat">
-            <strong>100%</strong>
-            <span>Safe &amp; Refundable</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="order-card" id="services">
-        <label for="category">Category</label>
-        <div class="select-wrap">
-          <select id="category"></select>
-        </div>
-
-        <label for="service">Service</label>
-        <div class="select-wrap">
-          <select id="service"></select>
-        </div>
-
-        <div class="average-time">⚡ Average Time: <strong id="averageTime">10 Minutes</strong></div>
-
-        <label for="profileLink" id="profileLabel">Link Instagram profile</label>
-        <input id="profileLink" class="input" type="url" placeholder="https://" autocomplete="off">
-
-        <label for="quantity">Quantity</label>
-        <input id="quantity" class="input" type="number" min="100" step="100" value="1000">
-
-        <div class="order-summary">
-          <span>Total</span>
-          <strong id="totalPrice">₹100.00</strong>
-        </div>
-
-        <button class="buy-btn" id="buyBtn">🛒 Buy Now</button>
-      </section>
-    </main>
-  </div>
-
-  <!-- Checkout -->
-  <div class="checkout-screen" id="checkoutScreen" aria-hidden="true">
-    <div class="checkout-header">
-      <button class="back-btn" id="backBtn">← Back</button>
-      <h2>Checkout</h2>
-      <div class="header-space"></div>
+      <button class="pay-tab" id="btnTabBinance" onclick="switchCheckoutPayment('binance')">
+        <i class="fa-solid fa-wallet"></i> Binance Pay
+      </button>
     </div>
 
-    <div class="checkout-content">
-      <section class="checkout-product">
-        <div class="checkout-product-icon" id="checkoutIcon">◎</div>
-        <div class="checkout-product-info">
-          <h3 id="checkoutName">Instagram - Followers 30% Extra Less Drop</h3>
-          <div class="checkout-qty-text"><span id="checkoutQty">200</span> Followers</div>
-          <span class="starter-badge">STARTER</span>
-          <div class="package-row">
-            <span><span id="packageQty">200</span> Package</span>
-            <strong id="checkoutPrice">₹20.00</strong>
-            <small>one-time</small>
-          </div>
-        </div>
-        <div class="mini-quantity">
-          <button id="minus">−</button>
-          <span id="miniQty">1</span>
-          <button id="plus">+</button>
-        </div>
-      </section>
-
-      <label for="checkoutLink">Instagram Profile Link</label>
-      <input id="checkoutLink" class="input checkout-input" type="text" placeholder="Enter Instagram username or profile link">
-
-      <div class="payTabs">
-        <button class="payTab active" data-pay="upi">▦ UPI QR Pay</button>
-        <button class="payTab" data-pay="binance">▣ Binance Pay</button>
+    <div id="checkoutUpiView" class="payment-view-box">
+      <div style="font-weight: 800; color: #a855f7; font-size: 14px; margin-bottom: 8px;">
+        SCAN TO PAY VIA UPI
       </div>
-
-      <section class="payment-panel" id="upiPanel">
-        <h3>SCAN TO PAY VIA UPI</h3>
-        <div class="qr-frame">
-          <div id="qr" class="qr-code"></div>
-        </div>
-        <p>Scan or enter payment detail into any UPI App</p>
-        <div class="upi-apps">
-          <button class="upiApp" data-upi="paytm">Paytm</button>
-          <button class="upiApp" data-upi="gpay"><span>G</span> <span>P</span><span>a</span><span>y</span></button>
-          <button class="upiApp" data-upi="phonepe">✱ PhonePe</button>
-          <button class="upiApp" data-upi="other">▦ Other UPI</button>
-        </div>
-      </section>
-
-      <section class="payment-panel hidden" id="binancePanel">
-        <h3>PAY VIA BINANCE</h3>
-        <div class="binance-box">
-          <div class="binance-logo">▣</div>
-          <strong>Binance Pay</strong>
-          <p>Use your Binance Pay details to complete payment.</p>
-          <button id="binancePayBtn">Open Binance Pay</button>
-        </div>
-      </section>
-
-      <label for="utr">Enter 12-Digit UPI UTR / Ref No:</label>
-      <input id="utr" class="input checkout-input" inputmode="numeric" maxlength="12"
-             placeholder="e.g. 4029XXXXXXXX (12-Digit UTR)">
-
-      <div class="warning">
-        ⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.
+      <div style="text-align: center; margin-bottom: 6px;">
+        <img id="checkoutQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=rajpanel@upi" alt="UPI QR Code" style="border-radius: 12px; width: 160px;" />
       </div>
-
-      <button class="confirm-btn" id="confirm">◔ Confirm your order</button>
-      <div class="checkout-message" id="msg"></div>
+      <p style="font-size: 10px; color: #64748b; margin-bottom: 8px;">
+        Scan or enter payment detail into any UPI App
+      </p>
+      
+      <div class="upi-app-btn-grid">
+        <div class="upi-app-card-btn" style="color: #00baf2;">Paytm</div>
+        <div class="upi-app-card-btn"><span style="color: #4285f4;">G</span><span style="color: #ea4335;">P</span><span style="color: #fbbc05;">a</span><span style="color: #34a853;">y</span></div>
+        <div class="upi-app-card-btn" style="color: #5f259f;">PhonePe</div>
+        <div class="upi-app-card-btn" style="color: #1e293b;">Other UPI</div>
+      </div>
     </div>
-  </div>
 
-  <script src="./script.js"></script>
+    <div id="checkoutBinanceView" class="payment-view-box hidden">
+      <div style="font-weight: 800; color: #a855f7; font-size: 14px; margin-bottom: 8px;">SCAN TO PAY VIA BINANCE</div>
+      <p style="font-size: 12px;">Binance ID: <strong>78901234</strong></p>
+    </div>
+
+    <div class="form-group">
+      <label id="txnLabel" style="font-size:12px; font-weight:700;">Enter 12-Digit UPI UTR / Ref No:</label>
+      <input type="text" class="form-control" id="checkoutTxnId" placeholder="e.g. 4029XXXXXXXXXX (12-Digit UTR)" />
+    </div>
+
+    <div class="notice-yellow-box">
+      <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
+    </div>
+
+    <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
+      <i class="fa-brands fa-whatsapp"></i> Confirm your order
+    </button>
+
+  </div>
+</div>
+
+<script>
+  // Services Dataset Provided By User
+  const servicesData = {
+    working: [
+      { id: "1220", name: "1220 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 60D Refill 🔄", rate: 65.358 },
+      { id: "1221", name: "1221 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 90D Refill 🔄", rate: 67.929 },
+      { id: "1222", name: "1222 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 365D Refill 🔄", rate: 70.501 },
+      { id: "1223", name: "1223 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - Lifetime Refill ♻️", rate: 73.072 }
+    ],
+    nondrop: [
+      { id: "1072", name: "1072 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - No Refill 🔄", rate: 67.929 },
+      { id: "1073", name: "1073 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 30D Refill 🔄", rate: 73.072 },
+      { id: "1074", name: "1074 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 60D Refill 🔄", rate: 75.644 },
+      { id: "1075", name: "1075 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 90D Refill 🔄", rate: 78.215 },
+      { id: "1076", name: "1076 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 365D Refill 🔄", rate: 79.858 },
+      { id: "1077", name: "1077 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - Lifetime Refill ♻️", rate: 83.358 }
+    ]
+  };
+
+  let calculatedPrice = 0;
+
+  function updateServices() {
+    const category = document.getElementById("categorySelect").value;
+    const serviceSelect = document.getElementById("serviceSelect");
+    serviceSelect.innerHTML = "";
+
+    servicesData[category].forEach(service => {
+      const option = document.createElement("option");
+      option.value = service.id;
+      option.setAttribute("data-rate", service.rate);
+      option.textContent = `${service.name} - ₹${service.rate}`;
+      serviceSelect.appendChild(option);
+    });
+
+    calculatePrice();
+  }
+
+  function calculatePrice() {
+    const serviceSelect = document.getElementById("serviceSelect");
+    const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
+    if(!selectedOption) return;
+
+    const ratePer1000 = parseFloat(selectedOption.getAttribute("data-rate"));
+    const quantity = parseInt(document.getElementById("mainQuantityInput").value) || 0;
+
+    calculatedPrice = ((ratePer1000 / 1000) * quantity).toFixed(2);
+  }
+
+  function openCheckout() {
+    const link = document.getElementById("mainLinkInput").value;
+    const serviceSelect = document.getElementById("serviceSelect");
+    const selectedText = serviceSelect.options[serviceSelect.selectedIndex].textContent;
+
+    document.getElementById("checkoutServiceTitle").innerText = selectedText.split(' - ')[0];
+    document.getElementById("checkoutPriceText").innerText = calculatedPrice;
+    document.getElementById("checkoutLinkInput").value = link;
+
+    document.getElementById("checkoutPage").classList.remove("hidden");
+  }
+
+  function closeCheckout() {
+    document.getElementById("checkoutPage").classList.add("hidden");
+  }
+
+  function switchCheckoutPayment(method) {
+    const upiView = document.getElementById('checkoutUpiView');
+    const binanceView = document.getElementById('checkoutBinanceView');
+    const btnUpi = document.getElementById('btnTabUpi');
+    const btnBinance = document.getElementById('btnTabBinance');
+    const txnLabel = document.getElementById('txnLabel');
+    const txnInput = document.getElementById('checkoutTxnId');
+
+    if (method === 'binance') {
+      upiView.classList.add('hidden');
+      binanceView.classList.remove('hidden');
+      btnUpi.classList.remove('active');
+      btnBinance.classList.add('active');
+      
+      txnLabel.innerText = "Enter Binance TxID / Order ID:";
+      txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
+    } else {
+      binanceView.classList.add('hidden');
+      upiView.classList.remove('hidden');
+      btnBinance.classList.remove('active');
+      btnTabUpi.classList.add('active');
+      
+      txnLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
+      txnInput.placeholder = "e.g. 4029XXXXXXXXXX (12-Digit UTR)";
+    }
+  }
+
+  function openSidebar() {
+    document.getElementById("leftSidebar").classList.add("active");
+    document.getElementById("sidebarOverlay").classList.add("active");
+  }
+
+  function closeSidebar() {
+    document.getElementById("leftSidebar").classList.remove("active");
+    document.getElementById("sidebarOverlay").classList.remove("active");
+  }
+
+  function openWhatsAppSupport() {
+    const phoneNumber = "919239628344";
+    const message = encodeURIComponent("Hi 👋 I want to know about your services on rajsmmpanel.in");
+    window.open("https://wa.me/" + phoneNumber + "?text=" + message, "_blank");
+  }
+
+  function submitOrderToWhatsApp() {
+    const link = document.getElementById("checkoutLinkInput").value;
+    const utr = document.getElementById("checkoutTxnId").value;
+    const service = document.getElementById("checkoutServiceTitle").innerText;
+
+    if(!link || !utr) {
+      alert("Please enter your Link and Transaction ID / UTR Number.");
+      return;
+    }
+
+    const message = `New Order Details:\nService: ${service}\nPrice: ₹${calculatedPrice}\nLink: ${link}\nUTR/TxID: ${utr}`;
+    window.open("https://wa.me/919239628344?text=" + encodeURIComponent(message), "_blank");
+  }
+
+  // Initialize Page Setup
+  window.onload = function() {
+    updateServices();
+  };
+</script>
 </body>
 </html>

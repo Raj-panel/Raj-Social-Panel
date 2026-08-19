@@ -13,6 +13,8 @@
       --bg-color: #fcebf4;
       --primary-gradient: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
       --banner-gradient: linear-gradient(135deg, #ff3b70 0%, #a855f7 50%, #ff8c42 100%);
+      --sidebar-bg: #ffffff;
+      --sidebar-text: #1e293b;
       --text-dark: #1e293b;
     }
 
@@ -39,7 +41,7 @@
       padding-bottom: 20px;
     }
 
-    /* Top Navigation Header */
+    /* Header */
     .header-top {
       display: flex;
       align-items: center;
@@ -72,7 +74,7 @@
       color: #6366f1;
     }
 
-    /* Support Buttons */
+    /* Support Actions */
     .hero-actions {
       display: flex;
       gap: 10px;
@@ -97,7 +99,7 @@
     .btn-telegram { color: #0088cc; }
     .btn-whatsapp { color: #25d366; }
 
-    /* Platform Switcher */
+    /* Platform Switcher Grid */
     .platform-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -183,7 +185,7 @@
     .stat-card .stat-num { display: block; font-size: 15px; font-weight: 800; }
     .stat-card .stat-lbl { font-size: 9px; opacity: 0.9; }
 
-    /* Form Container */
+    /* Form Card */
     .form-card {
       background: #ffffff;
       border-radius: 20px;
@@ -336,16 +338,70 @@
       color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer;
     }
 
+    /* Left Sidebar Menu Drawer */
+    .sidebar-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 2999;
+      opacity: 0; visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    .sidebar-overlay.active { opacity: 1; visibility: visible; }
+
+    .left-sidebar {
+      position: fixed;
+      top: 0; left: 0; width: 260px; height: 100%;
+      background: var(--sidebar-bg);
+      z-index: 3000;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      padding: 20px;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    }
+    .left-sidebar.active { transform: translateX(0); }
+
+    .sidebar-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;
+    }
+    .sidebar-title { font-weight: 800; font-style: italic; color: #6366f1; }
+    .close-sidebar-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: #64748b; }
+
+    .sidebar-menu { list-style: none; }
+    .sidebar-menu li { margin-bottom: 12px; }
+    .sidebar-menu li a {
+      text-decoration: none; color: var(--sidebar-text); font-weight: 600;
+      font-size: 14px; display: flex; align-items: center; gap: 10px;
+      padding: 10px; border-radius: 8px; transition: 0.2s;
+    }
+    .sidebar-menu li a:hover { background: #f1f5f9; color: #ec4899; }
+
     .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
+  <!-- Left Sidebar Menu -->
+  <div id="sidebarOverlay" class="sidebar-overlay" onclick="closeSidebar()"></div>
+  <div id="leftSidebar" class="left-sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-title">RAJ- SMM- PANEL</span>
+      <button class="close-sidebar-btn" onclick="closeSidebar()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="#"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="#"><i class="fa-solid fa-layer-group"></i> Services</a></li>
+      <li><a href="#"><i class="fa-solid fa-clock-rotate-left"></i> Order Status</a></li>
+      <li><a href="https://wa.me/919239628344" target="_blank"><i class="fa-brands fa-whatsapp"></i> Support</a></li>
+    </ul>
+  </div>
+
   <div class="main-wrapper">
     
     <!-- Top Header -->
     <div class="header-top">
-      <button class="hamburger-btn"><i class="fa-solid fa-bars"></i></button>
+      <button class="hamburger-btn" onclick="openSidebar()"><i class="fa-solid fa-bars"></i></button>
       <div class="panel-heading">RAJ- SMM- PANEL</div>
     </div>
 
@@ -357,19 +413,19 @@
 
     <!-- Platform Switcher Buttons -->
     <div class="platform-grid">
-      <button class="platform-btn active"><i class="fa-brands fa-instagram"></i> Instagram</button>
-      <button class="platform-btn"><i class="fa-brands fa-facebook"></i> Facebook</button>
-      <button class="platform-btn"><i class="fa-brands fa-youtube"></i> YouTube</button>
-      <button class="platform-btn"><i class="fa-brands fa-tiktok"></i> TikTok</button>
+      <button class="platform-btn active" id="btn-instagram" onclick="selectPlatform('instagram')"><i class="fa-brands fa-instagram"></i> Instagram</button>
+      <button class="platform-btn" id="btn-facebook" onclick="selectPlatform('facebook')"><i class="fa-brands fa-facebook"></i> Facebook</button>
+      <button class="platform-btn" id="btn-youtube" onclick="selectPlatform('youtube')"><i class="fa-brands fa-youtube"></i> YouTube</button>
+      <button class="platform-btn" id="btn-tiktok" onclick="selectPlatform('tiktok')"><i class="fa-brands fa-tiktok"></i> TikTok</button>
     </div>
 
     <!-- Hero Banner -->
     <div class="hero-banner">
       <div class="hero-top-row">
-        <div class="hero-logo-box"><i class="fa-brands fa-instagram"></i></div>
+        <div class="hero-logo-box" id="heroPlatformIcon"><i class="fa-brands fa-instagram"></i></div>
         <span class="provider-badge">#1 Service Provider</span>
       </div>
-      <h2>Instagram Boost</h2>
+      <h2 id="heroPlatformTitle">Instagram Boost</h2>
       <p class="hero-sub">⚡ Real Engagement • Fast & Safe Delivery</p>
       
       <div class="hero-stats-grid">
@@ -392,10 +448,7 @@
     <div class="form-card">
       <div class="form-group">
         <label>Category</label>
-        <select id="categorySelect" class="form-control" onchange="updateServices()">
-          <option value="working">Instagram Followers | Working Refill 🔄</option>
-          <option value="nondrop">Instagram Followers | Non Drop ♻️</option>
-        </select>
+        <select id="categorySelect" class="form-control" onchange="updateServices()"></select>
       </div>
 
       <div class="form-group">
@@ -408,13 +461,13 @@
       </div>
 
       <div class="form-group">
-        <label>Link Instagram profile</label>
+        <label id="linkLabel">Link Instagram profile</label>
         <input type="text" id="mainLinkInput" class="form-control" placeholder="https://" />
       </div>
 
       <div class="form-group">
         <label>Quantity</label>
-        <input type="number" id="mainQuantityInput" class="form-control" value="1000" oninput="calculatePrice()" />
+        <input type="number" id="mainQuantityInput" class="form-control" placeholder="Minimum order quantity: 100" min="100" oninput="calculatePrice()" />
       </div>
 
       <div class="total-display">
@@ -442,11 +495,11 @@
       <!-- Selected Package Info Banner -->
       <div class="premium-service-card">
         <div class="card-top-row">
-          <div class="platform-badge-icon">
+          <div class="platform-badge-icon" id="checkoutPlatformIcon">
             <i class="fa-brands fa-instagram"></i>
           </div>
           <div class="card-info">
-            <h4 id="checkoutServiceTitle">Instagram Followers</h4>
+            <h4 id="checkoutServiceTitle">Service Title</h4>
             <span class="pkg-name-badge">STARTER</span>
           </div>
         </div>
@@ -491,7 +544,7 @@
         <p style="font-size: 13px; color: #334155; margin-top: 10px;">Binance Pay ID: <strong>78901234</strong></p>
       </div>
 
-      <!-- UTR Input Input Field -->
+      <!-- UTR Input Field -->
       <div class="form-group">
         <label id="txnLabel" style="font-size:12px; font-weight:700;">Enter 12-Digit UPI UTR / Ref No:</label>
         <input type="text" class="form-control" id="checkoutTxnId" placeholder="e.g. 4029XXXXXXXXXX (12-Digit UTR)" />
@@ -511,32 +564,115 @@
   </div>
 
   <script>
-    // Services Data Dynamic Setup
-    const servicesData = {
-      working: [
-        { id: "1220", name: "1220 - Instagram Followers | 60D Refill 🔄", rate: 65.358 },
-        { id: "1221", name: "1221 - Instagram Followers | 90D Refill 🔄", rate: 67.929 },
-        { id: "1222", name: "1222 - Instagram Followers | 365D Refill 🔄", rate: 70.501 },
-        { id: "1223", name: "1223 - Instagram Followers | Lifetime Refill ♻️", rate: 73.072 }
-      ],
-      nondrop: [
-        { id: "1072", name: "1072 - Instagram Followers | Non Drop - No Refill 🔄", rate: 67.929 },
-        { id: "1073", name: "1073 - Instagram Followers | Non Drop - 30D Refill 🔄", rate: 73.072 },
-        { id: "1074", name: "1074 - Instagram Followers | Non Drop - 60D Refill 🔄", rate: 75.644 },
-        { id: "1075", name: "1075 - Instagram Followers | Non Drop - 90D Refill 🔄", rate: 78.215 },
-        { id: "1076", name: "1076 - Instagram Followers | Non Drop - 365D Refill 🔄", rate: 79.858 },
-        { id: "1077", name: "1077 - Instagram Followers | Non Drop - Lifetime Refill ♻️", rate: 83.358 }
-      ]
+    // Platforms & Data Structure
+    let currentPlatform = 'instagram';
+
+    const platformData = {
+      instagram: {
+        title: "Instagram Boost",
+        icon: "fa-brands fa-instagram",
+        linkPlaceholder: "Link Instagram profile",
+        categories: {
+          "working": {
+            name: "Instagram Followers | Working Refill 🔄",
+            services: [
+              { id: "1220", name: "1220 - Instagram Followers | 60D Refill 🔄", rate: 65.358 },
+              { id: "1221", name: "1221 - Instagram Followers | 90D Refill 🔄", rate: 67.929 },
+              { id: "1222", name: "1222 - Instagram Followers | 365D Refill 🔄", rate: 70.501 }
+            ]
+          },
+          "nondrop": {
+            name: "Instagram Followers | Non Drop ♻️",
+            services: [
+              { id: "1072", name: "1072 - Instagram Followers | Non Drop - No Refill 🔄", rate: 67.929 },
+              { id: "1073", name: "1073 - Instagram Followers | Non Drop - 30D Refill 🔄", rate: 73.072 }
+            ]
+          }
+        }
+      },
+      facebook: {
+        title: "Facebook Boost",
+        icon: "fa-brands fa-facebook",
+        linkPlaceholder: "Link Facebook page or profile",
+        categories: {
+          "fb_followers": {
+            name: "Facebook Page Followers / Likes 👍",
+            services: [
+              { id: "201", name: "201 - Facebook Page Followers | Real - Instant", rate: 85.00 },
+              { id: "202", name: "202 - Facebook Profile Followers | Non Drop 30D", rate: 90.50 }
+            ]
+          }
+        }
+      },
+      youtube: {
+        title: "YouTube Boost",
+        icon: "fa-brands fa-youtube",
+        linkPlaceholder: "Link YouTube channel or video",
+        categories: {
+          "yt_subs": {
+            name: "YouTube Subscribers 🔴",
+            services: [
+              { id: "301", name: "301 - YouTube Subscribers | Non Drop - Speed 500/Day", rate: 250.00 },
+              { id: "302", name: "302 - YouTube Views | High Retention", rate: 110.00 }
+            ]
+          }
+        }
+      },
+      tiktok: {
+        title: "TikTok Boost",
+        icon: "fa-brands fa-tiktok",
+        linkPlaceholder: "Link TikTok account or video",
+        categories: {
+          "tiktok_followers": {
+            name: "TikTok Followers / Likes ♪",
+            services: [
+              { id: "401", name: "401 - TikTok Followers | Fast Delivery", rate: 120.00 },
+              { id: "402", name: "402 - TikTok Video Likes | Instant", rate: 45.00 }
+            ]
+          }
+        }
+      }
     };
 
     let calculatedPrice = 0;
 
+    // Platform Selection Logic
+    function selectPlatform(platform) {
+      currentPlatform = platform;
+
+      // Active Button Highlight
+      document.querySelectorAll('.platform-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(`btn-${platform}`).classList.add('active');
+
+      // Update Banner Info
+      const data = platformData[platform];
+      document.getElementById('heroPlatformTitle').innerText = data.title;
+      document.getElementById('heroPlatformIcon').innerHTML = `<i class="${data.icon}"></i>`;
+      document.getElementById('checkoutPlatformIcon').innerHTML = `<i class="${data.icon}"></i>`;
+      document.getElementById('linkLabel').innerText = data.linkPlaceholder;
+
+      // Update Categories
+      const categorySelect = document.getElementById('categorySelect');
+      categorySelect.innerHTML = "";
+      
+      for (let key in data.categories) {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = data.categories[key].name;
+        categorySelect.appendChild(option);
+      }
+
+      updateServices();
+    }
+
     function updateServices() {
-      const category = document.getElementById("categorySelect").value;
+      const categoryKey = document.getElementById("categorySelect").value;
       const serviceSelect = document.getElementById("serviceSelect");
       serviceSelect.innerHTML = "";
 
-      servicesData[category].forEach(service => {
+      const services = platformData[currentPlatform].categories[categoryKey].services;
+
+      services.forEach(service => {
         const option = document.createElement("option");
         option.value = service.id;
         option.setAttribute("data-rate", service.rate);
@@ -553,7 +689,8 @@
       if (!selectedOption) return;
 
       const ratePer1000 = parseFloat(selectedOption.getAttribute("data-rate"));
-      const quantity = parseInt(document.getElementById("mainQuantityInput").value) || 0;
+      const quantityInput = document.getElementById("mainQuantityInput").value;
+      const quantity = parseInt(quantityInput) || 0;
 
       calculatedPrice = ((ratePer1000 / 1000) * quantity).toFixed(2);
       document.getElementById("totalPriceText").innerText = calculatedPrice;
@@ -561,9 +698,16 @@
 
     function openCheckout() {
       const link = document.getElementById("mainLinkInput").value.trim();
-      
+      const quantityInput = document.getElementById("mainQuantityInput").value.trim();
+      const quantity = parseInt(quantityInput);
+
       if (!link) {
-        alert("Please enter your Instagram profile link first!");
+        alert("Please enter link!");
+        return;
+      }
+
+      if (!quantityInput || isNaN(quantity) || quantity < 100) {
+        alert("Minimum order quantity is 100!");
         return;
       }
 
@@ -583,6 +727,17 @@
 
     function closeCheckout() {
       document.getElementById("checkoutPage").classList.add("hidden");
+    }
+
+    // Sidebar Handlers
+    function openSidebar() {
+      document.getElementById("leftSidebar").classList.add("active");
+      document.getElementById("sidebarOverlay").classList.add("active");
+    }
+
+    function closeSidebar() {
+      document.getElementById("leftSidebar").classList.remove("active");
+      document.getElementById("sidebarOverlay").classList.remove("active");
     }
 
     function switchCheckoutPayment(method) {
@@ -623,12 +778,12 @@
         return;
       }
 
-      const message = `New Order Details:\nService: ${service}\nQuantity: ${quantity}\nPrice: ₹${calculatedPrice}\nLink: ${link}\nUTR/TxID: ${utr}`;
+      const message = `New Order Details:\nPlatform: ${currentPlatform.toUpperCase()}\nService: ${service}\nQuantity: ${quantity}\nPrice: ₹${calculatedPrice}\nLink: ${link}\nUTR/TxID: ${utr}`;
       window.open("https://wa.me/919239628344?text=" + encodeURIComponent(message), "_blank");
     }
 
     window.onload = function() {
-      updateServices();
+      selectPlatform('instagram');
     };
   </script>
 </body>

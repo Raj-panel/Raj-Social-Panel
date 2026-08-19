@@ -172,73 +172,24 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+// =========================================================
+// ONLY NEW INSTAGRAM SERVICES (OLD ONES REMOVED COMPLETELY)
+// =========================================================
 const serviceData = {
     instagram: {
-        "Followers": [
-            { type: "custom", name: "Instagram Followers (20% Extra Less Drop)", pricePer50: 1000 }
+        "Instagram Followers — Working Service": [
+            { type: "custom", name: "1220 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 60D Refill 🔄", pricePer1000: 65.358 },
+            { type: "custom", name: "1221 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 90D Refill 🔄", pricePer1000: 67.929 },
+            { type: "custom", name: "1222 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 365D Refill 🔄", pricePer1000: 70.501 },
+            { type: "custom", name: "1223 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - Lifetime Refill ♻️", pricePer1000: 73.072 }
         ],
-        "Likes Non-Drop": [
-            { type: "custom", name: "Instagram Likes Non-Drop", pricePer1000: 1000 }
-        ],
-        "REAL Reels / Video Views Non-Drop": [
-            { type: "custom", name: "Instagram REAL Reels / Video Views Non-Drop", pricePer1000: 1000 }
-        ],
-        "REAL Photo / Post Views Non-Drop": [
-            { type: "custom", name: "Instagram REAL Photo / Post Views Non-Drop", pricePer1000: 1000 }
-        ],
-        "REAL Comments Non-Drop": [
-            { type: "custom", name: "Instagram REAL Comments Non-Drop", pricePer1000: 1000 }
-        ],
-        "REAL Repost Non-Drop": [
-            { type: "custom", name: "Instagram REAL Repost Non-Drop", pricePer1000: 1000 }
-        ],
-        "REAL Shares Non-Drop": [
-            { type: "custom", name: "Instagram REAL Shares Non-Drop", pricePer1000: 1000 }
-        ]
-    },
-    facebook: {
-        "PAGE/PROFILE Followers": [
-            { type: "custom", name: "Facebook Page/Profile Followers", pricePer1000: 40 }
-        ],
-        "Likes Life-Time Refill ♻️": [
-            { type: "custom", name: "Facebook Likes Life-Time Refill", pricePer1000: 1000 }
-        ],
-        "Reels / Video Views Non-Drop": [
-            { type: "custom", name: "Facebook Reels / Video Views Non-Drop", pricePer1000: 1000 }
-        ],
-        "POST / VIDEO Shares Non-Drop": [
-            { type: "custom", name: "Facebook Post / Video Shares Non-Drop", pricePer1000: 1000 }
-        ]
-    },
-    youtube: {
-        "YouTube Likes — Non Drop": [
-            { type: "custom", name: "YouTube Likes Non Drop", pricePer1000: 1000 }
-        ],
-        "YT Shorts / Video Views Non-Drop": [
-            { type: "custom", name: "YouTube Shorts / Video Views Non-Drop", pricePer1000: 1000 }
-        ],
-        "YT Live Stream Views Non-Drop": [
-            { type: "custom", name: "YouTube Live Stream Views Non-Drop", pricePer1000: 1000 }
-        ],
-        "YouTube Subscribe — Non Drop": [
-            { type: "custom", name: "YouTube Subscribers Non Drop", pricePer1000: 1000 }
-        ]
-    },
-    tiktok: {
-        "TikTok Followers 30 Day Refill♻️": [
-            { type: "custom", name: "TikTok Followers Premium", pricePer199: 1000 }
-        ],
-        "TikTok Likes Non-Drop": [
-            { type: "custom", name: "TikTok Likes Non-Drop", pricePer1000: 1000 }
-        ],
-        "TikTok Views Non-Drop": [
-            { type: "custom", name: "TikTok Video Views Non-Drop", pricePer1000: 1000 }
-        ],
-        "TikTok Share — Lifetime Refill": [
-            { type: "custom", name: "TikTok Shares Lifetime Refill", pricePer1000: 1000 }
-        ],
-        "TikTok Save — Lifetime Refill": [
-            { type: "custom", name: "TikTok Saves Lifetime Refill", pricePer1000: 1000 }
+        "Instagram followers Non-Drop": [
+            { type: "custom", name: "1072 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - No Refill 🔄", pricePer1000: 67.929 },
+            { type: "custom", name: "1073 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 30D Refill 🔄", pricePer1000: 73.072 },
+            { type: "custom", name: "1074 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 60D Refill 🔄", pricePer1000: 75.644 },
+            { type: "custom", name: "1075 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 90D Refill 🔄", pricePer1000: 78.215 },
+            { type: "custom", name: "1076 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 365D Refill 🔄", pricePer1000: 79.858 },
+            { type: "custom", name: "1077 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - Lifetime Refill ♻️", pricePer1000: 83.358 }
         ]
     }
 };
@@ -279,10 +230,7 @@ function switchPlatform(platform) {
     const heroLogoIcon = document.getElementById("heroLogoIcon");
 
     const platformConfigs = {
-        instagram: { title: "Instagram Boost", icon: '<i class="fa-brands fa-instagram"></i>' },
-        facebook: { title: "Facebook Boost", icon: '<i class="fa-brands fa-facebook"></i>' },
-        youtube: { title: "YouTube Boost", icon: '<i class="fa-brands fa-youtube"></i>' },
-        tiktok: { title: "TikTok Boost", icon: '<i class="fa-brands fa-tiktok"></i>' }
+        instagram: { title: "Instagram Boost", icon: '<i class="fa-brands fa-instagram"></i>' }
     };
 
     if (platformConfigs[platform]) {
@@ -356,7 +304,7 @@ function renderPackages() {
         customDiv.innerHTML = `
             <div style="margin-bottom: 8px;">
                 <strong class="custom-title" style="color: #a855f7; font-size: 13px;">
-                    ${pkg.name} (Enter Custom Qty)
+                    ${pkg.name}
                 </strong>
                 <p style="font-size: 10px; color: #94a3b8;">
                     ${rateInfo.label}
@@ -369,7 +317,7 @@ function renderPackages() {
                     id="${inputId}"
                     placeholder="Enter quantity (e.g. 1000)"
                     min="1"
-                    oninput="calculateCustomPriceForInput('${pkg.name}', ${rateInfo.rate}, ${rateInfo.baseQty}, '${inputId}', '${priceDisplayId}', '${minWarningId}')"
+                    oninput="calculateCustomPriceForInput('${pkg.name.replace(/'/g, "\\'")}', ${rateInfo.rate}, ${rateInfo.baseQty}, '${inputId}', '${priceDisplayId}', '${minWarningId}')"
                 >
             </div>
 
@@ -381,7 +329,7 @@ function renderPackages() {
                 Total: ₹<span id="${priceDisplayId}">0.00</span> INR
             </div>
 
-            <button class="action-btn" style="margin-top: 10px; width: 100%; padding: 8px; background: #22c55e; color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;" onclick="openCheckoutFromCustomInput('${inputId}', '${priceDisplayId}', ${rateInfo.baseQty}, ${rateInfo.rate})">
+            <button class="action-btn" style="margin-top: 10px; width: 100%; padding: 8px; background: #22c55e; color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;" onclick="openCheckoutFromCustomInput('${inputId}', '${priceDisplayId}', ${rateInfo.baseQty}, ${rateInfo.rate}, '${pkg.name.replace(/'/g, "\\'")}')">
                 Proceed to Payment
             </button>
         `;
@@ -420,7 +368,7 @@ function calculateCustomPriceForInput(serviceName, rate, baseQty, inputId, price
     }
 }
 
-function openCheckoutFromCustomInput(inputId, priceDisplayId, baseQty, rate) {
+function openCheckoutFromCustomInput(inputId, priceDisplayId, baseQty, rate, serviceFullName) {
     const qtyInput = document.getElementById(inputId);
     const qty = parseFloat(qtyInput ? qtyInput.value : 0);
 
@@ -437,7 +385,7 @@ function openCheckoutFromCustomInput(inputId, priceDisplayId, baseQty, rate) {
     currentCheckoutData = {
         platform: platformCap,
         serviceName: currentCategory,
-        packageName: `${qty.toLocaleString()} Custom Qty`,
+        packageName: serviceFullName || `${qty.toLocaleString()} Custom Qty`,
         baseQuantity: qty,
         quantity: qty,
         basePrice: price,
@@ -467,81 +415,9 @@ function extractQuantity(name) {
 
 // Dynamic link configuration matching service criteria
 function getLinkConfig(platform, category) {
-    const p = (platform || "").toLowerCase();
-    const c = (category || "").toLowerCase();
-
-    // 1. YouTube Service
-    if (p.includes("youtube") || c.includes("youtube") || c.includes("yt")) {
-        if (c.includes("subscribe")) {
-            return {
-                label: "YouTube Channel Link or Handle",
-                placeholder: "Enter YouTube channel link or @handle"
-            };
-        }
-        return {
-            label: "YouTube Video / Shorts Link",
-            placeholder: "Enter YouTube video/Shorts link"
-        };
-    }
-
-    // 2. TikTok Service
-    if (p.includes("tiktok") || c.includes("tiktok")) {
-        if (c.includes("follower") || c.includes("profile")) {
-            return {
-                label: "TikTok Video Link or Username",
-                placeholder: "Enter TikTok video link or username"
-            };
-        }
-        return {
-            label: "TikTok Video Link or Username",
-            placeholder: "Enter TikTok video link or username"
-        };
-    }
-
-    // 3. Instagram Service
-    if (p.includes("instagram") || c.includes("instagram") || c.includes("ig")) {
-        if (c.includes("like")) {
-            return {
-                label: "Post / Reel Link",
-                placeholder: "Enter Instagram post/reel link"
-            };
-        }
-        if (c.includes("reel") || c.includes("view") || c.includes("video")) {
-            return {
-                label: "Instagram Reel / Video Link",
-                placeholder: "Enter Instagram reel/video link"
-            };
-        }
-        if (c.includes("follower") || c.includes("blue") || c.includes("verify") || c.includes("profile")) {
-            return {
-                label: "Instagram Profile Link",
-                placeholder: "Enter Instagram username or profile link"
-            };
-        }
-        return {
-            label: "Instagram Post / Profile Link",
-            placeholder: "Enter Instagram username or link"
-        };
-    }
-
-    // 4. Facebook Service
-    if (p.includes("facebook") || c.includes("facebook") || c.includes("fb")) {
-        if (c.includes("follower") || c.includes("page")) {
-            return {
-                label: "Facebook Profile / Page Link",
-                placeholder: "Enter Facebook profile or page link"
-            };
-        }
-        return {
-            label: "Facebook Post / Video Link",
-            placeholder: "Enter Facebook post or video link"
-        };
-    }
-
-    // Default Fallback
     return {
-        label: "Target Link or Username",
-        placeholder: "Enter link or username"
+        label: "Instagram Profile Link",
+        placeholder: "Enter Instagram username or profile link"
     };
 }
 
@@ -550,7 +426,6 @@ function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUni
 }
 
 function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge, baseQty, rate) {
-    // REBUILD FRESH STATE AND PURGE PREVIOUS STALE CHECKOUT DATA
     currentCheckoutData = {
         platform: platform,
         serviceName: serviceName,
@@ -574,7 +449,6 @@ function updateCheckoutQuantityDisplay() {
 
     d.quantity = d.baseQuantity * (d.multiplier || 1);
     
-    // Dynamic price calculation based on specified rate and base quantity
     const bQty = d.baseQty || 1000;
     const rRate = d.rate || d.basePrice || 1000;
     d.price = (d.quantity / bQty) * rRate;
@@ -651,13 +525,7 @@ function showCheckoutOverlay() {
 
     const iconBox = document.getElementById("checkoutPlatformIcon");
     if (iconBox) {
-        const pLower = (d.platform || "").toLowerCase();
-        const iconClasses = {
-            facebook: '<i class="fa-brands fa-facebook"></i>',
-            youtube: '<i class="fa-brands fa-youtube"></i>',
-            tiktok: '<i class="fa-brands fa-tiktok"></i>'
-        };
-        iconBox.innerHTML = iconClasses[pLower] || '<i class="fa-brands fa-instagram"></i>';
+        iconBox.innerHTML = '<i class="fa-brands fa-instagram"></i>';
     }
 
     const titleEl = document.getElementById("checkoutServiceTitle");
@@ -730,7 +598,6 @@ function showCheckoutOverlay() {
         el.style.display = "none";
     });
 
-    // Dynamic Target Link Input Configuration
     const linkConfig = getLinkConfig(d.platform, d.serviceName);
     const linkLabel = document.getElementById("checkoutLinkLabel") || document.querySelector('label[for="checkoutLinkInput"]');
     const linkInput = document.getElementById("checkoutLinkInput");
@@ -759,13 +626,11 @@ function closeCheckoutUI() {
         checkoutPage.style.display = "none";
     }
     
-    // RESET INPUT VALUES
     const linkInput = document.getElementById("checkoutLinkInput");
     if (linkInput) linkInput.value = "";
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
     
-    // PURGE STALE STATE
     currentCheckoutData = {}; 
 }
 
@@ -795,7 +660,6 @@ function switchCheckoutPayment(type) {
     }
 }
 
-// Check standard URL validity
 function isValidUrl(string) {
     try {
         new URL(string);
@@ -805,68 +669,23 @@ function isValidUrl(string) {
     }
 }
 
-// Function to validate and process Profile Link / Username (Accepts both handles & full URLs)
 function processProfileOrLink(input, platform, serviceName) {
     const trimmed = (input || "").trim();
     if (!trimmed) {
         return { isValid: false, message: "Please enter target Profile Link or Username!" };
     }
 
-    const pName = (platform || "").toLowerCase();
-    const sName = (serviceName || "").toLowerCase();
-
-    // Generic fallback for any text if service supports username or URL
-    if (pName.includes("instagram")) {
-        const cleanUsername = trimmed.startsWith("@") ? trimmed.slice(1) : trimmed;
-        
-        if (sName.includes("follower") || sName.includes("blue") || sName.includes("verify") || sName.includes("profile")) {
-            if (/^[a-zA-Z0-9._]{1,30}$/.test(cleanUsername)) {
-                return {
-                    isValid: true,
-                    url: `https://www.instagram.com/${cleanUsername}`
-                };
-            }
-            if (trimmed.toLowerCase().includes("instagram.com")) {
-                return {
-                    isValid: true,
-                    url: trimmed.startsWith("http") ? trimmed : `https://${trimmed}`
-                };
-            }
-            return {
-                isValid: true,
-                url: trimmed
-            };
-        }
-
-        if (trimmed.toLowerCase().includes("instagram.com") || isValidUrl(trimmed)) {
-            return {
-                isValid: true,
-                url: trimmed.startsWith("http") ? trimmed : `https://${trimmed}`
-            };
-        }
-
+    const cleanUsername = trimmed.startsWith("@") ? trimmed.slice(1) : trimmed;
+    if (/^[a-zA-Z0-9._]{1,30}$/.test(cleanUsername)) {
         return {
             isValid: true,
-            url: trimmed
-        };
-    } else if (pName.includes("tiktok")) {
-        const cleanUsername = trimmed.startsWith("@") ? trimmed.slice(1) : trimmed;
-        if (/^[a-zA-Z0-9._]{2,24}$/.test(cleanUsername)) {
-            return {
-                isValid: true,
-                url: `https://www.tiktok.com/@${cleanUsername}`
-            };
-        }
-        return {
-            isValid: true,
-            url: trimmed
+            url: `https://www.instagram.com/${cleanUsername}`
         };
     }
 
-    // Default accepting string if non-empty
     return {
         isValid: true,
-        url: trimmed
+        url: trimmed.startsWith("http") ? trimmed : `https://${trimmed}`
     };
 }
 
@@ -954,7 +773,6 @@ function toggleInstallButton() {
 
     if (
         currentPlatform === "instagram" &&
-        currentCategory === "Followers" &&
         deferredPrompt
     ) {
         installContainer.style.display = "block";

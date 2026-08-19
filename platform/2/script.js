@@ -200,10 +200,8 @@ const serviceData = {
         ],
         "Instagram Blue VERIFY": [
             { type: "custom", name: "Instagram Blue Tick Verification Service", pricePer1000: 1000 }
-        ],
-        "🔥 Reels Combo Service": [
-            { type: "custom", name: "Instagram Reels Combo Service", pricePer1000: 1000 }
         ]
+        
     },
     facebook: {
         "PAGE/PROFILE Followers": [
@@ -248,9 +246,6 @@ const serviceData = {
         ],
         "TikTok Save — Lifetime Refill": [
             { type: "custom", name: "TikTok Saves Lifetime Refill", pricePer1000: 1000 }
-        ],
-        "🔥 TikTok Combo Service — Non-Drop": [
-            { type: "custom", name: "TikTok Combo Service Non-Drop", pricePer1000: 1000 }
         ]
     }
 };

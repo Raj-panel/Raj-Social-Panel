@@ -121,7 +121,7 @@ const platformData = {
   }
 };
 
-// Render Select With Icons
+// Render Select With Icons and Highlight Selected Option
 function setupSelectIcons(selectId) {
   const selectElem = document.getElementById(selectId);
   if (!selectElem) return;
@@ -135,42 +135,86 @@ function setupSelectIcons(selectId) {
 
   const selectedDisplay = document.createElement('div');
   selectedDisplay.className = 'custom-selected-box';
-  selectedDisplay.style.cssText = 'display: flex; align-items: center; gap: 10px; padding: 12px; background: #fff; border: 1px solid #ccc; border-radius: 8px; cursor: pointer; font-size: 14px;';
+  selectedDisplay.style.cssText = 'display: flex; align-items: center; justify-content: space-between; padding: 12px; background: #fff; border: 1px solid #ccc; border-radius: 8px; cursor: pointer; font-size: 14px;';
 
   const optionsContainer = document.createElement('div');
   optionsContainer.className = 'custom-options-container';
   optionsContainer.style.cssText = 'display: none; position: absolute; top: 105%; left: 0; right: 0; background: #fff; border: 1px solid #ccc; border-radius: 8px; max-height: 250px; overflow-y: auto; z-index: 999; box-shadow: 0 4px 10px rgba(0,0,0,0.15);';
 
-  Array.from(selectElem.options).forEach((opt, index) => {
-    const item = document.createElement('div');
-    item.className = 'custom-option-item';
-    item.style.cssText = 'display: flex; align-items: center; gap: 10px; padding: 10px 12px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 13px; color: #333;';
+  const updateOptionsUI = () => {
+    optionsContainer.innerHTML = '';
     
-    const logoUrl = getLogoByText(opt.textContent);
-    
-    item.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${opt.textContent}</span>`;
-
-    item.onclick = () => {
-      selectElem.selectedIndex = index;
-      selectedDisplay.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${opt.textContent}</span>`;
-      optionsContainer.style.display = 'none';
+    Array.from(selectElem.options).forEach((opt, index) => {
+      const isSelected = index === selectElem.selectedIndex;
+      const item = document.createElement('div');
+      item.className = 'custom-option-item';
       
-      const event = new Event('change');
-      selectElem.dispatchEvent(event);
-    };
+      // Highlight style for selected option
+      item.style.cssText = `
+        display: flex; 
+        align-items: center; 
+        justify-content: space-between; 
+        padding: 10px 12px; 
+        cursor: pointer; 
+        border-bottom: 1px solid #eee; 
+        font-size: 13px; 
+        color: ${isSelected ? '#0066cc' : '#333'}; 
+        background-color: ${isSelected ? '#e8f0fe' : '#fff'}; 
+        font-weight: ${isSelected ? '600' : '400'};
+      `;
+      
+      const logoUrl = getLogoByText(opt.textContent);
+      const checkMark = isSelected ? `<span style="color: #0066cc; font-weight: bold; margin-left: 10px;">✓</span>` : '';
 
-    optionsContainer.appendChild(item);
+      item.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
+          <img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> 
+          <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${opt.textContent}</span>
+        </div>
+        ${checkMark}
+      `;
 
-    if (index === selectElem.selectedIndex) {
-      selectedDisplay.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${opt.textContent}</span>`;
-    }
-  });
+      item.onclick = () => {
+        selectElem.selectedIndex = index;
+        selectedDisplay.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
+            <img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> 
+            <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${opt.textContent}</span>
+          </div>
+          <span style="font-size: 12px; color: #666;">▼</span>
+        `;
+        optionsContainer.style.display = 'none';
+        
+        const event = new Event('change');
+        selectElem.dispatchEvent(event);
+      };
+
+      optionsContainer.appendChild(item);
+
+      if (isSelected) {
+        selectedDisplay.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
+            <img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> 
+            <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${opt.textContent}</span>
+          </div>
+          <span style="font-size: 12px; color: #666;">▼</span>
+        `;
+      }
+    });
+  };
+
+  updateOptionsUI();
 
   selectedDisplay.onclick = (e) => {
     e.stopPropagation();
     const isVisible = optionsContainer.style.display === 'block';
     document.querySelectorAll('.custom-options-container').forEach(c => c.style.display = 'none');
-    optionsContainer.style.display = isVisible ? 'none' : 'block';
+    if (!isVisible) {
+      updateOptionsUI(); // Refresh state before showing
+      optionsContainer.style.display = 'block';
+    } else {
+      optionsContainer.style.display = 'none';
+    }
   };
 
   selectElem.style.display = 'none';

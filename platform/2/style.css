@@ -1431,3 +1431,94 @@ body.dark-mode .badge-best,
     box-shadow: 0 0 15px rgba(217, 70, 239, 0.6), 0 0 5px rgba(244, 63, 94, 0.8), inset 0 1px 2px rgba(255, 255, 255, 0.8) !important;
     border: 1px solid rgba(255, 255, 255, 0.5) !important;
 }
+
+/* =========================================================
+   DYNAMIC SMM FORM UI STYLING (ADDED)
+   ========================================================= */
+.smm-form-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #1e293b;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  border-color: #8b5cf6;
+}
+
+.avg-time-box {
+  background: #f8fafc;
+  border: 1px dashed #94a3b8;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #475569;
+  margin-bottom: 14px;
+}
+
+.qty-error-msg {
+  color: #ef4444;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 4px;
+  display: block;
+}
+
+.qty-error-msg.hidden {
+  display: none !important;
+}
+
+.quantity-error-border {
+  border-color: #ef4444 !important;
+  background-color: #fef2f2;
+}
+
+.total-price-box {
+  font-size: 18px;
+  font-weight: 700;
+  color: #16a34a;
+  margin: 15px 0;
+  text-align: right;
+}
+
+.proceed-payment-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+  transition: all 0.2s ease;
+}
+
+.proceed-payment-btn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}

@@ -6,7 +6,7 @@
     const style = document.createElement("style");
     style.id = "fixedLayoutCss";
     style.innerHTML = `
-        /* Fixed Hero Banner Height */
+        /* 1. Adjusted Fixed Hero Banner Height */
         .hero-banner, .hero-card, .instagram-boost-card {
             height: auto !important;
             min-height: 160px !important;
@@ -25,11 +25,13 @@
             font-size: 11px !important;
         }
 
+        /* Fixed Install Container Position */
         #installContainer {
             margin-top: 50px !important;
             margin-bottom: 4px !important;
         }
 
+        /* Target Link & UTR Field Labels Color & Contrast */
         #checkoutPage label[for="checkoutLinkInput"],
         #checkoutPage .target-input-label,
         #checkoutLinkLabel,
@@ -54,6 +56,16 @@
             #checkoutPage .input-box label {
                 color: #f8fafc !important;
                 text-shadow: none !important;
+            }
+        }
+
+        @media screen and (min-width: 768px) {
+            #checkoutPage label[for="checkoutLinkInput"],
+            #checkoutPage .target-input-label,
+            #checkoutLinkLabel,
+            #checkoutPage label[for="checkoutTxnId"],
+            #checkoutPage .utr-label {
+                font-size: 14px !important;
             }
         }
 
@@ -144,9 +156,89 @@
 })();
 
 // ==========================================
-// NAVIGATION FIX FOR LOGIN / CREATE ACCOUNT
+// SERVICE DATA STRUCTURE
 // ==========================================
+const serviceData = {
+    instagram: {
+        "Instagram Followers — Working Service": [
+            { 
+                id: "1220", 
+                name: "1220 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 60D Refill 🔄", 
+                pricePer1000: 65.358,
+                avgTime: "0–10 Minutes"
+            },
+            { 
+                id: "1221", 
+                name: "1221 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 90D Refill 🔄", 
+                pricePer1000: 67.929,
+                avgTime: "0–10 Minutes"
+            },
+            { 
+                id: "1222", 
+                name: "1222 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 365D Refill 🔄", 
+                pricePer1000: 70.501,
+                avgTime: "0–10 Minutes"
+            },
+            { 
+                id: "1223", 
+                name: "1223 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - Lifetime Refill ♻️", 
+                pricePer1000: 73.072,
+                avgTime: "0–10 Minutes"
+            }
+        ],
+        "Instagram followers Non-Drop": [
+            { 
+                id: "1072", 
+                name: "1072 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - No Refill 🔄", 
+                pricePer1000: 67.929,
+                avgTime: "0–2 Minutes"
+            },
+            { 
+                id: "1073", 
+                name: "1073 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 30D Refill 🔄", 
+                pricePer1000: 73.072,
+                avgTime: "0–2 Minutes"
+            },
+            { 
+                id: "1074", 
+                name: "1074 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 60D Refill 🔄", 
+                pricePer1000: 75.644,
+                avgTime: "0–2 Minutes"
+            },
+            { 
+                id: "1075", 
+                name: "1075 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 90D Refill 🔄", 
+                pricePer1000: 78.215,
+                avgTime: "0–2 Minutes"
+            },
+            { 
+                id: "1076", 
+                name: "1076 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 365D Refill 🔄", 
+                pricePer1000: 79.858,
+                avgTime: "0–2 Minutes"
+            },
+            { 
+                id: "1077", 
+                name: "1077 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - Lifetime Refill ♻️", 
+                pricePer1000: 83.358,
+                avgTime: "0–2 Minutes"
+            }
+        ]
+    },
+    facebook: {},
+    youtube: {},
+    tiktok: {}
+};
+
+// Global State
+let currentPlatform = "instagram";
+let currentCategory = "";
+let selectedService = null;
+let currentCheckoutData = {};
+
 document.addEventListener("DOMContentLoaded", function () {
+    switchPlatform("instagram");
+
     document.body.addEventListener("click", function (e) {
         const link = e.target.closest("a");
         if (link && !link.onclick) {
@@ -156,55 +248,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     });
-    // Initial Load
-    switchPlatform("instagram");
 });
-
-// ==========================================
-// ACCURATE SERVICE DATA
-// ==========================================
-const serviceData = {
-    instagram: {
-        "Working Service": [
-            { name: "1220 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 60D Refill 🔄", pricePer1000: 65.358, avgTime: "0–10 Minutes" },
-            { name: "1221 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 90D Refill 🔄", pricePer1000: 67.929, avgTime: "0–10 Minutes" },
-            { name: "1222 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 365D Refill 🔄", pricePer1000: 70.501, avgTime: "0–10 Minutes" },
-            { name: "1223 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - Lifetime Refill ♻️", pricePer1000: 73.072, avgTime: "0–10 Minutes" }
-        ],
-        "Followers Non-Drop": [
-            { name: "1072 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - No Refill 🔄", pricePer1000: 67.929, avgTime: "0–2 Minutes" },
-            { name: "1073 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 30D Refill 🔄", pricePer1000: 73.072, avgTime: "0–2 Minutes" },
-            { name: "1074 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 60D Refill 🔄", pricePer1000: 75.644, avgTime: "0–2 Minutes" },
-            { name: "1075 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 90D Refill 🔄", pricePer1000: 78.215, avgTime: "0–2 Minutes" },
-            { name: "1076 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 365D Refill 🔄", pricePer1000: 79.858, avgTime: "0–2 Minutes" },
-            { name: "1077 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - Lifetime Refill ♻️", pricePer1000: 83.358, avgTime: "0–2 Minutes" }
-        ]
-    },
-    facebook: {
-        "PAGE/PROFILE Followers": [
-            { name: "Facebook Page/Profile Followers", pricePer1000: 40, avgTime: "10–30 Minutes" }
-        ],
-        "Likes Life-Time Refill ♻️": [
-            { name: "Facebook Likes Life-Time Refill", pricePer1000: 1000, avgTime: "5–15 Minutes" }
-        ]
-    },
-    youtube: {
-        "YouTube Subscribe — Non Drop": [
-            { name: "YouTube Subscribers Non Drop", pricePer1000: 1000, avgTime: "1–2 Hours" }
-        ]
-    },
-    tiktok: {
-        "TikTok Followers 30 Day Refill♻️": [
-            { name: "TikTok Followers Premium", pricePer1000: 1000, avgTime: "15–30 Minutes" }
-        ]
-    }
-};
-
-// Application State
-let currentPlatform = "instagram";
-let currentCategory = "";
-let selectedPackage = null;
-let currentCheckoutData = {};
 
 window.addEventListener('popstate', function () {
     const checkoutPage = document.getElementById("checkoutPage");
@@ -215,7 +259,6 @@ window.addEventListener('popstate', function () {
 
 function switchPlatform(platform) {
     currentPlatform = platform;
-    selectedPackage = null;
 
     const btnMap = {
         instagram: document.getElementById("btnInsta"),
@@ -253,7 +296,12 @@ function renderCategoryTabs() {
     tabsContainer.innerHTML = "";
 
     const categories = Object.keys(serviceData[currentPlatform] || {});
-    if (categories.length === 0) return;
+    if (categories.length === 0) {
+        const packageList = document.getElementById("packageList");
+        if (packageList) packageList.innerHTML = "<p style='color:#94a3b8; font-size:12px;'>No services available in this section.</p>";
+        return;
+    }
+
     currentCategory = categories[0];
 
     categories.forEach((cat, index) => {
@@ -280,114 +328,129 @@ function renderPackages() {
     if (!packageList) return;
 
     packageList.innerHTML = "";
-    selectedPackage = null;
+    const services = serviceData[currentPlatform]?.[currentCategory] || [];
 
-    const packages = serviceData[currentPlatform]?.[currentCategory] || [];
+    if (services.length === 0) return;
 
-    packages.forEach((pkg, index) => {
-        const customDiv = document.createElement("div");
-        customDiv.className = "custom-card";
-        customDiv.style.cssText = "background: #1e293b; padding: 14px; border-radius: 12px; margin-bottom: 12px; border: 1px solid #334155;";
+    selectedService = services[0];
 
-        const inputId = `customQtyInput_${index}`;
-        const priceDisplayId = `customCalcPrice_${index}`;
-        const minWarningId = `customMinWarning_${index}`;
+    // Card Container
+    const cardDiv = document.createElement("div");
+    cardDiv.className = "custom-card";
+    cardDiv.style.cssText = "background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; margin-top: 10px;";
 
-        customDiv.innerHTML = `
-            <div style="margin-bottom: 8px;">
-                <strong class="custom-title" style="color: #a855f7; font-size: 13px; display: block; line-height: 1.4;">
-                    ${pkg.name}
-                </strong>
-                <p style="font-size: 11px; color: #94a3b8; margin: 4px 0 2px 0;">
-                    Rate: <b style="color: #f8fafc;">₹${pkg.pricePer1000}</b> per 1000 Quantity
-                </p>
-                <p style="font-size: 11px; color: #38bdf8; margin: 0; font-weight: bold;">
-                    ⚡ Average Time: <b>${pkg.avgTime || "0-10 Minutes"}</b>
-                </p>
-            </div>
+    // Service Selector Box
+    let selectOptionsHtml = services.map((s, i) => `<option value="${i}">${s.name}</option>`).join('');
 
-            <div class="input-box" style="margin-top: 10px;">
+    cardDiv.innerHTML = `
+        <div style="margin-bottom: 10px;">
+            <label style="font-size: 11px; color: #94a3b8; display: block; margin-bottom: 4px; font-weight: bold;">Select Service:</label>
+            <select id="serviceDropdownSelect" onchange="onServiceSelectChange(this.value)" style="width: 100%; padding: 8px; border-radius: 6px; background: #0f172a; color: #fff; border: 1px solid #334155; font-size: 11px; text-overflow: ellipsis; outline: none;">
+                ${selectOptionsHtml}
+            </select>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); padding: 6px 10px; border-radius: 6px; margin-bottom: 10px;">
+            <span style="font-size: 11px; color: #cbd5e1;">⚡ Average Time:</span>
+            <span id="displayAvgTime" style="font-size: 11px; font-weight: bold; color: #a855f7;">${selectedService.avgTime}</span>
+        </div>
+
+        <div style="margin-bottom: 10px;">
+            <label style="font-size: 11px; color: #94a3b8; display: block; margin-bottom: 4px; font-weight: bold;">Quantity:</label>
+            <div class="input-box">
                 <input
                     type="number"
-                    id="${inputId}"
-                    placeholder="Minimum 100"
-                    min="100"
-                    style="width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: #fff; font-size: 12px; outline: none;"
-                    oninput="calculateCustomPriceForInput('${pkg.name.replace(/'/g, "\\'")}', ${pkg.pricePer1000}, '${inputId}', '${priceDisplayId}', '${minWarningId}')"
+                    id="customQtyInput"
+                    placeholder="Enter quantity (e.g. 1000)"
+                    min="1"
+                    style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 12px; box-sizing: border-box;"
+                    oninput="calculateCustomPrice()"
                 >
             </div>
-
-            <div style="font-size: 11px; color: #ef4444; margin-top: 4px; display: none; font-weight: bold;" id="${minWarningId}">
-                ⚠️ Minimum Quantity is 100!
+            <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">
+                Rate: ₹<span id="displayServiceRate">${selectedService.pricePer1000}</span> per 1000 Qty
             </div>
+        </div>
 
-            <div style="font-size: 13px; font-weight: 800; color: #22c55e; margin-top: 8px;">
-                Total: ₹<span id="${priceDisplayId}">0.00</span> INR
-            </div>
+        <div style="font-size: 11px; color: #ef4444; margin-top: 4px; display: none;" id="customMinWarning">
+            ⚠️ Minimum Quantity is 1!
+        </div>
 
-            <button class="action-btn" style="margin-top: 10px; width: 100%; padding: 10px; background: #22c55e; color: #fff; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 13px;" onclick="openCheckoutFromCustomInput('${inputId}', '${priceDisplayId}', '${pkg.name.replace(/'/g, "\\'")}', ${pkg.pricePer1000})">
-                Proceed to Payment
-            </button>
-        `;
+        <div style="font-size: 13px; font-weight: 800; color: #22c55e; margin-top: 8px;">
+            Total Price: ₹<span id="customCalcPrice">0.00</span> INR
+        </div>
 
-        packageList.appendChild(customDiv);
-    });
+        <button class="action-btn" style="margin-top: 12px; width: 100%; padding: 10px; background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px;" onclick="openCheckoutFromSelectedInput()">
+            Proceed to Payment
+        </button>
+    `;
+
+    packageList.appendChild(cardDiv);
 }
 
-function calculateCustomPriceForInput(serviceName, ratePer1000, inputId, priceDisplayId, minWarningId) {
-    const qtyInput = document.getElementById(inputId);
-    const valStr = qtyInput ? qtyInput.value.trim() : "";
-    const qty = parseFloat(valStr) || 0;
-    const calcPriceSpan = document.getElementById(priceDisplayId);
-    const minWarning = document.getElementById(minWarningId);
+function onServiceSelectChange(index) {
+    const services = serviceData[currentPlatform]?.[currentCategory] || [];
+    selectedService = services[index];
 
-    if (valStr !== "" && qty < 100) {
+    if (!selectedService) return;
+
+    const rateSpan = document.getElementById("displayServiceRate");
+    const avgTimeSpan = document.getElementById("displayAvgTime");
+
+    if (rateSpan) rateSpan.innerText = selectedService.pricePer1000;
+    if (avgTimeSpan) avgTimeSpan.innerText = selectedService.avgTime;
+
+    calculateCustomPrice();
+}
+
+function calculateCustomPrice() {
+    if (!selectedService) return;
+
+    const qtyInput = document.getElementById("customQtyInput");
+    const qty = parseInt(qtyInput ? qtyInput.value : 0) || 0;
+    const calcPriceSpan = document.getElementById("customCalcPrice");
+    const minWarning = document.getElementById("customMinWarning");
+
+    if (qty < 1 && qtyInput && qtyInput.value !== "") {
         if (minWarning) minWarning.style.display = "block";
-        if (qtyInput) {
-            qtyInput.style.borderColor = "#ef4444";
-            qtyInput.style.color = "#ef4444";
-        }
         if (calcPriceSpan) calcPriceSpan.innerText = "0.00";
-    } else if (qty >= 100) {
+    } else if (qty >= 1) {
         if (minWarning) minWarning.style.display = "none";
-        if (qtyInput) {
-            qtyInput.style.borderColor = "#22c55e";
-            qtyInput.style.color = "#ffffff";
-        }
-        const total = (qty / 1000) * ratePer1000;
+        const total = (qty / 1000) * selectedService.pricePer1000;
         if (calcPriceSpan) calcPriceSpan.innerText = total.toFixed(2);
     } else {
         if (minWarning) minWarning.style.display = "none";
-        if (qtyInput) {
-            qtyInput.style.borderColor = "#475569";
-            qtyInput.style.color = "#ffffff";
-        }
         if (calcPriceSpan) calcPriceSpan.innerText = "0.00";
     }
 }
 
-function openCheckoutFromCustomInput(inputId, priceDisplayId, serviceFullName, ratePer1000) {
-    const qtyInput = document.getElementById(inputId);
+function openCheckoutFromSelectedInput() {
+    const qtyInput = document.getElementById("customQtyInput");
     const qty = parseFloat(qtyInput ? qtyInput.value : 0);
 
-    if (!qty || qty < 100) {
-        alert("Minimum order quantity is 100!");
+    if (!qty || qty < 1) {
+        alert("Please enter a valid order quantity!");
         return;
     }
 
-    const price = (qty / 1000) * ratePer1000;
+    if (!selectedService) {
+        alert("Please select a service first!");
+        return;
+    }
+
+    const price = (qty / 1000) * selectedService.pricePer1000;
     const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
 
     currentCheckoutData = {
         platform: platformCap,
-        serviceName: serviceFullName || currentCategory,
-        packageName: `${qty.toLocaleString()} Quantity`,
+        serviceName: currentCategory,
+        packageName: selectedService.name,
         baseQuantity: qty,
         quantity: qty,
         basePrice: price,
         price: price,
         multiplier: 1,
-        badge: "Custom"
+        badge: "Working"
     };
 
     showCheckoutOverlay();
@@ -397,16 +460,32 @@ function getLinkConfig(platform, category) {
     const p = (platform || "").toLowerCase();
     const c = (category || "").toLowerCase();
 
-    if (p.includes("youtube") || c.includes("youtube")) {
-        return { label: "YouTube Video / Channel Link", placeholder: "Enter YouTube link" };
+    if (p.includes("youtube") || c.includes("youtube") || c.includes("yt")) {
+        if (c.includes("subscribe")) {
+            return { label: "YouTube Channel Link or Handle", placeholder: "Enter YouTube channel link or @handle" };
+        }
+        return { label: "YouTube Video / Shorts Link", placeholder: "Enter YouTube video/Shorts link" };
     }
+
     if (p.includes("tiktok") || c.includes("tiktok")) {
-        return { label: "TikTok Video Link / Username", placeholder: "Enter TikTok link" };
+        return { label: "TikTok Video Link or Username", placeholder: "Enter TikTok video link or username" };
     }
-    if (p.includes("facebook") || c.includes("facebook")) {
-        return { label: "Facebook Page / Post Link", placeholder: "Enter Facebook link" };
+
+    if (p.includes("instagram") || c.includes("instagram") || c.includes("ig")) {
+        if (c.includes("like")) {
+            return { label: "Post / Reel Link", placeholder: "Enter Instagram post/reel link" };
+        }
+        if (c.includes("reel") || c.includes("view") || c.includes("video")) {
+            return { label: "Instagram Reel / Video Link", placeholder: "Enter Instagram reel/video link" };
+        }
+        return { label: "Instagram Profile Link", placeholder: "Enter Instagram username or profile link" };
     }
-    return { label: "Instagram Profile / Post Link", placeholder: "Enter Instagram link or username" };
+
+    if (p.includes("facebook") || c.includes("facebook") || c.includes("fb")) {
+        return { label: "Facebook Profile / Page Link", placeholder: "Enter Facebook profile or page link" };
+    }
+
+    return { label: "Target Link or Username", placeholder: "Enter link or username" };
 }
 
 function updateCheckoutQuantityDisplay() {
@@ -414,8 +493,7 @@ function updateCheckoutQuantityDisplay() {
     if (!d || !d.baseQuantity) return;
 
     d.quantity = d.baseQuantity * (d.multiplier || 1);
-    const unitRate = (d.basePrice / d.baseQuantity);
-    d.price = d.quantity * unitRate;
+    d.price = (d.basePrice || 0) * (d.multiplier || 1);
 
     const qtyCountDisplay = document.getElementById("checkoutQtyCount");
     if (qtyCountDisplay) qtyCountDisplay.innerText = d.multiplier || 1;
@@ -428,11 +506,13 @@ function updateCheckoutQuantityDisplay() {
 
     const usdtEl = document.getElementById("checkoutUsdtAmount");
     if (usdtEl) {
-        usdtEl.innerText = `$${(d.price / 88).toFixed(2)} USDT`;
+        const usdt = (d.price / 88).toFixed(2);
+        usdtEl.innerText = `$${usdt} USDT`;
     }
 
     const upiId = "rajpanel@axl";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
+    
     const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
@@ -446,6 +526,7 @@ function updateCheckoutQuantityDisplay() {
 
 function changeCheckoutMultiplier(delta) {
     if (!currentCheckoutData.multiplier) currentCheckoutData.multiplier = 1;
+    
     let newMultiplier = currentCheckoutData.multiplier + delta;
     if (newMultiplier < 1) newMultiplier = 1;
 
@@ -455,6 +536,7 @@ function changeCheckoutMultiplier(delta) {
 
 function showCheckoutOverlay() {
     const d = currentCheckoutData;
+
     history.pushState({ checkoutOpen: true }, "");
 
     const iconBox = document.getElementById("checkoutPlatformIcon");
@@ -476,6 +558,48 @@ function showCheckoutOverlay() {
 
     const badgeEl = document.getElementById("checkoutBadge");
     if (badgeEl) badgeEl.innerText = d.badge;
+
+    let counterContainer = document.getElementById("checkoutQtyCounterBox");
+    const priceEl = document.getElementById("checkoutPriceText");
+    const priceParent = priceEl ? priceEl.parentElement : null;
+
+    if (!counterContainer && priceParent) {
+        counterContainer = document.createElement("div");
+        counterContainer.id = "checkoutQtyCounterBox";
+        counterContainer.style.cssText = "display: flex; align-items: center; background: rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 1px 4px; gap: 6px; margin-left: auto;";
+        
+        counterContainer.innerHTML = `
+            <button type="button" onclick="changeCheckoutMultiplier(-1)" style="background: rgba(255, 255, 255, 0.2); color: #fff; border: none; width: 30px; height: 30px; border-radius: 5px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">-</button>
+            <span id="checkoutQtyCount" style="color: #fff; font-weight: bold; font-size: 16px; min-width: 22px; text-align: center;">1</span>
+            <button type="button" onclick="changeCheckoutMultiplier(1)" style="background: rgba(255, 255, 255, 0.2); color: #fff; border: none; width: 30px; height: 30px; border-radius: 5px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
+        `;
+
+        if (priceParent.style) {
+            priceParent.style.display = "flex";
+            priceParent.style.alignItems = "center";
+            priceParent.style.justifyContent = "space-between";
+        }
+        priceParent.appendChild(counterContainer);
+    }
+
+    d.multiplier = 1;
+
+    const upiView = document.getElementById("checkoutUpiView");
+    const qrImg = document.getElementById("checkoutQrImg");
+    if (upiView) {
+        let scanHeading = document.getElementById("scanToPayHeading");
+        if (!scanHeading) {
+            scanHeading = document.createElement("h3");
+            scanHeading.id = "scanToPayHeading";
+            scanHeading.innerText = "SCAN TO PAY VIA UPI";
+            scanHeading.style.cssText = "margin: 2px 0 2px 0 !important; font-size: 12px !important; font-weight: 800 !important; text-align: center !important; text-transform: uppercase !important; background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; display: block !important; visibility: visible !important; opacity: 1 !important;";
+        }
+        if (qrImg && qrImg.parentElement === upiView) {
+            upiView.insertBefore(scanHeading, qrImg);
+        } else {
+            upiView.prepend(scanHeading);
+        }
+    }
 
     updateCheckoutQuantityDisplay();
 
@@ -506,6 +630,12 @@ function closeCheckoutUI() {
         checkoutPage.classList.add("hidden");
         checkoutPage.style.display = "none";
     }
+    
+    const linkInput = document.getElementById("checkoutLinkInput");
+    if (linkInput) linkInput.value = "";
+    const txnInput = document.getElementById("checkoutTxnId");
+    if (txnInput) txnInput.value = "";
+    
     currentCheckoutData = {}; 
 }
 
@@ -528,31 +658,19 @@ function switchCheckoutPayment(type) {
         if (viewUpi) viewUpi.classList.remove("hidden");
         if (viewBinance) viewBinance.classList.add("hidden");
     } else {
-        if (btnBinance) btnBinance.classList.add("active");
+        if (btnBinance) btnBinance.classList.remove("active");
         if (btnUpi) btnUpi.classList.remove("active");
         if (viewBinance) viewBinance.classList.remove("hidden");
         if (viewUpi) viewUpi.classList.add("hidden");
     }
 }
 
-function triggerUpiPay(appType) {
-    const d = currentCheckoutData;
-    const upiId = "rajpanel@axl";
-    const amount = d.price ? d.price.toFixed(2) : "0.00";
-    const name = "RajSocialPanel";
-    const note = encodeURIComponent(d.packageName || "Social Boost Service");
-
-    let deepLink = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
-
-    if (appType === "paytm") {
-        deepLink = `paytmmp://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
-    } else if (appType === "gpay") {
-        deepLink = `tez://upi/pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
-    } else if (appType === "phonepe") {
-        deepLink = `phonepe://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
+function processProfileOrLink(input, platform, serviceName) {
+    const trimmed = (input || "").trim();
+    if (!trimmed) {
+        return { isValid: false, message: "Please enter target Profile Link or Username!" };
     }
-
-    window.location.href = deepLink;
+    return { isValid: true, url: trimmed };
 }
 
 function submitOrderToWhatsApp() {
@@ -562,14 +680,29 @@ function submitOrderToWhatsApp() {
     const rawLink = linkInput ? linkInput.value.trim() : "";
     const txnId = txnInput ? txnInput.value.trim() : "";
 
-    if (!rawLink) {
-        alert("Please enter target Link or Username!");
+    const validation = processProfileOrLink(rawLink, currentCheckoutData.platform, currentCheckoutData.serviceName);
+    if (!validation.isValid) {
+        alert(validation.message);
         return;
     }
+
+    const link = validation.url;
+
     if (!txnId) {
         alert("Please enter Transaction ID / UTR number!");
         return;
     }
+
+    const userIdentifier = (typeof window.firebaseUserUid !== 'undefined' && window.firebaseUserUid) 
+        ? window.firebaseUserUid 
+        : (() => {
+            let bid = localStorage.getItem('raj_smm_browser_id');
+            if (!bid) {
+                bid = 'BID_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+                localStorage.setItem('raj_smm_browser_id', bid);
+            }
+            return bid;
+        })();
 
     const orderIdVal = Math.floor(100000 + Math.random() * 900000);
     const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
@@ -582,22 +715,31 @@ function submitOrderToWhatsApp() {
         `🚀 *NEW ORDER SUBMITTED PLATFORM 2* 🚀\n\n` +
         `🆔 *Order ID:* #${orderIdVal}\n` +
         `📌 *Social Media:* ${d.platform || ''}\n` +
-        `🛠️ *Service Name:* ${d.serviceName || ''}\n` +
-        `📦 *Package:* ${d.packageName || ''}\n` +
+        `🛠️ *Category Name:* ${d.serviceName || ''}\n` +
+        `📦 *Selected Service:* ${d.packageName || ''}\n` +
         `🔢 *Total Quantity:* ${(d.quantity || 0).toLocaleString()}\n` +
         `💰 *Total Price:* ₹${(d.price || 0).toFixed(2)}\n` +
-        `🔗 *Target Link:* ${rawLink}\n` +
+        `🔗 *Target Link:* ${link}\n` +
         `💳 *Payment Method:* ${payMethod}\n` +
         `🧾 *Transaction ID / UTR:* ${txnId}`;
 
-    window.open(`https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(formattedMessage)}`, "_blank");
+    const waUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(formattedMessage)}`;
+
+    window.open(waUrl, "_blank");
 }
+
+let deferredPrompt = null;
+window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    toggleInstallButton();
+});
 
 function toggleInstallButton() {
     const installContainer = document.getElementById("installContainer");
     if (!installContainer) return;
 
-    if (currentPlatform === "instagram" && currentCategory === "Followers Non-Drop" && window.deferredPrompt) {
+    if (currentPlatform === "instagram" && deferredPrompt) {
         installContainer.style.display = "block";
     } else {
         installContainer.style.display = "none";

@@ -907,6 +907,7 @@ function submitOrderToWhatsApp() {
     const d = currentCheckoutData;
 
     const formattedMessage = 
+        ` *PLATFORM 2* \n\n` +
         `🚀 *NEW ORDER SUBMITTED* 🚀\n\n` +
         `🆔 *Order ID:* #${orderIdVal}\n` +
         `📌 *Social Media:* ${d.platform || ''}\n` +

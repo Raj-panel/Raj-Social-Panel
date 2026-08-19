@@ -309,6 +309,7 @@ body {
 }
 
 .badge-popular { background: linear-gradient(90deg, #3b82f6, #8b5cf6); }
+.badge-best { background: linear-gradient(90deg, #f59e0b, #ef4444); }
 .badge-demo { background: #94a3b8; }
 .badge-real { background: #6366f1; }
 
@@ -546,6 +547,7 @@ input:focus { border-color: var(--focus-color); background: #ffffff; }
 }
 .install-btn i{margin-right:8px;}
 
+
 /* ==================================================
     NEW PAYMENT PAGE / CHECKOUT OVERLAY STYLES
    ================================================== */
@@ -721,6 +723,33 @@ input:focus { border-color: var(--focus-color); background: #ffffff; }
 .checkout-input-group input:focus {
   border-color: var(--focus-color);
   box-shadow: 0 0 18px var(--shadow-color);
+}
+
+/* Payment Switch Tabs */
+.pay-toggle-tabs {
+  display: flex;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.pay-tab {
+  flex: 1;
+  padding: 11px;
+  background: #ffffff;
+  border: 1.5px solid var(--border-color);
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--secondary-color);
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--shadow-color);
+}
+
+.pay-tab.active {
+  background: var(--gradient);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 0 16px var(--shadow-color);
 }
 
 /* Payment View Box (QR / UPI Section) */
@@ -1340,7 +1369,6 @@ body.auth-page {
     padding-top: 20px;
   }
 }
-
 /* =========================================================
    PREMIUM 3D / GLOSSY COMBO PERCENTAGE BADGE
    ========================================================= */

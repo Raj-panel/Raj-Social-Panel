@@ -164,7 +164,7 @@ function openCheckout() {
   document.getElementById("checkoutPriceText").innerText = calculatedPrice;
 
   // UPI Dynamic QR Code
-  const upiId = "rajpanel@upi";
+  const upiId = "rajpanel@axl";
   const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=${upiId}%26am=${calculatedPrice}%26cu=INR`;
   document.getElementById("checkoutQrImg").src = qrApi;
 

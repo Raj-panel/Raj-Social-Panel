@@ -121,7 +121,7 @@ const platformData = {
   }
 };
 
-// Render Custom Select With Logo and Active Highlight
+// Render Select With Icons & Highlight Selected Background
 function setupSelectIcons(selectId) {
   const selectElem = document.getElementById(selectId);
   if (!selectElem) return;
@@ -133,70 +133,56 @@ function setupSelectIcons(selectId) {
   wrapper.className = 'custom-select-wrapper';
   wrapper.style.cssText = 'position: relative; width: 100%; font-family: sans-serif;';
 
+  // Hero Banner Theme Style (Gradient Background and White Text)
+  const activeBgStyle = 'background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); color: #ffffff; font-weight: 600; border-color: transparent;';
+
   const selectedDisplay = document.createElement('div');
   selectedDisplay.className = 'custom-selected-box';
-  selectedDisplay.style.cssText = 'display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px; background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: 500; color: #1e293b; box-shadow: 0 1px 3px rgba(0,0,0,0.05);';
+  selectedDisplay.style.cssText = `display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 14px; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25); ${activeBgStyle}`;
 
   const optionsContainer = document.createElement('div');
   optionsContainer.className = 'custom-options-container';
-  optionsContainer.style.cssText = 'display: none; position: absolute; top: 108%; left: 0; right: 0; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; max-height: 280px; overflow-y: auto; z-index: 999; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 6px;';
-
-  function updateActiveState() {
-    const items = optionsContainer.querySelectorAll('.custom-option-item');
-    items.forEach((item, index) => {
-      if (index === selectElem.selectedIndex) {
-        // Active Style (Hero Purple Theme)
-        item.style.backgroundColor = '#8b5cf6';
-        item.style.color = '#ffffff';
-        item.style.fontWeight = '600';
-      } else {
-        // Normal Style
-        item.style.backgroundColor = 'transparent';
-        item.style.color = '#334155';
-        item.style.fontWeight = '400';
-      }
-    });
-  }
+  optionsContainer.style.cssText = 'display: none; position: absolute; top: 105%; left: 0; right: 0; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; max-height: 250px; overflow-y: auto; z-index: 999; box-shadow: 0 10px 25px rgba(0,0,0,0.15);';
 
   Array.from(selectElem.options).forEach((opt, index) => {
     const item = document.createElement('div');
     item.className = 'custom-option-item';
-    item.style.cssText = 'display: flex; align-items: center; gap: 10px; padding: 10px 12px; cursor: pointer; border-radius: 8px; font-size: 13px; transition: all 0.2s ease; margin-bottom: 2px;';
     
     const logoUrl = getLogoByText(opt.textContent);
-    
-    item.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span style="line-height:1.4;">${opt.textContent}</span>`;
+    const isSelected = index === selectElem.selectedIndex;
 
-    item.onmouseover = () => {
-      if (index !== selectElem.selectedIndex) {
-        item.style.backgroundColor = '#f1f5f9';
-      }
-    };
-    item.onmouseout = () => {
-      if (index !== selectElem.selectedIndex) {
-        item.style.backgroundColor = 'transparent';
-      }
-    };
+    const defaultItemStyle = 'display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f3f4f6; font-size: 13px; color: #333; transition: background 0.2s;';
+    const selectedItemStyle = `display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f3f4f6; font-size: 13px; ${activeBgStyle}`;
+
+    item.style.cssText = isSelected ? selectedItemStyle : defaultItemStyle;
+    item.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${opt.textContent}</span>`;
 
     item.onclick = () => {
       selectElem.selectedIndex = index;
-      selectedDisplay.innerHTML = `<div style="display:flex; align-items:center; gap:10px;"><img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${opt.textContent}</span></div><span style="font-size:12px; color:#64748b;">▼</span>`;
-      
-      updateActiveState();
+      setupSelectIcons(selectId);
       optionsContainer.style.display = 'none';
       
       const event = new Event('change');
       selectElem.dispatchEvent(event);
     };
 
+    item.onmouseenter = () => {
+      if (index !== selectElem.selectedIndex) {
+        item.style.background = '#f3f4f6';
+      }
+    };
+    item.onmouseleave = () => {
+      if (index !== selectElem.selectedIndex) {
+        item.style.background = '#ffffff';
+      }
+    };
+
     optionsContainer.appendChild(item);
 
-    if (index === selectElem.selectedIndex) {
-      selectedDisplay.innerHTML = `<div style="display:flex; align-items:center; gap:10px;"><img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${opt.textContent}</span></div><span style="font-size:12px; color:#64748b;">▼</span>`;
+    if (isSelected) {
+      selectedDisplay.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${opt.textContent}</span>`;
     }
   });
-
-  updateActiveState();
 
   selectedDisplay.onclick = (e) => {
     e.stopPropagation();

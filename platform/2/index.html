@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RAJ-SMM-PANEL Platform 2</title>
+  <title>RAJ-SMM-PANEL</title>
   
   <!-- Google Font & FontAwesome Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -22,11 +22,10 @@
       <button class="close-sidebar-btn" onclick="closeSidebar()"><i class="fa-solid fa-xmark"></i></button>
     </div>
     
-    <!-- Sidebar Menu (Same as https://rajsmmpanel.in/) -->
+    <!-- Menu Options identical to https://rajsmmpanel.in/ -->
     <ul class="sidebar-menu">
       <li><a href="https://rajsmmpanel.in/platform/">🛒 New Order</a></li>
       <li><a href="https://rajsmmpanel.in/">⚡ Platform 1</a></li>
-      <li><a href="https://rajsmmpanel.in/platform/2/">⚡ Platform 2</a></li>
       <li><a href="/orders/">📦 My Orders</a></li>
       <li id="addFundsMenuItem" style="display: none;"></li>
       <li><a href="/pages/privacy-policy.html">🔒 Privacy Policy</a></li>
@@ -132,7 +131,6 @@
         <button class="back-btn" onclick="closeCheckout()"><i class="fa-solid fa-arrow-left"></i> Back</button>
         <div class="checkout-heading-text">Checkout</div>
       </div> 
-
       <!-- Selected Package Info Banner -->
       <div class="premium-service-card">
         <div class="card-top-row">
@@ -204,69 +202,7 @@
     </div>
   </div>
 
-  <!-- External JS File -->
+  <!-- External JS File (Contains original WhatsApp & Order Logic) -->
   <script src="script.js"></script>
-
-  <!-- Logical JavaScript for Order Handling & WhatsApp Message -->
-  <script>
-    function submitOrderToWhatsApp() {
-      const link = document.getElementById("mainLinkInput").value.trim();
-      const qty = document.getElementById("mainQuantityInput").value.trim();
-      const price = document.getElementById("totalPriceText").innerText;
-      const txnId = document.getElementById("checkoutTxnId").value.trim();
-      const serviceSelect = document.getElementById("serviceSelect");
-      const serviceName = serviceSelect ? serviceSelect.options[serviceSelect.selectedIndex].text : "Service";
-
-      if (!link) {
-        alert("Please enter a valid link.");
-        return;
-      }
-      if (!txnId) {
-        alert("Please enter Transaction ID / UTR.");
-        return;
-      }
-
-      // Generate Order ID & Save Order Logic
-      const orderId = "ORD-" + Math.floor(100000 + Math.random() * 900000);
-      const newOrder = {
-        id: orderId,
-        service: serviceName,
-        link: link,
-        quantity: qty,
-        price: price,
-        txnId: txnId,
-        status: "Pending",
-        date: new Date().toLocaleString()
-      };
-
-      let orders = JSON.parse(localStorage.getItem("my_orders") || "[]");
-      orders.unshift(newOrder);
-      localStorage.setItem("my_orders", JSON.stringify(orders));
-
-      // WhatsApp Redirect
-      const phone = "919239628344";
-      const message = `Hello, I placed an order on Platform 2:%0A%0A` +
-                      `📌 *Order ID:* ${orderId}%0A` +
-                      `🛠️ *Service:* ${serviceName}%0A` +
-                      `🔗 *Link:* ${link}%0A` +
-                      `🔢 *Quantity:* ${qty}%0A` +
-                      `💰 *Amount:* ₹${price}%0A` +
-                      `💳 *Transaction UTR:* ${txnId}%0A%0A` +
-                      `Please process my order.`;
-
-      window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
-    }
-
-    function openSidebar() {
-      document.getElementById("leftSidebar").classList.add("active");
-      document.getElementById("sidebarOverlay").classList.add("active");
-    }
-
-    function closeSidebar() {
-      document.getElementById("leftSidebar").classList.remove("active");
-      document.getElementById("sidebarOverlay").classList.remove("active");
-    }
-  </script>
-
 </body>
 </html>

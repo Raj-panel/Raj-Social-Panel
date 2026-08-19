@@ -2,7 +2,7 @@
 let currentPlatform = 'instagram';
 let calculatedPrice = 0;
 
-// All Platform & Service Data (Updated with New Facebook & Instagram Services)
+// All Platform & Service Data
 const platformData = {
   instagram: {
     title: "Instagram Boost",
@@ -29,25 +29,25 @@ const platformData = {
           { id: "1077", name: "1077 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - Lifetime Refill ♻️", rate: 83.358, avgTime: "0–2 Min Start" }
         ]
       },
-      "ig_likes_real": {
+      "Instagram like real profile": {
         name: "Instagram like real profile",
         services: [
-          { id: "881", name: "881 — Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 60 Days Refill♻️ | 0–10 Minutes Start", rate: 10.600, avgTime: "0–10 Min Start" },
-          { id: "882", name: "882 — Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 90 Days Refill♻️ | 0–10 Minutes Start", rate: 12.664, avgTime: "0–10 Min Start" },
-          { id: "883", name: "883 — Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 365 Days Refill♻️ | 0–10 Minutes Start", rate: 13.729, avgTime: "0–10 Min Start" },
-          { id: "884", name: "884 — Instagram Likes | Real Profiles ✓ | 100% Non Drop | 500K+ Per Day | Life Time Refill♻️ | 0–10 Minutes Start", rate: 15.600, avgTime: "0–10 Min Start" }
+          { id: "881", name: "881 — Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 60 Days Refill♻️ | 0–10 Minutes Start", rate: 10.600, avgTime: "0–10 Minutes Start" },
+          { id: "882", name: "882 — Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 90 Days Refill♻️ | 0–10 Minutes Start", rate: 12.664, avgTime: "0–10 Minutes Start" },
+          { id: "883", name: "883 — Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 365 Days Refill♻️ | 0–10 Minutes Start", rate: 13.729, avgTime: "0–10 Minutes Start" },
+          { id: "884", name: "884 — Instagram Likes | Real Profiles ✓ | 100% Non Drop | 500K+ Per Day | Life Time Refill♻️ | 0–10 Minutes Start", rate: 15.600, avgTime: "0–10 Minutes Start" }
         ]
       },
-      "ig_reels_views": {
+      "🇮🇳 Instagram Reels/ Video Views High Speed": {
         name: "🇮🇳 Instagram Reels/ Video Views High Speed",
         services: [
-          { id: "2623", name: "2623 — 🇮🇳Instagram Reels views [ Non-Drop] 500K/1M Days ULTRA FAST | Life-timeRefill♻️", rate: 0.500, avgTime: "0–5 Min Start" }
+          { id: "2623", name: "2623 — 🇮🇳Instagram Reels views [ Non-Drop] 500K/1M Days ULTRA FAST 0–5 Minutes Start Life-timeRefill♻️", rate: 0.50, avgTime: "0–5 Minutes Start" }
         ]
       },
-      "ig_post_views": {
-        name: "🇮🇳Instagram Photo / post Views",
+      "🇮🇳Instagram Photo / post Views": {
+        name: "🇮🇳Instagram  Photo / post Views",
         services: [
-          { id: "2693", name: "2693 — 🇮🇳Instagram Photo & Post Views | Photo + Post + Image Impressions | Non Drop | 1M+ Per Day", rate: 15.286, avgTime: "0–1 Min Start" }
+          { id: "2693", name: "2693 — 🇮🇳Instagram Photo & Post Views | Photo + Post + Image   Impressions | Non Drop | 1M+ Per Day | 0–1 Minutes Start", rate: 15.286, avgTime: "0–1 Minutes Start" }
         ]
       }
     }
@@ -57,54 +57,35 @@ const platformData = {
     icon: "fa-brands fa-facebook",
     linkPlaceholder: "Link Facebook page or profile",
     categories: {
-      "fb_followers_medium": {
+      "Facebook follower real account medium speed": {
         name: "Facebook follower real account medium speed",
         services: [
-          { id: "6207", name: "6207 — Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 90D Refill ♻️", rate: 40.4272, avgTime: "0–30 Min Start" },
-          { id: "6208", name: "6208 — Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 365D Refill ♻️", rate: 43.0640, avgTime: "0–30 Min Start" },
-          { id: "6209", name: "6209 — Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | Lifetime Refill ♻️", rate: 54.7008, avgTime: "0–30 Min Start" }
+          { id: "6207", name: "6207 — Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | 90D Refill ♻️", rate: 40.4272, avgTime: "0–30 Min Start" },
+          { id: "6208", name: "6208 — Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | 365D Refill ♻️", rate: 43.0640, avgTime: "0–30 Min Start" },
+          { id: "6209", name: "6209 — Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | Lifetime Refill ♻️", rate: 54.7008, avgTime: "0–30 Min Start" }
         ]
       },
-      "fb_video_views": {
-        name: "🇮🇳 Real Video Views Facebook - High Quality",
+      "🇮🇳 Real Video Views Facebook - High Quality": {
+        name: "🇮🇳 Real Video Views Facebook -  High Quality",
         services: [
-          { id: "6581", name: "6581 — Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 90D Refill ♻️", rate: 13.2500, avgTime: "0–30 Min Start" },
-          { id: "6582", name: "6582 — Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 365D Refill ♻️", rate: 15.4000, avgTime: "0–30 Min Start" },
-          { id: "6583", name: "6583 — Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | Lifetime Refill ♻️", rate: 17.5500, avgTime: "0–30 Min Start" }
+          { id: "6581", name: "6581 — Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 0–30 Min Start | 90D Refill ♻️", rate: 13.2500, avgTime: "0–30 Min Start" },
+          { id: "6582", name: "6582 — Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 0–30 Min Start | 365D Refill ♻️", rate: 15.4000, avgTime: "0–30 Min Start" },
+          { id: "6583", name: "6583 — Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 0–30 Min Start | Lifetime Refill ♻️", rate: 17.5500, avgTime: "0–30 Min Start" }
         ]
       },
-      "fb_reactions_mix": {
+      "Facebook - Post Reactions mix | Cheapest Rate": {
         name: "Facebook - Post Reactions mix | Cheapest Rate",
         services: [
-          { id: "5507", name: "5507 — Facebook - Post Likes 👍 | 50K/Day - Max 100K | Worldwide | Instant | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
-          { id: "5508", name: "5508 — Facebook - Reaction | Love ❤️ | 50K/Day - Max 100K | Worldwide | Instant | No Refill", rate: 23.5170, avgTime: "0–30 Min Start" },
-          { id: "5509", name: "5509 — Facebook - Reaction | Care 🥰 | 50K/Day - Max 100K | Worldwide | Instant | No Refill", rate: 22.5170, avgTime: "0–30 Min Start" },
-          { id: "5510", name: "5510 — Facebook - Reaction | Wow 😮 | 50K/Day - Max 100K | Worldwide | Instant | No Refill", rate: 21.5170, avgTime: "0–30 Min Start" },
-          { id: "5511", name: "5511 — Facebook - Reaction | Haha 😂 | 50K/Day - Max 100K | Worldwide | Instant | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
-          { id: "5512", name: "5512 — Facebook - Reaction | Sad 😢 | 50K/Day - Max 100K | Worldwide | Instant | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
-          { id: "5513", name: "5513 — Facebook - Reaction | Angry 😡 | 50K/Day - Max 100K | Worldwide | Instant | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" }
+          { id: "5507", name: "5507 — Facebook - Post Likes 👍 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
+          { id: "5508", name: "5508 — Facebook - Reaction | Love ❤️ | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 23.5170, avgTime: "0–30 Min Start" },
+          { id: "5509", name: "5509 — Facebook - Reaction | Care 🥰 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 22.5170, avgTime: "0–30 Min Start" },
+          { id: "5510", name: "5510 — Facebook - Reaction | Wow 😮 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 21.5170, avgTime: "0–30 Min Start" },
+          { id: "5511", name: "5511 — Facebook - Reaction | Haha 😂 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
+          { id: "5512", name: "5512 — Facebook - Reaction | Sad 😢 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
+          { id: "5513", name: "5513 — Facebook - Reaction | Angry 😡 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" }
         ]
       }
     }
-  },
-  youtube: {
-    title: "YouTube Boost",
-    icon: "fa-brands fa-youtube",
-    linkPlaceholder: "Link YouTube channel or video",
-    categories: {}
-  },
-  tiktok: {
-    title: "TikTok Boost",
-    icon: "fa-brands fa-tiktok",
-    linkPlaceholder: "Link TikTok account or video",
-    categories: {}
-  }
-};
-  facebook: {
-    title: "Facebook Boost",
-    icon: "fa-brands fa-facebook",
-    linkPlaceholder: "Link Facebook page or profile",
-    categories: {}
   },
   youtube: {
     title: "YouTube Boost",

@@ -1,21 +1,71 @@
 // =========================================================
-// SERVICE DATA (ONLY INSTAGRAM CATEGORIES & SERVICES)
+// SERVICE DATA WITH INDIVIDUAL PRICES AND AVERAGE TIMES
 // =========================================================
 const serviceData = {
     instagram: {
         "Instagram Followers — Working Service": [
-            { id: "1220", name: "1220 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 60D Refill 🔄", pricePer1000: 65.358 },
-            { id: "1221", name: "1221 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 90D Refill 🔄", pricePer1000: 67.929 },
-            { id: "1222", name: "1222 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 365D Refill 🔄", pricePer1000: 70.501 },
-            { id: "1223", name: "1223 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - Lifetime Refill ♻️", pricePer1000: 73.072 }
+            { 
+                id: "1220", 
+                name: "1220 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 60D Refill 🔄 - ₹65.358", 
+                pricePer1000: 65.358, 
+                avgTime: "10 Minutes" 
+            },
+            { 
+                id: "1221", 
+                name: "1221 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 90D Refill 🔄 - ₹67.929", 
+                pricePer1000: 67.929, 
+                avgTime: "10 Minutes" 
+            },
+            { 
+                id: "1222", 
+                name: "1222 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 365D Refill 🔄 - ₹70.501", 
+                pricePer1000: 70.501, 
+                avgTime: "10 Minutes" 
+            },
+            { 
+                id: "1223", 
+                name: "1223 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - Lifetime Refill ♻️ - ₹73.072", 
+                pricePer1000: 73.072, 
+                avgTime: "10 Minutes" 
+            }
         ],
         "Instagram followers Non-Drop": [
-            { id: "1072", name: "1072 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - No Refill 🔄", pricePer1000: 67.929 },
-            { id: "1073", name: "1073 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 30D Refill 🔄", pricePer1000: 73.072 },
-            { id: "1074", name: "1074 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 60D Refill 🔄", pricePer1000: 75.644 },
-            { id: "1075", name: "1075 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 90D Refill 🔄", pricePer1000: 78.215 },
-            { id: "1076", name: "1076 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 365D Refill 🔄", pricePer1000: 79.858 },
-            { id: "1077", name: "1077 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - Lifetime Refill ♻️", pricePer1000: 83.358 }
+            { 
+                id: "1072", 
+                name: "1072 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - No Refill 🔄 - ₹67.929", 
+                pricePer1000: 67.929, 
+                avgTime: "2 Minutes" 
+            },
+            { 
+                id: "1073", 
+                name: "1073 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 30D Refill 🔄 - ₹73.072", 
+                pricePer1000: 73.072, 
+                avgTime: "2 Minutes" 
+            },
+            { 
+                id: "1074", 
+                name: "1074 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 60D Refill 🔄 - ₹75.644", 
+                pricePer1000: 75.644, 
+                avgTime: "2 Minutes" 
+            },
+            { 
+                id: "1075", 
+                name: "1075 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 90D Refill 🔄 - ₹78.215", 
+                pricePer1000: 78.215, 
+                avgTime: "2 Minutes" 
+            },
+            { 
+                id: "1076", 
+                name: "1076 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 365D Refill 🔄 - ₹79.858", 
+                pricePer1000: 79.858, 
+                avgTime: "2 Minutes" 
+            },
+            { 
+                id: "1077", 
+                name: "1077 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - Lifetime Refill ♻️ - ₹83.358", 
+                pricePer1000: 83.358, 
+                avgTime: "2 Minutes" 
+            }
         ]
     }
 };
@@ -24,36 +74,46 @@ let currentPlatform = "instagram";
 let currentCheckoutData = {};
 
 // =========================================================
-// INITIALIZATION ON PAGE LOAD
+// DOM CONTENT LOADED & INITIAL BINDINGS
 // =========================================================
 document.addEventListener("DOMContentLoaded", function () {
-    // 1. Initial Load of Categories for Instagram
+    // 1. Initial Load of Category Dropdown
     loadCategories();
 
-    // 2. Event Listener for Category Selection Change
-    const categorySelect = getCategoryDropdown();
-    if (categorySelect) {
-        categorySelect.addEventListener("change", function () {
+    // 2. Category Dropdown Listener
+    const catSelect = getCategoryDropdown();
+    if (catSelect) {
+        catSelect.addEventListener("change", function () {
             loadServices(this.value);
         });
     }
 
-    // 3. Event Listener for Service Selection Change
-    const serviceSelect = getServiceDropdown();
-    if (serviceSelect) {
-        serviceSelect.addEventListener("change", function () {
-            calculateTotalPrice();
+    // 3. Service Dropdown Listener
+    const servSelect = getServiceDropdown();
+    if (servSelect) {
+        servSelect.addEventListener("change", function () {
+            onServiceChange();
         });
     }
 
-    // 4. Quantity Input Event Listener
-    const qtyInput = document.getElementById("quantityInput") || document.querySelector("input[type='number']");
+    // 4. Quantity Input Listener for Instant Total Price Calculation
+    const qtyInput = getQuantityInput();
     if (qtyInput) {
         qtyInput.addEventListener("input", calculateTotalPrice);
+        qtyInput.addEventListener("keyup", calculateTotalPrice);
+    }
+
+    // 5. Submit / Proceed Button Listener
+    const submitBtn = document.querySelector("button[type='submit']") || document.querySelector(".submit-btn") || document.getElementById("submitBtn");
+    if (submitBtn) {
+        submitBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            proceedToCheckout();
+        });
     }
 });
 
-// Helper functions to identify Dropdown elements flexibly
+// Helper functions to fetch elements safely
 function getCategoryDropdown() {
     return document.getElementById("categorySelect") || document.querySelectorAll("select")[0];
 }
@@ -62,94 +122,137 @@ function getServiceDropdown() {
     return document.getElementById("serviceSelect") || document.querySelectorAll("select")[1];
 }
 
+function getQuantityInput() {
+    return document.getElementById("quantityInput") || document.querySelector("input[type='number']");
+}
+
+function getLinkInput() {
+    return document.getElementById("linkInput") || document.querySelector("input[type='text']") || document.querySelector("input[placeholder*='http']");
+}
+
 // =========================================================
-// DYNAMIC DROPDOWN FILLING LOGIC
+// DROPDOWN LOADERS & DYNAMIC updates
 // =========================================================
 function loadCategories() {
-    const categorySelect = getCategoryDropdown();
-    if (!categorySelect) return;
+    const catSelect = getCategoryDropdown();
+    if (!catSelect) return;
 
-    categorySelect.innerHTML = '<option value="" disabled selected>-- Select Category --</option>';
+    catSelect.innerHTML = '<option value="" disabled selected>-- Select Category --</option>';
 
     const categories = Object.keys(serviceData[currentPlatform] || {});
     categories.forEach(cat => {
-        const option = document.createElement("option");
-        option.value = cat;
-        option.textContent = cat;
-        categorySelect.appendChild(option);
+        const opt = document.createElement("option");
+        opt.value = cat;
+        opt.textContent = cat;
+        catSelect.appendChild(opt);
     });
 
-    // Auto-select first category if available
     if (categories.length > 0) {
-        categorySelect.value = categories[0];
+        catSelect.value = categories[0];
         loadServices(categories[0]);
     }
 }
 
 function loadServices(categoryName) {
-    const serviceSelect = getServiceDropdown();
-    if (!serviceSelect) return;
+    const servSelect = getServiceDropdown();
+    if (!servSelect) return;
 
-    serviceSelect.innerHTML = '<option value="" disabled selected>-- Select Service --</option>';
+    servSelect.innerHTML = '<option value="" disabled selected>-- Select Service --</option>';
 
     const services = serviceData[currentPlatform]?.[categoryName] || [];
     
     services.forEach((service, index) => {
-        const option = document.createElement("option");
-        option.value = index; // pass array index
-        option.textContent = service.name;
-        serviceSelect.appendChild(option);
+        const opt = document.createElement("option");
+        opt.value = index;
+        opt.textContent = service.name; // Full Name including price tag (₹)
+        servSelect.appendChild(opt);
     });
 
-    // Auto-select first service if available
     if (services.length > 0) {
-        serviceSelect.value = "0";
+        servSelect.value = "0";
+        onServiceChange();
+    }
+}
+
+function onServiceChange() {
+    const catSelect = getCategoryDropdown();
+    const servSelect = getServiceDropdown();
+    
+    if (!catSelect || !servSelect) return;
+
+    const catName = catSelect.value;
+    const servIndex = servSelect.value;
+    const services = serviceData[currentPlatform]?.[catName] || [];
+    const service = services[servIndex];
+
+    if (service) {
+        // Update Dynamic Average Time Text
+        updateAverageTimeDisplay(service.avgTime);
+        // Calculate Total Price
         calculateTotalPrice();
     }
 }
 
+function updateAverageTimeDisplay(timeStr) {
+    // Search for element showing Average Time
+    const allDivs = document.querySelectorAll("div, p, span, h4");
+    allDivs.forEach(el => {
+        if (el.children.length === 0 && el.innerText && el.innerText.includes("Average Time:")) {
+            el.innerHTML = `⚡ Average Time: <b>${timeStr}</b>`;
+        }
+    });
+}
+
 function calculateTotalPrice() {
-    const categorySelect = getCategoryDropdown();
-    const serviceSelect = getServiceDropdown();
-    const qtyInput = document.getElementById("quantityInput") || document.querySelector("input[type='number']");
-    const priceDisplay = document.getElementById("totalPrice") || document.getElementById("charge");
+    const catSelect = getCategoryDropdown();
+    const servSelect = getServiceDropdown();
+    const qtyInput = getQuantityInput();
 
-    if (!categorySelect || !serviceSelect) return;
+    if (!catSelect || !servSelect) return;
 
-    const selectedCat = categorySelect.value;
-    const serviceIndex = serviceSelect.value;
-    const qty = parseFloat(qtyInput ? qtyInput.value : 1000) || 0;
+    const catName = catSelect.value;
+    const servIndex = servSelect.value;
+    const qty = parseFloat(qtyInput ? qtyInput.value : 0) || 0;
 
-    if (selectedCat && serviceIndex !== "" && serviceIndex !== null) {
-        const service = serviceData[currentPlatform][selectedCat][serviceIndex];
-        if (service) {
-            const totalPrice = (qty / 1000) * service.pricePer1000;
-            if (priceDisplay) {
-                priceDisplay.innerText = totalPrice.toFixed(2);
+    const services = serviceData[currentPlatform]?.[catName] || [];
+    const service = services[servIndex];
+
+    if (service) {
+        const totalAmount = (qty / 1000) * service.pricePer1000;
+        
+        // Find Total Amount / Charge element and display price
+        const priceDisplays = document.querySelectorAll("#totalPrice, #charge, .total-price, #totalAmount");
+        if (priceDisplays.length > 0) {
+            priceDisplays.forEach(el => {
+                if (el.tagName === "INPUT") {
+                    el.value = `₹${totalAmount.toFixed(2)}`;
+                } else {
+                    el.innerText = `₹${totalAmount.toFixed(2)}`;
+                }
+            });
+        } else {
+            // Fallback if ID is missing in HTML
+            const priceBox = document.querySelector(".price-box") || document.querySelector("[class*='price']");
+            if (priceBox) {
+                priceBox.innerText = `Total Charge: ₹${totalAmount.toFixed(2)}`;
             }
         }
     }
 }
 
-// Platform Switch Logic (If Top Icons Clicked)
-function switchPlatform(platform) {
-    currentPlatform = platform;
-    loadCategories();
-}
-
 // =========================================================
-// SUBMIT ORDER TO WHATSAPP / CHECKOUT LOGIC
+// CHECKOUT & PROCEED TO PAYMENT LOGIC
 // =========================================================
-function submitOrder() {
-    const categorySelect = getCategoryDropdown();
-    const serviceSelect = getServiceDropdown();
-    const linkInput = document.querySelector("input[type='text']") || document.getElementById("linkInput");
-    const qtyInput = document.getElementById("quantityInput") || document.querySelector("input[type='number']");
+function proceedToCheckout() {
+    const catSelect = getCategoryDropdown();
+    const servSelect = getServiceDropdown();
+    const linkInput = getLinkInput();
+    const qtyInput = getQuantityInput();
 
-    const category = categorySelect ? categorySelect.value : "";
-    const serviceIndex = serviceSelect ? serviceSelect.value : "";
+    const category = catSelect ? catSelect.value : "";
+    const serviceIndex = servSelect ? servSelect.value : "";
     const link = linkInput ? linkInput.value.trim() : "";
-    const qty = qtyInput ? qtyInput.value : "";
+    const qty = qtyInput ? parseFloat(qtyInput.value) : 0;
 
     if (!category || serviceIndex === "") {
         alert("Please select a Category and Service!");
@@ -161,18 +264,28 @@ function submitOrder() {
         return;
     }
 
-    const service = serviceData[currentPlatform][category][serviceIndex];
-    const price = ((parseFloat(qty) || 1000) / 1000) * service.pricePer1000;
+    if (!qty || qty < 1) {
+        alert("Please enter a valid Quantity!");
+        return;
+    }
 
+    const service = serviceData[currentPlatform][category][serviceIndex];
+    const totalAmount = (qty / 1000) * service.pricePer1000;
+
+    // Build WhatsApp Order Message directly
     const whatsappNumber = "919239628344";
-    const message = 
-        `🚀 *NEW INSTAGRAM ORDER platform 2* 🚀\n\n` +
+    const formattedMessage = 
+        `🚀 *NEW INSTAGRAM ORDER* 🚀\n\n` +
+        `📌 *Platform:* Instagram\n` +
         `📂 *Category:* ${category}\n` +
         `🛠️ *Service:* ${service.name}\n` +
-        `🔢 *Quantity:* ${qty}\n` +
-        `💰 *Total Price:* ₹${price.toFixed(2)}\n` +
+        `🔢 *Quantity:* ${qty.toLocaleString()}\n` +
+        `💰 *Total Price:* ₹${totalAmount.toFixed(2)}\n` +
+        `⚡ *Avg Time:* ${service.avgTime}\n` +
         `🔗 *Link:* ${link}`;
 
-    const waUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
+    const waUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(formattedMessage)}`;
+    
+    // Open WhatsApp
     window.open(waUrl, "_blank");
 }

@@ -172,10 +172,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+// ==========================================
+// SERVICE DATA CONFIGURATION
+// ==========================================
 const serviceData = {
     instagram: {
         "Followers": [
-            { type: "custom", name: "Instagram Followers (20% Extra Less Drop)", pricePer50: 1000 }
+            { type: "custom", name: "Instagram Followers (20% Extra Less Drop)", pricePer1000: 1000 }
         ],
         "Likes Non-Drop": [
             { type: "custom", name: "Instagram Likes Non-Drop", pricePer1000: 1000 }
@@ -195,7 +198,6 @@ const serviceData = {
         "REAL Shares Non-Drop": [
             { type: "custom", name: "Instagram REAL Shares Non-Drop", pricePer1000: 1000 }
         ]
-       
     },
     facebook: {
         "PAGE/PROFILE Followers": [
@@ -227,7 +229,7 @@ const serviceData = {
     },
     tiktok: {
         "TikTok Followers 30 Day Refill♻️": [
-            { type: "custom", name: "TikTok Followers Premium", pricePer199: 1000 }
+            { type: "custom", name: "TikTok Followers Premium", pricePer1000: 1000 }
         ],
         "TikTok Likes Non-Drop": [
             { type: "custom", name: "TikTok Likes Non-Drop", pricePer1000: 1000 }
@@ -340,13 +342,15 @@ function renderPackages() {
         const priceDisplayId = `customCalcPrice_${index}`;
         const minWarningId = `customMinWarning_${index}`;
 
+        const rate = pkg.pricePer1000 || 1000;
+
         customDiv.innerHTML = `
             <div style="margin-bottom: 8px;">
                 <strong class="custom-title" style="color: #a855f7; font-size: 13px;">
                     ${pkg.name} (Enter Custom Qty)
                 </strong>
                 <p style="font-size: 10px; color: #94a3b8;">
-                    Rate: ₹${pkg.pricePer1000 || 1000} per 1000 Quantity
+                    Rate: ₹${rate} per 1000 Quantity
                 </p>
             </div>
 
@@ -356,7 +360,7 @@ function renderPackages() {
                     id="${inputId}"
                     placeholder="Enter quantity (e.g. 1000)"
                     min="1"
-                    oninput="calculateCustomPriceForInput('${pkg.name}', ${pkg.pricePer1000 || 1000}, '${inputId}', '${priceDisplayId}', '${minWarningId}')"
+                    oninput="calculateCustomPriceForInput('${pkg.name}', ${rate}, '${inputId}', '${priceDisplayId}', '${minWarningId}')"
                 >
             </div>
 
@@ -368,7 +372,7 @@ function renderPackages() {
                 Total: ₹<span id="${priceDisplayId}">0.00</span> INR
             </div>
 
-            <button class="action-btn" style="margin-top: 10px; width: 100%; padding: 8px; background: #22c55e; color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;" onclick="openCheckoutFromCustomInput('${inputId}', '${priceDisplayId}')">
+            <button class="action-btn" style="margin-top: 10px; width: 100%; padding: 8px; background: #22c55e; color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;" onclick="openCheckoutFromCustomInput('${inputId}', '${priceDisplayId}', ${rate})">
                 Proceed to Payment
             </button>
         `;
@@ -383,7 +387,7 @@ function calculateCustomPriceForInput(serviceName, ratePer1000, inputId, priceDi
     const calcPriceSpan = document.getElementById(priceDisplayId);
     const minWarning = document.getElementById(minWarningId);
 
-    if (qty < 1 && qtyInput.value !== "") {
+    if (qty < 1 && qtyInput && qtyInput.value !== "") {
         if (minWarning) minWarning.style.display = "block";
         if (calcPriceSpan) calcPriceSpan.innerText = "0.00";
         selectedPackage = null;
@@ -396,7 +400,8 @@ function calculateCustomPriceForInput(serviceName, ratePer1000, inputId, priceDi
             name: `${qty.toLocaleString()} ${serviceName}`,
             price: total,
             quantity: qty,
-            category: currentCategory
+            category: currentCategory,
+            ratePer1000: ratePer1000
         };
     } else {
         if (minWarning) minWarning.style.display = "none";
@@ -405,7 +410,7 @@ function calculateCustomPriceForInput(serviceName, ratePer1000, inputId, priceDi
     }
 }
 
-function openCheckoutFromCustomInput(inputId, priceDisplayId) {
+function openCheckoutFromCustomInput(inputId, priceDisplayId, ratePer1000) {
     const qtyInput = document.getElementById(inputId);
     const qty = parseFloat(qtyInput ? qtyInput.value : 0);
 
@@ -427,6 +432,7 @@ function openCheckoutFromCustomInput(inputId, priceDisplayId) {
         quantity: qty,
         basePrice: price,
         price: price,
+        ratePer1000: ratePer1000 || 1000,
         multiplier: 1,
         badge: "Custom"
     };
@@ -434,26 +440,10 @@ function openCheckoutFromCustomInput(inputId, priceDisplayId) {
     showCheckoutOverlay();
 }
 
-function extractQuantity(name) {
-    const text = name.toUpperCase().replace(/,/g, "");
-    const match = text.match(/(\d+(?:\.\d+)?)\s*(M|K)?/);
-    if (!match) return 1;
-
-    let number = parseFloat(match[1]);
-    const unit = match[2];
-
-    if (unit === "K") number = number * 1000;
-    else if (unit === "M") number = number * 1000000;
-
-    return Math.floor(number) || 1;
-}
-
-// Dynamic link configuration matching service criteria
 function getLinkConfig(platform, category) {
     const p = (platform || "").toLowerCase();
     const c = (category || "").toLowerCase();
 
-    // 1. YouTube Service
     if (p.includes("youtube") || c.includes("youtube") || c.includes("yt")) {
         if (c.includes("subscribe")) {
             return {
@@ -467,21 +457,13 @@ function getLinkConfig(platform, category) {
         };
     }
 
-    // 2. TikTok Service
     if (p.includes("tiktok") || c.includes("tiktok")) {
-        if (c.includes("follower") || c.includes("profile")) {
-            return {
-                label: "TikTok Video Link or Username",
-                placeholder: "Enter TikTok video link or username"
-            };
-        }
         return {
             label: "TikTok Video Link or Username",
             placeholder: "Enter TikTok video link or username"
         };
     }
 
-    // 3. Instagram Service
     if (p.includes("instagram") || c.includes("instagram") || c.includes("ig")) {
         if (c.includes("like")) {
             return {
@@ -507,7 +489,6 @@ function getLinkConfig(platform, category) {
         };
     }
 
-    // 4. Facebook Service
     if (p.includes("facebook") || c.includes("facebook") || c.includes("fb")) {
         if (c.includes("follower") || c.includes("page")) {
             return {
@@ -521,32 +502,10 @@ function getLinkConfig(platform, category) {
         };
     }
 
-    // Default Fallback
     return {
         label: "Target Link or Username",
         placeholder: "Enter link or username"
     };
-}
-
-function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUnitQty, baseUnitPrice) {
-    return (totalQty / 1000) * 1000;
-}
-
-function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge) {
-    // REBUILD FRESH STATE AND PURGE PREVIOUS STALE CHECKOUT DATA
-    currentCheckoutData = {
-        platform: platform,
-        serviceName: serviceName,
-        packageName: packageName,
-        baseQuantity: quantity || 1,
-        quantity: quantity || 1,
-        basePrice: price,
-        price: price,
-        multiplier: 1,
-        badge: badge || 'Popular'
-    };
-
-    showCheckoutOverlay();
 }
 
 function updateCheckoutQuantityDisplay() {
@@ -554,7 +513,8 @@ function updateCheckoutQuantityDisplay() {
     if (!d || !d.baseQuantity) return;
 
     d.quantity = d.baseQuantity * (d.multiplier || 1);
-    d.price = (d.quantity / 1000) * 1000;
+    const rate = d.ratePer1000 || 1000;
+    d.price = (d.quantity / 1000) * rate;
 
     const qtyCountDisplay = document.getElementById("checkoutQtyCount");
     if (qtyCountDisplay) qtyCountDisplay.innerText = d.multiplier || 1;
@@ -707,7 +667,6 @@ function showCheckoutOverlay() {
         el.style.display = "none";
     });
 
-    // Dynamic Target Link Input Configuration
     const linkConfig = getLinkConfig(d.platform, d.serviceName);
     const linkLabel = document.getElementById("checkoutLinkLabel") || document.querySelector('label[for="checkoutLinkInput"]');
     const linkInput = document.getElementById("checkoutLinkInput");
@@ -736,13 +695,11 @@ function closeCheckoutUI() {
         checkoutPage.style.display = "none";
     }
     
-    // RESET INPUT VALUES
     const linkInput = document.getElementById("checkoutLinkInput");
     if (linkInput) linkInput.value = "";
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
     
-    // PURGE STALE STATE
     currentCheckoutData = {}; 
 }
 
@@ -765,14 +722,13 @@ function switchCheckoutPayment(type) {
         if (viewUpi) viewUpi.classList.remove("hidden");
         if (viewBinance) viewBinance.classList.add("hidden");
     } else {
-        if (btnBinance) btnBinance.classList.remove("active");
+        if (btnBinance) btnBinance.classList.add("active");
         if (btnUpi) btnUpi.classList.remove("active");
         if (viewBinance) viewBinance.classList.remove("hidden");
         if (viewUpi) viewUpi.classList.add("hidden");
     }
 }
 
-// Check standard URL validity
 function isValidUrl(string) {
     try {
         new URL(string);
@@ -782,7 +738,6 @@ function isValidUrl(string) {
     }
 }
 
-// Function to validate and process Profile Link / Username (Accepts both handles & full URLs)
 function processProfileOrLink(input, platform, serviceName) {
     const trimmed = (input || "").trim();
     if (!trimmed) {
@@ -792,7 +747,6 @@ function processProfileOrLink(input, platform, serviceName) {
     const pName = (platform || "").toLowerCase();
     const sName = (serviceName || "").toLowerCase();
 
-    // Generic fallback for any text if service supports username or URL
     if (pName.includes("instagram")) {
         const cleanUsername = trimmed.startsWith("@") ? trimmed.slice(1) : trimmed;
         
@@ -840,7 +794,6 @@ function processProfileOrLink(input, platform, serviceName) {
         };
     }
 
-    // Default accepting string if non-empty
     return {
         isValid: true,
         url: trimmed
@@ -931,7 +884,7 @@ function toggleInstallButton() {
 
     if (
         currentPlatform === "instagram" &&
-        currentCategory === "Followers Non-Drop" &&
+        currentCategory === "Followers" &&
         deferredPrompt
     ) {
         installContainer.style.display = "block";

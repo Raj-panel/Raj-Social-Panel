@@ -2,16 +2,24 @@
 let currentPlatform = 'instagram';
 let calculatedPrice = 0;
 
-// Platform Icon Mapping Helper
-function getPlatformEmoji(platform) {
-  switch (platform.toLowerCase()) {
-    case 'instagram': return '📸 ';
-    case 'facebook': return '📘 ';
-    case 'youtube': return '🔴 ';
-    case 'tiktok': return '🎵 ';
-    case 'whatsapp': return '💬 ';
-    default: return '🌐 ';
-  }
+// Platform Icon SVG / Image Links
+const platformLogos = {
+  instagram: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg",
+  facebook: "https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg",
+  youtube: "https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg",
+  tiktok: "https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg",
+  whatsapp: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+};
+
+// Helper: Auto Detect Logo based on text name
+function getLogoByText(text) {
+  const lower = text.toLowerCase();
+  if (lower.includes('facebook')) return platformLogos.facebook;
+  if (lower.includes('youtube')) return platformLogos.youtube;
+  if (lower.includes('tiktok')) return platformLogos.tiktok;
+  if (lower.includes('whatsapp')) return platformLogos.whatsapp;
+  if (lower.includes('instagram')) return platformLogos.instagram;
+  return platformLogos[currentPlatform] || platformLogos.instagram;
 }
 
 // All Platform & Service Data
@@ -113,16 +121,76 @@ const platformData = {
   }
 };
 
+// Render Select With Icons
+function setupSelectIcons(selectId) {
+  const selectElem = document.getElementById(selectId);
+  if (!selectElem) return;
+
+  let wrapper = selectElem.parentElement.querySelector('.custom-select-wrapper');
+  if (wrapper) wrapper.remove();
+
+  wrapper = document.createElement('div');
+  wrapper.className = 'custom-select-wrapper';
+  wrapper.style.cssText = 'position: relative; width: 100%; font-family: sans-serif;';
+
+  const selectedDisplay = document.createElement('div');
+  selectedDisplay.className = 'custom-selected-box';
+  selectedDisplay.style.cssText = 'display: flex; align-items: center; gap: 10px; padding: 12px; background: #fff; border: 1px solid #ccc; border-radius: 8px; cursor: pointer; font-size: 14px;';
+
+  const optionsContainer = document.createElement('div');
+  optionsContainer.className = 'custom-options-container';
+  optionsContainer.style.cssText = 'display: none; position: absolute; top: 105%; left: 0; right: 0; background: #fff; border: 1px solid #ccc; border-radius: 8px; max-height: 250px; overflow-y: auto; z-index: 999; box-shadow: 0 4px 10px rgba(0,0,0,0.15);';
+
+  Array.from(selectElem.options).forEach((opt, index) => {
+    const item = document.createElement('div');
+    item.className = 'custom-option-item';
+    item.style.cssText = 'display: flex; align-items: center; gap: 10px; padding: 10px 12px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 13px; color: #333;';
+    
+    const logoUrl = getLogoByText(opt.textContent);
+    
+    item.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${opt.textContent}</span>`;
+
+    item.onclick = () => {
+      selectElem.selectedIndex = index;
+      selectedDisplay.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${opt.textContent}</span>`;
+      optionsContainer.style.display = 'none';
+      
+      const event = new Event('change');
+      selectElem.dispatchEvent(event);
+    };
+
+    optionsContainer.appendChild(item);
+
+    if (index === selectElem.selectedIndex) {
+      selectedDisplay.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${opt.textContent}</span>`;
+    }
+  });
+
+  selectedDisplay.onclick = (e) => {
+    e.stopPropagation();
+    const isVisible = optionsContainer.style.display === 'block';
+    document.querySelectorAll('.custom-options-container').forEach(c => c.style.display = 'none');
+    optionsContainer.style.display = isVisible ? 'none' : 'block';
+  };
+
+  selectElem.style.display = 'none';
+  wrapper.appendChild(selectedDisplay);
+  wrapper.appendChild(optionsContainer);
+  selectElem.parentElement.appendChild(wrapper);
+}
+
+document.addEventListener('click', () => {
+  document.querySelectorAll('.custom-options-container').forEach(c => c.style.display = 'none');
+});
+
 // Platform Selection Logic
 function selectPlatform(platform) {
   currentPlatform = platform;
 
-  // Active Button Highlight
   document.querySelectorAll('.platform-btn').forEach(btn => btn.classList.remove('active'));
   const activeBtn = document.getElementById(`btn-${platform}`);
   if (activeBtn) activeBtn.classList.add('active');
 
-  // Update Banner Info
   const data = platformData[platform];
   if (data) {
     const heroTitle = document.getElementById('heroPlatformTitle');
@@ -136,18 +204,17 @@ function selectPlatform(platform) {
     if (linkLabel) linkLabel.innerText = data.linkPlaceholder;
   }
 
-  // Update Categories Dropdown with Dynamic Logo Emoji
   const categorySelect = document.getElementById('categorySelect');
   if (categorySelect) {
     categorySelect.innerHTML = "";
-    const emoji = getPlatformEmoji(platform);
     
     for (let key in data.categories) {
       const option = document.createElement("option");
       option.value = key;
-      option.textContent = `${emoji} ${data.categories[key].name}`;
+      option.textContent = data.categories[key].name;
       categorySelect.appendChild(option);
     }
+    setupSelectIcons('categorySelect');
   }
 
   updateServices();
@@ -167,22 +234,23 @@ function updateServices() {
   if (!categoryKey || !platformData[currentPlatform].categories[categoryKey]) {
     const timeBox = document.querySelector('.time-box');
     if (timeBox) timeBox.innerHTML = `⚡ Average Time: <strong>N/A</strong>`;
+    setupSelectIcons('serviceSelect');
     calculatePrice();
     return;
   }
 
   const services = platformData[currentPlatform].categories[categoryKey].services;
-  const emoji = getPlatformEmoji(currentPlatform);
 
   services.forEach(service => {
     const option = document.createElement("option");
     option.value = service.id;
     option.setAttribute("data-rate", service.rate);
     option.setAttribute("data-avgtime", service.avgTime);
-    option.textContent = `${emoji} ${service.name} - ₹${service.rate}`;
+    option.textContent = `${service.name} - ₹${service.rate}`;
     serviceSelect.appendChild(option);
   });
 
+  setupSelectIcons('serviceSelect');
   updateAverageTime();
   calculatePrice();
 }

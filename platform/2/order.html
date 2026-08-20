@@ -1,190 +1,241 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Order Status - Raj SMM Panel</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --bg-color: #fcebf4;
-      --card-bg: #ffffff;
-      --text-color: #1e293b;
-      --primary-gradient: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
-      --border-color: #e2e8f0;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-color: #0f172a;
-        --card-bg: #1e293b;
-        --text-color: #f8fafc;
-        --border-color: #334155;
-      }
-    }
-
-    * { box-sizing: border-box; font-family: 'Poppins', sans-serif; margin: 0; padding: 0; }
-    body { background-color: var(--bg-color); color: var(--text-color); display: flex; justify-content: center; padding: 15px; min-height: 100vh; }
-    .container { width: 100%; max-width: 500px; }
-
-    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-    .back-btn { background: var(--card-bg); border: none; padding: 8px 14px; border-radius: 20px; font-weight: 600; color: #6366f1; text-decoration: none; font-size: 13px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .page-title { font-size: 20px; font-weight: 800; color: #6366f1; font-style: italic; }
-
-    /* Search Box & Glowing Border */
-    @keyframes glowingBorder {
-      0% { border-color: #ec4899; box-shadow: 0 0 8px rgba(236, 72, 153, 0.6); }
-      50% { border-color: #8b5cf6; box-shadow: 0 0 12px rgba(139, 92, 246, 0.8); }
-      100% { border-color: #6366f1; box-shadow: 0 0 8px rgba(99, 102, 241, 0.6); }
-    }
-
-    .search-box { position: relative; margin-bottom: 15px; }
-    .search-input { width: 100%; padding: 12px 16px 12px 40px; background: var(--card-bg); border: 2px solid #ec4899; border-radius: 12px; font-size: 13px; color: var(--text-color); outline: none; animation: glowingBorder 3s infinite alternate; }
-    .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #8b5cf6; font-size: 14px; }
-
-    /* Filter Tabs */
-    .filter-tabs { display: flex; gap: 6px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 5px; }
-    .tab-btn { flex: 1; padding: 8px 12px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; font-size: 12px; font-weight: 700; color: var(--text-color); cursor: pointer; white-space: nowrap; text-align: center; }
-    .tab-btn.active { background: var(--primary-gradient); color: white; border: none; }
-
-    /* Order List Cards */
-    .order-card { background: var(--card-bg); border-radius: 16px; padding: 14px; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); border: 1px solid var(--border-color); }
-    .order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
-    .order-id { font-size: 13px; font-weight: 700; color: #6366f1; }
-    .order-status { font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 6px; }
-
-    .status-pending { background: #fef9c3; color: #854d0e; }
-    .status-processing { background: #dbeafe; color: #1e40af; }
-    .status-completed { background: #dcfce7; color: #166534; }
-
-    .order-detail { font-size: 12px; opacity: 0.9; margin-bottom: 4px; }
-    .order-detail strong { font-weight: 600; }
-    .order-time { font-size: 10px; color: #64748b; text-align: right; margin-top: 6px; }
-    .no-orders { text-align: center; padding: 30px 10px; color: #64748b; font-size: 13px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - Raj SMM Panel</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f4f7f6;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        /* Search Bar */
+        .search-box {
+            margin-bottom: 15px;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+        /* Filter Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            overflow-x: auto;
+        }
+        .tab-btn {
+            padding: 8px 16px;
+            border: none;
+            background: #e9ecef;
+            color: #495057;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: #007bff;
+            color: #fff;
+        }
+        /* Table Style */
+        .table-responsive {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+        }
+        th {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        /* Status Badges */
+        .badge {
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .badge-pending { background: #ffeeba; color: #856404; }
+        .badge-processing { background: #b8daff; color: #004085; }
+        .badge-completed { background: #c3e6cb; color: #155724; }
+    </style>
 </head>
 <body>
 
-  <div class="container">
-    <!-- Header -->
-    <div class="header">
-      <a href="javascript:history.back()" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back</a>
-      <div class="page-title">Order Status</div>
-    </div>
+<div class="container">
+    <h2>My Orders / অর্ডার স্ট্যাটাস</h2>
 
-    <!-- Search Bar -->
+    <!-- Search Section -->
     <div class="search-box">
-      <i class="fa-solid fa-magnifying-glass search-icon"></i>
-      <input type="text" id="searchInput" class="search-input" placeholder="Search by UTR / TxID or Service..." onkeyup="filterOrders()">
+        <input type="text" id="searchInput" onkeyup="filterOrders()" placeholder="Search by Order ID or Service ID...">
     </div>
 
-    <!-- Status Tabs -->
-    <div class="filter-tabs">
-      <button class="tab-btn active" onclick="switchTab('all', this)">All Orders</button>
-      <button class="tab-btn" onclick="switchTab('pending', this)">Pending ⏳</button>
-      <button class="tab-btn" onclick="switchTab('processing', this)">Processing ⚙️</button>
-      <button class="tab-btn" onclick="switchTab('completed', this)">Completed ✅</button>
+    <!-- Filter Tabs -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="filterTab('all', this)">All Orders</button>
+        <button class="tab-btn" onclick="filterTab('pending', this)">Pending</button>
+        <button class="tab-btn" onclick="filterTab('processing', this)">Processing</button>
+        <button class="tab-btn" onclick="filterTab('completed', this)">Completed</button>
     </div>
 
-    <!-- Orders Container -->
-    <div id="ordersContainer">
-      <!-- Dynamic Order Cards Will Appear Here -->
+    <!-- Orders Table -->
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Service ID</th>
+                    <th>Service Name</th>
+                    <th>Link</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="orderTableBody">
+                <!-- Dynamic Content Loaded Via JS -->
+            </tbody>
+        </table>
     </div>
-  </div>
+</div>
 
-  <script>
+<script>
+    // নমুনা অর্ডার ডাটা (টাইমস্ট্যাম্প সহ)
+    // বাস্তব সিস্টেমে এটি ডাটাবেস বা LocalStorage থেকে আসবে
+    const orders = [
+        {
+            orderId: "1001",
+            serviceId: "SRV-50",
+            serviceName: "Facebook Page Likes",
+            link: "https://facebook.com/demo",
+            quantity: 1000,
+            orderTime: new Date().getTime() // এখন অর্ডার করা হলো
+        },
+        {
+            orderId: "1000",
+            serviceId: "SRV-12",
+            serviceName: "Instagram Followers",
+            link: "https://instagram.com/demo",
+            quantity: 500,
+            orderTime: new Date().getTime() - (6 * 60 * 1000) // ৬ মিনিট আগে অর্ডার করা (Processing দেখাবে)
+        },
+        {
+            orderId: "999",
+            serviceId: "SRV-05",
+            serviceName: "YouTube Views",
+            link: "https://youtube.com/demo",
+            quantity: 2000,
+            orderTime: new Date().getTime() - (90 * 60 * 1000) // ৯০ মিনিট আগে (Completed দেখাবে)
+        }
+    ];
+
     let currentFilter = 'all';
 
-    // ১. কেবল platform/2 ইউআরএল চেকিং
-    function isPlatformTwoAllowed() {
-      const url = window.location.href;
-      return url.includes("platform/2");
-    }
+    // সময় অনুযায়ী স্ট্যাটাস নির্ধারণ করার ফনশন
+    function getOrderStatus(orderTime) {
+        const currentTime = new Date().getTime();
+        const diffInMinutes = (currentTime - orderTime) / (1000 * 60);
 
-    // ২. অটো টাইম স্ট্যাটাস ক্যালকুলেশন
-    function getStatusObj(timestamp) {
-      const now = new Date().getTime();
-      const diffInMinutes = (now - timestamp) / (1000 * 60);
-
-      if (diffInMinutes < 5) {
-        return { key: 'pending', text: 'Pending ⏳', class: 'status-pending' };
-      } else if (diffInMinutes >= 5 && diffInMinutes < 60) {
-        return { key: 'processing', text: 'Processing ⚙️', class: 'status-processing' };
-      } else {
-        return { key: 'completed', text: 'Completed ✅', class: 'status-completed' };
-      }
-    }
-
-    // ৩. অর্ডার লোড ও রেন্ডারিং
-    function renderOrders() {
-      const container = document.getElementById("ordersContainer");
-
-      // সিকিউরিটি চেক: platform/2 না হলে কোনো অর্ডার দেখাবে না
-      if (!isPlatformTwoAllowed()) {
-        container.innerHTML = `<div class="no-orders"><i class="fa-solid fa-lock" style="font-size: 24px; margin-bottom: 8px;"></i><br>Order tracking is only accessible through Platform 2 page.</div>`;
-        return;
-      }
-
-      const savedOrders = JSON.parse(localStorage.getItem("platform2_orders") || "[]");
-      const searchQuery = document.getElementById("searchInput").value.toLowerCase().trim();
-
-      if (savedOrders.length === 0) {
-        container.innerHTML = `<div class="no-orders"><i class="fa-solid fa-box-open" style="font-size:28px; margin-bottom:8px;"></i><br>No orders found!</div>`;
-        return;
-      }
-
-      let html = "";
-      let matchCount = 0;
-
-      savedOrders.forEach(order => {
-        const status = getStatusObj(order.timestamp);
-        
-        // ফিল্টার লজিক
-        const matchesTab = (currentFilter === 'all') || (status.key === currentFilter);
-        const matchesSearch = order.utr.toLowerCase().includes(searchQuery) || order.service.toLowerCase().includes(searchQuery);
-
-        if (matchesTab && matchesSearch) {
-          matchCount++;
-          const dateStr = new Date(order.timestamp).toLocaleString();
-
-          html += `
-            <div class="order-card">
-              <div class="order-header">
-                <span class="order-id"><i class="fa-solid fa-receipt"></i> TxID: ${order.utr}</span>
-                <span class="order-status ${status.class}">${status.text}</span>
-              </div>
-              <div class="order-detail"><strong>Service:</strong> ${order.service}</div>
-              <div class="order-detail"><strong>Amount:</strong> ₹${order.price}</div>
-              <div class="order-time"><i class="fa-regular fa-clock"></i> ${dateStr}</div>
-            </div>
-          `;
+        if (diffInMinutes < 5) {
+            return { text: 'Pending', class: 'badge-pending' };
+        } else if (diffInMinutes >= 5 && diffInMinutes < 60) {
+            return { text: 'Processing', class: 'badge-processing' };
+        } else {
+            return { text: 'Completed', class: 'badge-completed' };
         }
-      });
-
-      if (matchCount === 0) {
-        container.innerHTML = `<div class="no-orders">No matching orders found.</div>`;
-      } else {
-        container.innerHTML = html;
-      }
     }
 
-    // ৪. ফিল্টার ট্যাব পরিবর্তন
-    function switchTab(filterKey, btnElement) {
-      currentFilter = filterKey;
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      btnElement.classList.add('active');
-      renderOrders();
+    // টেবিল রেন্ডার করা
+    function renderOrders() {
+        const tbody = document.getElementById('orderTableBody');
+        tbody.innerHTML = '';
+
+        orders.forEach(order => {
+            const statusInfo = getOrderStatus(order.orderTime);
+            
+            // ফিল্টার লজিক check
+            if (currentFilter !== 'all' && statusInfo.text.toLowerCase() !== currentFilter) {
+                return;
+            }
+
+            const row = `
+                <tr>
+                    <td><b>#${order.orderId}</b></td>
+                    <td>${order.serviceId}</td>
+                    <td>${order.serviceName}</td>
+                    <td><a href="${order.link}" target="_blank">View Link</a></td>
+                    <td>${order.quantity}</td>
+                    <td><span class="badge ${statusInfo.class}">${statusInfo.text}</span></td>
+                </tr>
+            `;
+            tbody.innerHTML += row;
+        });
     }
 
-    // ৫. সার্চ ইনপুট ইভেন্ট
+    // ফিল্টার ট্যাব হ্যান্ডলার
+    function filterTab(category, btn) {
+        currentFilter = category;
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderOrders();
+    }
+
+    // সার্চ আইডি ফনশন
     function filterOrders() {
-      renderOrders();
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const rows = document.querySelectorAll('#orderTableBody tr');
+
+        rows.forEach(row => {
+            const orderId = row.cells[0].innerText.toLowerCase();
+            const serviceId = row.cells[1].innerText.toLowerCase();
+            
+            if (orderId.includes(input) || serviceId.includes(input)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
     }
 
-    // ইনিশিয়ালাইজেশন ও ১ মিনিট পর পর অটো রিফ্রেশ
-    window.onload = renderOrders;
+    // পেজ লোড হলে রেন্ডার হবে
+    renderOrders();
+
+    // প্রতি ১ মিনিটে অটোমেটিক স্ট্যাটাস আপডেট হবে (পেজ রিফ্রেশ ছাড়া)
     setInterval(renderOrders, 60000);
-  </script>
+</script>
+
 </body>
 </html>

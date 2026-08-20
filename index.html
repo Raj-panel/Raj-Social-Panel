@@ -355,31 +355,6 @@
   .hidden {
     display: none !important;
   }
-
-  /* Telegram Submit Button Styling */
-  .telegram-submit-btn {
-    width: 100%;
-    padding: 14px;
-    background: linear-gradient(135deg, #0088cc, #00a8ff);
-    color: #ffffff;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4);
-    transition: all 0.3s ease;
-    margin-top: 15px;
-  }
-  .telegram-submit-btn:hover {
-    background: linear-gradient(135deg, #0077b5, #0095e6);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 136, 204, 0.6);
-  }
 </style>
 </head>
 <body data-platform="instagram">
@@ -396,6 +371,7 @@
     <li id="authMenuItem">
       <a href="/login/">🔐 Login / Create Account</a>
     </li>
+    <!-- New Order Link Updated Below -->
     <li><a href="https://rajsmmpanel.in/platform/">🛒 New Order</a></li>
     <li><a href="https://rajsmmpanel.in/platform/2/">⚡ Platform 2</a></li>
     <li><a href="/orders/">📦 My Orders</a></li>
@@ -609,9 +585,8 @@
       <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
     </div>
 
-    <!-- Confirm Order Telegram Button -->
-    <button class="telegram-submit-btn" onclick="submitOrderToTelegram()">
-      <i class="fa-brands fa-telegram"></i> Confirm your order
+    <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
+      <i class="fa-brands fa-whatsapp"></i> Confirm your order
     </button>
 
   </div>
@@ -736,54 +711,6 @@
       }
     });
   });
-
-  // Telegram Order Submission Handler
-  async function submitOrderToTelegram() {
-    const linkInput = document.getElementById('checkoutLinkInput')?.value || 'N/A';
-    const txnInput = document.getElementById('checkoutTxnId')?.value || 'N/A';
-    const serviceTitle = document.getElementById('checkoutServiceTitle')?.innerText || 'N/A';
-    const pkgBadge = document.getElementById('checkoutPkgBadgeName')?.innerText || 'N/A';
-    const priceText = document.getElementById('checkoutPriceText')?.innerText || 'N/A';
-
-    if (!linkInput || linkInput === 'N/A') {
-      alert('অনুগ্রহ করে লিঙ্কটি প্রবেশ করান!');
-      return;
-    }
-
-    if (!txnInput || txnInput === 'N/A') {
-      alert('অনুগ্রহ করে Transaction ID / UTR নম্বরটি দিন!');
-      return;
-    }
-
-    const orderData = {
-      order_id: 'RAJ-' + Math.floor(100000 + Math.random() * 900000), // র্যান্ডম আইডি
-      service: `${serviceTitle} (${pkgBadge}) - ₹${priceText}`,
-      link: linkInput,
-      quantity: txnInput // Transaction ID
-    };
-
-    try {
-      const response = await fetch('/confirm-order', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(orderData)
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        alert('🎉 আপনার অর্ডারটি সফলভাবে টেলিগ্রামে পাঠানো হয়েছে!');
-        if (typeof closeCheckout === 'function') closeCheckout();
-      } else {
-        alert('অর্ডার পাঠাতে সমস্যা হয়েছে। আবার চেষ্টা করুন।');
-      }
-    } catch (error) {
-      console.error('Error submitting order:', error);
-      alert('সার্ভারের সাথে যোগাযোগ করা যাচ্ছে না!');
-    }
-  }
 
   // Service Worker Registration
   if ('serviceWorker' in navigator) {

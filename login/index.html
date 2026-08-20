@@ -315,20 +315,23 @@
     <!-- Title -->
     <h2 class="auth-title">Login Account</h2>
 
-    <!-- Input 1: Mobile Number -->
-    <div class="auth-input-group">
-      <label>Mobile Number</label>
-      <input type="tel" id="loginMobile" placeholder="Mobile Number" maxlength="10">
-    </div>
+    <!-- Form Container Added for auth-handler.js Support -->
+    <form id="loginForm">
+      <!-- Input 1: Mobile Number -->
+      <div class="auth-input-group">
+        <label for="loginMobile">Mobile Number</label>
+        <input type="tel" id="loginMobile" placeholder="Mobile Number" maxlength="10" required>
+      </div>
 
-    <!-- Input 2: Password -->
-    <div class="auth-input-group">
-      <label>Password</label>
-      <input type="password" id="loginPassword" placeholder="Password">
-    </div>
+      <!-- Input 2: Password -->
+      <div class="auth-input-group">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+      </div>
 
-    <!-- Login Button -->
-    <button onclick="handleLogin()" class="auth-btn">Login</button>
+      <!-- Login Button -->
+      <button type="submit" class="auth-btn">Login</button>
+    </form>
 
     <!-- Links -->
     <div class="auth-links">
@@ -373,6 +376,6 @@
 </div>
 
 <!-- Firebase Auth Handler Integration -->
-<script type="module" src="../auth-handler.js"></script>
+<script type="module" src="/auth-handler.js"></script>
 </body>
 </html>

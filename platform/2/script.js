@@ -131,7 +131,7 @@ function updatePreloadedQR(price) {
   }
 }
 
-// Render Select With Icons & Highlight Selected Background
+// Render Select With Icons & Highlight Selected Background (FIXED & CUSTOMIZED)
 function setupSelectIcons(selectId) {
   const selectElem = document.getElementById(selectId);
   if (!selectElem) return;
@@ -143,15 +143,21 @@ function setupSelectIcons(selectId) {
   wrapper.className = 'custom-select-wrapper';
   wrapper.style.cssText = 'position: relative; width: 100%; font-family: sans-serif;';
 
-  const activeBgStyle = 'background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); color: #ffffff; font-weight: 600; border-color: transparent;';
+  // ইনপুট বক্স সিলেক্টের সময় স্বাভাবিক হালকা ব্যাকগ্রাউন্ড
+  const defaultBoxStyle = 'background: #f8fafc; color: #1e293b; font-weight: 500; border: 2px solid #ec4899;';
 
   const selectedDisplay = document.createElement('div');
   selectedDisplay.className = 'custom-selected-box';
-  selectedDisplay.style.cssText = `display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 14px; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25); ${activeBgStyle}`;
+  selectedDisplay.style.cssText = `display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 12px; cursor: pointer; font-size: 13px; transition: all 0.3s ease; ${defaultBoxStyle}`;
 
   const optionsContainer = document.createElement('div');
   optionsContainer.className = 'custom-options-container';
-  optionsContainer.style.cssText = 'display: none; position: absolute; top: 105%; left: 0; right: 0; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; max-height: 250px; overflow-y: auto; z-index: 999; box-shadow: 0 10px 25px rgba(0,0,0,0.15);';
+  optionsContainer.style.cssText = 'display: none; position: absolute; top: 105%; left: 0; right: 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; max-height: 250px; overflow-y: auto; z-index: 999; box-shadow: 0 10px 25px rgba(0,0,0,0.15);';
+
+  // Helper function to format ID as a square badge
+  const formatTextWithBadge = (text) => {
+    return text.replace(/^(\d+)\s*[-—]/, '<span class="service-id">$1</span> -');
+  };
 
   Array.from(selectElem.options).forEach((opt, index) => {
     const item = document.createElement('div');
@@ -159,12 +165,14 @@ function setupSelectIcons(selectId) {
     
     const logoUrl = getLogoByText(opt.textContent);
     const isSelected = index === selectElem.selectedIndex;
+    const formattedText = formatTextWithBadge(opt.textContent);
 
-    const defaultItemStyle = 'display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f3f4f6; font-size: 13px; color: #333; transition: background 0.2s;';
-    const selectedItemStyle = `display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f3f4f6; font-size: 13px; ${activeBgStyle}`;
+    // ড্রপডাউনে হোভার বা সিলেক্টেড এরিয়া বেগুনি ব্যাকগ্রাউন্ড ও সাদা টেক্সট
+    const defaultItemStyle = 'display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #1e293b; background: #ffffff; transition: background 0.2s;';
+    const activeItemStyle = 'display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #ffffff; background: #8b5cf6;';
 
-    item.style.cssText = isSelected ? selectedItemStyle : defaultItemStyle;
-    item.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${opt.textContent}</span>`;
+    item.style.cssText = isSelected ? activeItemStyle : defaultItemStyle;
+    item.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${formattedText}</span>`;
 
     item.onclick = () => {
       selectElem.selectedIndex = index;
@@ -176,20 +184,20 @@ function setupSelectIcons(selectId) {
     };
 
     item.onmouseenter = () => {
-      if (index !== selectElem.selectedIndex) {
-        item.style.background = '#f3f4f6';
-      }
+      item.style.background = '#8b5cf6';
+      item.style.color = '#ffffff';
     };
     item.onmouseleave = () => {
       if (index !== selectElem.selectedIndex) {
         item.style.background = '#ffffff';
+        item.style.color = '#1e293b';
       }
     };
 
     optionsContainer.appendChild(item);
 
     if (isSelected) {
-      selectedDisplay.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${opt.textContent}</span>`;
+      selectedDisplay.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${formattedText}</span>`;
     }
   });
 

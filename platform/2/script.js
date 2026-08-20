@@ -416,8 +416,8 @@ async function sendOrderToTelegram() {
     return;
   }
 
-  // ⚠️ আপনার বট টোকেন দিয়ে নিচের মানটি পরিবর্তন করবেন
-  const botToken = "rajpanel888_bot"; 
+  // ⚠️ এখানে আপনার BotFather থেকে পাওয়া অরিজিনাল টোকেনটি বসাবেন (@ সহ ইউজারনেম নয়)
+  const botToken = "8960508595:AAG8-0ZNbOGZ-iRtSh5xzAabhSrHbRWjUaE"; 
   const chatId = "8895603997";
 
   const message = `🛍️ *New Order Received!*\n\n` +

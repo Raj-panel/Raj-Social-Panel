@@ -1333,8 +1333,8 @@ function submitOrderToWhatsApp() {
         `🧾 *Transaction ID / UTR:* ${txnId}`;
 
     // আপনার টেলিগ্রাম বটের টোকেন এবং চ্যাট আইডি এখানে দিন
-    const TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"; 
-    const TELEGRAM_CHAT_ID = "YOUR_TELEGRAM_CHAT_ID";
+    const TELEGRAM_BOT_TOKEN = "8818198886:AAG1Ww5lxVEPDBpBnFQAvtRZt6Zys9t0Wh8"; 
+    const TELEGRAM_CHAT_ID = "8895603997";
 
     const telegramApiUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
 

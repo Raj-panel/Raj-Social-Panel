@@ -1358,7 +1358,7 @@ function submitOrderToWhatsApp() {
     .then(response => response.json())
     .then(data => {
         if (data.ok) {
-            alert("Order submitted successfully to Telegram Bot!");
+            alert("Order submit successfully");
             closeCheckoutUI();
         } else {
             alert("Failed to send order to Telegram. Please check Bot Token & Chat ID.");

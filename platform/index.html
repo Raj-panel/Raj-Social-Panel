@@ -622,7 +622,7 @@
       </div>
       <div class="units-text" id="checkoutUnitsText">5,000 units</div>
       <div class="price-text">
-        ₹<span id="checkoutPriceText">199.00</span> <small>one-time</small>
+        ₹<span id="checkoutPriceText">0.00</span> <small>one-time</small>
       </div>
     </div>
 
@@ -640,7 +640,7 @@
       <div class="summary-divider"></div>
       <div class="summary-row pay-row">
         <span>You Pay</span>
-        <span class="pay-amount">₹<span id="summaryPayAmount">199.00</span></span>
+        <span class="pay-amount">₹<span id="summaryPayAmount">0.00</span></span>
       </div>
     </div>
 
@@ -712,7 +712,7 @@
   </div>
 </div>
 
-<!-- ORDER CONFIRMATION SUCCESS POPUP -->
+<!-- ORDER CONFIRMATION SUCCESS POPUP (Balance field removed) -->
 <div id="orderSuccessModal" class="order-popup-overlay">
   <div class="order-popup-card">
     <button class="order-popup-close" onclick="closeOrderSuccessModal()">&times;</button>
@@ -721,11 +721,10 @@
     </div>
     <div class="order-popup-details">
       <div><strong>ID:</strong> <span id="popOrderId">1759710</span></div>
-      <div><strong>Service:</strong> <span id="popService">Instagram - Views | All Videos Support | 500K / Days - Max Unlimited | Non Drop - Instant Start | Good Speed ✅</span></div>
-      <div><strong>Link:</strong> <span id="popLink">https://www.instagram.com/reel/...</span></div>
+      <div><strong>Service:</strong> <span id="popService">Service Name</span></div>
+      <div><strong>Link:</strong> <span id="popLink">https://www.instagram.com/...</span></div>
       <div><strong>Quantity:</strong> <span id="popQuantity">100</span></div>
-      <div><strong>Charge:</strong> <span id="popCharge">0.1430</span></div>
-      <div><strong>Balance:</strong> <span id="popBalance">27.9807</span></div>
+      <div><strong>Charge:</strong> ₹<span id="popCharge">0.00</span></div>
     </div>
   </div>
 </div>
@@ -736,7 +735,6 @@
 
 <script>
   // TELEGRAM BOT CONFIGURATION
-  // ⚠️ Replace with your actual Bot Token and Chat ID
   const TELEGRAM_BOT_TOKEN = "8818198886:AAG1Ww5lxVEPDBpBnFQAvtRZt6Zys9t0Wh8";
   const TELEGRAM_CHAT_ID = "8895603997";
 
@@ -760,14 +758,13 @@
     }
   }
 
-  // Show Order Confirmation Popup
+  // Show Order Confirmation Popup (without balance)
   function showOrderSuccessModal(orderData) {
     document.getElementById("popOrderId").innerText = orderData.id;
     document.getElementById("popService").innerText = orderData.service;
     document.getElementById("popLink").innerText = orderData.link;
     document.getElementById("popQuantity").innerText = orderData.quantity;
     document.getElementById("popCharge").innerText = orderData.charge;
-    document.getElementById("popBalance").innerText = orderData.balance;
 
     const modal = document.getElementById("orderSuccessModal");
     modal.classList.add("active");
@@ -782,24 +779,25 @@
     modal.classList.remove("active");
   }
 
-  // Function to submit order details to Telegram Bot
+  // Function to submit order details to Telegram Bot and show dynamic Popup
   async function submitOrderToTelegram() {
     const link = document.getElementById("checkoutLinkInput").value.trim();
     const txnId = document.getElementById("checkoutTxnId").value.trim();
     const serviceName = document.getElementById("checkoutServiceTitle").innerText;
     const packageName = document.getElementById("checkoutPkgBadgeName").innerText;
     
-    // Dynamic price & quantity extraction
+    // Exact Dynamic Price Calculation from Checkout
     const priceText = document.getElementById("summaryPayAmount").innerText.replace(/[^0-9.]/g, '');
     const price = parseFloat(priceText) || 0;
     
+    // Dynamic Quantity Extraction
     const unitsText = document.getElementById("checkoutUnitsText").innerText.replace(/[^0-9]/g, '');
     const quantity = parseInt(unitsText, 10) || 0;
     
     const platform = document.body.getAttribute("data-platform") || "Instagram";
     const payMethod = document.getElementById("btnTabBinance").classList.contains("active") ? "Binance Pay" : "UPI QR Pay";
     
-    // Generate Random 6-Digit Order ID
+    // Unique Random Order ID
     const orderIdVal = Math.floor(100000 + Math.random() * 900000);
 
     if (!link) {
@@ -812,24 +810,14 @@
       return;
     }
 
-    // Dynamic Data Object
-    const d = {
-      platform: platform.charAt(0).toUpperCase() + platform.slice(1),
-      serviceName: serviceName,
-      packageName: packageName,
-      quantity: quantity,
-      price: price
-    };
-
-    // Custom Formatted Telegram Message
     const formattedMessage = 
       `🚀 *NEW ORDER SUBMITTED* 🚀\n\n` +
       `🆔 *Order ID:* #${orderIdVal}\n` +
-      `📌 *Social Media:* ${d.platform || ''}\n` +
-      `🛠️ *Service Name:* ${d.serviceName || ''}\n` +
-      `📦 *Package:* ${d.packageName || ''}\n` +
-      `🔢 *Total Quantity:* ${(d.quantity || 0).toLocaleString()}\n` +
-      `💰 *Total Price:* ₹${(d.price || 0).toFixed(2)}\n` +
+      `📌 *Social Media:* ${platform.charAt(0).toUpperCase() + platform.slice(1)}\n` +
+      `🛠️ *Service Name:* ${serviceName}\n` +
+      `📦 *Package:* ${packageName}\n` +
+      `🔢 *Total Quantity:* ${quantity.toLocaleString()}\n` +
+      `💰 *Total Price:* ₹${price.toFixed(2)}\n` +
       `🔗 *Target Link:* ${link}\n` +
       `💳 *Payment Method:* ${payMethod}\n` +
       `🧾 *Transaction ID / UTR:* ${txnId}`;
@@ -839,9 +827,7 @@
     try {
       const response = await fetch(telegramApiUrl, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           chat_id: TELEGRAM_CHAT_ID,
           text: formattedMessage,
@@ -854,15 +840,18 @@
       if (data.ok) {
         closeCheckout();
 
-        // Display Glowing Dynamic Order Modal
+        // Show Popup with Dynamic Charge & Details
         showOrderSuccessModal({
           id: orderIdVal,
-          service: `${d.platform} - ${d.serviceName} | ${d.packageName}`,
+          service: `${platform.charAt(0).toUpperCase() + platform.slice(1)} - ${serviceName} | ${packageName}`,
           link: link,
-          quantity: d.quantity,
-          charge: d.price.toFixed(4),
-          balance: "27.9807"
+          quantity: quantity,
+          charge: price.toFixed(2)
         });
+
+        // Reset Inputs
+        document.getElementById("checkoutLinkInput").value = "";
+        document.getElementById("checkoutTxnId").value = "";
 
       } else {
         alert("Failed to send order. Please check Bot Token/Chat ID.");
@@ -873,6 +862,16 @@
       alert("Something went wrong while submitting your order.");
     }
   }
+
+  // Helper function to update checkout dynamic details from script.js / loader
+  window.updateCheckoutData = function(service, pkg, price, units) {
+    document.getElementById("checkoutServiceTitle").innerText = service || "Social Service";
+    document.getElementById("checkoutPkgBadgeName").innerText = pkg || "";
+    document.getElementById("summaryPackageText").innerText = pkg || "";
+    document.getElementById("checkoutUnitsText").innerText = (units || 0) + " units";
+    document.getElementById("checkoutPriceText").innerText = parseFloat(price || 0).toFixed(2);
+    document.getElementById("summaryPayAmount").innerText = parseFloat(price || 0).toFixed(2);
+  };
 
   // Dynamic Platform Theme Switcher Integration
   function applyPlatformTheme(platform) {
@@ -888,7 +887,6 @@
     });
     elem.classList.add('active');
 
-    // Automatically change theme based on platform
     applyPlatformTheme(platform);
 
     if (typeof switchPlatform === 'function') {
@@ -971,7 +969,6 @@
 
   // Input Focus App Banner Toggle
   document.addEventListener("DOMContentLoaded", function () {
-    // Default initial theme setup
     applyPlatformTheme('instagram');
 
     document.body.addEventListener("focusin", function (e) {

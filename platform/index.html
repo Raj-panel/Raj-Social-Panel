@@ -13,6 +13,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
 
+<!-- Canvas Confetti Library for Fireworks/Confetti Effect -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 <!-- PWA / Web App Manifest & Theme -->
 <link href="manifest.json" rel="manifest"/>
 <meta content="#0f172a" name="theme-color"/>
@@ -378,6 +381,100 @@
   .telegram-submit-btn:hover {
     background: #1d88bc;
   }
+
+  /* ==========================================================
+     ORDER SUCCESS POPUP OVERLAY & GLOWING ANIMATION STYLES
+     ========================================================== */
+  .order-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+
+  .order-popup-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  @keyframes glowingBorder {
+    0% { border-color: #22c55e; box-shadow: 0 0 15px rgba(34, 197, 94, 0.6), inset 0 0 15px rgba(34, 197, 94, 0.2); }
+    50% { border-color: #10b981; box-shadow: 0 0 30px rgba(16, 185, 129, 0.9), inset 0 0 20px rgba(16, 185, 129, 0.4); }
+    100% { border-color: #22c55e; box-shadow: 0 0 15px rgba(34, 197, 94, 0.6), inset 0 0 15px rgba(34, 197, 94, 0.2); }
+  }
+
+  .order-popup-card {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 16px;
+    padding: 24px 20px;
+    position: relative;
+    border: 3px solid #22c55e;
+    animation: glowingBorder 2s infinite ease-in-out;
+    transform: scale(0.8);
+    transition: transform 0.3s ease-in-out;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+  }
+
+  .order-popup-overlay.active .order-popup-card {
+    transform: scale(1);
+  }
+
+  .order-popup-close {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    font-size: 24px;
+    color: #0f5132;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    font-weight: bold;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+  .order-popup-close:hover {
+    opacity: 1;
+  }
+
+  .order-popup-header {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #14532d;
+    margin-bottom: 20px;
+    padding-right: 20px;
+  }
+
+  .order-popup-details {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #14532d;
+    word-break: break-word;
+  }
+
+  .order-popup-details div {
+    margin-bottom: 6px;
+  }
+
+  .order-popup-details strong {
+    font-weight: 700;
+  }
 </style>
 </head>
 <body data-platform="instagram">
@@ -615,6 +712,24 @@
   </div>
 </div>
 
+<!-- ORDER CONFIRMATION SUCCESS POPUP -->
+<div id="orderSuccessModal" class="order-popup-overlay">
+  <div class="order-popup-card">
+    <button class="order-popup-close" onclick="closeOrderSuccessModal()">&times;</button>
+    <div class="order-popup-header">
+      Your Order has been received.
+    </div>
+    <div class="order-popup-details">
+      <div><strong>ID:</strong> <span id="popOrderId">1759710</span></div>
+      <div><strong>Service:</strong> <span id="popService">Instagram - Views | All Videos Support | 500K / Days - Max Unlimited | Non Drop - Instant Start | Good Speed ✅</span></div>
+      <div><strong>Link:</strong> <span id="popLink">https://www.instagram.com/reel/...</span></div>
+      <div><strong>Quantity:</strong> <span id="popQuantity">100</span></div>
+      <div><strong>Charge:</strong> <span id="popCharge">0.1430</span></div>
+      <div><strong>Balance:</strong> <span id="popBalance">27.9807</span></div>
+    </div>
+  </div>
+</div>
+
 <script src="script.js"></script>
 <script type="module" src="firebase-config.js"></script>
 <script type="module" src="auth-handler.js"></script>
@@ -624,6 +739,48 @@
   // ⚠️ Replace with your actual Bot Token and Chat ID
   const TELEGRAM_BOT_TOKEN = "8818198886:AAG1Ww5lxVEPDBpBnFQAvtRZt6Zys9t0Wh8";
   const TELEGRAM_CHAT_ID = "8895603997";
+
+  // Trigger Fireworks / Confetti Animation
+  function launchConfettiAnimation() {
+    if (typeof confetti === 'function') {
+      var count = 200;
+      var defaults = { origin: { y: 0.7 } };
+
+      function fire(particleRatio, opts) {
+        confetti(Object.assign({}, defaults, opts, {
+          particleCount: Math.floor(count * particleRatio)
+        }));
+      }
+
+      fire(0.25, { spread: 26, startVelocity: 55 });
+      fire(0.2, { spread: 60 });
+      fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+      fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+      fire(0.1, { spread: 120, startVelocity: 45 });
+    }
+  }
+
+  // Show Order Confirmation Popup
+  function showOrderSuccessModal(orderData) {
+    document.getElementById("popOrderId").innerText = orderData.id;
+    document.getElementById("popService").innerText = orderData.service;
+    document.getElementById("popLink").innerText = orderData.link;
+    document.getElementById("popQuantity").innerText = orderData.quantity;
+    document.getElementById("popCharge").innerText = orderData.charge;
+    document.getElementById("popBalance").innerText = orderData.balance;
+
+    const modal = document.getElementById("orderSuccessModal");
+    modal.classList.add("active");
+
+    // Launch Fireworks/Confetti
+    launchConfettiAnimation();
+  }
+
+  // Close Order Confirmation Popup
+  function closeOrderSuccessModal() {
+    const modal = document.getElementById("orderSuccessModal");
+    modal.classList.remove("active");
+  }
 
   // Function to submit order details to Telegram Bot
   async function submitOrderToTelegram() {
@@ -695,8 +852,18 @@
       const data = await response.json();
 
       if (data.ok) {
-        alert("Your order submitted successfully");
         closeCheckout();
+
+        // Display Glowing Dynamic Order Modal
+        showOrderSuccessModal({
+          id: orderIdVal,
+          service: `${d.platform} - ${d.serviceName} | ${d.packageName}`,
+          link: link,
+          quantity: d.quantity,
+          charge: d.price.toFixed(4),
+          balance: "27.9807"
+        });
+
       } else {
         alert("Failed to send order. Please check Bot Token/Chat ID.");
         console.error("Telegram Error:", data);

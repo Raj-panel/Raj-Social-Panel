@@ -13,13 +13,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
 
-<!-- Stylesheets & Icons -->
+<!-- PWA / Web App Manifest & Theme -->
+<link href="manifest.json" rel="manifest"/>
 <meta content="#0f172a" name="theme-color"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
 <meta content="SMM Panel" name="apple-mobile-web-app-title"/>
-<link href="/icon-192.png" rel="apple-touch-icon"/>
-<link href="/style.css" rel="stylesheet"/>
+<link href="icon-192.png" rel="apple-touch-icon"/>
+<link href="style.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 
 <!-- Open Graph Meta Tags -->
@@ -367,7 +368,9 @@
   </div>
   
   <ul class="sidebar-menu">
-    <li id="authMenuItem"><a href="/login/">🔐 Login / Create Account</a></li>
+    <li id="authMenuItem">
+    
+    <!-- New Order Link Updated Below -->
     <li><a href="https://rajsmmpanel.in/">🛒 New Order</a></li>
     <li><a href="https://rajsmmpanel.in/platform/2/">⚡ Platform 2</a></li>
     <li><a href="/orders/">📦 My Orders</a></li>
@@ -385,7 +388,7 @@
       <i class="fa-brands fa-youtube"></i> Watch Tutorials
     </a>
     <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="tutorial-banner-link">
-      <img src="/thumbnail.png" alt="Watch Tutorial" class="tutorial-banner-img" />
+      <img src="thumbnail.png" alt="Watch Tutorial" class="tutorial-banner-img" />
     </a>
   </div>
 </div>
@@ -562,7 +565,7 @@
     <div id="checkoutBinanceView" class="payment-view-box hidden">
       <div class="scan-title">SCAN TO PAY VIA BINANCE</div>
       <div class="qr-wrapper">
-        <img src="/binance-qr.png" alt="Binance QR Code" />
+        <img src="binance-qr.png" alt="Binance QR Code" />
       </div>
       <div class="binance-nick-box">
         Binance Nickname: <strong style="color: #facc15;">Alex-Sahil786</strong>
@@ -588,7 +591,9 @@
   </div>
 </div>
 
-<script src="/script.js"></script>
+<script src="script.js"></script>
+<script type="module" src="firebase-config.js"></script>
+<script type="module" src="auth-handler.js"></script>
 
 <script>
   // Dynamic Platform Theme Switcher Integration
@@ -709,11 +714,12 @@
   // Service Worker Registration
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
+      navigator.serviceWorker.register('./sw.js')
         .then((reg) => console.log('Service Worker Registered Successfully:', reg))
         .catch((err) => console.log('Service Worker Registration Failed:', err));
     });
   }
 </script>
+<script type="module" src="js/services-loader.js"></script>
 </body>
 </html>

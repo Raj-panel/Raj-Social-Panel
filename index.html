@@ -8,9 +8,10 @@
 <title>Raj SMM Panel – Best India Cheapest SMM Panel for Instagram, Facebook &amp; YouTube</title>
 <meta content="Raj SMM Panel offers affordable social media marketing services for Instagram, Facebook, YouTube and more. Get Followers, Likes, Views, Comments and other SMM services at the best prices." name="description"/>
 
-<!-- Google Font -->
+<!-- Performance Optimizations: Preconnects & Font Display -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
 
 <!-- PWA / Web App Manifest & Theme -->
@@ -21,7 +22,7 @@
 <meta content="SMM Panel" name="apple-mobile-web-app-title"/>
 <link href="icon-192.png" rel="apple-touch-icon"/>
 <link href="style.css" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 
 <!-- Open Graph Meta Tags -->
 <meta content="website" property="og:type"/>
@@ -67,6 +68,19 @@
     --sidebar-hover: rgba(168, 85, 247, 0.15);
     --sidebar-hover-text: #ffffff;
     --sidebar-close: #94a3b8;
+  }
+
+  /* Image Fallback & Quick Render Rules */
+  img {
+    content-visibility: auto;
+    text-indent: -10000px;
+  }
+  
+  .qr-wrapper img {
+    min-width: 180px;
+    min-height: 180px;
+    background: #f1f5f9;
+    object-fit: contain;
   }
 
   /* Platform Switcher Card Container */
@@ -371,7 +385,6 @@
     <li id="authMenuItem">
       <a href="/login/">🔐 Login / Create Account</a>
     </li>
-    <!-- New Order Link Updated Below -->
     <li><a href="https://rajsmmpanel.in/platform/">🛒 New Order</a></li>
     <li><a href="https://rajsmmpanel.in/platform/2/">⚡ Platform 2</a></li>
     <li><a href="/orders/">📦 My Orders</a></li>
@@ -389,7 +402,7 @@
       <i class="fa-brands fa-youtube"></i> Watch Tutorials
     </a>
     <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="tutorial-banner-link">
-      <img src="thumbnail.png" alt="Watch Tutorial" class="tutorial-banner-img" />
+      <img src="thumbnail.png" alt="Watch Tutorial" class="tutorial-banner-img" width="250" height="140" loading="eager" decoding="async" />
     </a>
   </div>
 </div>
@@ -539,7 +552,7 @@
         SCAN TO PAY VIA UPI
       </div>
       <div class="qr-wrapper" style="text-align: center; margin-bottom: 2px;">
-        <img id="checkoutQrImg" src="" alt="UPI QR Code" style="display: block; margin: 0 auto; border-radius: 12px;" />
+        <img id="checkoutQrImg" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect width='100%25' height='100%25' fill='%23f1f5f9'/%3E%3C/svg%3E" alt="UPI QR Code" width="200" height="200" loading="eager" decoding="async" style="display: block; margin: 0 auto; border-radius: 12px;" />
       </div>
       <p class="qr-sub" style="font-size: 10px; color: #64748b; margin-top: 2px; margin-bottom: 8px; text-align: center;">
         Scan or enter payment detail into any UPI App
@@ -566,7 +579,7 @@
     <div id="checkoutBinanceView" class="payment-view-box hidden">
       <div class="scan-title">SCAN TO PAY VIA BINANCE</div>
       <div class="qr-wrapper">
-        <img src="binance-qr.png" alt="Binance QR Code" />
+        <img src="binance-qr.png" alt="Binance QR Code" width="200" height="200" loading="eager" decoding="async" />
       </div>
       <div class="binance-nick-box">
         Binance Nickname: <strong style="color: #facc15;">Alex-Sahil786</strong>
@@ -694,7 +707,6 @@
 
   // Input Focus App Banner Toggle
   document.addEventListener("DOMContentLoaded", function () {
-    // Default initial theme setup
     applyPlatformTheme('instagram');
 
     document.body.addEventListener("focusin", function (e) {

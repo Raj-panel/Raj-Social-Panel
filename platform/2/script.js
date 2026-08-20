@@ -121,7 +121,7 @@ const platformData = {
   }
 };
 
-// Render Select With Icons & Highlight Selected Background (FIXED & CUSTOMIZED)
+// Render Select With Icons & Highlight Selected Background
 function setupSelectIcons(selectId) {
   const selectElem = document.getElementById(selectId);
   if (!selectElem) return;
@@ -133,7 +133,6 @@ function setupSelectIcons(selectId) {
   wrapper.className = 'custom-select-wrapper';
   wrapper.style.cssText = 'position: relative; width: 100%; font-family: sans-serif;';
 
-  // ১. ইনপুট বক্স সিলেক্টের সময় স্বাভাবিক ও সাধারণ ব্যাকগ্রাউন্ড
   const defaultBoxStyle = 'background: #f8fafc; color: #1e293b; font-weight: 500; border: 2px solid #ec4899;';
 
   const selectedDisplay = document.createElement('div');
@@ -144,7 +143,6 @@ function setupSelectIcons(selectId) {
   optionsContainer.className = 'custom-options-container';
   optionsContainer.style.cssText = 'display: none; position: absolute; top: 105%; left: 0; right: 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; max-height: 250px; overflow-y: auto; z-index: 999; box-shadow: 0 10px 25px rgba(0,0,0,0.15);';
 
-  // ২. আইডি নম্বর সার্ভিস আইডি ব্যাজে র্যাপ করার ফাংশন
   const formatTextWithBadge = (text) => {
     return text.replace(/^(\d+)\s*[-—]/, '<span class="service-id">$1</span> -');
   };
@@ -157,7 +155,6 @@ function setupSelectIcons(selectId) {
     const isSelected = index === selectElem.selectedIndex;
     const formattedText = formatTextWithBadge(opt.textContent);
 
-    // ৩. ড্রপডাউনে মাউস নিলে/সিলেক্ট করতে গেলে বেগুনি ব্যাকগ্রাউন্ড ও সাদা টেক্সট
     const defaultItemStyle = 'display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #1e293b; background: #ffffff; transition: background 0.2s;';
     const activeItemStyle = 'display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #ffffff; background: #8b5cf6;';
 
@@ -357,29 +354,20 @@ function openCheckout() {
   const checkoutPage = document.getElementById("checkoutPage");
   if (checkoutPage) {
     checkoutPage.classList.remove("hidden");
-    // History Push for Back Button Handling
+    // Push state for checkout
     history.pushState({ checkoutOpen: true }, "", "#checkout");
   }
 }
 
 function closeCheckout() {
   const checkoutPage = document.getElementById("checkoutPage");
-  if (checkoutPage) {
+  if (checkoutPage && !checkoutPage.classList.contains("hidden")) {
     checkoutPage.classList.add("hidden");
-    // Remove #checkout hash from URL when closed manually
-    if (window.location.hash === "#checkout") {
+    if (history.state && history.state.checkoutOpen) {
       history.back();
     }
   }
 }
-
-// Global Event Listener for Hardware / Browser Back Button
-window.addEventListener('popstate', function (event) {
-  const checkoutPage = document.getElementById("checkoutPage");
-  if (checkoutPage && !checkoutPage.classList.contains("hidden")) {
-    checkoutPage.classList.add("hidden");
-  }
-});
 
 // Left Sidebar Handlers
 function openSidebar() {
@@ -387,14 +375,44 @@ function openSidebar() {
   const overlay = document.getElementById("sidebarOverlay");
   if (sidebar) sidebar.classList.add("active");
   if (overlay) overlay.classList.add("active");
+  
+  // Push state for sidebar menu
+  history.pushState({ sidebarOpen: true }, "", "#sidebar");
 }
 
 function closeSidebar() {
   const sidebar = document.getElementById("leftSidebar");
   const overlay = document.getElementById("sidebarOverlay");
-  if (sidebar) sidebar.classList.remove("active");
-  if (overlay) overlay.classList.remove("active");
+  
+  if (sidebar && sidebar.classList.contains("active")) {
+    sidebar.classList.remove("active");
+    if (overlay) overlay.classList.remove("active");
+    
+    if (history.state && history.state.sidebarOpen) {
+      history.back();
+    }
+  }
 }
+
+// Global Event Listener for Hardware / Browser Back Button
+window.addEventListener('popstate', function (event) {
+  const sidebar = document.getElementById("leftSidebar");
+  const overlay = document.getElementById("sidebarOverlay");
+  const checkoutPage = document.getElementById("checkoutPage");
+
+  // Handle Sidebar Close on Back
+  if (sidebar && sidebar.classList.contains("active")) {
+    sidebar.classList.remove("active");
+    if (overlay) overlay.classList.remove("active");
+    return;
+  }
+
+  // Handle Checkout Close on Back
+  if (checkoutPage && !checkoutPage.classList.contains("hidden")) {
+    checkoutPage.classList.add("hidden");
+    return;
+  }
+});
 
 // Payment View Switcher
 function switchCheckoutPayment(method) {

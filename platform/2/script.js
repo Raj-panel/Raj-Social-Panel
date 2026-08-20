@@ -1,6 +1,6 @@
 // Global State Variables
 let currentPlatform = 'instagram';
-let calculatedPrice = "0.00";
+let calculatedPrice = 0;
 
 // Platform Icon SVG / Image Links
 const platformLogos = {
@@ -121,17 +121,7 @@ const platformData = {
   }
 };
 
-// Preload Helper function for Instant QR Display
-function updatePreloadedQR(price) {
-  const upiId = "rajpanel@axl";
-  const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=${upiId}%26am=${price}%26cu=INR`;
-  const qrImg = document.getElementById("checkoutQrImg");
-  if (qrImg) {
-    qrImg.src = qrApi;
-  }
-}
-
-// Render Select With Icons & Highlight Selected Background (FIXED & CUSTOMIZED)
+// Render Select With Icons & Highlight Selected Background
 function setupSelectIcons(selectId) {
   const selectElem = document.getElementById(selectId);
   if (!selectElem) return;
@@ -143,21 +133,15 @@ function setupSelectIcons(selectId) {
   wrapper.className = 'custom-select-wrapper';
   wrapper.style.cssText = 'position: relative; width: 100%; font-family: sans-serif;';
 
-  // ইনপুট বক্স সিলেক্টের সময় স্বাভাবিক হালকা ব্যাকগ্রাউন্ড
-  const defaultBoxStyle = 'background: #f8fafc; color: #1e293b; font-weight: 500; border: 2px solid #ec4899;';
+  const activeBgStyle = 'background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); color: #ffffff; font-weight: 600; border-color: transparent;';
 
   const selectedDisplay = document.createElement('div');
   selectedDisplay.className = 'custom-selected-box';
-  selectedDisplay.style.cssText = `display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 12px; cursor: pointer; font-size: 13px; transition: all 0.3s ease; ${defaultBoxStyle}`;
+  selectedDisplay.style.cssText = `display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 14px; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25); ${activeBgStyle}`;
 
   const optionsContainer = document.createElement('div');
   optionsContainer.className = 'custom-options-container';
-  optionsContainer.style.cssText = 'display: none; position: absolute; top: 105%; left: 0; right: 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; max-height: 250px; overflow-y: auto; z-index: 999; box-shadow: 0 10px 25px rgba(0,0,0,0.15);';
-
-  // Helper function to format ID as a square badge
-  const formatTextWithBadge = (text) => {
-    return text.replace(/^(\d+)\s*[-—]/, '<span class="service-id">$1</span> -');
-  };
+  optionsContainer.style.cssText = 'display: none; position: absolute; top: 105%; left: 0; right: 0; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; max-height: 250px; overflow-y: auto; z-index: 999; box-shadow: 0 10px 25px rgba(0,0,0,0.15);';
 
   Array.from(selectElem.options).forEach((opt, index) => {
     const item = document.createElement('div');
@@ -165,14 +149,12 @@ function setupSelectIcons(selectId) {
     
     const logoUrl = getLogoByText(opt.textContent);
     const isSelected = index === selectElem.selectedIndex;
-    const formattedText = formatTextWithBadge(opt.textContent);
 
-    // ড্রপডাউনে হোভার বা সিলেক্টেড এরিয়া বেগুনি ব্যাকগ্রাউন্ড ও সাদা টেক্সট
-    const defaultItemStyle = 'display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #1e293b; background: #ffffff; transition: background 0.2s;';
-    const activeItemStyle = 'display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #ffffff; background: #8b5cf6;';
+    const defaultItemStyle = 'display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f3f4f6; font-size: 13px; color: #333; transition: background 0.2s;';
+    const selectedItemStyle = `display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f3f4f6; font-size: 13px; ${activeBgStyle}`;
 
-    item.style.cssText = isSelected ? activeItemStyle : defaultItemStyle;
-    item.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${formattedText}</span>`;
+    item.style.cssText = isSelected ? selectedItemStyle : defaultItemStyle;
+    item.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${opt.textContent}</span>`;
 
     item.onclick = () => {
       selectElem.selectedIndex = index;
@@ -184,20 +166,20 @@ function setupSelectIcons(selectId) {
     };
 
     item.onmouseenter = () => {
-      item.style.background = '#8b5cf6';
-      item.style.color = '#ffffff';
+      if (index !== selectElem.selectedIndex) {
+        item.style.background = '#f3f4f6';
+      }
     };
     item.onmouseleave = () => {
       if (index !== selectElem.selectedIndex) {
         item.style.background = '#ffffff';
-        item.style.color = '#1e293b';
       }
     };
 
     optionsContainer.appendChild(item);
 
     if (isSelected) {
-      selectedDisplay.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${formattedText}</span>`;
+      selectedDisplay.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${opt.textContent}</span>`;
     }
   });
 
@@ -317,7 +299,6 @@ function calculatePrice() {
   if (!selectedOption) {
     if (totalPriceText) totalPriceText.innerText = "0.00";
     calculatedPrice = "0.00";
-    updatePreloadedQR(calculatedPrice);
     return;
   }
 
@@ -328,8 +309,6 @@ function calculatePrice() {
   calculatedPrice = ((ratePer1000 / 1000) * quantity).toFixed(2);
   if (totalPriceText) totalPriceText.innerText = calculatedPrice;
   
-  // Preload QR immediately on price change
-  updatePreloadedQR(calculatedPrice);
   updateAverageTime();
 }
 
@@ -361,15 +340,38 @@ function openCheckout() {
   if (checkoutTitle) checkoutTitle.innerText = selectedText.split(' - ₹')[0];
   if (checkoutPrice) checkoutPrice.innerText = calculatedPrice;
 
-  // Show checkout page immediately (QR is already preloaded)
+  // UPI Dynamic QR Code
+  const upiId = "rajpanel@axl";
+  const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=${upiId}%26am=${calculatedPrice}%26cu=INR`;
+  const qrImg = document.getElementById("checkoutQrImg");
+  if (qrImg) qrImg.src = qrApi;
+
   const checkoutPage = document.getElementById("checkoutPage");
-  if (checkoutPage) checkoutPage.classList.remove("hidden");
+  if (checkoutPage) {
+    checkoutPage.classList.remove("hidden");
+    // History Push for Back Button Handling
+    history.pushState({ checkoutOpen: true }, "", "#checkout");
+  }
 }
 
 function closeCheckout() {
   const checkoutPage = document.getElementById("checkoutPage");
-  if (checkoutPage) checkoutPage.classList.add("hidden");
+  if (checkoutPage) {
+    checkoutPage.classList.add("hidden");
+    // Remove #checkout hash from URL when closed manually
+    if (window.location.hash === "#checkout") {
+      history.back();
+    }
+  }
 }
+
+// Global Event Listener for Hardware / Browser Back Button
+window.addEventListener('popstate', function (event) {
+  const checkoutPage = document.getElementById("checkoutPage");
+  if (checkoutPage && !checkoutPage.classList.contains("hidden")) {
+    checkoutPage.classList.add("hidden");
+  }
+});
 
 // Left Sidebar Handlers
 function openSidebar() {

@@ -5,6 +5,9 @@
   --sidebar-bg: #ffffff;
   --sidebar-text: #1e293b;
   --text-dark: #1e293b;
+  --card-bg: #ffffff;
+  --input-bg: #f8fafc;
+  --border-color: #e2e8f0;
 }
 
 * {
@@ -21,6 +24,7 @@ body {
   justify-content: center;
   min-height: 100vh;
   padding: 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .main-wrapper {
@@ -43,7 +47,7 @@ body {
 .hamburger-btn {
   position: absolute;
   left: 0;
-  background: #e2e8f0;
+  background: var(--input-bg);
   border: none;
   color: var(--text-dark);
   font-size: 18px;
@@ -78,8 +82,8 @@ body {
   gap: 6px;
   padding: 10px;
   border-radius: 30px;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   text-decoration: none;
   font-size: 13px;
   font-weight: 600;
@@ -98,9 +102,9 @@ body {
 
 .platform-btn {
   height: 45px;
-  background: #ffffff;
+  background: var(--card-bg);
   color: var(--text-dark);
-  border: 1px solid #f1f5f9;
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   font-size: 15px;
   font-weight: 700;
@@ -176,24 +180,64 @@ body {
 
 /* Form Card */
 .form-card {
-  background: #ffffff;
+  background: var(--card-bg);
   border-radius: 20px;
   padding: 16px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.03);
 }
 
 .form-group { margin-bottom: 14px; }
-.form-group label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+.form-group label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 6px; color: var(--text-dark); }
 
-.form-control {
+/* ==========================================
+   GLOWING BORDER EFFECT FOR INPUTS & QR CODE
+   ========================================== */
+
+@keyframes glowingBorder {
+  0% { border-color: #ec4899; box-shadow: 0 0 8px rgba(236, 72, 153, 0.6); }
+  50% { border-color: #8b5cf6; box-shadow: 0 0 12px rgba(139, 92, 246, 0.8); }
+  100% { border-color: #6366f1; box-shadow: 0 0 8px rgba(99, 102, 241, 0.6); }
+}
+
+/* Category, Service, Link, Profile Quality & UTR Input Boxes */
+.form-control, 
+.utr-input, 
+input[type="text"], 
+input[type="number"], 
+select.form-control {
   width: 100%;
   padding: 12px 14px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: var(--input-bg);
+  border: 2px solid #ec4899;
   border-radius: 12px;
   font-size: 13px;
   color: var(--text-dark);
   outline: none;
+  animation: glowingBorder 3s infinite alternate;
+  transition: all 0.3s ease;
+}
+
+/* Average Time Box Glowing Effect */
+.time-box {
+  background: var(--input-bg);
+  border: 2px dashed #ec4899;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  animation: glowingBorder 3s infinite alternate;
+}
+
+/* QR Code Border Glowing Effect */
+.qr-code-container, 
+.qr-code-img, 
+.payment-view-box img {
+  border: 3px solid #ec4899;
+  border-radius: 16px;
+  padding: 6px;
+  animation: glowingBorder 3s infinite alternate;
+  display: inline-block;
 }
 
 select.form-control {
@@ -202,16 +246,6 @@ select.form-control {
   background-repeat: no-repeat;
   background-position: right 12px center;
   background-size: 16px;
-}
-
-.time-box {
-  background: #f8fafc;
-  border: 1px dashed #cbd5e1;
-  border-radius: 10px;
-  padding: 10px 14px;
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 14px;
 }
 
 .total-display {
@@ -246,7 +280,7 @@ select.form-control {
 .checkout-page-overlay {
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: #fcebf4;
+  background: var(--bg-color);
   z-index: 2000;
   overflow-y: auto;
   padding: 15px;
@@ -258,7 +292,7 @@ select.form-control {
 .checkout-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
 
 .back-btn {
-  background: #ffffff;
+  background: var(--card-bg);
   border: none;
   padding: 8px 16px;
   border-radius: 20px;
@@ -268,7 +302,7 @@ select.form-control {
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-.checkout-heading-text { font-size: 20px; font-weight: 800; color: #1e1b4b; }
+.checkout-heading-text { font-size: 20px; font-weight: 800; color: var(--text-dark); }
 
 .premium-service-card {
   background: var(--banner-gradient);
@@ -302,19 +336,19 @@ select.form-control {
 .pay-toggle-tabs { display: flex; gap: 10px; margin: 15px 0; }
 .pay-tab {
   flex: 1; padding: 12px; border-radius: 12px; border: none;
-  background: #ffffff; font-weight: 700; color: var(--text-dark); cursor: pointer;
+  background: var(--card-bg); font-weight: 700; color: var(--text-dark); cursor: pointer;
 }
 .pay-tab.active { background: var(--primary-gradient); color: white; }
 
 .payment-view-box {
-  background: white; border-radius: 20px; padding: 16px;
+  background: var(--card-bg); border-radius: 20px; padding: 16px;
   text-align: center; margin-bottom: 15px;
 }
 
 .upi-app-btn-grid { display: flex; gap: 4px; margin-top: 10px; }
 .upi-app-card-btn {
-  flex: 1; background: #f8fafc; border: 1px solid #e2e8f0;
-  border-radius: 8px; padding: 6px 2px; font-size: 11px; font-weight: 700;
+  flex: 1; background: var(--input-bg); border: 1px solid var(--border-color);
+  border-radius: 8px; padding: 6px 2px; font-size: 11px; font-weight: 700; color: var(--text-dark);
 }
 
 .notice-yellow-box {
@@ -352,7 +386,7 @@ select.form-control {
 
 .sidebar-header {
   display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 20px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;
+  margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;
 }
 .sidebar-title { font-weight: 800; font-style: italic; color: #6366f1; }
 .close-sidebar-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: #64748b; }
@@ -364,6 +398,36 @@ select.form-control {
   font-size: 14px; display: flex; align-items: center; gap: 10px;
   padding: 10px; border-radius: 8px; transition: 0.2s;
 }
-.sidebar-menu li a:hover { background: #f1f5f9; color: #ec4899; }
+.sidebar-menu li a:hover { background: var(--input-bg); color: #ec4899; }
 
 .hidden { display: none !important; }
+
+/* ==========================================
+   AUTO DARK MODE (System & Mobile Theme Sync)
+   ========================================== */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #0f172a;
+    --sidebar-bg: #1e293b;
+    --sidebar-text: #f8fafc;
+    --text-dark: #f8fafc;
+    --card-bg: #1e293b;
+    --input-bg: #0f172a;
+    --border-color: #334155;
+  }
+
+  .form-control, select.form-control {
+    color: #ffffff;
+  }
+
+  .notice-yellow-box {
+    background: #422006;
+    border-color: #713f12;
+    color: #fef08a;
+  }
+
+  .hamburger-btn {
+    background: #334155;
+  }
+}

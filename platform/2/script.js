@@ -399,8 +399,8 @@ function switchCheckoutPayment(method) {
   }
 }
 
-// Order Submit to WhatsApp
-function submitOrderToWhatsApp() {
+// Send Order Details to Telegram
+async function sendOrderToTelegram() {
   const mainLink = document.getElementById("mainLinkInput");
   const checkoutTxn = document.getElementById("checkoutTxnId");
   const checkoutTitle = document.getElementById("checkoutServiceTitle");
@@ -416,8 +416,45 @@ function submitOrderToWhatsApp() {
     return;
   }
 
-  const message = `New Order Details:\nPlatform: ${currentPlatform.toUpperCase()}\nService: ${service}\nQuantity: ${quantity}\nPrice: ₹${calculatedPrice}\nLink: ${link}\nUTR/TxID: ${utr}`;
-  window.open("https://wa.me/919239628344?text=" + encodeURIComponent(message), "_blank");
+  // ⚠️ আপনার বট টোকেন দিয়ে নিচের মানটি পরিবর্তন করবেন
+  const botToken = "rajpanel888_bot"; 
+  const chatId = "8895603997";
+
+  const message = `🛍️ *New Order Received!*\n\n` +
+                  `📌 *Platform:* ${currentPlatform.toUpperCase()}\n` +
+                  `🏷️ *Service:* ${service}\n` +
+                  `🔢 *Quantity:* ${quantity}\n` +
+                  `💰 *Price:* ₹${calculatedPrice}\n` +
+                  `🔗 *Link:* ${link}\n` +
+                  `💳 *UTR/TxID:* \`${utr}\`\n\n` +
+                  `📅 *Date:* ${new Date().toLocaleString()}`;
+
+  const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message,
+        parse_mode: 'Markdown'
+      })
+    });
+
+    const data = await response.json();
+
+    if (data.ok) {
+      alert("Order submitted successfully!");
+      if (checkoutTxn) checkoutTxn.value = "";
+      closeCheckout();
+    } else {
+      alert("Telegram API Error: " + data.description);
+    }
+  } catch (error) {
+    console.error("Error submitting order:", error);
+    alert("Request failed! Please check your Bot Token or network.");
+  }
 }
 
 // Auto Initialize Page

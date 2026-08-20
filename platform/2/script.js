@@ -416,7 +416,7 @@ async function sendOrderToTelegram() {
     return;
   }
 
-  // ⚠️ এখানে আপনার BotFather থেকে পাওয়া অরিজিনাল টোকেনটি বসাবেন (@ সহ ইউজারনেম নয়)
+  // Telegram Bot Credentials
   const botToken = "8960508595:AAG8-0ZNbOGZ-iRtSh5xzAabhSrHbRWjUaE"; 
   const chatId = "8895603997";
 
@@ -453,7 +453,7 @@ async function sendOrderToTelegram() {
     }
   } catch (error) {
     console.error("Error submitting order:", error);
-    alert("Request failed! Please check your Bot Token or network.");
+    alert("Request failed! Please check your network connection.");
   }
 }
 

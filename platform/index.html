@@ -811,7 +811,7 @@
     const link = document.getElementById("checkoutLinkInput").value.trim();
     const txnId = document.getElementById("checkoutTxnId").value.trim();
     
-    // Dynamic extraction logic
+    // Fallback extraction from DOM elements if global object holds 0
     let price = window.currentOrderData.price;
     if (!price || price === 0) {
       const priceText = document.getElementById("summaryPayAmount").innerText.replace(/[^0-9.]/g, '');

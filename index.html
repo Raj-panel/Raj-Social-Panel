@@ -5,6 +5,9 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>Raj SMM Panel - Platform</title>
   
+  <!-- Manifest Link -->
+  <link rel="manifest" href="/manifest.json">
+  
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -101,7 +104,7 @@
       </div>
     </a>
 
-    <!-- Service Card 2: Premium Quality Followers (Direct Clickable Link to /platform/2/) -->
+    <!-- Service Card 2: Premium Quality Followers -->
     <a href="/platform/2/" class="glass-service-card glow-premium">
       <div class="card-left">
         <div class="multi-icon-box real-color-box">
@@ -120,7 +123,7 @@
       </div>
     </a>
 
-    <!-- Service Card 3: Lowest Price Followers (Glowing Emerald-Gold Theme) -->
+    <!-- Service Card 3: Lowest Price Followers -->
     <div class="glass-service-card glow-budget" onclick="openComingSoonModal()">
       <div class="card-left">
         <div class="multi-icon-box unique-budget-box">
@@ -161,7 +164,48 @@
     </div>
   </div>
 
-  <!-- JavaScript Link -->
-  <script src="script.js"></script>
+  <!-- UI Navigation Handlers (Sidebar & Modal) -->
+  <script>
+    function openSidebar() {
+      const sidebar = document.getElementById("leftSidebar");
+      const overlay = document.getElementById("sidebarOverlay");
+      if (sidebar) {
+        sidebar.classList.add("active");
+        if (overlay) overlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+        history.pushState({ sidebarOpen: true }, '');
+      }
+    }
+
+    function closeSidebar(fromUserAction = false) {
+      const sidebar = document.getElementById("leftSidebar");
+      const overlay = document.getElementById("sidebarOverlay");
+      if (sidebar && sidebar.classList.contains("active")) {
+        sidebar.classList.remove("active");
+        if (overlay) overlay.classList.remove("active");
+        document.body.style.overflow = "auto";
+        if (fromUserAction && history.state && history.state.sidebarOpen) {
+          history.back();
+        }
+      }
+    }
+
+    window.addEventListener("popstate", function () {
+      closeSidebar(false);
+    });
+
+    function openComingSoonModal() {
+      const modal = document.getElementById("comingSoonModal");
+      if (modal) modal.classList.add("active");
+    }
+
+    function closeComingSoonModal() {
+      const modal = document.getElementById("comingSoonModal");
+      if (modal) modal.classList.remove("active");
+    }
+  </script>
+
+  <!-- Firebase Authentication Logic Handler -->
+  <script type="module" src="/auth-handler.js"></script>
 </body>
 </html>

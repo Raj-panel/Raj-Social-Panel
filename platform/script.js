@@ -153,9 +153,120 @@
                 display: none !important; 
             }
         }
+
+        /* Order Confirmation Success Modal Overlay & Box */
+        .order-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999999;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .order-modal-card {
+            background-color: #d8ebd8; 
+            color: #0f3822; 
+            width: 100%;
+            max-width: 440px;
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+            font-family: Arial, sans-serif;
+            box-sizing: border-box;
+            text-align: left;
+        }
+
+        .order-modal-close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: transparent;
+            border: none;
+            font-size: 28px;
+            color: #8da48d;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .order-modal-close:hover {
+            color: #0f3822;
+        }
+
+        .order-modal-title {
+            font-size: 32px;
+            font-weight: 500;
+            margin: 0 0 20px 0;
+            line-height: 1.2;
+            color: #124027;
+        }
+
+        .order-modal-body p {
+            margin: 8px 0;
+            font-size: 15px;
+            line-height: 1.4;
+            word-break: break-word;
+            color: #0f3822;
+        }
+
+        .order-modal-body .link-text span {
+            color: #0d4227;
+            text-decoration: underline;
+        }
     `;
     document.head.appendChild(style);
 })();
+
+// Inject Order Modal Elements into Body
+(function injectOrderModalHtml() {
+    if (document.getElementById("orderSuccessModal")) return;
+    const modalDiv = document.createElement("div");
+    modalDiv.id = "orderSuccessModal";
+    modalDiv.className = "order-modal-overlay";
+    modalDiv.innerHTML = `
+        <div class="order-modal-card">
+            <button class="order-modal-close" onclick="closeOrderSuccessModal()">&times;</button>
+            <h2 class="order-modal-title">Your Order has been received.</h2>
+            <div class="order-modal-body">
+                <p><strong>ID:</strong> <span id="modalOrderId">1759710</span></p>
+                <p><strong>Service:</strong> <span id="modalService">Instagram - Views | All Videos Support</span></p>
+                <p class="link-text"><strong>Link:</strong> <br><span id="modalLink">https://www.instagram.com/reel/...</span></p>
+                <p><strong>Quantity:</strong> <span id="modalQuantity">100</span></p>
+                <p><strong>Charge:</strong> <span id="modalCharge">0.1430</span></p>
+                <p><strong>Balance:</strong> <span id="modalBalance">27.9807</span></p>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modalDiv);
+})();
+
+function showOrderSuccessModal(orderData) {
+    document.getElementById('modalOrderId').innerText = orderData.id || Math.floor(100000 + Math.random() * 900000);
+    document.getElementById('modalService').innerHTML = orderData.serviceName || 'Service Details';
+    document.getElementById('modalLink').innerText = orderData.link || 'N/A';
+    document.getElementById('modalQuantity').innerText = orderData.quantity || '0';
+    document.getElementById('modalCharge').innerText = orderData.charge || '0.00';
+    document.getElementById('modalBalance').innerText = orderData.balance || '0.00';
+
+    const modal = document.getElementById('orderSuccessModal');
+    if (modal) {
+        modal.style.display = 'flex';
+    }
+}
+
+function closeOrderSuccessModal() {
+    const modal = document.getElementById('orderSuccessModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
 
 // ==========================================
 // NAVIGATION FIX FOR LOGIN / CREATE ACCOUNT
@@ -1304,12 +1415,14 @@ function submitOrderToWhatsApp() {
         })();
 
     const orderIdVal = Math.floor(100000 + Math.random() * 900000);
+    const d = currentCheckoutData;
+
     const newOrder = {
         orderId: orderIdVal,
-        serviceName: `${currentCheckoutData.platform} - ${currentCheckoutData.serviceName} (${currentCheckoutData.packageName})`,
+        serviceName: `${d.platform} - ${d.serviceName} (${d.packageName})`,
         link: link,
-        quantity: currentCheckoutData.quantity || 0,
-        amount: currentCheckoutData.price ? currentCheckoutData.price.toFixed(2) : "0.00",
+        quantity: d.quantity || 0,
+        amount: d.price ? d.price.toFixed(2) : "0.00",
         orderTimeEpoch: Date.now(),
         status: 'Pending',
         userIdentifier: userIdentifier
@@ -1322,8 +1435,6 @@ function submitOrderToWhatsApp() {
     const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
     const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
     const whatsappNumber = "919239628344";
-
-    const d = currentCheckoutData;
 
     const formattedMessage = 
         `🚀 *NEW ORDER SUBMITTED* 🚀\n\n` +
@@ -1338,6 +1449,18 @@ function submitOrderToWhatsApp() {
         `🧾 *Transaction ID / UTR:* ${txnId}`;
 
     const waUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(formattedMessage)}`;
+
+    // Show Custom Order Received Popup Centered on Screen
+    showOrderSuccessModal({
+        id: orderIdVal,
+        serviceName: `${d.platform || ''} - ${d.serviceName || ''} | ${d.packageName || ''} | <strong>Non Drop - Instant Start | Good Speed ✅</strong>`,
+        link: link,
+        quantity: (d.quantity || 0).toLocaleString(),
+        charge: (d.price || 0).toFixed(4),
+        balance: '27.9807'
+    });
+
+    closeCheckoutUI();
 
     window.open(waUrl, "_blank");
 }
@@ -1418,6 +1541,9 @@ async function submitOrderWithWallet() {
     const userRef = db.collection('users').doc(user.uid);
 
     try {
+        const orderIdVal = Math.floor(100000 + Math.random() * 900000);
+        let updatedUserBalance = 0;
+
         await db.runTransaction(async (transaction) => {
             const userDoc = await transaction.get(userRef);
             if (!userDoc.exists) throw new Error("User account not found!");
@@ -1429,8 +1555,10 @@ async function submitOrderWithWallet() {
                 throw new Error("Insufficient Wallet Balance. Please Add Funds first.");
             }
 
+            updatedUserBalance = balance - orderAmount;
+
             transaction.update(userRef, {
-                walletBalance: balance - orderAmount,
+                walletBalance: updatedUserBalance,
                 totalSpent: (userData.totalSpent || 0) + orderAmount
             });
 
@@ -1444,7 +1572,18 @@ async function submitOrderWithWallet() {
             });
         });
 
-        alert("Order placed successfully using Wallet Balance!");
+        const d = currentCheckoutData;
+
+        // Display Modal Pop-up dynamically
+        showOrderSuccessModal({
+            id: orderIdVal,
+            serviceName: `${d.platform || ''} - ${d.serviceName || ''} | ${d.packageName || ''} | <strong>Non Drop - Instant Start | Good Speed ✅</strong>`,
+            link: link,
+            quantity: (d.quantity || 0).toLocaleString(),
+            charge: orderAmount.toFixed(4),
+            balance: updatedUserBalance.toFixed(4)
+        });
+
         closeCheckoutUI();
 
     } catch (error) {

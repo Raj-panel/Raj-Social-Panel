@@ -174,6 +174,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const serviceData = {
     instagram: {
+        /*"Followers Non-Drop": [
+            {
+                type: "custom",
+                name: "Instagram Followers [High Quality] Life-time Refill♻️ -300K+ Per Day- Start in 10 Min",
+                pricePer1000: 80
+            }
+        ],*/
         "Followers 30% Extra Less Drop": [
             { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "1K Followers", price: 50, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
@@ -910,6 +917,7 @@ function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUni
 }
 
 function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge) {
+    // REBUILD FRESH STATE AND PURGE PREVIOUS STALE CHECKOUT DATA
     currentCheckoutData = {
         platform: platform,
         serviceName: serviceName,
@@ -939,6 +947,7 @@ function openCheckoutFromCustom() {
 
     const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
 
+    // REBUILD FRESH STATE AND PURGE PREVIOUS STALE CHECKOUT DATA
     currentCheckoutData = {
         platform: platformCap,
         serviceName: currentCategory,
@@ -1123,6 +1132,7 @@ function showCheckoutOverlay() {
         el.style.display = "none";
     });
 
+    // Dynamic Target Link Input Configuration
     const linkConfig = getLinkConfig(d.platform, d.serviceName);
     const linkLabel = document.getElementById("checkoutLinkLabel") || document.querySelector('label[for="checkoutLinkInput"]');
     const linkInput = document.getElementById("checkoutLinkInput");
@@ -1151,11 +1161,13 @@ function closeCheckoutUI() {
         checkoutPage.style.display = "none";
     }
     
+    // RESET INPUT VALUES
     const linkInput = document.getElementById("checkoutLinkInput");
     if (linkInput) linkInput.value = "";
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
     
+    // PURGE STALE STATE
     currentCheckoutData = {}; 
 }
 
@@ -1185,6 +1197,7 @@ function switchCheckoutPayment(type) {
     }
 }
 
+// Check standard URL validity
 function isValidUrl(string) {
     try {
         new URL(string);
@@ -1194,6 +1207,7 @@ function isValidUrl(string) {
     }
 }
 
+// Function to validate and process Profile Link / Username (Accepts both handles & full URLs)
 function processProfileOrLink(input, platform, serviceName) {
     const trimmed = (input || "").trim();
     if (!trimmed) {
@@ -1203,6 +1217,7 @@ function processProfileOrLink(input, platform, serviceName) {
     const pName = (platform || "").toLowerCase();
     const sName = (serviceName || "").toLowerCase();
 
+    // Generic fallback for any text if service supports username or URL
     if (pName.includes("instagram")) {
         const cleanUsername = trimmed.startsWith("@") ? trimmed.slice(1) : trimmed;
         
@@ -1250,14 +1265,14 @@ function processProfileOrLink(input, platform, serviceName) {
         };
     }
 
+    // Default accepting string if non-empty
     return {
         isValid: true,
         url: trimmed
     };
 }
 
-// TELEGRAM ORDER SUBMISSION FUNCTION (SAME FORMAT AS WHATSAPP)
-async function submitOrderToTelegram() {
+function submitOrderToWhatsApp() {
     const linkInput = document.getElementById("checkoutLinkInput");
     const txnInput = document.getElementById("checkoutTxnId");
 
@@ -1289,17 +1304,12 @@ async function submitOrderToTelegram() {
         })();
 
     const orderIdVal = Math.floor(100000 + Math.random() * 900000);
-    const d = currentCheckoutData;
-    const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
-    const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
-
-    // SAVE ORDER TO LOCAL STORAGE
     const newOrder = {
         orderId: orderIdVal,
-        serviceName: `${d.platform} - ${d.serviceName} (${d.packageName})`,
+        serviceName: `${currentCheckoutData.platform} - ${currentCheckoutData.serviceName} (${currentCheckoutData.packageName})`,
         link: link,
-        quantity: d.quantity || 0,
-        amount: d.price ? d.price.toFixed(2) : "0.00",
+        quantity: currentCheckoutData.quantity || 0,
+        amount: currentCheckoutData.price ? currentCheckoutData.price.toFixed(2) : "0.00",
         orderTimeEpoch: Date.now(),
         status: 'Pending',
         userIdentifier: userIdentifier
@@ -1309,7 +1319,12 @@ async function submitOrderToTelegram() {
     existingOrders.push(newOrder);
     localStorage.setItem('raj_smm_orders', JSON.stringify(existingOrders));
 
-    // EXACT WHATSAPP FORMATTED MESSAGE
+    const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
+    const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
+    const whatsappNumber = "919239628344";
+
+    const d = currentCheckoutData;
+
     const formattedMessage = 
         `🚀 *NEW ORDER SUBMITTED* 🚀\n\n` +
         `🆔 *Order ID:* #${orderIdVal}\n` +
@@ -1322,35 +1337,9 @@ async function submitOrderToTelegram() {
         `💳 *Payment Method:* ${payMethod}\n` +
         `🧾 *Transaction ID / UTR:* ${txnId}`;
 
-    const orderPayload = {
-        order_id: `#${orderIdVal}`,
-        service: `${d.platform} - ${d.serviceName} (${d.packageName})`,
-        link: link,
-        quantity: txnId,
-        custom_message: formattedMessage
-    };
+    const waUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(formattedMessage)}`;
 
-    try {
-        const response = await fetch('/confirm-order', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(orderPayload)
-        });
-
-        const result = await response.json();
-
-        if (result.success) {
-            alert("🎉 Your order has been submitted successfully to Telegram!");
-            closeCheckoutUI();
-        } else {
-            alert("Failed to submit order. Please try again.");
-        }
-    } catch (error) {
-        console.error("Error submitting order to Telegram:", error);
-        alert("Server communication error. Please check your network!");
-    }
+    window.open(waUrl, "_blank");
 }
 
 let deferredPrompt = null;

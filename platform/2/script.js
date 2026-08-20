@@ -1,6 +1,6 @@
 // Global State Variables
 let currentPlatform = 'instagram';
-let calculatedPrice = 0;
+let calculatedPrice = "0.00";
 
 // Platform Icon SVG / Image Links
 const platformLogos = {
@@ -120,6 +120,16 @@ const platformData = {
     categories: {}
   }
 };
+
+// Preload Helper function for Instant QR Display
+function updatePreloadedQR(price) {
+  const upiId = "rajpanel@axl";
+  const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=${upiId}%26am=${price}%26cu=INR`;
+  const qrImg = document.getElementById("checkoutQrImg");
+  if (qrImg) {
+    qrImg.src = qrApi;
+  }
+}
 
 // Render Select With Icons & Highlight Selected Background
 function setupSelectIcons(selectId) {
@@ -299,6 +309,7 @@ function calculatePrice() {
   if (!selectedOption) {
     if (totalPriceText) totalPriceText.innerText = "0.00";
     calculatedPrice = "0.00";
+    updatePreloadedQR(calculatedPrice);
     return;
   }
 
@@ -309,6 +320,8 @@ function calculatePrice() {
   calculatedPrice = ((ratePer1000 / 1000) * quantity).toFixed(2);
   if (totalPriceText) totalPriceText.innerText = calculatedPrice;
   
+  // Preload QR immediately on price change
+  updatePreloadedQR(calculatedPrice);
   updateAverageTime();
 }
 
@@ -340,12 +353,7 @@ function openCheckout() {
   if (checkoutTitle) checkoutTitle.innerText = selectedText.split(' - ₹')[0];
   if (checkoutPrice) checkoutPrice.innerText = calculatedPrice;
 
-  // UPI Dynamic QR Code
-  const upiId = "rajpanel@axl";
-  const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=${upiId}%26am=${calculatedPrice}%26cu=INR`;
-  const qrImg = document.getElementById("checkoutQrImg");
-  if (qrImg) qrImg.src = qrApi;
-
+  // Show checkout page immediately (QR is already preloaded)
   const checkoutPage = document.getElementById("checkoutPage");
   if (checkoutPage) checkoutPage.classList.remove("hidden");
 }

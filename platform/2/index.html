@@ -204,5 +204,57 @@
 
   <!-- External JS File -->
   <script src="script.js"></script>
+
+  <!-- ORDER SAVING LOGIC INTEGRATION -->
+  <script>
+    function getUserIdentifier() {
+      if (typeof window.firebaseUserUid !== 'undefined' && window.firebaseUserUid) {
+        return window.firebaseUserUid;
+      }
+      let browserId = localStorage.getItem('raj_smm_browser_id');
+      if (!browserId) {
+        browserId = 'BID_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        localStorage.setItem('raj_smm_browser_id', browserId);
+      }
+      return browserId;
+    }
+
+    function saveOrderToLocalStorage(orderData) {
+      let existingOrders = JSON.parse(localStorage.getItem('raj_smm_orders') || '[]');
+      existingOrders.push(orderData);
+      localStorage.setItem('raj_smm_orders', JSON.stringify(existingOrders));
+    }
+
+    // Intercept original sendOrderToTelegram function to save order status
+    const originalSendOrderToTelegram = window.sendOrderToTelegram;
+    
+    window.sendOrderToTelegram = function() {
+      const linkInput = document.getElementById('mainLinkInput') ? document.getElementById('mainLinkInput').value : '';
+      const quantityInput = document.getElementById('mainQuantityInput') ? document.getElementById('mainQuantityInput').value : '0';
+      const priceText = document.getElementById('totalPriceText') ? document.getElementById('totalPriceText').innerText : '0.00';
+      const serviceSelect = document.getElementById('serviceSelect');
+      const serviceName = serviceSelect && serviceSelect.options[serviceSelect.selectedIndex] ? serviceSelect.options[serviceSelect.selectedIndex].text : 'SMM Service';
+      const txnId = document.getElementById('checkoutTxnId') ? document.getElementById('checkoutTxnId').value : '';
+
+      const newOrder = {
+        orderId: Math.floor(100000 + Math.random() * 900000),
+        userIdentifier: getUserIdentifier(),
+        serviceName: serviceName,
+        link: linkInput || 'N/A',
+        quantity: quantityInput || '0',
+        amount: priceText || '0.00',
+        txnId: txnId || 'N/A',
+        orderTimeEpoch: Date.now()
+      };
+
+      saveOrderToLocalStorage(newOrder);
+
+      if (typeof originalSendOrderToTelegram === 'function') {
+        originalSendOrderToTelegram();
+      } else {
+        alert('Order submitted successfully! Order ID: #' + newOrder.orderId);
+      }
+    };
+  </script>
 </body>
 </html>

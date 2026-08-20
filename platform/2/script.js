@@ -429,7 +429,6 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) upscaleViewCheck(upiView); // Safe fallback
     if (upiView) upiView.classList.remove('hidden');
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
@@ -443,11 +442,9 @@ function switchCheckoutPayment(method) {
 // Modern Glowing Popup & Confetti Integration (পপআপ এবং অ্যানিমেশন সিস্টেম)
 // ---------------------------------------------------------------------------
 function showModernPopup(title, message, type = 'success') {
-  // যদি আগের কোনো পপআপ থাকে তা রিমুভ করে দেওয়া
   const existingPopup = document.getElementById('modernCustomPopup');
   if (existingPopup) existingPopup.remove();
 
-  // স্টাইল সহ পপআপের মূল কন্টেইনার তৈরি
   const popupOverlay = document.createElement('div');
   popupOverlay.id = 'modernCustomPopup';
   popupOverlay.style.cssText = `
@@ -482,7 +479,6 @@ function showModernPopup(title, message, type = 'success') {
 
   document.body.appendChild(popupOverlay);
 
-  // অ্যানিমেশনের জন্য ইন্টারনাল CSS ইনজেক্ট করা
   if (!document.getElementById('modernPopupKeyframes')) {
     const styleSheet = document.createElement('style');
     styleSheet.id = 'modernPopupKeyframes';
@@ -493,7 +489,6 @@ function showModernPopup(title, message, type = 'success') {
     document.head.appendChild(styleSheet);
   }
 
-  // পপআপ বন্ধ করার লজিক
   document.getElementById('modernPopupCloseBtn').onclick = () => {
     popupOverlay.remove();
   };
@@ -501,7 +496,6 @@ function showModernPopup(title, message, type = 'success') {
     if (e.target === popupOverlay) popupOverlay.remove();
   };
 
-  // যদি সাকসেস হয় তবে কনফেটি বা ফায়ারক্রাকার ইফেক্ট ট্রিগার করা
   if (isSuccess && typeof triggerConfetti === 'function') {
     triggerConfetti();
   }
@@ -516,7 +510,6 @@ function triggerConfetti() {
       origin: { y: 0.6 }
     });
   } else {
-    // যদি ক্যানভাস কনফেটি লাইব্রেরি লোড না থাকে তবে স্ক্রিপ্ট ইনজেক্ট করে নেওয়া
     const script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js';
     script.onload = () => {
@@ -530,7 +523,7 @@ function triggerConfetti() {
   }
 }
 
-// Send Order Details to Telegram (আন্ডারস্কোর/ডট ড্রপ সমস্যা সমাধানের জন্য parse_mode রিমুভ করা হয়েছে)
+// Send Order Details to Telegram
 async function sendOrderToTelegram() {
   const mainLink = document.getElementById("mainLinkInput");
   const checkoutTxn = document.getElementById("checkoutTxnId");
@@ -551,7 +544,6 @@ async function sendOrderToTelegram() {
   const botToken = "8960508595:AAG8-0ZNbOGZ-iRtSh5xzAabhSrHbRWjUaE"; 
   const chatId = "8895603997";
 
-  // প্লেইন টেক্সট ফরম্যাট ব্যবহার করা হয়েছে যাতে আন্ডারস্কোর বা ডট ড্রপ না করে
   const message = `🛍️ New Order Received!\n\n` +
                   `📌 Platform2: ${currentPlatform.toUpperCase()}\n` +
                   `🏷️ Service: ${service}\n` +
@@ -564,13 +556,12 @@ async function sendOrderToTelegram() {
   const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
   try {
-    const response =- await fetch(url, {
+    const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         chat_id: chatId,
         text: message
-        // parse_mode রিমুভ করা হয়েছে যাতে স্পেশাল ক্যারেক্টার বা আন্ডারস্কোর মিসিং না হয়
       })
     });
 

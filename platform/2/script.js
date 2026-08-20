@@ -442,6 +442,12 @@ function switchCheckoutPayment(method) {
   }
 }
 
+// Helper Function: Safe Escape for Telegram Markdown
+function escapeMarkdown(text) {
+  if (!text) return '';
+  return text.toString().replace(/[_*[\]()~`>#+\-=|{}.!]/g, '\\$&');
+}
+
 // Send Order Details to Telegram
 async function sendOrderToTelegram() {
   const mainLink = document.getElementById("mainLinkInput");
@@ -463,14 +469,23 @@ async function sendOrderToTelegram() {
   const botToken = "8960508595:AAG8-0ZNbOGZ-iRtSh5xzAabhSrHbRWjUaE"; 
   const chatId = "8895603997";
 
+  // Escape variables to avoid Telegram Markdown entity parsing errors
+  const safePlatform = escapeMarkdown(currentPlatform.toUpperCase());
+  const safeService = escapeMarkdown(service);
+  const safeQuantity = escapeMarkdown(quantity);
+  const safePrice = escapeMarkdown(calculatedPrice);
+  const safeLink = escapeMarkdown(link);
+  const safeUtr = escapeMarkdown(utr);
+  const safeDate = escapeMarkdown(new Date().toLocaleString());
+
   const message = `🛍️ *New Order Received!*\n\n` +
-                  `📌 *Platform:* ${currentPlatform.toUpperCase()}\n` +
-                  `🏷️ *Service:* ${service}\n` +
-                  `🔢 *Quantity:* ${quantity}\n` +
-                  `💰 *Price:* ₹${calculatedPrice}\n` +
-                  `🔗 *Link:* ${link}\n` +
-                  `💳 *UTR/TxID:* \`${utr}\`\n\n` +
-                  `📅 *Date:* ${new Date().toLocaleString()}`;
+                  `📌 *Platform:* ${safePlatform}\n` +
+                  `🏷️ *Service:* ${safeService}\n` +
+                  `🔢 *Quantity:* ${safeQuantity}\n` +
+                  `💰 *Price:* ₹${safePrice}\n` +
+                  `🔗 *Link:* ${safeLink}\n` +
+                  `💳 *UTR/TxID:* ${safeUtr}\n\n` +
+                  `📅 *Date:* ${safeDate}`;
 
   const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 

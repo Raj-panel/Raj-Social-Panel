@@ -1487,26 +1487,26 @@ function submitOrderToWhatsApp() {
     const d = currentCheckoutData;
 
     const formattedMessage = 
-        `🚀 *NEW ORDER SUBMITTED* 🚀\n\n` +
-        `🆔 *Order ID:* #${orderIdVal}\n` +
-        `📌 *Social Media:* ${d.platform || ''}\n` +
-        `🛠️ *Service Name:* ${d.serviceName || ''}\n` +
-        `📦 *Package:* ${d.packageName || ''}\n` +
-        `🔢 *Total Quantity:* ${(d.quantity || 0).toLocaleString()}\n` +
-        `💰 *Total Price:* ₹${finalPriceFormatted}\n` +
-        `🔗 *Target Link:* ${link}\n` +
-        `💳 *Payment Method:* ${payMethod}\n` +
-        `🧾 *Transaction ID / UTR:* ${txnId}`;
+        `🚀 NEW ORDER SUBMITTED 🚀\n\n` +
+        `🆔 Order ID: #${orderIdVal}\n` +
+        `📌 Social Media: ${d.platform || ''}\n` +
+        `🛠️ Service Name: ${d.serviceName || ''}\n` +
+        `📦 Package: ${d.packageName || ''}\n` +
+        `🔢 Total Quantity: ${(d.quantity || 0).toLocaleString()}\n` +
+        `💰 Total Price: ₹${finalPriceFormatted}\n` +
+        `🔗 Target Link: ${link}\n` +
+        `💳 Payment Method: ${payMethod}\n` +
+        `🧾 Transaction ID / UTR: ${txnId}`;
 
     const TELEGRAM_BOT_TOKEN = "8818198886:AAG1Ww5lxVEPDBpBnFQAvtRZt6Zys9t0Wh8"; 
     const TELEGRAM_CHAT_ID = "8895603997";
 
     const telegramApiUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
 
+    // parse_mode রিমুভ করা হয়েছে যাতে কোনো ডট বা আন্ডারস্কোর ড্রপ না করে
     const payload = {
         chat_id: TELEGRAM_CHAT_ID,
-        text: formattedMessage,
-        parse_mode: "Markdown"
+        text: formattedMessage
     };
 
     const submitBtn = document.querySelector("#checkoutPage .submit-btn") || event.target;

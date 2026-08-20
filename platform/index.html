@@ -355,6 +355,29 @@
   .hidden {
     display: none !important;
   }
+
+  /* Telegram Submit Button Styling */
+  .telegram-submit-btn {
+    width: 100%;
+    background: #229ED9;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+    box-shadow: 0 4px 12px rgba(34, 158, 217, 0.3);
+    transition: background 0.2s ease;
+  }
+  .telegram-submit-btn:hover {
+    background: #1d88bc;
+  }
 </style>
 </head>
 <body data-platform="instagram">
@@ -584,8 +607,9 @@
       <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
     </div>
 
-    <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
-      <i class="fa-brands fa-whatsapp"></i> Confirm your order
+    <!-- Updated Button for Telegram -->
+    <button class="telegram-submit-btn" onclick="submitOrderToTelegram()">
+      <i class="fa-brands fa-telegram"></i> Confirm your order
     </button>
 
   </div>
@@ -596,6 +620,67 @@
 <script type="module" src="auth-handler.js"></script>
 
 <script>
+  // TELEGRAM BOT CONFIGURATION
+  // ⚠️ Replace with your actual Bot Token and Chat ID
+  const TELEGRAM_BOT_TOKEN = "8818198886:AAG1Ww5lxVEPDBpBnFQAvtRZt6Zys9t0Wh8";
+  const TELEGRAM_CHAT_ID = "8895603997";
+
+  // Function to submit order details to Telegram Bot
+  async function submitOrderToTelegram() {
+    const linkInput = document.getElementById("checkoutLinkInput").value.trim();
+    const txnId = document.getElementById("checkoutTxnId").value.trim();
+    const serviceTitle = document.getElementById("checkoutServiceTitle").innerText;
+    const pkgName = document.getElementById("checkoutPkgBadgeName").innerText;
+    const price = document.getElementById("summaryPayAmount").innerText;
+
+    if (!linkInput) {
+      alert("Please enter your link!");
+      return;
+    }
+
+    if (!txnId) {
+      alert("Please enter 12-Digit Transaction ID / UTR!");
+      return;
+    }
+
+    // Message Format for Telegram
+    const message = `🛒 *NEW ORDER RECEIVED* 🛒\n\n` +
+      `📌 *Service:* ${serviceTitle}\n` +
+      `📦 *Package:* ${pkgName}\n` +
+      `💰 *Amount Paid:* ₹${price}\n` +
+      `🔗 *Target Link:* ${linkInput}\n` +
+      `🆔 *Txn ID / UTR:* \`${txnId}\``;
+
+    const telegramApiUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+    try {
+      const response = await fetch(telegramApiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text: message,
+          parse_mode: "Markdown"
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.ok) {
+        alert(" Your order has been submitted successfully via Telegram!");
+        closeCheckout();
+      } else {
+        alert(" Failed to send order. Please check Bot Token/Chat ID.");
+        console.error("Telegram Error:", data);
+      }
+    } catch (error) {
+      console.error("Error submitting order:", error);
+      alert("Something went wrong while submitting your order.");
+    }
+  }
+
   // Dynamic Platform Theme Switcher Integration
   function applyPlatformTheme(platform) {
     if (!platform) return;
@@ -638,7 +723,7 @@
       txnLabel.innerText = "Enter Binance TxID / Order ID:";
       txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
     } else {
-      binanceView.classList.add('hidden');
+      binanceView.classList.remove('hidden');
       upiView.classList.remove('hidden');
       btnBinance.classList.remove('active');
       btnUpi.classList.add('active');

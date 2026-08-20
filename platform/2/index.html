@@ -22,7 +22,7 @@
       <button class="close-sidebar-btn" onclick="closeSidebar()"><i class="fa-solid fa-xmark"></i></button>
     </div>
     
-    <!-- Menu Options identical to https://rajsmmpanel.in/ -->
+    <!-- Menu Options -->
     <ul class="sidebar-menu">
       <li><a href="https://rajsmmpanel.in/platform/">🛒 New Order</a></li>
       <li><a href="https://rajsmmpanel.in/">⚡ Platform 1</a></li>
@@ -194,7 +194,7 @@
         <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
       </div>
 
-      <!-- Telegram Submit Button -->
+      <!-- Updated Telegram Submit Button -->
       <button class="whatsapp-submit-btn" onclick="sendOrderToTelegram()">
         <i class="fa-brands fa-telegram"></i> Confirm your order
       </button>
@@ -204,109 +204,5 @@
 
   <!-- External JS File -->
   <script src="script.js"></script>
-
-  <!-- Telegram Order Logic Integration -->
-  <script>
-    async function sendOrderToTelegram() {
-      // Form Fields থেকে তথ্য নেওয়া
-      const utrInput = document.getElementById('checkoutTxnId');
-      const serviceTitle = document.getElementById('checkoutServiceTitle')?.innerText || 'N/A';
-      const priceText = document.getElementById('checkoutPriceText')?.innerText || '0.00';
-      const linkInput = document.getElementById('mainLinkInput')?.value || 'N/A';
-      const quantityInput = document.getElementById('mainQuantityInput')?.value || 'N/A';
-      const utrNumber = utrInput ? utrInput.value.trim() : '';
-
-      // UTR চেক করা
-      if (!utrNumber) {
-        alert('Please enter a valid Transaction ID / UTR number.');
-        return;
-      }
-
-      // Telegram Bot Config
-      const botToken = "@rajpanel888_bot"; // BotFather থেকে পাওয়া টোকেনটি এখানে বসাবেন
-      const chatId = "8895603997";            // আপনার প্রদানকৃত Chat ID
-
-      // Telegram Message Formatting
-      const message = `🛍️ *New Order Received!*\n\n` +
-                      `📌 *Service:* ${serviceTitle}\n` +
-                      `🔗 *Link:* ${linkInput}\n` +
-                      `🔢 *Quantity:* ${quantityInput}\n` +
-                      `💰 *Price:* ₹${priceText}\n` +
-                      `💳 *UTR / Ref No:* \`${utrNumber}\`\n\n` +
-                      `📅 *Date:* ${new Date().toLocaleString()}`;
-
-      const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-
-      try {
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            chat_id: chatId,
-            text: message,
-            parse_mode: 'Markdown'
-          })
-        });
-
-        const data = await response.json();
-
-        if (data.ok) {
-          alert('Order submitted successfully!');
-          if (utrInput) utrInput.value = '';
-          if (typeof closeCheckout === 'function') closeCheckout();
-        } else {
-          alert('Failed to send order to Telegram. Please check Bot Token.');
-        }
-      } catch (error) {
-        console.error('Error submitting order:', error);
-        alert('An error occurred. Please check your internet connection.');
-      }
-    }
-  </script>
-
-  <!-- Navigation Drawer Hardware Back Button Handling Script -->
-  <script>
-    let isSidebarPushed = false;
-
-    function openSidebar() {
-      const sidebar = document.getElementById("leftSidebar");
-      const overlay = document.getElementById("sidebarOverlay");
-
-      if (sidebar && overlay) {
-        sidebar.classList.add("active");
-        overlay.classList.add("active");
-        
-        if (!isSidebarPushed) {
-          history.pushState({ sidebarOpen: true }, "", "#sidebar-open");
-          isSidebarPushed = true;
-        }
-      }
-    }
-
-    function hideSidebarUI() {
-      const sidebar = document.getElementById("leftSidebar");
-      const overlay = document.getElementById("sidebarOverlay");
-
-      if (sidebar && overlay) {
-        sidebar.classList.remove("active");
-        overlay.classList.remove("active");
-      }
-    }
-
-    function closeSidebar() {
-      hideSidebarUI();
-      if (isSidebarPushed) {
-        isSidebarPushed = false;
-        history.back();
-      }
-    }
-
-    window.addEventListener("popstate", function (event) {
-      if (isSidebarPushed) {
-        isSidebarPushed = false;
-        hideSidebarUI();
-      }
-    });
-  </script>
 </body>
 </html>

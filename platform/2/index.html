@@ -194,31 +194,88 @@
         <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
       </div>
 
-      <!-- WhatsApp Submit Button -->
-      <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
-        <i class="fa-brands fa-whatsapp"></i> Confirm your order
+      <!-- Telegram Submit Button -->
+      <button class="whatsapp-submit-btn" onclick="sendOrderToTelegram()">
+        <i class="fa-brands fa-telegram"></i> Confirm your order
       </button>
 
     </div>
   </div>
 
-  <!-- External JS File (Contains original WhatsApp & Order Logic) -->
+  <!-- External JS File -->
   <script src="script.js"></script>
+
+  <!-- Telegram Order Logic Integration -->
+  <script>
+    async function sendOrderToTelegram() {
+      // Form Fields থেকে তথ্য নেওয়া
+      const utrInput = document.getElementById('checkoutTxnId');
+      const serviceTitle = document.getElementById('checkoutServiceTitle')?.innerText || 'N/A';
+      const priceText = document.getElementById('checkoutPriceText')?.innerText || '0.00';
+      const linkInput = document.getElementById('mainLinkInput')?.value || 'N/A';
+      const quantityInput = document.getElementById('mainQuantityInput')?.value || 'N/A';
+      const utrNumber = utrInput ? utrInput.value.trim() : '';
+
+      // UTR চেক করা
+      if (!utrNumber) {
+        alert('Please enter a valid Transaction ID / UTR number.');
+        return;
+      }
+
+      // Telegram Bot Config
+      const botToken = "YOUR_BOT_TOKEN_HERE"; // BotFather থেকে পাওয়া টোকেনটি এখানে বসাবেন
+      const chatId = "8895603997";            // আপনার প্রদানকৃত Chat ID
+
+      // Telegram Message Formatting
+      const message = `🛍️ *New Order Received!*\n\n` +
+                      `📌 *Service:* ${serviceTitle}\n` +
+                      `🔗 *Link:* ${linkInput}\n` +
+                      `🔢 *Quantity:* ${quantityInput}\n` +
+                      `💰 *Price:* ₹${priceText}\n` +
+                      `💳 *UTR / Ref No:* \`${utrNumber}\`\n\n` +
+                      `📅 *Date:* ${new Date().toLocaleString()}`;
+
+      const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: message,
+            parse_mode: 'Markdown'
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.ok) {
+          alert('Order submitted successfully!');
+          if (utrInput) utrInput.value = '';
+          if (typeof closeCheckout === 'function') closeCheckout();
+        } else {
+          alert('Failed to send order to Telegram. Please check Bot Token.');
+        }
+      } catch (error) {
+        console.error('Error submitting order:', error);
+        alert('An error occurred. Please check your internet connection.');
+      }
+    }
+  </script>
 
   <!-- Navigation Drawer Hardware Back Button Handling Script -->
   <script>
     let isSidebarPushed = false;
 
-    // ১. সাইডবার ওপেন করার ফাংশন
     function openSidebar() {
       const sidebar = document.getElementById("leftSidebar");
       const overlay = document.getElementById("sidebarOverlay");
 
       if (sidebar && overlay) {
-        sidebar.classList.add("active"); // আপনার CSS অনুযায়ী ক্লাস সেট করুন (যেমন 'active' বা 'open')
+        sidebar.classList.add("active");
         overlay.classList.add("active");
         
-        // হিস্ট্রিতে ভুয়া স্টেট পুশ করা হচ্ছে
         if (!isSidebarPushed) {
           history.pushState({ sidebarOpen: true }, "", "#sidebar-open");
           isSidebarPushed = true;
@@ -226,7 +283,6 @@
       }
     }
 
-    // ২. সাইডবার বন্ধ করার ইন্টারনাল ফাংশন
     function hideSidebarUI() {
       const sidebar = document.getElementById("leftSidebar");
       const overlay = document.getElementById("sidebarOverlay");
@@ -237,20 +293,18 @@
       }
     }
 
-    // ৩. ম্যানুয়ালি বন্ধ করার ফাংশন (ক্রস বাটন বা ওভারলেতে ক্লিক করলে)
     function closeSidebar() {
       hideSidebarUI();
       if (isSidebarPushed) {
         isSidebarPushed = false;
-        history.back(); // হিস্ট্রি স্টেট রিমুভ করা
+        history.back();
       }
     }
 
-    // ৪. ব্যাক বাটন চাপলে হিস্ট্রি চেঞ্জ হ্যান্ডেল করা
     window.addEventListener("popstate", function (event) {
       if (isSidebarPushed) {
         isSidebarPushed = false;
-        hideSidebarUI(); // পেজ ব্যাক না হয়ে শুধু সাইডবার বন্ধ হবে
+        hideSidebarUI();
       }
     });
   </script>

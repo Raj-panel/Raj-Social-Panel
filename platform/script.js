@@ -174,13 +174,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const serviceData = {
     instagram: {
-        /*"Followers Non-Drop": [
-            {
-                type: "custom",
-                name: "Instagram Followers [High Quality] Life-time Refill♻️ -300K+ Per Day- Start in 10 Min",
-                pricePer1000: 80
-            }
-        ],*/
         "Followers 30% Extra Less Drop": [
             { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "1K Followers", price: 50, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
@@ -1190,7 +1183,7 @@ function switchCheckoutPayment(type) {
         if (viewUpi) viewUpi.classList.remove("hidden");
         if (viewBinance) viewBinance.classList.add("hidden");
     } else {
-        if (btnBinance) btnBinance.classList.remove("active");
+        if (btnBinance) btnBinance.classList.add("active");
         if (btnUpi) btnUpi.classList.remove("active");
         if (viewBinance) viewBinance.classList.remove("hidden");
         if (viewUpi) viewUpi.classList.add("hidden");
@@ -1272,6 +1265,9 @@ function processProfileOrLink(input, platform, serviceName) {
     };
 }
 
+// ==========================================
+// TELEGRAM ORDER SUBMISSION (REPLACED WHATSAPP)
+// ==========================================
 function submitOrderToWhatsApp() {
     const linkInput = document.getElementById("checkoutLinkInput");
     const txnInput = document.getElementById("checkoutTxnId");
@@ -1321,7 +1317,6 @@ function submitOrderToWhatsApp() {
 
     const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
     const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
-    const whatsappNumber = "919239628344";
 
     const d = currentCheckoutData;
 
@@ -1337,9 +1332,45 @@ function submitOrderToWhatsApp() {
         `💳 *Payment Method:* ${payMethod}\n` +
         `🧾 *Transaction ID / UTR:* ${txnId}`;
 
-    const waUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(formattedMessage)}`;
+    // আপনার টেলিগ্রাম বটের টোকেন এবং চ্যাট আইডি এখানে দিন
+    const TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"; 
+    const TELEGRAM_CHAT_ID = "YOUR_TELEGRAM_CHAT_ID";
 
-    window.open(waUrl, "_blank");
+    const telegramApiUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+    const payload = {
+        chat_id: TELEGRAM_CHAT_ID,
+        text: formattedMessage,
+        parse_mode: "Markdown"
+    };
+
+    // লোডিং অ্যালার্ট বা বাটন ডিসেবল করা যেতে পারে (ঐচ্ছিক)
+    const submitBtn = document.querySelector("#checkoutPage .submit-btn") || event.target;
+    if (submitBtn) submitBtn.disabled = true;
+
+    fetch(telegramApiUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.ok) {
+            alert("Order submitted successfully to Telegram Bot!");
+            closeCheckoutUI();
+        } else {
+            alert("Failed to send order to Telegram. Please check Bot Token & Chat ID.");
+        }
+    })
+    .catch(error => {
+        console.error("Telegram Error:", error);
+        alert("Network error while sending order to Telegram.");
+    })
+    .finally(() => {
+        if (submitBtn) submitBtn.disabled = false;
+    });
 }
 
 let deferredPrompt = null;

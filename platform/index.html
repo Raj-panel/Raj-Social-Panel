@@ -391,6 +391,75 @@
   .whatsapp-submit-btn:hover {
     transform: translateY(-2px);
   }
+
+  /* Custom Image-matched Success Popup Styles */
+  .custom-success-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .custom-success-box {
+    background: #ffffff;
+    border: 2px solid #22c55e;
+    border-radius: 20px;
+    padding: 24px 20px;
+    width: 100%;
+    max-width: 360px;
+    box-shadow: 0 0 25px rgba(34, 197, 94, 0.6);
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    animation: popupScaleIn 0.3s ease-out forwards;
+  }
+
+  @keyframes popupScaleIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .custom-success-close {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    color: #333;
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .custom-success-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #14532d;
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+
+  .custom-success-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 14px;
+    color: #1e293b;
+    font-weight: 500;
+  }
+
+  .custom-success-details span {
+    font-weight: 700;
+    color: #0f172a;
+  }
 </style>
 </head>
 <body data-platform="instagram">
@@ -620,17 +689,23 @@
       <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
     </div>
 
-    <!-- WhatsApp Logo Removed and Glowing Effect Added -->
-    <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
+    <!-- Confirm your order Button with Glowing Effect -->
+    <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsAppCustom()">
       Confirm your order
     </button>
 
   </div>
 </div>
 
+<!-- Canvas for Confetti Animation (Firecracker / Flower pop effect) -->
+<canvas id="confettiCanvas" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10000; display:none;"></canvas>
+
 <script src="script.js"></script>
 <script type="module" src="firebase-config.js"></script>
 <script type="module" src="auth-handler.js"></script>
+
+<!-- Confetti JS Library for flower/firecracker effect -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
   // Dynamic Platform Theme Switcher Integration
@@ -690,6 +765,94 @@
     const phoneNumber = "919239628344";
     const message = encodeURIComponent("Hi 👋 I want to know about your services on rajsmmpanel.in");
     window.open("https://wa.me/" + phoneNumber + "?text=" + message, "_blank");
+  }
+
+  // Custom Order Confirmation Logic with Image-matched Popup and Confetti Effect
+  function submitOrderToWhatsAppCustom() {
+    // Collect logical details from elements
+    const randomId = Math.floor(100000 + Math.random() * 900000);
+    const serviceTitle = document.getElementById('checkoutServiceTitle') ? document.getElementById('checkoutServiceTitle').innerText : 'Instagram - Instagram - Followers';
+    const pkgBadge = document.getElementById('checkoutPkgBadgeName') ? document.getElementById('checkoutPkgBadgeName').innerText : '2K Followers';
+    const linkInputVal = document.getElementById('checkoutLinkInput') ? document.getElementById('checkoutLinkInput').value : 'mr_rocky_84';
+    const cleanLink = linkInputVal ? linkInputVal.replace(/https?:\/\/(www\.)?instagram\.com\//, '').replace(/\/$/, '') : 'mr_rocky_84';
+    
+    // Extract units or parse quantity
+    let unitsText = document.getElementById('checkoutUnitsText') ? document.getElementById('checkoutUnitsText').innerText : '2000';
+    let quantityNum = unitsText.replace(/[^0-9]/g, '') || '2000';
+    
+    let priceText = document.getElementById('summaryPayAmount') ? document.getElementById('summaryPayAmount').innerText : '0.00';
+
+    // Trigger flower-pop / firecracker confetti effect
+    triggerFlowerConfetti();
+
+    // Create and show image-matched success popup
+    const existingPopup = document.getElementById('customSuccessPopup');
+    if (existingPopup) existingPopup.remove();
+
+    const popupHtml = `
+      <div id="customSuccessPopup" class="custom-success-popup-overlay">
+        <div class="custom-success-box">
+          <button class="custom-success-close" onclick="closeCustomPopup()">&times;</button>
+          <div class="custom-success-title">Your Order has been received.</div>
+          <div class="custom-success-details">
+            <div>ID: <span>${randomId}</span></div>
+            <div>Service: <span>${serviceTitle} | ${pkgBadge}</span></div>
+            <div>Link: <span>${cleanLink}</span></div>
+            <div>Quantity: <span>${quantityNum}</span></div>
+            <div>Charge: <span>₹${priceText}</span></div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', popupHtml);
+    
+    // Also execute original script handler if exists to maintain backward logic
+    if (typeof submitOrderToWhatsApp === 'function' && submitOrderToWhatsApp !== submitOrderToWhatsAppCustom) {
+      try { submitOrderToWhatsApp(); } catch(e) {}
+    }
+  }
+
+  function closeCustomPopup() {
+    const popup = document.getElementById('customSuccessPopup');
+    if (popup) popup.remove();
+  }
+
+  // Flower / Firecracker Confetti Generator
+  function triggerFlowerConfetti() {
+    const count = 200;
+    const defaults = {
+      origin: { y: 0.7 }
+    };
+
+    function fire(particleRatio, opts) {
+      confetti(Object.assign({}, defaults, opts, {
+        particleCount: Math.floor(count * particleRatio)
+      }));
+    }
+
+    fire(0.25, {
+      spread: 26,
+      startVelocity: 55,
+    });
+    fire(0.2, {
+      spread: 60,
+    });
+    fire(0.35, {
+      spread: 100,
+      decay: 0.91,
+      scalar: 0.8
+    });
+    fire(0.1, {
+      spread: 120,
+      startVelocity: 25,
+      decay: 0.92,
+      scalar: 1.2
+    });
+    fire(0.1, {
+      spread: 120,
+      startVelocity: 45,
+    });
   }
 
   // Sidebar Controls

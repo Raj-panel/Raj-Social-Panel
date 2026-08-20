@@ -13,9 +13,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
 
-<!-- Canvas Confetti Library for Fireworks/Confetti Effect -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
 <!-- PWA / Web App Manifest & Theme -->
 <link href="manifest.json" rel="manifest"/>
 <meta content="#0f172a" name="theme-color"/>
@@ -381,98 +378,6 @@
   .telegram-submit-btn:hover {
     background: #1d88bc;
   }
-
-  /* ORDER SUCCESS POPUP STYLES */
-  .order-popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(5px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 99999;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease-in-out;
-    padding: 15px;
-    box-sizing: border-box;
-  }
-
-  .order-popup-overlay.active {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  @keyframes glowingBorder {
-    0% { border-color: #22c55e; box-shadow: 0 0 15px rgba(34, 197, 94, 0.6), inset 0 0 15px rgba(34, 197, 94, 0.2); }
-    50% { border-color: #10b981; box-shadow: 0 0 30px rgba(16, 185, 129, 0.9), inset 0 0 20px rgba(16, 185, 129, 0.4); }
-    100% { border-color: #22c55e; box-shadow: 0 0 15px rgba(34, 197, 94, 0.6), inset 0 0 15px rgba(34, 197, 94, 0.2); }
-  }
-
-  .order-popup-card {
-    background-color: #d1e7dd;
-    color: #0f5132;
-    width: 100%;
-    max-width: 450px;
-    border-radius: 16px;
-    padding: 24px 20px;
-    position: relative;
-    border: 3px solid #22c55e;
-    animation: glowingBorder 2s infinite ease-in-out;
-    transform: scale(0.8);
-    transition: transform 0.3s ease-in-out;
-    font-family: 'Poppins', sans-serif;
-    box-sizing: border-box;
-  }
-
-  .order-popup-overlay.active .order-popup-card {
-    transform: scale(1);
-  }
-
-  .order-popup-close {
-    position: absolute;
-    top: 15px;
-    right: 18px;
-    font-size: 24px;
-    color: #0f5132;
-    cursor: pointer;
-    background: transparent;
-    border: none;
-    font-weight: bold;
-    opacity: 0.6;
-    transition: opacity 0.2s;
-  }
-  .order-popup-close:hover {
-    opacity: 1;
-  }
-
-  .order-popup-header {
-    font-size: 28px;
-    font-weight: 700;
-    line-height: 1.2;
-    color: #14532d;
-    margin-bottom: 20px;
-    padding-right: 20px;
-  }
-
-  .order-popup-details {
-    font-size: 15px;
-    line-height: 1.6;
-    color: #14532d;
-    word-break: break-word;
-  }
-
-  .order-popup-details div {
-    margin-bottom: 6px;
-  }
-
-  .order-popup-details strong {
-    font-weight: 700;
-  }
 </style>
 </head>
 <body data-platform="instagram">
@@ -486,9 +391,13 @@
   </div>
   
   <ul class="sidebar-menu">
+    <li id="authMenuItem">
+    
+    <!-- New Order Link Updated Below -->
     <li><a href="https://rajsmmpanel.in/">🛒 New Order</a></li>
     <li><a href="https://rajsmmpanel.in/platform/2/">⚡ Platform 2</a></li>
     <li><a href="/orders/">📦 My Orders</a></li>
+    <li id="addFundsMenuItem" style="display: none;"></li>
     <li><a href="/pages/privacy-policy.html">🔒 Privacy Policy</a></li>
     <li><a href="/pages/refund-policy.html">💸 Refund Policy</a></li>
     <li><a href="/pages/terms.html">📜 Terms &amp; Conditions</a></li>
@@ -616,13 +525,13 @@
       </div>
       <div class="units-text" id="checkoutUnitsText">5,000 units</div>
       <div class="price-text">
-        ₹<span id="checkoutPriceText">0.00</span> <small>one-time</small>
+        ₹<span id="checkoutPriceText">199.00</span> <small>one-time</small>
       </div>
     </div>
 
     <div class="checkout-input-group">
-      <label id="checkoutLinkLabel">Enter your Link</label>
-      <input type="text" id="checkoutLinkInput" placeholder="https://..." />
+      <label id="checkoutLinkLabel">Enter your Instagram link</label>
+      <input type="text" id="checkoutLinkInput" placeholder="https://instagram.com/your_username" />
     </div>
 
     <div class="checkout-order-summary">
@@ -634,7 +543,7 @@
       <div class="summary-divider"></div>
       <div class="summary-row pay-row">
         <span>You Pay</span>
-        <span class="pay-amount">₹<span id="summaryPayAmount">0.00</span></span>
+        <span class="pay-amount">₹<span id="summaryPayAmount">199.00</span></span>
       </div>
     </div>
 
@@ -698,28 +607,11 @@
       <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
     </div>
 
-    <!-- Confirm Order Button -->
+    <!-- Updated Button for Telegram -->
     <button class="telegram-submit-btn" onclick="submitOrderToTelegram()">
       <i class="fa-brands fa-telegram"></i> Confirm your order
     </button>
 
-  </div>
-</div>
-
-<!-- ORDER CONFIRMATION SUCCESS POPUP -->
-<div id="orderSuccessModal" class="order-popup-overlay">
-  <div class="order-popup-card">
-    <button class="order-popup-close" onclick="closeOrderSuccessModal()">&times;</button>
-    <div class="order-popup-header">
-      Your Order has been received.
-    </div>
-    <div class="order-popup-details">
-      <div><strong>ID:</strong> <span id="popOrderId">1759710</span></div>
-      <div><strong>Service:</strong> <span id="popService">Service Name</span></div>
-      <div><strong>Link:</strong> <span id="popLink">https://www.instagram.com/...</span></div>
-      <div><strong>Quantity:</strong> <span id="popQuantity">100</span></div>
-      <div><strong>Charge:</strong> ₹<span id="popCharge">0.00</span></div>
-    </div>
   </div>
 </div>
 
@@ -729,107 +621,28 @@
 
 <script>
   // TELEGRAM BOT CONFIGURATION
+  // ⚠️ Replace with your actual Bot Token and Chat ID
   const TELEGRAM_BOT_TOKEN = "8818198886:AAG1Ww5lxVEPDBpBnFQAvtRZt6Zys9t0Wh8";
   const TELEGRAM_CHAT_ID = "8895603997";
 
-  // GLOBAL ORDER STATE (Real-time dynamic price & order data)
-  window.currentOrderData = {
-    service: "Social Service",
-    pkg: "Default Package",
-    price: 0,
-    units: 0
-  };
-
-  // Helper function to update checkout dynamic details from script.js / UI selection
-  window.updateCheckoutData = function(service, pkg, price, units) {
-    const parsedPrice = parseFloat(price) || 0;
-    const parsedUnits = parseInt(units, 10) || 0;
-
-    // Save into global object
-    window.currentOrderData.service = service || "Social Service";
-    window.currentOrderData.pkg = pkg || "";
-    window.currentOrderData.price = parsedPrice;
-    window.currentOrderData.units = parsedUnits;
-
-    // Update UI Elements
-    document.getElementById("checkoutServiceTitle").innerText = window.currentOrderData.service;
-    document.getElementById("checkoutPkgBadgeName").innerText = window.currentOrderData.pkg;
-    document.getElementById("summaryPackageText").innerText = window.currentOrderData.pkg;
-    document.getElementById("checkoutUnitsText").innerText = parsedUnits.toLocaleString() + " units";
-    document.getElementById("checkoutPriceText").innerText = parsedPrice.toFixed(2);
-    document.getElementById("summaryPayAmount").innerText = parsedPrice.toFixed(2);
-    
-    // USDT Price update if Binance view exists
-    const usdtVal = (parsedPrice / 88).toFixed(2); // Approximate USDT conversion
-    const usdtElem = document.getElementById("checkoutUsdtAmount");
-    if(usdtElem) usdtElem.innerText = `$${usdtVal} USDT`;
-  };
-
-  // Trigger Fireworks / Confetti Animation
-  function launchConfettiAnimation() {
-    if (typeof confetti === 'function') {
-      var count = 200;
-      var defaults = { origin: { y: 0.7 } };
-
-      function fire(particleRatio, opts) {
-        confetti(Object.assign({}, defaults, opts, {
-          particleCount: Math.floor(count * particleRatio)
-        }));
-      }
-
-      fire(0.25, { spread: 26, startVelocity: 55 });
-      fire(0.2, { spread: 60 });
-      fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-      fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-      fire(0.1, { spread: 120, startVelocity: 45 });
-    }
-  }
-
-  // Show Order Confirmation Popup (Dynamic Charge)
-  function showOrderSuccessModal(orderData) {
-    document.getElementById("popOrderId").innerText = orderData.id;
-    document.getElementById("popService").innerText = orderData.service;
-    document.getElementById("popLink").innerText = orderData.link;
-    document.getElementById("popQuantity").innerText = orderData.quantity;
-    document.getElementById("popCharge").innerText = orderData.charge;
-
-    const modal = document.getElementById("orderSuccessModal");
-    modal.classList.add("active");
-
-    // Launch Fireworks
-    launchConfettiAnimation();
-  }
-
-  // Close Order Confirmation Popup
-  function closeOrderSuccessModal() {
-    const modal = document.getElementById("orderSuccessModal");
-    modal.classList.remove("active");
-  }
-
-  // Function to submit order details to Telegram Bot and show dynamic Popup
+  // Function to submit order details to Telegram Bot
   async function submitOrderToTelegram() {
     const link = document.getElementById("checkoutLinkInput").value.trim();
     const txnId = document.getElementById("checkoutTxnId").value.trim();
+    const serviceName = document.getElementById("checkoutServiceTitle").innerText;
+    const packageName = document.getElementById("checkoutPkgBadgeName").innerText;
     
-    // Fallback extraction from DOM elements if global object holds 0
-    let price = window.currentOrderData.price;
-    if (!price || price === 0) {
-      const priceText = document.getElementById("summaryPayAmount").innerText.replace(/[^0-9.]/g, '');
-      price = parseFloat(priceText) || 0;
-    }
-
-    let quantity = window.currentOrderData.units;
-    if (!quantity || quantity === 0) {
-      const unitsText = document.getElementById("checkoutUnitsText").innerText.replace(/[^0-9]/g, '');
-      quantity = parseInt(unitsText, 10) || 0;
-    }
-
-    const serviceName = document.getElementById("checkoutServiceTitle").innerText || window.currentOrderData.service;
-    const packageName = document.getElementById("checkoutPkgBadgeName").innerText || window.currentOrderData.pkg;
+    // Dynamic price & quantity extraction
+    const priceText = document.getElementById("summaryPayAmount").innerText.replace(/[^0-9.]/g, '');
+    const price = parseFloat(priceText) || 0;
+    
+    const unitsText = document.getElementById("checkoutUnitsText").innerText.replace(/[^0-9]/g, '');
+    const quantity = parseInt(unitsText, 10) || 0;
+    
     const platform = document.body.getAttribute("data-platform") || "Instagram";
     const payMethod = document.getElementById("btnTabBinance").classList.contains("active") ? "Binance Pay" : "UPI QR Pay";
     
-    // Generate Random Unique Order ID
+    // Generate Random 6-Digit Order ID
     const orderIdVal = Math.floor(100000 + Math.random() * 900000);
 
     if (!link) {
@@ -842,14 +655,24 @@
       return;
     }
 
+    // Dynamic Data Object
+    const d = {
+      platform: platform.charAt(0).toUpperCase() + platform.slice(1),
+      serviceName: serviceName,
+      packageName: packageName,
+      quantity: quantity,
+      price: price
+    };
+
+    // Custom Formatted Telegram Message
     const formattedMessage = 
       `🚀 *NEW ORDER SUBMITTED* 🚀\n\n` +
       `🆔 *Order ID:* #${orderIdVal}\n` +
-      `📌 *Social Media:* ${platform.charAt(0).toUpperCase() + platform.slice(1)}\n` +
-      `🛠️ *Service Name:* ${serviceName}\n` +
-      `📦 *Package:* ${packageName}\n` +
-      `🔢 *Total Quantity:* ${quantity.toLocaleString()}\n` +
-      `💰 *Total Price:* ₹${price.toFixed(2)}\n` +
+      `📌 *Social Media:* ${d.platform || ''}\n` +
+      `🛠️ *Service Name:* ${d.serviceName || ''}\n` +
+      `📦 *Package:* ${d.packageName || ''}\n` +
+      `🔢 *Total Quantity:* ${(d.quantity || 0).toLocaleString()}\n` +
+      `💰 *Total Price:* ₹${(d.price || 0).toFixed(2)}\n` +
       `🔗 *Target Link:* ${link}\n` +
       `💳 *Payment Method:* ${payMethod}\n` +
       `🧾 *Transaction ID / UTR:* ${txnId}`;
@@ -859,7 +682,9 @@
     try {
       const response = await fetch(telegramApiUrl, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify({
           chat_id: TELEGRAM_CHAT_ID,
           text: formattedMessage,
@@ -870,21 +695,8 @@
       const data = await response.json();
 
       if (data.ok) {
+        alert("Your order submitted successfully");
         closeCheckout();
-
-        // Show Popup with EXACT Dynamic Charge
-        showOrderSuccessModal({
-          id: orderIdVal,
-          service: `${platform.charAt(0).toUpperCase() + platform.slice(1)} - ${serviceName} | ${packageName}`,
-          link: link,
-          quantity: quantity,
-          charge: price.toFixed(2)
-        });
-
-        // Clear Inputs
-        document.getElementById("checkoutLinkInput").value = "";
-        document.getElementById("checkoutTxnId").value = "";
-
       } else {
         alert("Failed to send order. Please check Bot Token/Chat ID.");
         console.error("Telegram Error:", data);
@@ -895,20 +707,21 @@
     }
   }
 
-  // Dynamic Platform Theme Switcher
+  // Dynamic Platform Theme Switcher Integration
   function applyPlatformTheme(platform) {
     if (!platform) return;
     const p = platform.toLowerCase();
     document.body.setAttribute('data-platform', p);
   }
 
-  // Unified Platform Switch Click & Service Loading
+  // Unified Platform Switch Click & Service Loading Handler
   function handlePlatformClick(platform, elem) {
     document.querySelectorAll('.platform-switch-container .platform-btn').forEach(btn => {
       btn.classList.remove('active');
     });
     elem.classList.add('active');
 
+    // Automatically change theme based on platform
     applyPlatformTheme(platform);
 
     if (typeof switchPlatform === 'function') {
@@ -918,7 +731,7 @@
     }
   }
 
-  // Payment Method Switcher
+  // Payment Method Switching Logic
   function switchCheckoutPayment(method) {
     const upiView = document.getElementById('checkoutUpiView');
     const binanceView = document.getElementById('checkoutBinanceView');
@@ -936,7 +749,7 @@
       txnLabel.innerText = "Enter Binance TxID / Order ID:";
       txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
     } else {
-      binanceView.classList.add('hidden');
+      binanceView.classList.remove('hidden');
       upiView.classList.remove('hidden');
       btnBinance.classList.remove('active');
       btnUpi.classList.add('active');
@@ -946,12 +759,6 @@
     }
   }
 
-  // Close Checkout Function
-  function closeCheckout() {
-    const checkoutPage = document.getElementById("checkoutPage");
-    if(checkoutPage) checkoutPage.classList.add("hidden");
-  }
-
   // WhatsApp Support Click Handler
   function openWhatsAppSupport() {
     const phoneNumber = "919239628344";
@@ -959,7 +766,7 @@
     window.open("https://wa.me/" + phoneNumber + "?text=" + message, "_blank");
   }
 
-  // Sidebar Navigation Controls
+  // Sidebar Controls
   function openSidebar() {
     const sidebar = document.getElementById("leftSidebar");
     const overlay = document.getElementById("sidebarOverlay");
@@ -997,6 +804,7 @@
 
   // Input Focus App Banner Toggle
   document.addEventListener("DOMContentLoaded", function () {
+    // Default initial theme setup
     applyPlatformTheme('instagram');
 
     document.body.addEventListener("focusin", function (e) {

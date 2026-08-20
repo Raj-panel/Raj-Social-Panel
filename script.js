@@ -31,6 +31,39 @@
             margin-bottom: 4px !important;
         }
 
+        /* Dynamic Dropdown & ID Badge Styling */
+        select.form-control, .form-control {
+            background-color: #f8fafc !important;
+            color: #0f172a !important;
+            border: 1px solid #cbd5e1 !important;
+            border-radius: 8px !important;
+        }
+
+        /* Service ID Square Badge Style */
+        .service-id-badge, .badge-service-id {
+            background-color: #7c3aed !important;
+            color: #ffffff !important;
+            padding: 2px 6px !important;
+            border-radius: 4px !important;
+            font-weight: 700 !important;
+            font-size: 11px !important;
+            display: inline-block !important;
+            margin-right: 6px !important;
+        }
+
+        /* Dropdown Active/Selected Item Styling */
+        select option:checked,
+        .select2-results__option--highlighted[aria-selected="true"] {
+            background-color: #7c3aed !important;
+            color: #ffffff !important;
+        }
+
+        select option,
+        .select2-results__option {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+        }
+
         /* FIXED: Target Link & UTR Field Labels Color & Contrast for Light/Dark Mode */
         #checkoutPage label[for="checkoutLinkInput"],
         #checkoutPage .target-input-label,
@@ -174,13 +207,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const serviceData = {
     instagram: {
-        /*"Followers Non-Drop": [
-            {
-                type: "custom",
-                name: "Instagram Followers [High Quality] Life-time Refill♻️ -300K+ Per Day- Start in 10 Min",
-                pricePer1000: 80
-            }
-        ],*/
         "Followers 30% Extra Less Drop": [
             { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "1K Followers", price: 50, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },

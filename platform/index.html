@@ -355,6 +355,42 @@
   .hidden {
     display: none !important;
   }
+
+  /* Glowing Effect for Confirm Your Order Button */
+  @keyframes glowingBtn {
+    0% {
+      box-shadow: 0 0 5px rgba(34, 197, 94, 0.5), 0 0 10px rgba(34, 197, 94, 0.4), 0 0 15px rgba(34, 197, 94, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.9), 0 0 30px rgba(34, 197, 94, 0.7), 0 0 40px rgba(34, 197, 94, 0.5);
+    }
+    100% {
+      box-shadow: 0 0 5px rgba(34, 197, 94, 0.5), 0 0 10px rgba(34, 197, 94, 0.4), 0 0 15px rgba(34, 197, 94, 0.3);
+    }
+  }
+
+  .whatsapp-submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: glowingBtn 2s infinite ease-in-out;
+    transition: transform 0.2s ease;
+  }
+
+  .whatsapp-submit-btn:hover {
+    transform: translateY(-2px);
+  }
 </style>
 </head>
 <body data-platform="instagram">
@@ -584,8 +620,9 @@
       <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
     </div>
 
+    <!-- WhatsApp Logo Removed and Glowing Effect Added -->
     <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
-      <i class="fa-brands fa-whatsapp"></i> Confirm your order
+      Confirm your order
     </button>
 
   </div>

@@ -43,7 +43,7 @@
             line-height: 1.4 !important;
             margin-bottom: 4px !important;
             display: block !important;
-            color: #0f172a !important; /* Always readable Dark Navy text for white/light backgrounds */
+            color: #0f172a !important;
             text-shadow: 0 0 1px rgba(255, 255, 255, 0.8) !important;
         }
 
@@ -55,7 +55,7 @@
             #checkoutPage label[for="checkoutTxnId"],
             #checkoutPage .utr-label,
             #checkoutPage .input-box label {
-                color: #f8fafc !important; /* Bright crisp text in native system dark mode */
+                color: #f8fafc !important;
                 text-shadow: none !important;
             }
         }
@@ -71,7 +71,6 @@
         }
 
         @media screen and (max-width: 768px) {
-            /* 2. Checkout Ultra-Compact Vertical Height */
             #checkoutPage { 
                 padding: 4px 8px !important; 
                 max-width: 440px !important; 
@@ -122,7 +121,7 @@
             #checkoutBinanceView img {
                 width: 150px !important;
                 height: 160px !important;
-                object-fit: contain !important;
+                object-fit: contain !important; 
                 margin: 2px auto !important; 
                 padding: 2px !important;
                 border-radius: 10px !important;
@@ -152,6 +151,84 @@
             #payViaUpiAppBtn { 
                 display: none !important; 
             }
+        }
+
+        /* Modern Glowing Popup Styles */
+        .raj-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .raj-popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .raj-popup-card {
+            background: #f4fdf7;
+            border: 2px solid #22c55e;
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.4);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            padding: 24px;
+            position: relative;
+            box-sizing: border-box;
+            font-family: inherit;
+            color: #0f172a;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .raj-popup-overlay.active .raj-popup-card {
+            transform: scale(1);
+        }
+        .raj-popup-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(34, 197, 94, 0.1);
+            border: none;
+            color: #16a34a;
+            font-size: 18px;
+            font-weight: bold;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .raj-popup-close:hover {
+            background: rgba(34, 197, 94, 0.2);
+        }
+        .raj-popup-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #16a34a;
+            margin-bottom: 16px;
+            line-height: 1.3;
+            padding-right: 30px;
+        }
+        .raj-popup-row {
+            font-size: 14px;
+            margin-bottom: 10px;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+        .raj-popup-row strong {
+            color: #1e293b;
         }
     `;
     document.head.appendChild(style);
@@ -787,7 +864,6 @@ function getLinkConfig(platform, category) {
     const p = (platform || "").toLowerCase();
     const c = (category || "").toLowerCase();
 
-    // 1. YouTube Service
     if (p.includes("youtube") || c.includes("youtube") || c.includes("yt")) {
         if (c.includes("subscribe")) {
             return {
@@ -801,21 +877,13 @@ function getLinkConfig(platform, category) {
         };
     }
 
-    // 2. TikTok Service
     if (p.includes("tiktok") || c.includes("tiktok")) {
-        if (c.includes("follower") || c.includes("profile")) {
-            return {
-                label: "TikTok Video Link or Username",
-                placeholder: "Enter TikTok video link or username"
-            };
-        }
         return {
             label: "TikTok Video Link or Username",
             placeholder: "Enter TikTok video link or username"
         };
     }
 
-    // 3. Instagram Service
     if (p.includes("instagram") || c.includes("instagram") || c.includes("ig")) {
         if (c.includes("like")) {
             return {
@@ -841,7 +909,6 @@ function getLinkConfig(platform, category) {
         };
     }
 
-    // 4. Facebook Service
     if (p.includes("facebook") || c.includes("facebook") || c.includes("fb")) {
         if (c.includes("follower") || c.includes("page")) {
             return {
@@ -855,7 +922,6 @@ function getLinkConfig(platform, category) {
         };
     }
 
-    // Default Fallback
     return {
         label: "Target Link or Username",
         placeholder: "Enter link or username"
@@ -910,7 +976,6 @@ function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUni
 }
 
 function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge) {
-    // REBUILD FRESH STATE AND PURGE PREVIOUS STALE CHECKOUT DATA
     currentCheckoutData = {
         platform: platform,
         serviceName: serviceName,
@@ -940,7 +1005,6 @@ function openCheckoutFromCustom() {
 
     const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
 
-    // REBUILD FRESH STATE AND PURGE PREVIOUS STALE CHECKOUT DATA
     currentCheckoutData = {
         platform: platformCap,
         serviceName: currentCategory,
@@ -1125,7 +1189,6 @@ function showCheckoutOverlay() {
         el.style.display = "none";
     });
 
-    // Dynamic Target Link Input Configuration
     const linkConfig = getLinkConfig(d.platform, d.serviceName);
     const linkLabel = document.getElementById("checkoutLinkLabel") || document.querySelector('label[for="checkoutLinkInput"]');
     const linkInput = document.getElementById("checkoutLinkInput");
@@ -1154,13 +1217,11 @@ function closeCheckoutUI() {
         checkoutPage.style.display = "none";
     }
     
-    // RESET INPUT VALUES
     const linkInput = document.getElementById("checkoutLinkInput");
     if (linkInput) linkInput.value = "";
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
     
-    // PURGE STALE STATE
     currentCheckoutData = {}; 
 }
 
@@ -1190,7 +1251,6 @@ function switchCheckoutPayment(type) {
     }
 }
 
-// Check standard URL validity
 function isValidUrl(string) {
     try {
         new URL(string);
@@ -1200,7 +1260,6 @@ function isValidUrl(string) {
     }
 }
 
-// Function to validate and process Profile Link / Username (Accepts both handles & full URLs)
 function processProfileOrLink(input, platform, serviceName) {
     const trimmed = (input || "").trim();
     if (!trimmed) {
@@ -1210,7 +1269,6 @@ function processProfileOrLink(input, platform, serviceName) {
     const pName = (platform || "").toLowerCase();
     const sName = (serviceName || "").toLowerCase();
 
-    // Generic fallback for any text if service supports username or URL
     if (pName.includes("instagram")) {
         const cleanUsername = trimmed.startsWith("@") ? trimmed.slice(1) : trimmed;
         
@@ -1258,7 +1316,6 @@ function processProfileOrLink(input, platform, serviceName) {
         };
     }
 
-    // Default accepting string if non-empty
     return {
         isValid: true,
         url: trimmed
@@ -1266,7 +1323,47 @@ function processProfileOrLink(input, platform, serviceName) {
 }
 
 // ==========================================
-// TELEGRAM ORDER SUBMISSION (REPLACED WHATSAPP)
+// MODERN GLOWING SUCCESS POPUP FUNCTION
+// ==========================================
+function showOrderSuccessPopup(orderData) {
+    // Remove existing popup if any
+    const existingOverlay = document.getElementById("rajOrderSuccessOverlay");
+    if (existingOverlay) existingOverlay.remove();
+
+    const overlay = document.createElement("div");
+    overlay.id = "rajOrderSuccessOverlay";
+    overlay.className = "raj-popup-overlay";
+
+    overlay.innerHTML = `
+        <div class="raj-popup-card">
+            <button class="raj-popup-close" onclick="closeRajSuccessPopup()">×</button>
+            <div class="raj-popup-title">Your Order has been received.</div>
+            <div class="raj-popup-row"><strong>ID:</strong> ${orderData.orderId}</div>
+            <div class="raj-popup-row"><strong>Service:</strong> ${orderData.platformName} - ${orderData.serviceName} - ${orderData.packageName}</div>
+            <div class="raj-popup-row"><strong>Link:</strong> ${orderData.link}</div>
+            <div class="raj-popup-row"><strong>Quantity:</strong> ${orderData.quantity.toLocaleString()}</div>
+            <div class="raj-popup-row"><strong>Total price:</strong> ₹${orderData.amount}</div>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    // Trigger smooth fade-in
+    setTimeout(() => {
+        overlay.classList.add("active");
+    }, 10);
+}
+
+function closeRajSuccessPopup() {
+    const overlay = document.getElementById("rajOrderSuccessOverlay");
+    if (overlay) {
+        overlay.classList.remove("active");
+        setTimeout(() => overlay.remove(), 300);
+    }
+}
+
+// ==========================================
+// TELEGRAM ORDER SUBMISSION & POPUP INTEGRATION
 // ==========================================
 function submitOrderToWhatsApp() {
     const linkInput = document.getElementById("checkoutLinkInput");
@@ -1300,12 +1397,14 @@ function submitOrderToWhatsApp() {
         })();
 
     const orderIdVal = Math.floor(100000 + Math.random() * 900000);
+    const finalPriceFormatted = currentCheckoutData.price ? currentCheckoutData.price.toFixed(2) : "0.00";
+    
     const newOrder = {
         orderId: orderIdVal,
         serviceName: `${currentCheckoutData.platform} - ${currentCheckoutData.serviceName} (${currentCheckoutData.packageName})`,
         link: link,
         quantity: currentCheckoutData.quantity || 0,
-        amount: currentCheckoutData.price ? currentCheckoutData.price.toFixed(2) : "0.00",
+        amount: finalPriceFormatted,
         orderTimeEpoch: Date.now(),
         status: 'Pending',
         userIdentifier: userIdentifier
@@ -1327,12 +1426,11 @@ function submitOrderToWhatsApp() {
         `🛠️ *Service Name:* ${d.serviceName || ''}\n` +
         `📦 *Package:* ${d.packageName || ''}\n` +
         `🔢 *Total Quantity:* ${(d.quantity || 0).toLocaleString()}\n` +
-        `💰 *Total Price:* ₹${(d.price || 0).toFixed(2)}\n` +
+        `💰 *Total Price:* ₹${finalPriceFormatted}\n` +
         `🔗 *Target Link:* ${link}\n` +
         `💳 *Payment Method:* ${payMethod}\n` +
         `🧾 *Transaction ID / UTR:* ${txnId}`;
 
-    // আপনার টেলিগ্রাম বটের টোকেন এবং চ্যাট আইডি এখানে দিন
     const TELEGRAM_BOT_TOKEN = "8818198886:AAG1Ww5lxVEPDBpBnFQAvtRZt6Zys9t0Wh8"; 
     const TELEGRAM_CHAT_ID = "8895603997";
 
@@ -1344,7 +1442,6 @@ function submitOrderToWhatsApp() {
         parse_mode: "Markdown"
     };
 
-    // লোডিং অ্যালার্ট বা বাটন ডিসেবল করা যেতে পারে (ঐচ্ছিক)
     const submitBtn = document.querySelector("#checkoutPage .submit-btn") || event.target;
     if (submitBtn) submitBtn.disabled = true;
 
@@ -1358,8 +1455,19 @@ function submitOrderToWhatsApp() {
     .then(response => response.json())
     .then(data => {
         if (data.ok) {
-            alert("Order submit successfully");
+            // Close checkout UI first
             closeCheckoutUI();
+            
+            // Show modern glowing success popup with dynamic data
+            showOrderSuccessPopup({
+                orderId: orderIdVal,
+                platformName: d.platform || '',
+                serviceName: d.serviceName || '',
+                packageName: d.packageName || '',
+                link: link,
+                quantity: d.quantity || 0,
+                amount: finalPriceFormatted
+            });
         } else {
             alert("Failed to send order to Telegram. Please check Bot Token & Chat ID.");
         }
@@ -1422,6 +1530,7 @@ async function submitOrderWithWallet() {
     const walletBtn = document.getElementById("submitWalletBtn");
     const rawLink = linkInput ? linkInput.value.trim() : "";
     const orderAmount = currentCheckoutData.price;
+    const finalPriceFormatted = orderAmount ? orderAmount.toFixed(2) : "0.00";
 
     const validation = processProfileOrLink(rawLink, currentCheckoutData.platform, currentCheckoutData.serviceName);
     if (!validation.isValid) {
@@ -1475,8 +1584,18 @@ async function submitOrderWithWallet() {
             });
         });
 
-        alert("Order placed successfully using Wallet Balance!");
+        const orderIdVal = Math.floor(100000 + Math.random() * 900000);
         closeCheckoutUI();
+        
+        showOrderSuccessPopup({
+            orderId: orderIdVal,
+            platformName: currentCheckoutData.platform || '',
+            serviceName: currentCheckoutData.serviceName || '',
+            packageName: currentCheckoutData.packageName || '',
+            link: link,
+            quantity: currentCheckoutData.quantity || 0,
+            amount: finalPriceFormatted
+        });
 
     } catch (error) {
         alert("Error: " + (error.message || error));

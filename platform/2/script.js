@@ -133,7 +133,6 @@ function setupSelectIcons(selectId) {
   wrapper.className = 'custom-select-wrapper';
   wrapper.style.cssText = 'position: relative; width: 100%; font-family: sans-serif;';
 
-  // Hero Banner Theme Style (Gradient Background and White Text)
   const activeBgStyle = 'background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); color: #ffffff; font-weight: 600; border-color: transparent;';
 
   const selectedDisplay = document.createElement('div');
@@ -455,6 +454,11 @@ async function sendOrderToTelegram() {
     console.error("Error submitting order:", error);
     alert("Request failed! Please check your network connection.");
   }
+}
+
+// Alias for HTML Compatibility
+function submitOrderToWhatsApp() {
+  sendOrderToTelegram();
 }
 
 // Auto Initialize Page

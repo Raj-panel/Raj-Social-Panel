@@ -479,7 +479,7 @@ async function sendOrderToTelegram() {
   const safeDate = escapeMarkdown(new Date().toLocaleString());
 
   const message = `🛍️ *New Order Received!*\n\n` +
-                  `📌 *Platform:* ${safePlatform}\n` +
+                  `📌 *Platform2:* ${safePlatform}\n` +
                   `🏷️ *Service:* ${safeService}\n` +
                   `🔢 *Quantity:* ${safeQuantity}\n` +
                   `💰 *Price:* ₹${safePrice}\n` +

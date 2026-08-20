@@ -174,13 +174,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const serviceData = {
     instagram: {
-        /*"Followers Non-Drop": [
-            {
-                type: "custom",
-                name: "Instagram Followers [High Quality] Life-time Refill♻️ -300K+ Per Day- Start in 10 Min",
-                pricePer1000: 80
-            }
-        ],*/
         "Followers 30% Extra Less Drop": [
             { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "1K Followers", price: 50, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
@@ -650,7 +643,7 @@ function renderPackages() {
                     currentCategory,
                     pkg.name + " — ₹" + pkg.price,
                     1,
-                    pkg.price,
+                    parseFloat(pkg.price),
                     pkg.badge || 'Popular'
                 );
             };
@@ -712,7 +705,7 @@ function renderPackages() {
                     currentCategory,
                     pkg.name,
                     qty,
-                    pkg.price,
+                    parseFloat(pkg.price),
                     pkg.badge || 'Popular'
                 );
             };
@@ -758,7 +751,7 @@ function calculateCustomPrice(serviceName, ratePer1000, providerId) {
         selectedPackage = null;
     } else if (qty >= 100) {
         if (minWarning) minWarning.style.display = "none";
-        const total = (qty / 1000) * ratePer1000;
+        const total = (qty / 1000) * parseFloat(ratePer1000);
         if (calcPriceSpan) calcPriceSpan.innerText = total.toFixed(2);
 
         selectedPackage = {
@@ -794,7 +787,6 @@ function getLinkConfig(platform, category) {
     const p = (platform || "").toLowerCase();
     const c = (category || "").toLowerCase();
 
-    // 1. YouTube Service
     if (p.includes("youtube") || c.includes("youtube") || c.includes("yt")) {
         if (c.includes("subscribe")) {
             return {
@@ -808,21 +800,13 @@ function getLinkConfig(platform, category) {
         };
     }
 
-    // 2. TikTok Service
     if (p.includes("tiktok") || c.includes("tiktok")) {
-        if (c.includes("follower") || c.includes("profile")) {
-            return {
-                label: "TikTok Video Link or Username",
-                placeholder: "Enter TikTok video link or username"
-            };
-        }
         return {
             label: "TikTok Video Link or Username",
             placeholder: "Enter TikTok video link or username"
         };
     }
 
-    // 3. Instagram Service
     if (p.includes("instagram") || c.includes("instagram") || c.includes("ig")) {
         if (c.includes("like")) {
             return {
@@ -848,7 +832,6 @@ function getLinkConfig(platform, category) {
         };
     }
 
-    // 4. Facebook Service
     if (p.includes("facebook") || c.includes("facebook") || c.includes("fb")) {
         if (c.includes("follower") || c.includes("page")) {
             return {
@@ -862,7 +845,6 @@ function getLinkConfig(platform, category) {
         };
     }
 
-    // Default Fallback
     return {
         label: "Target Link or Username",
         placeholder: "Enter link or username"
@@ -876,10 +858,10 @@ function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUni
     }
 
     const availablePackages = platformData[categoryKey]
-        .filter(p => !p.type) 
+        .filter(p => !p.type && p.price) 
         .map(p => ({
             qty: extractQuantity(p.name),
-            price: p.price
+            price: parseFloat(p.price)
         }))
         .filter(p => p.qty > 0)
         .sort((a, b) => b.qty - a.qty); 
@@ -917,15 +899,17 @@ function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUni
 }
 
 function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge) {
-    // REBUILD FRESH STATE AND PURGE PREVIOUS STALE CHECKOUT DATA
+    const parsedPrice = parseFloat(price) || 0;
+    const parsedQty = parseInt(quantity) || 1;
+
     currentCheckoutData = {
         platform: platform,
         serviceName: serviceName,
         packageName: packageName,
-        baseQuantity: quantity || 1,
-        quantity: quantity || 1,
-        basePrice: price,
-        price: price,
+        baseQuantity: parsedQty,
+        quantity: parsedQty,
+        basePrice: parsedPrice,
+        price: parsedPrice,
         multiplier: 1,
         badge: badge || 'Popular'
     };
@@ -947,7 +931,6 @@ function openCheckoutFromCustom() {
 
     const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
 
-    // REBUILD FRESH STATE AND PURGE PREVIOUS STALE CHECKOUT DATA
     currentCheckoutData = {
         platform: platformCap,
         serviceName: currentCategory,
@@ -965,7 +948,7 @@ function openCheckoutFromCustom() {
 
 function updateCheckoutQuantityDisplay() {
     const d = currentCheckoutData;
-    if (!d || !d.baseQuantity) return;
+    if (!d || d.basePrice === undefined) return;
 
     if (d.serviceName && d.serviceName.includes("Combo Service")) {
         d.quantity = d.baseQuantity * (d.multiplier || 1);
@@ -981,6 +964,9 @@ function updateCheckoutQuantityDisplay() {
         );
     }
 
+    const finalPrice = parseFloat(d.price) || 0;
+
+    // 1. Popup UI Price Field Update (FIXED ZERO PRICE ISSUE)
     const qtyCountDisplay = document.getElementById("checkoutQtyCount");
     if (qtyCountDisplay) qtyCountDisplay.innerText = d.multiplier || 1;
 
@@ -988,16 +974,22 @@ function updateCheckoutQuantityDisplay() {
     if (unitsText) unitsText.innerText = `${d.quantity.toLocaleString()} Package`;
 
     const priceEl = document.getElementById("checkoutPriceText");
-    if (priceEl) priceEl.innerText = `${d.price.toFixed(2)}`;
+    if (priceEl) priceEl.innerText = `${finalPrice.toFixed(2)}`;
+
+    // DOM-এ যেকোনো জেন্যারিক চার্জ ক্লাস বা আইডি থাকলে তা আপডেট
+    const chargeElements = document.querySelectorAll(".checkout-charge, #popupCharge, .final-price-display");
+    chargeElements.forEach(el => {
+        el.innerText = `₹${finalPrice.toFixed(2)}`;
+    });
 
     const usdtEl = document.getElementById("checkoutUsdtAmount");
     if (usdtEl) {
-        const usdt = (d.price / 88).toFixed(2);
+        const usdt = (finalPrice / 88).toFixed(2);
         usdtEl.innerText = `$${usdt} USDT`;
     }
 
     const upiId = "rajpanel@axl";
-    const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
+    const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${finalPrice.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
     
     const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=${encodeURIComponent(upiUrl)}`;
 
@@ -1013,7 +1005,7 @@ function updateCheckoutQuantityDisplay() {
 function triggerUpiPay(appType) {
     const d = currentCheckoutData;
     const upiId = "rajpanel@axl";
-    const amount = d.price ? d.price.toFixed(2) : "0.00";
+    const amount = d.price ? parseFloat(d.price).toFixed(2) : "0.00";
     const name = "RajSocialPanel";
     const note = encodeURIComponent(d.packageName || "Social Boost Service");
 
@@ -1127,12 +1119,6 @@ function showCheckoutOverlay() {
         }
     }
 
-    const allSummaryElements = document.querySelectorAll(".order-summary-box, #orderSummaryBox, [class*='summary']");
-    allSummaryElements.forEach(el => {
-        el.style.display = "none";
-    });
-
-    // Dynamic Target Link Input Configuration
     const linkConfig = getLinkConfig(d.platform, d.serviceName);
     const linkLabel = document.getElementById("checkoutLinkLabel") || document.querySelector('label[for="checkoutLinkInput"]');
     const linkInput = document.getElementById("checkoutLinkInput");
@@ -1161,13 +1147,11 @@ function closeCheckoutUI() {
         checkoutPage.style.display = "none";
     }
     
-    // RESET INPUT VALUES
     const linkInput = document.getElementById("checkoutLinkInput");
     if (linkInput) linkInput.value = "";
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
     
-    // PURGE STALE STATE
     currentCheckoutData = {}; 
 }
 
@@ -1197,7 +1181,6 @@ function switchCheckoutPayment(type) {
     }
 }
 
-// Check standard URL validity
 function isValidUrl(string) {
     try {
         new URL(string);
@@ -1207,7 +1190,6 @@ function isValidUrl(string) {
     }
 }
 
-// Function to validate and process Profile Link / Username (Accepts both handles & full URLs)
 function processProfileOrLink(input, platform, serviceName) {
     const trimmed = (input || "").trim();
     if (!trimmed) {
@@ -1217,7 +1199,6 @@ function processProfileOrLink(input, platform, serviceName) {
     const pName = (platform || "").toLowerCase();
     const sName = (serviceName || "").toLowerCase();
 
-    // Generic fallback for any text if service supports username or URL
     if (pName.includes("instagram")) {
         const cleanUsername = trimmed.startsWith("@") ? trimmed.slice(1) : trimmed;
         
@@ -1265,7 +1246,6 @@ function processProfileOrLink(input, platform, serviceName) {
         };
     }
 
-    // Default accepting string if non-empty
     return {
         isValid: true,
         url: trimmed
@@ -1303,13 +1283,16 @@ function submitOrderToWhatsApp() {
             return bid;
         })();
 
+    const d = currentCheckoutData;
+    const finalCalculatedPrice = parseFloat(d.price || 0).toFixed(2); // 2. FIXED TELEGRAM/WHATSAPP MESSAGE PRICE
+
     const orderIdVal = Math.floor(100000 + Math.random() * 900000);
     const newOrder = {
         orderId: orderIdVal,
-        serviceName: `${currentCheckoutData.platform} - ${currentCheckoutData.serviceName} (${currentCheckoutData.packageName})`,
+        serviceName: `${d.platform} - ${d.serviceName} (${d.packageName})`,
         link: link,
-        quantity: currentCheckoutData.quantity || 0,
-        amount: currentCheckoutData.price ? currentCheckoutData.price.toFixed(2) : "0.00",
+        quantity: d.quantity || 0,
+        amount: finalCalculatedPrice,
         orderTimeEpoch: Date.now(),
         status: 'Pending',
         userIdentifier: userIdentifier
@@ -1323,8 +1306,6 @@ function submitOrderToWhatsApp() {
     const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
     const whatsappNumber = "919239628344";
 
-    const d = currentCheckoutData;
-
     const formattedMessage = 
         `🚀 *NEW ORDER SUBMITTED* 🚀\n\n` +
         `🆔 *Order ID:* #${orderIdVal}\n` +
@@ -1332,7 +1313,7 @@ function submitOrderToWhatsApp() {
         `🛠️ *Service Name:* ${d.serviceName || ''}\n` +
         `📦 *Package:* ${d.packageName || ''}\n` +
         `🔢 *Total Quantity:* ${(d.quantity || 0).toLocaleString()}\n` +
-        `💰 *Total Price:* ₹${(d.price || 0).toFixed(2)}\n` +
+        `💰 *Total Price:* ₹${finalCalculatedPrice}\n` +
         `🔗 *Target Link:* ${link}\n` +
         `💳 *Payment Method:* ${payMethod}\n` +
         `🧾 *Transaction ID / UTR:* ${txnId}`;
@@ -1390,7 +1371,7 @@ async function submitOrderWithWallet() {
     const linkInput = document.getElementById("checkoutLinkInput");
     const walletBtn = document.getElementById("submitWalletBtn");
     const rawLink = linkInput ? linkInput.value.trim() : "";
-    const orderAmount = currentCheckoutData.price;
+    const orderAmount = parseFloat(currentCheckoutData.price) || 0;
 
     const validation = processProfileOrLink(rawLink, currentCheckoutData.platform, currentCheckoutData.serviceName);
     if (!validation.isValid) {

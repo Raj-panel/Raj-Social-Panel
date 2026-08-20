@@ -354,7 +354,6 @@ function openCheckout() {
   const checkoutPage = document.getElementById("checkoutPage");
   if (checkoutPage) {
     checkoutPage.classList.remove("hidden");
-    // Push state for checkout
     history.pushState({ checkoutOpen: true }, "", "#checkout");
   }
 }
@@ -376,7 +375,6 @@ function openSidebar() {
   if (sidebar) sidebar.classList.add("active");
   if (overlay) overlay.classList.add("active");
   
-  // Push state for sidebar menu
   history.pushState({ sidebarOpen: true }, "", "#sidebar");
 }
 
@@ -400,14 +398,12 @@ window.addEventListener('popstate', function (event) {
   const overlay = document.getElementById("sidebarOverlay");
   const checkoutPage = document.getElementById("checkoutPage");
 
-  // Handle Sidebar Close on Back
   if (sidebar && sidebar.classList.contains("active")) {
     sidebar.classList.remove("active");
     if (overlay) overlay.classList.remove("active");
     return;
   }
 
-  // Handle Checkout Close on Back
   if (checkoutPage && !checkoutPage.classList.contains("hidden")) {
     checkoutPage.classList.add("hidden");
     return;
@@ -433,6 +429,7 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
+    if (upiView) upscaleViewCheck(upiView); // Safe fallback
     if (upiView) upiView.classList.remove('hidden');
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
@@ -442,13 +439,98 @@ function switchCheckoutPayment(method) {
   }
 }
 
-// Helper Function: Safe Escape for Telegram Markdown
-function escapeMarkdown(text) {
-  if (!text) return '';
-  return text.toString().replace(/[_*[\]()~`>#+\-=|{}.!]/g, '\\$&');
+// ---------------------------------------------------------------------------
+// Modern Glowing Popup & Confetti Integration (পপআপ এবং অ্যানিমেশন সিস্টেম)
+// ---------------------------------------------------------------------------
+function showModernPopup(title, message, type = 'success') {
+  // যদি আগের কোনো পপআপ থাকে তা রিমুভ করে দেওয়া
+  const existingPopup = document.getElementById('modernCustomPopup');
+  if (existingPopup) existingPopup.remove();
+
+  // স্টাইল সহ পপআপের মূল কন্টেইনার তৈরি
+  const popupOverlay = document.createElement('div');
+  popupOverlay.id = 'modernCustomPopup';
+  popupOverlay.style.cssText = `
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 99999; animation: fadeInPopup 0.3s ease;
+  `;
+
+  const isSuccess = type === 'success';
+  const glowColor = isSuccess ? 'rgba(16, 185, 129, 0.5)' : 'rgba(239, 68, 68, 0.5)';
+  const iconSymbol = isSuccess ? '✅' : '❌';
+
+  popupOverlay.innerHTML = `
+    <div style="
+      background: #ffffff; width: 90%; max-width: 380px; padding: 30px 20px;
+      border-radius: 20px; text-align: center; box-shadow: 0 0 30px ${glowColor};
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transform: scale(0.8); animation: scaleUpPopup 0.3s ease forwards;
+    ">
+      <div style="font-size: 50px; margin-bottom: 15px;">${iconSymbol}</div>
+      <h3 style="margin: 0 0 10px; color: #1e293b; font-size: 20px; font-weight: 700;">${title}</h3>
+      <p style="margin: 0 0 25px; color: #64748b; font-size: 14px; line-height: 1.5;">${message}</p>
+      <button id="modernPopupCloseBtn" style="
+        background: ${isSuccess ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #ef4444, #dc2626)'};
+        color: #ffffff; border: none; padding: 12px 30px; font-size: 15px;
+        font-weight: 600; border-radius: 10px; cursor: pointer; box-shadow: 0 4px 15px ${glowColor};
+        transition: transform 0.2s;
+      ">Okay</button>
+    </div>
+  `;
+
+  document.body.appendChild(popupOverlay);
+
+  // অ্যানিমেশনের জন্য ইন্টারনাল CSS ইনজেক্ট করা
+  if (!document.getElementById('modernPopupKeyframes')) {
+    const styleSheet = document.createElement('style');
+    styleSheet.id = 'modernPopupKeyframes';
+    styleSheet.innerHTML = `
+      @keyframes fadeInPopup { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes scaleUpPopup { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    `;
+    document.head.appendChild(styleSheet);
+  }
+
+  // পপআপ বন্ধ করার লজিক
+  document.getElementById('modernPopupCloseBtn').onclick = () => {
+    popupOverlay.remove();
+  };
+  popupOverlay.onclick = (e) => {
+    if (e.target === popupOverlay) popupOverlay.remove();
+  };
+
+  // যদি সাকসেস হয় তবে কনফেটি বা ফায়ারক্রাকার ইফেক্ট ট্রিগার করা
+  if (isSuccess && typeof triggerConfetti === 'function') {
+    triggerConfetti();
+  }
 }
 
-// Send Order Details to Telegram
+// ফায়ারক্রাকার / কনফেটি অ্যানিমেশন ইফেক্ট
+function triggerConfetti() {
+  if (window.confetti) {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 }
+    });
+  } else {
+    // যদি ক্যানভাস কনফেটি লাইব্রেরি লোড না থাকে তবে স্ক্রিপ্ট ইনজেক্ট করে নেওয়া
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js';
+    script.onload = () => {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    };
+    document.head.appendChild(script);
+  }
+}
+
+// Send Order Details to Telegram (আন্ডারস্কোর/ডট ড্রপ সমস্যা সমাধানের জন্য parse_mode রিমুভ করা হয়েছে)
 async function sendOrderToTelegram() {
   const mainLink = document.getElementById("mainLinkInput");
   const checkoutTxn = document.getElementById("checkoutTxnId");
@@ -461,7 +543,7 @@ async function sendOrderToTelegram() {
   const quantity = mainQty ? mainQty.value : "";
 
   if (!utr) {
-    alert("Please enter Transaction ID / UTR Number.");
+    showModernPopup("Error!", "Please enter Transaction ID / UTR Number.", "error");
     return;
   }
 
@@ -469,49 +551,41 @@ async function sendOrderToTelegram() {
   const botToken = "8960508595:AAG8-0ZNbOGZ-iRtSh5xzAabhSrHbRWjUaE"; 
   const chatId = "8895603997";
 
-  // Escape variables to avoid Telegram Markdown entity parsing errors
-  const safePlatform = escapeMarkdown(currentPlatform.toUpperCase());
-  const safeService = escapeMarkdown(service);
-  const safeQuantity = escapeMarkdown(quantity);
-  const safePrice = escapeMarkdown(calculatedPrice);
-  const safeLink = escapeMarkdown(link);
-  const safeUtr = escapeMarkdown(utr);
-  const safeDate = escapeMarkdown(new Date().toLocaleString());
-
-  const message = `🛍️ *New Order Received!*\n\n` +
-                  `📌 *Platform2:* ${safePlatform}\n` +
-                  `🏷️ *Service:* ${safeService}\n` +
-                  `🔢 *Quantity:* ${safeQuantity}\n` +
-                  `💰 *Price:* ₹${safePrice}\n` +
-                  `🔗 *Link:* ${safeLink}\n` +
-                  `💳 *UTR/TxID:* ${safeUtr}\n\n` +
-                  `📅 *Date:* ${safeDate}`;
+  // প্লেইন টেক্সট ফরম্যাট ব্যবহার করা হয়েছে যাতে আন্ডারস্কোর বা ডট ড্রপ না করে
+  const message = `🛍️ New Order Received!\n\n` +
+                  `📌 Platform2: ${currentPlatform.toUpperCase()}\n` +
+                  `🏷️ Service: ${service}\n` +
+                  `🔢 Quantity: ${quantity}\n` +
+                  `💰 Price: ₹${calculatedPrice}\n` +
+                  `🔗 Link: ${link}\n` +
+                  `💳 UTR/TxID: ${utr}\n\n` +
+                  `📅 Date: ${new Date().toLocaleString()}`;
 
   const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
   try {
-    const response = await fetch(url, {
+    const response =- await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         chat_id: chatId,
-        text: message,
-        parse_mode: 'Markdown'
+        text: message
+        // parse_mode রিমুভ করা হয়েছে যাতে স্পেশাল ক্যারেক্টার বা আন্ডারস্কোর মিসিং না হয়
       })
     });
 
     const data = await response.json();
 
     if (data.ok) {
-      alert("Order submitted successfully!");
+      showModernPopup("Success!", "Order submitted successfully!", "success");
       if (checkoutTxn) checkoutTxn.value = "";
       closeCheckout();
     } else {
-      alert("Telegram API Error: " + data.description);
+      showModernPopup("Telegram Error", data.description, "error");
     }
   } catch (error) {
     console.error("Error submitting order:", error);
-    alert("Request failed! Please check your network connection.");
+    showModernPopup("Connection Failed!", "Please check your network connection.", "error");
   }
 }
 

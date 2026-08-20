@@ -153,7 +153,7 @@
             }
         }
 
-        /* Modern Glowing Popup Styles */
+        /* Modern Glowing Popup & Confetti Styles */
         .raj-popup-overlay {
             position: fixed;
             top: 0;
@@ -169,6 +169,7 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
+            overflow: hidden;
         }
         .raj-popup-overlay.active {
             opacity: 1;
@@ -188,6 +189,7 @@
             color: #0f172a;
             transform: scale(0.95);
             transition: transform 0.3s ease;
+            z-index: 100000;
         }
         .raj-popup-overlay.active .raj-popup-card {
             transform: scale(1);
@@ -229,6 +231,28 @@
         }
         .raj-popup-row strong {
             color: #1e293b;
+        }
+
+        /* Confetti / Firecracker Particle Animation */
+        .raj-confetti-piece {
+            position: absolute;
+            top: -20px;
+            width: 10px;
+            height: 14px;
+            background-color: #ffd700;
+            opacity: 0.9;
+            animation: rajFall linear forwards;
+            z-index: 99998;
+        }
+        @keyframes rajFall {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(105vh) rotate(720deg) scale(0.8);
+                opacity: 0;
+            }
         }
     `;
     document.head.appendChild(style);
@@ -859,7 +883,6 @@ function extractQuantity(name) {
     return Math.floor(number) || 1;
 }
 
-// Dynamic link configuration matching service criteria
 function getLinkConfig(platform, category) {
     const p = (platform || "").toLowerCase();
     const c = (category || "").toLowerCase();
@@ -1323,6 +1346,49 @@ function processProfileOrLink(input, platform, serviceName) {
 }
 
 // ==========================================
+// FIRECRACKER / CONFETTI GENERATOR UTILITY
+// ==========================================
+function triggerRajConfettiAnimation(overlayElement) {
+    const colors = ['#22c55e', '#a855f7', '#ec4899', '#3b82f6', '#f59e0b', '#ef4444', '#10b981'];
+    const particleCount = 45;
+
+    for (let i = 0; i < particleCount; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'raj-confetti-piece';
+        
+        // Random horizontal positions
+        piece.style.left = Math.random() * 100 + '%';
+        
+        // Random colors
+        piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        // Random shapes (square, circle or thin strip)
+        if (Math.random() > 0.5) {
+            piece.style.borderRadius = '50%';
+            piece.style.width = (Math.random() * 8 + 6) + 'px';
+            piece.style.height = piece.style.width;
+        } else {
+            piece.style.width = (Math.random() * 8 + 6) + 'px';
+            piece.style.height = (Math.random() * 14 + 10) + 'px';
+        }
+
+        // Random animation duration & delays for firecracker burst feel
+        const duration = Math.random() * 1.5 + 1.2; // 1.2s to 2.7s
+        const delay = Math.random() * 0.4; // 0s to 0.4s
+        
+        piece.style.animationDuration = duration + 's';
+        piece.style.animationDelay = delay + 's';
+
+        overlayElement.appendChild(piece);
+
+        // Auto remove element after animation completes
+        setTimeout(() => {
+            piece.remove();
+        }, (duration + delay) * 1000);
+    }
+}
+
+// ==========================================
 // MODERN GLOWING SUCCESS POPUP FUNCTION
 // ==========================================
 function showOrderSuccessPopup(orderData) {
@@ -1348,9 +1414,10 @@ function showOrderSuccessPopup(orderData) {
 
     document.body.appendChild(overlay);
 
-    // Trigger smooth fade-in
+    // Trigger smooth fade-in and Firecracker/Confetti effect
     setTimeout(() => {
         overlay.classList.add("active");
+        triggerRajConfettiAnimation(overlay);
     }, 10);
 }
 
@@ -1458,7 +1525,7 @@ function submitOrderToWhatsApp() {
             // Close checkout UI first
             closeCheckoutUI();
             
-            // Show modern glowing success popup with dynamic data
+            // Show modern glowing success popup with confetti animation
             showOrderSuccessPopup({
                 orderId: orderIdVal,
                 platformName: d.platform || '',

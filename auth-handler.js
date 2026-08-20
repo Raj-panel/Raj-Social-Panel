@@ -11,8 +11,10 @@ const SESSION_KEY = "raj_smm_user_session";
 document.addEventListener("DOMContentLoaded", () => {
   checkUserSession();
   initPageSpecificAuth();
+  bindFormEvents(); // HTML inline event listener সমস্যা সমাধানের জন্য
 });
 
+// ১. সেশন পরীক্ষা এবং ডাইনামিক ইন্টারফেস আপডেট
 function checkUserSession() {
   const sessionData = localStorage.getItem(SESSION_KEY);
   const addFundsItem = document.getElementById("addFundsMenuItem");
@@ -33,7 +35,7 @@ function checkUserSession() {
       if (addFundsItem) {
         addFundsItem.style.setProperty("display", "none", "important");
       }
-      checkAddFundsProtection(currentPath, false);
+      checkAccessProtection(currentPath, false);
     }
   } else {
     updateSidebarForLoggedOutUser();
@@ -41,12 +43,18 @@ function checkUserSession() {
     if (addFundsItem) {
       addFundsItem.style.setProperty("display", "none", "important");
     }
-    checkAddFundsProtection(currentPath, false);
+    checkAccessProtection(currentPath, false);
   }
 }
 
-function checkAddFundsProtection(currentPath, isLoggedIn) {
-  if (currentPath.includes('/add-funds') && !isLoggedIn) {
+// ২. সুরক্ষিত পেজ চেক (সব প্ল্যাটফর্মে অ্যাক্সেস নিশ্চিত করতে)
+function checkAccessProtection(currentPath, isLoggedIn) {
+  // যেসব পেজে ঢুকতে লগইন বাধ্যতামূলক
+  const protectedPaths = ['/add-funds', '/orders', '/platform/2'];
+  const isProtected = protectedPaths.some(path => currentPath.includes(path));
+
+  if (isProtected && !isLoggedIn) {
+    alert("Please login first to access this page!");
     window.location.href = "/login/";
   }
 }
@@ -91,9 +99,15 @@ function initPageSpecificAuth() {
     }
   }
 
-  checkAddFundsProtection(currentPath, isLoggedIn);
+  checkAccessProtection(currentPath, isLoggedIn);
 
   if (currentPath.includes('/login/') || currentPath === '/login') {
+    // লগইন করা থাকলে সরাসরি হোমে নিয়ে যাবে
+    if (isLoggedIn) {
+      window.location.href = "/";
+      return;
+    }
+
     const loginMobileInput = document.getElementById("loginMobile");
     if (loginMobileInput && prefillMobile) {
       loginMobileInput.value = prefillMobile;
@@ -101,7 +115,34 @@ function initPageSpecificAuth() {
   }
 }
 
-// 1. CREATE ACCOUNT
+// ৩. Event Listeners অ্যাটাচ করার লজিক (Modules সমস্যার পারফেক্ট ফিক্স)
+function bindFormEvents() {
+  const loginForm = document.getElementById("loginForm");
+  if (loginForm) {
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      handleLogin();
+    });
+  }
+
+  const signupForm = document.getElementById("signupForm");
+  if (signupForm) {
+    signupForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      handleSignUp();
+    });
+  }
+
+  const resetForm = document.getElementById("resetForm");
+  if (resetForm) {
+    resetForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      handleResetPassword();
+    });
+  }
+}
+
+// 4. CREATE ACCOUNT
 window.handleSignUp = async function() {
   const nameEl = document.getElementById("signupName");
   const mobileEl = document.getElementById("signupMobile");
@@ -152,7 +193,7 @@ window.handleSignUp = async function() {
   }
 };
 
-// 2. LOGIN
+// 5. LOGIN
 window.handleLogin = async function() {
   const mobileEl = document.getElementById("loginMobile");
   const passwordEl = document.getElementById("loginPassword");
@@ -194,7 +235,7 @@ window.handleLogin = async function() {
   }
 };
 
-// 3. RESET / FORGOT PASSWORD
+// 6. RESET / FORGOT PASSWORD
 window.handleResetPassword = async function() {
   const mobileEl = document.getElementById("resetMobile") || document.getElementById("forgotMobile") || document.getElementById("mobile");
   const passwordEl = document.getElementById("resetNewPassword") || document.getElementById("forgotPassword") || document.getElementById("newPassword");
@@ -249,11 +290,11 @@ window.handleResetPassword = async function() {
   }
 };
 
-// 4. LOGOUT
+// 7. LOGOUT
 window.handleLogout = function() {
   if (confirm("Are you sure you want to logout?")) {
     localStorage.removeItem(SESSION_KEY);
     alert("Logged out successfully.");
-    window.location.href = "/";
+    window.location.href = "/login/";
   }
 };

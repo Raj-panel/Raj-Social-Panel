@@ -174,13 +174,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const serviceData = {
     instagram: {
-        /*"Followers Non-Drop": [
-            {
-                type: "custom",
-                name: "Instagram Followers [High Quality] Life-time Refill♻️ -300K+ Per Day- Start in 10 Min",
-                pricePer1000: 80
-            }
-        ],*/
         "Followers 30% Extra Less Drop": [
             { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "1K Followers", price: 50, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
@@ -1003,7 +996,13 @@ function updateCheckoutQuantityDisplay() {
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
-        qrImg.src = qrImageSrc;
+        // Optimized QR Image Preloading to eliminate loading delay/flicker
+        const tempQrImg = new Image();
+        tempQrImg.src = qrImageSrc;
+        tempQrImg.onload = function() {
+            qrImg.src = qrImageSrc;
+        };
+        
         qrImg.style.width = "110px";
         qrImg.style.height = "110px";
         qrImg.style.objectFit = "contain";
@@ -1419,7 +1418,7 @@ async function submitOrderWithWallet() {
 
     try {
         await db.runTransaction(async (transaction) => {
-            const userDoc = await transaction.get(userRef);
+            const userDoc = status = await transaction.get(userRef);
             if (!userDoc.exists) throw new Error("User account not found!");
 
             const userData = userDoc.data();

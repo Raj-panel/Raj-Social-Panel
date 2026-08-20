@@ -404,6 +404,9 @@
   </div>
   
   <ul class="sidebar-menu">
+    <li id="authMenuItem">
+    
+    <!-- New Order Link Updated Below -->
     <li><a href="https://rajsmmpanel.in/">🛒 New Order</a></li>
     <li><a href="https://rajsmmpanel.in/platform/2/">⚡ Platform 2</a></li>
     <li><a href="/orders/">📦 My Orders</a></li>
@@ -617,15 +620,13 @@
       <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
     </div>
 
+    <!-- WhatsApp Logo Removed and Glowing Effect Added -->
     <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
       Confirm your order
     </button>
 
   </div>
 </div>
-
-<!-- Canvas Confetti CDN (পপআপ কনফেটি বা পটকা ইফেক্টের জন্য) -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
 
 <script src="script.js"></script>
 <script type="module" src="firebase-config.js"></script>
@@ -646,6 +647,7 @@
     });
     elem.classList.add('active');
 
+    // Automatically change theme based on platform
     applyPlatformTheme(platform);
 
     if (typeof switchPlatform === 'function') {
@@ -728,6 +730,7 @@
 
   // Input Focus App Banner Toggle
   document.addEventListener("DOMContentLoaded", function () {
+    // Default initial theme setup
     applyPlatformTheme('instagram');
 
     document.body.addEventListener("focusin", function (e) {
@@ -751,18 +754,6 @@
       navigator.serviceWorker.register('./sw.js')
         .then((reg) => console.log('Service Worker Registered Successfully:', reg))
         .catch((err) => console.log('Service Worker Registration Failed:', err));
-    });
-  }
-
-  // ==========================================
-  // CONGRATULATION / CONFETTI TRIGGER FUNCTION
-  // ==========================================
-  // আপনার প্রজেক্টের অর্ডার সাকসেসফুল পপআপ বা অভিনন্দন মেসেজ দেখানোর ফাংশনের ভেতরে নিচের কোডটুকু কল করে দিলেই পটকা বা কনফেটি ফাটবে।
-  function triggerCongratulationsEffect() {
-    confetti({
-      particleCount: 120,
-      spread: 80,
-      origin: { y: 0.6 }
     });
   }
 </script>

@@ -6,19 +6,6 @@
     const style = document.createElement("style");
     style.id = "fixedLayoutCss";
     style.innerHTML = `
-        /* Font display swap to prevent blank icons delay */
-        i.fa-solid, i.fa-brands, .fa {
-            font-display: swap;
-            display: inline-block;
-            min-width: 1em;
-        }
-
-        /* Smooth QR Code Image Loading */
-        #checkoutQrImg {
-            transition: opacity 0.2s ease-in-out;
-            background-color: #f8fafc;
-        }
-
         /* 1. Adjusted Fixed Hero Banner Height */
         .hero-banner, .hero-card, .instagram-boost-card {
             height: auto !important;
@@ -187,6 +174,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const serviceData = {
     instagram: {
+        /*"Followers Non-Drop": [
+            {
+                type: "custom",
+                name: "Instagram Followers [High Quality] Life-time Refill♻️ -300K+ Per Day- Start in 10 Min",
+                pricePer1000: 80
+            }
+        ],*/
         "Followers 30% Extra Less Drop": [
             { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "1K Followers", price: 50, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
@@ -795,10 +789,12 @@ function extractQuantity(name) {
     return Math.floor(number) || 1;
 }
 
+// Dynamic link configuration matching service criteria
 function getLinkConfig(platform, category) {
     const p = (platform || "").toLowerCase();
     const c = (category || "").toLowerCase();
 
+    // 1. YouTube Service
     if (p.includes("youtube") || c.includes("youtube") || c.includes("yt")) {
         if (c.includes("subscribe")) {
             return {
@@ -812,6 +808,7 @@ function getLinkConfig(platform, category) {
         };
     }
 
+    // 2. TikTok Service
     if (p.includes("tiktok") || c.includes("tiktok")) {
         if (c.includes("follower") || c.includes("profile")) {
             return {
@@ -825,6 +822,7 @@ function getLinkConfig(platform, category) {
         };
     }
 
+    // 3. Instagram Service
     if (p.includes("instagram") || c.includes("instagram") || c.includes("ig")) {
         if (c.includes("like")) {
             return {
@@ -850,6 +848,7 @@ function getLinkConfig(platform, category) {
         };
     }
 
+    // 4. Facebook Service
     if (p.includes("facebook") || c.includes("facebook") || c.includes("fb")) {
         if (c.includes("follower") || c.includes("page")) {
             return {
@@ -863,6 +862,7 @@ function getLinkConfig(platform, category) {
         };
     }
 
+    // Default Fallback
     return {
         label: "Target Link or Username",
         placeholder: "Enter link or username"
@@ -917,6 +917,7 @@ function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUni
 }
 
 function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge) {
+    // REBUILD FRESH STATE AND PURGE PREVIOUS STALE CHECKOUT DATA
     currentCheckoutData = {
         platform: platform,
         serviceName: serviceName,
@@ -946,6 +947,7 @@ function openCheckoutFromCustom() {
 
     const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
 
+    // REBUILD FRESH STATE AND PURGE PREVIOUS STALE CHECKOUT DATA
     currentCheckoutData = {
         platform: platformCap,
         serviceName: currentCategory,
@@ -1001,17 +1003,10 @@ function updateCheckoutQuantityDisplay() {
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
-        // Preload image to prevent broken image icon flickering
-        qrImg.style.opacity = "0.3";
-        const tempQrImg = new Image();
-        tempQrImg.src = qrImageSrc;
-        tempQrImg.onload = function() {
-            qrImg.src = qrImageSrc;
-            qrImg.style.width = "110px";
-            qrImg.style.height = "110px";
-            qrImg.style.objectFit = "contain";
-            qrImg.style.opacity = "1";
-        };
+        qrImg.src = qrImageSrc;
+        qrImg.style.width = "110px";
+        qrImg.style.height = "110px";
+        qrImg.style.objectFit = "contain";
     }
 }
 
@@ -1137,6 +1132,7 @@ function showCheckoutOverlay() {
         el.style.display = "none";
     });
 
+    // Dynamic Target Link Input Configuration
     const linkConfig = getLinkConfig(d.platform, d.serviceName);
     const linkLabel = document.getElementById("checkoutLinkLabel") || document.querySelector('label[for="checkoutLinkInput"]');
     const linkInput = document.getElementById("checkoutLinkInput");
@@ -1165,11 +1161,13 @@ function closeCheckoutUI() {
         checkoutPage.style.display = "none";
     }
     
+    // RESET INPUT VALUES
     const linkInput = document.getElementById("checkoutLinkInput");
     if (linkInput) linkInput.value = "";
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
     
+    // PURGE STALE STATE
     currentCheckoutData = {}; 
 }
 
@@ -1199,6 +1197,7 @@ function switchCheckoutPayment(type) {
     }
 }
 
+// Check standard URL validity
 function isValidUrl(string) {
     try {
         new URL(string);
@@ -1208,6 +1207,7 @@ function isValidUrl(string) {
     }
 }
 
+// Function to validate and process Profile Link / Username (Accepts both handles & full URLs)
 function processProfileOrLink(input, platform, serviceName) {
     const trimmed = (input || "").trim();
     if (!trimmed) {
@@ -1217,6 +1217,7 @@ function processProfileOrLink(input, platform, serviceName) {
     const pName = (platform || "").toLowerCase();
     const sName = (serviceName || "").toLowerCase();
 
+    // Generic fallback for any text if service supports username or URL
     if (pName.includes("instagram")) {
         const cleanUsername = trimmed.startsWith("@") ? trimmed.slice(1) : trimmed;
         
@@ -1264,6 +1265,7 @@ function processProfileOrLink(input, platform, serviceName) {
         };
     }
 
+    // Default accepting string if non-empty
     return {
         isValid: true,
         url: trimmed

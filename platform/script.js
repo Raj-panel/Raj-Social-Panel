@@ -103,7 +103,7 @@
                 visibility: visible !important; 
                 opacity: 1 !important; 
                 margin: 2px 0 2px 0 !important; 
-                font-size: 12px !important; 
+                font-size: 11px !important; 
                 font-weight: 800 !important; 
                 text-align: center !important; 
                 text-transform: uppercase !important; 

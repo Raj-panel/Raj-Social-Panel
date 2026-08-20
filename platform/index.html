@@ -355,29 +355,6 @@
   .hidden {
     display: none !important;
   }
-
-  /* Telegram Submit Button Styling */
-  .telegram-submit-btn {
-    width: 100%;
-    background: #229ED9;
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 700;
-    border: none;
-    padding: 14px;
-    border-radius: 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 15px;
-    box-shadow: 0 4px 12px rgba(34, 158, 217, 0.3);
-    transition: background 0.2s ease;
-  }
-  .telegram-submit-btn:hover {
-    background: #1d88bc;
-  }
 </style>
 </head>
 <body data-platform="instagram">
@@ -607,9 +584,8 @@
       <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
     </div>
 
-    <!-- Updated Button for Telegram -->
-    <button class="telegram-submit-btn" onclick="submitOrderToTelegram()">
-      <i class="fa-brands fa-telegram"></i> Confirm your order
+    <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
+      <i class="fa-brands fa-whatsapp"></i> Confirm your order
     </button>
 
   </div>
@@ -620,93 +596,6 @@
 <script type="module" src="auth-handler.js"></script>
 
 <script>
-  // TELEGRAM BOT CONFIGURATION
-  // ⚠️ Replace with your actual Bot Token and Chat ID
-  const TELEGRAM_BOT_TOKEN = "8818198886:AAG1Ww5lxVEPDBpBnFQAvtRZt6Zys9t0Wh8";
-  const TELEGRAM_CHAT_ID = "8895603997";
-
-  // Function to submit order details to Telegram Bot
-  async function submitOrderToTelegram() {
-    const link = document.getElementById("checkoutLinkInput").value.trim();
-    const txnId = document.getElementById("checkoutTxnId").value.trim();
-    const serviceName = document.getElementById("checkoutServiceTitle").innerText;
-    const packageName = document.getElementById("checkoutPkgBadgeName").innerText;
-    
-    // Dynamic price & quantity extraction
-    const priceText = document.getElementById("summaryPayAmount").innerText.replace(/[^0-9.]/g, '');
-    const price = parseFloat(priceText) || 0;
-    
-    const unitsText = document.getElementById("checkoutUnitsText").innerText.replace(/[^0-9]/g, '');
-    const quantity = parseInt(unitsText, 10) || 0;
-    
-    const platform = document.body.getAttribute("data-platform") || "Instagram";
-    const payMethod = document.getElementById("btnTabBinance").classList.contains("active") ? "Binance Pay" : "UPI QR Pay";
-    
-    // Generate Random 6-Digit Order ID
-    const orderIdVal = Math.floor(100000 + Math.random() * 900000);
-
-    if (!link) {
-      alert("Please enter your link!");
-      return;
-    }
-
-    if (!txnId) {
-      alert("Please enter Transaction ID / UTR!");
-      return;
-    }
-
-    // Dynamic Data Object
-    const d = {
-      platform: platform.charAt(0).toUpperCase() + platform.slice(1),
-      serviceName: serviceName,
-      packageName: packageName,
-      quantity: quantity,
-      price: price
-    };
-
-    // Custom Formatted Telegram Message
-    const formattedMessage = 
-      `🚀 *NEW ORDER SUBMITTED* 🚀\n\n` +
-      `🆔 *Order ID:* #${orderIdVal}\n` +
-      `📌 *Social Media:* ${d.platform || ''}\n` +
-      `🛠️ *Service Name:* ${d.serviceName || ''}\n` +
-      `📦 *Package:* ${d.packageName || ''}\n` +
-      `🔢 *Total Quantity:* ${(d.quantity || 0).toLocaleString()}\n` +
-      `💰 *Total Price:* ₹${(d.price || 0).toFixed(2)}\n` +
-      `🔗 *Target Link:* ${link}\n` +
-      `💳 *Payment Method:* ${payMethod}\n` +
-      `🧾 *Transaction ID / UTR:* ${txnId}`;
-
-    const telegramApiUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-
-    try {
-      const response = await fetch(telegramApiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          chat_id: TELEGRAM_CHAT_ID,
-          text: formattedMessage,
-          parse_mode: "Markdown"
-        })
-      });
-
-      const data = await response.json();
-
-      if (data.ok) {
-        alert("Your order submitted successfully");
-        closeCheckout();
-      } else {
-        alert("Failed to send order. Please check Bot Token/Chat ID.");
-        console.error("Telegram Error:", data);
-      }
-    } catch (error) {
-      console.error("Error submitting order:", error);
-      alert("Something went wrong while submitting your order.");
-    }
-  }
-
   // Dynamic Platform Theme Switcher Integration
   function applyPlatformTheme(platform) {
     if (!platform) return;
@@ -749,7 +638,7 @@
       txnLabel.innerText = "Enter Binance TxID / Order ID:";
       txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
     } else {
-      binanceView.classList.remove('hidden');
+      binanceView.classList.add('hidden');
       upiView.classList.remove('hidden');
       btnBinance.classList.remove('active');
       btnUpi.classList.add('active');

@@ -622,34 +622,60 @@
 <script>
   // TELEGRAM BOT CONFIGURATION
   // ⚠️ Replace with your actual Bot Token and Chat ID
-  const TELEGRAM_BOT_TOKEN = "8818198886:AAG1Ww5lxVEPDBpBnFQAvtRZt6Zys9t0Wh8";
-  const TELEGRAM_CHAT_ID = "8895603997";
+  const TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN";
+  const TELEGRAM_CHAT_ID = "YOUR_TELEGRAM_CHAT_ID";
 
   // Function to submit order details to Telegram Bot
   async function submitOrderToTelegram() {
-    const linkInput = document.getElementById("checkoutLinkInput").value.trim();
+    const link = document.getElementById("checkoutLinkInput").value.trim();
     const txnId = document.getElementById("checkoutTxnId").value.trim();
-    const serviceTitle = document.getElementById("checkoutServiceTitle").innerText;
-    const pkgName = document.getElementById("checkoutPkgBadgeName").innerText;
-    const price = document.getElementById("summaryPayAmount").innerText;
+    const serviceName = document.getElementById("checkoutServiceTitle").innerText;
+    const packageName = document.getElementById("checkoutPkgBadgeName").innerText;
+    
+    // Dynamic price & quantity extraction
+    const priceText = document.getElementById("summaryPayAmount").innerText.replace(/[^0-9.]/g, '');
+    const price = parseFloat(priceText) || 0;
+    
+    const unitsText = document.getElementById("checkoutUnitsText").innerText.replace(/[^0-9]/g, '');
+    const quantity = parseInt(unitsText, 10) || 0;
+    
+    const platform = document.body.getAttribute("data-platform") || "Instagram";
+    const payMethod = document.getElementById("btnTabBinance").classList.contains("active") ? "Binance Pay" : "UPI QR Pay";
+    
+    // Generate Random 6-Digit Order ID
+    const orderIdVal = Math.floor(100000 + Math.random() * 900000);
 
-    if (!linkInput) {
+    if (!link) {
       alert("Please enter your link!");
       return;
     }
 
     if (!txnId) {
-      alert("Please enter 12-Digit Transaction ID / UTR!");
+      alert("Please enter Transaction ID / UTR!");
       return;
     }
 
-    // Message Format for Telegram
-    const message = `🛒 *NEW ORDER RECEIVED* 🛒\n\n` +
-      `📌 *Service:* ${serviceTitle}\n` +
-      `📦 *Package:* ${pkgName}\n` +
-      `💰 *Amount Paid:* ₹${price}\n` +
-      `🔗 *Target Link:* ${linkInput}\n` +
-      `🆔 *Txn ID / UTR:* \`${txnId}\``;
+    // Dynamic Data Object
+    const d = {
+      platform: platform.charAt(0).toUpperCase() + platform.slice(1),
+      serviceName: serviceName,
+      packageName: packageName,
+      quantity: quantity,
+      price: price
+    };
+
+    // Custom Formatted Telegram Message
+    const formattedMessage = 
+      `🚀 *NEW ORDER SUBMITTED* 🚀\n\n` +
+      `🆔 *Order ID:* #${orderIdVal}\n` +
+      `📌 *Social Media:* ${d.platform || ''}\n` +
+      `🛠️ *Service Name:* ${d.serviceName || ''}\n` +
+      `📦 *Package:* ${d.packageName || ''}\n` +
+      `🔢 *Total Quantity:* ${(d.quantity || 0).toLocaleString()}\n` +
+      `💰 *Total Price:* ₹${(d.price || 0).toFixed(2)}\n` +
+      `🔗 *Target Link:* ${link}\n` +
+      `💳 *Payment Method:* ${payMethod}\n` +
+      `🧾 *Transaction ID / UTR:* ${txnId}`;
 
     const telegramApiUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
 
@@ -661,7 +687,7 @@
         },
         body: JSON.stringify({
           chat_id: TELEGRAM_CHAT_ID,
-          text: message,
+          text: formattedMessage,
           parse_mode: "Markdown"
         })
       });
@@ -669,10 +695,10 @@
       const data = await response.json();
 
       if (data.ok) {
-        alert(" Your order has been submitted successfully via Telegram!");
+        alert("Your order submitted successfully");
         closeCheckout();
       } else {
-        alert(" Failed to send order. Please check Bot Token/Chat ID.");
+        alert("Failed to send order. Please check Bot Token/Chat ID.");
         console.error("Telegram Error:", data);
       }
     } catch (error) {

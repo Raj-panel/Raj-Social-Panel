@@ -61,15 +61,15 @@ const platformData = {
       "🇮🇳 Instagram Repost- India high quality": {
         name: "🇮🇳 Instagram Repost- India high quality",
         services: [
-          { id: "2008", name: "2008 — Instagram Repost | Worldwide | Max 50K | 100% 🇮🇳 Real Accounts | 12–30 Min Start | 1000 Per ₹60.94", rate: 60.94, avgTime: "12–30 Min Start" },
-          { id: "2086", name: "2086 — 🇮🇳 Instagram Repost | Worldwide | Max 100K | 100% 🇮🇳 Real Accounts | 12–30 Min Start | 1000 Per ₹72.6832", rate: 72.6832, avgTime: "12–30 Min Start" }
+          { id: "2008", name: "2008 — Instagram Repost | Worldwide | Max 50K | 100% 🇮🇳 Real Accounts | 12–30 Min Start", rate: 60.94, avgTime: "12–30 Min Start" },
+          { id: "2086", name: "2086 — 🇮🇳 Instagram Repost | Worldwide | Max 100K | 100% 🇮🇳 Real Accounts | 12–30 Min Start", rate: 72.6832, avgTime: "12–30 Min Start" }
         ]
       },
       "🇮🇳 Instagram Shares - Premium Quality | Super Fast": {
         name: "🇮🇳 Instagram Shares - Premium Quality | Super Fast",
         services: [
-          { id: "121", name: "121 — 🇮🇳 Instagram Shares | Premium Quality | Max 1M | 100K/Day | SuperFast | 10–25 Min Start | Lifetime Refill ♻️ | 1000 Per ₹22.266", rate: 22.266, avgTime: "10–25 Min Start" },
-          { id: "123", name: "123 — 🇮🇳 Instagram Shares | High Quality | Max 1M | 200K/Day | SuperFast | 10–30 Min Start | Lifetime Refill ♻️ | One Click Done | 1000 Per ₹20.33", rate: 20.33, avgTime: "10–30 Min Start" }
+          { id: "121", name: "121 — 🇮🇳 Instagram Shares | Premium Quality | Max 1M | 100K/Day | SuperFast | 10–25 Min Start | Lifetime Refill ♻️", rate: 22.266, avgTime: "10–25 Min Start" },
+          { id: "123", name: "123 — 🇮🇳 Instagram Shares | High Quality | Max 1M | 200K/Day | SuperFast | 10–30 Min Start | Lifetime Refill ♻️ | One Click Done", rate: 20.33, avgTime: "10–30 Min Start" }
         ]
       },
       "🇮🇳 Instagram Reels/ Video Views High Speed": {
@@ -443,7 +443,7 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) uptimeView.classList.remove('hidden'); // Fixed safe check below
+    if (upiView) upiView.classList.remove('hidden');
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
     

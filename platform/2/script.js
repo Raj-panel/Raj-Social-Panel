@@ -7,7 +7,7 @@ const platformLogos = {
   instagram: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg",
   facebook: "https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg",
   youtube: "https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg",
-  tiktok: "https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg",
+  tiktok: "https://upload.wikimedia.org/wikipedia/commons/a/a9/TikTok_logo.svg",
   whatsapp: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
 };
 
@@ -253,6 +253,10 @@ function selectPlatform(platform) {
     setupSelectIcons('categorySelect');
   }
 
+  // Clear search input if present on platform switch
+  const searchInput = document.getElementById('categorySearchInput');
+  if (searchInput) searchInput.value = "";
+
   updateServices();
 }
 
@@ -443,6 +447,7 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
+    if (upiView) uriView?.classList.remove('hidden'); // safe fallback
     if (upiView) upiView.classList.remove('hidden');
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
@@ -597,23 +602,41 @@ function submitOrderToWhatsApp() {
   sendOrderToTelegram();
 }
 
+// ---------------------------------------------------------------------------
+// Search Logic Integration for Category / Services (ID & Keyword Match)
+// ---------------------------------------------------------------------------
+document.addEventListener('DOMContentLoaded', function () {
+  const searchInput = document.getElementById('categorySearchInput');
+  if (searchInput) {
+    searchInput.addEventListener('input', function (e) {
+      const searchTerm = e.target.value.toLowerCase().trim();
+      const categorySelect = document.getElementById('categorySelect');
+      const data = platformData[currentPlatform].categories;
+      
+      if (!categorySelect) return;
+      categorySelect.innerHTML = "";
+      
+      for (let key in data) {
+        const categoryName = data[key].name.toLowerCase();
+        const matchService = data[key].services.some(s => 
+          s.id.toLowerCase().includes(searchTerm) || s.name.toLowerCase().includes(searchTerm)
+        );
+
+        if (searchTerm === "" || categoryName.includes(searchTerm) || matchService) {
+          const option = document.createElement("option");
+          option.value = key;
+          option.textContent = data[key].name;
+          categorySelect.appendChild(option);
+        }
+      }
+      
+      setupSelectIcons('categorySelect');
+      updateServices();
+    });
+  }
+});
+
 // Auto Initialize Page
 window.onload = function() {
   selectPlatform('instagram');
 };
-const searchInput = document.getElementById('search-input');
-const categorySelect = document.getElementById('category-select');
-
-searchInput.addEventListener('input', function() {
-    const searchTerm = this.value.toLowerCase();
-
-    for (let i = 0; i < categorySelect.options.length; i++) {
-        const optionText = categorySelect.options[i].text.toLowerCase();
-        const optionValue = categorySelect.options[i].value.toLowerCase();
-
-        if (optionText.includes(searchTerm) || optionValue.includes(searchTerm)) {
-            categorySelect.selectedIndex = i;
-            break;
-        }
-    }
-});

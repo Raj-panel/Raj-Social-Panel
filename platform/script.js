@@ -1427,8 +1427,8 @@ function showOrderSuccessPopup(orderData) {
     const currentDate = now.toLocaleDateString('en-GB'); // DD/MM/YYYY format
     const currentTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    // WhatsApp Number এখানে বসানো হয়েছে (আপনার প্রজেক্টের সঠিক নম্বরটি এখানে ব্যবহার করা হয়েছে)
-    const whatsappNumber = "918895603997"; // প্রয়োজনমতো আপনার WhatsApp number দিন
+   
+    const whatsappNumber = "919239628344"; // 
 
     // WhatsApp Message Format আপনার চাহিদা অনুযায়ী তৈরি করা হয়েছে
     const waMessage = 

@@ -1443,8 +1443,6 @@ I want to track my order.
 🔗 Link: ${orderData.link}
 📊 Quantity: ${orderData.quantity.toLocaleString()}
 💰 Total Price: ₹${orderData.amount}
-💳 Payment Method: ${orderData.paymentMethod}
-🧾 Transaction ID / UTR: ${orderData.utr}
 📅 Date: ${currentDate}, Time: ${currentTime}
 
 📌 Please provide my current order status.

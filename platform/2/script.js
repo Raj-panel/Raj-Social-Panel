@@ -522,7 +522,7 @@ function triggerConfetti() {
     });
   } else {
     const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.1net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js';
+    script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js';
     script.onload = () => {
       confetti({
         particleCount: 100,

@@ -1076,7 +1076,7 @@ function updateCheckoutQuantityDisplay() {
         usdtEl.innerText = `$${usdt} USDT`;
     }
 
-    const upiId = "rajpanel@axl";
+    const upiId = "rajsmmpanel@jio";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
     
     const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=${encodeURIComponent(upiUrl)}`;
@@ -1092,7 +1092,7 @@ function updateCheckoutQuantityDisplay() {
 
 function triggerUpiPay(appType) {
     const d = currentCheckoutData;
-    const upiId = "rajpanel@axl";
+    const upiId = "rajsmmpanel@jio";
     const amount = d.price ? d.price.toFixed(2) : "0.00";
     const name = "RajSocialPanel";
     const note = encodeURIComponent(d.packageName || "Social Boost Service");

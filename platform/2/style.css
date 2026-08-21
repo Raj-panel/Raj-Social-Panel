@@ -398,6 +398,27 @@ select.form-control {
   font-size: 14px; display: flex; align-items: center; gap: 10px;
   padding: 10px; border-radius: 8px; transition: 0.2s;
 }
+.search-container {
+    margin-bottom: 15px;
+}
+
+#search-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.category-container {
+    margin-bottom: 15px;
+}
+
+#category-select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
 .sidebar-menu li a:hover { background: var(--input-bg); color: #ec4899; }
 
 .hidden { display: none !important; }

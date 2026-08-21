@@ -47,7 +47,6 @@ const platformData = {
           { id: "1075", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 90D Refill 🔄", rate: 78.215, avgTime: "0–2 Min Start" },
           { id: "1076", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 365D Refill 🔄", rate: 79.858, avgTime: "0–2 Min Start" },
           { id: "1077", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - Lifetime Refill ♻️", rate: 83.358, avgTime: "0–2 Min Start" },
-          { id: "6122", name: "Instagram - Comments | 10K/Days - Max 10K", rate: 30.000, avgTime: "0–10 Min Start" }
         ]
       },
       "Instagram like real profile": {

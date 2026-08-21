@@ -601,3 +601,19 @@ function submitOrderToWhatsApp() {
 window.onload = function() {
   selectPlatform('instagram');
 };
+const searchInput = document.getElementById('search-input');
+const categorySelect = document.getElementById('category-select');
+
+searchInput.addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+
+    for (let i = 0; i < categorySelect.options.length; i++) {
+        const optionText = categorySelect.options[i].text.toLowerCase();
+        const optionValue = categorySelect.options[i].value.toLowerCase();
+
+        if (optionText.includes(searchTerm) || optionValue.includes(searchTerm)) {
+            categorySelect.selectedIndex = i;
+            break;
+        }
+    }
+});

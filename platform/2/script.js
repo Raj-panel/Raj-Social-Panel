@@ -22,7 +22,7 @@ function getLogoByText(text) {
   return platformLogos[currentPlatform] || platformLogos.instagram;
 }
 
-// All Platform & Service Data
+// All Platform & Service Data (Global across platforms for global search)
 const platformData = {
   instagram: {
     title: "Instagram Boost",
@@ -32,56 +32,58 @@ const platformData = {
       "working": {
         name: "Instagram Followers — Working Service",
         services: [
-          { id: "1220", name: "1220 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 60D Refill 🔄", rate: 65.358, avgTime: "0–10 Min Start" },
-          { id: "1221", name: "1221 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 90D Refill 🔄", rate: 67.929, avgTime: "0–10 Min Start" },
-          { id: "1222", name: "1222 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 365D Refill 🔄", rate: 70.501, avgTime: "0–10 Min Start" },
-          { id: "1223", name: "1223 - Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - Lifetime Refill ♻️", rate: 73.072, avgTime: "0–10 Min Start" }
+          { id: "1220", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 60D Refill 🔄", rate: 65.358, avgTime: "0–10 Min Start" },
+          { id: "1221", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 90D Refill 🔄", rate: 67.929, avgTime: "0–10 Min Start" },
+          { id: "1222", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 365D Refill 🔄", rate: 70.501, avgTime: "0–10 Min Start" },
+          { id: "1223", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - Lifetime Refill ♻️", rate: 73.072, avgTime: "0–10 Min Start" },
+          { id: "1229", name: "Instagram - Likes ~ 🇯🇵 Japan - REFILL 30D", rate: 25.000, avgTime: "0–10 Min Start" }
         ]
       },
       "nondrop": {
         name: "Instagram followers Non-Drop",
         services: [
-          { id: "1072", name: "1072 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - No Refill 🔄", rate: 67.929, avgTime: "0–2 Min Start" },
-          { id: "1073", name: "1073 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 30D Refill 🔄", rate: 73.072, avgTime: "0–2 Min Start" },
-          { id: "1074", name: "1074 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 60D Refill 🔄", rate: 75.644, avgTime: "0–2 Min Start" },
-          { id: "1075", name: "1075 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 90D Refill 🔄", rate: 78.215, avgTime: "0–2 Min Start" },
-          { id: "1076", name: "1076 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 365D Refill 🔄", rate: 79.858, avgTime: "0–2 Min Start" },
-          { id: "1077", name: "1077 - Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - Lifetime Refill ♻️", rate: 83.358, avgTime: "0–2 Min Start" }
+          { id: "1072", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - No Refill 🔄", rate: 67.929, avgTime: "0–2 Min Start" },
+          { id: "1073", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 30D Refill 🔄", rate: 73.072, avgTime: "0–2 Min Start" },
+          { id: "1074", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 60D Refill 🔄", rate: 75.644, avgTime: "0–2 Min Start" },
+          { id: "1075", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 90D Refill 🔄", rate: 78.215, avgTime: "0–2 Min Start" },
+          { id: "1076", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 365D Refill 🔄", rate: 79.858, avgTime: "0–2 Min Start" },
+          { id: "1077", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - Lifetime Refill ♻️", rate: 83.358, avgTime: "0–2 Min Start" },
+          { id: "6122", name: "Instagram - Comments | 10K/Days - Max 10K", rate: 30.000, avgTime: "0–10 Min Start" }
         ]
       },
       "Instagram like real profile": {
         name: "Instagram like real profile",
         services: [
-          { id: "881", name: "881 — Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 60 Days Refill♻️ | 0–10 Minutes Start", rate: 14.600, avgTime: "0–10 Minutes Start" },
-          { id: "882", name: "882 — Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 90 Days Refill♻️ | 0–10 Minutes Start", rate: 15.664, avgTime: "0–10 Minutes Start" },
-          { id: "883", name: "883 — Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 365 Days Refill♻️ | 0–10 Minutes Start", rate: 16.729, avgTime: "0–10 Minutes Start" },
-          { id: "884", name: "884 — Instagram Likes | Real Profiles ✓ | 100% Non Drop | 500K+ Per Day | Life Time Refill♻️ | 0–10 Minutes Start", rate: 20.600, avgTime: "0–10 Minutes Start" }
+          { id: "881", name: "Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 60 Days Refill♻️ | 0–10 Minutes Start", rate: 14.600, avgTime: "0–10 Minutes Start" },
+          { id: "882", name: "Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 90 Days Refill♻️ | 0–10 Minutes Start", rate: 15.664, avgTime: "0–10 Minutes Start" },
+          { id: "883", name: "Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 365 Days Refill♻️ | 0–10 Minutes Start", rate: 16.729, avgTime: "0–10 Minutes Start" },
+          { id: "884", name: "Instagram Likes | Real Profiles ✓ | 100% Non Drop | 500K+ Per Day | Life Time Refill♻️ | 0–10 Minutes Start", rate: 20.600, avgTime: "0–10 Minutes Start" }
         ]
       },
       "🇮🇳 Instagram Repost- India high quality": {
         name: "🇮🇳 Instagram Repost- India high quality",
         services: [
-          { id: "2008", name: "2008 — Instagram Repost | Worldwide | Max 50K | 100% 🇮🇳 Real Accounts | 12–30 Min Start", rate: 60.94, avgTime: "12–30 Min Start" },
-          { id: "2086", name: "2086 — 🇮🇳 Instagram Repost | Worldwide | Max 100K | 100% 🇮🇳 Real Accounts | 12–30 Min Start", rate: 72.6832, avgTime: "12–30 Min Start" }
+          { id: "2008", name: "Instagram Repost | Worldwide | Max 50K | 100% 🇮🇳 Real Accounts | 12–30 Min Start", rate: 60.94, avgTime: "12–30 Min Start" },
+          { id: "2086", name: "🇮🇳 Instagram Repost | Worldwide | Max 100K | 100% 🇮🇳 Real Accounts | 12–30 Min Start", rate: 72.6832, avgTime: "12–30 Min Start" }
         ]
       },
       "🇮🇳 Instagram Shares - Premium Quality | Super Fast": {
         name: "🇮🇳 Instagram Shares - Premium Quality | Super Fast",
         services: [
-          { id: "121", name: "121 — 🇮🇳 Instagram Shares | Premium Quality | Max 1M | 100K/Day | SuperFast | 10–25 Min Start | Lifetime Refill ♻️", rate: 22.266, avgTime: "10–25 Min Start" },
-          { id: "123", name: "123 — 🇮🇳 Instagram Shares | High Quality | Max 1M | 200K/Day | SuperFast | 10–30 Min Start | Lifetime Refill ♻️ | One Click Done", rate: 20.33, avgTime: "10–30 Min Start" }
+          { id: "121", name: "🇮🇳 Instagram Shares | Premium Quality | Max 1M | 100K/Day | SuperFast | 10–25 Min Start | Lifetime Refill ♻️", rate: 22.266, avgTime: "10–25 Min Start" },
+          { id: "123", name: "🇮🇳 Instagram Shares | High Quality | Max 1M | 200K/Day | SuperFast | 10–30 Min Start | Lifetime Refill ♻️ | One Click Done", rate: 20.33, avgTime: "10–30 Min Start" }
         ]
       },
       "🇮🇳 Instagram Reels/ Video Views High Speed": {
         name: "🇮🇳 Instagram Reels/ Video Views High Speed",
         services: [
-          { id: "2623", name: "2623 — 🇮🇳Instagram Reels views [ Non-Drop] 500K/1M Days ULTRA FAST 0–5 Minutes Start Life-timeRefill♻️", rate: 2.10, avgTime: "0–5 Minutes Start" }
+          { id: "2623", name: "🇮🇳Instagram Reels views [ Non-Drop] 500K/1M Days ULTRA FAST 0–5 Minutes Start Life-timeRefill♻️", rate: 2.10, avgTime: "0–5 Minutes Start" }
         ]
       },
       "🇮🇳Instagram Photo / post Views": {
         name: "🇮🇳Instagram  Photo / post Views",
         services: [
-          { id: "2693", name: "2693 — 🇮🇳Instagram Photo & Post Views | Photo + Post + Image   Impressions | Non Drop | 1M+ Per Day | 0–1 Minutes Start", rate: 15.286, avgTime: "0–1 Minutes Start" }
+          { id: "2693", name: "🇮🇳Instagram Photo & Post Views | Photo + Post + Image   Impressions | Non Drop | 1M+ Per Day | 0–1 Minutes Start", rate: 15.286, avgTime: "0–1 Minutes Start" }
         ]
       }
     }
@@ -94,29 +96,32 @@ const platformData = {
       "Facebook follower real account medium speed": {
         name: "Facebook follower real account medium speed",
         services: [
-          { id: "6207", name: "6207 — Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | 90D Refill ♻️", rate: 40.4272, avgTime: "0–30 Min Start" },
-          { id: "6208", name: "6208 — Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | 365D Refill ♻️", rate: 43.0640, avgTime: "0–30 Min Start" },
-          { id: "6209", name: "6209 — Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | Lifetime Refill ♻️", rate: 54.7008, avgTime: "0–30 Min Start" }
+          { id: "6207", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | 90D Refill ♻️", rate: 40.4272, avgTime: "0–30 Min Start" },
+          { id: "6208", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | 365D Refill ♻️", rate: 43.0640, avgTime: "0–30 Min Start" },
+          { id: "6209", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | Lifetime Refill ♻️", rate: 54.7008, avgTime: "0–30 Min Start" },
+          { id: "1224", name: "Facebook - Page Followers | 50K / Day - Max", rate: 35.000, avgTime: "0–30 Min Start" },
+          { id: "1226", name: "Facebook - Comments | 10K/Day - Max 50K", rate: 28.000, avgTime: "0–30 Min Start" },
+          { id: "3122", name: "Facebook Live Stream Views [ 90 Minutes ]", rate: 50.000, avgTime: "Instant" }
         ]
       },
       "🇮🇳 Real Video Views Facebook - High Quality": {
         name: "🇮🇳 Real Video Views Facebook -  High Quality",
         services: [
-          { id: "6581", name: "6581 — Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 0–30 Min Start | 90D Refill ♻️", rate: 13.2500, avgTime: "0–30 Min Start" },
-          { id: "6582", name: "6582 — Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 0–30 Min Start | 365D Refill ♻️", rate: 15.4000, avgTime: "0–30 Min Start" },
-          { id: "6583", name: "6583 — Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 0–30 Min Start | Lifetime Refill ♻️", rate: 17.5500, avgTime: "0–30 Min Start" }
+          { id: "6581", name: "Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 0–30 Min Start | 90D Refill ♻️", rate: 13.2500, avgTime: "0–30 Min Start" },
+          { id: "6582", name: "Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 0–30 Min Start | 365D Refill ♻️", rate: 15.4000, avgTime: "0–30 Min Start" },
+          { id: "6583", name: "Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 0–30 Min Start | Lifetime Refill ♻️", rate: 17.5500, avgTime: "0–30 Min Start" }
         ]
       },
       "Facebook - Post Reactions mix | Cheapest Rate": {
         name: "Facebook - Post Reactions mix | Cheapest Rate",
         services: [
-          { id: "5507", name: "5507 — Facebook - Post Likes 👍 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
-          { id: "5508", name: "5508 — Facebook - Reaction | Love ❤️ | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 23.5170, avgTime: "0–30 Min Start" },
-          { id: "5509", name: "5509 — Facebook - Reaction | Care 🥰 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 22.5170, avgTime: "0–30 Min Start" },
-          { id: "5510", name: "5510 — Facebook - Reaction | Wow 😮 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 21.5170, avgTime: "0–30 Min Start" },
-          { id: "5511", name: "5511 — Facebook - Reaction | Haha 😂 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
-          { id: "5512", name: "5512 — Facebook - Reaction | Sad 😢 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
-          { id: "5513", name: "5513 — Facebook - Reaction | Angry 😡 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" }
+          { id: "5507", name: "Facebook - Post Likes 👍 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
+          { id: "5508", name: "Facebook - Reaction | Love ❤️ | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 23.5170, avgTime: "0–30 Min Start" },
+          { id: "5509", name: "Facebook - Reaction | Care 🥰 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 22.5170, avgTime: "0–30 Min Start" },
+          { id: "5510", name: "Facebook - Reaction | Wow 😮 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 21.5170, avgTime: "0–30 Min Start" },
+          { id: "5511", name: "Facebook - Reaction | Haha 😂 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
+          { id: "5512", name: "Facebook - Reaction | Sad 😢 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
+          { id: "5513", name: "Facebook - Reaction | Angry 😡 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" }
         ]
       }
     }
@@ -158,7 +163,7 @@ function setupSelectIcons(selectId) {
   optionsContainer.style.cssText = 'display: none; position: absolute; top: 105%; left: 0; right: 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; max-height: 250px; overflow-y: auto; z-index: 999; box-shadow: 0 10px 25px rgba(0,0,0,0.15);';
 
   const formatTextWithBadge = (text) => {
-    return text.replace(/^(\d+)\s*[-—]/, '<span class="service-id">$1</span> -');
+    return text.replace(/^(\d+)\s*[-—]?\s*/, '<span class="service-id-badge" style="background: #8b5cf6; color: #ffffff; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 12px; display: inline-block; margin-right: 6px;">$1</span>');
   };
 
   Array.from(selectElem.options).forEach((opt, index) => {
@@ -243,7 +248,6 @@ function selectPlatform(platform) {
   const categorySelect = document.getElementById('categorySelect');
   if (categorySelect) {
     categorySelect.innerHTML = "";
-    
     for (let key in data.categories) {
       const option = document.createElement("option");
       option.value = key;
@@ -253,7 +257,6 @@ function selectPlatform(platform) {
     setupSelectIcons('categorySelect');
   }
 
-  // Clear search input if present on platform switch
   const searchInput = document.getElementById('categorySearchInput');
   if (searchInput) searchInput.value = "";
 
@@ -286,7 +289,7 @@ function updateServices() {
     option.value = service.id;
     option.setAttribute("data-rate", service.rate);
     option.setAttribute("data-avgtime", service.avgTime);
-    option.textContent = `${service.name} - ₹${service.rate}`;
+    option.textContent = `${service.id} - ${service.name} - ₹${service.rate}`;
     serviceSelect.appendChild(option);
   });
 
@@ -363,7 +366,6 @@ function openCheckout() {
   if (checkoutTitle) checkoutTitle.innerText = selectedText.split(' - ₹')[0];
   if (checkoutPrice) checkoutPrice.innerText = calculatedPrice;
 
-  // UPI Dynamic QR Code
   const upiId = "rajsmmpanel@jio";
   const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=${upiId}%26am=${calculatedPrice}%26cu=INR`;
   const qrImg = document.getElementById("checkoutQrImg");
@@ -410,7 +412,6 @@ function closeSidebar() {
   }
 }
 
-// Global Event Listener for Hardware / Browser Back Button
 window.addEventListener('popstate', function (event) {
   const sidebar = document.getElementById("leftSidebar");
   const overlay = document.getElementById("sidebarOverlay");
@@ -428,7 +429,6 @@ window.addEventListener('popstate', function (event) {
   }
 });
 
-// Payment View Switcher
 function switchCheckoutPayment(method) {
   const upiView = document.getElementById('checkoutUpiView');
   const binanceView = document.getElementById('checkoutBinanceView');
@@ -447,7 +447,6 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) uriView?.classList.remove('hidden'); // safe fallback
     if (upiView) upiView.classList.remove('hidden');
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
@@ -457,9 +456,7 @@ function switchCheckoutPayment(method) {
   }
 }
 
-// ---------------------------------------------------------------------------
 // Modern Glowing Popup & Confetti Integration
-// ---------------------------------------------------------------------------
 function showModernPopup(title, message, type = 'success') {
   const existingPopup = document.getElementById('modernCustomPopup');
   if (existingPopup) existingPopup.remove();
@@ -520,7 +517,6 @@ function showModernPopup(title, message, type = 'success') {
   }
 }
 
-// Confetti Effect
 function triggerConfetti() {
   if (window.confetti) {
     confetti({
@@ -530,7 +526,7 @@ function triggerConfetti() {
     });
   } else {
     const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js';
+    script.src = 'https://cdn.jsdelivr.1net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js';
     script.onload = () => {
       confetti({
         particleCount: 100,
@@ -542,7 +538,6 @@ function triggerConfetti() {
   }
 }
 
-// Send Order Details to Telegram
 async function sendOrderToTelegram() {
   const mainLink = document.getElementById("mainLinkInput");
   const checkoutTxn = document.getElementById("checkoutTxnId");
@@ -603,35 +598,103 @@ function submitOrderToWhatsApp() {
 }
 
 // ---------------------------------------------------------------------------
-// Search Logic Integration for Category / Services (ID & Keyword Match)
+// Exact Search Logic matching user screenshot style (ID Badge + Dropdown)
 // ---------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', function () {
   const searchInput = document.getElementById('categorySearchInput');
+  
   if (searchInput) {
+    // Create a floating dropdown container for search results mimicking the screenshot
+    let searchDropdown = document.createElement('div');
+    searchDropdown.id = 'liveSearchDropdown';
+    searchDropdown.style.cssText = `
+      display: none; position: absolute; top: calc(100% + 5px); left: 0; right: 0;
+      background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px;
+      max-height: 280px; overflow-y: auto; z-index: 1000;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15); padding: 8px;
+    `;
+    searchInput.parentElement.style.position = 'relative';
+    searchInput.parentElement.appendChild(searchDropdown);
+
     searchInput.addEventListener('input', function (e) {
       const searchTerm = e.target.value.toLowerCase().trim();
-      const categorySelect = document.getElementById('categorySelect');
-      const data = platformData[currentPlatform].categories;
-      
-      if (!categorySelect) return;
-      categorySelect.innerHTML = "";
-      
-      for (let key in data) {
-        const categoryName = data[key].name.toLowerCase();
-        const matchService = data[key].services.some(s => 
-          s.id.toLowerCase().includes(searchTerm) || s.name.toLowerCase().includes(searchTerm)
-        );
+      searchDropdown.innerHTML = "";
 
-        if (searchTerm === "" || categoryName.includes(searchTerm) || matchService) {
-          const option = document.createElement("option");
-          option.value = key;
-          option.textContent = data[key].name;
-          categorySelect.appendChild(option);
+      if (searchTerm === "") {
+        searchDropdown.style.display = 'none';
+        return;
+      }
+
+      let matchedServices = [];
+
+      // Loop through all platforms and categories to find matching ID or keyword
+      for (let platKey in platformData) {
+        const categories = platformData[platKey].categories;
+        for (let catKey in categories) {
+          categories[catKey].services.forEach(service => {
+            if (service.id.includes(searchTerm) || service.name.toLowerCase().includes(searchTerm)) {
+              matchedServices.push({ ...service, platform: platKey, categoryKey: catKey });
+            }
+          });
         }
       }
-      
-      setupSelectIcons('categorySelect');
-      updateServices();
+
+      if (matchedServices.length > 0) {
+        searchDropdown.style.display = 'block';
+        
+        matchedServices.forEach(service => {
+          const item = document.createElement('div');
+          item.style.cssText = `
+            display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+            cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #1e293b;
+            border-radius: 8px; transition: background 0.2s;
+          `;
+          
+          item.innerHTML = `
+            <span style="background: #8b5cf6; color: #ffffff; padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 12px; flex-shrink: 0;">${service.id}</span>
+            <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${service.name}</span>
+          `;
+
+          item.onmouseenter = () => item.style.background = '#f1f5f9';
+          item.onmouseleave = () => item.style.background = '#ffffff';
+
+          item.onclick = () => {
+            // Switch platform if needed
+            if (currentPlatform !== service.platform) {
+              selectPlatform(service.platform);
+            }
+            
+            // Set category
+            const categorySelect = document.getElementById('categorySelect');
+            categorySelect.value = service.categoryKey;
+            setupSelectIcons('categorySelect');
+            
+            // Update services dropdown and select the specific service
+            updateServices();
+            
+            const serviceSelect = document.getElementById('serviceSelect');
+            serviceSelect.value = service.id;
+            setupSelectIcons('serviceSelect');
+            calculatePrice();
+
+            // Hide dropdown and clear search
+            searchDropdown.style.display = 'none';
+            searchInput.value = '';
+          };
+
+          searchDropdown.appendChild(item);
+        });
+      } else {
+        searchDropdown.style.display = 'block';
+        searchDropdown.innerHTML = `<div style="padding: 12px; text-align: center; color: #64748b; font-size: 13px;">No matching services found</div>`;
+      }
+    });
+
+    // Close search dropdown when clicking outside
+    document.addEventListener('click', function (e) {
+      if (!searchInput.contains(e.target) && !searchDropdown.contains(e.target)) {
+        searchDropdown.style.display = 'none';
+      }
     });
   }
 });

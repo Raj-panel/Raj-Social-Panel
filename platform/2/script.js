@@ -36,7 +36,6 @@ const platformData = {
           { id: "1221", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 90D Refill 🔄", rate: 67.929, avgTime: "0–10 Min Start" },
           { id: "1222", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 365D Refill 🔄", rate: 70.501, avgTime: "0–10 Min Start" },
           { id: "1223", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - Lifetime Refill ♻️", rate: 73.072, avgTime: "0–10 Min Start" },
-          { id: "1229", name: "Instagram - Likes ~ 🇯🇵 Japan - REFILL 30D", rate: 25.000, avgTime: "0–10 Min Start" }
         ]
       },
       "nondrop": {
@@ -99,9 +98,7 @@ const platformData = {
           { id: "6207", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | 90D Refill ♻️", rate: 40.4272, avgTime: "0–30 Min Start" },
           { id: "6208", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | 365D Refill ♻️", rate: 43.0640, avgTime: "0–30 Min Start" },
           { id: "6209", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | Lifetime Refill ♻️", rate: 54.7008, avgTime: "0–30 Min Start" },
-          { id: "1224", name: "Facebook - Page Followers | 50K / Day - Max", rate: 35.000, avgTime: "0–30 Min Start" },
           { id: "1226", name: "Facebook - Comments | 10K/Day - Max 50K", rate: 28.000, avgTime: "0–30 Min Start" },
-          { id: "3122", name: "Facebook Live Stream Views [ 90 Minutes ]", rate: 50.000, avgTime: "Instant" }
         ]
       },
       "🇮🇳 Real Video Views Facebook - High Quality": {

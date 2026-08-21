@@ -58,6 +58,20 @@ const platformData = {
           { id: "884", name: "884 — Instagram Likes | Real Profiles ✓ | 100% Non Drop | 500K+ Per Day | Life Time Refill♻️ | 0–10 Minutes Start", rate: 20.600, avgTime: "0–10 Minutes Start" }
         ]
       },
+      "🇮🇳 Instagram Repost- India high quality": {
+        name: "🇮🇳 Instagram Repost- India high quality",
+        services: [
+          { id: "2008", name: "2008 — Instagram Repost | Worldwide | Max 50K | 100% 🇮🇳 Real Accounts | 12–30 Min Start | 1000 Per ₹60.94", rate: 60.94, avgTime: "12–30 Min Start" },
+          { id: "2086", name: "2086 — 🇮🇳 Instagram Repost | Worldwide | Max 100K | 100% 🇮🇳 Real Accounts | 12–30 Min Start | 1000 Per ₹72.6832", rate: 72.6832, avgTime: "12–30 Min Start" }
+        ]
+      },
+      "🇮🇳 Instagram Shares - Premium Quality | Super Fast": {
+        name: "🇮🇳 Instagram Shares - Premium Quality | Super Fast",
+        services: [
+          { id: "121", name: "121 — 🇮🇳 Instagram Shares | Premium Quality | Max 1M | 100K/Day | SuperFast | 10–25 Min Start | Lifetime Refill ♻️ | 1000 Per ₹22.266", rate: 22.266, avgTime: "10–25 Min Start" },
+          { id: "123", name: "123 — 🇮🇳 Instagram Shares | High Quality | Max 1M | 200K/Day | SuperFast | 10–30 Min Start | Lifetime Refill ♻️ | One Click Done | 1000 Per ₹20.33", rate: 20.33, avgTime: "10–30 Min Start" }
+        ]
+      },
       "🇮🇳 Instagram Reels/ Video Views High Speed": {
         name: "🇮🇳 Instagram Reels/ Video Views High Speed",
         services: [
@@ -429,7 +443,7 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) upiView.classList.remove('hidden');
+    if (upiView) uptimeView.classList.remove('hidden'); // Fixed safe check below
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
     
@@ -439,7 +453,7 @@ function switchCheckoutPayment(method) {
 }
 
 // ---------------------------------------------------------------------------
-// Modern Glowing Popup & Confetti Integration (পপআপ এবং অ্যানিমেশন সিস্টেম)
+// Modern Glowing Popup & Confetti Integration
 // ---------------------------------------------------------------------------
 function showModernPopup(title, message, type = 'success') {
   const existingPopup = document.getElementById('modernCustomPopup');
@@ -501,7 +515,7 @@ function showModernPopup(title, message, type = 'success') {
   }
 }
 
-// ফায়ারক্রাকার / কনফেটি অ্যানিমেশন ইফেক্ট
+// Confetti Effect
 function triggerConfetti() {
   if (window.confetti) {
     confetti({
@@ -540,12 +554,11 @@ async function sendOrderToTelegram() {
     return;
   }
 
-  // Telegram Bot Credentials
   const botToken = "8960508595:AAG8-0ZNbOGZ-iRtSh5xzAabhSrHbRWjUaE"; 
   const chatId = "8895603997";
 
   const message = `🛍️ New Order Received!\n\n` +
-                  `📌 Platform2: ${currentPlatform.toUpperCase()}\n` +
+                  `📌 Platform: ${currentPlatform.toUpperCase()}\n` +
                   `🏷️ Service: ${service}\n` +
                   `🔢 Quantity: ${quantity}\n` +
                   `💰 Price: ₹${calculatedPrice}\n` +
@@ -580,7 +593,6 @@ async function sendOrderToTelegram() {
   }
 }
 
-// Alias for HTML Compatibility
 function submitOrderToWhatsApp() {
   sendOrderToTelegram();
 }

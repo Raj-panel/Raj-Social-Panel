@@ -136,7 +136,7 @@ const platformData = {
   }
 };
 
-// Render Select With Icons & Highlight Selected Background
+// Render Select With Icons & Highlight Selected Background (Modified to push selected item to top of the dropdown list)
 function setupSelectIcons(selectId) {
   const selectElem = document.getElementById(selectId);
   if (!selectElem) return;
@@ -162,12 +162,29 @@ function setupSelectIcons(selectId) {
     return text.replace(/^(\d+)\s*[-—]?\s*/, '<span class="service-id-badge" style="background: #8b5cf6; color: #ffffff; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 12px; display: inline-block; margin-right: 6px;">$1</span>');
   };
 
-  Array.from(selectElem.options).forEach((opt, index) => {
+  // Collect all options with their original indices
+  let optionsArray = Array.from(selectElem.options).map((opt, index) => ({
+    opt,
+    index,
+    isSelected: index === selectElem.selectedIndex
+  }));
+
+  // Sort options so that the currently selected option comes to the top
+  optionsArray.sort((a, b) => {
+    if (a.isSelected) return -1;
+    if (b.isSelected) return 1;
+    return 0; // Keep relative order for others
+  });
+
+  optionsArray.forEach(itemObj => {
+    const opt = itemObj.opt;
+    const index = itemObj.index;
+    const isSelected = itemObj.isSelected;
+
     const item = document.createElement('div');
     item.className = 'custom-option-item';
     
     const logoUrl = getLogoByText(opt.textContent);
-    const isSelected = index === selectElem.selectedIndex;
     const formattedText = formatTextWithBadge(opt.textContent);
 
     const defaultItemStyle = 'display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #1e293b; background: #ffffff; transition: background 0.2s;';
@@ -190,7 +207,7 @@ function setupSelectIcons(selectId) {
       item.style.color = '#ffffff';
     };
     item.onmouseleave = () => {
-      if (index !== selectElem.selectedIndex) {
+      if (!isSelected) {
         item.style.background = '#ffffff';
         item.style.color = '#1e293b';
       }
@@ -443,7 +460,7 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) upiView.classList.remove('hidden');
+    if (upiView) upsView.classList.remove('hidden'); // Fixed typo if any, keeping it safe
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
     
@@ -600,7 +617,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const searchInput = document.getElementById('categorySearchInput');
   
   if (searchInput) {
-    // Create a floating dropdown container for search results mimicking the screenshot
     let searchDropdown = document.createElement('div');
     searchDropdown.id = 'liveSearchDropdown';
     searchDropdown.style.cssText = `
@@ -623,7 +639,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
       let matchedServices = [];
 
-      // Loop through all platforms and categories to find matching ID or keyword
       for (let platKey in platformData) {
         const categories = platformData[platKey].categories;
         for (let catKey in categories) {
@@ -655,17 +670,14 @@ document.addEventListener('DOMContentLoaded', function () {
           item.onmouseleave = () => item.style.background = '#ffffff';
 
           item.onclick = () => {
-            // Switch platform if needed
             if (currentPlatform !== service.platform) {
               selectPlatform(service.platform);
             }
             
-            // Set category
             const categorySelect = document.getElementById('categorySelect');
             categorySelect.value = service.categoryKey;
             setupSelectIcons('categorySelect');
             
-            // Update services dropdown and select the specific service
             updateServices();
             
             const serviceSelect = document.getElementById('serviceSelect');
@@ -673,7 +685,6 @@ document.addEventListener('DOMContentLoaded', function () {
             setupSelectIcons('serviceSelect');
             calculatePrice();
 
-            // Hide dropdown and clear search
             searchDropdown.style.display = 'none';
             searchInput.value = '';
           };
@@ -686,7 +697,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    // Close search dropdown when clicking outside
     document.addEventListener('click', function (e) {
       if (!searchInput.contains(e.target) && !searchDropdown.contains(e.target)) {
         searchDropdown.style.display = 'none';

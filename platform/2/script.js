@@ -136,7 +136,7 @@ const platformData = {
   }
 };
 
-// Render Select With Icons & Bring Selected Item to Top
+// Render Select With Icons & Auto-scroll to selected item position
 function setupSelectIcons(selectId) {
   const selectElem = document.getElementById(selectId);
   if (!selectElem) return;
@@ -162,25 +162,14 @@ function setupSelectIcons(selectId) {
     return text.replace(/^(\d+)\s*[-—]?\s*/, '<span class="service-id-badge" style="background: #8b5cf6; color: #ffffff; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 12px; display: inline-block; margin-right: 6px;">$1</span>');
   };
 
-  // Collect options and sort so that the selected option comes to the TOP
-  let optionsArray = Array.from(selectElem.options).map((opt, originalIndex) => ({
-    opt,
-    originalIndex,
-    isSelected: originalIndex === selectElem.selectedIndex
-  }));
+  let selectedItemElement = null;
 
-  // Sort: Selected item first, then the rest in their original order
-  optionsArray.sort((a, b) => {
-    if (a.isSelected) return -1;
-    if (b.isSelected) return 1;
-    return 0;
-  });
-
-  optionsArray.forEach(({ opt, originalIndex, isSelected }) => {
+  Array.from(selectElem.options).forEach((opt, index) => {
     const item = document.createElement('div');
     item.className = 'custom-option-item';
     
     const logoUrl = getLogoByText(opt.textContent);
+    const isSelected = index === selectElem.selectedIndex;
     const formattedText = formatTextWithBadge(opt.textContent);
 
     const defaultItemStyle = 'display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #1e293b; background: #ffffff; transition: background 0.2s;';
@@ -189,8 +178,13 @@ function setupSelectIcons(selectId) {
     item.style.cssText = isSelected ? activeItemStyle : defaultItemStyle;
     item.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${formattedText}</span>`;
 
+    if (isSelected) {
+      selectedItemElement = item;
+      selectedDisplay.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${formattedText}</span>`;
+    }
+
     item.onclick = () => {
-      selectElem.selectedIndex = originalIndex;
+      selectElem.selectedIndex = index;
       setupSelectIcons(selectId);
       optionsContainer.style.display = 'none';
       
@@ -199,28 +193,33 @@ function setupSelectIcons(selectId) {
     };
 
     item.onmouseenter = () => {
-      item.style.background = '#8b5cf6';
-      item.style.color = '#ffffff';
+      if (index !== selectElem.selectedIndex) {
+        item.style.background = '#f1f5f9';
+      }
     };
     item.onmouseleave = () => {
-      if (!isSelected) {
+      if (index !== selectElem.selectedIndex) {
         item.style.background = '#ffffff';
-        item.style.color = '#1e293b';
       }
     };
 
     optionsContainer.appendChild(item);
-
-    if (isSelected) {
-      selectedDisplay.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${formattedText}</span>`;
-    }
   });
 
   selectedDisplay.onclick = (e) => {
     e.stopPropagation();
     const isVisible = optionsContainer.style.display === 'block';
     document.querySelectorAll('.custom-options-container').forEach(c => c.style.display = 'none');
-    optionsContainer.style.display = isVisible ? 'none' : 'block';
+    
+    if (!isVisible) {
+      optionsContainer.style.display = 'block';
+      // Automatically scroll to the selected item without moving it to the top
+      if (selectedItemElement) {
+        optionsContainer.scrollTop = selectedItemElement.offsetTop - (optionsContainer.clientHeight / 2) + (selectedItemElement.clientHeight / 2);
+      }
+    } else {
+      optionsContainer.style.display = 'none';
+    }
   };
 
   selectElem.style.display = 'none';
@@ -456,7 +455,7 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) upsView.classList.remove('hidden'); // Fixed typo if any
+    if (upiView) upiView.classList.remove('hidden');
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
     

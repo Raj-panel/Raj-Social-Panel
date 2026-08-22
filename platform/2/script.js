@@ -136,7 +136,7 @@ const platformData = {
   }
 };
 
-// Render Select With Icons & Highlight Selected Background (Modified to push selected item to top of the dropdown list)
+// Render Select With Icons & Bring Selected Item to Top
 function setupSelectIcons(selectId) {
   const selectElem = document.getElementById(selectId);
   if (!selectElem) return;
@@ -162,25 +162,21 @@ function setupSelectIcons(selectId) {
     return text.replace(/^(\d+)\s*[-—]?\s*/, '<span class="service-id-badge" style="background: #8b5cf6; color: #ffffff; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 12px; display: inline-block; margin-right: 6px;">$1</span>');
   };
 
-  // Collect all options with their original indices
-  let optionsArray = Array.from(selectElem.options).map((opt, index) => ({
+  // Collect options and sort so that the selected option comes to the TOP
+  let optionsArray = Array.from(selectElem.options).map((opt, originalIndex) => ({
     opt,
-    index,
-    isSelected: index === selectElem.selectedIndex
+    originalIndex,
+    isSelected: originalIndex === selectElem.selectedIndex
   }));
 
-  // Sort options so that the currently selected option comes to the top
+  // Sort: Selected item first, then the rest in their original order
   optionsArray.sort((a, b) => {
     if (a.isSelected) return -1;
     if (b.isSelected) return 1;
-    return 0; // Keep relative order for others
+    return 0;
   });
 
-  optionsArray.forEach(itemObj => {
-    const opt = itemObj.opt;
-    const index = itemObj.index;
-    const isSelected = itemObj.isSelected;
-
+  optionsArray.forEach(({ opt, originalIndex, isSelected }) => {
     const item = document.createElement('div');
     item.className = 'custom-option-item';
     
@@ -194,7 +190,7 @@ function setupSelectIcons(selectId) {
     item.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${formattedText}</span>`;
 
     item.onclick = () => {
-      selectElem.selectedIndex = index;
+      selectElem.selectedIndex = originalIndex;
       setupSelectIcons(selectId);
       optionsContainer.style.display = 'none';
       
@@ -460,7 +456,7 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) upsView.classList.remove('hidden'); // Fixed typo if any, keeping it safe
+    if (upiView) upsView.classList.remove('hidden'); // Fixed typo if any
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
     
@@ -611,7 +607,7 @@ function submitOrderToWhatsApp() {
 }
 
 // ---------------------------------------------------------------------------
-// Exact Search Logic matching user screenshot style (ID Badge + Dropdown)
+// Search Logic matching user screenshot style
 // ---------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', function () {
   const searchInput = document.getElementById('categorySearchInput');

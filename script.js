@@ -1,44 +1,33 @@
-// --- 1. Authentication & Session Management System ---
+// --- 1. Authenticaton & Session Management System ---
 
+// ইউজার লগইন স্টেট পরীক্ষা করার ফাংশন
 function checkAuthStatus() {
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
   const userMobile = localStorage.getItem("userMobile") || "User";
 
   const authMenuItem = document.getElementById("authMenuItem");
   const addFundsMenuItem = document.getElementById("addFundsMenuItem");
-  const headerLoginBtn = document.getElementById("headerLoginBtn");
 
-  if (isLoggedIn) {
-    // সাইডবার মেনু আপডেট
-    if (authMenuItem) {
+  // সাইডবার মেনু আপডেট করা
+  if (authMenuItem) {
+    if (isLoggedIn) {
       authMenuItem.innerHTML = `<a href="javascript:void(0)" onclick="logoutUser()" style="color: #ff4d4d;">🚪 Logout (${userMobile})</a>`;
-    }
-    if (addFundsMenuItem) {
-      addFundsMenuItem.style.display = "block";
-      addFundsMenuItem.innerHTML = `<a href="/add-funds/">💳 Add Funds</a>`;
-    }
-    // লগইন করা থাকলে হেডার থেকে 'Login' বাটন সম্পূর্ণ লুকিয়ে ফেলা হবে
-    if (headerLoginBtn) {
-      headerLoginBtn.style.display = "none";
-    }
-  } else {
-    // লগইন করা না থাকলে ডিফল্ট অবস্থা
-    if (authMenuItem) {
+      if (addFundsMenuItem) {
+        addFundsMenuItem.style.display = "block";
+        addFundsMenuItem.innerHTML = `<a href="/add-funds/">💳 Add Funds</a>`;
+      }
+    } else {
       authMenuItem.innerHTML = `<a href="/login/">🔐 Login / Create Account</a>`;
-    }
-    if (addFundsMenuItem) {
-      addFundsMenuItem.style.display = "none";
-    }
-    if (headerLoginBtn) {
-      headerLoginBtn.style.display = "block";
-      headerLoginBtn.innerText = "Login";
-      headerLoginBtn.href = "/login/";
+      if (addFundsMenuItem) {
+        addFundsMenuItem.style.display = "none";
+      }
     }
   }
 
-  // প্রটেক্টেড পেজ সিকিউরিটি চেক
+  // যদি সংরক্ষিত/লগইন-প্রয়োজনীয় পেজে লগইন ছাড়া ঢুকতে চায়, তবে /login/-এ রিডাইরেক্ট করবে
   const currentPath = window.location.pathname;
   const protectedPaths = ["/platform/", "/platform/2/", "/orders/"];
+
   const isProtected = protectedPaths.some((path) => currentPath.includes(path));
 
   if (isProtected && !isLoggedIn) {
@@ -65,6 +54,7 @@ function openSidebar() {
     sidebar.classList.add("active");
     if (overlay) overlay.classList.add("active");
     document.body.style.overflow = "hidden";
+
     history.pushState({ sidebarOpen: true }, "");
   }
 }
@@ -103,6 +93,22 @@ function closeComingSoonModal() {
   if (modal) modal.classList.remove("active");
 }
 
+// Page DOM Init
 document.addEventListener("DOMContentLoaded", function () {
+  // ১. সেশন স্ট্যাটাস চেক
   checkAuthStatus();
+
+  // ২. Premium Quality Followers কার্ড ক্লিক হ্যান্ডলিং
+  const cards = document.querySelectorAll(
+    ".glass-service-card, .service-card, .card"
+  );
+  cards.forEach((card) => {
+    if (card.innerText.includes("Premium Quality Followers")) {
+      card.style.cursor = "pointer";
+      card.addEventListener("click", function (e) {
+        e.preventDefault();
+        window.location.href = "/platform/2/";
+      });
+    }
+  });
 });

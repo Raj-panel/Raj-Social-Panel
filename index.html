@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+v<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
@@ -20,7 +20,16 @@
   <link rel="stylesheet" href="style.css">
   
   <style>
-    /* ফুল উইথ এবং আকর্ষণীয় গ্লাস-মরফিজম হেডার ডিজাইন */
+    /* ==========================================================
+       [কাস্টমাইজেশন কন্ট্রোল]: আপনি এখান থেকে সাইজ ছোট-বড় করতে পারবেন 
+       ========================================================== */
+    :root {
+      --nav-padding-top: 8px;     /* মেনুবারের ওপরের প্যাডিং (কমালে ওপরের দিকে উঠবে) */
+      --nav-padding-bottom: 8px;  /* মেনুবারের নিচের প্যাডিং */
+      --logo-height: 48px;        /* লোগোর সাইজ (এখানে বাড়ালে লোগো বড় হবে, কমালে ছোট হবে) */
+    }
+
+    /* ফুল-উইথ গ্লাস-মরফিজম হেডার বার */
     .custom-top-nav {
       position: sticky;
       top: 0;
@@ -31,7 +40,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 20px;
+      padding: var(--nav-padding-top) 20px var(--nav-padding-bottom) 20px;
       background: rgba(25, 10, 45, 0.65);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -46,8 +55,8 @@
       background: rgba(255, 255, 255, 0.9);
       border: 1px solid rgba(255, 255, 255, 0.4);
       border-radius: 14px;
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -74,8 +83,10 @@
       align-items: center;
       justify-content: center;
     }
+    
+    /* লোগোর সাইজ কন্ট্রোল (ওপরে --logo-height থেকে পরিবর্তন করতে পারবেন) */
     .custom-platform-logo {
-      height: 38px;
+      height: var(--logo-height);
       width: auto;
       object-fit: contain;
       filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
@@ -98,7 +109,7 @@
       background: linear-gradient(135deg, #e91e63, #ff4081);
       color: #ffffff;
       border: none;
-      padding: 9px 20px;
+      padding: 8px 18px;
       border-radius: 22px;
       font-family: 'Poppins', sans-serif;
       font-weight: 600;
@@ -165,14 +176,14 @@
         <img src="platform.jpg" alt="Raj SMM Panel Platform" class="custom-platform-logo"/>
       </div>
 
-      <!-- লগইন করা না থাকলে গ্লোয়িং বাটন দেখাবে, লগইন হয়ে গেলে auth-handler.js এটি হাইড করে দেবে -->
+      <!-- লগইন করা না থাকলে গ্লোয়িং বাটন দেখাবে, লগইন হয়ে গেলে জাভাস্ক্রিপ্ট এটি হাইড করে দেবে -->
       <div id="headerLoginBtnContainer">
         <a href="/login/" class="custom-login-btn">Login</a>
       </div>
     </div>
 
     <!-- Header Card / Platform Image Logo Section -->
-    <div class="glass-header-card" style="margin-top: 15px;">
+    <div class="glass-header-card" style="margin-top: 10px;">
       <img src="platform.png" alt="Raj SMM Panel Platform" class="header-platform-img"/>
     </div>
 

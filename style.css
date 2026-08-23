@@ -1,4 +1,5 @@
 :root {
+  /* Default / Light Mode Variables */
   --bg-main: #f1f5f9;
   --bg-gradient: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
   --text-main: #0f172a;
@@ -14,9 +15,14 @@
   --sidebar-hover-text: #000000;
   --sidebar-close: #64748b;
   
+  --btn-hamburger-bg: rgba(255, 255, 255, 0.9);
+  --btn-hamburger-border: rgba(0, 0, 0, 0.1);
+  --btn-hamburger-text: #0f172a;
+  
   --modal-bg: #ffffff;
 }
 
+/* System Dark Mode */
 @media (prefers-color-scheme: dark) {
   :root {
     --bg-main: #0d1117;
@@ -33,6 +39,10 @@
     --sidebar-hover: rgba(168, 85, 247, 0.15);
     --sidebar-hover-text: #ffffff;
     --sidebar-close: #94a3b8;
+    
+    --btn-hamburger-bg: rgba(255, 255, 255, 0.2);
+    --btn-hamburger-border: rgba(255, 255, 255, 0.3);
+    --btn-hamburger-text: #ffffff;
     
     --modal-bg: #1e293b;
   }
@@ -66,72 +76,50 @@ body {
   gap: 12px;
 }
 
-/* --- Chrome-Style Glass Top Navigation Bar --- */
-.chrome-top-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--card-bg);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid var(--card-border);
-  border-radius: 18px;
-  padding: 8px 12px;
-  box-shadow: var(--card-shadow);
-  width: 100%;
+/* Hamburger Menu Button Positioned Above Header Card */
+.hamburger-btn {
+  align-self: flex-start;
   z-index: 10;
-}
-
-/* Left Hamburger Button inside Top Bar */
-.chrome-hamburger-btn {
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid var(--card-border);
-  color: var(--text-main);
+  background: var(--btn-hamburger-bg);
+  border: 1px solid var(--btn-hamburger-border);
+  color: var(--btn-hamburger-text);
   font-size: 16px;
   width: 38px;
   height: 38px;
-  border-radius: 12px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  margin-bottom: 2px;
 }
 
-/* Center Logo Icon */
-.chrome-center-logo {
-  flex: 1;
+/* Glass Header Card & Image Styling (Fits Image Perfectly) */
+.glass-header-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: var(--card-shadow);
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 160px;
-  margin: 0 10px;
+  overflow: hidden;
+  width: 100%;
 }
 
-.chrome-center-logo img {
+.header-platform-img {
   width: 100%;
   height: auto;
-  max-height: 38px;
-  object-fit: contain;
-  border-radius: 8px;
-}
-
-/* Right Functional Login Button */
-.chrome-login-btn {
-  background: #ff3366;
-  color: #ffffff;
-  font-size: 13px;
-  font-weight: 700;
-  padding: 8px 16px;
-  border-radius: 20px;
-  text-decoration: none;
-  box-shadow: 0 4px 10px rgba(255, 51, 102, 0.4);
-  transition: transform 0.2s ease;
-  white-space: nowrap;
-}
-
-.chrome-login-btn:hover {
-  transform: scale(1.05);
+  display: block;
+  object-fit: cover;
+  border-radius: 14px;
 }
 
 /* Social Media Grid Section */
@@ -180,6 +168,7 @@ body {
   position: relative;
 }
 
+/* Glowing Effects for Buttons */
 .glass-service-card.glow-indian {
   box-shadow: 0 0 12px rgba(255, 153, 51, 0.35), 0 0 5px rgba(19, 136, 8, 0.25);
   border: 1px solid rgba(255, 153, 51, 0.5);
@@ -223,6 +212,7 @@ body {
   gap: 12px;
 }
 
+/* Multi Icon Boxes */
 .multi-icon-box {
   width: 42px;
   height: 42px;
@@ -299,7 +289,7 @@ body {
   margin-top: 2px;
 }
 
-/* Bottom Glass Card for Thumbnail */
+/* Bottom Glass Card for Thumbnail (Same as Header Glass Border) */
 .glass-banner-card {
   background: var(--card-bg);
   backdrop-filter: blur(15px);

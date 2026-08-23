@@ -32,6 +32,7 @@
       width: 100%;
       box-sizing: border-box;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 15px;
     }
     .custom-menu-btn {
       background: #ffffff;
@@ -121,7 +122,7 @@
   <!-- Main Container -->
   <div class="platform-container">
     
-    <!-- নতুন কাঙ্ক্ষিত নেভবার (বাঁপাশে মেনু, মাঝখানে platform.jpg লোগো, ডানপাশে লগইন বাটন) -->
+    <!-- নতুন কাঙ্ক্ষিত নেভবার (বামে মেনু, মাঝখানে platform.jpg লোগো, ডানে লগইন বাটন যা লগইন করা থাকলে হাইড হবে) -->
     <div class="custom-top-nav">
       <button class="custom-menu-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
         <i class="fa-solid fa-bars"></i>
@@ -131,9 +132,15 @@
         <img src="platform.jpg" alt="Raj SMM Panel Platform" class="custom-platform-logo"/>
       </div>
 
+      <!-- লগইন করা থাকলে auth-handler.js এর মাধ্যমে এই কন্টেইনারটি স্বয়ংক্রিয়ভাবে হাইড হয়ে যাবে -->
       <div id="headerLoginBtnContainer">
         <a href="/login/" class="custom-login-btn">Login</a>
       </div>
+    </div>
+
+    <!-- Header Card / Platform Image Logo Section -->
+    <div class="glass-header-card">
+      <img src="platform.png" alt="Raj SMM Panel Platform" class="header-platform-img"/>
     </div>
 
     <!-- Social Media Icons Grid -->

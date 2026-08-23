@@ -18,6 +18,68 @@
   
   <!-- CSS Stylesheet Link -->
   <link rel="stylesheet" href="style.css">
+  
+  <style>
+    /* নতুন হেডার ডিজাইন (ছবির স্টাইল অনুযায়ী) */
+    .custom-top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+      background: rgba(25, 10, 40, 0.85);
+      backdrop-filter: blur(10px);
+      position: relative;
+      width: 100%;
+      box-sizing: border-box;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .custom-menu-btn {
+      background: #ffffff;
+      border: none;
+      border-radius: 12px;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .custom-menu-btn i {
+      font-size: 20px;
+      color: #000000;
+    }
+    .custom-logo-container {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .custom-platform-logo {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+    }
+    .custom-login-btn {
+      background: #e91e63;
+      color: #ffffff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
+      transition: all 0.3s ease;
+    }
+    .custom-login-btn:hover {
+      background: #d81b60;
+    }
+  </style>
 </head>
 <body data-platform="instagram">
 
@@ -59,38 +121,38 @@
   <!-- Main Container -->
   <div class="platform-container">
     
-    <!-- Chrome-Style Glass Top Navigation Bar -->
-    <div class="chrome-top-bar">
-      <!-- Left: Hamburger Menu Button -->
-      <button class="chrome-hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
+    <!-- নতুন কাঙ্ক্ষিত নেভবার (বাঁপাশে মেনু, মাঝখানে platform.jpg লোগো, ডানপাশে লগইন বাটন) -->
+    <div class="custom-top-nav">
+      <button class="custom-menu-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
         <i class="fa-solid fa-bars"></i>
       </button>
 
-      <!-- Center: Logo Icon -->
-      <div class="chrome-center-logo">
-        <img src="platform.png" alt="Raj SMM Panel Logo" />
+      <div class="custom-logo-container">
+        <img src="platform.jpg" alt="Raj SMM Panel Platform" class="custom-platform-logo"/>
       </div>
 
-      <!-- Right: Functional Login Button (Hidden when logged in via JS) -->
-      <a href="/login/" class="chrome-login-btn" id="headerLoginBtn">
-        Login
-      </a>
-    </div>
-
-    <!-- Main Banner Image (platform.png / Main Banner) -->
-    <div class="main-banner-card">
-      <img src="platform.png" alt="Raj SMM Panel Main Banner" />
+      <div id="headerLoginBtnContainer">
+        <a href="/login/" class="custom-login-btn">Login</a>
+      </div>
     </div>
 
     <!-- Social Media Icons Grid -->
     <div class="social-icons-grid">
-      <div class="social-box fb"><i class="fa-brands fa-facebook-f"></i></div>
-      <div class="social-box insta"><i class="fa-brands fa-instagram"></i></div>
-      <div class="social-box yt"><i class="fa-brands fa-youtube"></i></div>
-      <div class="social-box tiktok"><i class="fa-brands fa-tiktok"></i></div>
+      <div class="social-box fb">
+        <i class="fa-brands fa-facebook-f"></i>
+      </div>
+      <div class="social-box insta">
+        <i class="fa-brands fa-instagram"></i>
+      </div>
+      <div class="social-box yt">
+        <i class="fa-brands fa-youtube"></i>
+      </div>
+      <div class="social-box tiktok">
+        <i class="fa-brands fa-tiktok"></i>
+      </div>
     </div>
 
-    <!-- Service Card 1: Best Quality Followers -->
+    <!-- Service Card 1: Best Quality Followers (Glowing Indian Theme) -->
     <a href="https://rajsmmpanel.in/platform/" class="glass-service-card glow-indian">
       <div class="card-left">
         <div class="multi-icon-box indian-theme-box">
@@ -104,7 +166,9 @@
           <p>High Retention • Premium Quality</p>
         </div>
       </div>
-      <div class="card-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="card-arrow">
+        <i class="fa-solid fa-chevron-right"></i>
+      </div>
     </a>
 
     <!-- Service Card 2: Premium Quality Followers -->
@@ -121,7 +185,9 @@
           <p>Stable Profiles • Quality Service</p>
         </div>
       </div>
-      <div class="card-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="card-arrow">
+        <i class="fa-solid fa-chevron-right"></i>
+      </div>
     </a>
 
     <!-- Service Card 3: Lowest Price Followers -->
@@ -138,7 +204,9 @@
           <p>Low Cost • Budget Service</p>
         </div>
       </div>
-      <div class="card-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="card-arrow">
+        <i class="fa-solid fa-chevron-right"></i>
+      </div>
     </div>
 
     <!-- Watch Tutorials Red Button -->
@@ -163,8 +231,48 @@
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="script.js"></script>
+  <!-- UI Navigation Handlers (Sidebar & Modal) -->
+  <script>
+    function openSidebar() {
+      const sidebar = document.getElementById("leftSidebar");
+      const overlay = document.getElementById("sidebarOverlay");
+      if (sidebar) {
+        sidebar.classList.add("active");
+        if (overlay) overlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+        history.pushState({ sidebarOpen: true }, '');
+      }
+    }
+
+    function closeSidebar(fromUserAction = false) {
+      const sidebar = document.getElementById("leftSidebar");
+      const overlay = document.getElementById("sidebarOverlay");
+      if (sidebar && sidebar.classList.contains("active")) {
+        sidebar.classList.remove("active");
+        if (overlay) overlay.classList.remove("active");
+        document.body.style.overflow = "auto";
+        if (fromUserAction && history.state && history.state.sidebarOpen) {
+          history.back();
+        }
+      }
+    }
+
+    window.addEventListener("popstate", function () {
+      closeSidebar(false);
+    });
+
+    function openComingSoonModal() {
+      const modal = document.getElementById("comingSoonModal");
+      if (modal) modal.classList.add("active");
+    }
+
+    function closeComingSoonModal() {
+      const modal = document.getElementById("comingSoonModal");
+      if (modal) modal.classList.remove("active");
+    }
+  </script>
+
+  <!-- Firebase Authentication Logic Handler -->
   <script type="module" src="/auth-handler.js"></script>
 </body>
 </html>

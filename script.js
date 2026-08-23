@@ -1,4 +1,4 @@
-// --- 1. Authenticaton & Session Management System ---
+// --- 1. Authentication & Session Management System ---
 
 function checkAuthStatus() {
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
@@ -8,8 +8,8 @@ function checkAuthStatus() {
   const addFundsMenuItem = document.getElementById("addFundsMenuItem");
   const headerLoginBtn = document.getElementById("headerLoginBtn");
 
-  // সাইডবার মেনু এবং হেডার লগইন বাটনের লজিক হ্যান্ডেল করা
   if (isLoggedIn) {
+    // সাইডবার মেনু আপডেট
     if (authMenuItem) {
       authMenuItem.innerHTML = `<a href="javascript:void(0)" onclick="logoutUser()" style="color: #ff4d4d;">🚪 Logout (${userMobile})</a>`;
     }
@@ -17,11 +17,12 @@ function checkAuthStatus() {
       addFundsMenuItem.style.display = "block";
       addFundsMenuItem.innerHTML = `<a href="/add-funds/">💳 Add Funds</a>`;
     }
+    // লগইন করা থাকলে হেডার থেকে 'Login' বাটন সম্পূর্ণ লুকিয়ে ফেলা হবে
     if (headerLoginBtn) {
-      headerLoginBtn.innerText = "Account";
-      headerLoginBtn.href = "/orders/";
+      headerLoginBtn.style.display = "none";
     }
   } else {
+    // লগইন করা না থাকলে ডিফল্ট অবস্থা
     if (authMenuItem) {
       authMenuItem.innerHTML = `<a href="/login/">🔐 Login / Create Account</a>`;
     }
@@ -29,12 +30,13 @@ function checkAuthStatus() {
       addFundsMenuItem.style.display = "none";
     }
     if (headerLoginBtn) {
+      headerLoginBtn.style.display = "block";
       headerLoginBtn.innerText = "Login";
       headerLoginBtn.href = "/login/";
     }
   }
 
-  // প্রটেক্টেড পেজগুলোর সিকিউরিটি চেক
+  // প্রটেক্টেড পেজ সিকিউরিটি চেক
   const currentPath = window.location.pathname;
   const protectedPaths = ["/platform/", "/platform/2/", "/orders/"];
   const isProtected = protectedPaths.some((path) => currentPath.includes(path));
@@ -63,7 +65,6 @@ function openSidebar() {
     sidebar.classList.add("active");
     if (overlay) overlay.classList.add("active");
     document.body.style.overflow = "hidden";
-
     history.pushState({ sidebarOpen: true }, "");
   }
 }
@@ -102,20 +103,6 @@ function closeComingSoonModal() {
   if (modal) modal.classList.remove("active");
 }
 
-// Page DOM Init
 document.addEventListener("DOMContentLoaded", function () {
   checkAuthStatus();
-
-  const cards = document.querySelectorAll(
-    ".glass-service-card, .service-card, .card"
-  );
-  cards.forEach((card) => {
-    if (card.innerText.includes("Premium Quality Followers")) {
-      card.style.cursor = "pointer";
-      card.addEventListener("click", function (e) {
-        e.preventDefault();
-        window.location.href = "/platform/2/";
-      });
-    }
-  });
 });

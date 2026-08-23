@@ -7,20 +7,31 @@ function checkAuthStatus() {
 
   const authMenuItem = document.getElementById("authMenuItem");
   const addFundsMenuItem = document.getElementById("addFundsMenuItem");
+  const headerLoginBtnContainer = document.getElementById("headerLoginBtnContainer");
 
-  // সাইডবার মেনু আপডেট করা
-  if (authMenuItem) {
-    if (isLoggedIn) {
+  // সাইডবার মেনু এবং হেডার লগইন বাটন আপডেট করা
+  if (isLoggedIn) {
+    if (authMenuItem) {
       authMenuItem.innerHTML = `<a href="javascript:void(0)" onclick="logoutUser()" style="color: #ff4d4d;">🚪 Logout (${userMobile})</a>`;
-      if (addFundsMenuItem) {
-        addFundsMenuItem.style.display = "block";
-        addFundsMenuItem.innerHTML = `<a href="/add-funds/">💳 Add Funds</a>`;
-      }
-    } else {
+    }
+    if (addFundsMenuItem) {
+      addFundsMenuItem.style.display = "block";
+      addFundsMenuItem.innerHTML = `<a href="/add-funds/">💳 Add Funds</a>`;
+    }
+    // লগইন করা থাকলে হেডার বারের লগইন বাটনটি হাইড হয়ে যাবে
+    if (headerLoginBtnContainer) {
+      headerLoginBtnContainer.style.display = "none";
+    }
+  } else {
+    if (authMenuItem) {
       authMenuItem.innerHTML = `<a href="/login/">🔐 Login / Create Account</a>`;
-      if (addFundsMenuItem) {
-        addFundsMenuItem.style.display = "none";
-      }
+    }
+    if (addFundsMenuItem) {
+      addFundsMenuItem.style.display = "none";
+    }
+    // লগইন না করা থাকলে হেডার বারের লগইন বাটনটি শো করবে
+    if (headerLoginBtnContainer) {
+      headerLoginBtnContainer.style.display = "block";
     }
   }
 
@@ -112,3 +123,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+```[cite: 2]

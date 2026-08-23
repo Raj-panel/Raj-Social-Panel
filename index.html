@@ -20,36 +20,52 @@
   <link rel="stylesheet" href="style.css">
   
   <style>
-    /* নতুন হেডার ডিজাইন (ছবির স্টাইল অনুযায়ী) */
+    /* ফুল উইথ এবং আকর্ষণীয় গ্লাস-মরফিজম হেডার ডিজাইন */
     .custom-top-nav {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      margin-right: calc(-50vw + 50%);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 15px;
-      background: rgba(25, 10, 40, 0.85);
-      backdrop-filter: blur(10px);
-      position: relative;
-      width: 100%;
+      padding: 12px 20px;
+      background: rgba(25, 10, 45, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      z-index: 1000;
       box-sizing: border-box;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      margin-bottom: 15px;
     }
+
+    /* কাঁচের মতো চকচকে গ্লোয়িং মেনু বাটন */
     .custom-menu-btn {
-      background: #ffffff;
-      border: none;
-      border-radius: 12px;
-      width: 45px;
-      height: 45px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 14px;
+      width: 44px;
+      height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+    .custom-menu-btn:hover {
+      background: #ffffff;
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(233, 30, 99, 0.5);
     }
     .custom-menu-btn i {
-      font-size: 20px;
-      color: #000000;
+      font-size: 18px;
+      color: #1a0a2a;
     }
+
+    /* মাঝখানের লোগো কন্টেইনার */
     .custom-logo-container {
       position: absolute;
       left: 50%;
@@ -62,23 +78,40 @@
       height: 38px;
       width: auto;
       object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
     }
+
+    /* লগইন বাটনের প্রিমিয়াম গ্লোয়িং অ্যানিমেশন ইফেক্ট */
+    @keyframes glowingBtn {
+      0% {
+        box-shadow: 0 0 5px rgba(233, 30, 99, 0.6), 0 0 15px rgba(233, 30, 99, 0.4);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(233, 30, 99, 0.9), 0 0 35px rgba(233, 30, 99, 0.7);
+      }
+      100% {
+        box-shadow: 0 0 5px rgba(233, 30, 99, 0.6), 0 0 15px rgba(233, 30, 99, 0.4);
+      }
+    }
+
     .custom-login-btn {
-      background: #e91e63;
+      background: linear-gradient(135deg, #e91e63, #ff4081);
       color: #ffffff;
       border: none;
-      padding: 8px 18px;
-      border-radius: 20px;
+      padding: 9px 20px;
+      border-radius: 22px;
       font-family: 'Poppins', sans-serif;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 13px;
       cursor: pointer;
       text-decoration: none;
-      box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
+      letter-spacing: 0.5px;
+      animation: glowingBtn 2.5s infinite ease-in-out;
       transition: all 0.3s ease;
     }
     .custom-login-btn:hover {
-      background: #d81b60;
+      transform: translateY(-2px);
+      filter: brightness(1.1);
     }
   </style>
 </head>
@@ -122,7 +155,7 @@
   <!-- Main Container -->
   <div class="platform-container">
     
-    <!-- নতুন কাঙ্ক্ষিত নেভবার (বামে মেনু, মাঝখানে platform.jpg লোগো, ডানে লগইন বাটন যা লগইন করা থাকলে হাইড হবে) -->
+    <!-- ফুল-উইথ গ্লাস-মরফিজম হেডার বার -->
     <div class="custom-top-nav">
       <button class="custom-menu-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
         <i class="fa-solid fa-bars"></i>
@@ -132,14 +165,14 @@
         <img src="platform.jpg" alt="Raj SMM Panel Platform" class="custom-platform-logo"/>
       </div>
 
-      <!-- লগইন করা থাকলে auth-handler.js এর মাধ্যমে এই কন্টেইনারটি স্বয়ংক্রিয়ভাবে হাইড হয়ে যাবে -->
+      <!-- লগইন করা না থাকলে গ্লোয়িং বাটন দেখাবে, লগইন হয়ে গেলে auth-handler.js এটি হাইড করে দেবে -->
       <div id="headerLoginBtnContainer">
         <a href="/login/" class="custom-login-btn">Login</a>
       </div>
     </div>
 
     <!-- Header Card / Platform Image Logo Section -->
-    <div class="glass-header-card">
+    <div class="glass-header-card" style="margin-top: 15px;">
       <img src="platform.png" alt="Raj SMM Panel Platform" class="header-platform-img"/>
     </div>
 

@@ -1,4 +1,4 @@
-v<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
@@ -21,12 +21,17 @@ v<!DOCTYPE html>
   
   <style>
     /* ==========================================================
-       [কাস্টমাইজেশন কন্ট্রোল]: আপনি এখান থেকে সাইজ ছোট-বড় করতে পারবেন 
+       [কাস্টমাইজেশন কন্ট্রোল]: এখান থেকে সাইজ ও কালার পরিবর্তন করতে পারবেন 
        ========================================================== */
     :root {
-      --nav-padding-top: 8px;     /* মেনুবারের ওপরের প্যাডিং (কমালে ওপরের দিকে উঠবে) */
-      --nav-padding-bottom: 8px;  /* মেনুবারের নিচের প্যাডিং */
-      --logo-height: 48px;        /* লোগোর সাইজ (এখানে বাড়ালে লোগো বড় হবে, কমালে ছোট হবে) */
+      --nav-margin-top: -5px;     /* মেনুবারকে আরও ওপরের দিকে তোলার জন্য (মাইনাস ভ্যালু বাড়াতে পারেন) */
+      --nav-padding-top: 6px;     /* মেনুবারের ওপরের প্যাডিং */
+      --nav-padding-bottom: 6px;  /* মেনুবারের নিচের প্যাডিং */
+      --logo-height: 52px;        /* লোগোর সাইজ ছোট-বড় করার জন্য */
+      
+      /* নতুন প্রিমিয়াম এবং আকর্ষণীয় ব্যাকগ্রাউন্ড কালার (গ্লাস ইফেক্টসহ) */
+      --nav-bg-color: rgba(15, 12, 25, 0.85); 
+      --nav-border-color: rgba(255, 255, 255, 0.1);
     }
 
     /* ফুল-উইথ গ্লাস-মরফিজম হেডার বার */
@@ -35,43 +40,42 @@ v<!DOCTYPE html>
       top: 0;
       left: 0;
       width: 100vw;
+      margin-top: var(--nav-margin-top);
       margin-left: calc(-50vw + 50%);
       margin-right: calc(-50vw + 50%);
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: var(--nav-padding-top) 20px var(--nav-padding-bottom) 20px;
-      background: rgba(25, 10, 45, 0.65);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      background: var(--nav-bg-color);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--nav-border-color);
+      box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.5);
       z-index: 1000;
       box-sizing: border-box;
     }
 
     /* কাঁচের মতো চকচকে গ্লোয়িং মেনু বাটন */
     .custom-menu-btn {
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      border-radius: 14px;
-      width: 42px;
-      height: 42px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       transition: all 0.3s ease;
     }
     .custom-menu-btn:hover {
-      background: #ffffff;
+      background: rgba(255, 255, 255, 0.15);
       transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(233, 30, 99, 0.5);
     }
     .custom-menu-btn i {
       font-size: 18px;
-      color: #1a0a2a;
+      color: #ffffff;
     }
 
     /* মাঝখানের লোগো কন্টেইনার */
@@ -84,12 +88,12 @@ v<!DOCTYPE html>
       justify-content: center;
     }
     
-    /* লোগোর সাইজ কন্ট্রোল (ওপরে --logo-height থেকে পরিবর্তন করতে পারবেন) */
+    /* লোগোর সাইজ কন্ট্রোল */
     .custom-platform-logo {
       height: var(--logo-height);
       width: auto;
       object-fit: contain;
-      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      filter: drop-shadow(0 2px 10px rgba(0,0,0,0.4));
     }
 
     /* লগইন বাটনের প্রিমিয়াম গ্লোয়িং অ্যানিমেশন ইফেক্ট */
@@ -109,11 +113,11 @@ v<!DOCTYPE html>
       background: linear-gradient(135deg, #e91e63, #ff4081);
       color: #ffffff;
       border: none;
-      padding: 8px 18px;
-      border-radius: 22px;
+      padding: 7px 16px;
+      border-radius: 20px;
       font-family: 'Poppins', sans-serif;
       font-weight: 600;
-      font-size: 13px;
+      font-size: 12px;
       cursor: pointer;
       text-decoration: none;
       letter-spacing: 0.5px;
@@ -176,8 +180,8 @@ v<!DOCTYPE html>
         <img src="platform.jpg" alt="Raj SMM Panel Platform" class="custom-platform-logo"/>
       </div>
 
-      <!-- লগইন করা না থাকলে গ্লোয়িং বাটন দেখাবে, লগইন হয়ে গেলে জাভাস্ক্রিপ্ট এটি হাইড করে দেবে -->
-      <div id="headerLoginBtnContainer">
+      <!-- ডান সাইডের লগইন বাটন (আইডি ট্যাগ যুক্ত করা হয়েছে যেন জাভাস্ক্রিপ্ট লগইন থাকা অবস্থায় এটি লুকিয়ে ফেলতে পারে) -->
+      <div id="topLoginBtn">
         <a href="/login/" class="custom-login-btn">Login</a>
       </div>
     </div>
@@ -189,75 +193,52 @@ v<!DOCTYPE html>
 
     <!-- Social Media Icons Grid -->
     <div class="social-icons-grid">
-      <div class="social-box fb">
-        <i class="fa-brands fa-facebook-f"></i>
-      </div>
-      <div class="social-box insta">
-        <i class="fa-brands fa-instagram"></i>
-      </div>
-      <div class="social-box yt">
-        <i class="fa-brands fa-youtube"></i>
-      </div>
-      <div class="social-box tiktok">
-        <i class="fa-brands fa-tiktok"></i>
-      </div>
+      <div class="social-box fb"><i class="fa-brands fa-facebook-f"></i></div>
+      <div class="social-box insta"><i class="fa-brands fa-instagram"></i></div>
+      <div class="social-box yt"><i class="fa-brands fa-youtube"></i></div>
+      <div class="social-box tiktok"><i class="fa-brands fa-tiktok"></i></div>
     </div>
 
-    <!-- Service Card 1: Best Quality Followers (Glowing Indian Theme) -->
+    <!-- Service Card 1 -->
     <a href="https://rajsmmpanel.in/platform/" class="glass-service-card glow-indian">
       <div class="card-left">
         <div class="multi-icon-box indian-theme-box">
-          <i class="fa-brands fa-facebook-f"></i>
-          <i class="fa-brands fa-instagram"></i>
-          <i class="fa-brands fa-youtube"></i>
-          <i class="fa-brands fa-tiktok"></i>
+          <i class="fa-brands fa-facebook-f"></i><i class="fa-brands fa-instagram"></i><i class="fa-brands fa-youtube"></i><i class="fa-brands fa-tiktok"></i>
         </div>
         <div class="card-text">
           <h3>🇮🇳 Best Quality Followers</h3>
           <p>High Retention • Premium Quality</p>
         </div>
       </div>
-      <div class="card-arrow">
-        <i class="fa-solid fa-chevron-right"></i>
-      </div>
+      <div class="card-arrow"><i class="fa-solid fa-chevron-right"></i></div>
     </a>
 
-    <!-- Service Card 2: Premium Quality Followers -->
+    <!-- Service Card 2 -->
     <a href="/platform/2/" class="glass-service-card glow-premium">
       <div class="card-left">
         <div class="multi-icon-box real-color-box">
-          <i class="fa-brands fa-facebook-f icon-fb"></i>
-          <i class="fa-brands fa-instagram icon-insta"></i>
-          <i class="fa-brands fa-youtube icon-yt"></i>
-          <i class="fa-brands fa-tiktok icon-tt"></i>
+          <i class="fa-brands fa-facebook-f icon-fb"></i><i class="fa-brands fa-instagram icon-insta"></i><i class="fa-brands fa-youtube icon-yt"></i><i class="fa-brands fa-tiktok icon-tt"></i>
         </div>
         <div class="card-text">
           <h3>🔥 Premium Quality Followers</h3>
           <p>Stable Profiles • Quality Service</p>
         </div>
       </div>
-      <div class="card-arrow">
-        <i class="fa-solid fa-chevron-right"></i>
-      </div>
+      <div class="card-arrow"><i class="fa-solid fa-chevron-right"></i></div>
     </a>
 
-    <!-- Service Card 3: Lowest Price Followers -->
+    <!-- Service Card 3 -->
     <div class="glass-service-card glow-budget" onclick="openComingSoonModal()">
       <div class="card-left">
         <div class="multi-icon-box unique-budget-box">
-          <i class="fa-brands fa-facebook-f"></i>
-          <i class="fa-brands fa-instagram"></i>
-          <i class="fa-brands fa-youtube"></i>
-          <i class="fa-brands fa-tiktok"></i>
+          <i class="fa-brands fa-facebook-f"></i><i class="fa-brands fa-instagram"></i><i class="fa-brands fa-youtube"></i><i class="fa-brands fa-tiktok"></i>
         </div>
         <div class="card-text">
           <h3>💰 Lowest Price Followers</h3>
           <p>Low Cost • Budget Service</p>
         </div>
       </div>
-      <div class="card-arrow">
-        <i class="fa-solid fa-chevron-right"></i>
-      </div>
+      <div class="card-arrow"><i class="fa-solid fa-chevron-right"></i></div>
     </div>
 
     <!-- Watch Tutorials Red Button -->
@@ -282,7 +263,7 @@ v<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- UI Navigation Handlers (Sidebar & Modal) -->
+  <!-- UI Navigation Handlers -->
   <script>
     function openSidebar() {
       const sidebar = document.getElementById("leftSidebar");
@@ -300,7 +281,7 @@ v<!DOCTYPE html>
       const overlay = document.getElementById("sidebarOverlay");
       if (sidebar && sidebar.classList.contains("active")) {
         sidebar.classList.remove("active");
-        if (overlay) overlay.classList.remove("active");
+        if (overlay) overlay.classList.remove("export");
         document.body.style.overflow = "auto";
         if (fromUserAction && history.state && history.state.sidebarOpen) {
           history.back();

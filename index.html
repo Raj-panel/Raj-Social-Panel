@@ -59,14 +59,22 @@
   <!-- Main Container -->
   <div class="platform-container">
     
-    <!-- Hamburger Button Outside Header Card -->
-    <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
-      <i class="fa-solid fa-bars"></i>
-    </button>
+    <!-- Chrome-Style Glass Top Navigation Bar -->
+    <div class="chrome-top-bar">
+      <!-- Left: Hamburger Menu Button -->
+      <button class="chrome-hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
 
-    <!-- Header Card / Platform Image Logo Section -->
-    <div class="glass-header-card">
-      <img src="platform.png" alt="Raj SMM Panel Platform" class="header-platform-img"/>
+      <!-- Center: Logo Icon (Exact Middle Position) -->
+      <div class="chrome-center-logo">
+        <img src="platform.png" alt="Raj SMM Panel Logo" />
+      </div>
+
+      <!-- Right: Functional Login Button -->
+      <a href="/login/" class="chrome-login-btn" id="headerLoginBtn">
+        Login
+      </a>
     </div>
 
     <!-- Social Media Icons Grid -->
@@ -85,7 +93,7 @@
       </div>
     </div>
 
-    <!-- Service Card 1: Best Quality Followers (Glowing Indian Theme) -->
+    <!-- Service Card 1: Best Quality Followers -->
     <a href="https://rajsmmpanel.in/platform/" class="glass-service-card glow-indian">
       <div class="card-left">
         <div class="multi-icon-box indian-theme-box">
@@ -164,48 +172,8 @@
     </div>
   </div>
 
-  <!-- UI Navigation Handlers (Sidebar & Modal) -->
-  <script>
-    function openSidebar() {
-      const sidebar = document.getElementById("leftSidebar");
-      const overlay = document.getElementById("sidebarOverlay");
-      if (sidebar) {
-        sidebar.classList.add("active");
-        if (overlay) overlay.classList.add("active");
-        document.body.style.overflow = "hidden";
-        history.pushState({ sidebarOpen: true }, '');
-      }
-    }
-
-    function closeSidebar(fromUserAction = false) {
-      const sidebar = document.getElementById("leftSidebar");
-      const overlay = document.getElementById("sidebarOverlay");
-      if (sidebar && sidebar.classList.contains("active")) {
-        sidebar.classList.remove("active");
-        if (overlay) overlay.classList.remove("active");
-        document.body.style.overflow = "auto";
-        if (fromUserAction && history.state && history.state.sidebarOpen) {
-          history.back();
-        }
-      }
-    }
-
-    window.addEventListener("popstate", function () {
-      closeSidebar(false);
-    });
-
-    function openComingSoonModal() {
-      const modal = document.getElementById("comingSoonModal");
-      if (modal) modal.classList.add("active");
-    }
-
-    function closeComingSoonModal() {
-      const modal = document.getElementById("comingSoonModal");
-      if (modal) modal.classList.remove("active");
-    }
-  </script>
-
-  <!-- Firebase Authentication Logic Handler -->
+  <!-- UI Navigation & Auth Handlers Script -->
+  <script src="script.js"></script>
   <script type="module" src="/auth-handler.js"></script>
 </body>
 </html>

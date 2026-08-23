@@ -20,19 +20,11 @@ function checkUserSession() {
   const addFundsItem = document.getElementById("addFundsMenuItem");
   const currentPath = window.location.pathname;
 
-  // ডান সাইডের মূল হেডার/নভবার লগইন বাটন (আইডি পরিবর্তন করে আপনার এইচটিএমএল অনুযায়ী দিতে পারেন, যেমন: topLoginBtn)
-  const topLoginBtn = document.getElementById("topLoginBtn") || document.querySelector(".header-login-btn");
-
   if (sessionData) {
     try {
       const user = JSON.parse(sessionData);
       updateSidebarForLoggedInUser(user.name, user.mobile);
       
-      // লগইন থাকলে ডান সাইডের লগইন অপশনটি হাইড করে দেওয়া হবে
-      if (topLoginBtn) {
-        topLoginBtn.style.setProperty("display", "none", "important");
-      }
-
       if (addFundsItem) {
         addFundsItem.style.setProperty("display", "block", "important");
       }
@@ -40,11 +32,6 @@ function checkUserSession() {
       localStorage.removeItem(SESSION_KEY);
       updateSidebarForLoggedOutUser();
       
-      // লগআউট থাকলে ডান সাইডের লগইন অপশনটি শো করবে
-      if (topLoginBtn) {
-        topLoginBtn.style.setProperty("display", "block", "important");
-      }
-
       if (addFundsItem) {
         addFundsItem.style.setProperty("display", "none", "important");
       }
@@ -53,11 +40,6 @@ function checkUserSession() {
   } else {
     updateSidebarForLoggedOutUser();
     
-    // লগআউট থাকলে ডান সাইডের লগইন অপশনটি শো করবে
-    if (topLoginBtn) {
-      topLoginBtn.style.setProperty("display", "block", "important");
-    }
-
     if (addFundsItem) {
       addFundsItem.style.setProperty("display", "none", "important");
     }
@@ -248,7 +230,7 @@ window.handleLogin = async function() {
     } else {
       alert("Invalid Mobile Number or Password.");
     }
-  } catch, (error) {
+  } catch (error) {
     alert("Login failed: " + error.message);
   }
 };

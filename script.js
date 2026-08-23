@@ -1,33 +1,42 @@
 // --- 1. Authenticaton & Session Management System ---
 
-// ইউজার লগইন স্টেট পরীক্ষা করার ফাংশন
 function checkAuthStatus() {
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
   const userMobile = localStorage.getItem("userMobile") || "User";
 
   const authMenuItem = document.getElementById("authMenuItem");
   const addFundsMenuItem = document.getElementById("addFundsMenuItem");
+  const headerLoginBtn = document.getElementById("headerLoginBtn");
 
-  // সাইডবার মেনু আপডেট করা
-  if (authMenuItem) {
-    if (isLoggedIn) {
+  // সাইডবার মেনু এবং হেডার লগইন বাটনের লজিক হ্যান্ডেল করা
+  if (isLoggedIn) {
+    if (authMenuItem) {
       authMenuItem.innerHTML = `<a href="javascript:void(0)" onclick="logoutUser()" style="color: #ff4d4d;">🚪 Logout (${userMobile})</a>`;
-      if (addFundsMenuItem) {
-        addFundsMenuItem.style.display = "block";
-        addFundsMenuItem.innerHTML = `<a href="/add-funds/">💳 Add Funds</a>`;
-      }
-    } else {
+    }
+    if (addFundsMenuItem) {
+      addFundsMenuItem.style.display = "block";
+      addFundsMenuItem.innerHTML = `<a href="/add-funds/">💳 Add Funds</a>`;
+    }
+    if (headerLoginBtn) {
+      headerLoginBtn.innerText = "Account";
+      headerLoginBtn.href = "/orders/";
+    }
+  } else {
+    if (authMenuItem) {
       authMenuItem.innerHTML = `<a href="/login/">🔐 Login / Create Account</a>`;
-      if (addFundsMenuItem) {
-        addFundsMenuItem.style.display = "none";
-      }
+    }
+    if (addFundsMenuItem) {
+      addFundsMenuItem.style.display = "none";
+    }
+    if (headerLoginBtn) {
+      headerLoginBtn.innerText = "Login";
+      headerLoginBtn.href = "/login/";
     }
   }
 
-  // যদি সংরক্ষিত/লগইন-প্রয়োজনীয় পেজে লগইন ছাড়া ঢুকতে চায়, তবে /login/-এ রিডাইরেক্ট করবে
+  // প্রটেক্টেড পেজগুলোর সিকিউরিটি চেক
   const currentPath = window.location.pathname;
   const protectedPaths = ["/platform/", "/platform/2/", "/orders/"];
-
   const isProtected = protectedPaths.some((path) => currentPath.includes(path));
 
   if (isProtected && !isLoggedIn) {
@@ -95,10 +104,8 @@ function closeComingSoonModal() {
 
 // Page DOM Init
 document.addEventListener("DOMContentLoaded", function () {
-  // ১. সেশন স্ট্যাটাস চেক
   checkAuthStatus();
 
-  // ২. Premium Quality Followers কার্ড ক্লিক হ্যান্ডলিং
   const cards = document.querySelectorAll(
     ".glass-service-card, .service-card, .card"
   );

@@ -87,12 +87,13 @@ body {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 0 0 20px 20px;
-  padding: 0 !important;
+  padding: 0 !important; /* কোনো প্যাডিং রাখা হয়নি */
   box-shadow: 0 0 25px rgba(168, 85, 247, 0.35), inset 0 0 15px rgba(255, 255, 255, 0.05);
   position: relative;
   width: 100%;
   margin-bottom: 4px;
   
+  /* Unique Glowing Multi-Color Animated Border */
   border: 2px solid transparent;
   background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), linear-gradient(135deg, #a855f7, #ec4899, #3b82f6, #6366f1);
   background-origin: border-box;
@@ -130,7 +131,7 @@ body {
 }
 
 .brand-logo-img {
-  height: 55px;
+  height: 55px; /* লোগোর সাইজ আরও বড় করা হয়েছে */
   width: auto;
   max-width: 150px;
   object-fit: contain;
@@ -412,59 +413,6 @@ body {
   display: block;
   border-radius: 14px;
   object-fit: cover;
-}
-
-/* ==========================================================
-   PWA INSTALL BUTTON (Glowing & Bottom Fixed Styling)
-   ========================================================== */
-.pwa-install-btn-wrapper {
-  width: 100%;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: center;
-}
-
-.install-app-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(236, 72, 153, 0.25));
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  color: var(--text-main);
-  border: 1.5px solid rgba(168, 85, 247, 0.6);
-  padding: 14px 20px;
-  border-radius: 16px;
-  font-size: 15px;
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.1);
-  animation: pwaGlowPulse 2.5s infinite alternate;
-  transition: transform 0.2s ease;
-}
-
-.install-app-btn i {
-  color: #a855f7;
-  font-size: 18px;
-}
-
-.install-app-btn:hover {
-  transform: scale(1.02);
-}
-
-@keyframes pwaGlowPulse {
-  0% {
-    box-shadow: 0 0 10px rgba(168, 85, 247, 0.3), inset 0 0 5px rgba(255, 255, 255, 0.05);
-    border-color: rgba(168, 85, 247, 0.4);
-  }
-  100% {
-    box-shadow: 0 0 22px rgba(236, 72, 153, 0.7), inset 0 0 12px rgba(255, 255, 255, 0.15);
-    border-color: rgba(236, 72, 153, 0.8);
-  }
 }
 
 /* Drawer Sidebar Styles */

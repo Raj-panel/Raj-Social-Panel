@@ -39,7 +39,7 @@ const platformData = {
         ]
       },
       "nondrop": {
-        name: "Instagram followers Non-Drop",
+        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬 𝐍𝐨𝐧-𝐃𝐫𝐨𝐩",
         services: [
           { id: "1072", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - No Refill 🔄", rate: 67.929, avgTime: "0–2 Min Start" },
           { id: "1073", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 30D Refill 🔄", rate: 73.072, avgTime: "0–2 Min Start" },
@@ -50,7 +50,7 @@ const platformData = {
         ]
       },
       "Instagram like real profile": {
-        name: "Instagram like real profile",
+        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐥𝐢𝐤𝐞 𝐫𝐞𝐚𝐥 𝐩𝐫𝐨𝐟𝐢𝐥𝐞",
         services: [
           { id: "881", name: "Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 60 Days Refill♻️ | 0–10 Minutes Start", rate: 14.600, avgTime: "0–10 Minutes Start" },
           { id: "882", name: "Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 90 Days Refill♻️ | 0–10 Minutes Start", rate: 15.664, avgTime: "0–10 Minutes Start" },
@@ -59,27 +59,27 @@ const platformData = {
         ]
       },
       "🇮🇳 Instagram Repost- India high quality": {
-        name: "🇮🇳 Instagram Repost- India high quality",
+        name: "🇮🇳 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐑𝐞𝐩𝐨𝐬𝐭- 𝐈𝐧𝐝𝐢𝐚 𝐡𝐢𝐠𝐡 𝐪𝐮𝐚𝐥𝐢𝐭𝐲",
         services: [
           { id: "2008", name: "Instagram Repost | Worldwide | Max 50K | 100% 🇮🇳 Real Accounts | 12–30 Min Start", rate: 60.94, avgTime: "12–30 Min Start" },
           { id: "2086", name: "🇮🇳 Instagram Repost | Worldwide | Max 100K | 100% 🇮🇳 Real Accounts | 12–30 Min Start", rate: 72.6832, avgTime: "12–30 Min Start" }
         ]
       },
       "🇮🇳 Instagram Shares - Premium Quality | Super Fast": {
-        name: "🇮🇳 Instagram Shares - Premium Quality | Super Fast",
+        name: "🇮🇳 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐒𝐡𝐚𝐫𝐞𝐬 - 𝐏𝐫𝐞𝐦𝐢𝐮𝐦 𝐐𝐮𝐚𝐥𝐢𝐭𝐲 | 𝐒𝐮𝐩𝐞𝐫 𝐅𝐚𝐬𝐭",
         services: [
           { id: "121", name: "🇮🇳 Instagram Shares | Premium Quality | Max 1M | 100K/Day | SuperFast | 10–25 Min Start | Lifetime Refill ♻️", rate: 22.266, avgTime: "10–25 Min Start" },
           { id: "123", name: "🇮🇳 Instagram Shares | High Quality | Max 1M | 200K/Day | SuperFast | 10–30 Min Start | Lifetime Refill ♻️ | One Click Done", rate: 20.33, avgTime: "10–30 Min Start" }
         ]
       },
       "🇮🇳 Instagram Reels/ Video Views High Speed": {
-        name: "🇮🇳 Instagram Reels/ Video Views High Speed",
+        name: "🇮🇳 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐑𝐞𝐞𝐥𝐬/ 𝐕𝐢𝐝𝐞𝐨 𝐕𝐢𝐞𝐰𝐬 𝐇𝐢𝐠𝐡 𝐒𝐩𝐞𝐞𝐝",
         services: [
           { id: "2623", name: "🇮🇳Instagram Reels views [ Non-Drop] 500K/1M Days ULTRA FAST 0–5 Minutes Start Life-timeRefill♻️", rate: 2.10, avgTime: "0–5 Minutes Start" }
         ]
       },
       "🇮🇳Instagram Photo / post Views": {
-        name: "🇮🇳Instagram  Photo / post Views",
+        name: "🇮🇳𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐏𝐡𝐨𝐭𝐨 / 𝐩𝐨𝐬𝐭 𝐕𝐢𝐞𝐰𝐬",
         services: [
           { id: "1030", name: "🇮🇳Instagram Photo & Post Views | Photo + Post + Image   Impressions | Non Drop | 1M+ Per Day | 0–1 Minutes Start", rate: 15.286, avgTime: "0–1 Minutes Start" }
         ]
@@ -92,7 +92,7 @@ const platformData = {
     linkPlaceholder: "Link Facebook page or profile",
     categories: {
       "Facebook follower real account medium speed": {
-        name: "Facebook follower real account medium speed",
+        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫 𝐫𝐞𝐚𝐥 𝐚𝐜𝐜𝐨𝐮𝐧𝐭 𝐦𝐞𝐝𝐢𝐮𝐦 𝐬𝐩𝐞𝐞𝐝",
         services: [
           { id: "6207", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | 90D Refill ♻️", rate: 40.4272, avgTime: "0–30 Min Start" },
           { id: "6208", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | 365D Refill ♻️", rate: 43.0640, avgTime: "0–30 Min Start" },
@@ -101,7 +101,7 @@ const platformData = {
         ]
       },
       "🇮🇳 Real Video Views Facebook - High Quality": {
-        name: "🇮🇳 Real Video Views Facebook -  High Quality",
+        name: "🇮🇳 𝐑𝐞𝐚𝐥 𝐕𝐢𝐝𝐞𝐨 𝐕𝐢𝐞𝐰𝐬 𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 - 𝐇𝐢𝐠𝐡 𝐐𝐮𝐚𝐥𝐢𝐭𝐲",
         services: [
           { id: "6581", name: "Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 0–30 Min Start | 90D Refill ♻️", rate: 13.2500, avgTime: "0–30 Min Start" },
           { id: "6582", name: "Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 0–30 Min Start | 365D Refill ♻️", rate: 15.4000, avgTime: "0–30 Min Start" },
@@ -109,7 +109,7 @@ const platformData = {
         ]
       },
       "Facebook - Post Reactions mix | Cheapest Rate": {
-        name: "Facebook - Post Reactions mix | Cheapest Rate",
+        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 - 𝐏𝐨𝐬𝐭 𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 𝐦𝐢𝐱 | 𝐂𝐡𝐞𝐚𝐩𝐞𝐬𝐭 𝐑𝐚𝐭𝐞",
         services: [
           { id: "5507", name: "Facebook - Post Likes 👍 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
           { id: "5508", name: "Facebook - Reaction | Love ❤️ | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 23.5170, avgTime: "0–30 Min Start" },
@@ -213,7 +213,6 @@ function setupSelectIcons(selectId) {
     
     if (!isVisible) {
       optionsContainer.style.display = 'block';
-      // Automatically scroll to the selected item without moving it to the top
       if (selectedItemElement) {
         optionsContainer.scrollTop = selectedItemElement.offsetTop - (optionsContainer.clientHeight / 2) + (selectedItemElement.clientHeight / 2);
       }
@@ -605,9 +604,7 @@ function submitOrderToWhatsApp() {
   sendOrderToTelegram();
 }
 
-// ---------------------------------------------------------------------------
 // Search Logic matching user screenshot style
-// ---------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', function () {
   const searchInput = document.getElementById('categorySearchInput');
   

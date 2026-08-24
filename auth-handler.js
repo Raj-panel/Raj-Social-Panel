@@ -14,10 +14,13 @@ document.addEventListener("DOMContentLoaded", () => {
   bindFormEvents(); // HTML inline event listener সমস্যা সমাধানের জন্য
 });
 
-// ১. সেশন পরীক্ষা এবং ডাইনামিক ইন্টারফেস আপডেট
-function checkUserSession() {
+// ১. সেশন পরীক্ষা এবং ডাইনামিক ইন্টারফেস আপডেট (লগইন ও ওয়ালেট বক্স টগল লজিক সহ)
+async function checkUserSession() {
   const sessionData = localStorage.getItem(SESSION_KEY);
   const addFundsItem = document.getElementById("addFundsMenuItem");
+  const navLoginBtn = document.getElementById("navLoginBtn");
+  const navWalletBox = document.getElementById("navWalletBox");
+  const userBalanceText = document.getElementById("userBalanceText");
   const currentPath = window.location.pathname;
 
   if (sessionData) {
@@ -28,6 +31,26 @@ function checkUserSession() {
       if (addFundsItem) {
         addFundsItem.style.setProperty("display", "block", "important");
       }
+
+      // ডানপাশের হেডার লজিক: লগইন করা থাকলে Login বাটন হাইড হবে, ওয়ালেট বক্স শো করবে
+      if (navLoginBtn) navLoginBtn.style.display = "none";
+      if (navWalletBox) navWalletBox.style.display = "flex";
+
+      // ডাটাবেজ থেকে ইউজারের রিয়েল-টাইম ব্যালেন্স ফেচ করে দেখানো
+      try {
+        const userDocRef = doc(db, "users", user.mobile);
+        const userDoc = await getDoc(userDocRef);
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          const balance = userData.walletBalance !== undefined ? userData.walletBalance : 0;
+          if (userBalanceText) {
+            userBalanceText.innerText = "₹" + balance;
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching wallet balance:", err);
+      }
+
     } catch (e) {
       localStorage.removeItem(SESSION_KEY);
       updateSidebarForLoggedOutUser();
@@ -35,6 +58,9 @@ function checkUserSession() {
       if (addFundsItem) {
         addFundsItem.style.setProperty("display", "none", "important");
       }
+      if (navLoginBtn) navLoginBtn.style.display = "block";
+      if (navWalletBox) navWalletBox.style.display = "none";
+
       checkAccessProtection(currentPath, false);
     }
   } else {
@@ -43,6 +69,10 @@ function checkUserSession() {
     if (addFundsItem) {
       addFundsItem.style.setProperty("display", "none", "important");
     }
+    // লগআউট অবস্থায় Login বাটন শো করবে, ওয়ালেট বক্স হাইড থাকবে
+    if (navLoginBtn) navLoginBtn.style.display = "block";
+    if (navWalletBox) navWalletBox.style.display = "none";
+
     checkAccessProtection(currentPath, false);
   }
 }

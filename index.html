@@ -59,10 +59,36 @@
   <!-- Main Container -->
   <div class="platform-container">
     
-    <!-- Hamburger Button Outside Header Card -->
-    <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
-      <i class="fa-solid fa-bars"></i>
-    </button>
+    <!-- Top Custom Header Navigation Bar (Border, Hamburger, Middle Logo, Right Auth/Wallet) -->
+    <header class="top-navbar-wrapper">
+      <!-- Hamburger Button -->
+      <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <!-- Middle Logo (platform.jpg) -->
+      <div class="nav-brand-logo">
+        <a href="https://rajsmmpanel.in/">
+          <img src="platform.jpg" alt="Raj SMM Panel Logo" class="brand-logo-img"/>
+        </a>
+      </div>
+
+      <!-- Right Side Dynamic Auth / Wallet Section -->
+      <div class="nav-right-action" id="navRightAction">
+        <!-- Default State: Login Button (Shown before login) -->
+        <a href="/login/" class="nav-login-btn" id="navLoginBtn">Login</a>
+        
+        <!-- Logged-In State: Wallet Balance & Add Funds Plus Button (Dynamically toggled via JS) -->
+        <div class="nav-wallet-box" id="navWalletBox" style="display: none;">
+          <a href="/add-funds/" class="wallet-balance-pill">
+            <i class="fa-solid fa-wallet"></i> <span id="userBalanceText">₹0</span>
+          </a>
+          <a href="/add-funds/" class="wallet-add-btn" aria-label="Add Funds">
+            <i class="fa-solid fa-plus"></i>
+          </a>
+        </div>
+      </div>
+    </header>
 
     <!-- Header Card / Platform Image Logo Section -->
     <div class="glass-header-card">

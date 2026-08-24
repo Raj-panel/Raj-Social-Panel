@@ -550,6 +550,9 @@ async function sendOrderToTelegram() {
   const checkoutTxn = document.getElementById("checkoutTxnId");
   const checkoutTitle = document.getElementById("checkoutServiceTitle");
   const mainQty = document.getElementById("mainQuantityInput");
+  
+  // ডাবল ক্লিক রোধ করতে সাবমিট বাটনটি সিলেক্ট করা হলো
+  const submitBtn = document.querySelector("#checkoutPage button[onclick*='sendOrderToTelegram']") || document.querySelector("#checkoutPage button");
 
   const link = mainLink ? mainLink.value.trim() : "";
   const utr = checkoutTxn ? checkoutTxn.value.trim() : "";
@@ -559,6 +562,15 @@ async function sendOrderToTelegram() {
   if (!utr) {
     showModernPopup("Error!", "Please enter Transaction ID / UTR Number.", "error");
     return;
+  }
+
+  // প্রথম ক্লিক পড়ার সঙ্গে সঙ্গেই বাটনটি লক করে দেওয়া হচ্ছে
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = "0.7";
+    submitBtn.style.cursor = "not-allowed";
+    submitBtn.dataset.originalText = submitBtn.innerText;
+    submitBtn.innerText = "Processing...";
   }
 
   const botToken = "8960508595:AAG8-0ZNbOGZ-iRtSh5xzAabhSrHbRWjUaE"; 
@@ -597,6 +609,14 @@ async function sendOrderToTelegram() {
   } catch (error) {
     console.error("Error submitting order:", error);
     showModernPopup("Connection Failed!", "Please check your network connection.", "error");
+  } finally {
+    // কাজ শেষ হলে বাটনটি আবার আগের অবস্থায় ফিরিয়ে আনা
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = "1";
+      submitBtn.style.cursor = "pointer";
+      submitBtn.innerText = submitBtn.dataset.originalText || "Confirm Order";
+    }
   }
 }
 

@@ -86,7 +86,6 @@
 
     <!-- Main Order Form -->
     <div class="form-card">
-      <!-- Search Input Box Added Here -->
       <div class="form-group">
         <label>Search</label>
         <input type="text" id="categorySearchInput" class="form-control" placeholder="Search by ID, Report or Non-drop..." />
@@ -137,6 +136,7 @@
         <button class="back-btn" onclick="closeCheckout()"><i class="fa-solid fa-arrow-left"></i> Back</button>
         <div class="checkout-heading-text">Checkout</div>
       </div> 
+
       <!-- Selected Package Info Banner -->
       <div class="premium-service-card">
         <div class="card-top-row">
@@ -169,7 +169,8 @@
           SCAN TO PAY VIA UPI
         </div>
         <div style="text-align: center; margin-bottom: 6px;">
-          <img id="checkoutQrImg" src="" alt="UPI QR Code" style="border-radius: 12px; width: 160px;" />
+          <!-- প্রি-লোডেড ইনস্ট্যান্ট কিউআর কোড সোর্স যুক্ত করা হলো -->
+          <img id="checkoutQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=rajsmmpanel@jio%26am=0%26cu=INR" alt="UPI QR Code" style="border-radius: 12px; width: 160px;" />
         </div>
         <p style="font-size: 10px; color: #64748b; margin-bottom: 8px;">
           Scan or enter payment detail into any UPI App
@@ -231,7 +232,6 @@
       localStorage.setItem('raj_smm_orders', JSON.stringify(existingOrders));
     }
 
-    // Intercept original sendOrderToTelegram function to save order status
     const originalSendOrderToTelegram = window.sendOrderToTelegram;
     
     window.sendOrderToTelegram = function() {

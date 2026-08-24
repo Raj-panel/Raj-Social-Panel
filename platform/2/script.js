@@ -385,8 +385,8 @@ function openCheckout() {
     
     qrcodeInstance = new QRCode(qrContainer, {
       text: upiString,
-      width: 160,
-      height: 160,
+      width: 120,
+      height: 120,
       colorDark: "#000000",
       colorLight: "#ffffff",
       correctLevel: QRCode.CorrectLevel.H

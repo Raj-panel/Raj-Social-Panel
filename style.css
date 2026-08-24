@@ -87,20 +87,18 @@ body {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 0 0 20px 20px;
-  padding: 0 !important; /* কোনো প্যাডিং রাখা হয়নি */
+  padding: 0 !important;
   box-shadow: 0 0 25px rgba(168, 85, 247, 0.35), inset 0 0 15px rgba(255, 255, 255, 0.05);
   position: relative;
   width: 100%;
   margin-bottom: 4px;
   
-  /* Unique Glowing Multi-Color Animated Border */
   border: 2px solid transparent;
   background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), linear-gradient(135deg, #a855f7, #ec4899, #3b82f6, #6366f1);
   background-origin: border-box;
   background-clip: padding-box, border-box;
 }
 
-/* Hamburger Menu Button Inside Top Bar */
 .top-navbar-wrapper .hamburger-btn {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -120,7 +118,6 @@ body {
   z-index: 2;
 }
 
-/* Middle Brand Logo Container (Size Increased) */
 .nav-brand-logo {
   position: absolute;
   left: 50%;
@@ -131,7 +128,7 @@ body {
 }
 
 .brand-logo-img {
-  height: 55px; /* লোগোর সাইজ আরও বড় করা হয়েছে */
+  height: 55px;
   width: auto;
   max-width: 150px;
   object-fit: contain;
@@ -139,7 +136,6 @@ body {
   display: block;
 }
 
-/* Right Side Actions Wrapper */
 .nav-right-action {
   display: flex;
   align-items: center;
@@ -147,7 +143,6 @@ body {
   z-index: 2;
 }
 
-/* Login Button (Before Login) */
 .nav-login-btn {
   background: linear-gradient(135deg, #ec4899 0%, #db2777 50%, #be185d 100%);
   color: #ffffff;
@@ -164,7 +159,6 @@ body {
   transform: scale(1.03);
 }
 
-/* Logged-In Pink Wallet & Add Funds Box */
 .nav-wallet-box {
   display: flex;
   align-items: center;
@@ -243,6 +237,58 @@ body {
   margin-left: 10px;
   margin-right: 10px;
   width: calc(100% - 20px);
+}
+
+/* ==========================================================
+   NEW PLATFORM SWITCHER GRID STYLING (As per your screenshot)
+   ========================================================== */
+.platform-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  background: var(--card-bg);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 14px;
+  border-radius: 20px;
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--card-border);
+  margin-bottom: 4px;
+}
+
+.platform-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 16px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 14px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  background: #ffffff;
+  color: #1e293b;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+}
+
+.platform-btn i {
+  font-size: 18px;
+}
+
+.platform-btn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+/* Active Platform State (Gradient fill matching screenshot) */
+.platform-btn.active {
+  background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 6px 18px rgba(139, 92, 246, 0.35);
 }
 
 /* Social Media Grid Section */

@@ -373,13 +373,29 @@ const serviceData = {
         "🔥 Reels Combo Service": [
             {
                 name: "Reels Viral Package 1",
+                price: 49,
+                badge: "5% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
+                features: [
+                    "👁️ Reels Views — 10,000",
+                    "❤️ Reels Likes — 800",
+                    "💬 Reels Comments — 10",
+                    "💾 Post / Reels Save — 100",
+                    "🔄 Post / Reels Shares — 500",
+                    "♻️ Reels Reposts — 100"
+                ],
+                placeholder: "Enter Instagram reel/video link"
+            },
+            {
+                name: "Reels Viral Package 1",
                 price: 99,
                 badge: "10% OFF",
                 badgeClass: "badge-best",
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
                     "👁️ Reels Views — 20,000",
-                    "❤️ Reels Likes — 2,000",
+                    "❤️ Reels Likes — 1,500",
                     "💬 Reels Comments — 30",
                     "💾 Post / Reels Save — 100",
                     "🔄 Post / Reels Shares — 1,000",
@@ -442,7 +458,7 @@ const serviceData = {
                 badgeClass: "badge-best",
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
-                    "👁️ Reels Views — 100,000",
+                    "👁️ Reels Views — 300,000",
                     "❤️ Reels Likes — 18,000",
                     "💬 Reels Comments — 600",
                     "💾 Post / Reels Save — 2,500",

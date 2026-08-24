@@ -345,7 +345,9 @@ function calculatePrice() {
   updateAverageTime();
 }
 
-// Checkout Navigation with Instant QR Generation
+// Checkout Navigation with Instant Client-side QR Generation
+let qrcodeInstance = null;
+
 function openCheckout() {
   const mainLink = document.getElementById("mainLinkInput");
   const mainQty = document.getElementById("mainQuantityInput");
@@ -374,12 +376,21 @@ function openCheckout() {
   if (checkoutPrice) checkoutPrice.innerText = calculatedPrice;
 
   const upiId = "rajsmmpanel@jio";
-  // ইনস্ট্যান্ট রেন্ডারিংয়ের জন্য সরাসরি এসাইন করা হলো
-  const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=${upiId}%26am=${calculatedPrice}%26cu=INR`;
-  
-  const qrImg = document.getElementById("checkoutQrImg");
-  if (qrImg) {
-    qrImg.src = qrApi;
+  const upiString = `upi://pay?pa=${upiId}&am=${calculatedPrice}&cu=INR`;
+
+  // Instant Browser-based QR Generation (Zero Delay)
+  const qrContainer = document.getElementById("qrcode");
+  if (qrContainer) {
+    qrContainer.innerHTML = ""; 
+    
+    qrcodeInstance = new QRCode(qrContainer, {
+      text: upiString,
+      width: 160,
+      height: 160,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
   }
 
   const checkoutPage = document.getElementById("checkoutPage");

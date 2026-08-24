@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Funds - UPI Payment</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .add-funds-container {
+      width: 100%;
+      max-width: 410px;
+      margin: 20px auto;
+      padding: 0 10px;
+    }
+    .fund-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: var(--card-shadow);
+      text-align: center;
+    }
+    .fund-card h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 15px;
+    }
+    .upi-info-box {
+      background: rgba(168, 85, 247, 0.1);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      padding: 10px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .qr-code-box {
+      background: #ffffff;
+      padding: 15px;
+      border-radius: 14px;
+      display: inline-block;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .qr-code-box img {
+      width: 160px;
+      height: 160px;
+      display: block;
+      object-fit: contain;
+    }
+    .form-group {
+      text-align: left;
+      margin-bottom: 12px;
+    }
+    .form-group label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-sub);
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form-control {
+      width: 100%;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      color: var(--text-main);
+      font-size: 14px;
+      outline: none;
+    }
+    .submit-fund-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #ec4899, #8b5cf6);
+      color: #ffffff;
+      border: none;
+      padding: 13px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+      margin-top: 10px;
+      transition: transform 0.2s ease;
+    }
+    .submit-fund-btn:hover {
+      transform: scale(1.02);
+    }
+    .back-home-link {
+      display: inline-block;
+      margin-top: 15px;
+      font-size: 13px;
+      color: var(--text-sub);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="add-funds-container">
+    <div class="fund-card">
+      <h2><i class="fa-solid fa-wallet" style="color: #ec4899;"></i> Add Funds via UPI</h2>
+      
+      <div class="upi-info-box">
+        UPI ID: <span id="upiIdText" style="color: #a855f7;">rajsmmpanel@jio</span>
+      </div>
+
+      <!-- কিউআর কোড সেকশন (আপনার কিউআর ইমেজ এখানে যুক্ত করতে পারেন) -->
+      <div class="qr-code-box">
+        <img src="../qr-code.png" alt="UPI QR Code" id="qrImg">
+      </div>
+      <p style="font-size: 11px; color: var(--text-sub); margin-bottom: 15px;">Scan this QR using any UPI App (GPay, PhonePe, Paytm)</p>
+
+      <form id="addFundForm" onsubmit="handleFundSubmit(event)">
+        <div class="form-group">
+          <label>Enter UTR / Transaction ID</label>
+          <input type="text" id="utrInput" class="form-control" placeholder="e.g. 4321XXXX8901" required>
+        </div>
+
+        <div class="form-group">
+          <label>Enter Amount (e.g. 10)</label>
+          <input type="number" id="amountInput" class="form-control" placeholder="10" min="1" required>
+        </div>
+
+        <button type="submit" class="submit-fund-btn">Submit Payment</button>
+      </form>
+
+      <a href="../index.html" class="back-home-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+    function handleFundSubmit(event) {
+      event.preventDefault();
+      
+      const utr = document.getElementById('utrInput').value;
+      const amount = parseFloat(document.getElementById('amountInput').value);
+
+      if(!utr || isNaN(amount) || amount <= 0) {
+        alert('Please enter valid UTR and Amount!');
+        return;
+      }
+
+      // লজিক্যাল সিস্টেম: লোকাল স্টোরেজ বা ব্যালেন্স হ্যান্ডলিং
+      let currentBalance = parseFloat(localStorage.getItem('user_wallet_balance')) || 0;
+      currentBalance += amount;
+      localStorage.setItem('user_wallet_balance', currentBalance);
+
+      alert(`Success! Successfully added ${amount} BDT/INR to your account.`);
+      
+      // হোমপেজে রিডাইরেক্ট করে দেওয়া
+      window.location.href = '../index.html';
+    }
+  </script>
+
+</body>
+</html>

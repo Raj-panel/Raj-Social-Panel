@@ -63,7 +63,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 0 0 12px 0; /* ব্রাউজারের একদম উপর পর্যন্ত ফিক্স করার জন্য প্যাডিং জিরো করা হলো */
+  padding: 0 0 12px 0;
   transition: background 0.3s ease, color 0.3s ease;
 }
 
@@ -77,33 +77,33 @@ body {
 }
 
 /* ==========================================================
-   TOP STYLISH NAVBAR (Pink Glass Effect, Full Width & Top Fixed)
+   TOP STYLISH NAVBAR (Unique Glass Effect, No Padding & Glowing Border)
    ========================================================== */
 .top-navbar-wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(135deg, rgba(236, 72, 153, 0.25), rgba(219, 39, 119, 0.15));
+  background: rgba(15, 23, 42, 0.65);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-radius: 0 0 20px 20px; /* নিচটা গোল থাকবে, উপরটা ব্রাউজারের সাথে মিশে থাকবে */
-  padding: 12px 14px;
-  box-shadow: 0 8px 25px rgba(219, 39, 119, 0.2);
+  border-radius: 0 0 20px 20px;
+  padding: 0 !important; /* কোনো প্যাডিং রাখা হয়নি */
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.35), inset 0 0 15px rgba(255, 255, 255, 0.05);
   position: relative;
   width: 100%;
   margin-bottom: 4px;
   
-  /* Stylish Pinkish Multi-Color Animated Border */
+  /* Unique Glowing Multi-Color Animated Border */
   border: 2px solid transparent;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), linear-gradient(135deg, #ec4899, #f43f5e, #c084fc, #db2777);
+  background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), linear-gradient(135deg, #a855f7, #ec4899, #3b82f6, #6366f1);
   background-origin: border-box;
   background-clip: padding-box, border-box;
 }
 
 /* Hamburger Menu Button Inside Top Bar */
 .top-navbar-wrapper .hamburger-btn {
-  background: rgba(255, 255, 255, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--text-main);
   font-size: 16px;
   width: 40px;
@@ -115,12 +115,12 @@ body {
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   transition: all 0.3s ease;
-  margin-bottom: 0;
+  margin: 8px 0 8px 10px;
   align-self: center;
   z-index: 2;
 }
 
-/* Middle Brand Logo Container (platform.jpg - Size Increased) */
+/* Middle Brand Logo Container (Size Increased) */
 .nav-brand-logo {
   position: absolute;
   left: 50%;
@@ -131,9 +131,9 @@ body {
 }
 
 .brand-logo-img {
-  height: 46px; /* লোগোর সাইজ একটু বড় করা হয়েছে */
+  height: 55px; /* লোগোর সাইজ আরও বড় করা হয়েছে */
   width: auto;
-  max-width: 140px;
+  max-width: 150px;
   object-fit: contain;
   border-radius: 10px;
   display: block;
@@ -143,6 +143,7 @@ body {
 .nav-right-action {
   display: flex;
   align-items: center;
+  margin: 8px 10px 8px 0;
   z-index: 2;
 }
 
@@ -187,7 +188,7 @@ body {
 }
 
 .wallet-balance-pill i {
-  color: #ec4899; /* পিঙ্ক কালার আইকন */
+  color: #ec4899;
   font-size: 14px;
 }
 
@@ -211,7 +212,7 @@ body {
   transform: scale(1.1);
 }
 
-/* Glass Header Card & Image Styling (Fits Image Perfectly) */
+/* Glass Header Card & Image Styling */
 .glass-header-card {
   background: var(--card-bg);
   backdrop-filter: blur(15px);
@@ -225,9 +226,8 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  width: 100%;
-  margin: 0 10px; /* সাইডে গ্যাপ ঠিক রাখার জন্য */
   width: calc(100% - 20px);
+  margin: 0 10px;
   align-self: center;
 }
 
@@ -239,7 +239,6 @@ body {
   border-radius: 14px;
 }
 
-/* বাকি কন্টেইনারগুলোর মার্জিন প্যাডিং ঠিক রাখার জন্য */
 .platform-container > *:not(.top-navbar-wrapper) {
   margin-left: 10px;
   margin-right: 10px;
@@ -292,7 +291,6 @@ body {
   position: relative;
 }
 
-/* Glowing Effects for Buttons */
 .glass-service-card.glow-indian {
   box-shadow: 0 0 12px rgba(255, 153, 51, 0.35), 0 0 5px rgba(19, 136, 8, 0.25);
   border: 1px solid rgba(255, 153, 51, 0.5);
@@ -315,17 +313,6 @@ body {
   100% { box-shadow: 0 0 18px rgba(192, 132, 252, 0.65); }
 }
 
-.glass-service-card.glow-budget {
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.4), 0 0 5px rgba(245, 158, 11, 0.3);
-  border: 1px solid rgba(16, 185, 129, 0.5);
-  animation: pulseBudgetGlow 3s infinite alternate;
-}
-
-@keyframes pulseBudgetGlow {
-  0% { box-shadow: 0 0 8px rgba(16, 185, 129, 0.3); }
-  100% { box-shadow: 0 0 18px rgba(245, 158, 11, 0.5); }
-}
-
 .glass-service-card:hover {
   transform: translateY(-2px);
 }
@@ -336,7 +323,6 @@ body {
   gap: 12px;
 }
 
-/* Multi Icon Boxes */
 .multi-icon-box {
   width: 42px;
   height: 42px;
@@ -370,13 +356,6 @@ body {
 .real-color-box .icon-insta { color: #e1306c; }
 .real-color-box .icon-yt { color: #ff0000; }
 .real-color-box .icon-tt { color: #000000; }
-
-.unique-budget-box {
-  background: linear-gradient(135deg, #10b981 0%, #047857 100%);
-  border-radius: 50%;
-  border: 1.5px solid #f59e0b;
-}
-.unique-budget-box i { color: #ffffff; }
 
 .card-text h3 {
   font-size: 14.5px;
@@ -548,47 +527,3 @@ body {
   overflow: hidden;
 }
 .tutorial-banner-img { width: 100%; height: auto; display: block; }
-
-/* Modal Alert Box */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(4px);
-  z-index: 2000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-}
-
-.modal-overlay.active { opacity: 1; visibility: visible; }
-
-.modal-card {
-  background: var(--modal-bg);
-  border: 1px solid var(--card-border);
-  padding: 22px;
-  border-radius: 18px;
-  text-align: center;
-  width: 80%;
-  max-width: 310px;
-  box-shadow: var(--card-shadow);
-}
-
-.modal-icon { font-size: 34px; color: #c084fc; margin-bottom: 6px; }
-.modal-card h2 { font-size: 19px; margin-bottom: 4px; color: var(--text-main); }
-.modal-card p { font-size: 12.5px; color: var(--text-sub); margin-bottom: 16px; }
-.modal-card button {
-  background: linear-gradient(135deg, #c084fc, #9333ea);
-  color: #ffffff;
-  border: none;
-  padding: 9px 22px;
-  border-radius: 9px;
-  font-weight: 700;
-  cursor: pointer;
-}

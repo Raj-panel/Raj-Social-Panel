@@ -22,7 +22,7 @@ function getLogoByText(text) {
   return platformLogos[currentPlatform] || platformLogos.instagram;
 }
 
-// All Platform & Service Data (Global across platforms for global search)
+// All Platform & Service Data
 const platformData = {
   instagram: {
     title: "Instagram Boost",
@@ -92,7 +92,7 @@ const platformData = {
     linkPlaceholder: "Link Facebook page or profile",
     categories: {
       "Facebook follower real account medium speed": {
-        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫 𝐫𝐞𝐚𝐥 𝐚𝐜𝐜𝐨𝐮𝐧𝐭 𝐦𝐞𝐝𝐢𝐮𝐦 𝐬𝐩𝐞𝐞𝒅",
+        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫 𝐫𝐞𝐚𝐥 𝐚𝐜𝐜𝐨𝐮𝐧𝐭 𝐦𝐞𝐝𝐢𝐮𝐦 𝐬𝐩𝐞𝐞𝐝",
         services: [
           { id: "6207", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | 90D Refill ♻️", rate: 40.4272, avgTime: "0–30 Min Start" },
           { id: "6208", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | 365D Refill ♻️", rate: 43.0640, avgTime: "0–30 Min Start" },
@@ -136,7 +136,7 @@ const platformData = {
   }
 };
 
-// Render Select With Icons & Auto-scroll to selected item position
+// Render Select With Icons & Auto-scroll
 function setupSelectIcons(selectId) {
   const selectElem = document.getElementById(selectId);
   if (!selectElem) return;
@@ -345,7 +345,7 @@ function calculatePrice() {
   updateAverageTime();
 }
 
-// Checkout Navigation with Instant QR Pre-loading
+// Checkout Navigation with Instant QR Generation
 function openCheckout() {
   const mainLink = document.getElementById("mainLinkInput");
   const mainQty = document.getElementById("mainQuantityInput");
@@ -374,17 +374,11 @@ function openCheckout() {
   if (checkoutPrice) checkoutPrice.innerText = calculatedPrice;
 
   const upiId = "rajsmmpanel@jio";
+  // ইনস্ট্যান্ট রেন্ডারিংয়ের জন্য সরাসরি এসাইন করা হলো
   const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=${upiId}%26am=${calculatedPrice}%26cu=INR`;
   
   const qrImg = document.getElementById("checkoutQrImg");
   if (qrImg) {
-    // ইনস্ট্যান্ট লোড করার জন্য ব্যাকগ্রাউন্ডে প্রি-লোড অবজেক্ট তৈরি করে তাৎক্ষণিকভাবে সেট করা হলো
-    const preloaderImg = new Image();
-    preloaderImg.src = qrApi;
-    preloaderImg.onload = function() {
-      qrImg.src = qrApi;
-    };
-    // ফাস্ট রেন্ডারিংয়ের জন্য সরাসরিও এসাইন করে দেওয়া হলো
     qrImg.src = qrApi;
   }
 
@@ -473,7 +467,7 @@ function switchCheckoutPayment(method) {
   }
 }
 
-// Modern Glowing Popup & Confetti Integration
+// Modern Glowing Popup & Confetti
 function showModernPopup(title, message, type = 'success') {
   const existingPopup = document.getElementById('modernCustomPopup');
   if (existingPopup) existingPopup.remove();
@@ -536,20 +530,12 @@ function showModernPopup(title, message, type = 'success') {
 
 function triggerConfetti() {
   if (window.confetti) {
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 }
-    });
+    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
   } else {
     const script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js';
     script.onload = () => {
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
     };
     document.head.appendChild(script);
   }
@@ -599,10 +585,7 @@ async function sendOrderToTelegram() {
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: message
-      })
+      body: JSON.stringify({ chat_id: chatId, text: message })
     });
 
     const data = await response.json();

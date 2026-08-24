@@ -385,7 +385,7 @@ function openCheckout() {
     
     qrcodeInstance = new QRCode(qrContainer, {
       text: upiString,
-      width: 120,
+      width: 130,
       height: 120,
       colorDark: "#000000",
       colorLight: "#ffffff",

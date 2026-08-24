@@ -92,7 +92,7 @@ const platformData = {
     linkPlaceholder: "Link Facebook page or profile",
     categories: {
       "Facebook follower real account medium speed": {
-        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫 𝐫𝐞𝐚𝐥 𝐚𝐜𝐜𝐨𝐮𝐧𝐭 𝐦𝐞𝐝𝐢𝐮𝐦 𝐬𝐩𝐞𝐞𝐝",
+        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫 𝐫𝐞𝐚𝐥 𝐚𝐜𝐜𝐨𝐮𝐧𝐭 𝐦𝐞𝐝𝐢𝐮𝐦 𝐬𝐩𝐞𝐞𝒅",
         services: [
           { id: "6207", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | 90D Refill ♻️", rate: 40.4272, avgTime: "0–30 Min Start" },
           { id: "6208", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | 365D Refill ♻️", rate: 43.0640, avgTime: "0–30 Min Start" },
@@ -345,7 +345,7 @@ function calculatePrice() {
   updateAverageTime();
 }
 
-// Checkout Navigation
+// Checkout Navigation with Instant QR Pre-loading
 function openCheckout() {
   const mainLink = document.getElementById("mainLinkInput");
   const mainQty = document.getElementById("mainQuantityInput");
@@ -375,8 +375,18 @@ function openCheckout() {
 
   const upiId = "rajsmmpanel@jio";
   const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=${upiId}%26am=${calculatedPrice}%26cu=INR`;
+  
   const qrImg = document.getElementById("checkoutQrImg");
-  if (qrImg) qrImg.src = qrApi;
+  if (qrImg) {
+    // ইনস্ট্যান্ট লোড করার জন্য ব্যাকগ্রাউন্ডে প্রি-লোড অবজেক্ট তৈরি করে তাৎক্ষণিকভাবে সেট করা হলো
+    const preloaderImg = new Image();
+    preloaderImg.src = qrApi;
+    preloaderImg.onload = function() {
+      qrImg.src = qrApi;
+    };
+    // ফাস্ট রেন্ডারিংয়ের জন্য সরাসরিও এসাইন করে দেওয়া হলো
+    qrImg.src = qrApi;
+  }
 
   const checkoutPage = document.getElementById("checkoutPage");
   if (checkoutPage) {
@@ -551,7 +561,6 @@ async function sendOrderToTelegram() {
   const checkoutTitle = document.getElementById("checkoutServiceTitle");
   const mainQty = document.getElementById("mainQuantityInput");
   
-  // ডাবল ক্লিক রোধ করতে সাবমিট বাটনটি সিলেক্ট করা হলো
   const submitBtn = document.querySelector("#checkoutPage button[onclick*='sendOrderToTelegram']") || document.querySelector("#checkoutPage button");
 
   const link = mainLink ? mainLink.value.trim() : "";
@@ -564,7 +573,6 @@ async function sendOrderToTelegram() {
     return;
   }
 
-  // প্রথম ক্লিক পড়ার সঙ্গে সঙ্গেই বাটনটি লক করে দেওয়া হচ্ছে
   if (submitBtn) {
     submitBtn.disabled = true;
     submitBtn.style.opacity = "0.7";
@@ -610,7 +618,6 @@ async function sendOrderToTelegram() {
     console.error("Error submitting order:", error);
     showModernPopup("Connection Failed!", "Please check your network connection.", "error");
   } finally {
-    // কাজ শেষ হলে বাটনটি আবার আগের অবস্থায় ফিরিয়ে আনা
     if (submitBtn) {
       submitBtn.disabled = false;
       submitBtn.style.opacity = "1";

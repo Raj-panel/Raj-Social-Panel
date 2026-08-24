@@ -1,237 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Raj SMM Panel - Platform</title>
-  
-  <!-- Manifest Link -->
-  <link rel="manifest" href="/manifest.json">
-  
-  <!-- Google Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
-  
-  <!-- Font Awesome Icons -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-  
-  <!-- CSS Stylesheet Link -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raj SMM Panel - Social Media Growth</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
-<body data-platform="instagram">
+<body>
 
-  <!-- Left Sidebar Drawer Navigation -->
-  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar(true)"></div>
-  <div class="left-sidebar" id="leftSidebar">
-    <div class="sidebar-header">
-      <div class="sidebar-title">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
-      <button class="sidebar-close-btn" onclick="closeSidebar(true)" aria-label="Close Sidebar">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-    </div>
-    
-    <ul class="sidebar-menu">
-      <li id="authMenuItem">
-        <a href="/login/">🔐 Login / Create Account</a>
-      </li>
-      <li><a href="https://rajsmmpanel.in/">🛒 New Order</a></li>
-      <li><a href="/orders/">📦 My Orders</a></li>
-      <li id="addFundsMenuItem" style="display: none;"></li>
-      <li><a href="/pages/privacy-policy.html">🔒 Privacy Policy</a></li>
-      <li><a href="/pages/refund-policy.html">💸 Refund Policy</a></li>
-      <li><a href="/pages/terms.html">📜 Terms &amp; Conditions</a></li>
-      <li><a href="/pages/contact.html">📞 Contact Us</a></li>
-      <li><a href="/pages/about.html">ℹ️ About Us</a></li>
-      <li><a href="/buy-smm-panel">🛒 Buy SMM Panel</a></li>
-    </ul>
-
-    <div class="sidebar-footer-media">
-      <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="watch-tutorials-btn">
-        <i class="fa-brands fa-youtube"></i> Watch Tutorials
-      </a>
-      <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="tutorial-banner-link">
-        <img src="../thumbnail.png" alt="Watch Tutorial" class="tutorial-banner-img" />
-      </a>
-    </div>
-  </div>
-
-  <!-- Main Container -->
   <div class="platform-container">
-    
-    <!-- Top Custom Header Navigation Bar (Border, Hamburger, Middle Logo, Right Auth/Wallet) -->
+
+    <!-- ==========================================================
+       TOP STYLISH NAVBAR (Pink Glass Effect, Full Width & Top Fixed)
+       ========================================================== -->
     <header class="top-navbar-wrapper">
-      <!-- Hamburger Button -->
-      <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
+      <!-- Hamburger Menu Button -->
+      <button class="hamburger-btn" onclick="openSidebar()">
         <i class="fa-solid fa-bars"></i>
       </button>
 
-      <!-- Middle Logo (platform.jpg) -->
+      <!-- Middle Brand Logo (platform.jpg) -->
       <div class="nav-brand-logo">
-        <a href="https://rajsmmpanel.in/">
-          <img src="platform.jpg" alt="Raj SMM Panel Logo" class="brand-logo-img"/>
+        <a href="/">
+          <img src="platform.jpg" alt="Logo" class="brand-logo-img">
         </a>
       </div>
 
-      <!-- Right Side Dynamic Auth / Wallet Section -->
-      <div class="nav-right-action" id="navRightAction">
-        <!-- Default State: Login Button (Shown before login) -->
-        <a href="/login/" class="nav-login-btn" id="navLoginBtn">Login</a>
-        
-        <!-- Logged-In State: Wallet Balance & Add Funds Plus Button (Dynamically toggled via JS) -->
-        <div class="nav-wallet-box" id="navWalletBox" style="display: none;">
-          <a href="/add-funds/" class="wallet-balance-pill">
-            <i class="fa-solid fa-wallet"></i> <span id="userBalanceText">₹0</span>
+      <!-- Right Side Actions (Dynamic Login or Wallet & Add Funds) -->
+      <div class="nav-right-action">
+        <!-- Before Login: Login Button -->
+        <a href="/login/" id="navLoginBtn" class="nav-login-btn">Login</a>
+
+        <!-- After Login: Pink Wallet & Add Funds Box -->
+        <div id="navWalletBox" class="nav-wallet-box" style="display: none;">
+          <a href="/orders/" class="wallet-balance-pill">
+            <i class="fa-solid fa-wallet"></i>
+            <span id="userBalanceText">₹0</span>
           </a>
-          <a href="/add-funds/" class="wallet-add-btn" aria-label="Add Funds">
+          <a href="/add-funds/" class="wallet-add-btn" title="Add Funds">
             <i class="fa-solid fa-plus"></i>
           </a>
         </div>
       </div>
     </header>
 
-    <!-- Header Card / Platform Image Logo Section -->
+    <!-- Glass Header Card (Banner/Image) -->
     <div class="glass-header-card">
-      <img src="platform.png" alt="Raj SMM Panel Platform" class="header-platform-img"/>
+      <img src="platform.jpg" alt="Platform Banner" class="header-platform-img">
     </div>
 
-    <!-- Social Media Icons Grid -->
+    <!-- Social Media Grid Icons (Non-clickable representation) -->
     <div class="social-icons-grid">
-      <div class="social-box fb">
-        <i class="fa-brands fa-facebook-f"></i>
-      </div>
-      <div class="social-box insta">
-        <i class="fa-brands fa-instagram"></i>
-      </div>
-      <div class="social-box yt">
-        <i class="fa-brands fa-youtube"></i>
-      </div>
-      <div class="social-box tiktok">
-        <i class="fa-brands fa-tiktok"></i>
-      </div>
+      <div class="social-box fb"><i class="fa-brands fa-facebook-f"></i></div>
+      <div class="social-box insta"><i class="fa-brands fa-instagram"></i></div>
+      <div class="social-box yt"><i class="fa-brands fa-youtube"></i></div>
+      <div class="social-box tiktok"><i class="fa-brands fa-tiktok"></i></div>
     </div>
 
-    <!-- Service Card 1: Best Quality Followers (Glowing Indian Theme) -->
-    <a href="https://rajsmmpanel.in/platform/" class="glass-service-card glow-indian">
-      <div class="card-left">
-        <div class="multi-icon-box indian-theme-box">
-          <i class="fa-brands fa-facebook-f"></i>
-          <i class="fa-brands fa-instagram"></i>
-          <i class="fa-brands fa-youtube"></i>
-          <i class="fa-brands fa-tiktok"></i>
-        </div>
-        <div class="card-text">
-          <h3>🇮🇳 Best Quality Followers</h3>
-          <p>High Retention • Premium Quality</p>
-        </div>
-      </div>
-      <div class="card-arrow">
-        <i class="fa-solid fa-chevron-right"></i>
-      </div>
-    </a>
+    <!-- Service Cards List (Lowest Price Follower Removed) -->
+    <div class="services-list" style="display: flex; flex-direction: column; gap: 10px;">
 
-    <!-- Service Card 2: Premium Quality Followers -->
-    <a href="/platform/2/" class="glass-service-card glow-premium">
-      <div class="card-left">
-        <div class="multi-icon-box real-color-box">
-          <i class="fa-brands fa-facebook-f icon-fb"></i>
-          <i class="fa-brands fa-instagram icon-insta"></i>
-          <i class="fa-brands fa-youtube icon-yt"></i>
-          <i class="fa-brands fa-tiktok icon-tt"></i>
+      <!-- Service 1: Indian Real Services -->
+      <a href="/platform/1" class="glass-service-card glow-indian">
+        <div class="card-left">
+          <div class="multi-icon-box indian-theme-box">
+            <i class="fa-brands fa-instagram"></i>
+            <i class="fa-brands fa-facebook-f"></i>
+            <i class="fa-brands fa-youtube"></i>
+            <i class="fa-brands fa-telegram"></i>
+          </div>
+          <div class="card-text">
+            <h3>Indian Real Services</h3>
+            <p>Non-Drop & Real Engagement</p>
+          </div>
         </div>
-        <div class="card-text">
-          <h3>🔥 Premium Quality Followers</h3>
-          <p>Stable Profiles • Quality Service</p>
+        <div class="card-arrow">
+          <i class="fa-solid fa-chevron-right"></i>
         </div>
-      </div>
-      <div class="card-arrow">
-        <i class="fa-solid fa-chevron-right"></i>
-      </div>
-    </a>
+      </a>
 
-    <!-- Service Card 3: Lowest Price Followers -->
-    <div class="glass-service-card glow-budget" onclick="openComingSoonModal()">
-      <div class="card-left">
-        <div class="multi-icon-box unique-budget-box">
-          <i class="fa-brands fa-facebook-f"></i>
-          <i class="fa-brands fa-instagram"></i>
-          <i class="fa-brands fa-youtube"></i>
-          <i class="fa-brands fa-tiktok"></i>
+      <!-- Service 2: Premium Quality Services -->
+      <a href="/platform/2" class="glass-service-card glow-premium">
+        <div class="card-left">
+          <div class="multi-icon-box real-color-box">
+            <i class="fa-brands fa-facebook-f icon-fb"></i>
+            <i class="fa-brands fa-instagram icon-insta"></i>
+            <i class="fa-brands fa-youtube icon-yt"></i>
+            <i class="fa-brands fa-tiktok icon-tt"></i>
+          </div>
+          <div class="card-text">
+            <h3>Premium Quality Services</h3>
+            <p>Super Fast Speed Guaranteed</p>
+          </div>
         </div>
-        <div class="card-text">
-          <h3>💰 Lowest Price Followers</h3>
-          <p>Low Cost • Budget Service</p>
+        <div class="card-arrow">
+          <i class="fa-solid fa-chevron-right"></i>
         </div>
-      </div>
-      <div class="card-arrow">
-        <i class="fa-solid fa-chevron-right"></i>
-      </div>
+      </a>
+
+      <!-- Service 3: Budget Friendly Services -->
+      <a href="/platform/3" class="glass-service-card glow-budget">
+        <div class="card-left">
+          <div class="multi-icon-box unique-budget-box">
+            <i class="fa-solid fa-bolt" style="grid-column: span 2; grid-row: span 2; font-size: 18px;"></i>
+          </div>
+          <div class="card-text">
+            <h3>Budget Friendly Services</h3>
+            <p>Cheapest Rates in Market</p>
+          </div>
+        </div>
+        <div class="card-arrow">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </a>
+
     </div>
 
-    <!-- Watch Tutorials Red Button -->
-    <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="watch-tutorials-main-btn">
-      <i class="fa-brands fa-youtube"></i> WATCH TUTORIALS
+    <!-- Watch Tutorials Main Button -->
+    <a href="https://youtube.com" target="_blank" class="watch-tutorials-main-btn">
+      <i class="fa-brands fa-youtube" style="font-size: 18px;"></i> Watch Tutorials
     </a>
 
-    <!-- Bottom Glass Card For Thumbnail -->
-    <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="glass-banner-card">
-      <img src="../thumbnail.png" alt="Raj SMM Panel Tutorial" />
+    <!-- Bottom Glass Card (Tutorial Banner) -->
+    <a href="https://youtube.com" target="_blank" class="glass-banner-card">
+      <img src="platform.jpg" alt="Tutorial Banner">
     </a>
 
   </div>
 
-  <!-- Coming Soon Custom Alert Popup -->
-  <div class="modal-overlay" id="comingSoonModal">
+  <!-- ==========================================================
+     DRAWER SIDEBAR (Left Menu)
+     ========================================================== -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+  <aside class="left-sidebar" id="leftSidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-title">Raj SMM Panel</span>
+      <button class="sidebar-close-btn" onclick="closeSidebar()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <ul class="sidebar-menu">
+      <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="/orders/"><i class="fa-solid fa-box-archive"></i> My Orders</a></li>
+      <li id="addFundsMenuItem" style="display: none;"><a href="/add-funds/"><i class="fa-solid fa-wallet"></i> Add Funds</a></li>
+      <li><a href="https://wa.me/" target="_blank"><i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> WhatsApp Support</a></li>
+      <li id="authMenuItem"><a href="/login/"><i class="fa-solid fa-lock"></i> Login / Create Account</a></li>
+    </ul>
+
+    <div class="sidebar-footer-media">
+      <a href="https://youtube.com" target="_blank" class="watch-tutorials-btn">
+        <i class="fa-brands fa-youtube"></i> Watch Tutorials
+      </a>
+      <a href="https://youtube.com" target="_blank" class="tutorial-banner-link">
+        <img src="platform.jpg" alt="Tutorial" class="tutorial-banner-img">
+      </a>
+    </div>
+  </aside>
+
+  <!-- ==========================================================
+     MODAL ALERT BOX
+     ========================================================== -->
+  <div class="modal-overlay" id="customModal">
     <div class="modal-card">
-      <div class="modal-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
-      <h2>Coming Soon!</h2>
-      <p>This service will be available very soon. Stay tuned with us!</p>
-      <button onclick="closeComingSoonModal()">OK</button>
+      <div class="modal-icon"><i class="fa-solid fa-circle-check"></i></div>
+      <h2 id="modalTitle">Notice</h2>
+      <p id="modalMessage">Something went wrong!</p>
+      <button onclick="closeModal()">OK</button>
     </div>
   </div>
 
-  <!-- UI Navigation Handlers (Sidebar & Modal) -->
+  <!-- JavaScript Modules -->
+  <script type="module" src="auth-handler.js"></script>
   <script>
     function openSidebar() {
-      const sidebar = document.getElementById("leftSidebar");
-      const overlay = document.getElementById("sidebarOverlay");
-      if (sidebar) {
-        sidebar.classList.add("active");
-        if (overlay) overlay.classList.add("active");
-        document.body.style.overflow = "hidden";
-        history.pushState({ sidebarOpen: true }, '');
-      }
+      document.getElementById('leftSidebar').classList.add('active');
+      document.getElementById('sidebarOverlay').classList.add('active');
     }
-
-    function closeSidebar(fromUserAction = false) {
-      const sidebar = document.getElementById("leftSidebar");
-      const overlay = document.getElementById("sidebarOverlay");
-      if (sidebar && sidebar.classList.contains("active")) {
-        sidebar.classList.remove("active");
-        if (overlay) overlay.classList.remove("active");
-        document.body.style.overflow = "auto";
-        if (fromUserAction && history.state && history.state.sidebarOpen) {
-          history.back();
-        }
-      }
+    function closeSidebar() {
+      document.getElementById('leftSidebar').classList.remove('active');
+      document.getElementById('sidebarOverlay').classList.remove('active');
     }
-
-    window.addEventListener("popstate", function () {
-      closeSidebar(false);
-    });
-
-    function openComingSoonModal() {
-      const modal = document.getElementById("comingSoonModal");
-      if (modal) modal.classList.add("active");
+    function showModal(title, message) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalMessage').innerText = message;
+      document.getElementById('customModal').classList.add('active');
     }
-
-    function closeComingSoonModal() {
-      const modal = document.getElementById("comingSoonModal");
-      if (modal) modal.classList.remove("active");
+    function closeModal() {
+      document.getElementById('customModal').classList.remove('active');
     }
   </script>
-
-  <!-- Firebase Authentication Logic Handler -->
-  <script type="module" src="/auth-handler.js"></script>
 </body>
 </html>

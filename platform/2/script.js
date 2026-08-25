@@ -180,8 +180,8 @@ function setupSelectIcons(selectId) {
 
   // Category specific font size increased to 16px
   const isCategory = selectId === 'categorySelect';
-  const boxFontSize = isCategory ? '16px' : '14px';
-  const optionFontSize = isCategory ? '15px' : '13px';
+  const boxFontSize = isCategory ? '14px' : '14px';
+  const optionFontSize = isCategory ? '14px' : '13px';
 
   const selectedDisplay = document.createElement('div');
   selectedDisplay.className = 'custom-selected-box';

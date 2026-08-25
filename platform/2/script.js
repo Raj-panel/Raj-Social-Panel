@@ -232,6 +232,8 @@ const platformData = {
       }
     }
   }
+};
+
 // Render Select With Dynamic Platform Logos per item
 function setupSelectIcons(selectId) {
   const selectElem = document.getElementById(selectId);

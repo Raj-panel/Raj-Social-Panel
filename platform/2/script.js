@@ -1,19 +1,22 @@
 // Global State Variables
-let currentPlatform = 'instagram';
+let currentPlatform = 'all';
 let calculatedPrice = 0;
 
 // Platform Icon SVG / Image Links
 const platformLogos = {
+  all: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hamburger_icon.svg",
   instagram: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg",
   facebook: "https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg",
   youtube: "https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg",
   tiktok: "https://upload.wikimedia.org/wikipedia/commons/a/a9/TikTok_logo.svg",
+  telegram: "https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg",
   whatsapp: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
 };
 
 // Helper: Auto Detect Logo based on text name
 function getLogoByText(text) {
   const lower = text.toLowerCase();
+  if (lower.includes('telegram')) return platformLogos.telegram;
   if (lower.includes('facebook')) return platformLogos.facebook;
   if (lower.includes('youtube')) return platformLogos.youtube;
   if (lower.includes('tiktok')) return platformLogos.tiktok;
@@ -24,6 +27,11 @@ function getLogoByText(text) {
 
 // All Platform & Service Data
 const platformData = {
+  all: {
+    title: "All Services",
+    icon: "fa-solid fa-bars",
+    linkPlaceholder: "Link profile / post / channel"
+  },
   instagram: {
     title: "Instagram Boost",
     icon: "fa-brands fa-instagram",
@@ -161,8 +169,44 @@ const platformData = {
     icon: "fa-brands fa-tiktok",
     linkPlaceholder: "Link TikTok account or video",
     categories: {}
+  },
+  telegram: {
+    title: "Telegram Boost",
+    icon: "fa-brands fa-telegram",
+    linkPlaceholder: "Link Telegram channel / group / post",
+    categories: {
+      "Telegram Members | High Quality": {
+        name: "𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦 𝐌𝐞𝐦𝐛𝐞𝐫𝐬 [𝐍𝐨𝐧-𝐃𝐫𝐨𝐩]",
+        services: [
+          { id: "3001", name: "Telegram Channel/Group Members | Real Accounts | Non Drop | 50K/Day | 0–15 Min Start - Lifetime Refill ♻️", rate: 45.500, avgTime: "0–15 Min Start" },
+          { id: "3002", name: "Telegram Channel Members | High Quality | Fast Delivery | 0–5 Min Start - 30D Refill 🔄", rate: 38.200, avgTime: "0–5 Min Start" }
+        ]
+      },
+      "Telegram Post Views": {
+        name: "𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦 𝐏𝐨𝐬𝐭 𝐕𝐢𝐞𝐰𝐬 ~ 𝐒𝐮𝐩𝐞𝐫 𝐅𝐚𝐬𝐭",
+        services: [
+          { id: "3010", name: "Telegram Post Views | Last 5 Posts | Super Instant | 0–2 Min Start", rate: 5.500, avgTime: "0–2 Min Start" },
+          { id: "3011", name: "Telegram Post Views | Single Post | 100K/Day | Instant Start", rate: 3.200, avgTime: "0–1 Min Start" }
+        ]
+      }
+    }
   }
 };
+
+// Helper function to get combined categories for 'all'
+function getAllCategoriesCombined() {
+  const combined = {};
+  const platformKeys = ['instagram', 'facebook', 'youtube', 'tiktok', 'telegram'];
+  
+  platformKeys.forEach(plat => {
+    if (platformData[plat] && platformData[plat].categories) {
+      for (let catKey in platformData[plat].categories) {
+        combined[`${plat}_${catKey}`] = platformData[plat].categories[catKey];
+      }
+    }
+  });
+  return combined;
+}
 
 // Render Select With Icons & Auto-scroll
 function setupSelectIcons(selectId) {
@@ -178,7 +222,6 @@ function setupSelectIcons(selectId) {
 
   const defaultBoxStyle = 'background: #f8fafc; color: #1e293b; font-weight: 500; border: 2px solid #ec4899;';
 
-  // Category specific font size increased to 16px
   const isCategory = selectId === 'categorySelect';
   const boxFontSize = isCategory ? '14px' : '14px';
   const optionFontSize = isCategory ? '14px' : '13px';
@@ -288,10 +331,18 @@ function selectPlatform(platform) {
   const categorySelect = document.getElementById('categorySelect');
   if (categorySelect) {
     categorySelect.innerHTML = "";
-    for (let key in data.categories) {
+    
+    let categoriesObj = {};
+    if (platform === 'all') {
+      categoriesObj = getAllCategoriesCombined();
+    } else if (data && data.categories) {
+      categoriesObj = data.categories;
+    }
+
+    for (let key in categoriesObj) {
       const option = document.createElement("option");
       option.value = key;
-      option.textContent = data.categories[key].name;
+      option.textContent = categoriesObj[key].name;
       categorySelect.appendChild(option);
     }
     setupSelectIcons('categorySelect');
@@ -314,7 +365,14 @@ function updateServices() {
   
   serviceSelect.innerHTML = "";
 
-  if (!categoryKey || !platformData[currentPlatform].categories[categoryKey]) {
+  let categoriesObj = {};
+  if (currentPlatform === 'all') {
+    categoriesObj = getAllCategoriesCombined();
+  } else if (platformData[currentPlatform]) {
+    categoriesObj = platformData[currentPlatform].categories;
+  }
+
+  if (!categoryKey || !categoriesObj[categoryKey]) {
     const timeBox = document.querySelector('.time-box');
     if (timeBox) timeBox.innerHTML = `⚡ Average Time: <strong>N/A</strong>`;
     setupSelectIcons('serviceSelect');
@@ -322,7 +380,7 @@ function updateServices() {
     return;
   }
 
-  const services = platformData[currentPlatform].categories[categoryKey].services;
+  const services = categoriesObj[categoryKey].services;
 
   services.forEach(service => {
     const option = document.createElement("option");
@@ -686,6 +744,7 @@ document.addEventListener('DOMContentLoaded', function () {
       let matchedServices = [];
 
       for (let platKey in platformData) {
+        if (platKey === 'all') continue;
         const categories = platformData[platKey].categories;
         for (let catKey in categories) {
           categories[catKey].services.forEach(service => {
@@ -751,7 +810,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-// Auto Initialize Page
+// Auto Initialize Page to Default 'all'
 window.onload = function() {
-  selectPlatform('instagram');
+  selectPlatform('all');
 };

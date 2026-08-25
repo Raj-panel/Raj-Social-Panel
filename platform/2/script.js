@@ -126,7 +126,35 @@ const platformData = {
     title: "YouTube Boost",
     icon: "fa-brands fa-youtube",
     linkPlaceholder: "Link YouTube channel or video",
-    categories: {}
+    categories: {
+      "YouTube Subscribers | No Guaranteed": {
+        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐒𝐮𝐛𝐬𝐜𝐫𝐢𝐛𝐞𝐫𝐬 | 𝐍𝐨 𝐆𝐮𝐚𝐫𝐚𝐧𝐭𝐞𝐞𝐝",
+        services: [
+          { id: "69", name: "YouTube Subscribers | Low Quality | 50K+/Day | 0–5 Min Start | Fast | No Refill 🔄", rate: 36.429, avgTime: "0–5 Min Start" },
+          { id: "950", name: "YouTube Subscribers | Low Quality | 100K+/Day | 0–5 Min Start | Ultra Cheapest | No Refill 🔄", rate: 70.149, avgTime: "0–5 Min Start" },
+          { id: "951", name: "YouTube Subscribers | Low Quality | 500K+/Day | 0–5 Min Start | No Refill 🔄", rate: 76.345, avgTime: "0–5 Min Start" }
+        ]
+      },
+      "YouTube Subscribers- 🇮🇳 Guaranteed ✅": {
+        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐒𝐮𝐛𝐬𝐜𝐫𝐢𝐛𝐞𝐫𝐬- 🇮🇳 𝐆𝐮𝐚𝐫𝐚𝐧𝐭𝐞𝐞𝐝 ✅",
+        services: [
+          { id: "964", name: "YouTube Subscribers 🇮🇳 | High Quality | 100% Non Drop | 100+/Day | 0–15 Min Start ⚡ | Lifetime Refill ♻️", rate: 2541.601, avgTime: "0–15 Min Start" }
+        ]
+      },
+      "YouTube Likes [Best Quality] — 🇮🇳 Premium": {
+        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐋𝐢𝐤𝐞𝐬 [𝐁𝐞𝐬𝐭 𝐐𝐮𝐚𝐥𝐢𝐭𝐲] — 🇮🇳 𝐏𝐫𝐞𝐦𝐢𝐮𝐦",
+        services: [
+          { id: "2009", name: "YouTube Likes | Best Quality | Max 1M | Non Drop | Super Instant | 0–20 Min Start | 100K/Day | No Refill 🔄", rate: 49.8745, avgTime: "0–20 Min Start" },
+          { id: "2010", name: "YouTube Likes | Best Quality | Max 1M | Non Drop | Super Instant | 0–20 Min Start | 100K/Day | 365D Refill 🔄", rate: 299.0462, avgTime: "0–20 Min Start" }
+        ]
+      },
+      "YouTube Views 🇮🇳 {Shorts / Video} Non Drop": {
+        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐕𝐢𝐞𝐰𝐬 🇮🇳 {𝐒𝐡𝐨𝐫𝐭𝐬 / 𝐕𝐢𝐝𝐞𝐨} 𝐍𝐨𝐧 𝐃𝐫𝐨𝐩",
+        services: [
+          { id: "815", name: "YouTube Shorts / Video Views | Max 100K | Non Drop 📉 | Lifetime Guaranteed ♻️ | 20K/Day 🚀 | 0–20 Min Start ⚡", rate: 199.24, avgTime: "0–20 Min Start" }
+        ]
+      }
+    }
   },
   tiktok: {
     title: "TikTok Boost",

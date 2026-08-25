@@ -175,7 +175,7 @@ const platformData = {
     linkPlaceholder: "Link TikTok account or video",
     categories: {}
   },
-telegram: {
+  telegram: {
     title: "Telegram Boost",
     icon: "fa-brands fa-telegram",
     linkPlaceholder: "Link Telegram channel / group / post",

@@ -234,7 +234,7 @@ const platformData = {
   }
 };
 
-// Render Select With Dynamic Platform Logos per item
+// Render Select With Dynamic Platform Logos per item & Extended Popup Height with Gradient Border
 function setupSelectIcons(selectId) {
   const selectElem = document.getElementById(selectId);
   if (!selectElem) return;
@@ -257,7 +257,14 @@ function setupSelectIcons(selectId) {
 
   const optionsContainer = document.createElement('div');
   optionsContainer.className = 'custom-options-container';
-  optionsContainer.style.cssText = 'display: none; position: absolute; top: 105%; left: 0; right: 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; max-height: 250px; overflow-y: auto; z-index: 999; box-shadow: 0 10px 25px rgba(0,0,0,0.15);';
+  // Popup height extended to 340px and gradient border added
+  optionsContainer.style.cssText = `
+    display: none; position: absolute; top: 105%; left: 0; right: 0;
+    background: linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6) border-box;
+    border: 1px solid transparent; border-radius: 12px;
+    max-height: 340px; overflow-y: auto; z-index: 999;
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.25);
+  `;
 
   const formatTextWithBadge = (text) => {
     return text.replace(/^(\d+)\s*[-—]?\s*/, '<span class="service-id-badge" style="background: #8b5cf6; color: #ffffff; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 12px; display: inline-block; margin-right: 6px;">$1</span>');
@@ -311,7 +318,7 @@ function setupSelectIcons(selectId) {
   selectedDisplay.onclick = (e) => {
     e.stopPropagation();
     const isVisible = optionsContainer.style.display === 'block';
-    document.querySelectorAll('.custom-options-container').forEach(c => c.style.display = 'none');
+    document.querySelectorAll('.custom-options-container, #liveSearchDropdown').forEach(c => c.style.display = 'none');
 
     if (!isVisible) {
       optionsContainer.style.display = 'block';
@@ -330,7 +337,7 @@ function setupSelectIcons(selectId) {
 }
 
 document.addEventListener('click', () => {
-  document.querySelectorAll('.custom-options-container').forEach(c => c.style.display = 'none');
+  document.querySelectorAll('.custom-options-container, #liveSearchDropdown').forEach(c => c.style.display = 'none');
 });
 
 // Platform Selection Logic
@@ -761,18 +768,20 @@ function submitOrderToWhatsApp() {
   sendOrderToTelegram();
 }
 
-// Live Search Input Logic
+// Live Search Input Logic with Enhanced Height & Gradient Border
 document.addEventListener('DOMContentLoaded', function () {
   const searchInput = document.getElementById('categorySearchInput');
 
   if (searchInput) {
     let searchDropdown = document.createElement('div');
     searchDropdown.id = 'liveSearchDropdown';
+    // Live Search Popup height extended to 340px and gradient border added
     searchDropdown.style.cssText = `
-      display: none; position: absolute; top: calc(100% + 5px); left: 0; right: 0;
-      background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px;
-      max-height: 280px; overflow-y: auto; z-index: 1000;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15); padding: 8px;
+      display: none; position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+      background: linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6) border-box;
+      border: 1px solid transparent; border-radius: 12px;
+      max-height: 340px; overflow-y: auto; z-index: 1000;
+      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.25); padding: 8px;
     `;
     searchInput.parentElement.style.position = 'relative';
     searchInput.parentElement.appendChild(searchDropdown);

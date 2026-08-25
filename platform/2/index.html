@@ -14,6 +14,44 @@
   
   <!-- External CSS -->
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* 6 Platform Buttons Layout (2 Rows x 3 Columns) */
+    .platform-grid {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 6px !important;
+      margin-bottom: 15px !important;
+    }
+    .platform-btn {
+      padding: 10px 4px !important;
+      font-size: 11px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 4px !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+    .platform-btn i {
+      font-size: 12px !important;
+      flex-shrink: 0 !important;
+    }
+    @media (min-width: 480px) {
+      .platform-grid {
+        gap: 10px !important;
+      }
+      .platform-btn {
+        padding: 12px 8px !important;
+        font-size: 13px !important;
+        gap: 6px !important;
+      }
+      .platform-btn i {
+        font-size: 14px !important;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -54,21 +92,26 @@
       <a href="https://wa.me/919239628344" class="glass-btn btn-whatsapp" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp Support</a>
     </div>
 
-    <!-- Platform Switcher Buttons -->
+    <!-- Platform Switcher Buttons (6 Buttons: 2 Rows x 3 Columns) -->
     <div class="platform-grid">
-      <button class="platform-btn active" id="btn-instagram" onclick="selectPlatform('instagram')"><i class="fa-brands fa-instagram"></i> Instagram</button>
+      <!-- Row 1 -->
+      <button class="platform-btn active" id="btn-all" onclick="selectPlatform('all')"><i class="fa-solid fa-bars"></i> All Services</button>
+      <button class="platform-btn" id="btn-instagram" onclick="selectPlatform('instagram')"><i class="fa-brands fa-instagram"></i> Instagram</button>
       <button class="platform-btn" id="btn-facebook" onclick="selectPlatform('facebook')"><i class="fa-brands fa-facebook"></i> Facebook</button>
+      
+      <!-- Row 2 -->
       <button class="platform-btn" id="btn-youtube" onclick="selectPlatform('youtube')"><i class="fa-brands fa-youtube"></i> YouTube</button>
       <button class="platform-btn" id="btn-tiktok" onclick="selectPlatform('tiktok')"><i class="fa-brands fa-tiktok"></i> TikTok</button>
+      <button class="platform-btn" id="btn-telegram" onclick="selectPlatform('telegram')"><i class="fa-brands fa-telegram"></i> Telegram</button>
     </div>
 
     <!-- Hero Banner -->
     <div class="hero-banner">
       <div class="hero-top-row">
-        <div class="hero-logo-box" id="heroPlatformIcon"><i class="fa-brands fa-instagram"></i></div>
+        <div class="hero-logo-box" id="heroPlatformIcon"><i class="fa-solid fa-bars"></i></div>
         <span class="provider-badge">#1 Service Provider</span>
       </div>
-      <h2 id="heroPlatformTitle">Instagram Boost</h2>
+      <h2 id="heroPlatformTitle">All Services</h2>
       <p class="hero-sub">⚡ Real Engagement • Fast & Safe Delivery</p>
       
       <div class="hero-stats-grid">
@@ -109,7 +152,7 @@
       </div>
 
       <div class="form-group">
-        <label id="linkLabel">Link Instagram profile</label>
+        <label id="linkLabel">Link profile / post</label>
         <input type="text" id="mainLinkInput" class="form-control" placeholder="https://" />
       </div>
 

@@ -178,9 +178,14 @@ function setupSelectIcons(selectId) {
 
   const defaultBoxStyle = 'background: #f8fafc; color: #1e293b; font-weight: 500; border: 2px solid #ec4899;';
 
+  // Category specific font size increased to 16px
+  const isCategory = selectId === 'categorySelect';
+  const boxFontSize = isCategory ? '16px' : '14px';
+  const optionFontSize = isCategory ? '15px' : '13px';
+
   const selectedDisplay = document.createElement('div');
   selectedDisplay.className = 'custom-selected-box';
-  selectedDisplay.style.cssText = `display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 14px; transition: all 0.3s ease; ${defaultBoxStyle}`;
+  selectedDisplay.style.cssText = `display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 8px; cursor: pointer; font-size: ${boxFontSize}; transition: all 0.3s ease; ${defaultBoxStyle}`;
 
   const optionsContainer = document.createElement('div');
   optionsContainer.className = 'custom-options-container';
@@ -200,8 +205,8 @@ function setupSelectIcons(selectId) {
     const isSelected = index === selectElem.selectedIndex;
     const formattedText = formatTextWithBadge(opt.textContent);
 
-    const defaultItemStyle = 'display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #1e293b; background: #ffffff; transition: background 0.2s;';
-    const activeItemStyle = 'display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #ffffff; background: #8b5cf6;';
+    const defaultItemStyle = `display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: ${optionFontSize}; color: #1e293b; background: #ffffff; transition: background 0.2s;`;
+    const activeItemStyle = `display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: ${optionFontSize}; color: #ffffff; background: #8b5cf6;`;
 
     item.style.cssText = isSelected ? activeItemStyle : defaultItemStyle;
     item.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${formattedText}</span>`;

@@ -686,6 +686,7 @@ async function sendOrderToTelegram() {
   const checkoutTxn = document.getElementById("checkoutTxnId");
   const checkoutTitle = document.getElementById("checkoutServiceTitle");
   const mainQty = document.getElementById("mainQuantityInput");
+  const categorySelect = document.getElementById("categorySelect");
 
   const submitBtn = document.querySelector("#checkoutPage button[onclick*='sendOrderToTelegram']") || document.querySelector("#checkoutPage button");
 
@@ -693,6 +694,11 @@ async function sendOrderToTelegram() {
   const utr = checkoutTxn ? checkoutTxn.value.trim() : "";
   const service = checkoutTitle ? checkoutTitle.innerText : "";
   const quantity = mainQty ? mainQty.value : "";
+  
+  // Selected Category text extraction
+  const categoryText = categorySelect && categorySelect.options[categorySelect.selectedIndex] 
+    ? categorySelect.options[categorySelect.selectedIndex].textContent 
+    : "N/A";
 
   if (!utr) {
     showModernPopup("Error!", "Please enter Transaction ID / UTR Number.", "error");
@@ -710,8 +716,9 @@ async function sendOrderToTelegram() {
   const botToken = "8960508595:AAG8-0ZNbOGZ-iRtSh5xzAabhSrHbRWjUaE";
   const chatId = "8895603997";
 
+  // Platform-এর জায়গায় Category দিয়ে মোট মেসেজটি আপডেট করা হয়েছে
   const message = `🛍️ New Order Received!\n\n` +
-                  `📌 Platform: ${currentPlatform.toUpperCase()}\n` +
+                  `📁 Category: ${categoryText}\n` +
                   `🏷️ Service: ${service}\n` +
                   `🔢 Quantity: ${quantity}\n` +
                   `💰 Price: ₹${calculatedPrice}\n` +

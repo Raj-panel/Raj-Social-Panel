@@ -2,7 +2,7 @@
 let currentPlatform = 'all';
 let calculatedPrice = 0;
 
-// Platform Icon SVG / Image Links
+// Platform SVG / Image Logos
 const platformLogos = {
   instagram: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg",
   facebook: "https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg",
@@ -12,20 +12,22 @@ const platformLogos = {
   whatsapp: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
 };
 
-// Dynamic Helper: Auto Detect Logo based on category or service text name
-function getLogoByText(text) {
-  if (!text) return platformLogos.instagram;
-  const lower = text.toLowerCase();
-  
-  if (lower.includes('telegram')) return platformLogos.telegram;
-  if (lower.includes('facebook') || lower.includes('fb')) return platformLogos.facebook;
-  if (lower.includes('youtube') || lower.includes('yt')) return platformLogos.youtube;
-  if (lower.includes('tiktok')) return platformLogos.tiktok;
-  if (lower.includes('whatsapp')) return platformLogos.whatsapp;
-  if (lower.includes('instagram') || lower.includes('ig')) return platformLogos.instagram;
-  
-  // Default fallback if no match found
-  return platformLogos[currentPlatform] || platformLogos.instagram;
+// Precise Logo Detection via Explicit Platform Tag & Text Analysis
+function getLogoForOption(opt) {
+  const targetPlat = opt.getAttribute('data-platform');
+  if (targetPlat && platformLogos[targetPlat]) {
+    return platformLogos[targetPlat];
+  }
+
+  const text = (opt.textContent || "").toLowerCase();
+  if (text.includes('telegram')) return platformLogos.telegram;
+  if (text.includes('facebook') || text.includes('fb')) return platformLogos.facebook;
+  if (text.includes('youtube') || text.includes('yt')) return platformLogos.youtube;
+  if (text.includes('tiktok')) return platformLogos.tiktok;
+  if (text.includes('whatsapp')) return platformLogos.whatsapp;
+  if (text.includes('instagram') || text.includes('ig')) return platformLogos.instagram;
+
+  return platformLogos.instagram;
 }
 
 // All Platform & Service Data
@@ -92,7 +94,7 @@ const platformData = {
       "🇮🇳Instagram Photo / post Views": {
         name: "🇮🇳𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐏𝐡𝐨𝐭𝐨 / 𝐩𝐨𝐬𝐭 𝐕𝐢𝐞𝐰𝐬",
         services: [
-          { id: "1030", name: "🇮🇳Instagram Photo & Post Views | Photo + Post + Image   Impressions | Non Drop | 1M+ Per Day | 0–1 Minutes Start", rate: 15.286, avgTime: "0–1 Minutes Start" }
+          { id: "1030", name: "🇮🇳Instagram Photo & Post Views | Photo + Post + Image Impressions | Non Drop | 1M+ Per Day | 0–1 Minutes Start", rate: 15.286, avgTime: "0–1 Minutes Start" }
         ]
       }
     }
@@ -196,22 +198,7 @@ const platformData = {
   }
 };
 
-// Helper function to get combined categories for 'all'
-function getAllCategoriesCombined() {
-  const combined = {};
-  const platformKeys = ['instagram', 'facebook', 'youtube', 'tiktok', 'telegram'];
-  
-  platformKeys.forEach(plat => {
-    if (platformData[plat] && platformData[plat].categories) {
-      for (let catKey in platformData[plat].categories) {
-        combined[`${plat}_${catKey}`] = platformData[plat].categories[catKey];
-      }
-    }
-  });
-  return combined;
-}
-
-// Render Select With Dynamic Platform Icons & Auto-scroll
+// Render Select With Dynamic Platform Logos per item
 function setupSelectIcons(selectId) {
   const selectElem = document.getElementById(selectId);
   if (!selectElem) return;
@@ -224,7 +211,6 @@ function setupSelectIcons(selectId) {
   wrapper.style.cssText = 'position: relative; width: 100%; font-family: sans-serif;';
 
   const defaultBoxStyle = 'background: #f8fafc; color: #1e293b; font-weight: 500; border: 2px solid #ec4899;';
-
   const isCategory = selectId === 'categorySelect';
   const boxFontSize = '14px';
   const optionFontSize = isCategory ? '14px' : '13px';
@@ -246,9 +232,9 @@ function setupSelectIcons(selectId) {
   Array.from(selectElem.options).forEach((opt, index) => {
     const item = document.createElement('div');
     item.className = 'custom-option-item';
-    
-    // Automatically detect app logo from text
-    const logoUrl = getLogoByText(opt.textContent);
+
+    // Get exact logo for each item individually
+    const logoUrl = getLogoForOption(opt);
     const isSelected = index === selectElem.selectedIndex;
     const formattedText = formatTextWithBadge(opt.textContent);
 
@@ -267,7 +253,7 @@ function setupSelectIcons(selectId) {
       selectElem.selectedIndex = index;
       setupSelectIcons(selectId);
       optionsContainer.style.display = 'none';
-      
+
       const event = new Event('change');
       selectElem.dispatchEvent(event);
     };
@@ -290,7 +276,7 @@ function setupSelectIcons(selectId) {
     e.stopPropagation();
     const isVisible = optionsContainer.style.display === 'block';
     document.querySelectorAll('.custom-options-container').forEach(c => c.style.display = 'none');
-    
+
     if (!isVisible) {
       optionsContainer.style.display = 'block';
       if (selectedItemElement) {
@@ -335,19 +321,28 @@ function selectPlatform(platform) {
   const categorySelect = document.getElementById('categorySelect');
   if (categorySelect) {
     categorySelect.innerHTML = "";
-    
-    let categoriesObj = {};
-    if (platform === 'all') {
-      categoriesObj = getAllCategoriesCombined();
-    } else if (data && data.categories) {
-      categoriesObj = data.categories;
-    }
 
-    for (let key in categoriesObj) {
-      const option = document.createElement("option");
-      option.value = key;
-      option.textContent = categoriesObj[key].name;
-      categorySelect.appendChild(option);
+    if (platform === 'all') {
+      const platformKeys = ['instagram', 'facebook', 'youtube', 'tiktok', 'telegram'];
+      platformKeys.forEach(plat => {
+        if (platformData[plat] && platformData[plat].categories) {
+          for (let catKey in platformData[plat].categories) {
+            const option = document.createElement("option");
+            option.value = `${plat}_${catKey}`;
+            option.textContent = platformData[plat].categories[catKey].name;
+            option.setAttribute("data-platform", plat);
+            categorySelect.appendChild(option);
+          }
+        }
+      });
+    } else if (data && data.categories) {
+      for (let key in data.categories) {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = data.categories[key].name;
+        option.setAttribute("data-platform", platform);
+        categorySelect.appendChild(option);
+      }
     }
     setupSelectIcons('categorySelect');
   }
@@ -362,21 +357,24 @@ function selectPlatform(platform) {
 function updateServices() {
   const categorySelect = document.getElementById("categorySelect");
   if (!categorySelect) return;
-  
-  const categoryKey = categorySelect.value;
+
+  const categoryValue = categorySelect.value;
   const serviceSelect = document.getElementById("serviceSelect");
   if (!serviceSelect) return;
-  
+
   serviceSelect.innerHTML = "";
 
-  let categoriesObj = {};
-  if (currentPlatform === 'all') {
-    categoriesObj = getAllCategoriesCombined();
-  } else if (platformData[currentPlatform]) {
-    categoriesObj = platformData[currentPlatform].categories;
+  let targetPlatform = currentPlatform;
+  let catKey = categoryValue;
+
+  if (currentPlatform === 'all' && categoryValue.includes('_')) {
+    const parts = categoryValue.split('_');
+    targetPlatform = parts[0];
+    catKey = parts.slice(1).join('_');
   }
 
-  if (!categoryKey || !categoriesObj[categoryKey]) {
+  const platObj = platformData[targetPlatform];
+  if (!catKey || !platObj || !platObj.categories || !platObj.categories[catKey]) {
     const timeBox = document.querySelector('.time-box');
     if (timeBox) timeBox.innerHTML = `⚡ Average Time: <strong>N/A</strong>`;
     setupSelectIcons('serviceSelect');
@@ -384,13 +382,14 @@ function updateServices() {
     return;
   }
 
-  const services = categoriesObj[categoryKey].services;
+  const services = platObj.categories[catKey].services;
 
   services.forEach(service => {
     const option = document.createElement("option");
     option.value = service.id;
     option.setAttribute("data-rate", service.rate);
     option.setAttribute("data-avgtime", service.avgTime);
+    option.setAttribute("data-platform", targetPlatform);
     option.textContent = `${service.id} - ${service.name} - ₹${service.rate}`;
     serviceSelect.appendChild(option);
   });
@@ -407,7 +406,7 @@ function updateAverageTime() {
 
   const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
   const timeBox = document.querySelector('.time-box');
-  
+
   if (selectedOption && timeBox) {
     const avgTime = selectedOption.getAttribute("data-avgtime");
     timeBox.innerHTML = `⚡ Average Time: <strong>${avgTime}</strong>`;
@@ -423,7 +422,7 @@ function calculatePrice() {
 
   const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
   const totalPriceText = document.getElementById("totalPriceText");
-  
+
   if (!selectedOption) {
     if (totalPriceText) totalPriceText.innerText = "0.00";
     calculatedPrice = "0.00";
@@ -436,11 +435,11 @@ function calculatePrice() {
 
   calculatedPrice = ((ratePer1000 / 1000) * quantity).toFixed(2);
   if (totalPriceText) totalPriceText.innerText = calculatedPrice;
-  
+
   updateAverageTime();
 }
 
-// Checkout Navigation with Instant Client-side QR Generation
+// Checkout Navigation
 let qrcodeInstance = null;
 
 function openCheckout() {
@@ -473,11 +472,10 @@ function openCheckout() {
   const upiId = "rajsmmpanel@jio";
   const upiString = `upi://pay?pa=${upiId}&am=${calculatedPrice}&cu=INR`;
 
-  // Instant Browser-based QR Generation (Zero Delay)
   const qrContainer = document.getElementById("qrcode");
   if (qrContainer) {
-    qrContainer.innerHTML = ""; 
-    
+    qrContainer.innerHTML = "";
+
     qrcodeInstance = new QRCode(qrContainer, {
       text: upiString,
       width: 130,
@@ -511,18 +509,18 @@ function openSidebar() {
   const overlay = document.getElementById("sidebarOverlay");
   if (sidebar) sidebar.classList.add("active");
   if (overlay) overlay.classList.add("active");
-  
+
   history.pushState({ sidebarOpen: true }, "", "#sidebar");
 }
 
 function closeSidebar() {
   const sidebar = document.getElementById("leftSidebar");
   const overlay = document.getElementById("sidebarOverlay");
-  
+
   if (sidebar && sidebar.classList.contains("active")) {
     sidebar.classList.remove("active");
     if (overlay) overlay.classList.remove("active");
-    
+
     if (history.state && history.state.sidebarOpen) {
       history.back();
     }
@@ -559,7 +557,7 @@ function switchCheckoutPayment(method) {
     if (binanceView) binanceView.classList.remove('hidden');
     if (btnUpi) btnUpi.classList.remove('active');
     if (btnBinance) btnBinance.classList.add('active');
-    
+
     if (txnLabel) txnLabel.innerText = "Enter Binance TxID / Order ID:";
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
@@ -567,13 +565,13 @@ function switchCheckoutPayment(method) {
     if (upiView) upiView.classList.remove('hidden');
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
-    
+
     if (txnLabel) txnLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
     if (txnInput) txnInput.placeholder = "e.g. 4029XXXXXXXXXX (12-Digit UTR)";
   }
 }
 
-// Modern Glowing Popup & Confetti
+// Custom Glow Popup
 function showModernPopup(title, message, type = 'success') {
   const existingPopup = document.getElementById('modernCustomPopup');
   if (existingPopup) existingPopup.remove();
@@ -652,7 +650,7 @@ async function sendOrderToTelegram() {
   const checkoutTxn = document.getElementById("checkoutTxnId");
   const checkoutTitle = document.getElementById("checkoutServiceTitle");
   const mainQty = document.getElementById("mainQuantityInput");
-  
+
   const submitBtn = document.querySelector("#checkoutPage button[onclick*='sendOrderToTelegram']") || document.querySelector("#checkoutPage button");
 
   const link = mainLink ? mainLink.value.trim() : "";
@@ -673,7 +671,7 @@ async function sendOrderToTelegram() {
     submitBtn.innerText = "Processing...";
   }
 
-  const botToken = "8960508595:AAG8-0ZNbOGZ-iRtSh5xzAabhSrHbRWjUaE"; 
+  const botToken = "8960508595:AAG8-0ZNbOGZ-iRtSh5xzAabhSrHbRWjUaE";
   const chatId = "8895603997";
 
   const message = `🛍️ New Order Received!\n\n` +
@@ -720,10 +718,10 @@ function submitOrderToWhatsApp() {
   sendOrderToTelegram();
 }
 
-// Search Logic matching user screenshot style
+// Live Search Input Logic
 document.addEventListener('DOMContentLoaded', function () {
   const searchInput = document.getElementById('categorySearchInput');
-  
+
   if (searchInput) {
     let searchDropdown = document.createElement('div');
     searchDropdown.id = 'liveSearchDropdown';
@@ -761,16 +759,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (matchedServices.length > 0) {
         searchDropdown.style.display = 'block';
-        
+
         matchedServices.forEach(service => {
           const item = document.createElement('div');
+          const platLogo = platformLogos[service.platform] || platformLogos.instagram;
           item.style.cssText = `
             display: flex; align-items: center; gap: 10px; padding: 10px 12px;
             cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #1e293b;
             border-radius: 8px; transition: background 0.2s;
           `;
-          
+
           item.innerHTML = `
+            <img src="${platLogo}" style="width:18px; height:18px; object-fit:contain;">
             <span style="background: #8b5cf6; color: #ffffff; padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 12px; flex-shrink: 0;">${service.id}</span>
             <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${service.name}</span>
           `;
@@ -779,16 +779,17 @@ document.addEventListener('DOMContentLoaded', function () {
           item.onmouseleave = () => item.style.background = '#ffffff';
 
           item.onclick = () => {
-            if (currentPlatform !== service.platform) {
+            if (currentPlatform !== 'all' && currentPlatform !== service.platform) {
               selectPlatform(service.platform);
             }
-            
+
             const categorySelect = document.getElementById('categorySelect');
-            categorySelect.value = service.categoryKey;
+            const targetVal = currentPlatform === 'all' ? `${service.platform}_${service.categoryKey}` : service.categoryKey;
+            categorySelect.value = targetVal;
             setupSelectIcons('categorySelect');
-            
+
             updateServices();
-            
+
             const serviceSelect = document.getElementById('serviceSelect');
             serviceSelect.value = service.id;
             setupSelectIcons('serviceSelect');

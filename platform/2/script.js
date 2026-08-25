@@ -4,7 +4,6 @@ let calculatedPrice = 0;
 
 // Platform Icon SVG / Image Links
 const platformLogos = {
-  all: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hamburger_icon.svg",
   instagram: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg",
   facebook: "https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg",
   youtube: "https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg",
@@ -13,15 +12,19 @@ const platformLogos = {
   whatsapp: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
 };
 
-// Helper: Auto Detect Logo based on text name
+// Dynamic Helper: Auto Detect Logo based on category or service text name
 function getLogoByText(text) {
+  if (!text) return platformLogos.instagram;
   const lower = text.toLowerCase();
+  
   if (lower.includes('telegram')) return platformLogos.telegram;
-  if (lower.includes('facebook')) return platformLogos.facebook;
-  if (lower.includes('youtube')) return platformLogos.youtube;
+  if (lower.includes('facebook') || lower.includes('fb')) return platformLogos.facebook;
+  if (lower.includes('youtube') || lower.includes('yt')) return platformLogos.youtube;
   if (lower.includes('tiktok')) return platformLogos.tiktok;
   if (lower.includes('whatsapp')) return platformLogos.whatsapp;
-  if (lower.includes('instagram')) return platformLogos.instagram;
+  if (lower.includes('instagram') || lower.includes('ig')) return platformLogos.instagram;
+  
+  // Default fallback if no match found
   return platformLogos[currentPlatform] || platformLogos.instagram;
 }
 
@@ -29,7 +32,7 @@ function getLogoByText(text) {
 const platformData = {
   all: {
     title: "All Services",
-    icon: "fa-solid fa-bars",
+    icon: "fa-solid fa-layer-group",
     linkPlaceholder: "Link profile / post / channel"
   },
   instagram: {
@@ -208,7 +211,7 @@ function getAllCategoriesCombined() {
   return combined;
 }
 
-// Render Select With Icons & Auto-scroll
+// Render Select With Dynamic Platform Icons & Auto-scroll
 function setupSelectIcons(selectId) {
   const selectElem = document.getElementById(selectId);
   if (!selectElem) return;
@@ -223,7 +226,7 @@ function setupSelectIcons(selectId) {
   const defaultBoxStyle = 'background: #f8fafc; color: #1e293b; font-weight: 500; border: 2px solid #ec4899;';
 
   const isCategory = selectId === 'categorySelect';
-  const boxFontSize = isCategory ? '14px' : '14px';
+  const boxFontSize = '14px';
   const optionFontSize = isCategory ? '14px' : '13px';
 
   const selectedDisplay = document.createElement('div');
@@ -244,6 +247,7 @@ function setupSelectIcons(selectId) {
     const item = document.createElement('div');
     item.className = 'custom-option-item';
     
+    // Automatically detect app logo from text
     const logoUrl = getLogoByText(opt.textContent);
     const isSelected = index === selectElem.selectedIndex;
     const formattedText = formatTextWithBadge(opt.textContent);

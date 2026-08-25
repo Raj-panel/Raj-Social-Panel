@@ -149,7 +149,7 @@ const platformData = {
         ]
       },
       "YouTube Subscribers- 🇮🇳 Guaranteed ✅": {
-        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐒𝐮𝐛𝐬𝐜𝐫𝐢𝐛𝐞𝐫𝐬- 🇮🇳 𝐆𝐮𝐚𝐫𝐚𝐧𝐭𝐞𝐞𝐝 ✅",
+        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐒𝐮𝐛𝐬𝐜𝐫𝐢𝐛𝐞𝐫𝐬- 🇮🇳[𝐍𝐨𝐧~𝐃𝐫𝐨𝐩] ✅",
         services: [
           { id: "964", name: "YouTube Subscribers 🇮🇳 | High Quality | 100% Non Drop | 100+/Day | 0–15 Min Start ⚡ | Lifetime Refill ♻️", rate: 2541.601, avgTime: "0–15 Min Start" }
         ]

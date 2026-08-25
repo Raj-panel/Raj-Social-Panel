@@ -66,7 +66,7 @@ const platformData = {
         ]
       },
       "🇮🇳 Instagram Shares - Premium Quality | Super Fast": {
-        name: "🇮🇳 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐒𝐡𝐚𝐫𝐞𝐬 - 𝐏𝐫𝐞𝐦𝐢𝐮𝐦 𝐐𝐮𝐚𝐥𝐢𝐭𝐲 | 𝐒𝐮𝐩𝐞𝐫 𝐅𝐚𝐬𝐭",
+        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐒𝐡𝐚𝐫𝐞𝐬- 🇮🇳 𝐏𝐫𝐞𝐦𝐢𝐮𝐦 𝐐𝐮𝐚𝐥𝐢𝐭𝐲~[𝐍𝐨𝐧-𝐃𝐫𝐨𝐩]",
         services: [
           { id: "121", name: "🇮🇳 Instagram Shares | Premium Quality | Max 1M | 100K/Day | SuperFast | 10–25 Min Start | Lifetime Refill ♻️", rate: 22.266, avgTime: "10–25 Min Start" },
           { id: "123", name: "🇮🇳 Instagram Shares | High Quality | Max 1M | 200K/Day | SuperFast | 10–30 Min Start | Lifetime Refill ♻️ | One Click Done", rate: 20.33, avgTime: "10–30 Min Start" }
@@ -92,7 +92,7 @@ const platformData = {
     linkPlaceholder: "Link Facebook page or profile",
     categories: {
       "Facebook follower real account medium speed": {
-        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫 𝐫𝐞𝐚𝐥 𝐚𝐜𝐜𝐨𝐮𝐧𝐭 𝐦𝐞𝐝𝐢𝐮𝐦 𝐬𝐩𝐞𝐞𝐝",
+        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫 𝐌𝐢𝐱 𝐐𝐮𝐚𝐥𝐢𝐭𝐲[𝐍𝐨𝐧-𝐃𝐫𝐨𝐩]",
         services: [
           { id: "6207", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | 90D Refill ♻️", rate: 40.4272, avgTime: "0–30 Min Start" },
           { id: "6208", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | 365D Refill ♻️", rate: 43.0640, avgTime: "0–30 Min Start" },

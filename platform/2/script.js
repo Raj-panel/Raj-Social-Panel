@@ -164,7 +164,7 @@ const platformData = {
   }
 };
 
-// Render Select With Icons & Auto-scroll (FONT SIZE INCREASED)
+// Render Select With Icons, Larger Font Sizes & Auto-scroll
 function setupSelectIcons(selectId) {
   const selectElem = document.getElementById(selectId);
   if (!selectElem) return;
@@ -178,17 +178,17 @@ function setupSelectIcons(selectId) {
 
   const defaultBoxStyle = 'background: #f8fafc; color: #1e293b; font-weight: 600; border: 2px solid #ec4899;';
 
+  // Increased font-size to 16px for category selected box
   const selectedDisplay = document.createElement('div');
   selectedDisplay.className = 'custom-selected-box';
-  // Font size set to 16px for clear readability
-  selectedDisplay.style.cssText = `display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 10px; cursor: pointer; font-size: 16px; transition: all 0.3s ease; ${defaultBoxStyle}`;
+  selectedDisplay.style.cssText = `display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 10px; cursor: pointer; font-size: 16px; transition: all 0.3s ease; ${defaultBoxStyle}`;
 
   const optionsContainer = document.createElement('div');
   optionsContainer.className = 'custom-options-container';
   optionsContainer.style.cssText = 'display: none; position: absolute; top: 105%; left: 0; right: 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; max-height: 280px; overflow-y: auto; z-index: 999; box-shadow: 0 10px 25px rgba(0,0,0,0.15);';
 
   const formatTextWithBadge = (text) => {
-    return text.replace(/^(\d+)\s*[-—]?\s*/, '<span class="service-id-badge" style="background: #8b5cf6; color: #ffffff; padding: 3px 10px; border-radius: 6px; font-weight: 700; font-size: 14px; display: inline-block; margin-right: 8px;">$1</span>');
+    return text.replace(/^(\d+)\s*[-—]?\s*/, '<span class="service-id-badge" style="background: #8b5cf6; color: #ffffff; padding: 3px 9px; border-radius: 6px; font-weight: 700; font-size: 13px; display: inline-block; margin-right: 6px;">$1</span>');
   };
 
   let selectedItemElement = null;
@@ -201,16 +201,16 @@ function setupSelectIcons(selectId) {
     const isSelected = index === selectElem.selectedIndex;
     const formattedText = formatTextWithBadge(opt.textContent);
 
-    // Options font-size updated to 16px and line-height improved
-    const defaultItemStyle = 'display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 16px; font-weight: 500; color: #1e293b; background: #ffffff; transition: background 0.2s; line-height: 1.4;';
-    const activeItemStyle = 'display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 16px; font-weight: 600; color: #ffffff; background: #8b5cf6; line-height: 1.4;';
+    // Increased font-size to 15px & added font-weight for category options
+    const defaultItemStyle = 'display: flex; align-items: center; gap: 12px; padding: 14px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 15px; font-weight: 500; color: #1e293b; background: #ffffff; transition: background 0.2s;';
+    const activeItemStyle = 'display: flex; align-items: center; gap: 12px; padding: 14px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 15px; font-weight: 600; color: #ffffff; background: #8b5cf6;';
 
     item.style.cssText = isSelected ? activeItemStyle : defaultItemStyle;
-    item.innerHTML = `<img src="${logoUrl}" style="width:24px; height:24px; object-fit:contain; flex-shrink:0;"> <span style="flex-grow: 1;">${formattedText}</span>`;
+    item.innerHTML = `<img src="${logoUrl}" style="width:22px; height:22px; object-fit:contain; flex-shrink:0;"> <span>${formattedText}</span>`;
 
     if (isSelected) {
       selectedItemElement = item;
-      selectedDisplay.innerHTML = `<img src="${logoUrl}" style="width:24px; height:24px; object-fit:contain; flex-shrink:0;"> <span style="flex-grow: 1;">${formattedText}</span>`;
+      selectedDisplay.innerHTML = `<img src="${logoUrl}" style="width:22px; height:22px; object-fit:contain; flex-shrink:0;"> <span>${formattedText}</span>`;
     }
 
     item.onclick = () => {
@@ -699,13 +699,13 @@ document.addEventListener('DOMContentLoaded', function () {
         matchedServices.forEach(service => {
           const item = document.createElement('div');
           item.style.cssText = `
-            display: flex; align-items: center; gap: 10px; padding: 12px 14px;
-            cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 15px; color: #1e293b;
+            display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+            cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 14px; color: #1e293b;
             border-radius: 8px; transition: background 0.2s;
           `;
           
           item.innerHTML = `
-            <span style="background: #8b5cf6; color: #ffffff; padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 13px; flex-shrink: 0;">${service.id}</span>
+            <span style="background: #8b5cf6; color: #ffffff; padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 12px; flex-shrink: 0;">${service.id}</span>
             <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${service.name}</span>
           `;
 

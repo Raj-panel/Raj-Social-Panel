@@ -39,7 +39,7 @@ const platformData = {
         ]
       },
       "nondrop": {
-        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬 𝐍𝐨𝐧-𝐃𝐫𝐨𝐩",
+        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬 [𝐍𝐨𝐧-𝐃𝐫𝐨𝐩]",
         services: [
           { id: "1072", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - No Refill 🔄", rate: 67.929, avgTime: "0–2 Min Start" },
           { id: "1073", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 30D Refill 🔄", rate: 73.072, avgTime: "0–2 Min Start" },
@@ -50,7 +50,7 @@ const platformData = {
         ]
       },
       "Instagram like real profile": {
-        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐥𝐢𝐤𝐞 𝐫𝐞𝐚𝐥 𝐩𝐫𝐨𝐟𝐢𝐥𝐞",
+        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐋𝐢𝐤𝐞 𝐈𝐧𝐝𝐢𝐚 𝐦𝐢𝐱 𝐑𝐞𝐚𝐥 𝐩𝐫𝐨𝐟𝐢𝐥𝐞",
         services: [
           { id: "881", name: "Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 60 Days Refill♻️ | 0–10 Minutes Start", rate: 14.600, avgTime: "0–10 Minutes Start" },
           { id: "882", name: "Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 90 Days Refill♻️ | 0–10 Minutes Start", rate: 15.664, avgTime: "0–10 Minutes Start" },
@@ -66,7 +66,7 @@ const platformData = {
         ]
       },
       "🇮🇳 Instagram Shares - Premium Quality | Super Fast": {
-        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐒𝐡𝐚𝐫𝐞𝐬- 🇮🇳 𝐏𝐫𝐞𝐦𝐢𝐮𝐦 𝐐𝐮𝐚𝐥𝐢𝐭𝐲~[𝐍𝐨𝐧-𝐃𝐫𝐨𝐩]",
+        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐒𝐡𝐚𝐫𝐞𝐬- 🇮🇳𝐏𝐫𝐞𝐦𝐢𝐮𝐦 𝐐𝐮𝐚𝐥𝐢𝐭𝐲",
         services: [
           { id: "121", name: "🇮🇳 Instagram Shares | Premium Quality | Max 1M | 100K/Day | SuperFast | 10–25 Min Start | Lifetime Refill ♻️", rate: 22.266, avgTime: "10–25 Min Start" },
           { id: "123", name: "🇮🇳 Instagram Shares | High Quality | Max 1M | 200K/Day | SuperFast | 10–30 Min Start | Lifetime Refill ♻️ | One Click Done", rate: 20.33, avgTime: "10–30 Min Start" }
@@ -109,7 +109,7 @@ const platformData = {
         ]
       },
       "Facebook - Post Reactions mix | Cheapest Rate": {
-        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 - 𝐏𝐨𝐬𝐭 𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 𝐦𝐢𝐱 | 𝐂𝐡𝐞𝐚𝐩𝐞𝐬𝐭 𝐑𝐚𝐭𝐞",
+        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 - 𝐏𝐨𝐬𝐭 𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 𝐦𝐢𝐱~ 𝐋𝐨𝐰 𝐑𝐚𝐭𝐞",
         services: [
           { id: "5507", name: "Facebook - Post Likes 👍 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
           { id: "5508", name: "Facebook - Reaction | Love ❤️ | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 23.5170, avgTime: "0–30 Min Start" },
@@ -149,7 +149,7 @@ const platformData = {
         ]
       },
       "YouTube Views 🇮🇳 {Shorts / Video} Non Drop": {
-        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐕𝐢𝐞𝐰𝐬 🇮🇳 {𝐒𝐡𝐨𝐫𝐭𝐬 / 𝐕𝐢𝐝𝐞𝐨} 𝐍𝐨𝐧 𝐃𝐫𝐨𝐩",
+        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐕𝐢𝐞𝐰𝐬 🇮🇳 {𝐒𝐡𝐨𝐫𝐭𝐬 / 𝐕𝐢𝐝𝐞𝐨} 𝐍𝐨𝐧~𝐃𝐫𝐨𝐩",
         services: [
           { id: "815", name: "YouTube Shorts / Video Views | Max 100K | Non Drop 📉 | Lifetime Guaranteed ♻️ | 20K/Day 🚀 | 0–20 Min Start ⚡", rate: 199.24, avgTime: "0–20 Min Start" }
         ]

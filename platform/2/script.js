@@ -175,29 +175,63 @@ const platformData = {
     linkPlaceholder: "Link TikTok account or video",
     categories: {}
   },
-  telegram: {
+telegram: {
     title: "Telegram Boost",
     icon: "fa-brands fa-telegram",
     linkPlaceholder: "Link Telegram channel / group / post",
     categories: {
-      "Telegram Members | High Quality": {
-        name: "𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦 𝐌𝐞𝐦𝐛𝐞𝐫𝐬 [𝐍𝐨𝐧-𝐃𝐫𝐨𝐩]",
+      "Telegram Members - Non~Drop": {
+        name: "𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦 𝐌𝐞𝐦𝐛𝐞𝐫𝐬 - 𝐍𝐨𝐧~𝐃𝐫𝐨𝐩",
         services: [
-          { id: "3001", name: "Telegram Channel/Group Members | Real Accounts | Non Drop | 50K/Day | 0–15 Min Start - Lifetime Refill ♻️", rate: 45.500, avgTime: "0–15 Min Start" },
-          { id: "3002", name: "Telegram Channel Members | High Quality | Fast Delivery | 0–5 Min Start - 30D Refill 🔄", rate: 38.200, avgTime: "0–5 Min Start" }
+          { id: "6749", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | Refill ♻️", rate: 70.5200, avgTime: "0–10 Min Start" },
+          { id: "6750", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 60D Refill ♻️", rate: 72.8000, avgTime: "0–10 Min Start" },
+          { id: "6751", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 90D Refill ♻️", rate: 74.7000, avgTime: "0–10 Min Start" },
+          { id: "6752", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 365D Refill ♻️", rate: 76.6000, avgTime: "0–10 Min Start" },
+          { id: "6753", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | Lifetime Refill ♻️", rate: 80.5000, avgTime: "0–10 Min Start" }
         ]
       },
-      "Telegram Post Views": {
-        name: "𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦 𝐏𝐨𝐬𝐭 𝐕𝐢𝐞𝐰𝐬 ~ 𝐒𝐮𝐩𝐞𝐫 𝐅𝐚𝐬𝐭",
+      "Telegram - Reactions | Cheapest in The World": {
+        name: "𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦 - 𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 | 𝐂𝐡𝐞𝐚𝐩𝐞𝐬𝐭 𝐢𝐧 𝐓𝐡𝐞 𝐖𝐨𝐫𝐥𝐝",
         services: [
-          { id: "3010", name: "Telegram Post Views | Last 5 Posts | Super Instant | 0–2 Min Start", rate: 5.500, avgTime: "0–2 Min Start" },
-          { id: "3011", name: "Telegram Post Views | Single Post | 100K/Day | Instant Start", rate: 3.200, avgTime: "0–1 Min Start" }
+          { id: "6050", name: "Telegram Mix Positive Reaction [👍😍🎉🔥❤️🥰👏🥳🤩🔥💯] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6051", name: "Telegram Mix Negative Reaction [👎💔👎😢💩🤢🤬😡😴🍌😈] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6052", name: "Telegram Reaction [🔥] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6053", name: "Telegram Reaction [❤️] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6054", name: "Telegram Reaction [💘] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6055", name: "Telegram Reaction [💔] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6056", name: "Telegram Reaction [🔥] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6057", name: "Telegram Reaction [👍] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6058", name: "Telegram Reaction [👎] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6059", name: "Telegram Reaction [💩] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6060", name: "Telegram Reaction [⚡] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6061", name: "Telegram Reaction [⛄] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6062", name: "Telegram Reaction [✍️] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6063", name: "Telegram Reaction [🙈] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6064", name: "Telegram Reaction [💊] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6065", name: "Telegram Reaction [😎] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6066", name: "Telegram Reaction [😘] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6067", name: "Telegram Reaction [🦄] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6068", name: "Telegram Reaction [🤷] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6069", name: "Telegram Reaction [🆒] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6070", name: "Telegram Reaction [👾] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6071", name: "Telegram Reaction [🗿] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6072", name: "Telegram Reaction [🤪] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6073", name: "Telegram Reaction [🎉] + Views", rate: 10.3749, avgTime: "0–20 Min Start" }
+        ]
+      },
+      "Telegram - Post Views": {
+        name: "𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦 - 𝐏𝐨𝐬𝐭 𝐕𝐢𝐞𝐰𝐬",
+        services: [
+          { id: "3882", name: "Telegram - Views ~ 1 POST ~ INSTANT", rate: 3.2645, avgTime: "0–20 Min Start" },
+          { id: "3885", name: "Telegram Post View (Last 5 Post)", rate: 12.3135, avgTime: "0–20 Min Start" },
+          { id: "3886", name: "Telegram Post View (Last 10 Post)", rate: 25.0515, avgTime: "0–20 Min Start" },
+          { id: "3887", name: "Telegram Post View [Last 20 Post]", rate: 40.5275, avgTime: "0–20 Min Start" },
+          { id: "3888", name: "Telegram Post View [Last 50 Post]", rate: 80.0315, avgTime: "0–20 Min Start" },
+          { id: "3889", name: "Telegram Post View [Last 100 Post]", rate: 159.8545, avgTime: "0–20 Min Start" }
         ]
       }
     }
   }
-};
-
 // Render Select With Dynamic Platform Logos per item
 function setupSelectIcons(selectId) {
   const selectElem = document.getElementById(selectId);

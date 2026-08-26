@@ -351,11 +351,11 @@ const serviceData = {
             { providerId: 31, name: "1K Comments", price: 199, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "💬High Quality • Custom Random Comments start in 10 min" }
         ],
         "REAL Repost Non-Drop": [
-            { providerId: 505, name: "50 Reposts", price: 15, badge: "Starter", badgeClass: "badge-demo", desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" },
-            { providerId: 505, name: "100 Reposts", price: 20, desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" },
-            { providerId: 505, name: "500 Reposts", price: 59, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" },
+            { providerId: 505, name: "100 Reposts", price: 10, badge: "Starter", badgeClass: "badge-demo", desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" },
+            { providerId: 505, name: "300 Reposts", price: 20, desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" },
+            { providerId: 505, name: "500 Reposts", price: 49, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" },
             { providerId: 505, name: "1K Reposts", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" },
-            { providerId: 505, name: "3K Reposts", price: 249, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" }
+            { providerId: 505, name: "3K Reposts", price: 199, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" }
         ],
         "REAL Shares Non-Drop": [
             { providerId: 50, name: "100 Shares", price: 5, badge: "Starter", badgeClass: "badge-demo", desc: "🔗 REAL Shares ♻️Life-Time •Start in 20 Min" },

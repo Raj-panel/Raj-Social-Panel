@@ -342,11 +342,13 @@ const serviceData = {
             { providerId: 1030, name: "100K Views", price: 220, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" }
         ],
         "REAL Comments Non-Drop": [
-            { providerId: 31, name: "20 Comment (Start)", price: 10, desc: "💬High Quality • Custom Random Comments start in 10 min" },
-            { providerId: 31, name: "50 Comments", price: 20, desc: "💬High Quality • Custom Random Comments start in 10 min" },
-            { providerId: 31, name: "100 Comments", price: 30, desc: "💬High Quality • Custom Random Comments start in 10 min" },
-            { providerId: 31, name: "500 Comments", price: 70, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "💬High Quality • Custom Random Comments start in 10 min" },
-            { providerId: 31, name: "1K Comments", price: 120, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "💬High Quality • Custom Random Comments start in 10 min" }
+            { providerId: 31, name: "15 Comment (Start)", price: 10, desc: "💬High Quality • Custom Random Comments start in 10 min" },
+            { providerId: 31, name: "40 Comments", price: 30, desc: "💬High Quality • Custom Random Comments start in 10 min" },
+            { providerId: 31, name: "60 Comments", price: 40, desc: "💬High Quality • Custom Random Comments start in 10 min" },
+            { providerId: 31, name: "100 Comments", price: 50, desc: "💬High Quality • Custom Random Comments start in 10 min" },
+            { providerId: 31, name: "300 Comments", price: 80, desc: "💬High Quality • Custom Random Comments start in 10 min" },
+            { providerId: 31, name: "500 Comments", price: 139, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "💬High Quality • Custom Random Comments start in 10 min" },
+            { providerId: 31, name: "1K Comments", price: 199, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "💬High Quality • Custom Random Comments start in 10 min" }
         ],
         "REAL Repost Non-Drop": [
             { providerId: 505, name: "50 Reposts", price: 15, badge: "Starter", badgeClass: "badge-demo", desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" },

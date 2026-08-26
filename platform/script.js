@@ -306,12 +306,12 @@ const serviceData = {
             { name: "1K Followers", price: 50, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "2K Followers", price: 90, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "3K Followers", price: 129, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
-            { name: "4K Followers", price: 165, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
-            { name: "5K Followers", price: 199, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "4K Followers", price: 175, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "5K Followers", price: 225, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "6K Followers", price: 239, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
-            { name: "7K Followers", price: 279, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
-            { name: "8K Followers", price: 319, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
-            { name: "9K Followers", price: 359, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "7K Followers", price: 289, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "8K Followers", price: 339, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "9K Followers", price: 369, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "10K Followers", price: 399, badge: "🎁 BUY 10K + GET 2K FREE", badgeClass: "badge-super", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" }
         ],
         "Likes Non-Drop": [

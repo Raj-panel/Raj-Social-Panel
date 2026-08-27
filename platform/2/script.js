@@ -104,6 +104,16 @@ const platformData = {
     icon: "fa-brands fa-facebook",
     linkPlaceholder: "Link Facebook page or profile",
     categories: {
+      },
+      "Facebook - Followers | HQ - Cheapest Price": {
+        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 - 𝐅𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬 | 𝐇𝐐 - 𝐂𝐡𝐞𝐚𝐩𝐞𝐬𝐭 𝐏𝐫𝐢𝐜𝐞",
+        services: [
+          { id: "4501", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | 60D Refill", rate: 34.1075, avgTime: "0–30 Min Start" },
+          { id: "4502", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | 90D Refill", rate: 35.1525, avgTime: "0–30 Min Start" },
+          { id: "5988", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | 365D Refill ♻️", rate: 36.1975, avgTime: "0–30 Min Start" },
+          { id: "5989", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | Lifetime Refill♻️", rate: 40.2425, avgTime: "0–30 Min Start" }
+         ]
+      },
       "Facebook follower real account medium speed": {
         name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫 𝐑𝐞𝐚𝐥 𝐀𝐜𝐜𝐨𝐮𝐧𝐭 [𝐍𝐨𝐧-𝐃𝐫𝐨𝐩]",
         services: [
@@ -212,7 +222,7 @@ const platformData = {
           { id: "6067", name: "Telegram Reaction [🦄] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
           { id: "6068", name: "Telegram Reaction [🤷] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
           { id: "6069", name: "Telegram Reaction [🆒] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6070", name: "Telegram Reaction [👾] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "7070", name: "Telegram Reaction [👾] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
           { id: "6071", name: "Telegram Reaction [🗿] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
           { id: "6072", name: "Telegram Reaction [🤪] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
           { id: "6073", name: "Telegram Reaction [🎉] + Views", rate: 10.3749, avgTime: "0–20 Min Start" }

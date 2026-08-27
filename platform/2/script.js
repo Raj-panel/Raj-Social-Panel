@@ -105,12 +105,11 @@ const platformData = {
     linkPlaceholder: "Link Facebook page or profile",
     categories: {
       "Facebook follower real account medium speed": {
-        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫 𝐌𝐢𝐱 𝐐𝐮𝐚𝐥𝐢𝐭𝐲[𝐍𝐨𝐧-𝐃𝐫𝐨𝐩]",
+        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫 𝐑𝐞𝐚𝐥 𝐀𝐜𝐜𝐨𝐮𝐧𝐭 [𝐍𝐨𝐧-𝐃𝐫𝐨𝐩]",
         services: [
-          { id: "6207", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | 90D Refill ♻️", rate: 40.4272, avgTime: "0–30 Min Start" },
-          { id: "6208", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | 365D Refill ♻️", rate: 43.0640, avgTime: "0–30 Min Start" },
-          { id: "6209", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts | Medium Speed | 0–30 Min Start | Lifetime Refill ♻️", rate: 54.7008, avgTime: "0–30 Min Start" },
-          { id: "1226", name: "Facebook - Comments | 10K/Day - Max 50K", rate: 28.000, avgTime: "0–30 Min Start" },
+          { id: "6426", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts| 0–30 Min Start | 90D Refill ♻️", rate: 40.4272, avgTime: "0–30 Min Start" },
+          { id: "6427", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts| 0–30 Min Start | 365D Refill ♻️", rate: 45.0640, avgTime: "0–30 Min Start" },
+          { id: "6428", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts| 0–30 Min Start | Lifetime Refill ♻️", rate: 53.7008, avgTime: "0–30 Min Start" },
         ]
       },
       "🇮🇳 Real Video Views Facebook - High Quality": {

@@ -1440,15 +1440,12 @@ function showOrderSuccessPopup(orderData) {
     const existingOverlay = document.getElementById("rajOrderSuccessOverlay");
     if (existingOverlay) existingOverlay.remove();
 
-    // বর্তমান Date ও Time জেনারেট করার জন্য
     const now = new Date();
-    const currentDate = now.toLocaleDateString('en-GB'); // DD/MM/YYYY format
+    const currentDate = now.toLocaleDateString('en-GB'); 
     const currentTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-   
-    const whatsappNumber = "919239628344"; // 
+    const whatsappNumber = "919239628344"; 
 
-    // WhatsApp Message Format আপনার চাহিদা অনুযায়ী তৈরি করা হয়েছে
     const waMessage = 
 `📦 Track Your Order
 
@@ -1467,7 +1464,6 @@ I want to track my order.
 
 Thank you! 💚`;
 
-    // URL Encode করা যাতে স্পেস বা ইমোজি ঠিক থাকে
     const encodedWaMessage = encodeURIComponent(waMessage);
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedWaMessage}`;
 
@@ -1485,7 +1481,7 @@ Thank you! 💚`;
             <div class="raj-popup-row"><strong>Quantity:</strong> ${orderData.quantity.toLocaleString()}</div>
             <div class="raj-popup-row"><strong>Total price:</strong> ₹${orderData.amount}</div>
 
-            <!-- নতুন WhatsApp Track Your Order Button (Center Aligned & Color-Changing) -->
+            <!-- WhatsApp Track Your Order Button -->
             <div style="text-align: center; margin-top: 20px;">
                 <a href="${whatsappUrl}" target="_blank" class="raj-whatsapp-track-btn">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -1499,7 +1495,6 @@ Thank you! 💚`;
 
     document.body.appendChild(overlay);
 
-    // Trigger smooth fade-in and Firecracker/Confetti effect
     setTimeout(() => {
         overlay.classList.add("active");
         triggerRajConfettiAnimation(overlay);
@@ -1515,7 +1510,7 @@ function closeRajSuccessPopup() {
 }
 
 // ==========================================
-// TELEGRAM ORDER SUBMISSION & POPUP INTEGRATION
+// ORDER SUBMISSION & POPUP INTEGRATION
 // ==========================================
 function submitOrderToWhatsApp() {
     const linkInput = document.getElementById("checkoutLinkInput");
@@ -1583,8 +1578,10 @@ function submitOrderToWhatsApp() {
         `💳 Payment Method: ${payMethod}\n` +
         `🧾 Transaction ID / UTR: ${txnId}`;
 
-    const TELEGRAM_BOT_TOKEN = "8818198886:AAG1Ww5lxVEPDBpBnFQAvtRZt6Zys9t0Wh8"; 
-    const TELEGRAM_CHAT_ID = "8895603997";
+    // TELEGRAM ENDPOINT CONFIGURATION
+    // Sensitive keys have been safely abstracted to avoid exposure in client-side production files.
+    const TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"; 
+    const TELEGRAM_CHAT_ID = "YOUR_TELEGRAM_CHAT_ID";
 
     const telegramApiUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
 
@@ -1618,12 +1615,12 @@ function submitOrderToWhatsApp() {
                 amount: finalPriceFormatted
             });
         } else {
-            alert("Failed to send order to Telegram. Please check Bot Token & Chat ID.");
+            alert("Failed to send order notification. Please check system integration settings.");
         }
     })
     .catch(error => {
-        console.error("Telegram Error:", error);
-        alert("Network error while sending order to Telegram.");
+        console.error("Submission Error:", error);
+        alert("Network error while submitting order.");
     })
     .finally(() => {
         if (submitBtn) submitBtn.disabled = false;

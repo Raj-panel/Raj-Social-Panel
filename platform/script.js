@@ -284,9 +284,7 @@
     document.head.appendChild(style);
 })();
 
-// ==========================================
-// NAVIGATION FIX FOR LOGIN / CREATE ACCOUNT
-// ==========================================
+// Navigation Fix
 document.addEventListener("DOMContentLoaded", function () {
     document.body.addEventListener("click", function (e) {
         const link = e.target.closest("a");
@@ -642,7 +640,6 @@ const serviceData = {
     }
 };
 
-// Global Application State
 let currentPlatform = "instagram";
 let currentCategory = "";
 let selectedPackage = null;
@@ -1389,9 +1386,6 @@ function processProfileOrLink(input, platform, serviceName) {
     };
 }
 
-// ==========================================
-// FIRECRACKER / CONFETTI GENERATOR UTILITY
-// ==========================================
 function triggerRajConfettiAnimation(overlayElement) {
     const colors = ['#22c55e', '#a855f7', '#ec4899', '#3b82f6', '#f59e0b', '#ef4444', '#10b981'];
     const particleCount = 45;
@@ -1400,13 +1394,9 @@ function triggerRajConfettiAnimation(overlayElement) {
         const piece = document.createElement('div');
         piece.className = 'raj-confetti-piece';
         
-        // Random horizontal positions
         piece.style.left = Math.random() * 100 + '%';
-        
-        // Random colors
         piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
         
-        // Random shapes (square, circle or thin strip)
         if (Math.random() > 0.5) {
             piece.style.borderRadius = '50%';
             piece.style.width = (Math.random() * 8 + 6) + 'px';
@@ -1416,39 +1406,30 @@ function triggerRajConfettiAnimation(overlayElement) {
             piece.style.height = (Math.random() * 14 + 10) + 'px';
         }
 
-        // Random animation duration & delays for firecracker burst feel
-        const duration = Math.random() * 1.5 + 1.2; // 1.2s to 2.7s
-        const delay = Math.random() * 0.4; // 0s to 0.4s
+        const duration = Math.random() * 1.5 + 1.2;
+        const delay = Math.random() * 0.4;
         
         piece.style.animationDuration = duration + 's';
         piece.style.animationDelay = delay + 's';
 
         overlayElement.appendChild(piece);
 
-        // Auto remove element after animation completes
         setTimeout(() => {
             piece.remove();
         }, (duration + delay) * 1000);
     }
 }
 
-// ==========================================
-// MODERN GLOWING SUCCESS POPUP FUNCTION (WITH WHATSAPP TRACK BUTTON)
-// ==========================================
 function showOrderSuccessPopup(orderData) {
-    // Remove existing popup if any
     const existingOverlay = document.getElementById("rajOrderSuccessOverlay");
     if (existingOverlay) existingOverlay.remove();
 
-    // বর্তমান Date ও Time জেনারেট করার জন্য
     const now = new Date();
-    const currentDate = now.toLocaleDateString('en-GB'); // DD/MM/YYYY format
+    const currentDate = now.toLocaleDateString('en-GB');
     const currentTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-   
-    const whatsappNumber = "919239628344"; // 
+    const whatsappNumber = "919239628344";
 
-    // WhatsApp Message Format আপনার চাহিদা অনুযায়ী তৈরি করা হয়েছে
     const waMessage = 
 `📦 Track Your Order
 
@@ -1467,7 +1448,6 @@ I want to track my order.
 
 Thank you! 💚`;
 
-    // URL Encode করা যাতে স্পেস বা ইমোজি ঠিক থাকে
     const encodedWaMessage = encodeURIComponent(waMessage);
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedWaMessage}`;
 
@@ -1485,7 +1465,6 @@ Thank you! 💚`;
             <div class="raj-popup-row"><strong>Quantity:</strong> ${orderData.quantity.toLocaleString()}</div>
             <div class="raj-popup-row"><strong>Total price:</strong> ₹${orderData.amount}</div>
 
-            <!-- নতুন WhatsApp Track Your Order Button (Center Aligned & Color-Changing) -->
             <div style="text-align: center; margin-top: 20px;">
                 <a href="${whatsappUrl}" target="_blank" class="raj-whatsapp-track-btn">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -1499,7 +1478,6 @@ Thank you! 💚`;
 
     document.body.appendChild(overlay);
 
-    // Trigger smooth fade-in and Firecracker/Confetti effect
     setTimeout(() => {
         overlay.classList.add("active");
         triggerRajConfettiAnimation(overlay);
@@ -1515,7 +1493,7 @@ function closeRajSuccessPopup() {
 }
 
 // ==========================================
-// TELEGRAM ORDER SUBMISSION & POPUP INTEGRATION
+// BACKEND API INTEGRATION FOR PLATFORM 1
 // ==========================================
 function submitOrderToWhatsApp() {
     const linkInput = document.getElementById("checkoutLinkInput");
@@ -1550,12 +1528,13 @@ function submitOrderToWhatsApp() {
 
     const orderIdVal = Math.floor(100000 + Math.random() * 900000);
     const finalPriceFormatted = currentCheckoutData.price ? currentCheckoutData.price.toFixed(2) : "0.00";
-    
+    const d = currentCheckoutData;
+
     const newOrder = {
         orderId: orderIdVal,
-        serviceName: `${currentCheckoutData.platform} - ${currentCheckoutData.serviceName} (${currentCheckoutData.packageName})`,
+        serviceName: `${d.platform} - ${d.serviceName} (${d.packageName})`,
         link: link,
-        quantity: currentCheckoutData.quantity || 0,
+        quantity: d.quantity || 0,
         amount: finalPriceFormatted,
         orderTimeEpoch: Date.now(),
         status: 'Pending',
@@ -1566,37 +1545,19 @@ function submitOrderToWhatsApp() {
     existingOrders.push(newOrder);
     localStorage.setItem('raj_smm_orders', JSON.stringify(existingOrders));
 
-    const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
-    const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
-
-    const d = currentCheckoutData;
-
-    const formattedMessage = 
-        `🚀 NEW ORDER SUBMITTED 🚀\n\n` +
-        `🆔 Order ID: #${orderIdVal}\n` +
-        `📌 Social Media: ${d.platform || ''}\n` +
-        `🛠️ Service Name: ${d.serviceName || ''}\n` +
-        `📦 Package: ${d.packageName || ''}\n` +
-        `🔢 Total Quantity: ${(d.quantity || 0).toLocaleString()}\n` +
-        `💰 Total Price: ₹${finalPriceFormatted}\n` +
-        `🔗 Target Link: ${link}\n` +
-        `💳 Payment Method: ${payMethod}\n` +
-        `🧾 Transaction ID / UTR: ${txnId}`;
-
-    const TELEGRAM_BOT_TOKEN = "8818198886:AAG1Ww5lxVEPDBpBnFQAvtRZt6Zys9t0Wh8"; 
-    const TELEGRAM_CHAT_ID = "8895603997";
-
-    const telegramApiUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-
-    const payload = {
-        chat_id: TELEGRAM_CHAT_ID,
-        text: formattedMessage
-    };
-
-    const submitBtn = document.querySelector("#checkoutPage .submit-btn") || event.target;
+    const submitBtn = document.querySelector("#checkoutPage .submit-btn") || (event && event.target);
     if (submitBtn) submitBtn.disabled = true;
 
-    fetch(telegramApiUrl, {
+    // ব্যাকএন্ডে পাঠানোর জন্য ডাটা স্ট্রাকচার
+    const payload = {
+        source: 'platform1',
+        serviceName: `${d.platform} - ${d.serviceName} (${d.packageName})`,
+        quantity: d.quantity || 0,
+        link: link,
+        price: `₹${finalPriceFormatted}`
+    };
+
+    fetch('https://rajsmmpanel.in/api/send-order', {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -1605,7 +1566,7 @@ function submitOrderToWhatsApp() {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.ok) {
+        if (data.success) {
             closeCheckoutUI();
             
             showOrderSuccessPopup({
@@ -1618,12 +1579,12 @@ function submitOrderToWhatsApp() {
                 amount: finalPriceFormatted
             });
         } else {
-            alert("Failed to send order to Telegram. Please check Bot Token & Chat ID.");
+            alert("Order submission failed: " + (data.error || data.message));
         }
     })
     .catch(error => {
-        console.error("Telegram Error:", error);
-        alert("Network error while sending order to Telegram.");
+        console.error("API Error:", error);
+        alert("Network error while submitting order.");
     })
     .finally(() => {
         if (submitBtn) submitBtn.disabled = false;

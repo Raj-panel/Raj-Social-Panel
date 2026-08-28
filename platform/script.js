@@ -388,7 +388,7 @@ const serviceData = {
                 placeholder: "Enter Instagram reel/video link"
             },
             {
-                name: "Reels Viral Package 1",
+                name: "Reels Viral Package 2",
                 price: 99,
                 badge: "10% OFF",
                 badgeClass: "badge-best",
@@ -404,7 +404,7 @@ const serviceData = {
                 placeholder: "Enter Instagram reel/video link"
             },
             {
-                name: "Reels Viral Package 2",
+                name: "Reels Viral Package 3",
                 price: 199,
                 badge: "20% OFF",
                 badgeClass: "badge-best",
@@ -420,7 +420,7 @@ const serviceData = {
                 placeholder: "Enter Instagram reel/video link"
             },
             {
-                name: "Reels Viral Package 3",
+                name: "Reels Viral Package 4",
                 price: 299,
                 badge: "30% OFF",
                 badgeClass: "badge-best",
@@ -436,7 +436,7 @@ const serviceData = {
                 placeholder: "Enter Instagram reel/video link"
             },
             {
-                name: "Reels Viral Package 4",
+                name: "Reels Viral Package 5",
                 price: 399,
                 badge: "40% OFF",
                 badgeClass: "badge-best",
@@ -452,7 +452,7 @@ const serviceData = {
                 placeholder: "Enter Instagram reel/video link"
             },
             {
-                name: "Reels Viral Package 5",
+                name: "Reels Viral Package 6",
                 price: 499,
                 badge: "50% OFF",
                 badgeClass: "badge-best",
@@ -1224,7 +1224,7 @@ function showCheckoutOverlay() {
         if (!scanHeading) {
             scanHeading = document.createElement("h3");
             scanHeading.id = "scanToPayHeading";
-            scanHeading.innerText = "TACK A SCREENSHOT OR SCAN TO PAY";
+            scanHeading.innerText = "TAKE A SCREENSHOT OR SCAN TO PAY";
             scanHeading.style.cssText = "margin: 2px 0 2px 0 !important; font-size: 12px !important; font-weight: 800 !important; text-align: center !important; text-transform: uppercase !important; background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; display: block !important; visibility: visible !important; opacity: 1 !important;";
         }
         if (qrImg && qrImg.parentElement === upiView) {
@@ -1495,7 +1495,9 @@ function closeRajSuccessPopup() {
 // ==========================================
 // BACKEND API INTEGRATION FOR PLATFORM 1
 // ==========================================
-function submitOrderToWhatsApp() {
+function submitOrderToWhatsApp(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    
     const linkInput = document.getElementById("checkoutLinkInput");
     const txnInput = document.getElementById("checkoutTxnId");
 
@@ -1530,31 +1532,22 @@ function submitOrderToWhatsApp() {
     const finalPriceFormatted = currentCheckoutData.price ? currentCheckoutData.price.toFixed(2) : "0.00";
     const d = currentCheckoutData;
 
-    const newOrder = {
-        orderId: orderIdVal,
-        serviceName: `${d.platform} - ${d.serviceName} (${d.packageName})`,
-        link: link,
-        quantity: d.quantity || 0,
-        amount: finalPriceFormatted,
-        orderTimeEpoch: Date.now(),
-        status: 'Pending',
-        userIdentifier: userIdentifier
-    };
+    const submitBtn = document.querySelector("#checkoutPage .submit-btn") || (e && e.target);
+    const originalBtnText = submitBtn ? submitBtn.innerText : "";
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Processing Order...";
+    }
 
-    const existingOrders = JSON.parse(localStorage.getItem('raj_smm_orders') || '[]');
-    existingOrders.push(newOrder);
-    localStorage.setItem('raj_smm_orders', JSON.stringify(existingOrders));
-
-    const submitBtn = document.querySelector("#checkoutPage .submit-btn") || (event && event.target);
-    if (submitBtn) submitBtn.disabled = true;
-
-    // ব্যাকএন্ডে পাঠানোর জন্য ডাটা স্ট্রাকচার
     const payload = {
         source: 'platform1',
+        orderId: orderIdVal,
         serviceName: `${d.platform} - ${d.serviceName} (${d.packageName})`,
         quantity: d.quantity || 0,
         link: link,
-        price: `₹${finalPriceFormatted}`
+        txnId: txnId,
+        price: `₹${finalPriceFormatted}`,
+        userIdentifier: userIdentifier
     };
 
     fetch('https://rajsmmpanel.in/api/send-order', {
@@ -1566,7 +1559,23 @@ function submitOrderToWhatsApp() {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.success) {
+        if (data.success || data.status === "ok") {
+            const newOrder = {
+                orderId: orderIdVal,
+                serviceName: `${d.platform} - ${d.serviceName} (${d.packageName})`,
+                link: link,
+                txnId: txnId,
+                quantity: d.quantity || 0,
+                amount: finalPriceFormatted,
+                orderTimeEpoch: Date.now(),
+                status: 'Pending',
+                userIdentifier: userIdentifier
+            };
+
+            const existingOrders = JSON.parse(localStorage.getItem('raj_smm_orders') || '[]');
+            existingOrders.push(newOrder);
+            localStorage.setItem('raj_smm_orders', JSON.stringify(existingOrders));
+
             closeCheckoutUI();
             
             showOrderSuccessPopup({
@@ -1579,15 +1588,18 @@ function submitOrderToWhatsApp() {
                 amount: finalPriceFormatted
             });
         } else {
-            alert("Order submission failed: " + (data.error || data.message));
+            alert("Order submission failed: " + (data.error || data.message || "Unknown error"));
         }
     })
     .catch(error => {
         console.error("API Error:", error);
-        alert("Network error while submitting order.");
+        alert("Network error while submitting order. Please check your internet connection.");
     })
     .finally(() => {
-        if (submitBtn) submitBtn.disabled = false;
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerText = originalBtnText || "Confirm Order";
+        }
     });
 }
 

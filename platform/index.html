@@ -69,6 +69,39 @@
     --sidebar-close: #94a3b8;
   }
 
+  /* Header Controls Area */
+  .top-nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .nav-wallet-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    padding: 6px 14px;
+    border-radius: 20px;
+    color: #38bdf8;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  .nav-login-btn {
+    background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+    color: #ffffff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+  }
+
   /* Platform Switcher Card Container */
   .platform-card-wrapper {
     background: #ffffff !important;
@@ -131,10 +164,6 @@
 
   /* Hamburger Button */
   .hamburger-btn {
-    position: absolute;
-    top: -4px;
-    left: -8px;
-    z-index: 100;
     background: rgba(30, 41, 59, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: inherit;
@@ -176,42 +205,6 @@
     box-shadow: 0 0 20px rgba(0, 150, 255, 0.8), 0 0 40px rgba(138, 43, 226, 0.6);
     transition: all 0.3s ease-in-out;
     cursor: pointer;
-  }
-  .install-btn:hover {
-    box-shadow: 0 0 30px rgba(0, 150, 255, 1), 0 0 50px rgba(138, 43, 226, 0.9);
-    transform: translateY(-2px);
-  }
-
-  /* UPI Buttons Grid */
-  .upi-app-btn-grid {
-    display: flex;
-    justify-content: space-between;
-    gap: 2px;
-    margin-top: 4px;
-    width: 100%;
-  }
-  .upi-app-card-btn {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(226, 232, 240, 0.6);
-    border-radius: 12px;
-    padding: 8px 4px;
-    text-decoration: none;
-    color: #1e293b;
-    font-weight: 700;
-    font-size: 12px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-    pointer-events: none;
-    cursor: default;
-  }
-
-  .checkout-input-group input[type="text"] {
-    width: 100%;
-    box-sizing: border-box;
   }
 
   /* Sidebar Drawer Overlay */
@@ -304,69 +297,15 @@
     color: var(--sidebar-hover-text);
   }
 
-  .sidebar-footer-media {
-    padding: 15px;
-    border-top: 1px solid var(--sidebar-border);
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .watch-tutorials-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background: #dc2626;
-    color: #ffffff !important;
-    font-weight: 700;
-    font-size: 14px;
-    padding: 12px;
-    border-radius: 8px;
-    text-decoration: none;
-    text-transform: uppercase;
-    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-    transition: background 0.2s ease, transform 0.2s ease;
-    text-align: center;
-  }
-  .watch-tutorials-btn:hover {
-    background: #b91c1c;
-    transform: translateY(-1px);
-  }
-
-  .tutorial-banner-link {
-    display: block;
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .tutorial-banner-img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 8px;
-    transition: transform 0.2s ease;
-  }
-  .tutorial-banner-link:hover .tutorial-banner-img {
-    transform: scale(1.02);
-  }
-  
   .hidden {
     display: none !important;
   }
 
   /* Glowing Effect for Confirm Your Order Button */
   @keyframes glowingBtn {
-    0% {
-      box-shadow: 0 0 5px rgba(34, 197, 94, 0.5), 0 0 10px rgba(34, 197, 94, 0.4), 0 0 15px rgba(34, 197, 94, 0.3);
-    }
-    50% {
-      box-shadow: 0 0 20px rgba(34, 197, 94, 0.9), 0 0 30px rgba(34, 197, 94, 0.7), 0 0 40px rgba(34, 197, 94, 0.5);
-    }
-    100% {
-      box-shadow: 0 0 5px rgba(34, 197, 94, 0.5), 0 0 10px rgba(34, 197, 94, 0.4), 0 0 15px rgba(34, 197, 94, 0.3);
-    }
+    0% { box-shadow: 0 0 5px rgba(34, 197, 94, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.9); }
+    100% { box-shadow: 0 0 5px rgba(34, 197, 94, 0.5); }
   }
 
   .whatsapp-submit-btn {
@@ -385,15 +324,24 @@
     align-items: center;
     justify-content: center;
     animation: glowingBtn 2s infinite ease-in-out;
-    transition: transform 0.2s ease;
-  }
-
-  .whatsapp-submit-btn:hover {
-    transform: translateY(-2px);
   }
 </style>
 </head>
 <body data-platform="instagram">
+
+<!-- Top Navigation Bar -->
+<div class="top-nav-bar">
+  <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <div id="navWalletBox" class="nav-wallet-box" style="display: none;">
+    <i class="fa-solid fa-wallet"></i>
+    <span id="userBalanceText">₹0</span>
+  </div>
+
+  <a id="navLoginBtn" href="/login/" class="nav-login-btn">🔐 Login</a>
+</div>
 
 <!-- Left Sidebar Navigation -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar(true)"></div>
@@ -404,11 +352,11 @@
   </div>
   
   <ul class="sidebar-menu">
-    <li id="authMenuItem"></li>
+    <li id="authMenuItem"><a href="/login/" onclick="closeSidebar();">🔐 Login / Create Account</a></li>
     <li><a href="https://rajsmmpanel.in/">🛒 New Order</a></li>
     <li><a href="https://rajsmmpanel.in/platform/2/">⚡ Platform 2</a></li>
     <li><a href="/orders/">📦 My Orders</a></li>
-    <li id="addFundsMenuItem" style="display: none;"></li>
+    <li id="addFundsMenuItem" style="display: none;"><a href="/add-funds/">💳 Add Funds</a></li>
     <li><a href="/pages/privacy-policy.html">🔒 Privacy Policy</a></li>
     <li><a href="/pages/refund-policy.html">💸 Refund Policy</a></li>
     <li><a href="/pages/terms.html">📜 Terms &amp; Conditions</a></li>
@@ -416,36 +364,11 @@
     <li><a href="/pages/about.html">ℹ️ About Us</a></li>
     <li><a href="/buy-smm-panel">🛒 Buy SMM Panel</a></li>
   </ul>
-
-  <div class="sidebar-footer-media">
-    <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="watch-tutorials-btn">
-      <i class="fa-brands fa-youtube"></i> Watch Tutorials
-    </a>
-    <a href="https://youtu.be/vsRlXbdNaoU?si=zFrOw3iIYW5GFF4c" target="_blank" rel="noopener noreferrer" class="tutorial-banner-link">
-      <img src="thumbnail.png" alt="Watch Tutorial" class="tutorial-banner-img" />
-    </a>
-  </div>
 </div>
 
-<div class="main-wrapper" id="mainHomeView" style="position: relative;">
+<div class="main-wrapper" id="mainHomeView">
   
-  <!-- Hamburger Button -->
-  <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
-    <i class="fa-solid fa-bars"></i>
-  </button>
-
-  <!-- Header -->
   <div class="panel-heading">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
-
-  <!-- Support Buttons Header -->
-  <div class="hero-actions">
-    <a class="glass-btn btn-telegram" href="https://t.me/raj_smm_panel" target="_blank" rel="noopener noreferrer">
-      <i class="fa-brands fa-telegram"></i> Telegram Support
-    </a>
-    <a class="glass-btn btn-whatsapp" href="javascript:void(0);" onclick="openWhatsAppSupport()">
-      <i class="fa-brands fa-whatsapp"></i> WhatsApp Support
-    </a>
-  </div>
 
   <!-- Platform Switcher -->
   <div class="platform-card-wrapper">
@@ -465,35 +388,6 @@
     </div>
   </div>
 
-  <!-- Hero Status Banner -->
-  <div class="hero-banner">
-    <div class="hero-top-row">
-      <div class="hero-logo-box" id="heroLogoIcon">
-        <i class="fa-brands fa-instagram"></i>
-      </div>
-      <span class="provider-badge">#1 Service Provider</span>
-    </div>
-    <h2 id="heroTitle">Instagram Boost</h2>
-    <p class="hero-sub">⚡Real Engagement• Fast &amp; Safe Delivery</p>
-    <div class="hero-stats-grid">
-      <div class="stat-card">
-        <span class="stat-icon"><i class="fa-solid fa-rocket"></i></span>
-        <span class="stat-num" id="totalOrders">10M</span>
-        <span class="stat-lbl">Orders Delivered</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-icon"><i class="fa-solid fa-headset"></i></span>
-        <span class="stat-num">24/7</span>
-        <span class="stat-lbl">Support</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-icon"><i class="fa-solid fa-shield-halved"></i></span>
-        <span class="stat-num">100%</span>
-        <span class="stat-lbl">Safe &amp; Refundable</span>
-      </div>
-    </div>
-  </div>
-
   <!-- Scrollable Category Tabs -->
   <div class="category-tabs-wrapper">
     <div class="category-tabs" id="categoryTabs"></div>
@@ -502,257 +396,65 @@
   <!-- Package List Section -->
   <div class="package-list-container" id="packageList"></div>
 
-  <div class="footer-note">
+  <div class="footer-note" style="text-align: center; color: #94a3b8; margin-top: 20px;">
     ⚡ Fast Processing • 100% Refund Guarantee If Failed
-  </div>
-
-  <!-- Install App Button -->
-  <div id="installContainer" style="display:none;">
-    <button class="install-btn" id="installBtn"><i class="fa-solid fa-download"></i> Install App</button>
   </div>
 </div>
 
-<!-- CHECKOUT PAGE OVERLAY -->
+<!-- CHECKOUT OVERLAY -->
 <div id="checkoutPage" class="checkout-page-overlay hidden">
   <div class="checkout-content">
-    
     <div class="checkout-nav">
       <button class="back-btn" onclick="closeCheckout()"><i class="fa-solid fa-arrow-left"></i> Back</button>
       <div class="checkout-heading-text">Checkout</div>
     </div>
 
     <div class="premium-service-card">
-      <div class="card-top-row">
-        <div class="platform-badge-icon" id="checkoutPlatformIcon">
-          <i class="fa-brands fa-instagram"></i>
-        </div>
-        <div class="card-info">
-          <h4 id="checkoutServiceTitle">Instagram Followers</h4>
-          <div class="badge-row">
-            <span class="pkg-name-badge" id="checkoutPkgBadgeName">5K Followers</span>
-            <span class="popular-badge" id="checkoutBadge">Best Value</span>
-          </div>
-        </div>
-      </div>
-      <div class="units-text" id="checkoutUnitsText">5,000 units</div>
-      <div class="price-text">
-        ₹<span id="checkoutPriceText">199.00</span> <small>one-time</small>
-      </div>
+      <h4 id="checkoutServiceTitle">Instagram Followers</h4>
+      <div class="price-text">₹<span id="checkoutPriceText">199.00</span></div>
     </div>
 
     <div class="checkout-input-group">
-      <label id="checkoutLinkLabel">Enter your Instagram link</label>
-      <input type="text" id="checkoutLinkInput" placeholder="https://instagram.com/your_username" />
-    </div>
-
-    <div class="checkout-order-summary">
-      <div class="summary-title">Order Summary</div>
-      <div class="summary-row">
-        <span>Package</span>
-        <span id="summaryPackageText">5K Followers</span>
-      </div>
-      <div class="summary-divider"></div>
-      <div class="summary-row pay-row">
-        <span>You Pay</span>
-        <span class="pay-amount">₹<span id="summaryPayAmount">199.00</span></span>
-      </div>
-    </div>
-
-    <div class="pay-toggle-tabs">
-      <button class="pay-tab active" id="btnTabUpi" onclick="switchCheckoutPayment('upi')">
-        <i class="fa-solid fa-qrcode"></i> UPI QR Pay
-      </button>
-      <button class="pay-tab" id="btnTabBinance" onclick="switchCheckoutPayment('binance')">
-        <i class="fa-solid fa-wallet"></i> Binance Pay
-      </button>
-    </div>
-
-    <div id="checkoutUpiView" class="payment-view-box">
-      <div class="scan-title" style="font-weight: 800; color: var(--platform-primary, #a855f7); font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
-        SCAN TO PAY VIA UPI
-      </div>
-      <div class="qr-wrapper" style="text-align: center; margin-bottom: 2px;">
-        <img id="checkoutQrImg" src="" alt="UPI QR Code" style="display: block; margin: 0 auto; border-radius: 12px;" />
-      </div>
-      <p class="qr-sub" style="font-size: 10px; color: #64748b; margin-top: 2px; margin-bottom: 8px; text-align: center;">
-        Scan or enter payment detail into any UPI App
-      </p>
-      
-      <div class="upi-app-btn-grid">
-        <div class="upi-app-card-btn">
-          <span style="color: #00baf2; font-weight: 900;">Paytm</span>
-        </div>
-        <div class="upi-app-card-btn">
-          <span style="color: #4285f4; font-weight: 800;">G</span><span style="color: #ea4335; font-weight: 800;">P</span><span style="color: #fbbc05; font-weight: 800;">a</span><span style="color: #34a853; font-weight: 800;">y</span>
-        </div>
-        <div class="upi-app-card-btn">
-          <i class="fa-solid fa-asterisk" style="color: #5f259f;"></i>
-          <span style="color: #5f259f; font-weight: 800;">PhonePe</span>
-        </div>
-        <div class="upi-app-card-btn">
-          <i class="fa-solid fa-qrcode" style="color: #6366f1;"></i>
-          <span style="color: #1e293b; font-weight: 700;">Other UPI</span>
-        </div>
-      </div>
-    </div>
-
-    <div id="checkoutBinanceView" class="payment-view-box hidden">
-      <div class="scan-title">SCAN TO PAY VIA BINANCE</div>
-      <div class="qr-wrapper">
-        <img src="binance-qr.png" alt="Binance QR Code" />
-      </div>
-      <div class="binance-nick-box">
-        Binance Nickname: <strong style="color: #facc15;">Alex-Sahil786</strong>
-      </div>
-      <div class="usdt-badge-box">
-        <span id="checkoutUsdtAmount">$0.00 USDT</span>
-      </div>
+      <label id="checkoutLinkLabel">Enter Target Link</label>
+      <input type="text" id="checkoutLinkInput" placeholder="https://..." />
     </div>
 
     <div class="checkout-input-group margin-top-15">
-      <label id="txnLabel" for="checkoutTxnId">Enter 12-Digit UPI UTR / Ref No:</label>
-      <input type="text" id="checkoutTxnId" placeholder="e.g. 4029XXXXXXXXXX (12-Digit UTR)" />
-    </div>
-
-    <div class="notice-yellow-box">
-      <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
+      <label id="txnLabel" for="checkoutTxnId">Enter Transaction / UTR ID:</label>
+      <input type="text" id="checkoutTxnId" placeholder="e.g. 4029XXXXXXXXXX" />
     </div>
 
     <button id="submitWalletBtn" class="whatsapp-submit-btn" onclick="submitOrderWithWallet()">
       Confirm your order
     </button>
-
   </div>
 </div>
 
-<script src="script.js"></script>
+<!-- ★★★ সঠিকভাবে স্ক্রিপ্ট লোড করার সঠিক ক্রম ★★★ -->
+
+<!-- ১. ফায়ারবেস ব্যাকএন্ড এবং অথেনটিকেশন মডিউল স্ক্রিপ্ট -->
 <script type="module" src="firebase-config.js"></script>
 <script type="module" src="auth-handler.js"></script>
 
+<!-- ২. ফ্রন্টএন্ড স্ক্রিপ্টসমূহ -->
+<script src="script.js"></script>
+
 <script>
-  function submitOrderToWhatsApp() {
-    if (typeof submitOrderWithWallet === 'function') {
-      submitOrderWithWallet();
-    } else {
-      console.error("submitOrderWithWallet function is not defined.");
-    }
+  function openSidebar() {
+    document.getElementById("leftSidebar").classList.add("active");
+    document.getElementById("sidebarOverlay").classList.add("active");
   }
 
-  function applyPlatformTheme(platform) {
-    if (!platform) return;
-    const p = platform.toLowerCase();
-    document.body.setAttribute('data-platform', p);
+  function closeSidebar() {
+    document.getElementById("leftSidebar").classList.remove("active");
+    document.getElementById("sidebarOverlay").classList.remove("active");
   }
 
   function handlePlatformClick(platform, elem) {
-    document.querySelectorAll('.platform-switch-container .platform-btn').forEach(btn => {
-      btn.classList.remove('active');
-    });
+    document.querySelectorAll('.platform-btn').forEach(btn => btn.classList.remove('active'));
     elem.classList.add('active');
-
-    applyPlatformTheme(platform);
-
-    if (typeof switchPlatform === 'function') {
-      switchPlatform(platform);
-    } else if (typeof loadPlatformServices === 'function') {
-      loadPlatformServices(platform);
-    }
-  }
-
-  function switchCheckoutPayment(method) {
-    const upiView = document.getElementById('checkoutUpiView');
-    const binanceView = document.getElementById('checkoutBinanceView');
-    const btnUpi = document.getElementById('btnTabUpi');
-    const btnBinance = document.getElementById('btnTabBinance');
-    const txnLabel = document.getElementById('txnLabel');
-    const txnInput = document.getElementById('checkoutTxnId');
-
-    if (method === 'binance') {
-      upiView.classList.add('hidden');
-      binanceView.classList.remove('hidden');
-      btnUpi.classList.remove('active');
-      btnBinance.classList.add('active');
-      
-      txnLabel.innerText = "Enter Binance TxID / Order ID:";
-      txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
-    } else {
-      binanceView.classList.add('hidden');
-      upiView.classList.remove('hidden');
-      btnBinance.classList.remove('active');
-      btnUpi.classList.add('active');
-      
-      txnLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
-      txnInput.placeholder = "e.g. 4029XXXXXXXXXX (12-Digit UTR)";
-    }
-  }
-
-  function openWhatsAppSupport() {
-    const phoneNumber = "919239628344";
-    const message = encodeURIComponent("Hi 👋 I want to know about your services on rajsmmpanel.in");
-    window.open("https://wa.me/" + phoneNumber + "?text=" + message, "_blank");
-  }
-
-  function openSidebar() {
-    const sidebar = document.getElementById("leftSidebar");
-    const overlay = document.getElementById("sidebarOverlay");
-    
-    if (!sidebar.classList.contains("active")) {
-      sidebar.classList.add("active");
-      overlay.classList.add("active");
-      document.body.style.overflow = "hidden";
-      
-      history.pushState({ sidebarOpen: true }, '');
-    }
-  }
-
-  function closeSidebar(fromUserAction = false) {
-    const sidebar = document.getElementById("leftSidebar");
-    const overlay = document.getElementById("sidebarOverlay");
-    
-    if (sidebar.classList.contains("active")) {
-      sidebar.classList.remove("active");
-      overlay.classList.remove("active");
-      document.body.style.overflow = "auto";
-      
-      if (fromUserAction && history.state && history.state.sidebarOpen) {
-        history.back();
-      }
-    }
-  }
-
-  window.addEventListener("popstate", function (event) {
-    const sidebar = document.getElementById("leftSidebar");
-    if (sidebar && sidebar.classList.contains("active")) {
-      closeSidebar(false);
-    }
-  });
-
-  document.addEventListener("DOMContentLoaded", function () {
-    applyPlatformTheme('instagram');
-
-    document.body.addEventListener("focusin", function (e) {
-      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
-        const installBox = document.getElementById("installContainer");
-        if (installBox) installBox.style.display = "none";
-      }
-    });
-
-    document.body.addEventListener("focusout", function (e) {
-      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
-        const installBox = document.getElementById("installContainer");
-        if (installBox) installBox.style.display = "block";
-      }
-    });
-  });
-
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then((reg) => console.log('Service Worker Registered Successfully:', reg))
-        .catch((err) => console.log('Service Worker Registration Failed:', err));
-    });
+    if (typeof switchPlatform === 'function') switchPlatform(platform);
   }
 </script>
-<script type="module" src="js/services-loader.js"></script>
 </body>
 </html>

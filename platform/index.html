@@ -14,7 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
 
 <!-- PWA / Web App Manifest & Theme -->
-<link href="manifest.json" rel="manifest"/>
+<link rel="manifest" href="/manifest.json"/>
 <meta content="#0f172a" name="theme-color"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
@@ -618,7 +618,6 @@
       <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
     </div>
 
-    <!-- Updated onclick handler to process wallet and background Firestore submissions -->
     <button id="submitWalletBtn" class="whatsapp-submit-btn" onclick="submitOrderWithWallet()">
       Confirm your order
     </button>
@@ -631,7 +630,6 @@
 <script type="module" src="auth-handler.js"></script>
 
 <script>
-  // Fallback function alias in case old cached scripts call submitOrderToWhatsApp()
   function submitOrderToWhatsApp() {
     if (typeof submitOrderWithWallet === 'function') {
       submitOrderWithWallet();
@@ -640,21 +638,18 @@
     }
   }
 
-  // Dynamic Platform Theme Switcher Integration
   function applyPlatformTheme(platform) {
     if (!platform) return;
     const p = platform.toLowerCase();
     document.body.setAttribute('data-platform', p);
   }
 
-  // Unified Platform Switch Click & Service Loading Handler
   function handlePlatformClick(platform, elem) {
     document.querySelectorAll('.platform-switch-container .platform-btn').forEach(btn => {
       btn.classList.remove('active');
     });
     elem.classList.add('active');
 
-    // Automatically change theme based on platform
     applyPlatformTheme(platform);
 
     if (typeof switchPlatform === 'function') {
@@ -664,7 +659,6 @@
     }
   }
 
-  // Payment Method Switching Logic
   function switchCheckoutPayment(method) {
     const upiView = document.getElementById('checkoutUpiView');
     const binanceView = document.getElementById('checkoutBinanceView');
@@ -692,14 +686,12 @@
     }
   }
 
-  // WhatsApp Support Click Handler
   function openWhatsAppSupport() {
     const phoneNumber = "919239628344";
     const message = encodeURIComponent("Hi 👋 I want to know about your services on rajsmmpanel.in");
     window.open("https://wa.me/" + phoneNumber + "?text=" + message, "_blank");
   }
 
-  // Sidebar Controls
   function openSidebar() {
     const sidebar = document.getElementById("leftSidebar");
     const overlay = document.getElementById("sidebarOverlay");
@@ -735,9 +727,7 @@
     }
   });
 
-  // Input Focus App Banner Toggle
   document.addEventListener("DOMContentLoaded", function () {
-    // Default initial theme setup
     applyPlatformTheme('instagram');
 
     document.body.addEventListener("focusin", function (e) {
@@ -755,7 +745,6 @@
     });
   });
 
-  // Service Worker Registration
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./sw.js')

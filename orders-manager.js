@@ -1,59 +1,52 @@
-/**
- * Orders Manager - Handles Local Storage persistence and time-based status automation.
- */
+async function loadUserOrders(userId, platformName) {
+    try {
+        const url = `https://raj-social-panel-backend-qfwd.vercel.app/api/orders/user/${userId}?platform=${platformName}`;
+        const response = await fetch(url);
+        const data = await response.json();
 
-const ORDER_STORAGE_KEY = 'user_local_orders';
-
-/**
- * Saves a new order to Local Storage.
- * @param {Object} orderData - Details from the successful checkout.
- */
-function saveNewOrder(orderData) {
-    const orders = getAllOrders();
-    
-    const newOrder = {
-        orderId: orderData.orderId || 'ORD-' + Math.floor(100000 + Math.random() * 900000),
-        serviceName: orderData.serviceName,
-        link: orderData.link,
-        quantity: orderData.quantity,
-        amount: orderData.amount,
-        dateTime: new Date().toLocaleString(),
-        createdTimestamp: Date.now()
-    };
-
-    orders.unshift(newOrder);
-    localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(orders));
+        if (data.success) {
+            renderOrdersTable(data.orders);
+        }
+    } catch (error) {
+        console.error("Error fetching user orders:", error);
+    }
 }
 
-/**
- * Retrieves all orders from Local Storage, calculating their current status dynamically.
- * Updated Rule:
- * - Pending: < 5 minutes
- * - Processing: >= 5 minutes AND < 60 minutes (1 hour)
- * - Completed: >= 60 minutes
- */
-function getAllOrders() {
-    const data = localStorage.getItem(ORDER_STORAGE_KEY);
-    if (!data) return [];
-    
-    try {
-        const orders = JSON.parse(data);
-        const currentTime = Date.now();
+function renderOrdersTable(orders) {
+    const container = document.getElementById("orders-list-container");
+    if (!container) return;
 
-        return orders.map(order => {
-            const elapsedMinutes = (currentTime - order.createdTimestamp) / (1000 * 60);
-            let status = 'Pending';
-
-            if (elapsedMinutes >= 60) {
-                status = 'Completed';
-            } else if (elapsedMinutes >= 5) {
-                status = 'Processing';
-            }
-
-            return { ...order, status };
-        });
-    } catch (e) {
-        console.error("Error parsing orders from Local Storage", e);
-        return [];
+    if (orders.length === 0) {
+        container.innerHTML = "<p>No orders found.</p>";
+        return;
     }
+
+    let html = `<table class="orders-table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Service</th>
+                <th>Link</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>`;
+
+    orders.forEach(order => {
+        html += `
+            <tr>
+                <td>${order.internalOrderId}</td>
+                <td>${order.serviceName}</td>
+                <td><a href="${order.link}" target="_blank">Link</a></td>
+                <td>${order.quantity}</td>
+                <td>₹${order.amount}</td>
+                <td><span class="status-badge ${order.orderStatus.toLowerCase()}">${order.orderStatus}</span></td>
+            </tr>
+        `;
+    });
+
+    html += `</tbody></table>`;
+    container.innerHTML = html;
 }

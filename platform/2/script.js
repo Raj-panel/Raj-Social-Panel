@@ -94,7 +94,7 @@ const platformData = {
       "🇮🇳Instagram Photo / post Views": {
         name: "🇮🇳𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐏𝐡𝐨𝐭𝐨 / 𝐩𝐨𝐬𝐭 𝐕𝐢𝐞𝐰𝐬",
         services: [
-          { id: "1030", name: "🇮🇳Instagram Photo & Post Views | Photo + Post + Image Impressions | Non Drop | 1M+ Per Day | 0–1 Minutes Start", rate: 15.286, avgTime: "0–1 Minutes Start" }
+          { id: "1030", name: "🇮🇳Instagram Photo & Post Views | Photo + Post + Image Impressions | Non Drop | 1M+ Per Day | 0–1 Minutes Start", rate: 10.286, avgTime: "0–1 Minutes Start" }
         ]
       }
     }

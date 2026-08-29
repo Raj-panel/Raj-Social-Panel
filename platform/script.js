@@ -1445,10 +1445,9 @@ function showOrderSuccessPopup(orderData) {
     const currentDate = now.toLocaleDateString('en-GB'); // DD/MM/YYYY format
     const currentTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-   
-    const whatsappNumber = "919239628344"; // 
+    const whatsappNumber = "919239628344";
 
-    // WhatsApp Message Format আপনার চাহিদা অনুযায়ী তৈরি করা হয়েছে
+    // WhatsApp Message Format
     const waMessage = 
 `📦 Track Your Order
 

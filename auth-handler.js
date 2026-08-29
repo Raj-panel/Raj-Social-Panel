@@ -3,7 +3,9 @@ import {
   doc, 
   setDoc, 
   getDoc, 
-  updateDoc 
+  updateDoc,
+  collection,
+  addDoc
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
 const SESSION_KEY = "raj_smm_user_session";
@@ -11,7 +13,7 @@ const SESSION_KEY = "raj_smm_user_session";
 document.addEventListener("DOMContentLoaded", () => {
   checkUserSession();
   initPageSpecificAuth();
-  bindFormEvents(); // HTML inline event listener সমস্যা সমাধানের জন্য
+  bindFormEvents(); // HTML inline event listener সমস্যার সমাধানের জন্য
 });
 
 // ১. সেশন পরীক্ষা এবং ডাইনামিক ইন্টারফেস আপডেট (লগইন ও ওয়ালেট বক্স টগল লজিক সহ)
@@ -172,7 +174,7 @@ function bindFormEvents() {
   }
 }
 
-// 4. CREATE ACCOUNT
+// ৪. CREATE ACCOUNT
 window.handleSignUp = async function() {
   const nameEl = document.getElementById("signupName");
   const mobileEl = document.getElementById("signupMobile");
@@ -223,7 +225,7 @@ window.handleSignUp = async function() {
   }
 };
 
-// 5. LOGIN
+// ৫. LOGIN
 window.handleLogin = async function() {
   const mobileEl = document.getElementById("loginMobile");
   const passwordEl = document.getElementById("loginPassword");
@@ -265,7 +267,7 @@ window.handleLogin = async function() {
   }
 };
 
-// 6. RESET / FORGOT PASSWORD
+// ৬. RESET / FORGOT PASSWORD
 window.handleResetPassword = async function() {
   const mobileEl = document.getElementById("resetMobile") || document.getElementById("forgotMobile") || document.getElementById("mobile");
   const passwordEl = document.getElementById("resetNewPassword") || document.getElementById("forgotPassword") || document.getElementById("newPassword");
@@ -320,11 +322,59 @@ window.handleResetPassword = async function() {
   }
 };
 
-// 7. LOGOUT
+// ৭. LOGOUT
 window.handleLogout = function() {
   if (confirm("Are you sure you want to logout?")) {
     localStorage.removeItem(SESSION_KEY);
     alert("Logged out successfully.");
     window.location.href = "/login/";
+  }
+};
+
+// ৮. FIRESTORE BACKEND ORDER PROCESSOR (মূল ফিক্স)
+window.processFirestoreWalletOrder = async function(orderData) {
+  const sessionData = localStorage.getItem(SESSION_KEY);
+  if (!sessionData) {
+    console.warn("User not logged in. Saved to local storage only.");
+    return false;
+  }
+
+  try {
+    const user = JSON.parse(sessionData);
+    const userDocRef = doc(db, "users", user.mobile);
+    const userDoc = await getDoc(userDocRef);
+
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      const currentBalance = userData.walletBalance || 0;
+      const orderCost = parseFloat(orderData.amount) || 0;
+
+      // Firestore-এ 'orders' কালেকশনে অর্ডার ডাটা সেভ করা
+      const ordersRef = collection(db, "orders");
+      await addDoc(ordersRef, {
+        ...orderData,
+        userMobile: user.mobile,
+        userName: user.name || '',
+        status: "Pending",
+        createdAt: new Date().toISOString()
+      });
+
+      // ইউজারের ওয়ালেট থেকে টাকা কমানো (যদি ব্যালেন্স থাকে)
+      if (currentBalance >= orderCost) {
+        const newBalance = currentBalance - orderCost;
+        await updateDoc(userDocRef, { walletBalance: newBalance });
+        
+        const userBalanceText = document.getElementById("userBalanceText");
+        if (userBalanceText) {
+          userBalanceText.innerText = "₹" + newBalance;
+        }
+      }
+
+      console.log("Order successfully saved to Firestore!");
+      return true;
+    }
+  } catch (error) {
+    console.error("Error saving order to Firestore:", error);
+    throw error;
   }
 };

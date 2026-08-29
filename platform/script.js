@@ -301,7 +301,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const serviceData = {
     instagram: {
-        "Followers 20% Extra": [
+        "Followers 20% Extra less-Drop": [
             { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "1K Followers", price: 60, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "2K Followers", price: 99, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
@@ -372,7 +372,7 @@ const serviceData = {
                 desc: "Real blue Trick verified ✓" 
             }
         ],
-        "🔥 Reels Combo Service": [
+        "🔥Instagram Reels Combo Service": [
             {
                 name: "Reels Viral Package 1",
                 price: 49,
@@ -1400,9 +1400,13 @@ function triggerRajConfettiAnimation(overlayElement) {
         const piece = document.createElement('div');
         piece.className = 'raj-confetti-piece';
         
+        // Random horizontal positions
         piece.style.left = Math.random() * 100 + '%';
+        
+        // Random colors
         piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
         
+        // Random shapes (square, circle or thin strip)
         if (Math.random() > 0.5) {
             piece.style.borderRadius = '50%';
             piece.style.width = (Math.random() * 8 + 6) + 'px';
@@ -1412,14 +1416,16 @@ function triggerRajConfettiAnimation(overlayElement) {
             piece.style.height = (Math.random() * 14 + 10) + 'px';
         }
 
-        const duration = Math.random() * 1.5 + 1.2;
-        const delay = Math.random() * 0.4;
+        // Random animation duration & delays for firecracker burst feel
+        const duration = Math.random() * 1.5 + 1.2; // 1.2s to 2.7s
+        const delay = Math.random() * 0.4; // 0s to 0.4s
         
         piece.style.animationDuration = duration + 's';
         piece.style.animationDelay = delay + 's';
 
         overlayElement.appendChild(piece);
 
+        // Auto remove element after animation completes
         setTimeout(() => {
             piece.remove();
         }, (duration + delay) * 1000);
@@ -1427,18 +1433,22 @@ function triggerRajConfettiAnimation(overlayElement) {
 }
 
 // ==========================================
-// MODERN GLOWING SUCCESS POPUP FUNCTION
+// MODERN GLOWING SUCCESS POPUP FUNCTION (WITH WHATSAPP TRACK BUTTON)
 // ==========================================
 function showOrderSuccessPopup(orderData) {
+    // Remove existing popup if any
     const existingOverlay = document.getElementById("rajOrderSuccessOverlay");
     if (existingOverlay) existingOverlay.remove();
 
+    // বর্তমান Date ও Time জেনারেট করার জন্য
     const now = new Date();
-    const currentDate = now.toLocaleDateString('en-GB'); 
+    const currentDate = now.toLocaleDateString('en-GB'); // DD/MM/YYYY format
     const currentTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    const whatsappNumber = "919239628344";
+   
+    const whatsappNumber = "919239628344"; // 
 
+    // WhatsApp Message Format আপনার চাহিদা অনুযায়ী তৈরি করা হয়েছে
     const waMessage = 
 `📦 Track Your Order
 
@@ -1457,6 +1467,7 @@ I want to track my order.
 
 Thank you! 💚`;
 
+    // URL Encode করা যাতে স্পেস বা ইমোজি ঠিক থাকে
     const encodedWaMessage = encodeURIComponent(waMessage);
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedWaMessage}`;
 
@@ -1474,6 +1485,7 @@ Thank you! 💚`;
             <div class="raj-popup-row"><strong>Quantity:</strong> ${orderData.quantity.toLocaleString()}</div>
             <div class="raj-popup-row"><strong>Total price:</strong> ₹${orderData.amount}</div>
 
+            <!-- নতুন WhatsApp Track Your Order Button (Center Aligned & Color-Changing) -->
             <div style="text-align: center; margin-top: 20px;">
                 <a href="${whatsappUrl}" target="_blank" class="raj-whatsapp-track-btn">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -1487,6 +1499,7 @@ Thank you! 💚`;
 
     document.body.appendChild(overlay);
 
+    // Trigger smooth fade-in and Firecracker/Confetti effect
     setTimeout(() => {
         overlay.classList.add("active");
         triggerRajConfettiAnimation(overlay);
@@ -1502,14 +1515,14 @@ function closeRajSuccessPopup() {
 }
 
 // ==========================================
-// BACKEND WALLET ORDER SUBMISSION & FIRESTORE INTEGRATION
+// TELEGRAM ORDER SUBMISSION & POPUP INTEGRATION
 // ==========================================
-async function submitOrderWithWallet() {
+function submitOrderToWhatsApp() {
     const linkInput = document.getElementById("checkoutLinkInput");
-    const walletBtn = document.getElementById("submitWalletBtn");
+    const txnInput = document.getElementById("checkoutTxnId");
+
     const rawLink = linkInput ? linkInput.value.trim() : "";
-    const orderAmount = currentCheckoutData.price;
-    const finalPriceFormatted = orderAmount ? orderAmount.toFixed(2) : "0.00";
+    const txnId = txnInput ? txnInput.value.trim() : "";
 
     const validation = processProfileOrLink(rawLink, currentCheckoutData.platform, currentCheckoutData.serviceName);
     if (!validation.isValid) {
@@ -1519,108 +1532,104 @@ async function submitOrderWithWallet() {
 
     const link = validation.url;
 
-    if (typeof firebase === 'undefined' || !firebase.auth) {
-        alert("Authentication system unavailable.");
+    if (!txnId) {
+        alert("Please enter Transaction ID / UTR number!");
         return;
     }
 
-    const auth = firebase.auth();
-    const user = auth.currentUser;
-    if (!user) {
-        alert("Please login to use Wallet System.");
-        return;
-    }
-
-    if (walletBtn) walletBtn.disabled = true;
-
-    const db = firebase.firestore();
-    const userRef = db.collection('users').doc(user.uid);
-
-    try {
-        const orderIdVal = Math.floor(100000 + Math.random() * 900000);
-
-        await db.runTransaction(async (transaction) => {
-            const userDoc = await transaction.get(userRef);
-            if (!userDoc.exists) throw new Error("User account not found!");
-
-            const userData = userDoc.data();
-            const balance = userData.walletBalance || 0;
-
-            if (balance < orderAmount) {
-                throw new Error("Insufficient Wallet Balance. Please Add Funds first.");
+    const userIdentifier = (typeof window.firebaseUserUid !== 'undefined' && window.firebaseUserUid) 
+        ? window.firebaseUserUid 
+        : (() => {
+            let bid = localStorage.getItem('raj_smm_browser_id');
+            if (!bid) {
+                bid = 'BID_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+                localStorage.setItem('raj_smm_browser_id', bid);
             }
+            return bid;
+        })();
 
-            // Deduct balance from user backend
-            transaction.update(userRef, {
-                walletBalance: balance - orderAmount,
-                totalSpent: (userData.totalSpent || 0) + orderAmount
-            });
+    const orderIdVal = Math.floor(100000 + Math.random() * 900000);
+    const finalPriceFormatted = currentCheckoutData.price ? currentCheckoutData.price.toFixed(2) : "0.00";
+    
+    const newOrder = {
+        orderId: orderIdVal,
+        serviceName: `${currentCheckoutData.platform} - ${currentCheckoutData.serviceName} (${currentCheckoutData.packageName})`,
+        link: link,
+        quantity: currentCheckoutData.quantity || 0,
+        amount: finalPriceFormatted,
+        orderTimeEpoch: Date.now(),
+        status: 'Pending',
+        userIdentifier: userIdentifier
+    };
 
-            // Log wallet transaction in database
-            const txRef = db.collection('walletTransactions').doc();
-            transaction.set(txRef, {
-                uid: user.uid,
-                type: 'DEBIT',
-                amount: orderAmount,
-                description: `Order #${orderIdVal}: ${currentCheckoutData.packageName}`,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
+    const existingOrders = JSON.parse(localStorage.getItem('raj_smm_orders') || '[]');
+    existingOrders.push(newOrder);
+    localStorage.setItem('raj_smm_orders', JSON.stringify(existingOrders));
 
-            // Store placed order in Firestore database
-            const orderRef = db.collection('orders').doc(orderIdVal.toString());
-            transaction.set(orderRef, {
+    const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
+    const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
+
+    const d = currentCheckoutData;
+
+    const formattedMessage = 
+        `🚀 NEW ORDER SUBMITTED 🚀\n\n` +
+        `🆔 Order ID: #${orderIdVal}\n` +
+        `📌 Social Media: ${d.platform || ''}\n` +
+        `🛠️ Service Name: ${d.serviceName || ''}\n` +
+        `📦 Package: ${d.packageName || ''}\n` +
+        `🔢 Total Quantity: ${(d.quantity || 0).toLocaleString()}\n` +
+        `💰 Total Price: ₹${finalPriceFormatted}\n` +
+        `🔗 Target Link: ${link}\n` +
+        `💳 Payment Method: ${payMethod}\n` +
+        `🧾 Transaction ID / UTR: ${txnId}`;
+
+    const TELEGRAM_BOT_TOKEN = "8818198886:AAG1Ww5lxVEPDBpBnFQAvtRZt6Zys9t0Wh8"; 
+    const TELEGRAM_CHAT_ID = "8895603997";
+
+    const telegramApiUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+    const payload = {
+        chat_id: TELEGRAM_CHAT_ID,
+        text: formattedMessage
+    };
+
+    const submitBtn = document.querySelector("#checkoutPage .submit-btn") || event.target;
+    if (submitBtn) submitBtn.disabled = true;
+
+    fetch(telegramApiUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.ok) {
+            closeCheckoutUI();
+            
+            showOrderSuccessPopup({
                 orderId: orderIdVal,
-                uid: user.uid,
-                platform: currentCheckoutData.platform || '',
-                serviceName: currentCheckoutData.serviceName || '',
-                packageName: currentCheckoutData.packageName || '',
+                platformName: d.platform || '',
+                serviceName: d.serviceName || '',
+                packageName: d.packageName || '',
                 link: link,
-                quantity: currentCheckoutData.quantity || 0,
-                amount: orderAmount,
-                status: 'Pending',
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                quantity: d.quantity || 0,
+                amount: finalPriceFormatted
             });
-        });
-
-        // Save Order in Local Storage
-        const userIdentifier = user.uid;
-        const newOrder = {
-            orderId: orderIdVal,
-            serviceName: `${currentCheckoutData.platform} - ${currentCheckoutData.serviceName} (${currentCheckoutData.packageName})`,
-            link: link,
-            quantity: currentCheckoutData.quantity || 0,
-            amount: finalPriceFormatted,
-            orderTimeEpoch: Date.now(),
-            status: 'Pending',
-            userIdentifier: userIdentifier
-        };
-
-        const existingOrders = JSON.parse(localStorage.getItem('raj_smm_orders') || '[]');
-        existingOrders.push(newOrder);
-        localStorage.setItem('raj_smm_orders', JSON.stringify(existingOrders));
-
-        closeCheckoutUI();
-
-        showOrderSuccessPopup({
-            orderId: orderIdVal,
-            platformName: currentCheckoutData.platform || '',
-            serviceName: currentCheckoutData.serviceName || '',
-            packageName: currentCheckoutData.packageName || '',
-            link: link,
-            quantity: currentCheckoutData.quantity || 0,
-            amount: finalPriceFormatted
-        });
-
-    } catch (error) {
-        alert("Error: " + (error.message || error));
-    } finally {
-        if (walletBtn) walletBtn.disabled = false;
-    }
+        } else {
+            alert("Failed to send order to Telegram. Please check Bot Token & Chat ID.");
+        }
+    })
+    .catch(error => {
+        console.error("Telegram Error:", error);
+        alert("Network error while sending order to Telegram.");
+    })
+    .finally(() => {
+        if (submitBtn) submitBtn.disabled = false;
+    });
 }
 
-// ==========================================
-// APP INSTALLATION HANDLING
-// ==========================================
 let deferredPrompt = null;
 
 window.addEventListener("beforeinstallprompt", (e) => {
@@ -1664,3 +1673,82 @@ window.addEventListener("appinstalled", () => {
     }
     deferredPrompt = null;
 });
+
+async function submitOrderWithWallet() {
+    const linkInput = document.getElementById("checkoutLinkInput");
+    const walletBtn = document.getElementById("submitWalletBtn");
+    const rawLink = linkInput ? linkInput.value.trim() : "";
+    const orderAmount = currentCheckoutData.price;
+    const finalPriceFormatted = orderAmount ? orderAmount.toFixed(2) : "0.00";
+
+    const validation = processProfileOrLink(rawLink, currentCheckoutData.platform, currentCheckoutData.serviceName);
+    if (!validation.isValid) {
+        alert(validation.message);
+        return;
+    }
+
+    const link = validation.url;
+
+    if (typeof firebase === 'undefined' || !firebase.auth) {
+        alert("Authentication system unavailable.");
+        return;
+    }
+
+    const auth = firebase.auth();
+    const user = auth.currentUser;
+    if (!user) {
+        alert("Please login to use Wallet System.");
+        return;
+    }
+
+    if (walletBtn) walletBtn.disabled = true;
+
+    const db = firebase.firestore();
+    const userRef = db.collection('users').doc(user.uid);
+
+    try {
+        await db.runTransaction(async (transaction) => {
+            const userDoc = await transaction.get(userRef);
+            if (!userDoc.exists) throw new Error("User account not found!");
+
+            const userData = userDoc.data();
+            const balance = userData.walletBalance || 0;
+
+            if (balance < orderAmount) {
+                throw new Error("Insufficient Wallet Balance. Please Add Funds first.");
+            }
+
+            transaction.update(userRef, {
+                walletBalance: balance - orderAmount,
+                totalSpent: (userData.totalSpent || 0) + orderAmount
+            });
+
+            const txRef = db.collection('walletTransactions').doc();
+            transaction.set(txRef, {
+                uid: user.uid,
+                type: 'DEBIT',
+                amount: orderAmount,
+                description: `Order: ${currentCheckoutData.packageName}`,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        });
+
+        const orderIdVal = Math.floor(100000 + Math.random() * 900000);
+        closeCheckoutUI();
+        
+        showOrderSuccessPopup({
+            orderId: orderIdVal,
+            platformName: currentCheckoutData.platform || '',
+            serviceName: currentCheckoutData.serviceName || '',
+            packageName: currentCheckoutData.packageName || '',
+            link: link,
+            quantity: currentCheckoutData.quantity || 0,
+            amount: finalPriceFormatted
+        });
+
+    } catch (error) {
+        alert("Error: " + (error.message || error));
+    } finally {
+        if (walletBtn) walletBtn.disabled = false;
+    }
+}

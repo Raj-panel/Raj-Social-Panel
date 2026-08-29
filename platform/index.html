@@ -404,9 +404,7 @@
   </div>
   
   <ul class="sidebar-menu">
-    <li id="authMenuItem">
-    
-    <!-- New Order Link Updated Below -->
+    <li id="authMenuItem"></li>
     <li><a href="https://rajsmmpanel.in/">🛒 New Order</a></li>
     <li><a href="https://rajsmmpanel.in/platform/2/">⚡ Platform 2</a></li>
     <li><a href="/orders/">📦 My Orders</a></li>
@@ -620,8 +618,8 @@
       <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
     </div>
 
-    <!-- WhatsApp Logo Removed and Glowing Effect Added -->
-    <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
+    <!-- Updated onclick handler to process wallet and background Firestore submissions -->
+    <button id="submitWalletBtn" class="whatsapp-submit-btn" onclick="submitOrderWithWallet()">
       Confirm your order
     </button>
 
@@ -633,6 +631,15 @@
 <script type="module" src="auth-handler.js"></script>
 
 <script>
+  // Fallback function alias in case old cached scripts call submitOrderToWhatsApp()
+  function submitOrderToWhatsApp() {
+    if (typeof submitOrderWithWallet === 'function') {
+      submitOrderWithWallet();
+    } else {
+      console.error("submitOrderWithWallet function is not defined.");
+    }
+  }
+
   // Dynamic Platform Theme Switcher Integration
   function applyPlatformTheme(platform) {
     if (!platform) return;

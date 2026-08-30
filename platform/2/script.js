@@ -769,7 +769,7 @@ async function sendOrderToTelegram() {
     // SEND PLATFORM 2 ORDER TO BACKEND
     // ==========================================
     const response = await fetch(
-      "http://localhost:5000/api/orders/create",
+      "https://raj-social-panel-backend-qfwd.vercel.app/api/orders/create",
       {
         method: "POST",
         headers: {

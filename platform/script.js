@@ -301,7 +301,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const serviceData = {
     instagram: {
-        "Followers 20% Extra less-Drop": [
+        "Followers 20% Extra": [
             { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "1K Followers", price: 60, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "2K Followers", price: 99, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
@@ -365,14 +365,14 @@ const serviceData = {
         ],
         "Instagram Blue VERIFY": [
             { 
-                name: "Blue Tick →", 
+                name: "Blue Tick", 
                 price: 249, 
                 badge: "100% REAL", 
                 badgeClass: "badge-popular", 
                 desc: "Real blue Trick verified ✓" 
             }
         ],
-        "🔥Instagram Reels Combo Service": [
+        "🔥 Reels Combo Service": [
             {
                 name: "Reels Viral Package 1",
                 price: 49,

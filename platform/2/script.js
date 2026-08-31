@@ -45,21 +45,21 @@ const platformData = {
       "working": {
         name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐅𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬- 𝐌𝐢𝐱 𝐒𝐞𝐫𝐯𝐢𝐜𝐞",
         services: [
-          { id: "1220", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 60D Refill 🔄", rate: 53.358, avgTime: "0–10 Min Start" },
-          { id: "1221", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 90D Refill 🔄", rate: 57.929, avgTime: "0–10 Min Start" },
-          { id: "1222", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 365D Refill 🔄", rate: 60.501, avgTime: "0–10 Min Start" },
-          { id: "1223", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - Lifetime Refill ♻️", rate: 63.072, avgTime: "0–10 Min Start" },
+          { id: "1220", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–30 Min Start - 60D Refill 🔄", rate: 53.358, avgTime: "0–10 Min Start" },
+          { id: "1221", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–30 Min Start - 90D Refill 🔄", rate: 57.929, avgTime: "0–10 Min Start" },
+          { id: "1222", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–50 Min Start - 365D Refill 🔄", rate: 60.501, avgTime: "0–10 Min Start" },
+          { id: "1223", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–30 Min Start - Lifetime Refill ♻️", rate: 63.072, avgTime: "0–10 Min Start" },
         ]
       },
       "nondrop": {
         name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬 [𝐍𝐨𝐧-𝐃𝐫𝐨𝐩]",
         services: [
-          { id: "1072", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - No Refill 🔄", rate: 67.929, avgTime: "0–2 Min Start" },
-          { id: "1073", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 30D Refill 🔄", rate: 73.072, avgTime: "0–2 Min Start" },
-          { id: "1074", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 60D Refill 🔄", rate: 75.644, avgTime: "0–2 Min Start" },
-          { id: "1075", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 90D Refill 🔄", rate: 78.215, avgTime: "0–2 Min Start" },
-          { id: "1076", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 365D Refill 🔄", rate: 79.858, avgTime: "0–2 Min Start" },
-          { id: "1077", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - Lifetime Refill ♻️", rate: 83.358, avgTime: "0–2 Min Start" },
+          { id: "1072", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 20 Min Start - No Refill 🔄", rate: 67.929, avgTime: "0–2 Min Start" },
+          { id: "1073", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 20 Min Start - 30D Refill 🔄", rate: 73.072, avgTime: "0–2 Min Start" },
+          { id: "1074", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 20 Min Start - 60D Refill 🔄", rate: 75.644, avgTime: "0–2 Min Start" },
+          { id: "1075", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 20 Min Start - 90D Refill 🔄", rate: 78.215, avgTime: "0–2 Min Start" },
+          { id: "1076", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 20 Min Start - 365D Refill 🔄", rate: 79.858, avgTime: "0–2 Min Start" },
+          { id: "1077", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 20 Min Start - Lifetime Refill ♻️", rate: 83.358, avgTime: "0–2 Min Start" },
         ]
       },
       "Instagram like real profile": {

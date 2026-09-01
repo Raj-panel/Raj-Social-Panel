@@ -191,11 +191,11 @@ const platformData = {
       "Telegram Members - Non~Drop": {
         name: "𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦 𝐌𝐞𝐦𝐛𝐞𝐫𝐬 - 𝐍𝐨𝐧~𝐃𝐫𝐨𝐩",
         services: [
-          { id: "6749", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | Refill ♻️", rate: 70.5200, avgTime: "0–10 Min Start" },
-          { id: "6750", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 60D Refill ♻️", rate: 72.8000, avgTime: "0–10 Min Start" },
-          { id: "6751", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 90D Refill ♻️", rate: 74.7000, avgTime: "0–10 Min Start" },
-          { id: "6752", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 365D Refill ♻️", rate: 76.6000, avgTime: "0–10 Min Start" },
-          { id: "6753", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | Lifetime Refill ♻️", rate: 80.5000, avgTime: "0–10 Min Start" }
+          { id: "6749", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 30D Refill ♻️", rate: 50.5200, avgTime: "0–10 Min Start" },
+          { id: "6750", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 60D Refill ♻️", rate: 52.8000, avgTime: "0–10 Min Start" },
+          { id: "6751", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 90D Refill ♻️", rate: 54.7000, avgTime: "0–10 Min Start" },
+          { id: "6752", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 365D Refill ♻️", rate: 56.6000, avgTime: "0–10 Min Start" },
+          { id: "6753", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | Lifetime Refill ♻️", rate: 60.5000, avgTime: "0–10 Min Start" }
         ]
       },
       "Telegram - Reactions | Cheapest in The World": {

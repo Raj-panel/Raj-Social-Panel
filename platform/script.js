@@ -301,7 +301,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const serviceData = {
     instagram: {
-        "Followers 20% Extra less Drop": [
+        "Followers 20% Extra": [
             { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "1K Followers", price: 60, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "2K Followers", price: 99, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
@@ -1515,16 +1515,26 @@ function closeRajSuccessPopup() {
 }
 
 // ==========================================
-// TELEGRAM ORDER SUBMISSION & POPUP INTEGRATION
+// BACKEND ORDER SUBMISSION
+// Platform 1
+// Frontend → Backend → MongoDB + Telegram
 // ==========================================
-function submitOrderToWhatsApp() {
+async function submitOrderToWhatsApp() {
     const linkInput = document.getElementById("checkoutLinkInput");
     const txnInput = document.getElementById("checkoutTxnId");
 
     const rawLink = linkInput ? linkInput.value.trim() : "";
     const txnId = txnInput ? txnInput.value.trim() : "";
 
-    const validation = processProfileOrLink(rawLink, currentCheckoutData.platform, currentCheckoutData.serviceName);
+    // -----------------------------
+    // 1. Validate Link
+    // -----------------------------
+    const validation = processProfileOrLink(
+        rawLink,
+        currentCheckoutData.platform,
+        currentCheckoutData.serviceName
+    );
+
     if (!validation.isValid) {
         alert(validation.message);
         return;
@@ -1532,102 +1542,247 @@ function submitOrderToWhatsApp() {
 
     const link = validation.url;
 
+    // -----------------------------
+    // 2. Validate UTR
+    // -----------------------------
     if (!txnId) {
         alert("Please enter Transaction ID / UTR number!");
         return;
     }
 
-    const userIdentifier = (typeof window.firebaseUserUid !== 'undefined' && window.firebaseUserUid) 
-        ? window.firebaseUserUid 
-        : (() => {
-            let bid = localStorage.getItem('raj_smm_browser_id');
-            if (!bid) {
-                bid = 'BID_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-                localStorage.setItem('raj_smm_browser_id', bid);
-            }
-            return bid;
-        })();
+    // -----------------------------
+    // 3. User ID
+    // -----------------------------
+    const userIdentifier =
+        (typeof window.firebaseUserUid !== "undefined" && window.firebaseUserUid)
+            ? window.firebaseUserUid
+            : (() => {
+                let bid = localStorage.getItem("raj_smm_browser_id");
 
-    const orderIdVal = Math.floor(100000 + Math.random() * 900000);
-    const finalPriceFormatted = currentCheckoutData.price ? currentCheckoutData.price.toFixed(2) : "0.00";
-    
-    const newOrder = {
-        orderId: orderIdVal,
-        serviceName: `${currentCheckoutData.platform} - ${currentCheckoutData.serviceName} (${currentCheckoutData.packageName})`,
-        link: link,
-        quantity: currentCheckoutData.quantity || 0,
-        amount: finalPriceFormatted,
-        orderTimeEpoch: Date.now(),
-        status: 'Pending',
-        userIdentifier: userIdentifier
-    };
+                if (!bid) {
+                    bid =
+                        "BID_" +
+                        Math.random().toString(36).substring(2, 15) +
+                        Math.random().toString(36).substring(2, 15);
 
-    const existingOrders = JSON.parse(localStorage.getItem('raj_smm_orders') || '[]');
-    existingOrders.push(newOrder);
-    localStorage.setItem('raj_smm_orders', JSON.stringify(existingOrders));
+                    localStorage.setItem("raj_smm_browser_id", bid);
+                }
 
-    const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
-    const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
+                return bid;
+            })();
 
+    // -----------------------------
+    // 4. Order Data
+    // -----------------------------
     const d = currentCheckoutData;
 
-    const formattedMessage = 
-        `🚀 NEW ORDER SUBMITTED 🚀\n\n` +
-        `🆔 Order ID: #${orderIdVal}\n` +
-        `📌 Social Media: ${d.platform || ''}\n` +
-        `🛠️ Service Name: ${d.serviceName || ''}\n` +
-        `📦 Package: ${d.packageName || ''}\n` +
-        `🔢 Total Quantity: ${(d.quantity || 0).toLocaleString()}\n` +
-        `💰 Total Price: ₹${finalPriceFormatted}\n` +
-        `🔗 Target Link: ${link}\n` +
-        `💳 Payment Method: ${payMethod}\n` +
-        `🧾 Transaction ID / UTR: ${txnId}`;
+    const finalPrice = Number(d.price || 0);
 
-    const TELEGRAM_BOT_TOKEN = "8818198886:AAG1Ww5lxVEPDBpBnFQAvtRZt6Zys9t0Wh8"; 
-    const TELEGRAM_CHAT_ID = "8895603997";
+    if (finalPrice <= 0) {
+        alert("Invalid order amount.");
+        return;
+    }
 
-    const telegramApiUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+    const finalPriceFormatted = finalPrice.toFixed(2);
 
-    const payload = {
-        chat_id: TELEGRAM_CHAT_ID,
-        text: formattedMessage
+    // -----------------------------
+    // 5. Payment Method
+    // -----------------------------
+    const isUpi = document.getElementById("btnTabUpi")
+        ? document
+            .getElementById("btnTabUpi")
+            .classList.contains("active")
+        : true;
+
+    const payMethod = isUpi
+        ? "UPI QR Code"
+        : "Binance Pay";
+
+    // -----------------------------
+    // 6. Backend URL
+    // -----------------------------
+    // LOCAL TEST
+    const BACKEND_URL = "http://localhost:5000";
+
+    // পরে Live করার সময়:
+    // const BACKEND_URL = "https://raj-social-panel-backend-qfwd.vercel.app";
+
+    // -----------------------------
+    // 7. Prepare Backend Request
+    // -----------------------------
+    const orderPayload = {
+        userId: userIdentifier,
+
+        platform: "platform1",
+
+        serviceId: String(
+            d.serviceId ||
+            d.id ||
+            d.serviceID ||
+            "unknown"
+        ),
+
+        serviceName: d.serviceName || "SMM Service",
+
+        packageName: d.packageName || "",
+
+        link: link,
+
+        quantity: Number(d.quantity || 0),
+
+        amount: finalPrice,
+
+        paymentId: txnId,
+
+        paymentMethod: payMethod,
+
+        paymentStatus: "PAID",
+
+        orderStatus: "PAID"
     };
 
-    const submitBtn = document.querySelector("#checkoutPage .submit-btn") || event.target;
-    if (submitBtn) submitBtn.disabled = true;
+    // -----------------------------
+    // 8. Disable Submit Button
+    // -----------------------------
+    const submitBtn =
+        document.querySelector("#checkoutPage .submit-btn") ||
+        document.querySelector(".submit-btn");
 
-    fetch(telegramApiUrl, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.ok) {
-            closeCheckoutUI();
-            
-            showOrderSuccessPopup({
-                orderId: orderIdVal,
-                platformName: d.platform || '',
-                serviceName: d.serviceName || '',
-                packageName: d.packageName || '',
-                link: link,
-                quantity: d.quantity || 0,
-                amount: finalPriceFormatted
-            });
-        } else {
-            alert("Failed to send order to Telegram. Please check Bot Token & Chat ID.");
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Processing...";
+    }
+
+    try {
+
+        // -----------------------------
+        // 9. Send Order to Backend
+        // -----------------------------
+        const response = await fetch(
+            `${BACKEND_URL}/api/orders/create`,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(orderPayload)
+            }
+        );
+
+        // -----------------------------
+        // 10. Read Backend Response
+        // -----------------------------
+        const data = await response.json();
+
+        console.log("Backend Order Response:", data);
+
+        // -----------------------------
+        // 11. Backend Error
+        // -----------------------------
+        if (!response.ok || !data.success) {
+
+            throw new Error(
+                data.message ||
+                data.error ||
+                "Order submission failed."
+            );
         }
-    })
-    .catch(error => {
-        console.error("Telegram Error:", error);
-        alert("Network error while sending order to Telegram.");
-    })
-    .finally(() => {
-        if (submitBtn) submitBtn.disabled = false;
-    });
+
+        // -----------------------------
+        // 12. Save Local Order
+        // -----------------------------
+        const backendOrder = data.order;
+
+        const localOrder = {
+            orderId:
+                backendOrder?.internalOrderId ||
+                Math.floor(100000 + Math.random() * 900000),
+
+            serviceName:
+                `${d.platform} - ${d.serviceName} (${d.packageName || ""})`,
+
+            link: link,
+
+            quantity: d.quantity || 0,
+
+            amount: finalPriceFormatted,
+
+            orderTimeEpoch: Date.now(),
+
+            status: "Pending",
+
+            userIdentifier: userIdentifier,
+
+            paymentId: txnId
+        };
+
+        const existingOrders = JSON.parse(
+            localStorage.getItem("raj_smm_orders") || "[]"
+        );
+
+        existingOrders.push(localOrder);
+
+        localStorage.setItem(
+            "raj_smm_orders",
+            JSON.stringify(existingOrders)
+        );
+
+        // -----------------------------
+        // 13. Close Checkout
+        // -----------------------------
+        closeCheckoutUI();
+
+        // -----------------------------
+        // 14. Success Popup
+        // -----------------------------
+        showOrderSuccessPopup({
+            orderId:
+                backendOrder?.internalOrderId ||
+                localOrder.orderId,
+
+            platformName:
+                d.platform || "",
+
+            serviceName:
+                d.serviceName || "",
+
+            packageName:
+                d.packageName || "",
+
+            link: link,
+
+            quantity:
+                d.quantity || 0,
+
+            amount:
+                finalPriceFormatted
+        });
+
+        console.log(
+            "✅ Platform 1 order successfully sent to Backend."
+        );
+
+    } catch (error) {
+
+        console.error(
+            "❌ Backend Order Error:",
+            error
+        );
+
+        alert(
+            "Order could not be submitted.\n\n" +
+            (error.message || "Please try again.")
+        );
+
+    } finally {
+
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Confirm Order";
+        }
+    }
 }
 
 let deferredPrompt = null;

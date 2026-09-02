@@ -94,7 +94,7 @@ const platformData = {
       "🇮🇳Instagram Photo / post Views": {
         name: "🇮🇳𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐏𝐡𝐨𝐭𝐨 / 𝐩𝐨𝐬𝐭 𝐕𝐢𝐞𝐰𝐬",
         services: [
-          { id: "1030", name: "🇮🇳Instagram Photo & Post Views | Photo + Post + Image Impressions | Non Drop | 1M+ Per Day | 0–1 Minutes Start", rate: 10.286, avgTime: "0–1 Minutes Start" }
+          { id: "1030", name: "🇮🇳Instagram Photo & Post Views | Photo + Post + Image Impressions | Non Drop | 1M+ Per Day | 0–1 Minutes Start", rate: 15.286, avgTime: "0–1 Minutes Start" }
         ]
       }
     }
@@ -265,6 +265,7 @@ function setupSelectIcons(selectId) {
 
   const optionsContainer = document.createElement('div');
   optionsContainer.className = 'custom-options-container';
+  // Popup height extended to 340px and gradient border added
   optionsContainer.style.cssText = `
     display: none; position: absolute; top: 105%; left: 0; right: 0;
     background: linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6) border-box;
@@ -283,6 +284,7 @@ function setupSelectIcons(selectId) {
     const item = document.createElement('div');
     item.className = 'custom-option-item';
 
+    // Get exact logo for each item individually
     const logoUrl = getLogoForOption(opt);
     const isSelected = index === selectElem.selectedIndex;
     const formattedText = formatTextWithBadge(opt.textContent);
@@ -611,7 +613,7 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) upsView.classList.remove('hidden'); // Fixed typo safeguard
+    if (upiView) upiView.classList.remove('hidden');
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
 
@@ -681,10 +683,19 @@ function showModernPopup(title, message, type = 'success') {
   }
 }
 
-// ==========================================
-// PLATFORM 2 - BACKEND ORDER SUBMISSION
-// Frontend -> Backend -> Telegram Bot 2
-// ==========================================
+function triggerConfetti() {
+  if (window.confetti) {
+    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+  } else {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js';
+    script.onload = () => {
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+    };
+    document.head.appendChild(script);
+  }
+}
+
 async function sendOrderToTelegram() {
   const mainLink = document.getElementById("mainLinkInput");
   const checkoutTxn = document.getElementById("checkoutTxnId");
@@ -692,64 +703,22 @@ async function sendOrderToTelegram() {
   const mainQty = document.getElementById("mainQuantityInput");
   const categorySelect = document.getElementById("categorySelect");
 
-  const submitBtn =
-    document.querySelector("#checkoutPage button[onclick*='sendOrderToTelegram']") ||
-    document.querySelector("#checkoutPage button");
+  const submitBtn = document.querySelector("#checkoutPage button[onclick*='sendOrderToTelegram']") || document.querySelector("#checkoutPage button");
 
   const link = mainLink ? mainLink.value.trim() : "";
   const utr = checkoutTxn ? checkoutTxn.value.trim() : "";
-  const service = checkoutTitle ? checkoutTitle.innerText.trim() : "";
-  const quantity = Number(mainQty ? mainQty.value : 0);
-
-  const categoryText =
-    categorySelect &&
-    categorySelect.options[categorySelect.selectedIndex]
-      ? categorySelect.options[categorySelect.selectedIndex].textContent.trim()
-      : "N/A";
-
-  if (!link) {
-    showModernPopup("Error!", "Please enter the target link.", "error");
-    return;
-  }
+  const service = checkoutTitle ? checkoutTitle.innerText : "";
+  const quantity = mainQty ? mainQty.value : "";
+  
+  // Selected Category text extraction
+  const categoryText = categorySelect && categorySelect.options[categorySelect.selectedIndex] 
+    ? categorySelect.options[categorySelect.selectedIndex].textContent 
+    : "N/A";
 
   if (!utr) {
-    showModernPopup(
-      "Error!",
-      "Please enter Transaction ID / UTR Number.",
-      "error"
-    );
+    showModernPopup("Error!", "Please enter Transaction ID / UTR Number.", "error");
     return;
   }
-
-  if (!quantity || quantity <= 0) {
-    showModernPopup("Error!", "Please enter a valid quantity.", "error");
-    return;
-  }
-
-  let userIdentifier = localStorage.getItem("raj_smm_browser_id");
-
-  if (!userIdentifier) {
-    userIdentifier =
-      "BID_" +
-      Math.random().toString(36).substring(2, 15) +
-      Math.random().toString(36).substring(2, 15);
-
-    localStorage.setItem("raj_smm_browser_id", userIdentifier);
-  }
-
-  let serviceId = "PLATFORM2_SERVICE";
-
-  if (typeof selectedServiceId !== "undefined" && selectedServiceId) {
-    serviceId = String(selectedServiceId);
-  } else if (typeof currentServiceId !== "undefined" && currentServiceId) {
-    serviceId = String(currentServiceId);
-  }
-
-  const amount = Number(
-    typeof calculatedPrice !== "undefined"
-      ? calculatedPrice
-      : 0
-  );
 
   if (submitBtn) {
     submitBtn.disabled = true;
@@ -759,107 +728,46 @@ async function sendOrderToTelegram() {
     submitBtn.innerText = "Processing...";
   }
 
+  const botToken = "8960508595:AAG8-0ZNbOGZ-iRtSh5xzAabhSrHbRWjUaE";
+  const chatId = "8895603997";
+
+  // Platform-এর জায়গায় Category দিয়ে মোট মেসেজটি আপডেট করা হয়েছে
+  const message = `🛍️ New Order Received!\n\n` +
+                  `📁 Category: ${categoryText}\n` +
+                  `🏷️ Service: ${service}\n` +
+                  `🔢 Quantity: ${quantity}\n` +
+                  `💰 Price: ₹${calculatedPrice}\n` +
+                  `🔗 Link: ${link}\n` +
+                  `💳 UTR/TxID: ${utr}\n\n` +
+                  `📅 Date: ${new Date().toLocaleString()}`;
+
+  const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
   try {
-    // ==========================================
-    // SEND PLATFORM 2 ORDER TO BACKEND (Vercel Live API)
-    // ==========================================
-    const response = await fetch(
-      "https://raj-social-panel-backend-qfwd.vercel.app/api/orders/create",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          userId: userIdentifier,
-          platform: "platform2",
-          serviceId: serviceId,
-          serviceName: `${service} (${categoryText})`,
-          link: link,
-          quantity: quantity,
-          amount: amount,
-          paymentId: utr,
-          transactionId: utr,
-          paymentMethod: "UPI QR Code"
-        })
-      }
-    );
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: chatId, text: message })
+    });
 
     const data = await response.json();
 
-    if (!response.ok || !data.success) {
-      throw new Error(
-        data.message ||
-        data.error ||
-        "Order submission failed."
-      );
+    if (data.ok) {
+      showModernPopup("Success!", "Order submitted successfully!", "success");
+      if (checkoutTxn) checkoutTxn.value = "";
+      closeCheckout();
+    } else {
+      showModernPopup("Telegram Error", data.description, "error");
     }
-
-    const backendOrder = data.order || {};
-
-    const localOrder = {
-      orderId:
-        backendOrder.internalOrderId ||
-        Math.floor(100000 + Math.random() * 900000),
-
-      serviceName: service,
-      category: categoryText,
-      link: link,
-      quantity: quantity,
-      amount: amount.toFixed(2),
-      transactionId: utr,
-      status: "Pending",
-      userIdentifier: userIdentifier,
-      orderTimeEpoch: Date.now()
-    };
-
-    const existingOrders = JSON.parse(
-      localStorage.getItem("raj_smm_orders") || "[]"
-    );
-
-    existingOrders.push(localOrder);
-
-    localStorage.setItem(
-      "raj_smm_orders",
-      JSON.stringify(existingOrders)
-    );
-
-    showModernPopup(
-      "Success!",
-      "Order submitted successfully!",
-      "success"
-    );
-
-    if (checkoutTxn) {
-      checkoutTxn.value = "";
-    }
-
-    closeCheckout();
-
-    console.log(
-      "Platform 2 order successfully submitted:",
-      backendOrder
-    );
-
   } catch (error) {
-    console.error(
-      "Platform 2 Backend Order Error:",
-      error
-    );
-
-    showModernPopup(
-      "Connection Failed!",
-      error.message || "Please try again.",
-      "error"
-    );
-
+    console.error("Error submitting order:", error);
+    showModernPopup("Connection Failed!", "Please check your network connection.", "error");
   } finally {
     if (submitBtn) {
       submitBtn.disabled = false;
       submitBtn.style.opacity = "1";
       submitBtn.style.cursor = "pointer";
-      submitBtn.innerText =
-        submitBtn.dataset.originalText || "Confirm Order";
+      submitBtn.innerText = submitBtn.dataset.originalText || "Confirm Order";
     }
   }
 }
@@ -875,6 +783,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (searchInput) {
     let searchDropdown = document.createElement('div');
     searchDropdown.id = 'liveSearchDropdown';
+    // Live Search Popup height extended to 340px and gradient border added
     searchDropdown.style.cssText = `
       display: none; position: absolute; top: calc(100% + 6px); left: 0; right: 0;
       background: linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6) border-box;

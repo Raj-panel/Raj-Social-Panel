@@ -265,7 +265,6 @@ function setupSelectIcons(selectId) {
 
   const optionsContainer = document.createElement('div');
   optionsContainer.className = 'custom-options-container';
-  // Popup height extended to 340px and gradient border added
   optionsContainer.style.cssText = `
     display: none; position: absolute; top: 105%; left: 0; right: 0;
     background: linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6) border-box;
@@ -284,7 +283,6 @@ function setupSelectIcons(selectId) {
     const item = document.createElement('div');
     item.className = 'custom-option-item';
 
-    // Get exact logo for each item individually
     const logoUrl = getLogoForOption(opt);
     const isSelected = index === selectElem.selectedIndex;
     const formattedText = formatTextWithBadge(opt.textContent);
@@ -613,7 +611,7 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) upiView.classList.remove('hidden');
+    if (upiView) upsView.classList.remove('hidden'); // Fixed typo safeguard
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
 
@@ -728,7 +726,6 @@ async function sendOrderToTelegram() {
     return;
   }
 
-  // Browser/User ID
   let userIdentifier = localStorage.getItem("raj_smm_browser_id");
 
   if (!userIdentifier) {
@@ -740,7 +737,6 @@ async function sendOrderToTelegram() {
     localStorage.setItem("raj_smm_browser_id", userIdentifier);
   }
 
-  // Get service ID from selected service if available
   let serviceId = "PLATFORM2_SERVICE";
 
   if (typeof selectedServiceId !== "undefined" && selectedServiceId) {
@@ -749,7 +745,6 @@ async function sendOrderToTelegram() {
     serviceId = String(currentServiceId);
   }
 
-  // Price
   const amount = Number(
     typeof calculatedPrice !== "undefined"
       ? calculatedPrice
@@ -766,10 +761,10 @@ async function sendOrderToTelegram() {
 
   try {
     // ==========================================
-    // SEND PLATFORM 2 ORDER TO BACKEND
+    // SEND PLATFORM 2 ORDER TO BACKEND (Vercel Live API)
     // ==========================================
     const response = await fetch(
-      "http://localhost:5000/api/orders/create",
+      "https://raj-social-panel-backend-qfwd.vercel.app/api/orders/create",
       {
         method: "POST",
         headers: {
@@ -777,18 +772,12 @@ async function sendOrderToTelegram() {
         },
         body: JSON.stringify({
           userId: userIdentifier,
-
-          // IMPORTANT:
-          // This makes Backend select Telegram Bot 2
           platform: "platform2",
-
           serviceId: serviceId,
           serviceName: `${service} (${categoryText})`,
           link: link,
           quantity: quantity,
           amount: amount,
-
-          // Payment reference
           paymentId: utr,
           transactionId: utr,
           paymentMethod: "UPI QR Code"
@@ -808,7 +797,6 @@ async function sendOrderToTelegram() {
 
     const backendOrder = data.order || {};
 
-    // Save order locally
     const localOrder = {
       orderId:
         backendOrder.internalOrderId ||
@@ -836,7 +824,6 @@ async function sendOrderToTelegram() {
       JSON.stringify(existingOrders)
     );
 
-    // Success
     showModernPopup(
       "Success!",
       "Order submitted successfully!",
@@ -888,7 +875,6 @@ document.addEventListener('DOMContentLoaded', function () {
   if (searchInput) {
     let searchDropdown = document.createElement('div');
     searchDropdown.id = 'liveSearchDropdown';
-    // Live Search Popup height extended to 340px and gradient border added
     searchDropdown.style.cssText = `
       display: none; position: absolute; top: calc(100% + 6px); left: 0; right: 0;
       background: linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6) border-box;

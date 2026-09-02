@@ -1,881 +1,1754 @@
-// Global State Variables
-let currentPlatform = 'all';
-let calculatedPrice = 0;
+// =========================================================
+// PERMANENT LAYOUT LOCK & CHECKOUT SCROLL OPTIMIZATION
+// =========================================================
+(function injectPermanentCss() {
+    if (document.getElementById("fixedLayoutCss")) return;
+    const style = document.createElement("style");
+    style.id = "fixedLayoutCss";
+    style.innerHTML = `
+        /* 1. Adjusted Fixed Hero Banner Height */
+        .hero-banner, .hero-card, .instagram-boost-card {
+            height: auto !important;
+            min-height: 160px !important;
+            max-height: 180px !important;
+            padding: 12px 14px !important;
+            box-sizing: border-box !important;
+            overflow: visible !important;
+        }
+        .hero-banner .hero-title, .hero-card h1, .hero-card h2 {
+            margin-top: 0px !important;
+            margin-bottom: 2px !important;
+            font-size: 18px !important;
+        }
+        .hero-banner p, .hero-card p {
+            margin-bottom: 8px !important;
+            font-size: 11px !important;
+        }
 
-// Platform SVG / Image Logos
-const platformLogos = {
-  instagram: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg",
-  facebook: "https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg",
-  youtube: "https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg",
-  tiktok: "https://upload.wikimedia.org/wikipedia/commons/a/a9/TikTok_logo.svg",
-  telegram: "https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg",
-  whatsapp: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-};
+        /* Fixed Install Container Position */
+        #installContainer {
+            margin-top: 50px !important;
+            margin-bottom: 4px !important;
+        }
 
-// Precise Logo Detection via Explicit Platform Tag & Text Analysis
-function getLogoForOption(opt) {
-  const targetPlat = opt.getAttribute('data-platform');
-  if (targetPlat && platformLogos[targetPlat]) {
-    return platformLogos[targetPlat];
-  }
+        /* FIXED: Target Link & UTR Field Labels Color & Contrast for Light/Dark Mode */
+        #checkoutPage label[for="checkoutLinkInput"],
+        #checkoutPage .target-input-label,
+        #checkoutLinkLabel,
+        #checkoutPage label[for="checkoutTxnId"],
+        #checkoutPage .utr-label,
+        #checkoutPage .input-box label {
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            line-height: 1.4 !important;
+            margin-bottom: 4px !important;
+            display: block !important;
+            color: #0f172a !important;
+            text-shadow: 0 0 1px rgba(255, 255, 255, 0.8) !important;
+        }
 
-  const text = (opt.textContent || "").toLowerCase();
-  if (text.includes('telegram')) return platformLogos.telegram;
-  if (text.includes('facebook') || text.includes('fb')) return platformLogos.facebook;
-  if (text.includes('youtube') || text.includes('yt')) return platformLogos.youtube;
-  if (text.includes('tiktok')) return platformLogos.tiktok;
-  if (text.includes('whatsapp')) return platformLogos.whatsapp;
-  if (text.includes('instagram') || text.includes('ig')) return platformLogos.instagram;
+        /* Dark Mode Fallback */
+        @media (prefers-color-scheme: dark) {
+            #checkoutPage label[for="checkoutLinkInput"],
+            #checkoutPage .target-input-label,
+            #checkoutLinkLabel,
+            #checkoutPage label[for="checkoutTxnId"],
+            #checkoutPage .utr-label,
+            #checkoutPage .input-box label {
+                color: #f8fafc !important;
+                text-shadow: none !important;
+            }
+        }
 
-  return platformLogos.instagram;
-}
+        @media screen and (min-width: 768px) {
+            #checkoutPage label[for="checkoutLinkInput"],
+            #checkoutPage .target-input-label,
+            #checkoutLinkLabel,
+            #checkoutPage label[for="checkoutTxnId"],
+            #checkoutPage .utr-label {
+                font-size: 14px !important;
+            }
+        }
 
-// All Platform & Service Data
-const platformData = {
-  all: {
-    title: "All Services",
-    icon: "fa-solid fa-layer-group",
-    linkPlaceholder: "Link profile / post / channel"
-  },
-  instagram: {
-    title: "Instagram Boost",
-    icon: "fa-brands fa-instagram",
-    linkPlaceholder: "Link Instagram profile",
-    categories: {
-      "working": {
-        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐅𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬- 𝐌𝐢𝐱 𝐒𝐞𝐫𝐯𝐢𝐜𝐞",
-        services: [
-          { id: "1220", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 60D Refill 🔄", rate: 53.358, avgTime: "0–10 Min Start" },
-          { id: "1221", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 90D Refill 🔄", rate: 57.929, avgTime: "0–10 Min Start" },
-          { id: "1222", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 365D Refill 🔄", rate: 60.501, avgTime: "0–10 Min Start" },
-          { id: "1223", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - Lifetime Refill ♻️", rate: 63.072, avgTime: "0–10 Min Start" },
-        ]
-      },
-      "nondrop": {
-        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬 [𝐍𝐨𝐧-𝐃𝐫𝐨𝐩]",
-        services: [
-          { id: "1072", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - No Refill 🔄", rate: 67.929, avgTime: "0–2 Min Start" },
-          { id: "1073", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 30D Refill 🔄", rate: 73.072, avgTime: "0–2 Min Start" },
-          { id: "1074", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 60D Refill 🔄", rate: 75.644, avgTime: "0–2 Min Start" },
-          { id: "1075", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 90D Refill 🔄", rate: 78.215, avgTime: "0–2 Min Start" },
-          { id: "1076", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 365D Refill 🔄", rate: 79.858, avgTime: "0–2 Min Start" },
-          { id: "1077", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - Lifetime Refill ♻️", rate: 83.358, avgTime: "0–2 Min Start" },
-        ]
-      },
-      "Instagram like real profile": {
-        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐋𝐢𝐤𝐞 𝐈𝐧𝐝𝐢𝐚 𝐦𝐢𝐱 𝐑𝐞𝐚𝐥 𝐩𝐫𝐨𝐟𝐢𝐥𝐞",
-        services: [
-          { id: "881", name: "Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 60 Days Refill♻️ | 0–10 Minutes Start", rate: 14.600, avgTime: "0–10 Minutes Start" },
-          { id: "882", name: "Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 90 Days Refill♻️ | 0–10 Minutes Start", rate: 15.664, avgTime: "0–10 Minutes Start" },
-          { id: "883", name: "Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 365 Days Refill♻️ | 0–10 Minutes Start", rate: 16.729, avgTime: "0–10 Minutes Start" },
-          { id: "884", name: "Instagram Likes | Real Profiles ✓ | 100% Non Drop | 500K+ Per Day | Life Time Refill♻️ | 0–10 Minutes Start", rate: 20.600, avgTime: "0–10 Minutes Start" }
-        ]
-      },
-      "🇮🇳 Instagram Repost- India high quality": {
-        name: "🇮🇳 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐑𝐞𝐩𝐨𝐬𝐭- 𝐈𝐧𝐝𝐢𝐚 𝐡𝐢𝐠𝐡 𝐪𝐮𝐚𝐥𝐢𝐭𝐲",
-        services: [
-          { id: "2008", name: "Instagram Repost | Worldwide | Max 50K | 100% 🇮🇳 Real Accounts | 12–30 Min Start", rate: 60.94, avgTime: "12–30 Min Start" },
-          { id: "2086", name: "🇮🇳 Instagram Repost | Worldwide | Max 100K | 100% 🇮🇳 Real Accounts | 12–30 Min Start", rate: 72.6832, avgTime: "12–30 Min Start" }
-        ]
-      },
-      "🇮🇳 Instagram Shares - Premium Quality | Super Fast": {
-        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐒𝐡𝐚𝐫𝐞𝐬- 🇮🇳𝐏𝐫𝐞𝐦𝐢𝐮𝐦 𝐐𝐮𝐚𝐥𝐢𝐭𝐲",
-        services: [
-          { id: "121", name: "🇮🇳 Instagram Shares | Premium Quality | Max 1M | 100K/Day | SuperFast | 10–25 Min Start | Lifetime Refill ♻️", rate: 22.266, avgTime: "10–25 Min Start" },
-          { id: "123", name: "🇮🇳 Instagram Shares | High Quality | Max 1M | 200K/Day | SuperFast | 10–30 Min Start | Lifetime Refill ♻️ | One Click Done", rate: 20.33, avgTime: "10–30 Min Start" }
-        ]
-      },
-      "🇮🇳 Instagram Reels/ Video Views High Speed": {
-        name: "🇮🇳 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐑𝐞𝐞𝐥𝐬/ 𝐕𝐢𝐝𝐞𝐨 𝐕𝐢𝐞𝐰𝐬 𝐇𝐢𝐠𝐡 𝐒𝐩𝐞𝐞𝐝",
-        services: [
-          { id: "2623", name: "🇮🇳Instagram Reels views [ Non-Drop] 500K/1M Days ULTRA FAST 0–5 Minutes Start Life-timeRefill♻️", rate: 2.10, avgTime: "0–5 Minutes Start" }
-        ]
-      },
-      "🇮🇳Instagram Photo / post Views": {
-        name: "🇮🇳𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐏𝐡𝐨𝐭𝐨 / 𝐩𝐨𝐬𝐭 𝐕𝐢𝐞𝐰𝐬",
-        services: [
-          { id: "1030", name: "🇮🇳Instagram Photo & Post Views | Photo + Post + Image Impressions | Non Drop | 1M+ Per Day | 0–1 Minutes Start", rate: 15.286, avgTime: "0–1 Minutes Start" }
-        ]
-      }
-    }
-  },
-  facebook: {
-    title: "Facebook Boost",
-    icon: "fa-brands fa-facebook",
-    linkPlaceholder: "Link Facebook page or profile",
-    categories: {
-      "Facebook - Followers | HQ - Cheapest Price": {
-        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 - 𝐅𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬 | 𝐇𝐐 - 𝐂𝐡𝐞𝐚𝐩𝐞𝐬𝐭 𝐏𝐫𝐢𝐜𝐞",
-        services: [
-          { id: "4501", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | 60D Refill", rate: 34.1075, avgTime: "0–30 Min Start" },
-          { id: "4502", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | 90D Refill", rate: 35.1525, avgTime: "0–30 Min Start" },
-          { id: "5988", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | 365D Refill ♻️", rate: 36.1975, avgTime: "0–30 Min Start" },
-          { id: "5989", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | Lifetime Refill♻️", rate: 40.2425, avgTime: "0–30 Min Start" }
-        ]
-      },
-      "Facebook follower real account medium speed": {
-        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫 𝐑𝐞𝐚𝐥 𝐀𝐜𝐜𝐨𝐮𝐧𝐭 [𝐍𝐨𝐧-𝐃𝐫𝐨𝐩]",
-        services: [
-          { id: "6426", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts| 0–30 Min Start | 90D Refill ♻️", rate: 40.4272, avgTime: "0–30 Min Start" },
-          { id: "6427", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts| 0–30 Min Start | 365D Refill ♻️", rate: 45.0640, avgTime: "0–30 Min Start" },
-          { id: "6428", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts| 0–30 Min Start | Lifetime Refill ♻️", rate: 53.7008, avgTime: "0–30 Min Start" },
-        ]
-      },
-      "🇮🇳 Real Video Views Facebook - High Quality": {
-        name: "🇮🇳 𝐑𝐞𝐚𝐥 𝐕𝐢𝐝𝐞𝐨 𝐕𝐢𝐞𝐰𝐬 𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 - 𝐇𝐢𝐠𝐡 𝐐𝐮𝐚𝐥𝐢𝐭𝐲",
-        services: [
-          { id: "6581", name: "Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 0–30 Min Start | 90D Refill ♻️", rate: 13.2500, avgTime: "0–30 Min Start" },
-          { id: "6582", name: "Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 0–30 Min Start | 365D Refill ♻️", rate: 15.4000, avgTime: "0–30 Min Start" },
-          { id: "6583", name: "Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 0–30 Min Start | Lifetime Refill ♻️", rate: 17.5500, avgTime: "0–30 Min Start" }
-        ]
-      },
-      "Facebook - Post Reactions mix | Cheapest Rate": {
-        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 - 𝐏𝐨𝐬𝐭 𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 𝐦𝐢𝐱~ 𝐋𝐨𝐰 𝐑𝐚𝐭𝐞",
-        services: [
-          { id: "5507", name: "Facebook - Post Likes 👍 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
-          { id: "5508", name: "Facebook - Reaction | Love ❤️ | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 23.5170, avgTime: "0–30 Min Start" },
-          { id: "5509", name: "Facebook - Reaction | Care 🥰 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 22.5170, avgTime: "0–30 Min Start" },
-          { id: "5510", name: "Facebook - Reaction | Wow 😮 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 21.5170, avgTime: "0–30 Min Start" },
-          { id: "5511", name: "Facebook - Reaction | Haha 😂 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
-          { id: "5512", name: "Facebook - Reaction | Sad 😢 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
-          { id: "5513", name: "Facebook - Reaction | Angry 😡 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" }
-        ]
-      }
-    }
-  },
-  youtube: {
-    title: "YouTube Boost",
-    icon: "fa-brands fa-youtube",
-    linkPlaceholder: "Link YouTube channel or video",
-    categories: {
-      "YouTube Subscribers | No Guaranteed": {
-        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐒𝐮𝐛𝐬𝐜𝐫𝐢𝐛𝐞𝐫𝐬 | 𝐍𝐨 𝐆𝐮𝐚𝐫𝐚𝐧𝐭𝐞𝐞𝐝",
-        services: [
-          { id: "69", name: "YouTube Subscribers | Low Quality | 50K+/Day | 0–5 Min Start | Fast | No Refill 🔄", rate: 36.429, avgTime: "0–5 Min Start" },
-          { id: "950", name: "YouTube Subscribers | Low Quality | 100K+/Day | 0–5 Min Start | Ultra Cheapest | No Refill 🔄", rate: 70.149, avgTime: "0–5 Min Start" },
-          { id: "951", name: "YouTube Subscribers | Low Quality | 500K+/Day | 0–5 Min Start | No Refill 🔄", rate: 76.345, avgTime: "0–5 Min Start" }
-        ]
-      },
-      "YouTube Subscribers- 🇮🇳 Guaranteed ✅": {
-        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐒𝐮𝐛𝐬𝐜𝐫𝐢𝐛𝐞𝐫𝐬- 🇮🇳[𝐍𝐨𝐧~𝐃𝐫𝐨𝐩] ✅",
-        services: [
-          { id: "964", name: "YouTube Subscribers 🇮🇳 | High Quality | 100% Non Drop | 100+/Day | 0–15 Min Start ⚡ | Lifetime Refill ♻️", rate: 2541.601, avgTime: "0–15 Min Start" }
-        ]
-      },
-      "YouTube Likes [Best Quality] — 🇮🇳 Premium": {
-        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐋𝐢𝐤𝐞𝐬 [𝐁𝐞𝐬𝐭 𝐐𝐮𝐚𝐥𝐢𝐭𝐲] — 🇮🇳 𝐏𝐫𝐞𝐦𝐢𝐮𝐦",
-        services: [
-          { id: "2009", name: "YouTube Likes | Best Quality | Max 1M | Non Drop | Super Instant | 0–20 Min Start | 100K/Day | No Refill 🔄", rate: 49.8745, avgTime: "0–20 Min Start" },
-          { id: "2010", name: "YouTube Likes | Best Quality | Max 1M | Non Drop | Super Instant | 0–20 Min Start | 100K/Day | 365D Refill 🔄", rate: 299.0462, avgTime: "0–20 Min Start" }
-        ]
-      },
-      "YouTube Views 🇮🇳 {Shorts / Video} Non Drop": {
-        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐕𝐢𝐞𝐰𝐬 🇮🇳 {𝐒𝐡𝐨𝐫𝐭𝐬 / 𝐕𝐢𝐝𝐞𝐨} 𝐍𝐨𝐧~𝐃𝐫𝐨𝐩",
-        services: [
-          { id: "815", name: "YouTube Shorts / Video Views | Max 100K | Non Drop 📉 | Lifetime Guaranteed ♻️ | 20K/Day 🚀 | 0–20 Min Start ⚡", rate: 199.24, avgTime: "0–20 Min Start" }
-        ]
-      }
-    }
-  },
-  tiktok: {
-    title: "TikTok Boost",
-    icon: "fa-brands fa-tiktok",
-    linkPlaceholder: "Link TikTok account or video",
-    categories: {}
-  },
-  telegram: {
-    title: "Telegram Boost",
-    icon: "fa-brands fa-telegram",
-    linkPlaceholder: "Link Telegram channel / group / post",
-    categories: {
-      "Telegram Members - Non~Drop": {
-        name: "𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦 𝐌𝐞𝐦𝐛𝐞𝐫𝐬 - 𝐍𝐨𝐧~𝐃𝐫𝐨𝐩",
-        services: [
-          { id: "6749", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | Refill ♻️", rate: 70.5200, avgTime: "0–10 Min Start" },
-          { id: "6750", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 60D Refill ♻️", rate: 72.8000, avgTime: "0–10 Min Start" },
-          { id: "6751", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 90D Refill ♻️", rate: 74.7000, avgTime: "0–10 Min Start" },
-          { id: "6752", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 365D Refill ♻️", rate: 76.6000, avgTime: "0–10 Min Start" },
-          { id: "6753", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | Lifetime Refill ♻️", rate: 80.5000, avgTime: "0–10 Min Start" }
-        ]
-      },
-      "Telegram - Reactions | Cheapest in The World": {
-        name: "𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦 - 𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 | 𝐂𝐡𝐞𝐚𝐩𝐞𝐬𝐭 𝐢𝐧 𝐓𝐡𝐞 𝐖𝐨𝐫𝐥𝐝",
-        services: [
-          { id: "6050", name: "Telegram Mix Positive Reaction [👍😍🎉🔥❤️🥰👏🥳🤩🔥💯] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6051", name: "Telegram Mix Negative Reaction [👎💔👎😢💩🤢🤬😡😴🍌😈] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6052", name: "Telegram Reaction [🔥] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6053", name: "Telegram Reaction [❤️] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6054", name: "Telegram Reaction [💘] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6055", name: "Telegram Reaction [💔] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6056", name: "Telegram Reaction [🔥] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6057", name: "Telegram Reaction [👍] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6058", name: "Telegram Reaction [👎] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6059", name: "Telegram Reaction [💩] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6060", name: "Telegram Reaction [⚡] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6061", name: "Telegram Reaction [⛄] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6062", name: "Telegram Reaction [✍️] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6063", name: "Telegram Reaction [🙈] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6064", name: "Telegram Reaction [💊] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6065", name: "Telegram Reaction [😎] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6066", name: "Telegram Reaction [😘] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6067", name: "Telegram Reaction [🦄] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6068", name: "Telegram Reaction [🤷] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6069", name: "Telegram Reaction [🆒] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6070", name: "Telegram Reaction [👾] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6071", name: "Telegram Reaction [🗿] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6072", name: "Telegram Reaction [🤪] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6073", name: "Telegram Reaction [🎉] + Views", rate: 10.3749, avgTime: "0–20 Min Start" }
-        ]
-      },
-      "Telegram - Post Views": {
-        name: "𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦 - 𝐏𝐨𝐬𝐭 𝐕𝐢𝐞𝐰𝐬",
-        services: [
-          { id: "3882", name: "Telegram - Views ~ 1 POST ~ INSTANT", rate: 3.2645, avgTime: "0–20 Min Start" },
-          { id: "3885", name: "Telegram Post View (Last 5 Post)", rate: 12.3135, avgTime: "0–20 Min Start" },
-          { id: "3886", name: "Telegram Post View (Last 10 Post)", rate: 25.0515, avgTime: "0–20 Min Start" },
-          { id: "3887", name: "Telegram Post View [Last 20 Post]", rate: 40.5275, avgTime: "0–20 Min Start" },
-          { id: "3888", name: "Telegram Post View [Last 50 Post]", rate: 80.0315, avgTime: "0–20 Min Start" },
-          { id: "3889", name: "Telegram Post View [Last 100 Post]", rate: 159.8545, avgTime: "0–20 Min Start" }
-        ]
-      }
-    }
-  }
-};
+        @media screen and (max-width: 768px) {
+            #checkoutPage { 
+                padding: 4px 8px !important; 
+                max-width: 440px !important; 
+                margin: 0 auto !important;
+                box-sizing: border-box !important;
+            }
+            #checkoutPage .checkout-card, #checkoutPage .card-box { 
+                margin-bottom: 4px !important; 
+                padding: 6px 8px !important; 
+            }
+            #checkoutPage .input-box { 
+                margin-bottom: 4px !important; 
+            }
+            #checkoutPage input { 
+                padding: 2px 6px !important; 
+                font-size: 11px !important; 
+                height: 36px !important; 
+                color: #0f172a !important;
+                background-color: #ffffff !important;
+                border: 1px solid #cbd5e1 !important;
+            }
+            #checkoutUpiView { 
+                padding: 0px !important; 
+                margin-bottom: 2px !important; 
+                text-align: center !important; 
+            }
+            #scanToPayHeading { 
+                display: block !important; 
+                visibility: visible !important; 
+                opacity: 1 !important; 
+                margin: 2px 0 2px 0 !important; 
+                font-size: 12px !important; 
+                font-weight: 800 !important; 
+                text-align: center !important; 
+                text-transform: uppercase !important; 
+                background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; 
+                -webkit-background-clip: text !important; 
+                -webkit-text-fill-color: transparent !important; 
+            }
+            #checkoutUpiView img { 
+                width: 140px !important; 
+                height: 130px !important; 
+                object-fit: contain !important; 
+                margin: 4px auto !important; 
+                padding: 4px !important; 
+                border-radius: 8px !important; 
+            }
+            #checkoutBinanceView img {
+                width: 150px !important;
+                height: 160px !important;
+                object-fit: contain !important; 
+                margin: 2px auto !important; 
+                padding: 2px !important;
+                border-radius: 10px !important;
+            }
+            .upi-app-btn-grid { 
+                margin-top: 2px !important; 
+                gap: 4px !important; 
+            }
+            #checkoutPage .payment-tabs { 
+                margin-bottom: 2px !important; 
+            }
+            #checkoutPage .submit-btn { 
+                padding: 2px !important; 
+                height: 32px !important; 
+                font-size: 12px !important; 
+                margin-top: 4px !important; 
+            }
+            #checkoutPage p { 
+                margin-bottom: 1px !important; 
+                font-size: 9px !important; 
+            }
+            .warning-msg, [style*="background: rgba(234, 179, 8, 0.1)"] { 
+                padding: 2px 4px !important; 
+                font-size: 8.5px !important; 
+                margin-bottom: 2px !important; 
+            }
+            #payViaUpiAppBtn { 
+                display: none !important; 
+            }
+        }
 
-// Render Select With Dynamic Platform Logos per item & Extended Popup Height with Gradient Border
-function setupSelectIcons(selectId) {
-  const selectElem = document.getElementById(selectId);
-  if (!selectElem) return;
+        /* Modern Glowing Popup & Confetti Styles */
+        .raj-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            overflow: hidden;
+        }
+        .raj-popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .raj-popup-card {
+            background: #f4fdf7;
+            border: 2px solid #22c55e;
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.4);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            padding: 24px;
+            position: relative;
+            box-sizing: border-box;
+            font-family: inherit;
+            color: #0f172a;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+            z-index: 100000;
+        }
+        .raj-popup-overlay.active .raj-popup-card {
+            transform: scale(1);
+        }
+        .raj-popup-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(34, 197, 94, 0.1);
+            border: none;
+            color: #16a34a;
+            font-size: 18px;
+            font-weight: bold;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .raj-popup-close:hover {
+            background: rgba(34, 197, 94, 0.2);
+        }
+        .raj-popup-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #16a34a;
+            margin-bottom: 16px;
+            line-height: 1.3;
+            padding-right: 30px;
+        }
+        .raj-popup-row {
+            font-size: 14px;
+            margin-bottom: 10px;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+        .raj-popup-row strong {
+            color: #1e293b;
+        }
 
-  let wrapper = selectElem.parentElement.querySelector('.custom-select-wrapper');
-  if (wrapper) wrapper.remove();
+        /* Stylish Color-Changing WhatsApp Button Animation */
+        @keyframes rajColorPulse {
+            0% { border-color: #25D366; background-color: #ffffff; color: #25D366; box-shadow: 0 0 10px rgba(37, 211, 102, 0.3); }
+            33% { border-color: #10b981; background-color: #f0fdf4; color: #059669; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
+            66% { border-color: #3b82f6; background-color: #eff6ff; color: #2563eb; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+            100% { border-color: #25D366; background-color: #ffffff; color: #25D366; box-shadow: 0 0 10px rgba(37, 211, 102, 0.3); }
+        }
 
-  wrapper = document.createElement('div');
-  wrapper.className = 'custom-select-wrapper';
-  wrapper.style.cssText = 'position: relative; width: 100%; font-family: sans-serif;';
+        .raj-whatsapp-track-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 15px;
+            text-decoration: none;
+            border: 2px solid #25D366;
+            animation: rajColorPulse 3s infinite ease-in-out;
+            transition: transform 0.2s ease;
+        }
+        .raj-whatsapp-track-btn:hover {
+            transform: scale(1.03);
+        }
 
-  const defaultBoxStyle = 'background: #f8fafc; color: #1e293b; font-weight: 500; border: 2px solid #ec4899;';
-  const isCategory = selectId === 'categorySelect';
-  const boxFontSize = '14px';
-  const optionFontSize = isCategory ? '14px' : '13px';
+        /* Confetti / Firecracker Particle Animation */
+        .raj-confetti-piece {
+            position: absolute;
+            top: -20px;
+            width: 10px;
+            height: 14px;
+            background-color: #ffd700;
+            opacity: 0.9;
+            animation: rajFall linear forwards;
+            z-index: 99998;
+        }
+        @keyframes rajFall {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(105vh) rotate(720deg) scale(0.8);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+})();
 
-  const selectedDisplay = document.createElement('div');
-  selectedDisplay.className = 'custom-selected-box';
-  selectedDisplay.style.cssText = `display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 8px; cursor: pointer; font-size: ${boxFontSize}; transition: all 0.3s ease; ${defaultBoxStyle}`;
-
-  const optionsContainer = document.createElement('div');
-  optionsContainer.className = 'custom-options-container';
-  // Popup height extended to 340px and gradient border added
-  optionsContainer.style.cssText = `
-    display: none; position: absolute; top: 105%; left: 0; right: 0;
-    background: linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6) border-box;
-    border: 1px solid transparent; border-radius: 12px;
-    max-height: 340px; overflow-y: auto; z-index: 999;
-    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.25);
-  `;
-
-  const formatTextWithBadge = (text) => {
-    return text.replace(/^(\d+)\s*[-—]?\s*/, '<span class="service-id-badge" style="background: #8b5cf6; color: #ffffff; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 12px; display: inline-block; margin-right: 6px;">$1</span>');
-  };
-
-  let selectedItemElement = null;
-
-  Array.from(selectElem.options).forEach((opt, index) => {
-    const item = document.createElement('div');
-    item.className = 'custom-option-item';
-
-    // Get exact logo for each item individually
-    const logoUrl = getLogoForOption(opt);
-    const isSelected = index === selectElem.selectedIndex;
-    const formattedText = formatTextWithBadge(opt.textContent);
-
-    const defaultItemStyle = `display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: ${optionFontSize}; color: #1e293b; background: #ffffff; transition: background 0.2s;`;
-    const activeItemStyle = `display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: ${optionFontSize}; color: #ffffff; background: #8b5cf6;`;
-
-    item.style.cssText = isSelected ? activeItemStyle : defaultItemStyle;
-    item.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${formattedText}</span>`;
-
-    if (isSelected) {
-      selectedItemElement = item;
-      selectedDisplay.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${formattedText}</span>`;
-    }
-
-    item.onclick = () => {
-      selectElem.selectedIndex = index;
-      setupSelectIcons(selectId);
-      optionsContainer.style.display = 'none';
-
-      const event = new Event('change');
-      selectElem.dispatchEvent(event);
-    };
-
-    item.onmouseenter = () => {
-      if (index !== selectElem.selectedIndex) {
-        item.style.background = '#f1f5f9';
-      }
-    };
-    item.onmouseleave = () => {
-      if (index !== selectElem.selectedIndex) {
-        item.style.background = '#ffffff';
-      }
-    };
-
-    optionsContainer.appendChild(item);
-  });
-
-  selectedDisplay.onclick = (e) => {
-    e.stopPropagation();
-    const isVisible = optionsContainer.style.display === 'block';
-    document.querySelectorAll('.custom-options-container, #liveSearchDropdown').forEach(c => c.style.display = 'none');
-
-    if (!isVisible) {
-      optionsContainer.style.display = 'block';
-      if (selectedItemElement) {
-        optionsContainer.scrollTop = selectedItemElement.offsetTop - (optionsContainer.clientHeight / 2) + (selectedItemElement.clientHeight / 2);
-      }
-    } else {
-      optionsContainer.style.display = 'none';
-    }
-  };
-
-  selectElem.style.display = 'none';
-  wrapper.appendChild(selectedDisplay);
-  wrapper.appendChild(optionsContainer);
-  selectElem.parentElement.appendChild(wrapper);
-}
-
-document.addEventListener('click', () => {
-  document.querySelectorAll('.custom-options-container, #liveSearchDropdown').forEach(c => c.style.display = 'none');
+// ==========================================
+// NAVIGATION FIX FOR LOGIN / CREATE ACCOUNT
+// ==========================================
+document.addEventListener("DOMContentLoaded", function () {
+    document.body.addEventListener("click", function (e) {
+        const link = e.target.closest("a");
+        if (link && !link.onclick) {
+            const href = link.getAttribute("href");
+            if (href && href !== "#" && !href.startsWith("javascript:")) {
+                window.location.href = href;
+            }
+        }
+    });
 });
 
-// Platform Selection Logic
-function selectPlatform(platform) {
-  currentPlatform = platform;
-
-  document.querySelectorAll('.platform-btn').forEach(btn => btn.classList.remove('active'));
-  const activeBtn = document.getElementById(`btn-${platform}`);
-  if (activeBtn) activeBtn.classList.add('active');
-
-  const data = platformData[platform];
-  if (data) {
-    const heroTitle = document.getElementById('heroPlatformTitle');
-    const heroIcon = document.getElementById('heroPlatformIcon');
-    const checkoutIcon = document.getElementById('checkoutPlatformIcon');
-    const linkLabel = document.getElementById('linkLabel');
-
-    if (heroTitle) heroTitle.innerText = data.title;
-    if (heroIcon) heroIcon.innerHTML = `<i class="${data.icon}"></i>`;
-    if (checkoutIcon) checkoutIcon.innerHTML = `<i class="${data.icon}"></i>`;
-    if (linkLabel) linkLabel.innerText = data.linkPlaceholder;
-  }
-
-  const categorySelect = document.getElementById('categorySelect');
-  if (categorySelect) {
-    categorySelect.innerHTML = "";
-
-    if (platform === 'all') {
-      const platformKeys = ['instagram', 'facebook', 'youtube', 'tiktok', 'telegram'];
-      platformKeys.forEach(plat => {
-        if (platformData[plat] && platformData[plat].categories) {
-          for (let catKey in platformData[plat].categories) {
-            const option = document.createElement("option");
-            option.value = `${plat}_${catKey}`;
-            option.textContent = platformData[plat].categories[catKey].name;
-            option.setAttribute("data-platform", plat);
-            categorySelect.appendChild(option);
-          }
-        }
-      });
-    } else if (data && data.categories) {
-      for (let key in data.categories) {
-        const option = document.createElement("option");
-        option.value = key;
-        option.textContent = data.categories[key].name;
-        option.setAttribute("data-platform", platform);
-        categorySelect.appendChild(option);
-      }
+const serviceData = {
+    instagram: {
+        "Followers 20% Extra": [
+            { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "1K Followers", price: 60, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "2K Followers", price: 99, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "3K Followers", price: 149, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "4K Followers", price: 180, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "5K Followers", price: 229, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "6K Followers", price: 269, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "7K Followers", price: 310, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "8K Followers", price: 339, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "9K Followers", price: 369, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "10K Followers", price: 399, badge: "🎁 BUY 10K + GET 2K FREE", badgeClass: "badge-super", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" }
+        ],
+        "Likes Non-Drop": [
+            { providerId: 675, name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo", desc: "⚡ Best Quality • Mix Account • Starts in 5 Min" },
+            { providerId: 675, name: "500 Likes", price: 25, desc: "⚡ Best Quality • Mix Account • Starts in 5 Min" },
+            { providerId: 675, name: "1K Likes", price: 30, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "⚡ Best Quality • Mix Account • Starts in 5 Min" },
+            { providerId: 675, name: "3K Likes", price: 69, desc: "⚡ Best Quality • Mix Account • Starts in 5 Min" },
+            { providerId: 675, name: "5K Likes", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "⚡ Best Quality • Mix Account • Starts in 5 Min" },
+            { providerId: 675, name: "10K Likes", price: 179, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "⚡ Best Quality • Mix Account • Starts in 5 Min" }
+        ],
+        "REAL Reels / Video Views Non-Drop": [
+            { providerId: 853, name: "1K Views", price: 5, badge: "DEMO", badgeClass: "badge-demo", desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
+            { providerId: 853, name: "5K Views", price: 9, desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
+            { providerId: 853, name: "10K Views", price: 15, badge: "BEST VALUE", badgeClass: "badge-best", desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
+            { providerId: 853, name: "20K Views", price: 25, desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
+            { providerId: 853, name: "50K Views", price: 55, desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
+            { providerId: 853, name: "100K Views", price: 99, badge: "🔥 BEST SELLER", badgeClass: "badge-best", desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
+            { providerId: 853, name: "500K Views", price: 299, desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
+            { providerId: 853, name: "1M Views", price: 499, badge: "💥 MEGA DEAL", badgeClass: "badge-best", desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" }
+        ],
+        "REAL Photo / Post Views Non-Drop": [
+            { providerId: 1030, name: "1K Views", price: 10, badge: "🎯 Demo", badgeClass: "badge-demo", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
+            { providerId: 1030, name: "3K Views", price: 15, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
+            { providerId: 1030, name: "5K Views", price: 25, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
+            { providerId: 1030, name: "10K Views", price: 40, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
+            { providerId: 1030, name: "30K Views", price: 79, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
+            { providerId: 1030, name: "50K Views", price: 119, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
+            { providerId: 1030, name: "100K Views", price: 220, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" }
+        ],
+        "REAL Comments Non-Drop": [
+            { providerId: 31, name: "15 Comment (Start)", price: 10, desc: "💬High Quality • Custom Random Comments start in 10 min" },
+            { providerId: 31, name: "40 Comments", price: 30, desc: "💬High Quality • Custom Random Comments start in 10 min" },
+            { providerId: 31, name: "60 Comments", price: 40, desc: "💬High Quality • Custom Random Comments start in 10 min" },
+            { providerId: 31, name: "100 Comments", price: 50, desc: "💬High Quality • Custom Random Comments start in 10 min" },
+            { providerId: 31, name: "300 Comments", price: 80, desc: "💬High Quality • Custom Random Comments start in 10 min" },
+            { providerId: 31, name: "500 Comments", price: 139, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "💬High Quality • Custom Random Comments start in 10 min" },
+            { providerId: 31, name: "1K Comments", price: 199, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "💬High Quality • Custom Random Comments start in 10 min" }
+        ],
+        "REAL Repost Non-Drop": [
+            { providerId: 505, name: "100 Reposts", price: 10, badge: "Starter", badgeClass: "badge-demo", desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" },
+            { providerId: 505, name: "300 Reposts", price: 20, desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" },
+            { providerId: 505, name: "500 Reposts", price: 49, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" },
+            { providerId: 505, name: "1K Reposts", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" },
+            { providerId: 505, name: "3K Reposts", price: 199, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🔄 REAL Repost • 🇮🇳Premium Quality Start in 20 Min" }
+        ],
+        "REAL Shares Non-Drop": [
+            { providerId: 50, name: "100 Shares", price: 5, badge: "Starter", badgeClass: "badge-demo", desc: "🔗 REAL Shares ♻️Life-Time •Start in 20 Min" },
+            { providerId: 50, name: "1K Shares", price: 30, desc: "🔗 REAL Shares ♻️Life-Time •Start in 20 Min" },
+            { providerId: 50, name: "5K Shares", price: 69, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🔗 REAL Shares ♻️Life-Time •Start in 20 Min" },
+            { providerId: 50, name: "10K Shares", price: 99, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🔗 REAL Shares ♻️Life-Time •Start in 20 Min" }
+        ],
+        "Instagram Blue VERIFY": [
+            { 
+                name: "Blue Tick →", 
+                price: 249, 
+                badge: "100% REAL", 
+                badgeClass: "badge-popular", 
+                desc: "Real blue Trick verified ✓" 
+            }
+        ],
+        "🔥 Reels Combo Service": [
+            {
+                name: "Reels Viral Package 1",
+                price: 49,
+                badge: "5% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
+                features: [
+                    "👁️ Reels Views — 10,000",
+                    "❤️ Reels Likes — 600",
+                    "💬 Reels Comments — 13",
+                    "💾 Post / Reels Save — 100",
+                    "🔄 Post / Reels Shares — 500",
+                    "♻️ Reels Reposts — 100"
+                ],
+                placeholder: "Enter Instagram reel/video link"
+            },
+            {
+                name: "Reels Viral Package 1",
+                price: 99,
+                badge: "10% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
+                features: [
+                    "👁️ Reels Views — 30,000",
+                    "❤️ Reels Likes — 1,500",
+                    "💬 Reels Comments — 30",
+                    "💾 Post / Reels Save — 100",
+                    "🔄 Post / Reels Shares — 1,000",
+                    "♻️ Reels Reposts — 100"
+                ],
+                placeholder: "Enter Instagram reel/video link"
+            },
+            {
+                name: "Reels Viral Package 2",
+                price: 199,
+                badge: "20% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
+                features: [
+                    "👁️ Reels Views — 40,000",
+                    "❤️ Reels Likes — 3,500",
+                    "💬 Reels Comments — 60",
+                    "💾 Post / Reels Save — 300",
+                    "🔄 Post / Reels Shares — 3,000",
+                    "♻️ Reels Reposts — 250"
+                ],
+                placeholder: "Enter Instagram reel/video link"
+            },
+            {
+                name: "Reels Viral Package 3",
+                price: 299,
+                badge: "30% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
+                features: [
+                    "👁️ Reels Views — 60,000",
+                    "❤️ Reels Likes — 7,000",
+                    "💬 Reels Comments — 120",
+                    "💾 Post / Reels Save — 500",
+                    "🔄 Post / Reels Shares — 5,000",
+                    "♻️ Reels Reposts — 400"
+                ],
+                placeholder: "Enter Instagram reel/video link"
+            },
+            {
+                name: "Reels Viral Package 4",
+                price: 399,
+                badge: "40% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
+                features: [
+                    "👁️ Reels Views — 100,000",
+                    "❤️ Reels Likes — 11,000",
+                    "💬 Reels Comments — 400",
+                    "💾 Post / Reels Save — 2,000",
+                    "🔄 Post / Reels Shares — 8,000",
+                    "♻️ Reels Reposts — 600"
+                ],
+                placeholder: "Enter Instagram reel/video link"
+            },
+            {
+                name: "Reels Viral Package 5",
+                price: 499,
+                badge: "50% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
+                features: [
+                    "👁️ Reels Views — 300,000",
+                    "❤️ Reels Likes — 18,000",
+                    "💬 Reels Comments — 600",
+                    "💾 Post / Reels Save — 2,500",
+                    "🔄 Post / Reels Shares — 15,000",
+                    "♻️ Reels Reposts — 800"
+                ],
+                placeholder: "Enter Instagram reel/video link"
+            }
+        ]
+    },
+    facebook: {
+        "PAGE/PROFILE Followers": [
+            { type: "custom", name: "High Quality Facebook Followers • ♻️ Lifetime Refill • 100K+/Day •Start in 30 Min", pricePer1000: 49 }
+        ],
+        "Likes Life-Time Refill ♻️": [
+            { name: "100 Likes", price: 10, badge: "STARTER", badgeClass: "badge-demo", desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" },
+            { name: "500 Likes", price: 35, desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" },
+            { name: "1K Likes", price: 70, badge: "⭐ POPULAR", badgeClass: "badge-popular", desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" },
+            { name: "3K Likes", price: 140, desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" },
+            { name: "5K Likes", price: 260, badge: "🔥 BEST VALUE", badgeClass: "badge-best", desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" },
+            { name: "10K Likes", price: 499, badge: "👑 MOST POPULAR", badgeClass: "badge-best", desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" }
+        ],
+        "Reels / Video Views Non-Drop": [
+            { name: "1K Views", price: 15, badge: "STARTER", badgeClass: "badge-demo", desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" },
+            { name: "3K Views", price: 30, desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" },
+            { name: "5K Views", price: 50, badge: "⭐ POPULAR", badgeClass: "badge-popular", desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" },
+            { name: "10K Views", price: 90, desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" },
+            { name: "50K Views", price: 349, badge: "🔥 BEST VALUE", badgeClass: "badge-best", desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" },
+            { name: "100K Views", price: 449, badge: "👑 MOST POPULAR", badgeClass: "badge-best", desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" }
+        ],
+        "POST / VIDEO Shares Non-Drop": [
+            { name: "100 Shares", price: 15, desc: "🔗 Real Quality Shares • ♻️ Lifetime Refill • Start In 20 Min" },
+            { name: "1K Shares", price: 25, desc: "🔗 Real Quality Shares • ♻️ Lifetime Refill • Start In 20 Min" },
+            { name: "5K Shares", price: 59, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🔗 Real Quality Shares • ♻️ Lifetime Refill • Start In 20 Min" },
+            { name: "10K Shares", price: 89, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🔗 Real Quality Shares • ♻️ Lifetime Refill • Start In 20 Min" },
+            { name: "20K Shares", price: 149, badge: "🏆 Best Deal", badgeClass: "badge-best", desc: "🔗 Real Quality Shares • ♻️ Lifetime Refill • Start In 20 Min" },
+            { name: "100K Shares", price: 399, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🔗 Real Quality Shares • ♻️ Lifetime Refill • Start In 20 Min" }
+        ]
+    },
+    youtube: {
+        "YouTube Likes — Non Drop": [
+            { name: "100 Real Likes", price: 49, desc: "Indian Real Active High Quality" },
+            { name: "500 Real Likes", price: 149, desc: "Indian Real Active High Quality" },
+            { name: "1K Real Likes", price: 249, desc: "Indian Real Active High Quality" },
+            { name: "3K Real Likes", price: 499, desc: "Indian Real Active High Quality" },
+            { name: "5K Real Likes", price: 949, desc: "Indian Real Active High Quality" }
+        ],
+        "YT Shorts / Video Views Non-Drop": [
+            { name: "100 Short Video Views", price: 49, desc: "Indian High Quality" },
+            { name: "500 Short Video Views", price: 90, desc: "Indian High Quality" },
+            { name: "1K Short Video Views", price: 179, desc: "Indian High Quality" },
+            { name: "3K Short Video Views", price: 449, desc: "Indian High Quality" },
+            { name: "5K Short Video Views", price: 749, desc: "Indian High Quality" },
+            { name: "7K Short Video Views", price: 999, desc: "Indian High Quality" },
+            { name: "10K Short Video Views", price: 1499, desc: "Indian High Quality" }
+        ],
+        "YT Live Stream Views Non-Drop": [
+            { name: "1K Live Stream Views — 15 Mins", price: 25, desc: "Live Views for 15 Minutes" },
+            { name: "1K Live Stream Views — 30 Mins", price: 40, desc: "Live Views for 30 Minutes" },
+            { name: "1K Live Stream Views — 60 Mins", price: 70, desc: "Live Views for 60 Minutes" },
+            { name: "1K Live Stream Views — 90 Mins", price: 99, desc: "Live Views for 90 Minutes" }
+        ],
+        "YouTube Subscribe — Non Drop": [
+            { name: "100 Subscribers", price: 249, desc: "High Quality Indian Subscribers" },
+            { name: "500 Subscribers", price: 1199, desc: "High Quality Indian Subscribers" },
+            { name: "1K Subscribers", price: 2349, desc: "High Quality Indian Subscribers" }
+        ]
+    },
+    tiktok: {
+        "TikTok Followers 30 Day Refill♻️": [
+            {
+                type: "custom",
+                name: "TikTok Followers Premium Mixed • Starts in 30 Min",
+                pricePer1000: 249
+            }
+        ],
+        "TikTok Likes Non-Drop": [
+            { name: "100 TikTok Likes", price: 35, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" },
+            { name: "500 TikTok Likes", price: 40, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" },
+            { name: "1K TikTok Likes", price: 70, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" },
+            { name: "3K TikTok Likes", price: 179, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" },
+            { name: "5K TikTok Likes", price: 269, desc: "♻️ Lifetime Auto Refill • Starts in 10 Min" }
+        ],
+        "TikTok Views Non-Drop": [
+            { name: "100 TikTok Video Views", price: 9, desc: "🇧🇩 Real Views • High Quality • Lifetime Refill Start in 10 Min" },
+            { name: "500 TikTok Video Views", price: 20, desc: "🇧🇩 Real Views • High Quality • Lifetime Refill Start in 10 Min" },
+            { name: "1K TikTok Video Views", price: 35, desc: "🇧🇩 Real Views • High Quality • Lifetime Refill Start in 10 Min" },
+            { name: "5K TikTok Video Views", price: 119, desc: "🇧🇩 Real Views • High Quality • Lifetime Refill Start in 10 Min" },
+            { name: "10K TikTok Video Views", price: 249, desc: "🇧🇩 Real Views • High Quality • Lifetime Refill Start in 10 Min" }
+        ],
+        "TikTok Share — Lifetime Refill": [
+            { name: "100 Share", price: 15, badge: "Starter", badgeClass: "badge-demo", desc: "🇧🇩 Bangladesh High Quality Real Service • 18 Minute Start" },
+            { name: "500 Share", price: 22, desc: "🇧🇩 Bangladesh High Quality Real Service • 18 Minute Start" },
+            { name: "1K Share", price: 30, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🇧🇩 Bangladesh High Quality Real Service • 18 Minute Start" },
+            { name: "3K Share", price: 75, desc: "🇧🇩 Bangladesh High Quality Real Service • 18 Minute Start" },
+            { name: "5K Share", price: 115, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🇧🇩 Bangladesh High Quality Real Service • 18 Minute Start" },
+            { name: "10K Share", price: 200, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🇧🇩 Bangladesh High Quality Real Service • 18 Minute Start" }
+        ],
+        "TikTok Save — Lifetime Refill": [
+            { name: "100 Save", price: 15, badge: "Starter", badgeClass: "badge-demo", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
+            { name: "500 Save", price: 25, desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
+            { name: "1K Save", price: 35, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
+            { name: "3K Save", price: 85, desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
+            { name: "5K Save", price: 110, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" },
+            { name: "10K Save", price: 199, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🇧🇩 Premium Quality Real Bangladesh Service • 15 Minute Start" }
+        ],
+        "🔥 TikTok Combo Service — Non-Drop": [
+            {
+                name: "Video Viral Package 1",
+                price: 159,
+                badge: "10% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇧🇩 Fast Delivery • 20 Minute Start • Premium Quality",
+                features: [
+                    "👁️ Video Views — 1,300",
+                    "❤️ Video Likes — 1,500",
+                    "🔄 Video Shares — 1,200",
+                    "💾 Video Saves — 1,500"
+                ],
+                placeholder: "Enter TikTok video link or username"
+            },
+            {
+                name: "Video Viral Package 2",
+                price: 249,
+                badge: "20% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇧🇩 Fast Delivery • 20 Minute Start • Premium Quality",
+                features: [
+                    "👁️ Video Views — 3,000",
+                    "❤️ Video Likes — 2,500",
+                    "🔄 Video Shares — 2,000",
+                    "💾 Video Saves — 2,500"
+                ],
+                placeholder: "Enter TikTok video link or username"
+            },
+            {
+                name: "Video Viral Package 3",
+                price: 399,
+                badge: "30% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇧🇩 Fast Delivery • 20 Minute Start • Premium Quality",
+                features: [
+                    "👁️ Video Views — 5,000",
+                    "❤️ Video Likes — 4,000",
+                    "🔄 Video Shares — 3,000",
+                    "💾 Video Saves — 4,000"
+                ],
+                placeholder: "Enter TikTok video link or username"
+            },
+            {
+                name: "Video Viral Package 4",
+                price: 699,
+                badge: "40% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇧🇩 Fast Delivery • 20 Minute Start • Premium Quality",
+                features: [
+                    "👁️ Video Views — 10,000",
+                    "❤️ Video Likes — 7,000",
+                    "🔄 Video Shares — 5,000",
+                    "💾 Video Saves — 7,000"
+                ],
+                placeholder: "Enter TikTok video link or username"
+            },
+            {
+                name: "Video Viral Package 5",
+                price: 999,
+                badge: "50% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇧🇩 Fast Delivery • 20 Minute Start • Premium Quality",
+                features: [
+                    "👁️ Video Views — 13,000",
+                    "❤️ Video Likes — 10,000",
+                    "🔄 Video Shares — 10,000",
+                    "💾 Video Saves — 13,000"
+                ],
+                placeholder: "Enter TikTok video link or username"
+            }
+        ]
     }
-    setupSelectIcons('categorySelect');
-  }
+};
 
-  const searchInput = document.getElementById('categorySearchInput');
-  if (searchInput) searchInput.value = "";
+// Global Application State
+let currentPlatform = "instagram";
+let currentCategory = "";
+let selectedPackage = null;
+let currentCheckoutData = {};
 
-  updateServices();
-}
+window.onload = function () {
+    switchPlatform("instagram");
+};
 
-// Service Options & Average Time Update Logic
-function updateServices() {
-  const categorySelect = document.getElementById("categorySelect");
-  if (!categorySelect) return;
+window.addEventListener('popstate', function () {
+    const checkoutPage = document.getElementById("checkoutPage");
+    if (checkoutPage && (checkoutPage.style.display === "block" || !checkoutPage.classList.contains("hidden"))) {
+        closeCheckoutUI();
+    }
+});
 
-  const categoryValue = categorySelect.value;
-  const serviceSelect = document.getElementById("serviceSelect");
-  if (!serviceSelect) return;
+function switchPlatform(platform) {
+    currentPlatform = platform;
+    selectedPackage = null;
 
-  serviceSelect.innerHTML = "";
+    const btnMap = {
+        instagram: document.getElementById("btnInsta"),
+        facebook: document.getElementById("btnFb"),
+        youtube: document.getElementById("btnYt"),
+        tiktok: document.getElementById("btnTt")
+    };
 
-  let targetPlatform = currentPlatform;
-  let catKey = categoryValue;
-
-  if (currentPlatform === 'all' && categoryValue.includes('_')) {
-    const parts = categoryValue.split('_');
-    targetPlatform = parts[0];
-    catKey = parts.slice(1).join('_');
-  }
-
-  const platObj = platformData[targetPlatform];
-  if (!catKey || !platObj || !platObj.categories || !platObj.categories[catKey]) {
-    const timeBox = document.querySelector('.time-box');
-    if (timeBox) timeBox.innerHTML = `⚡ Average Time: <strong>N/A</strong>`;
-    setupSelectIcons('serviceSelect');
-    calculatePrice();
-    return;
-  }
-
-  const services = platObj.categories[catKey].services;
-
-  services.forEach(service => {
-    const option = document.createElement("option");
-    option.value = service.id;
-    option.setAttribute("data-rate", service.rate);
-    option.setAttribute("data-avgtime", service.avgTime);
-    option.setAttribute("data-platform", targetPlatform);
-    option.textContent = `${service.id} - ${service.name} - ₹${service.rate}`;
-    serviceSelect.appendChild(option);
-  });
-
-  setupSelectIcons('serviceSelect');
-  updateAverageTime();
-  calculatePrice();
-}
-
-// Dynamic Average Time Display
-function updateAverageTime() {
-  const serviceSelect = document.getElementById("serviceSelect");
-  if (!serviceSelect) return;
-
-  const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
-  const timeBox = document.querySelector('.time-box');
-
-  if (selectedOption && timeBox) {
-    const avgTime = selectedOption.getAttribute("data-avgtime");
-    timeBox.innerHTML = `⚡ Average Time: <strong>${avgTime}</strong>`;
-  } else if (timeBox) {
-    timeBox.innerHTML = `⚡ Average Time: <strong>N/A</strong>`;
-  }
-}
-
-// Calculate Price Logic
-function calculatePrice() {
-  const serviceSelect = document.getElementById("serviceSelect");
-  if (!serviceSelect) return;
-
-  const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
-  const totalPriceText = document.getElementById("totalPriceText");
-
-  if (!selectedOption) {
-    if (totalPriceText) totalPriceText.innerText = "0.00";
-    calculatedPrice = "0.00";
-    return;
-  }
-
-  const ratePer1000 = parseFloat(selectedOption.getAttribute("data-rate"));
-  const quantityInput = document.getElementById("mainQuantityInput") ? document.getElementById("mainQuantityInput").value : 0;
-  const quantity = parseInt(quantityInput) || 0;
-
-  calculatedPrice = ((ratePer1000 / 1000) * quantity).toFixed(2);
-  if (totalPriceText) totalPriceText.innerText = calculatedPrice;
-
-  updateAverageTime();
-}
-
-// Checkout Navigation
-let qrcodeInstance = null;
-
-function openCheckout() {
-  const mainLink = document.getElementById("mainLinkInput");
-  const mainQty = document.getElementById("mainQuantityInput");
-
-  const link = mainLink ? mainLink.value.trim() : "";
-  const quantityInput = mainQty ? mainQty.value.trim() : "";
-  const quantity = parseInt(quantityInput);
-
-  if (!link) {
-    alert("Please enter link!");
-    return;
-  }
-
-  if (!quantityInput || isNaN(quantity) || quantity < 100) {
-    alert("Minimum order quantity is 100!");
-    return;
-  }
-
-  const serviceSelect = document.getElementById("serviceSelect");
-  const selectedText = serviceSelect.options[serviceSelect.selectedIndex].textContent;
-
-  const checkoutTitle = document.getElementById("checkoutServiceTitle");
-  const checkoutPrice = document.getElementById("checkoutPriceText");
-
-  if (checkoutTitle) checkoutTitle.innerText = selectedText.split(' - ₹')[0];
-  if (checkoutPrice) checkoutPrice.innerText = calculatedPrice;
-
-  const upiId = "rajsmmpanel@jio";
-  const upiString = `upi://pay?pa=${upiId}&am=${calculatedPrice}&cu=INR`;
-
-  const qrContainer = document.getElementById("qrcode");
-  if (qrContainer) {
-    qrContainer.innerHTML = "";
-
-    qrcodeInstance = new QRCode(qrContainer, {
-      text: upiString,
-      width: 130,
-      height: 120,
-      colorDark: "#000000",
-      colorLight: "#ffffff",
-      correctLevel: QRCode.CorrectLevel.H
+    Object.keys(btnMap).forEach(p => {
+        if (btnMap[p]) btnMap[p].classList.toggle("active", p === platform);
     });
-  }
 
-  const checkoutPage = document.getElementById("checkoutPage");
-  if (checkoutPage) {
-    checkoutPage.classList.remove("hidden");
-    history.pushState({ checkoutOpen: true }, "", "#checkout");
-  }
+    const heroTitle = document.getElementById("heroTitle");
+    const heroLogoIcon = document.getElementById("heroLogoIcon");
+
+    const platformConfigs = {
+        instagram: { title: "Instagram Boost", icon: '<i class="fa-brands fa-instagram"></i>' },
+        facebook: { title: "Facebook Boost", icon: '<i class="fa-brands fa-facebook"></i>' },
+        youtube: { title: "YouTube Boost", icon: '<i class="fa-brands fa-youtube"></i>' },
+        tiktok: { title: "TikTok Boost", icon: '<i class="fa-brands fa-tiktok"></i>' }
+    };
+
+    if (platformConfigs[platform]) {
+        if (heroTitle) heroTitle.innerText = platformConfigs[platform].title;
+        if (heroLogoIcon) heroLogoIcon.innerHTML = platformConfigs[platform].icon;
+    }
+
+    renderCategoryTabs();
+    toggleInstallButton();
+}
+
+function renderCategoryTabs() {
+    const tabsContainer = document.getElementById("categoryTabs");
+    if (!tabsContainer) return;
+    tabsContainer.innerHTML = "";
+
+    const categories = Object.keys(serviceData[currentPlatform] || {});
+    if (categories.length === 0) return;
+    currentCategory = categories[0];
+
+    categories.forEach((cat, index) => {
+        const tabBtn = document.createElement("button");
+        tabBtn.className = `cat-tab ${index === 0 ? "active" : ""}`;
+        tabBtn.innerText = cat;
+
+        tabBtn.onclick = function () {
+            document.querySelectorAll(".cat-tab").forEach(t => t.classList.remove("active"));
+            tabBtn.classList.add("active");
+            currentCategory = cat;
+            renderPackages();
+            toggleInstallButton();
+        };
+
+        tabsContainer.appendChild(tabBtn);
+    });
+
+    renderPackages();
+}
+
+function renderPackages() {
+    const packageList = document.getElementById("packageList");
+    if (!packageList) return;
+
+    packageList.innerHTML = "";
+    selectedPackage = null;
+
+    const packages = serviceData[currentPlatform]?.[currentCategory] || [];
+    const iconClassMap = {
+        facebook: "fa-facebook",
+        youtube: "fa-youtube",
+        tiktok: "fa-tiktok",
+        instagram: "fa-instagram"
+    };
+    const iconClass = iconClassMap[currentPlatform] || "fa-instagram";
+
+    packages.forEach((pkg) => {
+        if (pkg.type === "custom") {
+            const customDiv = document.createElement("div");
+            customDiv.className = "custom-card";
+
+            customDiv.innerHTML = `
+                <div style="margin-bottom: 8px;">
+                    <strong class="custom-title" style="color: #a855f7; font-size: 13px;">
+                        ${pkg.name} (Custom Qty)
+                    </strong>
+                    <p style="font-size: 10px; color: #94a3b8;">
+                        Rate: ₹${pkg.pricePer1000 || 0} per 1000 Qty
+                    </p>
+                </div>
+
+                <div class="input-box">
+                    <input
+                        type="number"
+                        id="customQtyInput"
+                        placeholder="Min 100 (e.g. 1000)"
+                        min="100"
+                        oninput="calculateCustomPrice('${pkg.name}', ${pkg.pricePer1000 || 0}, ${pkg.providerId || "null"})"
+                    >
+                </div>
+
+                <div style="font-size: 11px; color: #ef4444; margin-top: 4px; display: none;" id="customMinWarning">
+                    ⚠️ Minimum Quantity is 100!
+                </div>
+
+                <div style="font-size: 12px; font-weight: 800; color: #22c55e; margin-top: 5px;" id="customPriceDisplay">
+                    Total: ₹<span id="customCalcPrice">0.00</span> INR
+                </div>
+
+                <button class="action-btn" style="margin-top: 10px; width: 100%; padding: 8px; background: #22c55e; color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;" onclick="openCheckoutFromCustom()">
+                    Proceed to Payment
+                </button>
+            `;
+
+            packageList.appendChild(customDiv);
+        } else if (currentCategory.includes("Combo Service")) {
+            const card = document.createElement("div");
+            card.className = "pkg-card";
+            card.style.cssText = "display: flex; flex-direction: column; align-items: stretch; padding: 16px; margin-bottom: 12px; background: #fff5f7; border: 1px solid rgba(236, 72, 153, 0.2); border-radius: 12px; backdrop-filter: blur(10px);";
+
+            card.onclick = function () {
+                const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
+                openCheckoutForFixed(
+                    platformCap,
+                    currentCategory,
+                    pkg.name + " — ₹" + pkg.price,
+                    1,
+                    pkg.price,
+                    pkg.badge || 'Popular'
+                );
+            };
+
+            let featuresHtml = "";
+            if (pkg.features && pkg.features.length) {
+                featuresHtml = `<div style="margin: 10px 0; display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #475569;">`;
+                pkg.features.forEach(feat => {
+                    featuresHtml += `<div>${feat}</div>`;
+                });
+                featuresHtml += `</div>`;
+            }
+
+            const comboSubText = pkg.subtitle ? pkg.subtitle : "⚡ Fast Delivery • Premium Quality";
+
+            card.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div class="pkg-icon" style="width: 36px; height: 36px; background: rgba(168, 85, 247, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #a855f7;">
+                            <i class="fa-brands ${iconClass}"></i>
+                        </div>
+                        <div>
+                            <div class="pkg-title" style="font-weight: 700; font-size: 15px; color: #1e293b;">
+                                ${pkg.name.replace(/\s\d+$/, '')}
+                            </div>
+                            <span class="pkg-sub" style="font-size: 11px; color: #64748b;">
+                                ${comboSubText}
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        ${pkg.badge ? `<span class="pkg-badge ${pkg.badgeClass || "badge-popular"}" style="background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); color: #fff; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 800;">${pkg.badge}</span>` : ""}
+                    </div>
+                </div>
+
+                ${featuresHtml}
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: 1px solid rgba(0, 0, 0, 0.08); padding-top: 8px;">
+                    <div style="font-size: 16px; font-weight: 800; color: #16a34a;">
+                        ₹${pkg.price}
+                    </div>
+                    <button style="background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer;">
+                        Order This Combo →
+                    </button>
+                </div>
+            `;
+
+            packageList.appendChild(card);
+        } else {
+            const card = document.createElement("div");
+            card.className = "pkg-card";
+
+            card.onclick = function () {
+                let qty = extractQuantity(pkg.name);
+                if (!qty || qty <= 0) qty = 1;
+                const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
+                openCheckoutForFixed(
+                    platformCap,
+                    currentCategory,
+                    pkg.name,
+                    qty,
+                    pkg.price,
+                    pkg.badge || 'Popular'
+                );
+            };
+
+            const subtitleText = pkg.desc ? pkg.desc : "⚡ Fast Delivery • Premium Quality";
+
+            card.innerHTML = `
+                <div class="pkg-left">
+                    <div class="pkg-icon">
+                        <i class="fa-brands ${iconClass}"></i>
+                    </div>
+
+                    <div class="pkg-info">
+                        <div class="pkg-title">
+                            ${pkg.name}
+                            ${pkg.badge ? `<span class="pkg-badge ${pkg.badgeClass || "badge-popular"}">${pkg.badge}</span>` : ""}
+                        </div>
+                        <span class="pkg-sub">
+                            ${subtitleText}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="pkg-price-btn">
+                    ₹${pkg.price}
+                </div>
+            `;
+
+            packageList.appendChild(card);
+        }
+    });
+}
+
+function calculateCustomPrice(serviceName, ratePer1000, providerId) {
+    const qtyInput = document.getElementById("customQtyInput");
+    const qty = parseInt(qtyInput ? qtyInput.value : 0) || 0;
+    const calcPriceSpan = document.getElementById("customCalcPrice");
+    const minWarning = document.getElementById("customMinWarning");
+
+    if (qty > 0 && qty < 100) {
+        if (minWarning) minWarning.style.display = "block";
+        if (calcPriceSpan) calcPriceSpan.innerText = "0.00";
+        selectedPackage = null;
+    } else if (qty >= 100) {
+        if (minWarning) minWarning.style.display = "none";
+        const total = (qty / 1000) * ratePer1000;
+        if (calcPriceSpan) calcPriceSpan.innerText = total.toFixed(2);
+
+        selectedPackage = {
+            name: `${qty.toLocaleString()} ${serviceName}`,
+            price: total,
+            providerId: providerId,
+            quantity: qty,
+            category: currentCategory
+        };
+    } else {
+        if (minWarning) minWarning.style.display = "none";
+        if (calcPriceSpan) calcPriceSpan.innerText = "0.00";
+        selectedPackage = null;
+    }
+}
+
+function extractQuantity(name) {
+    const text = name.toUpperCase().replace(/,/g, "");
+    const match = text.match(/(\d+(?:\.\d+)?)\s*(M|K)?/);
+    if (!match) return 1;
+
+    let number = parseFloat(match[1]);
+    const unit = match[2];
+
+    if (unit === "K") number = number * 1000;
+    else if (unit === "M") number = number * 1000000;
+
+    return Math.floor(number) || 1;
+}
+
+function getLinkConfig(platform, category) {
+    const p = (platform || "").toLowerCase();
+    const c = (category || "").toLowerCase();
+
+    if (p.includes("youtube") || c.includes("youtube") || c.includes("yt")) {
+        if (c.includes("subscribe")) {
+            return {
+                label: "YouTube Channel Link or Handle",
+                placeholder: "Enter YouTube channel link or @handle"
+            };
+        }
+        return {
+            label: "YouTube Video / Shorts Link",
+            placeholder: "Enter YouTube video/Shorts link"
+        };
+    }
+
+    if (p.includes("tiktok") || c.includes("tiktok")) {
+        return {
+            label: "TikTok Video Link or Username",
+            placeholder: "Enter TikTok video link or username"
+        };
+    }
+
+    if (p.includes("instagram") || c.includes("instagram") || c.includes("ig")) {
+        if (c.includes("like")) {
+            return {
+                label: "Post / Reel Link",
+                placeholder: "Enter Instagram post/reel link"
+            };
+        }
+        if (c.includes("reel") || c.includes("view") || c.includes("video")) {
+            return {
+                label: "Instagram Reel / Video Link",
+                placeholder: "Enter Instagram reel/video link"
+            };
+        }
+        if (c.includes("follower") || c.includes("blue") || c.includes("verify") || c.includes("profile")) {
+            return {
+                label: "Instagram Profile Link",
+                placeholder: "Enter Instagram username or profile link"
+            };
+        }
+        return {
+            label: "Instagram Post / Profile Link",
+            placeholder: "Enter Instagram username or link"
+        };
+    }
+
+    if (p.includes("facebook") || c.includes("facebook") || c.includes("fb")) {
+        if (c.includes("follower") || c.includes("page")) {
+            return {
+                label: "Facebook Profile / Page Link",
+                placeholder: "Enter Facebook profile or page link"
+            };
+        }
+        return {
+            label: "Facebook Post / Video Link",
+            placeholder: "Enter Facebook post or video link"
+        };
+    }
+
+    return {
+        label: "Target Link or Username",
+        placeholder: "Enter link or username"
+    };
+}
+
+function calculateDynamicPriceForQty(platformKey, categoryKey, totalQty, baseUnitQty, baseUnitPrice) {
+    const platformData = serviceData[platformKey.toLowerCase()];
+    if (!platformData || !platformData[categoryKey]) {
+        return (totalQty / (baseUnitQty || 1)) * baseUnitPrice;
+    }
+
+    const availablePackages = platformData[categoryKey]
+        .filter(p => !p.type) 
+        .map(p => ({
+            qty: extractQuantity(p.name),
+            price: p.price
+        }))
+        .filter(p => p.qty > 0)
+        .sort((a, b) => b.qty - a.qty); 
+
+    if (availablePackages.length === 0) {
+        return (totalQty / (baseUnitQty || 1)) * baseUnitPrice;
+    }
+
+    const exactMatch = availablePackages.find(p => p.qty === totalQty);
+    if (exactMatch) {
+        return exactMatch.price;
+    }
+
+    let remaining = totalQty;
+    let totalPrice = 0;
+
+    for (let pkg of availablePackages) {
+        if (remaining >= pkg.qty) {
+            let count = Math.floor(remaining / pkg.qty);
+            totalPrice += count * pkg.price;
+            remaining = remaining % pkg.qty;
+        }
+    }
+
+    if (remaining > 0) {
+        let smallestPkg = availablePackages[availablePackages.length - 1];
+        if (smallestPkg) {
+            totalPrice += (remaining / smallestPkg.qty) * smallestPkg.price;
+        } else {
+            totalPrice += (remaining / (baseUnitQty || 1)) * baseUnitPrice;
+        }
+    }
+
+    return totalPrice;
+}
+
+function openCheckoutForFixed(platform, serviceName, packageName, quantity, price, badge) {
+    currentCheckoutData = {
+        platform: platform,
+        serviceName: serviceName,
+        packageName: packageName,
+        baseQuantity: quantity || 1,
+        quantity: quantity || 1,
+        basePrice: price,
+        price: price,
+        multiplier: 1,
+        badge: badge || 'Popular'
+    };
+
+    showCheckoutOverlay();
+}
+
+function openCheckoutFromCustom() {
+    const qtyInput = document.getElementById("customQtyInput");
+    const qty = parseFloat(qtyInput ? qtyInput.value : 0);
+
+    if (!qty || qty < 100) {
+        alert("Minimum order quantity is 100!");
+        return;
+    }
+
+    const calculatedPriceText = document.getElementById("customCalcPrice");
+    const price = parseFloat(calculatedPriceText ? calculatedPriceText.innerText : 0);
+
+    const platformCap = currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1);
+
+    currentCheckoutData = {
+        platform: platformCap,
+        serviceName: currentCategory,
+        packageName: `${qty.toLocaleString()} Custom Qty`,
+        baseQuantity: qty,
+        quantity: qty,
+        basePrice: price,
+        price: price,
+        multiplier: 1,
+        badge: "Custom"
+    };
+
+    showCheckoutOverlay();
+}
+
+function updateCheckoutQuantityDisplay() {
+    const d = currentCheckoutData;
+    if (!d || !d.baseQuantity) return;
+
+    if (d.serviceName && d.serviceName.includes("Combo Service")) {
+        d.quantity = d.baseQuantity * (d.multiplier || 1);
+        d.price = d.basePrice * (d.multiplier || 1);
+    } else {
+        d.quantity = d.baseQuantity * (d.multiplier || 1);
+        d.price = calculateDynamicPriceForQty(
+            d.platform,
+            d.serviceName,
+            d.quantity,
+            d.baseQuantity,
+            d.basePrice
+        );
+    }
+
+    const qtyCountDisplay = document.getElementById("checkoutQtyCount");
+    if (qtyCountDisplay) qtyCountDisplay.innerText = d.multiplier || 1;
+
+    const unitsText = document.getElementById("checkoutUnitsText");
+    if (unitsText) unitsText.innerText = `${d.quantity.toLocaleString()} Package`;
+
+    const priceEl = document.getElementById("checkoutPriceText");
+    if (priceEl) priceEl.innerText = `${d.price.toFixed(2)}`;
+
+    const usdtEl = document.getElementById("checkoutUsdtAmount");
+    if (usdtEl) {
+        const usdt = (d.price / 88).toFixed(2);
+        usdtEl.innerText = `$${usdt} USDT`;
+    }
+
+    const upiId = "rajsmmpanel@jio";
+    const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
+    
+    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=${encodeURIComponent(upiUrl)}`;
+
+    const qrImg = document.getElementById("checkoutQrImg");
+    if (qrImg) {
+        qrImg.src = qrImageSrc;
+        qrImg.style.width = "110px";
+        qrImg.style.height = "110px";
+        qrImg.style.objectFit = "contain";
+    }
+}
+
+function triggerUpiPay(appType) {
+    const d = currentCheckoutData;
+    const upiId = "rajsmmpanel@jio";
+    const amount = d.price ? d.price.toFixed(2) : "0.00";
+    const name = "RajSocialPanel";
+    const note = encodeURIComponent(d.packageName || "Social Boost Service");
+
+    let deepLink = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
+
+    if (appType === "paytm") {
+        deepLink = `paytmmp://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
+    } else if (appType === "gpay") {
+        deepLink = `tez://upi/pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
+    } else if (appType === "phonepe") {
+        deepLink = `phonepe://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
+    }
+
+    window.location.href = deepLink;
+
+    setTimeout(() => {
+        if (!document.hidden) {
+            window.location.href = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note}`;
+        }
+    }, 1200);
+}
+
+function changeCheckoutMultiplier(delta) {
+    if (!currentCheckoutData.multiplier) currentCheckoutData.multiplier = 1;
+    
+    let newMultiplier = currentCheckoutData.multiplier + delta;
+    if (newMultiplier < 1) newMultiplier = 1;
+
+    currentCheckoutData.multiplier = newMultiplier;
+    updateCheckoutQuantityDisplay();
+}
+
+function showCheckoutOverlay() {
+    const d = currentCheckoutData;
+
+    history.pushState({ checkoutOpen: true }, "");
+
+    const iconBox = document.getElementById("checkoutPlatformIcon");
+    if (iconBox) {
+        const pLower = (d.platform || "").toLowerCase();
+        const iconClasses = {
+            facebook: '<i class="fa-brands fa-facebook"></i>',
+            youtube: '<i class="fa-brands fa-youtube"></i>',
+            tiktok: '<i class="fa-brands fa-tiktok"></i>'
+        };
+        iconBox.innerHTML = iconClasses[pLower] || '<i class="fa-brands fa-instagram"></i>';
+    }
+
+    const titleEl = document.getElementById("checkoutServiceTitle");
+    if (titleEl) titleEl.innerText = `${d.platform} - ${d.serviceName}`;
+
+    const badgeNameEl = document.getElementById("checkoutPkgBadgeName");
+    if (badgeNameEl) badgeNameEl.innerText = d.packageName;
+
+    const badgeEl = document.getElementById("checkoutBadge");
+    if (badgeEl) badgeEl.innerText = d.badge;
+
+    let counterContainer = document.getElementById("checkoutQtyCounterBox");
+    const priceEl = document.getElementById("checkoutPriceText");
+    const priceParent = priceEl ? priceEl.parentElement : null;
+
+    if (!counterContainer && priceParent) {
+        counterContainer = document.createElement("div");
+        counterContainer.id = "checkoutQtyCounterBox";
+        counterContainer.style.cssText = "display: flex; align-items: center; background: rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 1px 4px; gap: 6px; margin-left: auto;";
+        
+        counterContainer.innerHTML = `
+            <button type="button" onclick="changeCheckoutMultiplier(-1)" style="background: rgba(255, 255, 255, 0.2); color: #fff; border: none; width: 30px; height: 30px; border-radius: 5px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">-</button>
+            <span id="checkoutQtyCount" style="color: #fff; font-weight: bold; font-size: 16px; min-width: 22px; text-align: center;">1</span>
+            <button type="button" onclick="changeCheckoutMultiplier(1)" style="background: rgba(255, 255, 255, 0.2); color: #fff; border: none; width: 30px; height: 30px; border-radius: 5px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
+        `;
+
+        if (priceParent.style) {
+            priceParent.style.display = "flex";
+            priceParent.style.alignItems = "center";
+            priceParent.style.justifyContent = "space-between";
+        }
+        priceParent.appendChild(counterContainer);
+    }
+
+    d.multiplier = 1;
+
+    const upiView = document.getElementById("checkoutUpiView");
+    const qrImg = document.getElementById("checkoutQrImg");
+    if (upiView) {
+        let scanHeading = document.getElementById("scanToPayHeading");
+        if (!scanHeading) {
+            scanHeading = document.createElement("h3");
+            scanHeading.id = "scanToPayHeading";
+            scanHeading.innerText = "TACK A SCREENSHOT OR SCAN TO PAY";
+            scanHeading.style.cssText = "margin: 2px 0 2px 0 !important; font-size: 12px !important; font-weight: 800 !important; text-align: center !important; text-transform: uppercase !important; background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; display: block !important; visibility: visible !important; opacity: 1 !important;";
+        }
+        if (qrImg && qrImg.parentElement === upiView) {
+            upiView.insertBefore(scanHeading, qrImg);
+        } else {
+            upiView.prepend(scanHeading);
+        }
+    }
+
+    updateCheckoutQuantityDisplay();
+
+    const priceCard = priceEl ? priceEl.parentElement : null;
+    if (priceCard) {
+        const subSpans = priceCard.querySelectorAll("span");
+        if (subSpans && subSpans.length) {
+            subSpans.forEach(s => {
+                if (s.id !== "checkoutPriceText" && s.id !== "checkoutQtyCount") {
+                    s.innerText = "You Pay";
+                }
+            });
+        }
+    }
+
+    const allSummaryElements = document.querySelectorAll(".order-summary-box, #orderSummaryBox, [class*='summary']");
+    allSummaryElements.forEach(el => {
+        el.style.display = "none";
+    });
+
+    const linkConfig = getLinkConfig(d.platform, d.serviceName);
+    const linkLabel = document.getElementById("checkoutLinkLabel") || document.querySelector('label[for="checkoutLinkInput"]');
+    const linkInput = document.getElementById("checkoutLinkInput");
+
+    if (linkLabel) linkLabel.innerText = linkConfig.label;
+    if (linkInput) {
+        linkInput.value = "";
+        linkInput.placeholder = linkConfig.placeholder;
+    }
+
+    const txnInput = document.getElementById("checkoutTxnId");
+    if (txnInput) txnInput.value = "";
+
+    const checkoutPage = document.getElementById("checkoutPage");
+    if (checkoutPage) {
+        checkoutPage.classList.remove("hidden");
+        checkoutPage.style.display = "block";
+        checkoutPage.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+}
+
+function closeCheckoutUI() {
+    const checkoutPage = document.getElementById("checkoutPage");
+    if (checkoutPage) {
+        checkoutPage.classList.add("hidden");
+        checkoutPage.style.display = "none";
+    }
+    
+    const linkInput = document.getElementById("checkoutLinkInput");
+    if (linkInput) linkInput.value = "";
+    const txnInput = document.getElementById("checkoutTxnId");
+    if (txnInput) txnInput.value = "";
+    
+    currentCheckoutData = {}; 
 }
 
 function closeCheckout() {
-  const checkoutPage = document.getElementById("checkoutPage");
-  if (checkoutPage && !checkoutPage.classList.contains("hidden")) {
-    checkoutPage.classList.add("hidden");
+    closeCheckoutUI();
     if (history.state && history.state.checkoutOpen) {
-      history.back();
+        history.back();
     }
-  }
 }
 
-// Left Sidebar Handlers
-function openSidebar() {
-  const sidebar = document.getElementById("leftSidebar");
-  const overlay = document.getElementById("sidebarOverlay");
-  if (sidebar) sidebar.classList.add("active");
-  if (overlay) overlay.classList.add("active");
+function switchCheckoutPayment(type) {
+    const btnUpi = document.getElementById("btnTabUpi");
+    const btnBinance = document.getElementById("btnTabBinance");
+    const viewUpi = document.getElementById("checkoutUpiView");
+    const viewBinance = document.getElementById("checkoutBinanceView");
 
-  history.pushState({ sidebarOpen: true }, "", "#sidebar");
-}
-
-function closeSidebar() {
-  const sidebar = document.getElementById("leftSidebar");
-  const overlay = document.getElementById("sidebarOverlay");
-
-  if (sidebar && sidebar.classList.contains("active")) {
-    sidebar.classList.remove("active");
-    if (overlay) overlay.classList.remove("active");
-
-    if (history.state && history.state.sidebarOpen) {
-      history.back();
-    }
-  }
-}
-
-window.addEventListener('popstate', function (event) {
-  const sidebar = document.getElementById("leftSidebar");
-  const overlay = document.getElementById("sidebarOverlay");
-  const checkoutPage = document.getElementById("checkoutPage");
-
-  if (sidebar && sidebar.classList.contains("active")) {
-    sidebar.classList.remove("active");
-    if (overlay) overlay.classList.remove("active");
-    return;
-  }
-
-  if (checkoutPage && !checkoutPage.classList.contains("hidden")) {
-    checkoutPage.classList.add("hidden");
-    return;
-  }
-});
-
-function switchCheckoutPayment(method) {
-  const upiView = document.getElementById('checkoutUpiView');
-  const binanceView = document.getElementById('checkoutBinanceView');
-  const btnUpi = document.getElementById('btnTabUpi');
-  const btnBinance = document.getElementById('btnTabBinance');
-  const txnLabel = document.getElementById('txnLabel');
-  const txnInput = document.getElementById('checkoutTxnId');
-
-  if (method === 'binance') {
-    if (upiView) upiView.classList.add('hidden');
-    if (binanceView) binanceView.classList.remove('hidden');
-    if (btnUpi) btnUpi.classList.remove('active');
-    if (btnBinance) btnBinance.classList.add('active');
-
-    if (txnLabel) txnLabel.innerText = "Enter Binance TxID / Order ID:";
-    if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
-  } else {
-    if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) upiView.classList.remove('hidden');
-    if (btnBinance) btnBinance.classList.remove('active');
-    if (btnUpi) btnUpi.classList.add('active');
-
-    if (txnLabel) txnLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
-    if (txnInput) txnInput.placeholder = "e.g. 4029XXXXXXXXXX (12-Digit UTR)";
-  }
-}
-
-// Custom Glow Popup
-function showModernPopup(title, message, type = 'success') {
-  const existingPopup = document.getElementById('modernCustomPopup');
-  if (existingPopup) existingPopup.remove();
-
-  const popupOverlay = document.createElement('div');
-  popupOverlay.id = 'modernCustomPopup';
-  popupOverlay.style.cssText = `
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 99999; animation: fadeInPopup 0.3s ease;
-  `;
-
-  const isSuccess = type === 'success';
-  const glowColor = isSuccess ? 'rgba(16, 185, 129, 0.5)' : 'rgba(239, 68, 68, 0.5)';
-  const iconSymbol = isSuccess ? '✅' : '❌';
-
-  popupOverlay.innerHTML = `
-    <div style="
-      background: #ffffff; width: 90%; max-width: 380px; padding: 30px 20px;
-      border-radius: 20px; text-align: center; box-shadow: 0 0 30px ${glowColor};
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      transform: scale(0.8); animation: scaleUpPopup 0.3s ease forwards;
-    ">
-      <div style="font-size: 50px; margin-bottom: 15px;">${iconSymbol}</div>
-      <h3 style="margin: 0 0 10px; color: #1e293b; font-size: 20px; font-weight: 700;">${title}</h3>
-      <p style="margin: 0 0 25px; color: #64748b; font-size: 14px; line-height: 1.5;">${message}</p>
-      <button id="modernPopupCloseBtn" style="
-        background: ${isSuccess ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #ef4444, #dc2626)'};
-        color: #ffffff; border: none; padding: 12px 30px; font-size: 15px;
-        font-weight: 600; border-radius: 10px; cursor: pointer; box-shadow: 0 4px 15px ${glowColor};
-        transition: transform 0.2s;
-      ">Okay</button>
-    </div>
-  `;
-
-  document.body.appendChild(popupOverlay);
-
-  if (!document.getElementById('modernPopupKeyframes')) {
-    const styleSheet = document.createElement('style');
-    styleSheet.id = 'modernPopupKeyframes';
-    styleSheet.innerHTML = `
-      @keyframes fadeInPopup { from { opacity: 0; } to { opacity: 1; } }
-      @keyframes scaleUpPopup { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-    `;
-    document.head.appendChild(styleSheet);
-  }
-
-  document.getElementById('modernPopupCloseBtn').onclick = () => {
-    popupOverlay.remove();
-  };
-  popupOverlay.onclick = (e) => {
-    if (e.target === popupOverlay) popupOverlay.remove();
-  };
-
-  if (isSuccess && typeof triggerConfetti === 'function') {
-    triggerConfetti();
-  }
-}
-
-function triggerConfetti() {
-  if (window.confetti) {
-    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-  } else {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js';
-    script.onload = () => {
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-    };
-    document.head.appendChild(script);
-  }
-}
-
-async function sendOrderToTelegram() {
-  const mainLink = document.getElementById("mainLinkInput");
-  const checkoutTxn = document.getElementById("checkoutTxnId");
-  const checkoutTitle = document.getElementById("checkoutServiceTitle");
-  const mainQty = document.getElementById("mainQuantityInput");
-  const categorySelect = document.getElementById("categorySelect");
-
-  const submitBtn = document.querySelector("#checkoutPage button[onclick*='sendOrderToTelegram']") || document.querySelector("#checkoutPage button");
-
-  const link = mainLink ? mainLink.value.trim() : "";
-  const utr = checkoutTxn ? checkoutTxn.value.trim() : "";
-  const service = checkoutTitle ? checkoutTitle.innerText : "";
-  const quantity = mainQty ? mainQty.value : "";
-  
-  // Selected Category text extraction
-  const categoryText = categorySelect && categorySelect.options[categorySelect.selectedIndex] 
-    ? categorySelect.options[categorySelect.selectedIndex].textContent 
-    : "N/A";
-
-  if (!utr) {
-    showModernPopup("Error!", "Please enter Transaction ID / UTR Number.", "error");
-    return;
-  }
-
-  if (submitBtn) {
-    submitBtn.disabled = true;
-    submitBtn.style.opacity = "0.7";
-    submitBtn.style.cursor = "not-allowed";
-    submitBtn.dataset.originalText = submitBtn.innerText;
-    submitBtn.innerText = "Processing...";
-  }
-
-  const botToken = "8960508595:AAG8-0ZNbOGZ-iRtSh5xzAabhSrHbRWjUaE";
-  const chatId = "8895603997";
-
-  // Platform-এর জায়গায় Category দিয়ে মোট মেসেজটি আপডেট করা হয়েছে
-  const message = `🛍️ New Order Received!\n\n` +
-                  `📁 Category: ${categoryText}\n` +
-                  `🏷️ Service: ${service}\n` +
-                  `🔢 Quantity: ${quantity}\n` +
-                  `💰 Price: ₹${calculatedPrice}\n` +
-                  `🔗 Link: ${link}\n` +
-                  `💳 UTR/TxID: ${utr}\n\n` +
-                  `📅 Date: ${new Date().toLocaleString()}`;
-
-  const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: chatId, text: message })
-    });
-
-    const data = await response.json();
-
-    if (data.ok) {
-      showModernPopup("Success!", "Order submitted successfully!", "success");
-      if (checkoutTxn) checkoutTxn.value = "";
-      closeCheckout();
+    if (type === 'upi') {
+        if (btnUpi) btnUpi.classList.add("active");
+        if (btnBinance) btnBinance.classList.remove("active");
+        if (viewUpi) viewUpi.classList.remove("hidden");
+        if (viewBinance) viewBinance.classList.add("hidden");
     } else {
-      showModernPopup("Telegram Error", data.description, "error");
+        if (btnBinance) btnBinance.classList.add("active");
+        if (btnUpi) btnUpi.classList.remove("active");
+        if (viewBinance) viewBinance.classList.remove("hidden");
+        if (viewUpi) viewUpi.classList.add("hidden");
     }
-  } catch (error) {
-    console.error("Error submitting order:", error);
-    showModernPopup("Connection Failed!", "Please check your network connection.", "error");
-  } finally {
-    if (submitBtn) {
-      submitBtn.disabled = false;
-      submitBtn.style.opacity = "1";
-      submitBtn.style.cursor = "pointer";
-      submitBtn.innerText = submitBtn.dataset.originalText || "Confirm Order";
-    }
-  }
 }
 
-function submitOrderToWhatsApp() {
-  sendOrderToTelegram();
+function isValidUrl(string) {
+    try {
+        new URL(string);
+        return true;
+    } catch (_) {
+        return false;
+    }
 }
 
-// Live Search Input Logic with Enhanced Height & Gradient Border
-document.addEventListener('DOMContentLoaded', function () {
-  const searchInput = document.getElementById('categorySearchInput');
+function processProfileOrLink(input, platform, serviceName) {
+    const trimmed = (input || "").trim();
+    if (!trimmed) {
+        return { isValid: false, message: "Please enter target Profile Link or Username!" };
+    }
 
-  if (searchInput) {
-    let searchDropdown = document.createElement('div');
-    searchDropdown.id = 'liveSearchDropdown';
-    // Live Search Popup height extended to 340px and gradient border added
-    searchDropdown.style.cssText = `
-      display: none; position: absolute; top: calc(100% + 6px); left: 0; right: 0;
-      background: linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6) border-box;
-      border: 1px solid transparent; border-radius: 12px;
-      max-height: 340px; overflow-y: auto; z-index: 1000;
-      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.25); padding: 8px;
-    `;
-    searchInput.parentElement.style.position = 'relative';
-    searchInput.parentElement.appendChild(searchDropdown);
+    const pName = (platform || "").toLowerCase();
+    const sName = (serviceName || "").toLowerCase();
 
-    searchInput.addEventListener('input', function (e) {
-      const searchTerm = e.target.value.toLowerCase().trim();
-      searchDropdown.innerHTML = "";
-
-      if (searchTerm === "") {
-        searchDropdown.style.display = 'none';
-        return;
-      }
-
-      let matchedServices = [];
-
-      for (let platKey in platformData) {
-        if (platKey === 'all') continue;
-        const categories = platformData[platKey].categories;
-        for (let catKey in categories) {
-          categories[catKey].services.forEach(service => {
-            if (service.id.includes(searchTerm) || service.name.toLowerCase().includes(searchTerm)) {
-              matchedServices.push({ ...service, platform: platKey, categoryKey: catKey });
+    if (pName.includes("instagram")) {
+        const cleanUsername = trimmed.startsWith("@") ? trimmed.slice(1) : trimmed;
+        
+        if (sName.includes("follower") || sName.includes("blue") || sName.includes("verify") || sName.includes("profile")) {
+            if (/^[a-zA-Z0-9._]{1,30}$/.test(cleanUsername)) {
+                return {
+                    isValid: true,
+                    url: `https://www.instagram.com/${cleanUsername}`
+                };
             }
-          });
+            if (trimmed.toLowerCase().includes("instagram.com")) {
+                return {
+                    isValid: true,
+                    url: trimmed.startsWith("http") ? trimmed : `https://${trimmed}`
+                };
+            }
+            return {
+                isValid: true,
+                url: trimmed
+            };
         }
-      }
 
-      if (matchedServices.length > 0) {
-        searchDropdown.style.display = 'block';
+        if (trimmed.toLowerCase().includes("instagram.com") || isValidUrl(trimmed)) {
+            return {
+                isValid: true,
+                url: trimmed.startsWith("http") ? trimmed : `https://${trimmed}`
+            };
+        }
 
-        matchedServices.forEach(service => {
-          const item = document.createElement('div');
-          const platLogo = platformLogos[service.platform] || platformLogos.instagram;
-          item.style.cssText = `
-            display: flex; align-items: center; gap: 10px; padding: 10px 12px;
-            cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #1e293b;
-            border-radius: 8px; transition: background 0.2s;
-          `;
+        return {
+            isValid: true,
+            url: trimmed
+        };
+    } else if (pName.includes("tiktok")) {
+        const cleanUsername = trimmed.startsWith("@") ? trimmed.slice(1) : trimmed;
+        if (/^[a-zA-Z0-9._]{2,24}$/.test(cleanUsername)) {
+            return {
+                isValid: true,
+                url: `https://www.tiktok.com/@${cleanUsername}`
+            };
+        }
+        return {
+            isValid: true,
+            url: trimmed
+        };
+    }
 
-          item.innerHTML = `
-            <img src="${platLogo}" style="width:18px; height:18px; object-fit:contain;">
-            <span style="background: #8b5cf6; color: #ffffff; padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 12px; flex-shrink: 0;">${service.id}</span>
-            <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${service.name}</span>
-          `;
+    return {
+        isValid: true,
+        url: trimmed
+    };
+}
 
-          item.onmouseenter = () => item.style.background = '#f1f5f9';
-          item.onmouseleave = () => item.style.background = '#ffffff';
+// ==========================================
+// FIRECRACKER / CONFETTI GENERATOR UTILITY
+// ==========================================
+function triggerRajConfettiAnimation(overlayElement) {
+    const colors = ['#22c55e', '#a855f7', '#ec4899', '#3b82f6', '#f59e0b', '#ef4444', '#10b981'];
+    const particleCount = 45;
 
-          item.onclick = () => {
-            if (currentPlatform !== 'all' && currentPlatform !== service.platform) {
-              selectPlatform(service.platform);
+    for (let i = 0; i < particleCount; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'raj-confetti-piece';
+        
+        // Random horizontal positions
+        piece.style.left = Math.random() * 100 + '%';
+        
+        // Random colors
+        piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        // Random shapes (square, circle or thin strip)
+        if (Math.random() > 0.5) {
+            piece.style.borderRadius = '50%';
+            piece.style.width = (Math.random() * 8 + 6) + 'px';
+            piece.style.height = piece.style.width;
+        } else {
+            piece.style.width = (Math.random() * 8 + 6) + 'px';
+            piece.style.height = (Math.random() * 14 + 10) + 'px';
+        }
+
+        // Random animation duration & delays for firecracker burst feel
+        const duration = Math.random() * 1.5 + 1.2; // 1.2s to 2.7s
+        const delay = Math.random() * 0.4; // 0s to 0.4s
+        
+        piece.style.animationDuration = duration + 's';
+        piece.style.animationDelay = delay + 's';
+
+        overlayElement.appendChild(piece);
+
+        // Auto remove element after animation completes
+        setTimeout(() => {
+            piece.remove();
+        }, (duration + delay) * 1000);
+    }
+}
+
+// ==========================================
+// MODERN GLOWING SUCCESS POPUP FUNCTION (WITH WHATSAPP TRACK BUTTON)
+// ==========================================
+function showOrderSuccessPopup(orderData) {
+    // Remove existing popup if any
+    const existingOverlay = document.getElementById("rajOrderSuccessOverlay");
+    if (existingOverlay) existingOverlay.remove();
+
+    // বর্তমান Date ও Time জেনারেট করার জন্য
+    const now = new Date();
+    const currentDate = now.toLocaleDateString('en-GB'); // DD/MM/YYYY format
+    const currentTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+   
+    const whatsappNumber = "919239628344"; // 
+
+    // WhatsApp Message Format আপনার চাহিদা অনুযায়ী তৈরি করা হয়েছে
+    const waMessage = 
+`📦 Track Your Order
+
+Hello Raj SMM Panel 👋
+
+I want to track my order.
+
+🆔 Order ID: ${orderData.orderId}
+🛠️ Service: ${orderData.platformName} - ${orderData.serviceName} - ${orderData.packageName}
+🔗 Link: ${orderData.link}
+📊 Quantity: ${orderData.quantity.toLocaleString()}
+💰 Total Price: ₹${orderData.amount}
+📅 Date: ${currentDate}, Time: ${currentTime}
+
+📌 Please provide my current order status.
+
+Thank you! 💚`;
+
+    // URL Encode করা যাতে স্পেস বা ইমোজি ঠিক থাকে
+    const encodedWaMessage = encodeURIComponent(waMessage);
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedWaMessage}`;
+
+    const overlay = document.createElement("div");
+    overlay.id = "rajOrderSuccessOverlay";
+    overlay.className = "raj-popup-overlay";
+
+    overlay.innerHTML = `
+        <div class="raj-popup-card">
+            <button class="raj-popup-close" onclick="closeRajSuccessPopup()">×</button>
+            <div class="raj-popup-title">Your Order has been received.</div>
+            <div class="raj-popup-row"><strong>ID:</strong> ${orderData.orderId}</div>
+            <div class="raj-popup-row"><strong>Service:</strong> ${orderData.platformName} - ${orderData.serviceName} - ${orderData.packageName}</div>
+            <div class="raj-popup-row"><strong>Link:</strong> ${orderData.link}</div>
+            <div class="raj-popup-row"><strong>Quantity:</strong> ${orderData.quantity.toLocaleString()}</div>
+            <div class="raj-popup-row"><strong>Total price:</strong> ₹${orderData.amount}</div>
+
+            <!-- নতুন WhatsApp Track Your Order Button (Center Aligned & Color-Changing) -->
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="${whatsappUrl}" target="_blank" class="raj-whatsapp-track-btn">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                    </svg>
+                    Track Your Order
+                </a>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    // Trigger smooth fade-in and Firecracker/Confetti effect
+    setTimeout(() => {
+        overlay.classList.add("active");
+        triggerRajConfettiAnimation(overlay);
+    }, 10);
+}
+
+function closeRajSuccessPopup() {
+    const overlay = document.getElementById("rajOrderSuccessOverlay");
+    if (overlay) {
+        overlay.classList.remove("active");
+        setTimeout(() => overlay.remove(), 300);
+    }
+}
+
+// ==========================================
+// TELEGRAM ORDER SUBMISSION & POPUP INTEGRATION
+// ==========================================
+function submitOrderToWhatsApp() {
+    const linkInput = document.getElementById("checkoutLinkInput");
+    const txnInput = document.getElementById("checkoutTxnId");
+
+    const rawLink = linkInput ? linkInput.value.trim() : "";
+    const txnId = txnInput ? txnInput.value.trim() : "";
+
+    const validation = processProfileOrLink(rawLink, currentCheckoutData.platform, currentCheckoutData.serviceName);
+    if (!validation.isValid) {
+        alert(validation.message);
+        return;
+    }
+
+    const link = validation.url;
+
+    if (!txnId) {
+        alert("Please enter Transaction ID / UTR number!");
+        return;
+    }
+
+    const userIdentifier = (typeof window.firebaseUserUid !== 'undefined' && window.firebaseUserUid) 
+        ? window.firebaseUserUid 
+        : (() => {
+            let bid = localStorage.getItem('raj_smm_browser_id');
+            if (!bid) {
+                bid = 'BID_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+                localStorage.setItem('raj_smm_browser_id', bid);
             }
+            return bid;
+        })();
 
-            const categorySelect = document.getElementById('categorySelect');
-            const targetVal = currentPlatform === 'all' ? `${service.platform}_${service.categoryKey}` : service.categoryKey;
-            categorySelect.value = targetVal;
-            setupSelectIcons('categorySelect');
+    const orderIdVal = Math.floor(100000 + Math.random() * 900000);
+    const finalPriceFormatted = currentCheckoutData.price ? currentCheckoutData.price.toFixed(2) : "0.00";
+    
+    const newOrder = {
+        orderId: orderIdVal,
+        serviceName: `${currentCheckoutData.platform} - ${currentCheckoutData.serviceName} (${currentCheckoutData.packageName})`,
+        link: link,
+        quantity: currentCheckoutData.quantity || 0,
+        amount: finalPriceFormatted,
+        orderTimeEpoch: Date.now(),
+        status: 'Pending',
+        userIdentifier: userIdentifier
+    };
 
-            updateServices();
+    const existingOrders = JSON.parse(localStorage.getItem('raj_smm_orders') || '[]');
+    existingOrders.push(newOrder);
+    localStorage.setItem('raj_smm_orders', JSON.stringify(existingOrders));
 
-            const serviceSelect = document.getElementById('serviceSelect');
-            serviceSelect.value = service.id;
-            setupSelectIcons('serviceSelect');
-            calculatePrice();
+    const isUpi = document.getElementById("btnTabUpi") ? document.getElementById("btnTabUpi").classList.contains("active") : true;
+    const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
 
-            searchDropdown.style.display = 'none';
-            searchInput.value = '';
-          };
+    const d = currentCheckoutData;
 
-          searchDropdown.appendChild(item);
-        });
-      } else {
-        searchDropdown.style.display = 'block';
-        searchDropdown.innerHTML = `<div style="padding: 12px; text-align: center; color: #64748b; font-size: 13px;">No matching services found</div>`;
-      }
+    const formattedMessage = 
+        `🚀 NEW ORDER SUBMITTED 🚀\n\n` +
+        `🆔 Order ID: #${orderIdVal}\n` +
+        `📌 Social Media: ${d.platform || ''}\n` +
+        `🛠️ Service Name: ${d.serviceName || ''}\n` +
+        `📦 Package: ${d.packageName || ''}\n` +
+        `🔢 Total Quantity: ${(d.quantity || 0).toLocaleString()}\n` +
+        `💰 Total Price: ₹${finalPriceFormatted}\n` +
+        `🔗 Target Link: ${link}\n` +
+        `💳 Payment Method: ${payMethod}\n` +
+        `🧾 Transaction ID / UTR: ${txnId}`;
+
+    const TELEGRAM_BOT_TOKEN = "8818198886:AAG1Ww5lxVEPDBpBnFQAvtRZt6Zys9t0Wh8"; 
+    const TELEGRAM_CHAT_ID = "8895603997";
+
+    const telegramApiUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+    const payload = {
+        chat_id: TELEGRAM_CHAT_ID,
+        text: formattedMessage
+    };
+
+    const submitBtn = document.querySelector("#checkoutPage .submit-btn") || event.target;
+    if (submitBtn) submitBtn.disabled = true;
+
+    fetch(telegramApiUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.ok) {
+            closeCheckoutUI();
+            
+            showOrderSuccessPopup({
+                orderId: orderIdVal,
+                platformName: d.platform || '',
+                serviceName: d.serviceName || '',
+                packageName: d.packageName || '',
+                link: link,
+                quantity: d.quantity || 0,
+                amount: finalPriceFormatted
+            });
+        } else {
+            alert("Failed to send order to Telegram. Please check Bot Token & Chat ID.");
+        }
+    })
+    .catch(error => {
+        console.error("Telegram Error:", error);
+        alert("Network error while sending order to Telegram.");
+    })
+    .finally(() => {
+        if (submitBtn) submitBtn.disabled = false;
     });
+}
 
-    document.addEventListener('click', function (e) {
-      if (!searchInput.contains(e.target) && !searchDropdown.contains(e.target)) {
-        searchDropdown.style.display = 'none';
-      }
-    });
-  }
+let deferredPrompt = null;
+
+window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    toggleInstallButton();
 });
 
-// Auto Initialize Page to Default 'all'
-window.onload = function() {
-  selectPlatform('all');
-};
+function toggleInstallButton() {
+    const installContainer = document.getElementById("installContainer");
+    if (!installContainer) return;
+
+    if (
+        currentPlatform === "instagram" &&
+        currentCategory === "Followers Non-Drop" &&
+        deferredPrompt
+    ) {
+        installContainer.style.display = "block";
+    } else {
+        installContainer.style.display = "none";
+    }
+}
+
+const installBtn = document.getElementById("installBtn");
+if (installBtn) {
+    installBtn.addEventListener("click", async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            deferredPrompt = null;
+            toggleInstallButton();
+        }
+    });
+}
+
+window.addEventListener("appinstalled", () => {
+    const installContainer = document.getElementById("installContainer");
+    if (installContainer) {
+        installContainer.style.display = "none";
+    }
+    deferredPrompt = null;
+});
+
+async function submitOrderWithWallet() {
+    const linkInput = document.getElementById("checkoutLinkInput");
+    const walletBtn = document.getElementById("submitWalletBtn");
+    const rawLink = linkInput ? linkInput.value.trim() : "";
+    const orderAmount = currentCheckoutData.price;
+    const finalPriceFormatted = orderAmount ? orderAmount.toFixed(2) : "0.00";
+
+    const validation = processProfileOrLink(rawLink, currentCheckoutData.platform, currentCheckoutData.serviceName);
+    if (!validation.isValid) {
+        alert(validation.message);
+        return;
+    }
+
+    const link = validation.url;
+
+    if (typeof firebase === 'undefined' || !firebase.auth) {
+        alert("Authentication system unavailable.");
+        return;
+    }
+
+    const auth = firebase.auth();
+    const user = auth.currentUser;
+    if (!user) {
+        alert("Please login to use Wallet System.");
+        return;
+    }
+
+    if (walletBtn) walletBtn.disabled = true;
+
+    const db = firebase.firestore();
+    const userRef = db.collection('users').doc(user.uid);
+
+    try {
+        await db.runTransaction(async (transaction) => {
+            const userDoc = await transaction.get(userRef);
+            if (!userDoc.exists) throw new Error("User account not found!");
+
+            const userData = userDoc.data();
+            const balance = userData.walletBalance || 0;
+
+            if (balance < orderAmount) {
+                throw new Error("Insufficient Wallet Balance. Please Add Funds first.");
+            }
+
+            transaction.update(userRef, {
+                walletBalance: balance - orderAmount,
+                totalSpent: (userData.totalSpent || 0) + orderAmount
+            });
+
+            const txRef = db.collection('walletTransactions').doc();
+            transaction.set(txRef, {
+                uid: user.uid,
+                type: 'DEBIT',
+                amount: orderAmount,
+                description: `Order: ${currentCheckoutData.packageName}`,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        });
+
+        const orderIdVal = Math.floor(100000 + Math.random() * 900000);
+        closeCheckoutUI();
+        
+        showOrderSuccessPopup({
+            orderId: orderIdVal,
+            platformName: currentCheckoutData.platform || '',
+            serviceName: currentCheckoutData.serviceName || '',
+            packageName: currentCheckoutData.packageName || '',
+            link: link,
+            quantity: currentCheckoutData.quantity || 0,
+            amount: finalPriceFormatted
+        });
+
+    } catch (error) {
+        alert("Error: " + (error.message || error));
+    } finally {
+        if (walletBtn) walletBtn.disabled = false;
+    }
+}

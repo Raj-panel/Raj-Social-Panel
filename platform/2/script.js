@@ -45,21 +45,21 @@ const platformData = {
       "working": {
         name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐅𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬- 𝐌𝐢𝐱 𝐒𝐞𝐫𝐯𝐢𝐜𝐞",
         services: [
-          { id: "1220", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–30 Min Start - 60D Refill 🔄", rate: 53.358, avgTime: "0–10 Min Start" },
-          { id: "1221", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–30 Min Start - 90D Refill 🔄", rate: 57.929, avgTime: "0–10 Min Start" },
-          { id: "1222", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–50 Min Start - 365D Refill 🔄", rate: 60.501, avgTime: "0–10 Min Start" },
-          { id: "1223", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–30 Min Start - Lifetime Refill ♻️", rate: 63.072, avgTime: "0–10 Min Start" },
+          { id: "1220", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 60D Refill 🔄", rate: 53.358, avgTime: "0–10 Min Start" },
+          { id: "1221", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 90D Refill 🔄", rate: 57.929, avgTime: "0–10 Min Start" },
+          { id: "1222", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 365D Refill 🔄", rate: 60.501, avgTime: "0–10 Min Start" },
+          { id: "1223", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - Lifetime Refill ♻️", rate: 63.072, avgTime: "0–10 Min Start" },
         ]
       },
       "nondrop": {
         name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬 [𝐍𝐨𝐧-𝐃𝐫𝐨𝐩]",
         services: [
-          { id: "1072", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 20 Min Start - No Refill 🔄", rate: 67.929, avgTime: "0–2 Min Start" },
-          { id: "1073", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 20 Min Start - 30D Refill 🔄", rate: 73.072, avgTime: "0–2 Min Start" },
-          { id: "1074", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 20 Min Start - 60D Refill 🔄", rate: 75.644, avgTime: "0–2 Min Start" },
-          { id: "1075", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 20 Min Start - 90D Refill 🔄", rate: 78.215, avgTime: "0–2 Min Start" },
-          { id: "1076", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 20 Min Start - 365D Refill 🔄", rate: 79.858, avgTime: "0–2 Min Start" },
-          { id: "1077", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 20 Min Start - Lifetime Refill ♻️", rate: 83.358, avgTime: "0–2 Min Start" },
+          { id: "1072", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - No Refill 🔄", rate: 67.929, avgTime: "0–2 Min Start" },
+          { id: "1073", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 30D Refill 🔄", rate: 73.072, avgTime: "0–2 Min Start" },
+          { id: "1074", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 60D Refill 🔄", rate: 75.644, avgTime: "0–2 Min Start" },
+          { id: "1075", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 90D Refill 🔄", rate: 78.215, avgTime: "0–2 Min Start" },
+          { id: "1076", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 365D Refill 🔄", rate: 79.858, avgTime: "0–2 Min Start" },
+          { id: "1077", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - Lifetime Refill ♻️", rate: 83.358, avgTime: "0–2 Min Start" },
         ]
       },
       "Instagram like real profile": {
@@ -94,7 +94,7 @@ const platformData = {
       "🇮🇳Instagram Photo / post Views": {
         name: "🇮🇳𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐏𝐡𝐨𝐭𝐨 / 𝐩𝐨𝐬𝐭 𝐕𝐢𝐞𝐰𝐬",
         services: [
-          { id: "1030", name: "🇮🇳Instagram Photo & Post Views | Photo + Post + Image Impressions | Non Drop | 1M+ Per Day | 0–1 Minutes Start", rate: 15.286, avgTime: "0–1 Minutes Start" }
+          { id: "1030", name: "🇮🇳Instagram Photo & Post Views | Photo + Post + Image Impressions | Non Drop | 1M+ Per Day | 0–1 Minutes Start", rate: 10.286, avgTime: "0–1 Minutes Start" }
         ]
       }
     }
@@ -191,11 +191,11 @@ const platformData = {
       "Telegram Members - Non~Drop": {
         name: "𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦 𝐌𝐞𝐦𝐛𝐞𝐫𝐬 - 𝐍𝐨𝐧~𝐃𝐫𝐨𝐩",
         services: [
-          { id: "6749", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 30D Refill ♻️", rate: 50.5200, avgTime: "0–10 Min Start" },
-          { id: "6750", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 60D Refill ♻️", rate: 52.8000, avgTime: "0–10 Min Start" },
-          { id: "6751", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 90D Refill ♻️", rate: 54.7000, avgTime: "0–10 Min Start" },
-          { id: "6752", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 365D Refill ♻️", rate: 56.6000, avgTime: "0–10 Min Start" },
-          { id: "6753", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | Lifetime Refill ♻️", rate: 60.5000, avgTime: "0–10 Min Start" }
+          { id: "6749", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | Refill ♻️", rate: 70.5200, avgTime: "0–10 Min Start" },
+          { id: "6750", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 60D Refill ♻️", rate: 72.8000, avgTime: "0–10 Min Start" },
+          { id: "6751", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 90D Refill ♻️", rate: 74.7000, avgTime: "0–10 Min Start" },
+          { id: "6752", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 365D Refill ♻️", rate: 76.6000, avgTime: "0–10 Min Start" },
+          { id: "6753", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | Lifetime Refill ♻️", rate: 80.5000, avgTime: "0–10 Min Start" }
         ]
       },
       "Telegram - Reactions | Cheapest in The World": {
@@ -683,19 +683,10 @@ function showModernPopup(title, message, type = 'success') {
   }
 }
 
-function triggerConfetti() {
-  if (window.confetti) {
-    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-  } else {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js';
-    script.onload = () => {
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-    };
-    document.head.appendChild(script);
-  }
-}
-
+// ==========================================
+// PLATFORM 2 - BACKEND ORDER SUBMISSION
+// Frontend -> Backend -> Telegram Bot 2
+// ==========================================
 async function sendOrderToTelegram() {
   const mainLink = document.getElementById("mainLinkInput");
   const checkoutTxn = document.getElementById("checkoutTxnId");
@@ -703,22 +694,67 @@ async function sendOrderToTelegram() {
   const mainQty = document.getElementById("mainQuantityInput");
   const categorySelect = document.getElementById("categorySelect");
 
-  const submitBtn = document.querySelector("#checkoutPage button[onclick*='sendOrderToTelegram']") || document.querySelector("#checkoutPage button");
+  const submitBtn =
+    document.querySelector("#checkoutPage button[onclick*='sendOrderToTelegram']") ||
+    document.querySelector("#checkoutPage button");
 
   const link = mainLink ? mainLink.value.trim() : "";
   const utr = checkoutTxn ? checkoutTxn.value.trim() : "";
-  const service = checkoutTitle ? checkoutTitle.innerText : "";
-  const quantity = mainQty ? mainQty.value : "";
-  
-  // Selected Category text extraction
-  const categoryText = categorySelect && categorySelect.options[categorySelect.selectedIndex] 
-    ? categorySelect.options[categorySelect.selectedIndex].textContent 
-    : "N/A";
+  const service = checkoutTitle ? checkoutTitle.innerText.trim() : "";
+  const quantity = Number(mainQty ? mainQty.value : 0);
 
-  if (!utr) {
-    showModernPopup("Error!", "Please enter Transaction ID / UTR Number.", "error");
+  const categoryText =
+    categorySelect &&
+    categorySelect.options[categorySelect.selectedIndex]
+      ? categorySelect.options[categorySelect.selectedIndex].textContent.trim()
+      : "N/A";
+
+  if (!link) {
+    showModernPopup("Error!", "Please enter the target link.", "error");
     return;
   }
+
+  if (!utr) {
+    showModernPopup(
+      "Error!",
+      "Please enter Transaction ID / UTR Number.",
+      "error"
+    );
+    return;
+  }
+
+  if (!quantity || quantity <= 0) {
+    showModernPopup("Error!", "Please enter a valid quantity.", "error");
+    return;
+  }
+
+  // Browser/User ID
+  let userIdentifier = localStorage.getItem("raj_smm_browser_id");
+
+  if (!userIdentifier) {
+    userIdentifier =
+      "BID_" +
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15);
+
+    localStorage.setItem("raj_smm_browser_id", userIdentifier);
+  }
+
+  // Get service ID from selected service if available
+  let serviceId = "PLATFORM2_SERVICE";
+
+  if (typeof selectedServiceId !== "undefined" && selectedServiceId) {
+    serviceId = String(selectedServiceId);
+  } else if (typeof currentServiceId !== "undefined" && currentServiceId) {
+    serviceId = String(currentServiceId);
+  }
+
+  // Price
+  const amount = Number(
+    typeof calculatedPrice !== "undefined"
+      ? calculatedPrice
+      : 0
+  );
 
   if (submitBtn) {
     submitBtn.disabled = true;
@@ -728,46 +764,115 @@ async function sendOrderToTelegram() {
     submitBtn.innerText = "Processing...";
   }
 
-  const botToken = "8960508595:AAG8-0ZNbOGZ-iRtSh5xzAabhSrHbRWjUaE";
-  const chatId = "8895603997";
-
-  // Platform-এর জায়গায় Category দিয়ে মোট মেসেজটি আপডেট করা হয়েছে
-  const message = `🛍️ New Order Received!\n\n` +
-                  `📁 Category: ${categoryText}\n` +
-                  `🏷️ Service: ${service}\n` +
-                  `🔢 Quantity: ${quantity}\n` +
-                  `💰 Price: ₹${calculatedPrice}\n` +
-                  `🔗 Link: ${link}\n` +
-                  `💳 UTR/TxID: ${utr}\n\n` +
-                  `📅 Date: ${new Date().toLocaleString()}`;
-
-  const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-
   try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: chatId, text: message })
-    });
+    // ==========================================
+    // SEND PLATFORM 2 ORDER TO BACKEND
+    // ==========================================
+    const response = await fetch(
+      "https://raj-social-panel-backend-qfwd.vercel.app/api/orders/create",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          userId: userIdentifier,
+
+          // IMPORTANT:
+          // This makes Backend select Telegram Bot 2
+          platform: "platform2",
+
+          serviceId: serviceId,
+          serviceName: `${service} (${categoryText})`,
+          link: link,
+          quantity: quantity,
+          amount: amount,
+
+          // Payment reference
+          paymentId: utr,
+          transactionId: utr,
+          paymentMethod: "UPI QR Code"
+        })
+      }
+    );
 
     const data = await response.json();
 
-    if (data.ok) {
-      showModernPopup("Success!", "Order submitted successfully!", "success");
-      if (checkoutTxn) checkoutTxn.value = "";
-      closeCheckout();
-    } else {
-      showModernPopup("Telegram Error", data.description, "error");
+    if (!response.ok || !data.success) {
+      throw new Error(
+        data.message ||
+        data.error ||
+        "Order submission failed."
+      );
     }
+
+    const backendOrder = data.order || {};
+
+    // Save order locally
+    const localOrder = {
+      orderId:
+        backendOrder.internalOrderId ||
+        Math.floor(100000 + Math.random() * 900000),
+
+      serviceName: service,
+      category: categoryText,
+      link: link,
+      quantity: quantity,
+      amount: amount.toFixed(2),
+      transactionId: utr,
+      status: "Pending",
+      userIdentifier: userIdentifier,
+      orderTimeEpoch: Date.now()
+    };
+
+    const existingOrders = JSON.parse(
+      localStorage.getItem("raj_smm_orders") || "[]"
+    );
+
+    existingOrders.push(localOrder);
+
+    localStorage.setItem(
+      "raj_smm_orders",
+      JSON.stringify(existingOrders)
+    );
+
+    // Success
+    showModernPopup(
+      "Success!",
+      "Order submitted successfully!",
+      "success"
+    );
+
+    if (checkoutTxn) {
+      checkoutTxn.value = "";
+    }
+
+    closeCheckout();
+
+    console.log(
+      "Platform 2 order successfully submitted:",
+      backendOrder
+    );
+
   } catch (error) {
-    console.error("Error submitting order:", error);
-    showModernPopup("Connection Failed!", "Please check your network connection.", "error");
+    console.error(
+      "Platform 2 Backend Order Error:",
+      error
+    );
+
+    showModernPopup(
+      "Connection Failed!",
+      error.message || "Please try again.",
+      "error"
+    );
+
   } finally {
     if (submitBtn) {
       submitBtn.disabled = false;
       submitBtn.style.opacity = "1";
       submitBtn.style.cursor = "pointer";
-      submitBtn.innerText = submitBtn.dataset.originalText || "Confirm Order";
+      submitBtn.innerText =
+        submitBtn.dataset.originalText || "Confirm Order";
     }
   }
 }

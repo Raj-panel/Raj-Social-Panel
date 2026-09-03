@@ -677,8 +677,8 @@ function showModernPopup(title, message, type = 'success') {
   };
 }
 
-// ORIGINAL ORDER ID SYSTEM RESTORED
-async function sendOrderToTelegram() {
+// PLATFORM 2 - BACKEND ORDER SUBMISSION
+function sendOrderToTelegram() {
   const mainLink = document.getElementById("mainLinkInput");
   const checkoutTxn = document.getElementById("checkoutTxnId");
   const checkoutTitle = document.getElementById("checkoutServiceTitle");
@@ -732,11 +732,6 @@ async function sendOrderToTelegram() {
     serviceId = String(selectedServiceId);
   } else if (typeof currentServiceId !== "undefined" && currentServiceId) {
     serviceId = String(currentServiceId);
-  } else {
-    const serviceSelect = document.getElementById("serviceSelect");
-    if (serviceSelect && serviceSelect.value) {
-      serviceId = serviceSelect.value;
-    }
   }
 
   const amount = Number(
@@ -745,11 +740,11 @@ async function sendOrderToTelegram() {
       : 0
   );
 
-  // Exact original order ID system logic
-  const standardOrderId = Math.floor(100000 + Math.random() * 900000);
+  // Instant Success Feedback & Popup (No blocking wait)
+  const localOrderId = Math.floor(100000 + Math.random() * 900000);
 
   const localOrder = {
-    orderId: standardOrderId,
+    orderId: localOrderId,
     serviceName: service,
     category: categoryText,
     link: link,
@@ -764,12 +759,17 @@ async function sendOrderToTelegram() {
   const existingOrders = JSON.parse(
     localStorage.getItem("raj_smm_orders") || "[]"
   );
+
   existingOrders.push(localOrder);
-  localStorage.setItem("raj_smm_orders", JSON.stringify(existingOrders));
+
+  localStorage.setItem(
+    "raj_smm_orders",
+    JSON.stringify(existingOrders)
+  );
 
   showModernPopup(
     "Success!",
-    `Order submitted successfully! Order ID: #${standardOrderId}`,
+    "Order submitted successfully!",
     "success"
   );
 
@@ -779,7 +779,7 @@ async function sendOrderToTelegram() {
 
   closeCheckout();
 
-  // Background request sync with correct orderId
+  // Background fetch request (non-blocking)
   fetch(
     "https://raj-social-panel-backend-qfwd.vercel.app/api/orders/create",
     {
@@ -788,7 +788,6 @@ async function sendOrderToTelegram() {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        orderId: standardOrderId,
         userId: userIdentifier,
         platform: "platform2",
         serviceId: serviceId,
@@ -801,9 +800,16 @@ async function sendOrderToTelegram() {
         paymentMethod: "UPI QR Code"
       })
     }
-  ).catch(error => {
-    console.error("Background Order Sync Error:", error);
-  });
+  )
+    .then(async (response) => {
+      const data = await response.json();
+      if (!response.ok || !data.success) {
+        console.error("Background Order Sync Warning:", data.message || data.error);
+      }
+    })
+    .catch((error) => {
+      console.error("Platform 2 Background Order Error:", error);
+    });
 }
 
 function submitOrderToWhatsApp() {

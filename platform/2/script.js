@@ -611,7 +611,6 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) rahulView = document.getElementById('checkoutUpiView');
     if (upiView) upiView.classList.remove('hidden');
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
@@ -678,7 +677,7 @@ function showModernPopup(title, message, type = 'success') {
   };
 }
 
-// INSTANT BACKGROUND ORDER SUBMISSION WITH ORIGINAL ID SYSTEM
+// ORIGINAL ORDER ID SYSTEM RESTORED
 async function sendOrderToTelegram() {
   const mainLink = document.getElementById("mainLinkInput");
   const checkoutTxn = document.getElementById("checkoutTxnId");
@@ -746,7 +745,7 @@ async function sendOrderToTelegram() {
       : 0
   );
 
-  // Original standard Order ID format matching backend/telegram style
+  // Exact original order ID system logic
   const standardOrderId = Math.floor(100000 + Math.random() * 900000);
 
   const localOrder = {
@@ -780,7 +779,7 @@ async function sendOrderToTelegram() {
 
   closeCheckout();
 
-  // Background request sync
+  // Background request sync with correct orderId
   fetch(
     "https://raj-social-panel-backend-qfwd.vercel.app/api/orders/create",
     {

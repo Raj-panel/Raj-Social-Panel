@@ -12,6 +12,9 @@
   <!-- Client-side QR Code Library for Instant Generation -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   
+  <!-- Canvas Confetti Library for Fireworks Animation -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <!-- External CSS -->
   <link rel="stylesheet" href="style.css">
 
@@ -260,7 +263,7 @@
   <!-- External JS File -->
   <script src="script.js"></script>
 
-  <!-- ORDER SAVING LOGIC INTEGRATION -->
+  <!-- ORDER SAVING LOGIC & FIREWORKS ANIMATION INTEGRATION -->
   <script>
     function getUserIdentifier() {
       if (typeof window.firebaseUserUid !== 'undefined' && window.firebaseUserUid) {
@@ -280,10 +283,50 @@
       localStorage.setItem('raj_smm_orders', JSON.stringify(existingOrders));
     }
 
+    // Fireworks / Confetti Trigger Function
+    function triggerFireworks() {
+      const duration = 2.5 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999999 };
+
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+
+        const particleCount = 50 * (timeLeft / duration);
+        
+        // Since particles fall down, start a bit higher than random
+        confetti(Object.assign({}, defaults, { 
+          particleCount, 
+          origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } 
+        }));
+        confetti(Object.assign({}, defaults, { 
+          particleCount, 
+          origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } 
+        }));
+      }, 250);
+    }
+
     const originalSendOrderToTelegram = window.sendOrderToTelegram;
     
     window.sendOrderToTelegram = function() {
       const linkInput = document.getElementById('mainLinkInput') ? document.getElementById('mainLinkInput').value : '';
+      
+      if (!linkInput) {
+        // যদি লিঙ্ক দেওয়া না থাকে তবে আগের ফাংশন ভ্যালিডেশন হ্যান্ডেল করবে
+        if (typeof originalSendOrderToTelegram === 'function') {
+          originalSendOrderToTelegram();
+        }
+        return;
+      }
+
       const quantityInput = document.getElementById('mainQuantityInput') ? document.getElementById('mainQuantityInput').value : '0';
       const priceText = document.getElementById('totalPriceText') ? document.getElementById('totalPriceText').innerText : '0.00';
       const serviceSelect = document.getElementById('serviceSelect');
@@ -303,10 +346,11 @@
 
       saveOrderToLocalStorage(newOrder);
 
+      // সফলভাবে অর্ডার কনফার্ম হওয়ার সাথে সাথেই পটকা ফোটার অ্যানিমেশন চালু হবে
+      triggerFireworks();
+
       if (typeof originalSendOrderToTelegram === 'function') {
         originalSendOrderToTelegram();
-      } else {
-        alert('Order submitted successfully! Order ID: #' + newOrder.orderId);
       }
     };
   </script>

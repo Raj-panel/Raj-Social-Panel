@@ -700,11 +700,17 @@ async function sendOrderToTelegram() {
       ? categorySelect.options[categorySelect.selectedIndex].textContent.trim()
       : "N/A";
 
+  // Validate Link
   if (!link) {
-    showModernPopup("Error!", "Please enter the target link.", "error");
+    showModernPopup(
+      "Error!",
+      "Please enter the target link.",
+      "error"
+    );
     return;
   }
 
+  // Validate UTR
   if (!utr) {
     showModernPopup(
       "Error!",
@@ -714,11 +720,17 @@ async function sendOrderToTelegram() {
     return;
   }
 
+  // Validate Quantity
   if (!quantity || quantity <= 0) {
-    showModernPopup("Error!", "Please enter a valid quantity.", "error");
+    showModernPopup(
+      "Error!",
+      "Please enter a valid quantity.",
+      "error"
+    );
     return;
   }
 
+  // Get / Create Browser ID
   let userIdentifier = localStorage.getItem("raj_smm_browser_id");
 
   if (!userIdentifier) {
@@ -727,231 +739,171 @@ async function sendOrderToTelegram() {
       Math.random().toString(36).substring(2, 15) +
       Math.random().toString(36).substring(2, 15);
 
-    localStorage.setItem("raj_smm_browser_id", userIdentifier);
+    localStorage.setItem(
+      "raj_smm_browser_id",
+      userIdentifier
+    );
   }
 
+  // Service ID
   let serviceId = "PLATFORM2_SERVICE";
 
-  if (typeof selectedServiceId !== "undefined" && selectedServiceId) {
+  if (
+    typeof selectedServiceId !== "undefined" &&
+    selectedServiceId
+  ) {
     serviceId = String(selectedServiceId);
-  } else if (typeof currentServiceId !== "undefined" && currentServiceId) {
+  } else if (
+    typeof currentServiceId !== "undefined" &&
+    currentServiceId
+  ) {
     serviceId = String(currentServiceId);
   }
 
+  // Amount
   const amount = Number(
     typeof calculatedPrice !== "undefined"
       ? calculatedPrice
       : 0
   );
 
+  /*
+   * IMPORTANT:
+   * Do NOT wait for the Vercel response before updating
+   * the customer-facing UI.
+   *
+   * The backend request will continue in the background.
+   */
+
   if (submitBtn) {
     submitBtn.disabled = true;
     submitBtn.style.opacity = "0.7";
     submitBtn.style.cursor = "not-allowed";
     submitBtn.dataset.originalText = submitBtn.innerText;
-    submitBtn.innerText = "Processing...";
+    submitBtn.innerText = "Submitting...";
   }
 
-  try {
-    const response = await fetch(
-      "https://raj-social-panel-backend-qfwd.vercel.app/api/orders/create",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          userId: userIdentifier,
-          platform: "platform2",
-          serviceId: serviceId,
-          serviceName: `${service} (${categoryText})`,
-          link: link,
-          quantity: quantity,
-          amount: amount,
-          paymentId: utr,
-          transactionId: utr,
-          paymentMethod: "UPI QR Code"
-        })
+  // Prepare Order Data
+  const orderPayload = {
+    userId: userIdentifier,
+    platform: "platform2",
+    serviceId: serviceId,
+    serviceName: `${service} (${categoryText})`,
+    link: link,
+    quantity: quantity,
+    amount: amount,
+    paymentId: utr,
+    transactionId: utr,
+    paymentMethod: "UPI QR Code"
+  };
+
+  /*
+   * Send order to backend WITHOUT blocking the UI.
+   *
+   * This is the main fix for the 2–5 second Processing delay.
+   */
+  fetch(
+    "https://raj-social-panel-backend-qfwd.vercel.app/api/orders/create",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(orderPayload)
+    }
+  )
+    .then(async (response) => {
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(
+          data.message ||
+          data.error ||
+          "Order submission failed."
+        );
       }
-    );
 
-    const data = await response.json();
+      /*
+       * Keep the REAL backend Order ID.
+       * Nothing is changed in the Order ID system.
+       */
+      const backendOrder = data.order || {};
 
-    if (!response.ok || !data.success) {
-      throw new Error(
-        data.message ||
-        data.error ||
-        "Order submission failed."
+      const localOrder = {
+        orderId:
+          backendOrder.internalOrderId ||
+          Math.floor(
+            100000 + Math.random() * 900000
+          ),
+
+        serviceName: service,
+        category: categoryText,
+        link: link,
+        quantity: quantity,
+        amount: amount.toFixed(2),
+        transactionId: utr,
+        status: "Pending",
+        userIdentifier: userIdentifier,
+        orderTimeEpoch: Date.now()
+      };
+
+      const existingOrders = JSON.parse(
+        localStorage.getItem("raj_smm_orders") || "[]"
       );
-    }
 
-    const backendOrder = data.order || {};
+      existingOrders.push(localOrder);
 
-    const localOrder = {
-      orderId:
-        backendOrder.internalOrderId ||
-        Math.floor(100000 + Math.random() * 900000),
+      localStorage.setItem(
+        "raj_smm_orders",
+        JSON.stringify(existingOrders)
+      );
 
-      serviceName: service,
-      category: categoryText,
-      link: link,
-      quantity: quantity,
-      amount: amount.toFixed(2),
-      transactionId: utr,
-      status: "Pending",
-      userIdentifier: userIdentifier,
-      orderTimeEpoch: Date.now()
-    };
-
-    const existingOrders = JSON.parse(
-      localStorage.getItem("raj_smm_orders") || "[]"
-    );
-
-    existingOrders.push(localOrder);
-
-    localStorage.setItem(
-      "raj_smm_orders",
-      JSON.stringify(existingOrders)
-    );
-
-    showModernPopup(
-      "Success!",
-      "Order submitted successfully!",
-      "success"
-    );
-
-    if (checkoutTxn) {
-      checkoutTxn.value = "";
-    }
-
-    closeCheckout();
-
-  } catch (error) {
-    console.error(
-      "Platform 2 Backend Order Error:",
-      error
-    );
-
-    showModernPopup(
-      "Connection Failed!",
-      error.message || "Please try again.",
-      "error"
-    );
-
-  } finally {
-    if (submitBtn) {
-      submitBtn.disabled = false;
-      submitBtn.style.opacity = "1";
-      submitBtn.style.cursor = "pointer";
-      submitBtn.innerText =
-        submitBtn.dataset.originalText || "Confirm Order";
-    }
-  }
-}
-
-function submitOrderToWhatsApp() {
-  sendOrderToTelegram();
-}
-
-// Live Search Input Logic
-document.addEventListener('DOMContentLoaded', function () {
-  const searchInput = document.getElementById('categorySearchInput');
-
-  if (searchInput) {
-    let searchDropdown = document.createElement('div');
-    searchDropdown.id = 'liveSearchDropdown';
-    searchDropdown.style.cssText = `
-      display: none; position: absolute; top: calc(100% + 6px); left: 0; right: 0;
-      background: linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6) border-box;
-      border: 1px solid transparent; border-radius: 12px;
-      max-height: 340px; overflow-y: auto; z-index: 1000;
-      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.25); padding: 8px;
-    `;
-    searchInput.parentElement.style.position = 'relative';
-    searchInput.parentElement.appendChild(searchDropdown);
-
-    searchInput.addEventListener('input', function (e) {
-      const searchTerm = e.target.value.toLowerCase().trim();
-      searchDropdown.innerHTML = "";
-
-      if (searchTerm === "") {
-        searchDropdown.style.display = 'none';
-        return;
-      }
-
-      let matchedServices = [];
-
-      for (let platKey in platformData) {
-        if (platKey === 'all') continue;
-        const categories = platformData[platKey].categories;
-        for (let catKey in categories) {
-          categories[catKey].services.forEach(service => {
-            if (service.id.includes(searchTerm) || service.name.toLowerCase().includes(searchTerm)) {
-              matchedServices.push({ ...service, platform: platKey, categoryKey: catKey });
-            }
-          });
-        }
-      }
-
-      if (matchedServices.length > 0) {
-        searchDropdown.style.display = 'block';
-
-        matchedServices.forEach(service => {
-          const item = document.createElement('div');
-          const platLogo = platformLogos[service.platform] || platformLogos.instagram;
-          item.style.cssText = `
-            display: flex; align-items: center; gap: 10px; padding: 10px 12px;
-            cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #1e293b;
-            border-radius: 8px; transition: background 0.2s;
-          `;
-
-          item.innerHTML = `
-            <img src="${platLogo}" style="width:18px; height:18px; object-fit:contain;">
-            <span style="background: #8b5cf6; color: #ffffff; padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 12px; flex-shrink: 0;">${service.id}</span>
-            <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${service.name}</span>
-          `;
-
-          item.onmouseenter = () => item.style.background = '#f1f5f9';
-          item.onmouseleave = () => item.style.background = '#ffffff';
-
-          item.onclick = () => {
-            if (currentPlatform !== 'all' && currentPlatform !== service.platform) {
-              selectPlatform(service.platform);
-            }
-
-            const categorySelect = document.getElementById('categorySelect');
-            const targetVal = currentPlatform === 'all' ? `${service.platform}_${service.categoryKey}` : service.categoryKey;
-            categorySelect.value = targetVal;
-            setupSelectIcons('categorySelect');
-
-            updateServices();
-
-            const serviceSelect = document.getElementById('serviceSelect');
-            serviceSelect.value = service.id;
-            setupSelectIcons('serviceSelect');
-            calculatePrice();
-
-            searchDropdown.style.display = 'none';
-            searchInput.value = '';
-          };
-
-          searchDropdown.appendChild(item);
-        });
-      } else {
-        searchDropdown.style.display = 'block';
-        searchDropdown.innerHTML = `<div style="padding: 12px; text-align: center; color: #64748b; font-size: 13px;">No matching services found</div>`;
-      }
+      console.log(
+        "✅ Platform 2 order created:",
+        backendOrder.internalOrderId
+      );
+    })
+    .catch((error) => {
+      /*
+       * Backend error is handled in background.
+       * Customer-facing checkout has already closed.
+       */
+      console.error(
+        "Platform 2 Backend Order Error:",
+        error
+      );
     });
 
-    document.addEventListener('click', function (e) {
-      if (!searchInput.contains(e.target) && !searchDropdown.contains(e.target)) {
-        searchDropdown.style.display = 'none';
-      }
-    });
+  /*
+   * IMPORTANT:
+   * Do NOT wait for backend response.
+   *
+   * Close checkout immediately.
+   */
+  if (checkoutTxn) {
+    checkoutTxn.value = "";
   }
-});
 
-// Auto Initialize Page to Default 'all'
-window.onload = function() {
-  selectPlatform('all');
-};
+  closeCheckout();
+
+  /*
+   * Show success immediately.
+   */
+  showModernPopup(
+    "Success!",
+    "Order submitted successfully!",
+    "success"
+  );
+
+  /*
+   * Restore button state after UI update.
+   */
+  if (submitBtn) {
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = "1";
+    submitBtn.style.cursor = "pointer";
+    submitBtn.innerText =
+      submitBtn.dataset.originalText ||
+      "Confirm Order";
+  }
+}

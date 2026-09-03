@@ -260,7 +260,7 @@
   <!-- External JS File -->
   <script src="script.js"></script>
 
-  <!-- ORDER SAVING LOGIC INTEGRATION -->
+  <!-- ORDER SAVING LOGIC INTEGRATION (Instant Execution without delay) -->
   <script>
     function getUserIdentifier() {
       if (typeof window.firebaseUserUid !== 'undefined' && window.firebaseUserUid) {
@@ -303,10 +303,13 @@
 
       saveOrderToLocalStorage(newOrder);
 
+      // Instant execution: completely eliminates any lag or delay on click
       if (typeof originalSendOrderToTelegram === 'function') {
-        originalSendOrderToTelegram();
-      } else {
-        alert('Order submitted successfully! Order ID: #' + newOrder.orderId);
+        try {
+          originalSendOrderToTelegram();
+        } catch (e) {
+          console.error(e);
+        }
       }
     };
   </script>

@@ -678,7 +678,7 @@ function showModernPopup(title, message, type = 'success') {
 }
 
 // PLATFORM 2 - BACKEND ORDER SUBMISSION
-async function sendOrderToTelegram() {
+function sendOrderToTelegram() {
   const mainLink = document.getElementById("mainLinkInput");
   const checkoutTxn = document.getElementById("checkoutTxnId");
   const checkoutTitle = document.getElementById("checkoutServiceTitle");
@@ -700,17 +700,11 @@ async function sendOrderToTelegram() {
       ? categorySelect.options[categorySelect.selectedIndex].textContent.trim()
       : "N/A";
 
-  // Validate Link
   if (!link) {
-    showModernPopup(
-      "Error!",
-      "Please enter the target link.",
-      "error"
-    );
+    showModernPopup("Error!", "Please enter the target link.", "error");
     return;
   }
 
-  // Validate UTR
   if (!utr) {
     showModernPopup(
       "Error!",
@@ -720,17 +714,11 @@ async function sendOrderToTelegram() {
     return;
   }
 
-  // Validate Quantity
   if (!quantity || quantity <= 0) {
-    showModernPopup(
-      "Error!",
-      "Please enter a valid quantity.",
-      "error"
-    );
+    showModernPopup("Error!", "Please enter a valid quantity.", "error");
     return;
   }
 
-  // Get / Create Browser ID
   let userIdentifier = localStorage.getItem("raj_smm_browser_id");
 
   if (!userIdentifier) {
@@ -739,51 +727,30 @@ async function sendOrderToTelegram() {
       Math.random().toString(36).substring(2, 15) +
       Math.random().toString(36).substring(2, 15);
 
-    localStorage.setItem(
-      "raj_smm_browser_id",
-      userIdentifier
-    );
+    localStorage.setItem("raj_smm_browser_id", userIdentifier);
   }
 
-  // Service ID
   let serviceId = "PLATFORM2_SERVICE";
 
-  if (
-    typeof selectedServiceId !== "undefined" &&
-    selectedServiceId
-  ) {
+  if (typeof selectedServiceId !== "undefined" && selectedServiceId) {
     serviceId = String(selectedServiceId);
-  } else if (
-    typeof currentServiceId !== "undefined" &&
-    currentServiceId
-  ) {
+  } else if (typeof currentServiceId !== "undefined" && currentServiceId) {
     serviceId = String(currentServiceId);
   }
 
-  // Amount
   const amount = Number(
     typeof calculatedPrice !== "undefined"
       ? calculatedPrice
       : 0
   );
 
-  /*
-   * IMPORTANT:
-   * Do NOT wait for the Vercel response before updating
-   * the customer-facing UI.
-   *
-   * The backend request will continue in the background.
-   */
-
+  // Prevent double click without showing Processing delay
   if (submitBtn) {
     submitBtn.disabled = true;
     submitBtn.style.opacity = "0.7";
     submitBtn.style.cursor = "not-allowed";
-    submitBtn.dataset.originalText = submitBtn.innerText;
-    submitBtn.innerText = "Submitting...";
   }
 
-  // Prepare Order Data
   const orderPayload = {
     userId: userIdentifier,
     platform: "platform2",
@@ -798,9 +765,12 @@ async function sendOrderToTelegram() {
   };
 
   /*
-   * Send order to backend WITHOUT blocking the UI.
+   * IMPORTANT:
+   * We intentionally DO NOT use await here.
    *
-   * This is the main fix for the 2–5 second Processing delay.
+   * The request is sent immediately in the background.
+   * The customer does not have to wait for the Vercel response
+   * before the order-success screen appears.
    */
   fetch(
     "https://raj-social-panel-backend-qfwd.vercel.app/api/orders/create",
@@ -823,18 +793,16 @@ async function sendOrderToTelegram() {
         );
       }
 
-      /*
-       * Keep the REAL backend Order ID.
-       * Nothing is changed in the Order ID system.
-       */
       const backendOrder = data.order || {};
 
+      /*
+       * Keep the backend-generated Order ID exactly as before.
+       * Nothing is changed here.
+       */
       const localOrder = {
         orderId:
           backendOrder.internalOrderId ||
-          Math.floor(
-            100000 + Math.random() * 900000
-          ),
+          Math.floor(100000 + Math.random() * 900000),
 
         serviceName: service,
         category: categoryText,
@@ -858,36 +826,39 @@ async function sendOrderToTelegram() {
         JSON.stringify(existingOrders)
       );
 
+      /*
+       * If the background request succeeds,
+       * the local order data is updated exactly as before.
+       */
       console.log(
-        "✅ Platform 2 order created:",
+        "Platform 2 order created successfully:",
         backendOrder.internalOrderId
       );
     })
     .catch((error) => {
-      /*
-       * Backend error is handled in background.
-       * Customer-facing checkout has already closed.
-       */
       console.error(
         "Platform 2 Backend Order Error:",
         error
       );
+
+      /*
+       * The backend request failed in the background.
+       * We still log it instead of keeping the customer
+       * stuck on Processing.
+       */
+    })
+    .finally(() => {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = "1";
+        submitBtn.style.cursor = "pointer";
+      }
     });
 
   /*
    * IMPORTANT:
-   * Do NOT wait for backend response.
-   *
-   * Close checkout immediately.
-   */
-  if (checkoutTxn) {
-    checkoutTxn.value = "";
-  }
-
-  closeCheckout();
-
-  /*
-   * Show success immediately.
+   * Customer gets immediate success feedback.
+   * No waiting for Vercel / MongoDB / Telegram response.
    */
   showModernPopup(
     "Success!",
@@ -895,15 +866,13 @@ async function sendOrderToTelegram() {
     "success"
   );
 
-  /*
-   * Restore button state after UI update.
-   */
-  if (submitBtn) {
-    submitBtn.disabled = false;
-    submitBtn.style.opacity = "1";
-    submitBtn.style.cursor = "pointer";
-    submitBtn.innerText =
-      submitBtn.dataset.originalText ||
-      "Confirm Order";
+  if (checkoutTxn) {
+    checkoutTxn.value = "";
   }
+
+  closeCheckout();
+}
+
+function submitOrderToWhatsApp() {
+  sendOrderToTelegram();
 }

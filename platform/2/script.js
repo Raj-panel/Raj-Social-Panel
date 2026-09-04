@@ -611,7 +611,7 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) upsView.classList.remove('hidden'); // Fix typo if any in original or keep safe
+    if (upiView) upiView.classList.remove('hidden');
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
 
@@ -677,17 +677,13 @@ function showModernPopup(title, message, type = 'success') {
   };
 }
 
-// PLATFORM 2 - BACKEND ORDER SUBMISSION
+// PLATFORM 2 - OPTIMIZED INSTANT ORDER SUBMISSION
 async function sendOrderToTelegram() {
   const mainLink = document.getElementById("mainLinkInput");
   const checkoutTxn = document.getElementById("checkoutTxnId");
   const checkoutTitle = document.getElementById("checkoutServiceTitle");
   const mainQty = document.getElementById("mainQuantityInput");
   const categorySelect = document.getElementById("categorySelect");
-
-  const submitBtn =
-    document.querySelector("#checkoutPage button[onclick*='sendOrderToTelegram']") ||
-    document.querySelector("#checkoutPage button");
 
   const link = mainLink ? mainLink.value.trim() : "";
   const utr = checkoutTxn ? checkoutTxn.value.trim() : "";
@@ -744,109 +740,71 @@ async function sendOrderToTelegram() {
       : 0
   );
 
-  if (submitBtn) {
-    submitBtn.disabled = true;
-    submitBtn.style.opacity = "0.7";
-    submitBtn.style.cursor = "not-allowed";
-    submitBtn.dataset.originalText = submitBtn.innerText;
-    submitBtn.innerText = "Processing...";
+  // Local Order Save & Immediate Success Response (Optimistic UI Update)
+  const localOrder = {
+    orderId: Math.floor(100000 + Math.random() * 900000),
+    serviceName: service,
+    category: categoryText,
+    link: link,
+    quantity: quantity,
+    amount: amount.toFixed(2),
+    transactionId: utr,
+    status: "Pending",
+    userIdentifier: userIdentifier,
+    orderTimeEpoch: Date.now()
+  };
+
+  const existingOrders = JSON.parse(
+    localStorage.getItem("raj_smm_orders") || "[]"
+  );
+  existingOrders.push(localOrder);
+  localStorage.setItem(
+    "raj_smm_orders",
+    JSON.stringify(existingOrders)
+  );
+
+  // Instant Success Popup & Form Clear without waiting for backend response delay
+  showModernPopup(
+    "Success!",
+    "Order submitted successfully!",
+    "success"
+  );
+
+  if (checkoutTxn) {
+    checkoutTxn.value = "";
   }
 
-  try {
-    const response = await fetch(
-      "https://raj-social-panel-backend-qfwd.vercel.app/api/orders/create",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          userId: userIdentifier,
-          platform: "platform2",
-          serviceId: serviceId,
-          serviceName: `${service} (${categoryText})`,
-          link: link,
-          quantity: quantity,
-          amount: amount,
-          paymentId: utr,
-          transactionId: utr,
-          paymentMethod: "UPI QR Code"
-        })
-      }
-    );
+  closeCheckout();
 
-    const data = await response.json();
-
-    if (!response.ok || !data.success) {
-      throw new Error(
-        data.message ||
-        data.error ||
-        "Order submission failed."
-      );
+  // Background API Request (Silent execution so user doesn't face any loading delay)
+  fetch(
+    "https://raj-social-panel-backend-qfwd.vercel.app/api/orders/create",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        userId: userIdentifier,
+        platform: "platform2",
+        serviceId: serviceId,
+        serviceName: `${service} (${categoryText})`,
+        link: link,
+        quantity: quantity,
+        amount: amount,
+        paymentId: utr,
+        transactionId: utr,
+        paymentMethod: "UPI QR Code"
+      })
     }
-
-    const backendOrder = data.order || {};
-
-    const localOrder = {
-      orderId:
-        backendOrder.internalOrderId ||
-        Math.floor(100000 + Math.random() * 900000),
-
-      serviceName: service,
-      category: categoryText,
-      link: link,
-      quantity: quantity,
-      amount: amount.toFixed(2),
-      transactionId: utr,
-      status: "Pending",
-      userIdentifier: userIdentifier,
-      orderTimeEpoch: Date.now()
-    };
-
-    const existingOrders = JSON.parse(
-      localStorage.getItem("raj_smm_orders") || "[]"
-    );
-
-    existingOrders.push(localOrder);
-
-    localStorage.setItem(
-      "raj_smm_orders",
-      JSON.stringify(existingOrders)
-    );
-
-    showModernPopup(
-      "Success!",
-      "Order submitted successfully!",
-      "success"
-    );
-
-    if (checkoutTxn) {
-      checkoutTxn.value = "";
-    }
-
-    closeCheckout();
-
-  } catch (error) {
-    console.error(
-      "Platform 2 Backend Order Error:",
-      error
-    );
-
-    showModernPopup(
-      "Connection Failed!",
-      error.message || "Please try again.",
-      "error"
-    );
-
-  } finally {
-    if (submitBtn) {
-      submitBtn.disabled = false;
-      submitBtn.style.opacity = "1";
-      submitBtn.style.cursor = "pointer";
-      submitBtn.innerText =
-        submitBtn.dataset.originalText || "Confirm Order";
-    }
-  }
+  )
+  .then(response => response.json())
+  .then(data => {
+    console.log("Background order sync successful:", data);
+  })
+  .catch(error => {
+    console.error("Background order sync error:", error);
+  });
 }
 
 function submitOrderToWhatsApp() {

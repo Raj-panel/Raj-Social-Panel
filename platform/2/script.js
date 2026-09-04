@@ -611,7 +611,7 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) upiView.classList.remove('hidden');
+    if (upiView) upsView.classList.remove('hidden');
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
 
@@ -677,7 +677,7 @@ function showModernPopup(title, message, type = 'success') {
   };
 }
 
-// PLATFORM 2 - OPTIMIZED INSTANT ORDER SUBMISSION
+// PLATFORM 2 - UNIFIED ORDER ID SYNC & INSTANT SUBMISSION
 async function sendOrderToTelegram() {
   const mainLink = document.getElementById("mainLinkInput");
   const checkoutTxn = document.getElementById("checkoutTxnId");
@@ -740,9 +740,12 @@ async function sendOrderToTelegram() {
       : 0
   );
 
-  // Local Order Save & Immediate Success Response (Optimistic UI Update)
+  // Generate a unified unique Order ID so website and backend/telegram use the exact same ID
+  const unifiedOrderId = "#RAJ" + Math.floor(100000 + Math.random() * 900000);
+
+  // Local Order Save with the exact same unified Order ID
   const localOrder = {
-    orderId: Math.floor(100000 + Math.random() * 900000),
+    orderId: unifiedOrderId,
     serviceName: service,
     category: categoryText,
     link: link,
@@ -763,10 +766,10 @@ async function sendOrderToTelegram() {
     JSON.stringify(existingOrders)
   );
 
-  // Instant Success Popup & Form Clear without waiting for backend response delay
+  // Instant Success Popup & Form Clear (Optimistic UI Update)
   showModernPopup(
     "Success!",
-    "Order submitted successfully!",
+    "Order submitted successfully! Order ID: " + unifiedOrderId,
     "success"
   );
 
@@ -776,7 +779,7 @@ async function sendOrderToTelegram() {
 
   closeCheckout();
 
-  // Background API Request (Silent execution so user doesn't face any loading delay)
+  // Background API Request transmitting the exact same unified orderId
   fetch(
     "https://raj-social-panel-backend-qfwd.vercel.app/api/orders/create",
     {
@@ -785,6 +788,7 @@ async function sendOrderToTelegram() {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
+        orderId: unifiedOrderId,
         userId: userIdentifier,
         platform: "platform2",
         serviceId: serviceId,

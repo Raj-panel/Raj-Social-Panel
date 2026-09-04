@@ -677,296 +677,281 @@ function showModernPopup(title, message, type = 'success') {
   };
 }
 
-// ==========================================
 // PLATFORM 2 - BACKEND ORDER SUBMISSION
-// ==========================================
 async function sendOrderToTelegram() {
+  const mainLink = document.getElementById("mainLinkInput");
+  const checkoutTxn = document.getElementById("checkoutTxnId");
+  const checkoutTitle = document.getElementById("checkoutServiceTitle");
+  const mainQty = document.getElementById("mainQuantityInput");
+  const categorySelect = document.getElementById("categorySelect");
+
+  const submitBtn =
+    document.querySelector("#checkoutPage button[onclick*='sendOrderToTelegram']") ||
+    document.querySelector("#checkoutPage button");
+
+  const link = mainLink ? mainLink.value.trim() : "";
+  const utr = checkoutTxn ? checkoutTxn.value.trim() : "";
+  const service = checkoutTitle ? checkoutTitle.innerText.trim() : "";
+  const quantity = Number(mainQty ? mainQty.value : 0);
+
+  const categoryText =
+    categorySelect &&
+    categorySelect.options[categorySelect.selectedIndex]
+      ? categorySelect.options[categorySelect.selectedIndex].textContent.trim()
+      : "N/A";
+
+  if (!link) {
+    showModernPopup("Error!", "Please enter the target link.", "error");
+    return;
+  }
+
+  if (!utr) {
+    showModernPopup(
+      "Error!",
+      "Please enter Transaction ID / UTR Number.",
+      "error"
+    );
+    return;
+  }
+
+  if (!quantity || quantity <= 0) {
+    showModernPopup("Error!", "Please enter a valid quantity.", "error");
+    return;
+  }
+
+  let userIdentifier = localStorage.getItem("raj_smm_browser_id");
+
+  if (!userIdentifier) {
+    userIdentifier =
+      "BID_" +
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15);
+
+    localStorage.setItem("raj_smm_browser_id", userIdentifier);
+  }
+
+  let serviceId = "PLATFORM2_SERVICE";
+
+  if (typeof selectedServiceId !== "undefined" && selectedServiceId) {
+    serviceId = String(selectedServiceId);
+  } else if (typeof currentServiceId !== "undefined" && currentServiceId) {
+    serviceId = String(currentServiceId);
+  }
+
+  const amount = Number(
+    typeof calculatedPrice !== "undefined"
+      ? calculatedPrice
+      : 0
+  );
+
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = "0.7";
+    submitBtn.style.cursor = "not-allowed";
+    submitBtn.dataset.originalText = submitBtn.innerText;
+    submitBtn.innerText = "Processing...";
+  }
+
   try {
-    const linkInput = document.getElementById('orderLink');
-    const utrInput = document.getElementById('utrNumber');
-
-    const link = linkInput ? linkInput.value.trim() : '';
-    const utr = utrInput ? utrInput.value.trim() : '';
-
-    if (!link) {
-      alert('Please enter your order link.');
-      return;
-    }
-
-    if (!utr) {
-      alert('Please enter your UTR / Transaction ID.');
-      return;
-    }
-
-    // ------------------------------------------
-    // Service information
-    // ------------------------------------------
-    const serviceName =
-      typeof selectedServiceName !== 'undefined' &&
-      selectedServiceName
-        ? selectedServiceName
-        : (
-            typeof currentServiceName !== 'undefined' &&
-            currentServiceName
-              ? currentServiceName
-              : 'Platform 2 Service'
-          );
-
-    const serviceId =
-      typeof selectedServiceId !== 'undefined' &&
-      selectedServiceId
-        ? String(selectedServiceId)
-        : (
-            typeof currentServiceId !== 'undefined' &&
-            currentServiceId
-              ? String(currentServiceId)
-              : 'PLATFORM2_SERVICE'
-          );
-
-    const quantityValue =
-      typeof calculatedQuantity !== 'undefined' &&
-      calculatedQuantity
-        ? calculatedQuantity
-        : (
-            typeof quantity !== 'undefined' &&
-            quantity
-              ? quantity
-              : 0
-          );
-
-    const amountValue =
-      typeof calculatedPrice !== 'undefined' &&
-      calculatedPrice
-        ? calculatedPrice
-        : 0;
-
-    // ------------------------------------------
-    // User ID
-    // ------------------------------------------
-    let userIdentifier =
-      localStorage.getItem('raj_smm_browser_id');
-
-    if (!userIdentifier) {
-      userIdentifier =
-        'USER-' +
-        Date.now() +
-        '-' +
-        Math.floor(1000 + Math.random() * 9000);
-
-      localStorage.setItem(
-        'raj_smm_browser_id',
-        userIdentifier
-      );
-    }
-
-    // ------------------------------------------
-    // Backend URL
-    // ------------------------------------------
-    const BACKEND_URL =
-      'https://raj-social-panel-backend-qfwd.vercel.app';
-
-    // ------------------------------------------
-    // Send order to backend
-    // ------------------------------------------
     const response = await fetch(
-      `${BACKEND_URL}/api/orders/create`,
+      "https://raj-social-panel-backend-qfwd.vercel.app/api/orders/create",
       {
-        method: 'POST',
-
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         },
-
         body: JSON.stringify({
           userId: userIdentifier,
-
-          platform: 'platform2',
-
+          platform: "platform2",
           serviceId: serviceId,
-
-          serviceName: serviceName,
-
-          packageName:
-            typeof selectedPackageName !== 'undefined' &&
-            selectedPackageName
-              ? selectedPackageName
-              : 'N/A',
-
+          serviceName: `${service} (${categoryText})`,
           link: link,
-
-          quantity: Number(quantityValue),
-
-          amount: Number(amountValue),
-
+          quantity: quantity,
+          amount: amount,
           paymentId: utr,
-
-          paymentMethod: 'UPI QR Code',
-
-          paymentStatus: 'PAID',
-
-          orderStatus: 'PAID'
+          transactionId: utr,
+          paymentMethod: "UPI QR Code"
         })
       }
     );
 
     const data = await response.json();
 
-    // ------------------------------------------
-    // Backend error
-    // ------------------------------------------
     if (!response.ok || !data.success) {
-      console.error(
-        '❌ Backend Order Error:',
-        data
-      );
-
-      alert(
+      throw new Error(
         data.message ||
-        'Order submission failed. Please try again.'
+        data.error ||
+        "Order submission failed."
       );
-
-      return;
     }
 
-    // ------------------------------------------
-    // IMPORTANT:
-    // Backend is the ONLY source of Order ID.
-    // NEVER generate a random Order ID here.
-    // ------------------------------------------
-    const backendOrder = data.order;
+    const backendOrder = data.order || {};
 
-    if (
-      !backendOrder ||
-      !backendOrder.internalOrderId
-    ) {
-      console.error(
-        '❌ Backend did not return a valid Order ID:',
-        data
-      );
-
-      alert(
-        'Order was created but Order ID was not received. Please contact support.'
-      );
-
-      return;
-    }
-
-    const canonicalOrderId =
-      backendOrder.internalOrderId;
-
-    // ------------------------------------------
-    // Create local order using SAME backend ID
-    // ------------------------------------------
     const localOrder = {
-      orderId: canonicalOrderId,
+      orderId:
+        backendOrder.internalOrderId ||
+        Math.floor(100000 + Math.random() * 900000),
 
-      internalOrderId: canonicalOrderId,
-
-      userId: userIdentifier,
-
-      platform: 'platform2',
-
-      serviceId: serviceId,
-
-      serviceName: serviceName,
-
-      packageName:
-        typeof selectedPackageName !== 'undefined' &&
-        selectedPackageName
-          ? selectedPackageName
-          : 'N/A',
-
+      serviceName: service,
+      category: categoryText,
       link: link,
-
-      quantity: Number(quantityValue),
-
-      amount: Number(amountValue),
-
-      paymentId: utr,
-
-      paymentMethod: 'UPI QR Code',
-
-      paymentStatus:
-        backendOrder.paymentStatus || 'PAID',
-
-      orderStatus:
-        backendOrder.orderStatus || 'PAID',
-
-      createdAt:
-        backendOrder.createdAt ||
-        new Date().toISOString()
+      quantity: quantity,
+      amount: amount.toFixed(2),
+      transactionId: utr,
+      status: "Pending",
+      userIdentifier: userIdentifier,
+      orderTimeEpoch: Date.now()
     };
 
-    // ------------------------------------------
-    // Save order to local history
-    // ------------------------------------------
-    let existingOrders = [];
+    const existingOrders = JSON.parse(
+      localStorage.getItem("raj_smm_orders") || "[]"
+    );
 
-    try {
-      const savedOrders =
-        localStorage.getItem('raj_smm_orders');
-
-      if (savedOrders) {
-        existingOrders =
-          JSON.parse(savedOrders);
-
-        if (!Array.isArray(existingOrders)) {
-          existingOrders = [];
-        }
-      }
-    } catch (storageError) {
-      console.error(
-        '❌ Local order history error:',
-        storageError
-      );
-
-      existingOrders = [];
-    }
-
-    existingOrders.unshift(localOrder);
+    existingOrders.push(localOrder);
 
     localStorage.setItem(
-      'raj_smm_orders',
+      "raj_smm_orders",
       JSON.stringify(existingOrders)
     );
 
-    // ------------------------------------------
-    // Success
-    // ------------------------------------------
-    alert(
-      `Order submitted successfully!\n\nOrder ID: ${canonicalOrderId}`
+    showModernPopup(
+      "Success!",
+      "Order submitted successfully!",
+      "success"
     );
 
-    console.log(
-      `✅ Platform 2 Order Created: ${canonicalOrderId}`
-    );
-
-    // ------------------------------------------
-    // Close checkout
-    // ------------------------------------------
-    if (
-      typeof closeCheckout === 'function'
-    ) {
-      closeCheckout();
+    if (checkoutTxn) {
+      checkoutTxn.value = "";
     }
 
-  } catch (error) {
+    closeCheckout();
 
+  } catch (error) {
     console.error(
-      '❌ Platform 2 Order Submission Error:',
+      "Platform 2 Backend Order Error:",
       error
     );
 
-    alert(
-      'Unable to submit order. Please check your internet connection and try again.'
+    showModernPopup(
+      "Connection Failed!",
+      error.message || "Please try again.",
+      "error"
     );
+
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = "1";
+      submitBtn.style.cursor = "pointer";
+      submitBtn.innerText =
+        submitBtn.dataset.originalText || "Confirm Order";
+    }
   }
 }
 
-
-// ==========================================
-// PLATFORM 2 - WHATSAPP / TELEGRAM BUTTON
-// ==========================================
 function submitOrderToWhatsApp() {
-  return sendOrderToTelegram();
+  sendOrderToTelegram();
 }
+
+// Live Search Input Logic
+document.addEventListener('DOMContentLoaded', function () {
+  const searchInput = document.getElementById('categorySearchInput');
+
+  if (searchInput) {
+    let searchDropdown = document.createElement('div');
+    searchDropdown.id = 'liveSearchDropdown';
+    searchDropdown.style.cssText = `
+      display: none; position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+      background: linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6) border-box;
+      border: 1px solid transparent; border-radius: 12px;
+      max-height: 340px; overflow-y: auto; z-index: 1000;
+      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.25); padding: 8px;
+    `;
+    searchInput.parentElement.style.position = 'relative';
+    searchInput.parentElement.appendChild(searchDropdown);
+
+    searchInput.addEventListener('input', function (e) {
+      const searchTerm = e.target.value.toLowerCase().trim();
+      searchDropdown.innerHTML = "";
+
+      if (searchTerm === "") {
+        searchDropdown.style.display = 'none';
+        return;
+      }
+
+      let matchedServices = [];
+
+      for (let platKey in platformData) {
+        if (platKey === 'all') continue;
+        const categories = platformData[platKey].categories;
+        for (let catKey in categories) {
+          categories[catKey].services.forEach(service => {
+            if (service.id.includes(searchTerm) || service.name.toLowerCase().includes(searchTerm)) {
+              matchedServices.push({ ...service, platform: platKey, categoryKey: catKey });
+            }
+          });
+        }
+      }
+
+      if (matchedServices.length > 0) {
+        searchDropdown.style.display = 'block';
+
+        matchedServices.forEach(service => {
+          const item = document.createElement('div');
+          const platLogo = platformLogos[service.platform] || platformLogos.instagram;
+          item.style.cssText = `
+            display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+            cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #1e293b;
+            border-radius: 8px; transition: background 0.2s;
+          `;
+
+          item.innerHTML = `
+            <img src="${platLogo}" style="width:18px; height:18px; object-fit:contain;">
+            <span style="background: #8b5cf6; color: #ffffff; padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 12px; flex-shrink: 0;">${service.id}</span>
+            <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${service.name}</span>
+          `;
+
+          item.onmouseenter = () => item.style.background = '#f1f5f9';
+          item.onmouseleave = () => item.style.background = '#ffffff';
+
+          item.onclick = () => {
+            if (currentPlatform !== 'all' && currentPlatform !== service.platform) {
+              selectPlatform(service.platform);
+            }
+
+            const categorySelect = document.getElementById('categorySelect');
+            const targetVal = currentPlatform === 'all' ? `${service.platform}_${service.categoryKey}` : service.categoryKey;
+            categorySelect.value = targetVal;
+            setupSelectIcons('categorySelect');
+
+            updateServices();
+
+            const serviceSelect = document.getElementById('serviceSelect');
+            serviceSelect.value = service.id;
+            setupSelectIcons('serviceSelect');
+            calculatePrice();
+
+            searchDropdown.style.display = 'none';
+            searchInput.value = '';
+          };
+
+          searchDropdown.appendChild(item);
+        });
+      } else {
+        searchDropdown.style.display = 'block';
+        searchDropdown.innerHTML = `<div style="padding: 12px; text-align: center; color: #64748b; font-size: 13px;">No matching services found</div>`;
+      }
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!searchInput.contains(e.target) && !searchDropdown.contains(e.target)) {
+        searchDropdown.style.display = 'none';
+      }
+    });
+  }
+});
+
+// Auto Initialize Page to Default 'all'
+window.onload = function() {
+  selectPlatform('all');
+};

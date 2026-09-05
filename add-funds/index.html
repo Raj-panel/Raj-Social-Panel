@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Funds - UPI Payment</title>
+  <title>Add Funds - Payment Gateway</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -11,25 +11,36 @@
 
   <div class="add-funds-container">
     <div class="fund-card">
-      <h2><i class="fa-solid fa-wallet" style="color: #ec4899;"></i> Add Funds via UPI</h2>
+      
+      <!-- পেমেন্ট মেথড সিলেক্ট করার জন্য সুইচ বাটন -->
+      <div class="payment-tabs">
+        <button type="button" class="tab-btn active" id="tabQr" onclick="selectPaymentMethod('qr')">
+          <i class="fa-solid fa-qrcode"></i> QR Pay
+        </button>
+        <button type="button" class="tab-btn" id="tabBinance" onclick="selectPaymentMethod('binance')">
+          <i class="fa-solid fa-coins"></i> Binance Pay
+        </button>
+      </div>
+
+      <h2 id="methodTitle"><i class="fa-solid fa-wallet" style="color: #ec4899;"></i> Add Funds via UPI</h2>
       
       <!-- কালারিং ও গ্লোয়িং বর্ডারযুক্ত কিউআর কোড বক্স -->
       <div class="qr-code-wrapper">
         <div class="qr-code-box">
-          <img id="qrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=rajsmmpanel@jio%26pn=Raj%20SMM%20Panel" alt="UPI QR Code">
+          <img id="qrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=rajsmmpanel@jio%26pn=Raj%20SMM%20Panel" alt="Payment QR Code">
         </div>
       </div>
 
-      <!-- কিউআর কোড ডাউনলোড বাটন (তীর চিহ্নসহ) -->
+      <!-- কিউআর কোড ডাউনলোড বাটন -->
       <button type="button" class="download-qr-btn" onclick="downloadQRCode()">
         <i class="fa-solid fa-circle-down"></i> Download QR Code
       </button>
 
-      <p class="scan-notice">Scan QR using any UPI App (GPay, PhonePe, Paytm) or Download to Pay</p>
+      <p class="scan-notice" id="scanNotice">Scan QR using any UPI App (GPay, PhonePe, Paytm) or Download to Pay</p>
 
       <form id="addFundForm" onsubmit="handleFundSubmit(event)">
         <div class="form-group">
-          <label>Enter UTR / Transaction ID</label>
+          <label id="utrLabel">Enter UTR / Transaction ID</label>
           <input type="text" id="utrInput" class="form-control" placeholder="Enter UTR or Transaction ID" required>
         </div>
 
@@ -48,9 +59,50 @@
   <script>
     const upiId = "rajsmmpanel@jio";
     const name = "Raj SMM Panel";
+    const binanceQrUrl = "https://raw.githubusercontent.com/Raj-panel/Raj-Social-Panel/main/binance-qr.png";
+    
+    let currentMethod = 'qr'; // ডিফল্টভাবে QR Pay সিলেক্ট থাকবে
 
-    // অ্যামাউন্ট লিখলে কিউআর কোড অটোমেটিক সেই টাকার জন্য তৈরি হবে
+    // পেমেন্ট মেথড চেঞ্জ করার ফাংশন
+    function selectPaymentMethod(method) {
+      currentMethod = method;
+      const tabQr = document.getElementById('tabQr');
+      const tabBinance = document.getElementById('tabBinance');
+      const methodTitle = document.getElementById('methodTitle');
+      const utrLabel = document.getElementById('utrLabel');
+      const utrInput = document.getElementById('utrInput');
+      const scanNotice = document.getElementById('scanNotice');
+      const amountInput = document.getElementById('amountInput');
+
+      if (method === 'qr') {
+        tabQr.classList.add('active');
+        tabBinance.classList.remove('active');
+        
+        methodTitle.innerHTML = `<i class="fa-solid fa-wallet" style="color: #ec4899;"></i> Add Funds via UPI`;
+        utrLabel.innerText = "Enter UTR / Transaction ID";
+        utrInput.placeholder = "Enter UTR or Transaction ID";
+        scanNotice.innerText = "Scan QR using any UPI App (GPay, PhonePe, Paytm) or Download to Pay";
+        
+        // QR আপডেট
+        updateQrCode(amountInput.value);
+      } else if (method === 'binance') {
+        tabBinance.classList.add('active');
+        tabQr.classList.remove('active');
+        
+        methodTitle.innerHTML = `<i class="fa-solid fa-coins" style="color: #f3ba2f;"></i> Add Funds via Binance Pay`;
+        utrLabel.innerText = "Enter Binance Order ID / TxID";
+        utrInput.placeholder = "Enter Order ID or TxID";
+        scanNotice.innerText = "Scan using Binance App to complete your payment";
+        
+        // Binance QR সেট
+        document.getElementById('qrImg').src = binanceQrUrl;
+      }
+    }
+
+    // ইউপিআই এর ক্ষেত্রে পরিমাণ লিখলে QR কোড ডায়নামিক করা
     function updateQrCode(amount) {
+      if (currentMethod !== 'qr') return;
+      
       const qrImg = document.getElementById('qrImg');
       if (amount && amount > 0) {
         const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR`;
@@ -61,7 +113,7 @@
       }
     }
 
-    // কিউআর কোড ইমেজ ডাউনলোড করার ফাংশন
+    // কিউআর কোড ডাউনলোড
     async function downloadQRCode() {
       const qrImg = document.getElementById('qrImg');
       try {
@@ -71,17 +123,17 @@
         
         const downloadLink = document.createElement('a');
         downloadLink.href = blobUrl;
-        downloadLink.download = 'UPI_Payment_QR.png';
+        downloadLink.download = currentMethod === 'qr' ? 'UPI_Payment_QR.png' : 'Binance_Payment_QR.png';
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);
         URL.revokeObjectURL(blobUrl);
       } catch (error) {
-        alert("Unable to download QR code automatically. Please long press on the QR image to save.");
+        alert("Unable to download automatically. Please long press or right-click the QR image to save.");
       }
     }
 
-    // ফর্ম সাবমিশন হ্যান্ডলার (UTR / Transaction ID ও Amount ভ্যালিডেশন)
+    // পেমেন্ট সাবমিট
     function handleFundSubmit(event) {
       event.preventDefault();
       
@@ -89,18 +141,16 @@
       const amount = parseFloat(document.getElementById('amountInput').value);
 
       if(!utr || isNaN(amount) || amount <= 0) {
-        alert('Please enter a valid UTR/Transaction ID and Amount!');
+        alert('Please enter a valid Transaction/Order ID and Amount!');
         return;
       }
 
-      // ওয়ালেট ব্যালেন্স যোগ ও সেভ করা
       let currentBalance = parseFloat(localStorage.getItem('user_wallet_balance')) || 0;
       currentBalance += amount;
       localStorage.setItem('user_wallet_balance', currentBalance);
 
-      alert(`Payment Submitted Successfully!\nTransaction ID: ${utr}\nAmount: ₹${amount} added to your account.`);
+      alert(`Payment Submitted Successfully!\nMethod: ${currentMethod.toUpperCase()}\nTransaction/Order ID: ${utr}\nAmount: $/${amount} added to account.`);
       
-      // রিডাইরেক্ট
       window.location.href = '../index.html';
     }
   </script>

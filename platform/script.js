@@ -1269,18 +1269,6 @@ function showCheckoutOverlay() {
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
 
-    // Reset submit button state when opening checkout
-    const submitBtn = document.querySelector("#checkoutPage .submit-btn") || document.querySelector(".submit-btn");
-    if (submitBtn) {
-        submitBtn.style.display = "block";
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Confirm Your Order";
-    }
-    const processingIndicator = document.getElementById("orderProcessingText");
-    if (processingIndicator) {
-        processingIndicator.remove();
-    }
-
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage) {
         checkoutPage.classList.remove("hidden");
@@ -1460,7 +1448,7 @@ function showOrderSuccessPopup(orderData) {
    
     const whatsappNumber = "919239628344"; // 
 
-    // WhatsApp Message Format
+    // WhatsApp Message Format আপনার চাহিদা অনুযায়ী তৈরি করা হয়েছে
     const waMessage = 
 `📦 Track Your Order
 
@@ -1620,59 +1608,39 @@ async function submitOrderToWhatsApp() {
     // -----------------------------
     const orderPayload = {
         userId: userIdentifier,
-
         platform: "platform1",
-
         serviceId: String(
             d.serviceId ||
             d.id ||
             d.serviceID ||
             "unknown"
         ),
-
         serviceName: d.serviceName || "SMM Service",
-
         packageName: d.packageName || "",
-
         link: link,
-
         quantity: Number(d.quantity || 0),
-
         amount: finalPrice,
-
         paymentId: txnId,
-
         paymentMethod: payMethod,
-
         paymentStatus: "PAID",
-
         orderStatus: "PAID"
     };
 
     // -----------------------------
-    // 8. Hide Submit Button and Show Processing
+    // 8. Disable Submit Button & Show "Processing..."
     // -----------------------------
     const submitBtn =
         document.querySelector("#checkoutPage .submit-btn") ||
         document.querySelector(".submit-btn");
 
+    let originalBtnText = "Confirm Your Order";
     if (submitBtn) {
-        submitBtn.style.display = "none";
-
-        let processingText = document.getElementById("orderProcessingText");
-        if (!processingText) {
-            processingText = document.createElement("div");
-            processingText.id = "orderProcessingText";
-            processingText.innerText = "Processing...";
-            processingText.style.cssText = "text-align: center; padding: 10px; font-weight: bold; font-size: 14px; color: #a855f7; width: 100%; margin-top: 4px;";
-            submitBtn.parentNode.insertBefore(processingText, submitBtn);
-        } else {
-            processingText.style.display = "block";
-        }
+        originalBtnText = submitBtn.textContent || "Confirm Your Order";
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Processing...";
     }
 
     try {
-
         // -----------------------------
         // 9. Send Order to Backend
         // -----------------------------
@@ -1680,11 +1648,9 @@ async function submitOrderToWhatsApp() {
             `${BACKEND_URL}/api/orders/create`,
             {
                 method: "POST",
-
                 headers: {
                     "Content-Type": "application/json"
                 },
-
                 body: JSON.stringify(orderPayload)
             }
         );
@@ -1697,10 +1663,9 @@ async function submitOrderToWhatsApp() {
         console.log("Backend Order Response:", data);
 
         // -----------------------------
-        // 11. Backend Error
+        // 11. Backend Error Handling
         // -----------------------------
         if (!response.ok || !data.success) {
-
             throw new Error(
                 data.message ||
                 data.error ||
@@ -1722,17 +1687,11 @@ async function submitOrderToWhatsApp() {
                 `${d.platform} - ${d.serviceName} (${d.packageName || ""})`,
 
             link: link,
-
             quantity: d.quantity || 0,
-
             amount: finalPriceFormatted,
-
             orderTimeEpoch: Date.now(),
-
             status: "Pending",
-
             userIdentifier: userIdentifier,
-
             paymentId: txnId
         };
 
@@ -1748,12 +1707,12 @@ async function submitOrderToWhatsApp() {
         );
 
         // -----------------------------
-        // 13. Close Checkout
+        // 13. Close Checkout UI
         // -----------------------------
         closeCheckoutUI();
 
         // -----------------------------
-        // 14. Success Popup
+        // 14. Show Order Success Popup
         // -----------------------------
         showOrderSuccessPopup({
             orderId:
@@ -1778,33 +1737,20 @@ async function submitOrderToWhatsApp() {
                 finalPriceFormatted
         });
 
-        console.log(
-            "✅ Platform 1 order successfully sent to Backend."
-        );
+        console.log("✅ Order successfully sent to Backend.");
 
     } catch (error) {
-
-        console.error(
-            "❌ Backend Order Error:",
-            error
-        );
-
+        console.error("❌ Backend Order Error:", error);
         alert(
             "Order could not be submitted.\n\n" +
             (error.message || "Please try again.")
         );
-
-        // Restore submit button in case of error
+    } finally {
+        // Reset Button State
         if (submitBtn) {
-            submitBtn.style.display = "block";
             submitBtn.disabled = false;
-            submitBtn.textContent = "Confirm Your Order";
+            submitBtn.textContent = originalBtnText;
         }
-        const processingText = document.getElementById("orderProcessingText");
-        if (processingText) {
-            processingText.style.display = "none";
-        }
-
     }
 }
 
@@ -1879,7 +1825,10 @@ async function submitOrderWithWallet() {
         return;
     }
 
-    if (walletBtn) walletBtn.disabled = true;
+    if (walletBtn) {
+        walletBtn.disabled = true;
+        walletBtn.textContent = "Processing...";
+    }
 
     const db = firebase.firestore();
     const userRef = db.collection('users').doc(user.uid);
@@ -1927,6 +1876,9 @@ async function submitOrderWithWallet() {
     } catch (error) {
         alert("Error: " + (error.message || error));
     } finally {
-        if (walletBtn) walletBtn.disabled = false;
+        if (walletBtn) {
+            walletBtn.disabled = false;
+            walletBtn.textContent = "Pay with Wallet";
+        }
     }
 }

@@ -12,6 +12,9 @@
   <!-- Client-side QR Code Library for Instant Generation -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   
+  <!-- Canvas Confetti Library for Fireworks/Popper Effect -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <!-- External CSS -->
   <link rel="stylesheet" href="style.css">
 
@@ -50,6 +53,12 @@
       .platform-btn i {
         font-size: 14px !important;
       }
+    }
+    
+    /* Disabled State Styling for Processing Button */
+    .whatsapp-submit-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
     }
   </style>
 </head>
@@ -249,8 +258,8 @@
         <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
       </div>
 
-      <!-- Updated Telegram Submit Button -->
-      <button class="whatsapp-submit-btn" onclick="sendOrderToTelegram()">
+      <!-- Updated Telegram Submit Button with Processing & Confetti/Popper Effect -->
+      <button class="whatsapp-submit-btn" id="confirmOrderBtn" onclick="handleConfirmOrder(this)">
         <i class="fa-brands fa-telegram"></i> Confirm your order
       </button>
 
@@ -260,7 +269,7 @@
   <!-- External JS File -->
   <script src="script.js"></script>
 
-  <!-- ORDER SAVING LOGIC INTEGRATION -->
+  <!-- ORDER SAVING LOGIC & CONFETTI INTEGRATION -->
   <script>
     function getUserIdentifier() {
       if (typeof window.firebaseUserUid !== 'undefined' && window.firebaseUserUid) {
@@ -282,7 +291,17 @@
 
     const originalSendOrderToTelegram = window.sendOrderToTelegram;
     
-    window.sendOrderToTelegram = function() {
+    // Updated function with Processing state, click protection, and Confetti effect
+    window.handleConfirmOrder = function(btn) {
+      if (btn.disabled) return;
+
+      // Disable button instantly to prevent multiple clicks
+      btn.disabled = true;
+      
+      // Change button text to "Processing..."
+      const originalHTML = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+
       const linkInput = document.getElementById('mainLinkInput') ? document.getElementById('mainLinkInput').value : '';
       const quantityInput = document.getElementById('mainQuantityInput') ? document.getElementById('mainQuantityInput').value : '0';
       const priceText = document.getElementById('totalPriceText') ? document.getElementById('totalPriceText').innerText : '0.00';
@@ -303,11 +322,23 @@
 
       saveOrderToLocalStorage(newOrder);
 
-      if (typeof originalSendOrderToTelegram === 'function') {
-        originalSendOrderToTelegram();
-      } else {
-        alert('Order submitted successfully! Order ID: #' + newOrder.orderId);
+      // Trigger Confetti (পটকা ফোটার ইফেক্ট) instantly on successful order placement
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
       }
+
+      // Execute original telegram function or fallback notification
+      setTimeout(() => {
+        if (typeof originalSendOrderToTelegram === 'function') {
+          originalSendOrderToTelegram();
+        } else {
+          alert('Order submitted successfully! Order ID: #' + newOrder.orderId);
+        }
+      }, 500);
     };
   </script>
 </body>

@@ -36,11 +36,45 @@ body {
   text-align: center;
 }
 
+/* পেমেন্ট ট্যাবের নতুন স্টাইল */
+.payment-tabs {
+  display: flex;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 5px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 1px solid var(--card-border);
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  color: var(--text-sub);
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, #ec4899, #8b5cf6);
+  color: #ffffff;
+  box-shadow: 0 2px 10px rgba(236, 72, 153, 0.3);
+}
+
 .fund-card h2 {
   font-size: 18px;
   font-weight: 700;
   color: var(--text-main);
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 /* কিউআর কোড এর চারপাশে কালারফুল গ্লোয়িং বর্ডার */
@@ -67,7 +101,7 @@ body {
   object-fit: contain;
 }
 
-/* ডাউনলোড বাটন স্টাইল (তীর চিহ্নসহ) */
+/* ডাউনলোড বাটন স্টাইল */
 .download-qr-btn {
   background: rgba(139, 92, 246, 0.15);
   color: #c084fc;

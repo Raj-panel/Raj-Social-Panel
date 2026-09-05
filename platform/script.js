@@ -280,24 +280,6 @@
                 opacity: 0;
             }
         }
-
-        /* গোল পাকে পাকে ঘোরার স্পিনার অ্যানিমেশন */
-        .btn-spinner {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            border-top: 2px solid #ffffff;
-            border-radius: 50%;
-            animation: spinCircle 0.6s linear infinite;
-            vertical-align: middle;
-            margin-right: 6px;
-        }
-
-        @keyframes spinCircle {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     `;
     document.head.appendChild(style);
 })();
@@ -1287,6 +1269,18 @@ function showCheckoutOverlay() {
     const txnInput = document.getElementById("checkoutTxnId");
     if (txnInput) txnInput.value = "";
 
+    // Reset submit button state when opening checkout
+    const submitBtn = document.querySelector("#checkoutPage .submit-btn") || document.querySelector(".submit-btn");
+    if (submitBtn) {
+        submitBtn.style.display = "block";
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Confirm Your Order";
+    }
+    const processingIndicator = document.getElementById("orderProcessingText");
+    if (processingIndicator) {
+        processingIndicator.remove();
+    }
+
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage) {
         checkoutPage.classList.remove("hidden");
@@ -1466,7 +1460,7 @@ function showOrderSuccessPopup(orderData) {
    
     const whatsappNumber = "919239628344"; // 
 
-    // WhatsApp Message Format আপনার চাহিদা অনুযায়ী তৈরি করা হয়েছে
+    // WhatsApp Message Format
     const waMessage = 
 `📦 Track Your Order
 
@@ -1656,17 +1650,25 @@ async function submitOrderToWhatsApp() {
     };
 
     // -----------------------------
-    // 8. Disable Submit Button & Show Processing Spinner
+    // 8. Hide Submit Button and Show Processing
     // -----------------------------
     const submitBtn =
         document.querySelector("#checkoutPage .submit-btn") ||
         document.querySelector(".submit-btn");
 
-    const originalBtnText = submitBtn ? submitBtn.innerHTML : "Confirm Order";
-
     if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = `<span class="btn-spinner"></span> Processing...`;
+        submitBtn.style.display = "none";
+
+        let processingText = document.getElementById("orderProcessingText");
+        if (!processingText) {
+            processingText = document.createElement("div");
+            processingText.id = "orderProcessingText";
+            processingText.innerText = "Processing...";
+            processingText.style.cssText = "text-align: center; padding: 10px; font-weight: bold; font-size: 14px; color: #a855f7; width: 100%; margin-top: 4px;";
+            submitBtn.parentNode.insertBefore(processingText, submitBtn);
+        } else {
+            processingText.style.display = "block";
+        }
     }
 
     try {
@@ -1792,12 +1794,17 @@ async function submitOrderToWhatsApp() {
             (error.message || "Please try again.")
         );
 
-    } finally {
-
+        // Restore submit button in case of error
         if (submitBtn) {
+            submitBtn.style.display = "block";
             submitBtn.disabled = false;
-            submitBtn.innerHTML = originalBtnText;
+            submitBtn.textContent = "Confirm Your Order";
         }
+        const processingText = document.getElementById("orderProcessingText");
+        if (processingText) {
+            processingText.style.display = "none";
+        }
+
     }
 }
 

@@ -4,44 +4,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add Funds - UPI Payment</title>
-  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- আপনার কাস্টম CSS ফাইল লিংক -->
-  <link rel="stylesheet" href="add-funds.css">
 </head>
 <body>
 
   <div class="add-funds-container">
     <div class="fund-card">
       <h2><i class="fa-solid fa-wallet" style="color: #ec4899;"></i> Add Funds via UPI</h2>
-
-      <!-- কালারিং বর্ডার সহ QR কোড -->
-      <div class="qr-wrapper">
+      
+      <!-- কালারিং ও গ্লোয়িং বর্ডারযুক্ত কিউআর কোড বক্স -->
+      <div class="qr-code-wrapper">
         <div class="qr-code-box">
           <img id="qrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=rajsmmpanel@jio%26pn=Raj%20SMM%20Panel" alt="UPI QR Code">
         </div>
       </div>
 
-      <!-- ডাউনলোড বাটন -->
-      <div>
-        <button type="button" class="download-btn" onclick="downloadQRCode()">
-          <i class="fa-solid fa-arrow-down"></i> Download QR Code
-        </button>
-      </div>
+      <!-- কিউআর কোড ডাউনলোড বাটন (তীর চিহ্নসহ) -->
+      <button type="button" class="download-qr-btn" onclick="downloadQRCode()">
+        <i class="fa-solid fa-circle-down"></i> Download QR Code
+      </button>
 
-      <p style="font-size: 11px; color: var(--text-sub); margin-bottom: 15px;">Scan this QR code or download it to pay using GPay, PhonePe, or Paytm.</p>
+      <p class="scan-notice">Scan QR using any UPI App (GPay, PhonePe, Paytm) or Download to Pay</p>
 
       <form id="addFundForm" onsubmit="handleFundSubmit(event)">
-        <!-- UTR বা Transaction ID ইনপুট -->
         <div class="form-group">
           <label>Enter UTR / Transaction ID</label>
           <input type="text" id="utrInput" class="form-control" placeholder="Enter UTR or Transaction ID" required>
         </div>
 
-        <!-- অ্যামাউন্ট ইনপুট -->
         <div class="form-group">
           <label>Enter Amount Paid</label>
-          <input type="number" id="amountInput" class="form-control" placeholder="Enter amount (e.g. 100)" min="1" oninput="updateQrCode(this.value)" required>
+          <input type="number" id="amountInput" class="form-control" placeholder="e.g. 100" min="1" oninput="updateQrCode(this.value)" required>
         </div>
 
         <button type="submit" class="submit-fund-btn">Submit Payment</button>
@@ -55,7 +49,7 @@
     const upiId = "rajsmmpanel@jio";
     const name = "Raj SMM Panel";
 
-    // ইনপুট ফিল্ডে টাকা টাইপ করলে ডায়নামিক QR কোড তৈরি হওয়া
+    // অ্যামাউন্ট লিখলে কিউআর কোড অটোমেটিক সেই টাকার জন্য তৈরি হবে
     function updateQrCode(amount) {
       const qrImg = document.getElementById('qrImg');
       if (amount && amount > 0) {
@@ -67,7 +61,7 @@
       }
     }
 
-    // QR কোড ইমেজ ডাউনলোড করার ফাংশন
+    // কিউআর কোড ইমেজ ডাউনলোড করার ফাংশন
     async function downloadQRCode() {
       const qrImg = document.getElementById('qrImg');
       try {
@@ -75,19 +69,19 @@
         const blob = await response.blob();
         const blobUrl = URL.createObjectURL(blob);
         
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        link.download = 'UPI-QR-Code.png';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        const downloadLink = document.createElement('a');
+        downloadLink.href = blobUrl;
+        downloadLink.download = 'UPI_Payment_QR.png';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
         URL.revokeObjectURL(blobUrl);
       } catch (error) {
-        alert('Downloading failed. Please long press on the QR code to save it.');
+        alert("Unable to download QR code automatically. Please long press on the QR image to save.");
       }
     }
 
-    // ফর্ম সাবমিট হ্যান্ডলার
+    // ফর্ম সাবমিশন হ্যান্ডলার (UTR / Transaction ID ও Amount ভ্যালিডেশন)
     function handleFundSubmit(event) {
       event.preventDefault();
       
@@ -95,18 +89,18 @@
       const amount = parseFloat(document.getElementById('amountInput').value);
 
       if(!utr || isNaN(amount) || amount <= 0) {
-        alert('Please enter a valid UTR / Transaction ID and Amount!');
+        alert('Please enter a valid UTR/Transaction ID and Amount!');
         return;
       }
 
-      // ওয়ালেট ব্যালেন্স যোগ ও সেভ
+      // ওয়ালেট ব্যালেন্স যোগ ও সেভ করা
       let currentBalance = parseFloat(localStorage.getItem('user_wallet_balance')) || 0;
       currentBalance += amount;
       localStorage.setItem('user_wallet_balance', currentBalance);
 
-      alert(`Payment Successful! Successfully added ₹${amount} to your wallet.`);
+      alert(`Payment Submitted Successfully!\nTransaction ID: ${utr}\nAmount: ₹${amount} added to your account.`);
       
-      // হোম পেজে রিডাইরেক্ট
+      // রিডাইরেক্ট
       window.location.href = '../index.html';
     }
   </script>

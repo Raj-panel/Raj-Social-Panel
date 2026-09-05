@@ -202,7 +202,7 @@ const platformData = {
         name: "𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦 - 𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 | 𝐂𝐡𝐞𝐚𝐩𝐞𝐬𝐭 𝐢𝐧 𝐓𝐡𝐞 𝐖𝐨𝐫𝐥𝐝",
         services: [
           { id: "6050", name: "Telegram Mix Positive Reaction [👍😍🎉🔥❤️🥰👏🥳🤩🔥💯] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6051", name: "Telegram Mix Negative Reaction [👎💔👎😢💩🤢🤬😡😴🍌😈] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
+          { id: "6051", name: "Telegram Mix Negative Reaction [👎💔😢💩🤢🤬😡😴🍌😈] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
           { id: "6052", name: "Telegram Reaction [🔥] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
           { id: "6053", name: "Telegram Reaction [❤️] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
           { id: "6054", name: "Telegram Reaction [💘] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
@@ -611,13 +611,50 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) upsView.classList.remove('hidden'); // Fix typo if any in original or keep safe
+    if (upiView) upiView.classList.remove('hidden'); 
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
 
     if (txnLabel) txnLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
     if (txnInput) txnInput.placeholder = "e.g. 4029XXXXXXXXXX (12-Digit UTR)";
   }
+}
+
+// --- NEW FUNCTION: Firecracker/Confetti Animation on Success Popup ---
+function triggerOrderConfetti() {
+  // Load canvas-confetti library dynamically if not already available
+  if (typeof confetti === 'undefined') {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
+    script.onload = () => runConfettiEffect();
+    document.head.appendChild(script);
+  } else {
+    runConfettiEffect();
+  }
+}
+
+function runConfettiEffect() {
+  // Stunning firecracker / fireworks burst effect
+  var duration = 2.5 * 1000;
+  var animationEnd = Date.now() + duration;
+  var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100000 };
+
+  function randomInRange(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  var interval = setInterval(function() {
+    var timeLeft = animationEnd - Date.now();
+
+    if (timeLeft <= 0) {
+      return clearInterval(interval);
+    }
+
+    var particleCount = 50 * (timeLeft / duration);
+    // Fire from multiple random spots to mimic firecrackers
+    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+  }, 250);
 }
 
 // Custom Glow Popup
@@ -658,6 +695,11 @@ function showModernPopup(title, message, type = 'success') {
   `;
 
   document.body.appendChild(popupOverlay);
+
+  // Trigger firecracker animation if it's a success popup!
+  if (isSuccess) {
+    triggerOrderConfetti();
+  }
 
   if (!document.getElementById('modernPopupKeyframes')) {
     const styleSheet = document.createElement('style');

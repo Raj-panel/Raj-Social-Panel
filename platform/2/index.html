@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RAJ-SMM-PANEL</title>
   
+  <!-- Google Font & FontAwesome Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
+  <!-- Client-side QR Code Library for Instant Generation -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  
+  <!-- External CSS -->
   <link rel="stylesheet" href="style.css">
 
   <style>
@@ -54,6 +55,7 @@
 </head>
 <body>
 
+  <!-- Left Sidebar Menu -->
   <div id="sidebarOverlay" class="sidebar-overlay" onclick="closeSidebar()"></div>
   <div id="leftSidebar" class="left-sidebar">
     <div class="sidebar-header">
@@ -61,6 +63,7 @@
       <button class="close-sidebar-btn" onclick="closeSidebar()"><i class="fa-solid fa-xmark"></i></button>
     </div>
     
+    <!-- Menu Options -->
     <ul class="sidebar-menu">
       <li><a href="https://rajsmmpanel.in/">🛒 New Order</a></li>
       <li><a href="https://rajsmmpanel.in/platform/">⚡ Platform 1</a></li>
@@ -77,26 +80,32 @@
 
   <div class="main-wrapper">
     
+    <!-- Top Header -->
     <div class="header-top">
       <button class="hamburger-btn" onclick="openSidebar()"><i class="fa-solid fa-bars"></i></button>
       <div class="panel-heading">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
     </div>
 
+    <!-- Support Actions -->
     <div class="hero-actions">
       <a href="https://t.me/your_telegram" class="glass-btn btn-telegram" target="_blank"><i class="fa-brands fa-telegram"></i> Telegram Support</a>
       <a href="https://wa.me/919239628344" class="glass-btn btn-whatsapp" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp Support</a>
     </div>
 
+    <!-- Platform Switcher Buttons (6 Buttons: 2 Rows x 3 Columns) -->
     <div class="platform-grid">
+      <!-- Row 1 -->
       <button class="platform-btn active" id="btn-all" onclick="selectPlatform('all')"><i class="fa-solid fa-bars"></i> All Services</button>
       <button class="platform-btn" id="btn-instagram" onclick="selectPlatform('instagram')"><i class="fa-brands fa-instagram"></i> Instagram</button>
       <button class="platform-btn" id="btn-facebook" onclick="selectPlatform('facebook')"><i class="fa-brands fa-facebook"></i> Facebook</button>
       
+      <!-- Row 2 -->
       <button class="platform-btn" id="btn-youtube" onclick="selectPlatform('youtube')"><i class="fa-brands fa-youtube"></i> YouTube</button>
       <button class="platform-btn" id="btn-tiktok" onclick="selectPlatform('tiktok')"><i class="fa-brands fa-tiktok"></i> TikTok</button>
       <button class="platform-btn" id="btn-telegram" onclick="selectPlatform('telegram')"><i class="fa-brands fa-telegram"></i> Telegram</button>
     </div>
 
+    <!-- Hero Banner -->
     <div class="hero-banner">
       <div class="hero-top-row">
         <div class="hero-logo-box" id="heroPlatformIcon"><i class="fa-solid fa-bars"></i></div>
@@ -121,6 +130,7 @@
       </div>
     </div>
 
+    <!-- Main Order Form -->
     <div class="form-card">
       <div class="form-group">
         <label>Search</label>
@@ -164,6 +174,7 @@
 
   </div>
 
+  <!-- CHECKOUT PAGE OVERLAY -->
   <div id="checkoutPage" class="checkout-page-overlay hidden">
     <div class="checkout-content">
       
@@ -172,6 +183,7 @@
         <div class="checkout-heading-text">Checkout</div>
       </div> 
 
+      <!-- Selected Package Info Banner -->
       <div class="premium-service-card">
         <div class="card-top-row">
           <div class="platform-badge-icon" id="checkoutPlatformIcon">
@@ -187,6 +199,7 @@
         </div>
       </div>
 
+      <!-- Payment Option Switcher -->
       <div class="pay-toggle-tabs">
         <button class="pay-tab active" id="btnTabUpi" onclick="switchCheckoutPayment('upi')">
           <i class="fa-solid fa-qrcode"></i> UPI QR Pay
@@ -196,11 +209,13 @@
         </button>
       </div>
 
+      <!-- UPI Payment View -->
       <div id="checkoutUpiView" class="payment-view-box">
         <div style="font-weight: 800; color: #a855f7; font-size: 14px; margin-bottom: 8px;">
           TACK A SCREENSHOT OR SCAN TO PAY
         </div>
         
+        <!-- QR Code Container with Coloring Border -->
         <div style="display: flex; justify-content: center; margin-bottom: 6px;">
           <div id="qrcode" style="padding: 10px; background: #fff; border-radius: 12px; display: inline-block; border: 3px solid #a855f7; box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);"></div>
         </div>
@@ -217,20 +232,24 @@
         </div>
       </div>
 
+      <!-- Binance Payment View -->
       <div id="checkoutBinanceView" class="payment-view-box hidden">
         <div style="font-weight: 800; color: #a855f7; font-size: 14px; margin-bottom: 8px;">SCAN TO PAY VIA BINANCE</div>
         <p style="font-size: 13px; color: #334155; margin-top: 10px;">Binance Pay ID: <strong>78901234</strong></p>
       </div>
 
+      <!-- UTR Input Field -->
       <div class="form-group">
         <label id="txnLabel" style="font-size:12px; font-weight:700;">Enter 12-Digit UPI UTR / Ref No:</label>
         <input type="text" class="form-control" id="checkoutTxnId" placeholder="e.g. 4029XXXXXXXXXX (12-Digit UTR)" />
       </div>
 
+      <!-- Notice Box -->
       <div class="notice-yellow-box">
         <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
       </div>
 
+      <!-- Updated Telegram Submit Button -->
       <button class="whatsapp-submit-btn" onclick="sendOrderToTelegram()">
         <i class="fa-brands fa-telegram"></i> Confirm your order
       </button>
@@ -238,8 +257,10 @@
     </div>
   </div>
 
+  <!-- External JS File -->
   <script src="script.js"></script>
 
+  <!-- ORDER SAVING LOGIC INTEGRATION -->
   <script>
     function getUserIdentifier() {
       if (typeof window.firebaseUserUid !== 'undefined' && window.firebaseUserUid) {
@@ -281,15 +302,6 @@
       };
 
       saveOrderToLocalStorage(newOrder);
-
-      // Trigger Confetti Explosion (পটকা ফাটার অ্যানিমেশন)
-      if (typeof confetti === 'function') {
-        confetti({
-          particleCount: 120,
-          spread: 80,
-          origin: { y: 0.6 }
-        });
-      }
 
       if (typeof originalSendOrderToTelegram === 'function') {
         originalSendOrderToTelegram();

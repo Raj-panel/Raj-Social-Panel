@@ -14,19 +14,20 @@
       padding: 0 10px;
     }
     .fund-card {
-      background: var(--card-bg);
+      background: var(--card-bg, #1a1b26);
       backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
-      border: 1px solid var(--card-border);
+      border: 1px solid var(--card-border, rgba(255,255,255,0.1));
       border-radius: 20px;
       padding: 20px;
-      box-shadow: var(--card-shadow);
+      box-shadow: var(--card-shadow, 0 8px 32px rgba(0,0,0,0.37));
       text-align: center;
+      color: var(--text-main, #ffffff);
     }
     .fund-card h2 {
       font-size: 18px;
       font-weight: 700;
-      color: var(--text-main);
+      color: var(--text-main, #ffffff);
       margin-bottom: 15px;
     }
     .upi-info-box {
@@ -37,7 +38,7 @@
       margin-bottom: 15px;
       font-size: 14px;
       font-weight: 600;
-      color: var(--text-main);
+      color: var(--text-main, #ffffff);
     }
     .qr-code-box {
       background: #ffffff;
@@ -60,7 +61,7 @@
     .form-group label {
       font-size: 12.5px;
       font-weight: 600;
-      color: var(--text-sub);
+      color: var(--text-sub, #a0aec0);
       display: block;
       margin-bottom: 5px;
     }
@@ -68,11 +69,12 @@
       width: 100%;
       padding: 12px 14px;
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
+      border: 1px solid var(--card-border, rgba(255,255,255,0.1));
       border-radius: 12px;
-      color: var(--text-main);
+      color: var(--text-main, #ffffff);
       font-size: 14px;
       outline: none;
+      box-sizing: border-box;
     }
     .submit-fund-btn {
       width: 100%;
@@ -95,7 +97,7 @@
       display: inline-block;
       margin-top: 15px;
       font-size: 13px;
-      color: var(--text-sub);
+      color: var(--text-sub, #a0aec0);
       text-decoration: none;
     }
   </style>
@@ -110,11 +112,11 @@
         UPI ID: <span id="upiIdText" style="color: #a855f7;">rajsmmpanel@jio</span>
       </div>
 
-      <!-- কিউআর কোড সেকশন (আপনার কিউআর ইমেজ এখানে যুক্ত করতে পারেন) -->
+      <!-- ডায়নামিক QR কোড জেনারেটর -->
       <div class="qr-code-box">
-        <img src="../qr-code.png" alt="UPI QR Code" id="qrImg">
+        <img id="qrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=rajsmmpanel@jio%26pn=Raj%20SMM%20Panel" alt="UPI QR Code">
       </div>
-      <p style="font-size: 11px; color: var(--text-sub); margin-bottom: 15px;">Scan this QR using any UPI App (GPay, PhonePe, Paytm)</p>
+      <p style="font-size: 11px; color: var(--text-sub, #a0aec0); margin-bottom: 15px;">Scan this QR using any UPI App (GPay, PhonePe, Paytm)</p>
 
       <form id="addFundForm" onsubmit="handleFundSubmit(event)">
         <div class="form-group">
@@ -124,7 +126,7 @@
 
         <div class="form-group">
           <label>Enter Amount (e.g. 10)</label>
-          <input type="number" id="amountInput" class="form-control" placeholder="10" min="1" required>
+          <input type="number" id="amountInput" class="form-control" placeholder="10" min="1" oninput="updateQrCode(this.value)" required>
         </div>
 
         <button type="submit" class="submit-fund-btn">Submit Payment</button>
@@ -135,6 +137,21 @@
   </div>
 
   <script>
+    const upiId = "rajsmmpanel@jio";
+    const name = "Raj SMM Panel";
+
+    // ইনপুট ফিল্ডে টাকা টাইপ করলে QR কোডে অটোমেটিক সেই টাকা সেট হবে
+    function updateQrCode(amount) {
+      const qrImg = document.getElementById('qrImg');
+      if (amount && amount > 0) {
+        const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR`;
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(upiUrl)}`;
+      } else {
+        const defaultUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}`;
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(defaultUrl)}`;
+      }
+    }
+
     function handleFundSubmit(event) {
       event.preventDefault();
       
@@ -146,14 +163,12 @@
         return;
       }
 
-      // লজিক্যাল সিস্টেম: লোকাল স্টোরেজ বা ব্যালেন্স হ্যান্ডলিং
       let currentBalance = parseFloat(localStorage.getItem('user_wallet_balance')) || 0;
       currentBalance += amount;
       localStorage.setItem('user_wallet_balance', currentBalance);
 
-      alert(`Success! Successfully added ${amount} BDT/INR to your account.`);
+      alert(`Success! Successfully added ${amount} INR to your account.`);
       
-      // হোমপেজে রিডাইরেক্ট করে দেওয়া
       window.location.href = '../index.html';
     }
   </script>

@@ -280,6 +280,24 @@
                 opacity: 0;
             }
         }
+
+        /* গোল পাকে পাকে ঘোরার স্পিনার অ্যানিমেশন */
+        .btn-spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-top: 2px solid #ffffff;
+            border-radius: 50%;
+            animation: spinCircle 0.6s linear infinite;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+
+        @keyframes spinCircle {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     `;
     document.head.appendChild(style);
 })();
@@ -1601,11 +1619,7 @@ async function submitOrderToWhatsApp() {
     // -----------------------------
     // 6. Backend URL
     // -----------------------------
-    // LOCAL TEST
     const BACKEND_URL = "https://raj-social-panel-backend-qfwd.vercel.app";
-
-    // পরে Live করার সময়:
-    // const BACKEND_URL = "https://raj-social-panel-backend-qfwd.vercel.app";
 
     // -----------------------------
     // 7. Prepare Backend Request
@@ -1642,15 +1656,17 @@ async function submitOrderToWhatsApp() {
     };
 
     // -----------------------------
-    // 8. Disable Submit Button
+    // 8. Disable Submit Button & Show Processing Spinner
     // -----------------------------
     const submitBtn =
         document.querySelector("#checkoutPage .submit-btn") ||
         document.querySelector(".submit-btn");
 
+    const originalBtnText = submitBtn ? submitBtn.innerHTML : "Confirm Order";
+
     if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.textContent = "Processing...";
+        submitBtn.innerHTML = `<span class="btn-spinner"></span> Processing...`;
     }
 
     try {
@@ -1780,7 +1796,7 @@ async function submitOrderToWhatsApp() {
 
         if (submitBtn) {
             submitBtn.disabled = false;
-            submitBtn.textContent = "Confirm Order";
+            submitBtn.innerHTML = originalBtnText;
         }
     }
 }

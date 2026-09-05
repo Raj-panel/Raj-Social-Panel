@@ -2,18 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<!-- Canonical Link -->
 <link rel="canonical" href="https://rajsmmpanel.in/"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Raj SMM Panel – Best India Cheapest SMM Panel for Instagram, Facebook &amp; YouTube</title>
 <meta content="Raj SMM Panel offers affordable social media marketing services for Instagram, Facebook, YouTube and more. Get Followers, Likes, Views, Comments and other SMM services at the best prices." name="description"/>
 
-<!-- Google Font -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
 
-<!-- PWA / Web App Manifest & Theme -->
 <link href="manifest.json" rel="manifest"/>
 <meta content="#0f172a" name="theme-color"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
@@ -24,7 +21,6 @@
 <link href="style.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 
-<!-- Open Graph Meta Tags -->
 <meta content="website" property="og:type"/>
 <meta content="https://rajsmmpanel.in/" property="og:url"/>
 <meta content="Raj Social Panel - Premium Social Boosting Services" property="og:title"/>
@@ -35,7 +31,6 @@
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
 
-<!-- Twitter Card Meta Tags -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="https://rajsmmpanel.in/" name="twitter:url"/>
 <meta content="Raj Social Panel - Premium Social Boosting Services" name="twitter:title"/>
@@ -392,11 +387,17 @@
   .whatsapp-submit-btn:hover {
     transform: translateY(-2px);
   }
+
+  /* Disabled state style for processing button */
+  .whatsapp-submit-btn:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+    animation: none;
+  }
 </style>
 </head>
 <body data-platform="instagram">
 
-<!-- Left Sidebar Navigation -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar(true)"></div>
 <div class="left-sidebar" id="leftSidebar">
   <div class="sidebar-header">
@@ -405,10 +406,8 @@
   </div>
   
   <ul class="sidebar-menu">
-    <li id="authMenuItem">
-    
-    <!-- New Order Link Updated Below -->
-    <li><a href="https://rajsmmpanel.in/">🛒 New Order</a></li>
+    <li id="authMenuItem"></li>
+        <li><a href="https://rajsmmpanel.in/">🛒 New Order</a></li>
     <li><a href="https://rajsmmpanel.in/platform/2/">⚡ Platform 2</a></li>
     <li><a href="/orders/">📦 My Orders</a></li>
     <li id="addFundsMenuItem" style="display: none;"></li>
@@ -432,16 +431,13 @@
 
 <div class="main-wrapper" id="mainHomeView" style="position: relative;">
   
-  <!-- Hamburger Button -->
-  <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
+    <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
     <i class="fa-solid fa-bars"></i>
   </button>
 
-  <!-- Header -->
-  <div class="panel-heading">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
+    <div class="panel-heading">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
 
-  <!-- Support Buttons Header -->
-  <div class="hero-actions">
+    <div class="hero-actions">
     <a class="glass-btn btn-telegram" href="https://t.me/raj_smm_panel" target="_blank" rel="noopener noreferrer">
       <i class="fa-brands fa-telegram"></i> Telegram Support
     </a>
@@ -450,8 +446,7 @@
     </a>
   </div>
 
-  <!-- Platform Switcher -->
-  <div class="platform-card-wrapper">
+    <div class="platform-card-wrapper">
     <div class="platform-switch-container">
       <button class="platform-btn active" id="btnInsta" onclick="handlePlatformClick('instagram', this)">
         <i class="fa-brands fa-instagram"></i> Instagram
@@ -468,8 +463,7 @@
     </div>
   </div>
 
-  <!-- Hero Status Banner -->
-  <div class="hero-banner">
+    <div class="hero-banner">
     <div class="hero-top-row">
       <div class="hero-logo-box" id="heroLogoIcon">
         <i class="fa-brands fa-instagram"></i>
@@ -497,25 +491,21 @@
     </div>
   </div>
 
-  <!-- Scrollable Category Tabs -->
-  <div class="category-tabs-wrapper">
+    <div class="category-tabs-wrapper">
     <div class="category-tabs" id="categoryTabs"></div>
   </div>
 
-  <!-- Package List Section -->
-  <div class="package-list-container" id="packageList"></div>
+    <div class="package-list-container" id="packageList"></div>
 
   <div class="footer-note">
     ⚡ Fast Processing • 100% Refund Guarantee If Failed
   </div>
 
-  <!-- Install App Button -->
-  <div id="installContainer" style="display:none;">
+    <div id="installContainer" style="display:none;">
     <button class="install-btn" id="installBtn"><i class="fa-solid fa-download"></i> Install App</button>
   </div>
 </div>
 
-<!-- CHECKOUT PAGE OVERLAY -->
 <div id="checkoutPage" class="checkout-page-overlay hidden">
   <div class="checkout-content">
     
@@ -621,8 +611,7 @@
       <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
     </div>
 
-    <!-- WhatsApp Logo Removed and Glowing Effect Added -->
-    <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
+        <button class="whatsapp-submit-btn" id="confirmOrderBtn" onclick="submitOrderToWhatsApp()">
       Confirm your order
     </button>
 
@@ -756,6 +745,27 @@
         .then((reg) => console.log('Service Worker Registered Successfully:', reg))
         .catch((err) => console.log('Service Worker Registration Failed:', err));
     });
+  }
+
+  // -----------------------------------------------------------------
+  // Order Confirmation & Processing Logic (নতুন যুক্ত করা ফাংশন)
+  // -----------------------------------------------------------------
+  function submitOrderToWhatsApp() {
+    const btn = document.getElementById('confirmOrderBtn');
+    
+    // একবার ক্লিক করার পর বাটনটি সাথে সাথে ডিসেবল (disable) করা হলো যাতে দ্বিতীয়বার আর ক্লিক না করা যায়
+    btn.disabled = true;
+    
+    // টেক্সট পরিবর্তন করে "Processing..." করা হলো
+    btn.innerText = "Processing...";
+   
+    
+   try {
+      // যদি আপনার কোডে বাহ্যিক কোনো সাবমিট ফাংশন থাকে তা এখানে রান করা যাবে।
+      // যেমন: if (typeof originalSubmitOrderToWhatsApp === 'function') { originalSubmitOrderToWhatsApp(); }
+    } catch (e) {
+      console.error(e);
+    }
   }
 </script>
 <script type="module" src="js/services-loader.js"></script>

@@ -334,12 +334,12 @@ const serviceData = {
         ],
         "REAL Photo / Post Views Non-Drop": [
             { providerId: 1030, name: "1K Views", price: 10, badge: "🎯 Demo", badgeClass: "badge-demo", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
-            { providerId: 1030, name: "3K Views", price: 15, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
-            { providerId: 1030, name: "5K Views", price: 25, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
-            { providerId: 1030, name: "10K Views", price: 40, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
-            { providerId: 1030, name: "30K Views", price: 79, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
-            { providerId: 1030, name: "50K Views", price: 119, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
-            { providerId: 1030, name: "100K Views", price: 220, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" }
+            { providerId: 1030, name: "3K Views", price: 17, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
+            { providerId: 1030, name: "5K Views", price: 29, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
+            { providerId: 1030, name: "10K Views", price: 49, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
+            { providerId: 1030, name: "30K Views", price: 89, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
+            { providerId: 1030, name: "50K Views", price: 149, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
+            { providerId: 1030, name: "100K Views", price: 270, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" }
         ],
         "REAL Comments Non-Drop": [
             { providerId: 31, name: "15 Comment (Start)", price: 10, desc: "💬High Quality • Custom Random Comments start in 10 min" },

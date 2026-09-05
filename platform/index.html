@@ -20,7 +20,6 @@
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
 <meta content="SMM Panel" name="apple-mobile-web-app-title"/>
 <link href="icon-192.png" rel="apple-touch-icon"/>
-<link rel="icon" type="image/png" href="../icon-192.png"/>
 <link href="style.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 
@@ -386,11 +385,21 @@
     align-items: center;
     justify-content: center;
     animation: glowingBtn 2s infinite ease-in-out;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, background 0.3s ease;
   }
 
   .whatsapp-submit-btn:hover {
     transform: translateY(-2px);
+  }
+
+  /* Processing State CSS */
+  .whatsapp-submit-btn.processing-state {
+    background: #ec4899 !important;
+    cursor: not-allowed !important;
+    animation: none !important;
+    opacity: 0.9 !important;
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4) !important;
+    transform: none !important;
   }
 </style>
 </head>
@@ -622,7 +631,7 @@
     </div>
 
     <!-- WhatsApp Logo Removed and Glowing Effect Added -->
-    <button class="whatsapp-submit-btn" onclick="submitOrderToWhatsApp()">
+    <button class="whatsapp-submit-btn" id="confirmOrderBtn" onclick="handleConfirmOrderClick(event)">
       Confirm your order
     </button>
 
@@ -634,6 +643,66 @@
 <script type="module" src="auth-handler.js"></script>
 
 <script>
+  // Lock flag for preventing duplicate submissions
+  let isSubmittingOrder = false;
+
+  function handleConfirmOrderClick(event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    // Double-click / rapid-click protection check
+    if (isSubmittingOrder) {
+      return false;
+    }
+
+    // Set submission lock immediately before anything else
+    isSubmittingOrder = true;
+
+    // Target the button UI element
+    const btn = document.getElementById('confirmOrderBtn') || document.querySelector('.whatsapp-submit-btn');
+
+    if (btn) {
+      // 1. Change text to "Processing"
+      btn.innerText = "Processing";
+      // 2. Add processing state style (pink background)
+      btn.classList.add("processing-state");
+      // 3. Disable the button
+      btn.disabled = true;
+    }
+
+    // Call existing submit logic safely
+    try {
+      if (typeof submitOrderToWhatsApp === 'function') {
+        const result = submitOrderToWhatsApp();
+        if (result && typeof result.catch === 'function') {
+          result.catch(function(err) {
+            console.error("Order submit error:", err);
+            // On API/Request failure, unlock button if needed by existing flow
+            resetOrderButton();
+          });
+        }
+      } else {
+        console.warn("submitOrderToWhatsApp function not found");
+      }
+    } catch (error) {
+      console.error("Error executing submitOrderToWhatsApp:", error);
+      resetOrderButton();
+    }
+  }
+
+  // Helper function to reset button if order submission fails
+  function resetOrderButton() {
+    isSubmittingOrder = false;
+    const btn = document.getElementById('confirmOrderBtn') || document.querySelector('.whatsapp-submit-btn');
+    if (btn) {
+      btn.innerText = "Confirm your order";
+      btn.classList.remove("processing-state");
+      btn.disabled = false;
+    }
+  }
+
   // Dynamic Platform Theme Switcher Integration
   function applyPlatformTheme(platform) {
     if (!platform) return;

@@ -529,7 +529,7 @@
   <div class="checkout-content">
     
     <div class="checkout-nav">
-      <button class="back-btn" onclick="closeCheckout()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+      <button class="back-btn" onclick="handleCloseCheckout()"><i class="fa-solid fa-arrow-left"></i> Back</button>
       <div class="checkout-heading-text">Checkout</div>
     </div>
 
@@ -646,6 +646,17 @@
   // Lock flag for preventing duplicate submissions
   let isSubmittingOrder = false;
 
+  // Helper function to reset button state and unlock
+  function resetOrderButton() {
+    isSubmittingOrder = false;
+    const btn = document.getElementById('confirmOrderBtn') || document.querySelector('.whatsapp-submit-btn');
+    if (btn) {
+      btn.innerText = "Confirm your order";
+      btn.classList.remove("processing-state");
+      btn.disabled = false;
+    }
+  }
+
   function handleConfirmOrderClick(event) {
     if (event) {
       event.preventDefault();
@@ -679,7 +690,6 @@
         if (result && typeof result.catch === 'function') {
           result.catch(function(err) {
             console.error("Order submit error:", err);
-            // On API/Request failure, unlock button if needed by existing flow
             resetOrderButton();
           });
         }
@@ -692,16 +702,35 @@
     }
   }
 
-  // Helper function to reset button if order submission fails
-  function resetOrderButton() {
-    isSubmittingOrder = false;
-    const btn = document.getElementById('confirmOrderBtn') || document.querySelector('.whatsapp-submit-btn');
-    if (btn) {
-      btn.innerText = "Confirm your order";
-      btn.classList.remove("processing-state");
-      btn.disabled = false;
+  // Wrapper for closing checkout modal and resetting button state
+  function handleCloseCheckout() {
+    resetOrderButton();
+    if (typeof closeCheckout === 'function') {
+      closeCheckout();
+    } else {
+      const checkoutPage = document.getElementById('checkoutPage');
+      if (checkoutPage) checkoutPage.classList.add('hidden');
     }
   }
+
+  // Intercept open checkout or page visibility changes to guarantee button reset for new orders
+  const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.attributeName === 'class') {
+        const checkoutPage = document.getElementById('checkoutPage');
+        if (checkoutPage && checkoutPage.classList.contains('hidden')) {
+          resetOrderButton();
+        }
+      }
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const checkoutPage = document.getElementById('checkoutPage');
+    if (checkoutPage) {
+      observer.observe(checkoutPage, { attributes: true });
+    }
+  });
 
   // Dynamic Platform Theme Switcher Integration
   function applyPlatformTheme(platform) {

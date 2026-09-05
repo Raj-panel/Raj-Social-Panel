@@ -1601,46 +1601,60 @@ async function submitOrderToWhatsApp() {
     // -----------------------------
     // 6. Backend URL
     // -----------------------------
+    // LOCAL TEST
     const BACKEND_URL = "https://raj-social-panel-backend-qfwd.vercel.app";
+
+    // পরে Live করার সময়:
+    // const BACKEND_URL = "https://raj-social-panel-backend-qfwd.vercel.app";
 
     // -----------------------------
     // 7. Prepare Backend Request
     // -----------------------------
     const orderPayload = {
         userId: userIdentifier,
+
         platform: "platform1",
+
         serviceId: String(
             d.serviceId ||
             d.id ||
             d.serviceID ||
             "unknown"
         ),
+
         serviceName: d.serviceName || "SMM Service",
+
         packageName: d.packageName || "",
+
         link: link,
+
         quantity: Number(d.quantity || 0),
+
         amount: finalPrice,
+
         paymentId: txnId,
+
         paymentMethod: payMethod,
+
         paymentStatus: "PAID",
+
         orderStatus: "PAID"
     };
 
     // -----------------------------
-    // 8. Disable Submit Button & Show "Processing..."
+    // 8. Disable Submit Button
     // -----------------------------
     const submitBtn =
         document.querySelector("#checkoutPage .submit-btn") ||
         document.querySelector(".submit-btn");
 
-    let originalBtnText = "Confirm Your Order";
     if (submitBtn) {
-        originalBtnText = submitBtn.textContent || "Confirm Your Order";
         submitBtn.disabled = true;
         submitBtn.textContent = "Processing...";
     }
 
     try {
+
         // -----------------------------
         // 9. Send Order to Backend
         // -----------------------------
@@ -1648,9 +1662,11 @@ async function submitOrderToWhatsApp() {
             `${BACKEND_URL}/api/orders/create`,
             {
                 method: "POST",
+
                 headers: {
                     "Content-Type": "application/json"
                 },
+
                 body: JSON.stringify(orderPayload)
             }
         );
@@ -1663,9 +1679,10 @@ async function submitOrderToWhatsApp() {
         console.log("Backend Order Response:", data);
 
         // -----------------------------
-        // 11. Backend Error Handling
+        // 11. Backend Error
         // -----------------------------
         if (!response.ok || !data.success) {
+
             throw new Error(
                 data.message ||
                 data.error ||
@@ -1687,11 +1704,17 @@ async function submitOrderToWhatsApp() {
                 `${d.platform} - ${d.serviceName} (${d.packageName || ""})`,
 
             link: link,
+
             quantity: d.quantity || 0,
+
             amount: finalPriceFormatted,
+
             orderTimeEpoch: Date.now(),
+
             status: "Pending",
+
             userIdentifier: userIdentifier,
+
             paymentId: txnId
         };
 
@@ -1707,12 +1730,12 @@ async function submitOrderToWhatsApp() {
         );
 
         // -----------------------------
-        // 13. Close Checkout UI
+        // 13. Close Checkout
         // -----------------------------
         closeCheckoutUI();
 
         // -----------------------------
-        // 14. Show Order Success Popup
+        // 14. Success Popup
         // -----------------------------
         showOrderSuccessPopup({
             orderId:
@@ -1737,19 +1760,27 @@ async function submitOrderToWhatsApp() {
                 finalPriceFormatted
         });
 
-        console.log("✅ Order successfully sent to Backend.");
+        console.log(
+            "✅ Platform 1 order successfully sent to Backend."
+        );
 
     } catch (error) {
-        console.error("❌ Backend Order Error:", error);
+
+        console.error(
+            "❌ Backend Order Error:",
+            error
+        );
+
         alert(
             "Order could not be submitted.\n\n" +
             (error.message || "Please try again.")
         );
+
     } finally {
-        // Reset Button State
+
         if (submitBtn) {
             submitBtn.disabled = false;
-            submitBtn.textContent = originalBtnText;
+            submitBtn.textContent = "Confirm Order";
         }
     }
 }
@@ -1825,10 +1856,7 @@ async function submitOrderWithWallet() {
         return;
     }
 
-    if (walletBtn) {
-        walletBtn.disabled = true;
-        walletBtn.textContent = "Processing...";
-    }
+    if (walletBtn) walletBtn.disabled = true;
 
     const db = firebase.firestore();
     const userRef = db.collection('users').doc(user.uid);
@@ -1876,9 +1904,6 @@ async function submitOrderWithWallet() {
     } catch (error) {
         alert("Error: " + (error.message || error));
     } finally {
-        if (walletBtn) {
-            walletBtn.disabled = false;
-            walletBtn.textContent = "Pay with Wallet";
-        }
+        if (walletBtn) walletBtn.disabled = false;
     }
 }

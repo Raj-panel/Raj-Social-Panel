@@ -233,6 +233,51 @@
             color: #1e293b;
         }
 
+        /* Processing Overlay / Non-clickable State */
+        .raj-processing-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border-radius: inherit;
+            pointer-events: all;
+        }
+        .raj-processing-spinner {
+            width: 36px;
+            height: 36px;
+            border: 4px solid rgba(34, 197, 94, 0.2);
+            border-top-color: #22c55e;
+            border-radius: 50%;
+            animation: rajSpin 0.8s linear infinite;
+        }
+        .raj-processing-text {
+            font-weight: 700;
+            font-size: 14px;
+            color: #16a34a;
+            letter-spacing: 0.5px;
+        }
+        @keyframes rajSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Global pointer-events locker when processing checkout */
+        body.is-processing {
+            pointer-events: none !important;
+        }
+        body.is-processing #checkoutPage {
+            pointer-events: auto !important; /* Allow interactions only inside checkout overlay processing bounds if needed, or let overlay handle it */
+        }
+
         /* Stylish Color-Changing WhatsApp Button Animation */
         @keyframes rajColorPulse {
             0% { border-color: #25D366; background-color: #ffffff; color: #25D366; box-shadow: 0 0 10px rgba(37, 211, 102, 0.3); }
@@ -1400,13 +1445,9 @@ function triggerRajConfettiAnimation(overlayElement) {
         const piece = document.createElement('div');
         piece.className = 'raj-confetti-piece';
         
-        // Random horizontal positions
         piece.style.left = Math.random() * 100 + '%';
-        
-        // Random colors
         piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
         
-        // Random shapes (square, circle or thin strip)
         if (Math.random() > 0.5) {
             piece.style.borderRadius = '50%';
             piece.style.width = (Math.random() * 8 + 6) + 'px';
@@ -1416,16 +1457,14 @@ function triggerRajConfettiAnimation(overlayElement) {
             piece.style.height = (Math.random() * 14 + 10) + 'px';
         }
 
-        // Random animation duration & delays for firecracker burst feel
-        const duration = Math.random() * 1.5 + 1.2; // 1.2s to 2.7s
-        const delay = Math.random() * 0.4; // 0s to 0.4s
+        const duration = Math.random() * 1.5 + 1.2;
+        const delay = Math.random() * 0.4;
         
         piece.style.animationDuration = duration + 's';
         piece.style.animationDelay = delay + 's';
 
         overlayElement.appendChild(piece);
 
-        // Auto remove element after animation completes
         setTimeout(() => {
             piece.remove();
         }, (duration + delay) * 1000);
@@ -1436,19 +1475,15 @@ function triggerRajConfettiAnimation(overlayElement) {
 // MODERN GLOWING SUCCESS POPUP FUNCTION (WITH WHATSAPP TRACK BUTTON)
 // ==========================================
 function showOrderSuccessPopup(orderData) {
-    // Remove existing popup if any
     const existingOverlay = document.getElementById("rajOrderSuccessOverlay");
     if (existingOverlay) existingOverlay.remove();
 
-    // বর্তমান Date ও Time জেনারেট করার জন্য
     const now = new Date();
-    const currentDate = now.toLocaleDateString('en-GB'); // DD/MM/YYYY format
+    const currentDate = now.toLocaleDateString('en-GB'); 
     const currentTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-   
-    const whatsappNumber = "919239628344"; // 
+    const whatsappNumber = "919239628344";
 
-    // WhatsApp Message Format আপনার চাহিদা অনুযায়ী তৈরি করা হয়েছে
     const waMessage = 
 `📦 Track Your Order
 
@@ -1467,7 +1502,6 @@ I want to track my order.
 
 Thank you! 💚`;
 
-    // URL Encode করা যাতে স্পেস বা ইমোজি ঠিক থাকে
     const encodedWaMessage = encodeURIComponent(waMessage);
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedWaMessage}`;
 
@@ -1485,7 +1519,6 @@ Thank you! 💚`;
             <div class="raj-popup-row"><strong>Quantity:</strong> ${orderData.quantity.toLocaleString()}</div>
             <div class="raj-popup-row"><strong>Total price:</strong> ₹${orderData.amount}</div>
 
-            <!-- নতুন WhatsApp Track Your Order Button (Center Aligned & Color-Changing) -->
             <div style="text-align: center; margin-top: 20px;">
                 <a href="${whatsappUrl}" target="_blank" class="raj-whatsapp-track-btn">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -1499,7 +1532,6 @@ Thank you! 💚`;
 
     document.body.appendChild(overlay);
 
-    // Trigger smooth fade-in and Firecracker/Confetti effect
     setTimeout(() => {
         overlay.classList.add("active");
         triggerRajConfettiAnimation(overlay);
@@ -1511,6 +1543,38 @@ function closeRajSuccessPopup() {
     if (overlay) {
         overlay.classList.remove("active");
         setTimeout(() => overlay.remove(), 300);
+    }
+}
+
+// ==========================================
+// HELPER: SHOW NON-CLICKABLE PROCESSING STATE
+// ==========================================
+function setProcessingState(isProcessing, message = "Processing Order...") {
+    const checkoutPage = document.getElementById("checkoutPage");
+    if (!checkoutPage) return;
+
+    if (isProcessing) {
+        document.body.classList.add("is-processing");
+        
+        // Prevent multiple overlays
+        let processingOverlay = document.getElementById("rajProcessingOverlay");
+        if (!processingOverlay) {
+            processingOverlay = document.createElement("div");
+            processingOverlay.id = "rajProcessingOverlay";
+            processingOverlay.className = "raj-processing-overlay";
+            processingOverlay.innerHTML = `
+                <div class="raj-processing-spinner"></div>
+                <div class="raj-processing-text">${message}</div>
+            `;
+            checkoutPage.style.position = checkoutPage.style.position || "relative";
+            checkoutPage.appendChild(processingOverlay);
+        }
+    } else {
+        document.body.classList.remove("is-processing");
+        const processingOverlay = document.getElementById("rajProcessingOverlay");
+        if (processingOverlay) {
+            processingOverlay.remove();
+        }
     }
 }
 
@@ -1601,11 +1665,7 @@ async function submitOrderToWhatsApp() {
     // -----------------------------
     // 6. Backend URL
     // -----------------------------
-    // LOCAL TEST
     const BACKEND_URL = "https://raj-social-panel-backend-qfwd.vercel.app";
-
-    // পরে Live করার সময়:
-    // const BACKEND_URL = "https://raj-social-panel-backend-qfwd.vercel.app";
 
     // -----------------------------
     // 7. Prepare Backend Request
@@ -1642,16 +1702,9 @@ async function submitOrderToWhatsApp() {
     };
 
     // -----------------------------
-    // 8. Disable Submit Button
+    // 8. Trigger Non-Clickable Processing Lock
     // -----------------------------
-    const submitBtn =
-        document.querySelector("#checkoutPage .submit-btn") ||
-        document.querySelector(".submit-btn");
-
-    if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.textContent = "Processing...";
-    }
+    setProcessingState(true, "Processing Your Order...");
 
     try {
 
@@ -1777,11 +1830,10 @@ async function submitOrderToWhatsApp() {
         );
 
     } finally {
-
-        if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.textContent = "Confirm Order";
-        }
+        // -----------------------------
+        // 15. Release Non-Clickable Lock
+        // -----------------------------
+        setProcessingState(false);
     }
 }
 
@@ -1831,7 +1883,6 @@ window.addEventListener("appinstalled", () => {
 
 async function submitOrderWithWallet() {
     const linkInput = document.getElementById("checkoutLinkInput");
-    const walletBtn = document.getElementById("submitWalletBtn");
     const rawLink = linkInput ? linkInput.value.trim() : "";
     const orderAmount = currentCheckoutData.price;
     const finalPriceFormatted = orderAmount ? orderAmount.toFixed(2) : "0.00";
@@ -1856,7 +1907,8 @@ async function submitOrderWithWallet() {
         return;
     }
 
-    if (walletBtn) walletBtn.disabled = true;
+    // Trigger Non-Clickable Processing Lock for Wallet Order
+    setProcessingState(true, "Processing Wallet Order...");
 
     const db = firebase.firestore();
     const userRef = db.collection('users').doc(user.uid);
@@ -1904,6 +1956,6 @@ async function submitOrderWithWallet() {
     } catch (error) {
         alert("Error: " + (error.message || error));
     } finally {
-        if (walletBtn) walletBtn.disabled = false;
+        setProcessingState(false);
     }
 }

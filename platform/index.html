@@ -630,7 +630,6 @@
       <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
     </div>
 
-    <!-- WhatsApp Logo Removed and Glowing Effect Added -->
     <button class="whatsapp-submit-btn" id="confirmOrderBtn" onclick="handleConfirmOrderClick(event)">
       Confirm your order
     </button>
@@ -643,10 +642,8 @@
 <script type="module" src="auth-handler.js"></script>
 
 <script>
-  // Lock flag for preventing duplicate submissions
   let isSubmittingOrder = false;
 
-  // Helper function to reset button state and unlock
   function resetOrderButton() {
     isSubmittingOrder = false;
     const btn = document.getElementById('confirmOrderBtn') || document.querySelector('.whatsapp-submit-btn');
@@ -663,30 +660,50 @@
       event.stopPropagation();
     }
 
-    // Double-click / rapid-click protection check
     if (isSubmittingOrder) {
       return false;
     }
 
-    // Set submission lock immediately before anything else
-    isSubmittingOrder = true;
+    // 1. First Validation Check (Check inputs before setting processing state)
+    const linkInput = document.getElementById('checkoutLinkInput');
+    const txnInput = document.getElementById('checkoutTxnId');
 
-    // Target the button UI element
+    const linkValue = linkInput ? linkInput.value.trim() : '';
+    const txnValue = txnInput ? txnInput.value.trim() : '';
+
+    if (!linkValue) {
+      alert("Please enter a valid Link / Username.");
+      resetOrderButton();
+      return false;
+    }
+
+    if (!txnValue) {
+      alert("Please enter Transaction ID / UTR number.");
+      resetOrderButton();
+      return false;
+    }
+
+    // 2. Set processing state ONLY if validation passes
+    isSubmittingOrder = true;
     const btn = document.getElementById('confirmOrderBtn') || document.querySelector('.whatsapp-submit-btn');
 
     if (btn) {
-      // 1. Change text to "Processing"
       btn.innerText = "Processing";
-      // 2. Add processing state style (pink background)
       btn.classList.add("processing-state");
-      // 3. Disable the button
       btn.disabled = true;
     }
 
-    // Call existing submit logic safely
+    // 3. Execute Submission Logic
     try {
       if (typeof submitOrderToWhatsApp === 'function') {
         const result = submitOrderToWhatsApp();
+        
+        // If validation inside script.js returns false/fails
+        if (result === false) {
+          resetOrderButton();
+          return false;
+        }
+
         if (result && typeof result.catch === 'function') {
           result.catch(function(err) {
             console.error("Order submit error:", err);
@@ -695,6 +712,7 @@
         }
       } else {
         console.warn("submitOrderToWhatsApp function not found");
+        resetOrderButton();
       }
     } catch (error) {
       console.error("Error executing submitOrderToWhatsApp:", error);
@@ -702,7 +720,6 @@
     }
   }
 
-  // Wrapper for closing checkout modal and resetting button state
   function handleCloseCheckout() {
     resetOrderButton();
     if (typeof closeCheckout === 'function') {
@@ -713,7 +730,6 @@
     }
   }
 
-  // Intercept open checkout or page visibility changes to guarantee button reset for new orders
   const observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
       if (mutation.attributeName === 'class') {
@@ -732,21 +748,17 @@
     }
   });
 
-  // Dynamic Platform Theme Switcher Integration
   function applyPlatformTheme(platform) {
     if (!platform) return;
     const p = platform.toLowerCase();
     document.body.setAttribute('data-platform', p);
   }
 
-  // Unified Platform Switch Click & Service Loading Handler
   function handlePlatformClick(platform, elem) {
     document.querySelectorAll('.platform-switch-container .platform-btn').forEach(btn => {
       btn.classList.remove('active');
     });
     elem.classList.add('active');
-
-    // Automatically change theme based on platform
     applyPlatformTheme(platform);
 
     if (typeof switchPlatform === 'function') {
@@ -756,7 +768,6 @@
     }
   }
 
-  // Payment Method Switching Logic
   function switchCheckoutPayment(method) {
     const upiView = document.getElementById('checkoutUpiView');
     const binanceView = document.getElementById('checkoutBinanceView');
@@ -784,14 +795,12 @@
     }
   }
 
-  // WhatsApp Support Click Handler
   function openWhatsAppSupport() {
     const phoneNumber = "919239628344";
     const message = encodeURIComponent("Hi 👋 I want to know about your services on rajsmmpanel.in");
     window.open("https://wa.me/" + phoneNumber + "?text=" + message, "_blank");
   }
 
-  // Sidebar Controls
   function openSidebar() {
     const sidebar = document.getElementById("leftSidebar");
     const overlay = document.getElementById("sidebarOverlay");
@@ -827,9 +836,7 @@
     }
   });
 
-  // Input Focus App Banner Toggle
   document.addEventListener("DOMContentLoaded", function () {
-    // Default initial theme setup
     applyPlatformTheme('instagram');
 
     document.body.addEventListener("focusin", function (e) {
@@ -847,7 +854,6 @@
     });
   });
 
-  // Service Worker Registration
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./sw.js')

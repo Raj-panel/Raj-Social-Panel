@@ -475,7 +475,7 @@ const serviceData = {
         "PAGE/PROFILE Followers": [
             { type: "custom", name: "High Quality Facebook Followers • ♻️ Lifetime Refill • 100K+/Day •Start in 30 Min", pricePer1000: 69 }
         ],
-        "Likes Life-Time Refill ♻️": [
+        "Like Life-Time Refill ♻️": [
             { name: "100 Likes", price: 10, badge: "STARTER", badgeClass: "badge-demo", desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" },
             { name: "500 Likes", price: 35, desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" },
             { name: "1K Likes", price: 70, badge: "⭐ POPULAR", badgeClass: "badge-popular", desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" },
@@ -483,7 +483,7 @@ const serviceData = {
             { name: "5K Likes", price: 260, badge: "🔥 BEST VALUE", badgeClass: "badge-best", desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" },
             { name: "10K Likes", price: 499, badge: "👑 MOST POPULAR", badgeClass: "badge-best", desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" }
         ],
-        "Reels / Video Views Non-Drop": [
+        "REELS / VIDEO Views Non-Drop": [
             { name: "1K Views", price: 15, badge: "STARTER", badgeClass: "badge-demo", desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" },
             { name: "3K Views", price: 30, desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" },
             { name: "5K Views", price: 50, badge: "⭐ POPULAR", badgeClass: "badge-popular", desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" },
@@ -491,7 +491,7 @@ const serviceData = {
             { name: "50K Views", price: 349, badge: "🔥 BEST VALUE", badgeClass: "badge-best", desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" },
             { name: "100K Views", price: 449, badge: "👑 MOST POPULAR", badgeClass: "badge-best", desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" }
         ],
-        "POST / VIDEO Shares Non-Drop": [
+        "REELS / VIDEO Shares Non-Drop": [
             { name: "100 Shares", price: 15, desc: "🔗 Real Quality Shares • ♻️ Lifetime Refill • Start In 20 Min" },
             { name: "1K Shares", price: 25, desc: "🔗 Real Quality Shares • ♻️ Lifetime Refill • Start In 20 Min" },
             { name: "5K Shares", price: 59, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🔗 Real Quality Shares • ♻️ Lifetime Refill • Start In 20 Min" },

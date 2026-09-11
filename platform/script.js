@@ -489,7 +489,7 @@ const serviceData = {
             { name: "5K Views", price: 50, badge: "⭐ POPULAR", badgeClass: "badge-popular", desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" },
             { name: "10K Views", price: 90, desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" },
             { name: "50K Views", price: 349, badge: "🔥 BEST VALUE", badgeClass: "badge-best", desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" },
-            { name: "100K Views", price: 449, badge: "👑 MOST POPULAR", badgeClass: "badge-best", desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" }
+            { name: "100K Views", price: 499, badge: "👑 MOST POPULAR", badgeClass: "badge-best", desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" }
         ],
         "REELS / VIDEO Shares Non-Drop": [
             { name: "100 Shares", price: 15, desc: "🔗 Real Quality Shares • ♻️ Lifetime Refill • Start In 20 Min" },

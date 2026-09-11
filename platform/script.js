@@ -380,12 +380,12 @@ const serviceData = {
                 badgeClass: "badge-best",
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
-                    "👁️ Reels Views — 10,000",
-                    "❤️ Reels Likes — 600",
+                    "👁️ Reels Views — 15,000",
+                    "❤️ Reels Likes — 500",
                     "💬 Reels Comments — 13",
-                    "💾 Post / Reels Save — 100",
+                    "💾 Post / Reels Save — 150",
                     "🔄 Post / Reels Shares — 500",
-                    "♻️ Reels Reposts — 100"
+                    "♻️ Reels Reposts — 150"
                 ],
                 placeholder: "Enter Instagram reel/video link"
             },
@@ -396,8 +396,8 @@ const serviceData = {
                 badgeClass: "badge-best",
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
-                    "👁️ Reels Views — 30,000",
-                    "❤️ Reels Likes — 1,500",
+                    "👁️ Reels Views — 40,000",
+                    "❤️ Reels Likes — 1,000",
                     "💬 Reels Comments — 30",
                     "💾 Post / Reels Save — 100",
                     "🔄 Post / Reels Shares — 1,000",
@@ -412,11 +412,11 @@ const serviceData = {
                 badgeClass: "badge-best",
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
-                    "👁️ Reels Views — 40,000",
-                    "❤️ Reels Likes — 3,500",
+                    "👁️ Reels Views — 70,000",
+                    "❤️ Reels Likes — 2,000",
                     "💬 Reels Comments — 60",
                     "💾 Post / Reels Save — 300",
-                    "🔄 Post / Reels Shares — 3,000",
+                    "🔄 Post / Reels Shares — 2,000",
                     "♻️ Reels Reposts — 250"
                 ],
                 placeholder: "Enter Instagram reel/video link"
@@ -428,8 +428,8 @@ const serviceData = {
                 badgeClass: "badge-best",
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
-                    "👁️ Reels Views — 60,000",
-                    "❤️ Reels Likes — 7,000",
+                    "👁️ Reels Views — 100,000",
+                    "❤️ Reels Likes — 3,500",
                     "💬 Reels Comments — 120",
                     "💾 Post / Reels Save — 500",
                     "🔄 Post / Reels Shares — 5,000",
@@ -444,11 +444,11 @@ const serviceData = {
                 badgeClass: "badge-best",
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
-                    "👁️ Reels Views — 100,000",
-                    "❤️ Reels Likes — 11,000",
+                    "👁️ Reels Views — 150,000",
+                    "❤️ Reels Likes — 5,000",
                     "💬 Reels Comments — 400",
-                    "💾 Post / Reels Save — 2,000",
-                    "🔄 Post / Reels Shares — 8,000",
+                    "💾 Post / Reels Save — 1,000",
+                    "🔄 Post / Reels Shares — 7,000",
                     "♻️ Reels Reposts — 600"
                 ],
                 placeholder: "Enter Instagram reel/video link"
@@ -460,11 +460,11 @@ const serviceData = {
                 badgeClass: "badge-best",
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
-                    "👁️ Reels Views — 300,000",
-                    "❤️ Reels Likes — 18,000",
+                    "👁️ Reels Views — 320,000",
+                    "❤️ Reels Likes — 10,000",
                     "💬 Reels Comments — 600",
                     "💾 Post / Reels Save — 2,500",
-                    "🔄 Post / Reels Shares — 15,000",
+                    "🔄 Post / Reels Shares — 10,000",
                     "♻️ Reels Reposts — 800"
                 ],
                 placeholder: "Enter Instagram reel/video link"

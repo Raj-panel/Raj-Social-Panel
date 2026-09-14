@@ -380,12 +380,12 @@ const serviceData = {
                 badgeClass: "badge-best",
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
-                    "👁️ Reels Views — 15,000",
+                    "👁️ Reels Views — 16,000",
                     "❤️ Reels Likes — 500",
                     "💬 Reels Comments — 13",
                     "💾 Post / Reels Save — 100",
-                    "🔄 Post / Reels Shares — 300",
-                    "♻️ Reels Reposts — 100"
+                    "🔄 Post / Reels Shares — 200",
+                    "♻️ Reels Reposts — 50"
                 ],
                 placeholder: "Enter Instagram reel/video link"
             },
@@ -399,9 +399,9 @@ const serviceData = {
                     "👁️ Reels Views — 40,000",
                     "❤️ Reels Likes — 1,000",
                     "💬 Reels Comments — 30",
-                    "💾 Post / Reels Save — 200",
-                    "🔄 Post / Reels Shares — 1,000",
-                    "♻️ Reels Reposts — 150"
+                    "💾 Post / Reels Save — 300",
+                    "🔄 Post / Reels Shares — 500",
+                    "♻️ Reels Reposts — 100"
                 ],
                 placeholder: "Enter Instagram reel/video link"
             },
@@ -415,8 +415,8 @@ const serviceData = {
                     "👁️ Reels Views — 70,000",
                     "❤️ Reels Likes — 2,000",
                     "💬 Reels Comments — 60",
-                    "💾 Post / Reels Save — 300",
-                    "🔄 Post / Reels Shares — 2,000",
+                    "💾 Post / Reels Save — 500",
+                    "🔄 Post / Reels Shares — 1,500",
                     "♻️ Reels Reposts — 250"
                 ],
                 placeholder: "Enter Instagram reel/video link"
@@ -431,8 +431,8 @@ const serviceData = {
                     "👁️ Reels Views — 100,000",
                     "❤️ Reels Likes — 3,500",
                     "💬 Reels Comments — 120",
-                    "💾 Post / Reels Save — 500",
-                    "🔄 Post / Reels Shares — 5,000",
+                    "💾 Post / Reels Save — 700",
+                    "🔄 Post / Reels Shares — 3,000",
                     "♻️ Reels Reposts — 400"
                 ],
                 placeholder: "Enter Instagram reel/video link"
@@ -448,8 +448,8 @@ const serviceData = {
                     "❤️ Reels Likes — 5,000",
                     "💬 Reels Comments — 400",
                     "💾 Post / Reels Save — 1,000",
-                    "🔄 Post / Reels Shares — 7,000",
-                    "♻️ Reels Reposts — 600"
+                    "🔄 Post / Reels Shares — 5,000",
+                    "♻️ Reels Reposts — 500"
                 ],
                 placeholder: "Enter Instagram reel/video link"
             },
@@ -463,9 +463,9 @@ const serviceData = {
                     "👁️ Reels Views — 220,000",
                     "❤️ Reels Likes — 8,000",
                     "💬 Reels Comments — 600",
-                    "💾 Post / Reels Save — 2,500",
-                    "🔄 Post / Reels Shares — 10,000",
-                    "♻️ Reels Reposts — 800"
+                    "💾 Post / Reels Save — 2,000",
+                    "🔄 Post / Reels Shares — 8,000",
+                    "♻️ Reels Reposts — 700"
                 ],
                 placeholder: "Enter Instagram reel/video link"
             }

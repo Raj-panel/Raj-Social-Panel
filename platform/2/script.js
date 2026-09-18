@@ -45,21 +45,21 @@ const platformData = {
       "working": {
         name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐅𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬- 𝐌𝐢𝐱 𝐒𝐞𝐫𝐯𝐢𝐜𝐞",
         services: [
-          { id: "1220", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 60D Refill 🔄", rate: 53.358, avgTime: "0–10 Min Start" },
-          { id: "1221", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 90D Refill 🔄", rate: 57.929, avgTime: "0–10 Min Start" },
-          { id: "1222", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 365D Refill 🔄", rate: 60.501, avgTime: "0–10 Min Start" },
-          { id: "1223", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - Lifetime Refill ♻️", rate: 63.072, avgTime: "0–10 Min Start" },
+          { id: "1220", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 60D Refill 🔄", rate: 180.358, avgTime: "0–10 Min Start" },
+          { id: "1221", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 90D Refill 🔄", rate: 185.929, avgTime: "0–10 Min Start" },
+          { id: "1222", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 365D Refill 🔄", rate: 205.501, avgTime: "0–10 Min Start" },
+          { id: "1223", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - Lifetime Refill ♻️", rate: 230.072, avgTime: "0–10 Min Start" },
         ]
       },
       "nondrop": {
         name: "Instagram - Followers | Real Profiles [Refill Working] NEW",
         services: [
-          { id: "5811", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - No Refill 🔄", rate: 80.929, avgTime: "0–30 Min Start" },
-          { id: "5812", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 30D Refill 🔄", rate: 82.072, avgTime: "0–30 Min Start" },
-          { id: "5813", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 60D Refill 🔄", rate: 85.644, avgTime: "0–30 Min Start" },
-          { id: "5814", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 90D Refill 🔄", rate: 86.215, avgTime: "0–30 Min Start" },
-          { id: "5815", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 365D Refill 🔄", rate: 88.858, avgTime: "0–30 Min Start" },
-          { id: "5816", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - Lifetime Refill ♻️", rate: 96.358, avgTime: "0–30 Min Start" },
+          { id: "5811", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - No Refill 🔄", rate: 157.929, avgTime: "0–30 Min Start" },
+          { id: "5812", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 30D Refill 🔄", rate: 170.072, avgTime: "0–30 Min Start" },
+          { id: "5813", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 60D Refill 🔄", rate: 182.644, avgTime: "0–30 Min Start" },
+          { id: "5814", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 90D Refill 🔄", rate: 194.215, avgTime: "0–30 Min Start" },
+          { id: "5815", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 365D Refill 🔄", rate: 207.858, avgTime: "0–30 Min Start" },
+          { id: "5816", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - Lifetime Refill ♻️", rate: 235.358, avgTime: "0–30 Min Start" },
         ]
       },
       "Instagram like real profile": {

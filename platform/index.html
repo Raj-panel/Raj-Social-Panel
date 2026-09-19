@@ -414,9 +414,7 @@
   </div>
   
   <ul class="sidebar-menu">
-    <li id="authMenuItem">
-    
-    <!-- New Order Link Updated Below -->
+    <li id="authMenuItem"></li>
     <li><a href="https://rajsmmpanel.in/">🛒 New Order</a></li>
     <li><a href="https://rajsmmpanel.in/platform/2/">⚡ Platform 2</a></li>
     <li><a href="/orders/">📦 My Orders</a></li>
@@ -579,20 +577,20 @@
       </button>
     </div>
 
-    <!-- UPDATED CHECKOUT UPI VIEW -->
+    <!-- CHECKOUT UPI VIEW -->
     <div id="checkoutUpiView" class="payment-view-box">
       <div class="scan-title" style="font-weight: 800; color: var(--platform-primary, #a855f7); font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
         SCAN TO PAY VIA UPI
       </div>
       
-      <!-- QR Container Box with Border & Hero-like Background -->
+      <!-- QR Container Box -->
       <div class="qr-card-container" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(99, 102, 241, 0.08) 100%); border: 2px dashed rgba(168, 85, 247, 0.4); border-radius: 16px; padding: 16px; text-align: center; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
         <div class="qr-wrapper" style="text-align: center; margin-bottom: 12px;">
-          <img id="checkoutQrImg" src="" alt="UPI QR Code" style="display: block; margin: 0 auto; border-radius: 12px; width: 180px; height: 180px; background: #ffffff; padding: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
+          <img id="checkoutQrImg" src="" alt="UPI QR Code" crossorigin="anonymous" style="display: block; margin: 0 auto; border-radius: 12px; width: 180px; height: 180px; background: #ffffff; padding: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
         </div>
         
-        <!-- Download QR Code Button (Placed inside container, right below border/QR) -->
-        <button type="button" class="download-qr-btn" onclick="downloadQRCode()" style="background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); color: #ffffff; border: none; border-radius: 8px; padding: 8px 16px; font-size: 13px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 3px 10px rgba(168, 85, 247, 0.3); transition: all 0.2s ease;">
+        <!-- Download QR Code Button -->
+        <button type="button" class="download-qr-btn" id="downloadQrBtn" onclick="downloadQRCode()" style="background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); color: #ffffff; border: none; border-radius: 8px; padding: 8px 16px; font-size: 13px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 3px 10px rgba(168, 85, 247, 0.3); transition: all 0.2s ease;">
           <i class="fa-solid fa-download"></i> Download QR Code
         </button>
       </div>
@@ -606,7 +604,7 @@
           <span style="color: #00baf2; font-weight: 900;">Paytm</span>
         </div>
         <div class="upi-app-card-btn">
-          <span style="color: #4285f4; font-weight: 800;">G</span><span style="color: #ea4335; font-weight: 800;">P</span><span style="color: #fbbc05; font-weight: 800;">a</span><span style="color: #34a853; font-weight: 800;">y</span>
+          <span style="color: #4285f4; font-weight: 800;">G</span><span style="color: #ea4335; font-weight: 800;">P</span><span style="color: #fbbc05; font-weight: 800;">a</span><span style="color: #34a853; font-weight: 800;">Y</span>
         </div>
         <div class="upi-app-card-btn">
           <i class="fa-solid fa-asterisk" style="color: #5f259f;"></i>
@@ -661,36 +659,74 @@
     }
   }
 
-  // FUNCTION: DOWNLOAD QR CODE WITHOUT LEAVING CHECKOUT PAGE
+  // FIXED SILENT BACKGROUND DOWNLOAD FUNCTION
   function downloadQRCode() {
     const qrImg = document.getElementById('checkoutQrImg');
+    const dlBtn = document.getElementById('downloadQrBtn');
+
     if (!qrImg || !qrImg.src) {
       alert("QR Code image not available!");
       return;
     }
 
-    fetch(qrImg.src)
-      .then(response => response.blob())
-      .then(blob => {
-        const blobUrl = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        link.download = 'Raj_SMM_UPI_QR.png';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(blobUrl);
-      })
-      .catch(err => {
-        console.error("Error downloading QR Code:", err);
-        const link = document.createElement('a');
-        link.href = qrImg.src;
-        link.download = 'Raj_SMM_UPI_QR.png';
-        link.target = '_blank';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      });
+    // Temporary button state change to indicate downloading
+    const originalText = dlBtn.innerHTML;
+    dlBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Downloading...';
+    dlBtn.disabled = true;
+
+    // Direct Canvas conversion to prevent image opening in new window/tab
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = qrImg.src;
+
+    img.onload = function () {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth || img.width;
+      canvas.height = img.naturalHeight || img.height;
+      
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+
+      // Convert image to Data Base64 URL for instant silent download
+      const dataURL = canvas.toDataURL('image/png');
+      
+      const a = document.createElement('a');
+      a.href = dataURL;
+      a.download = 'Raj_SMM_UPI_QR.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      // Reset button
+      setTimeout(() => {
+        dlBtn.innerHTML = originalText;
+        dlBtn.disabled = false;
+      }, 500);
+    };
+
+    img.onerror = function () {
+      // Fallback Blob method if CORS blocks Canvas
+      fetch(qrImg.src)
+        .then(response => response.blob())
+        .then(blob => {
+          const blobUrl = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = blobUrl;
+          a.download = 'Raj_SMM_UPI_QR.png';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(blobUrl);
+        })
+        .catch(err => {
+          console.error("QR Download Error:", err);
+          alert("Unable to download image automatically.");
+        })
+        .finally(() => {
+          dlBtn.innerHTML = originalText;
+          dlBtn.disabled = false;
+        });
+    };
   }
 
   function handleConfirmOrderClick(event) {
@@ -703,7 +739,6 @@
       return false;
     }
 
-    // 1. First Validation Check (Check inputs before setting processing state)
     const linkInput = document.getElementById('checkoutLinkInput');
     const txnInput = document.getElementById('checkoutTxnId');
 
@@ -722,7 +757,6 @@
       return false;
     }
 
-    // 2. Set processing state ONLY if validation passes
     isSubmittingOrder = true;
     const btn = document.getElementById('confirmOrderBtn') || document.querySelector('.whatsapp-submit-btn');
 
@@ -732,12 +766,10 @@
       btn.disabled = true;
     }
 
-    // 3. Execute Submission Logic
     try {
       if (typeof submitOrderToWhatsApp === 'function') {
         const result = submitOrderToWhatsApp();
         
-        // If validation inside script.js returns false/fails
         if (result === false) {
           resetOrderButton();
           return false;

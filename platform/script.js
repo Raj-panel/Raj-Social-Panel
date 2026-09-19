@@ -472,7 +472,16 @@ const serviceData = {
         ]
     },
     facebook: {
-        "PAGE/PROFILE Followers": [
+        "Facebook Followers Non-Drop / Refill": [
+            { name: "200 Followers", price: 20, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
+            { name: "1k followers", price: 70, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
+            { name: "3k followers", price: 179, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
+            { name: "5k Followers", price: 270, badge: "POPULAR", badgeClass: "badge-popular", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
+            { name: "7k Followers", price: 369, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
+            { name: "10k followers", price: 510, badge: "BEST VALUE", badgeClass: "badge-best", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
+            { name: "20k Followers", price: 999, badge: "MEGA DEAL", badgeClass: "badge-super", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" }
+        ],
+        "PAGE/PROFILE Followers (Custom Qty)": [
             { type: "custom", name: "High Quality Facebook Followers • ♻️ Lifetime Refill • 100K+/Day •Start in 30 Min", pricePer1000: 69 }
         ],
         "Like Life-Time Refill ♻️": [
@@ -866,7 +875,7 @@ function renderPackages() {
                     <div class="pkg-info">
                         <div class="pkg-title">
                             ${pkg.name}
-                            ${pkg.badge ? `<span class="pkg-badge ${pkg.badgeClass || "badge-popular"}">${pkg.badge}</span>` : ""}
+                            ${pkg.badge ? `<span class="pkg-badge ${pkg.badgeClass \vert{}\vert{} "badge-popular"}">${pkg.badge}</span>` : ""}
                         </div>
                         <span class="pkg-sub">
                             ${subtitleText}
@@ -1436,19 +1445,15 @@ function triggerRajConfettiAnimation(overlayElement) {
 // MODERN GLOWING SUCCESS POPUP FUNCTION (WITH WHATSAPP TRACK BUTTON)
 // ==========================================
 function showOrderSuccessPopup(orderData) {
-    // Remove existing popup if any
     const existingOverlay = document.getElementById("rajOrderSuccessOverlay");
     if (existingOverlay) existingOverlay.remove();
 
-    // বর্তমান Date ও Time জেনারেট করার জন্য
     const now = new Date();
-    const currentDate = now.toLocaleDateString('en-GB'); // DD/MM/YYYY format
+    const currentDate = now.toLocaleDateString('en-GB'); 
     const currentTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-   
-    const whatsappNumber = "919239628344"; // 
+    const whatsappNumber = "919239628344";
 
-    // WhatsApp Message Format আপনার চাহিদা অনুযায়ী তৈরি করা হয়েছে
     const waMessage = 
 `📦 Track Your Order
 
@@ -1467,7 +1472,6 @@ I want to track my order.
 
 Thank you! 💚`;
 
-    // URL Encode করা যাতে স্পেস বা ইমোজি ঠিক থাকে
     const encodedWaMessage = encodeURIComponent(waMessage);
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedWaMessage}`;
 
@@ -1485,11 +1489,10 @@ Thank you! 💚`;
             <div class="raj-popup-row"><strong>Quantity:</strong> ${orderData.quantity.toLocaleString()}</div>
             <div class="raj-popup-row"><strong>Total price:</strong> ₹${orderData.amount}</div>
 
-            <!-- নতুন WhatsApp Track Your Order Button (Center Aligned & Color-Changing) -->
             <div style="text-align: center; margin-top: 20px;">
                 <a href="${whatsappUrl}" target="_blank" class="raj-whatsapp-track-btn">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
                     </svg>
                     Track Your Order
                 </a>
@@ -1499,7 +1502,6 @@ Thank you! 💚`;
 
     document.body.appendChild(overlay);
 
-    // Trigger smooth fade-in and Firecracker/Confetti effect
     setTimeout(() => {
         overlay.classList.add("active");
         triggerRajConfettiAnimation(overlay);
@@ -1516,8 +1518,6 @@ function closeRajSuccessPopup() {
 
 // ==========================================
 // BACKEND ORDER SUBMISSION
-// Platform 1
-// Frontend → Backend → MongoDB + Telegram
 // ==========================================
 async function submitOrderToWhatsApp() {
     const linkInput = document.getElementById("checkoutLinkInput");
@@ -1526,9 +1526,6 @@ async function submitOrderToWhatsApp() {
     const rawLink = linkInput ? linkInput.value.trim() : "";
     const txnId = txnInput ? txnInput.value.trim() : "";
 
-    // -----------------------------
-    // 1. Validate Link
-    // -----------------------------
     const validation = processProfileOrLink(
         rawLink,
         currentCheckoutData.platform,
@@ -1542,17 +1539,11 @@ async function submitOrderToWhatsApp() {
 
     const link = validation.url;
 
-    // -----------------------------
-    // 2. Validate UTR
-    // -----------------------------
     if (!txnId) {
         alert("Please enter Transaction ID / UTR number!");
         return;
     }
 
-    // -----------------------------
-    // 3. User ID
-    // -----------------------------
     const userIdentifier =
         (typeof window.firebaseUserUid !== "undefined" && window.firebaseUserUid)
             ? window.firebaseUserUid
@@ -1571,11 +1562,7 @@ async function submitOrderToWhatsApp() {
                 return bid;
             })();
 
-    // -----------------------------
-    // 4. Order Data
-    // -----------------------------
     const d = currentCheckoutData;
-
     const finalPrice = Number(d.price || 0);
 
     if (finalPrice <= 0) {
@@ -1585,65 +1572,28 @@ async function submitOrderToWhatsApp() {
 
     const finalPriceFormatted = finalPrice.toFixed(2);
 
-    // -----------------------------
-    // 5. Payment Method
-    // -----------------------------
     const isUpi = document.getElementById("btnTabUpi")
-        ? document
-            .getElementById("btnTabUpi")
-            .classList.contains("active")
+        ? document.getElementById("btnTabUpi").classList.contains("active")
         : true;
 
-    const payMethod = isUpi
-        ? "UPI QR Code"
-        : "Binance Pay";
-
-    // -----------------------------
-    // 6. Backend URL
-    // -----------------------------
-    // LOCAL TEST
+    const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
     const BACKEND_URL = "https://raj-social-panel-backend-qfwd.vercel.app";
 
-    // পরে Live করার সময়:
-    // const BACKEND_URL = "https://raj-social-panel-backend-qfwd.vercel.app";
-
-    // -----------------------------
-    // 7. Prepare Backend Request
-    // -----------------------------
     const orderPayload = {
         userId: userIdentifier,
-
         platform: "platform1",
-
-        serviceId: String(
-            d.serviceId ||
-            d.id ||
-            d.serviceID ||
-            "unknown"
-        ),
-
+        serviceId: String(d.serviceId || d.id || d.serviceID || "unknown"),
         serviceName: d.serviceName || "SMM Service",
-
         packageName: d.packageName || "",
-
         link: link,
-
         quantity: Number(d.quantity || 0),
-
         amount: finalPrice,
-
         paymentId: txnId,
-
         paymentMethod: payMethod,
-
         paymentStatus: "PAID",
-
         orderStatus: "PAID"
     };
 
-    // -----------------------------
-    // 8. Disable Submit Button
-    // -----------------------------
     const submitBtn =
         document.querySelector("#checkoutPage .submit-btn") ||
         document.querySelector(".submit-btn");
@@ -1654,67 +1604,37 @@ async function submitOrderToWhatsApp() {
     }
 
     try {
-
-        // -----------------------------
-        // 9. Send Order to Backend
-        // -----------------------------
         const response = await fetch(
             `${BACKEND_URL}/api/orders/create`,
             {
                 method: "POST",
-
                 headers: {
                     "Content-Type": "application/json"
                 },
-
                 body: JSON.stringify(orderPayload)
             }
         );
 
-        // -----------------------------
-        // 10. Read Backend Response
-        // -----------------------------
         const data = await response.json();
-
         console.log("Backend Order Response:", data);
 
-        // -----------------------------
-        // 11. Backend Error
-        // -----------------------------
         if (!response.ok || !data.success) {
-
             throw new Error(
-                data.message ||
-                data.error ||
-                "Order submission failed."
+                data.message || data.error || "Order submission failed."
             );
         }
 
-        // -----------------------------
-        // 12. Save Local Order
-        // -----------------------------
         const backendOrder = data.order;
 
         const localOrder = {
-            orderId:
-                backendOrder?.internalOrderId ||
-                Math.floor(100000 + Math.random() * 900000),
-
-            serviceName:
-                `${d.platform} - ${d.serviceName} (${d.packageName || ""})`,
-
+            orderId: backendOrder?.internalOrderId || Math.floor(100000 + Math.random() * 900000),
+            serviceName: `${d.platform} - ${d.serviceName} (${d.packageName || ""})`,
             link: link,
-
             quantity: d.quantity || 0,
-
             amount: finalPriceFormatted,
-
             orderTimeEpoch: Date.now(),
-
             status: "Pending",
-
             userIdentifier: userIdentifier,
-
             paymentId: txnId
         };
 
@@ -1723,61 +1643,29 @@ async function submitOrderToWhatsApp() {
         );
 
         existingOrders.push(localOrder);
+        localStorage.setItem("raj_smm_orders", JSON.stringify(existingOrders));
 
-        localStorage.setItem(
-            "raj_smm_orders",
-            JSON.stringify(existingOrders)
-        );
-
-        // -----------------------------
-        // 13. Close Checkout
-        // -----------------------------
         closeCheckoutUI();
 
-        // -----------------------------
-        // 14. Success Popup
-        // -----------------------------
         showOrderSuccessPopup({
-            orderId:
-                backendOrder?.internalOrderId ||
-                localOrder.orderId,
-
-            platformName:
-                d.platform || "",
-
-            serviceName:
-                d.serviceName || "",
-
-            packageName:
-                d.packageName || "",
-
+            orderId: backendOrder?.internalOrderId || localOrder.orderId,
+            platformName: d.platform || "",
+            serviceName: d.serviceName || "",
+            packageName: d.packageName || "",
             link: link,
-
-            quantity:
-                d.quantity || 0,
-
-            amount:
-                finalPriceFormatted
+            quantity: d.quantity || 0,
+            amount: finalPriceFormatted
         });
 
-        console.log(
-            "✅ Platform 1 order successfully sent to Backend."
-        );
+        console.log("✅ Platform 1 order successfully sent to Backend.");
 
     } catch (error) {
-
-        console.error(
-            "❌ Backend Order Error:",
-            error
-        );
-
+        console.error("❌ Backend Order Error:", error);
         alert(
             "Order could not be submitted.\n\n" +
             (error.message || "Please try again.")
         );
-
     } finally {
-
         if (submitBtn) {
             submitBtn.disabled = false;
             submitBtn.textContent = "Confirm Order";

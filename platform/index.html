@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<!-- Canonical Link -->
 <link rel="canonical" href="https://rajsmmpanel.in/"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Raj SMM Panel – Best India Cheapest SMM Panel for Instagram, Facebook &amp; YouTube</title>
@@ -186,8 +185,8 @@
   .upi-app-btn-grid {
     display: flex;
     justify-content: space-between;
-    gap: 2px;
-    margin-top: 4px;
+    gap: 4px;
+    margin-top: 10px;
     width: 100%;
   }
   .upi-app-card-btn {
@@ -195,15 +194,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(226, 232, 240, 0.6);
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(226, 232, 240, 0.8);
     border-radius: 12px;
-    padding: 8px 4px;
+    padding: 8px 2px;
     text-decoration: none;
     color: #1e293b;
     font-weight: 700;
-    font-size: 12px;
+    font-size: 11px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.03);
     pointer-events: none;
     cursor: default;
@@ -413,23 +412,51 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
 
-  /* Download QR Code Button */
+  /* Outer Image Box for QR */
+  .qr-inner-card {
+    background: #111827;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 18px;
+    padding: 16px 12px 14px 12px;
+    margin: 0 auto;
+    max-width: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Download QR Code Button Exact Image Style */
   .download-qr-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+    gap: 6px;
+    background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
     color: #ffffff !important;
     font-size: 12px;
     font-weight: 700;
     padding: 8px 18px;
     border-radius: 20px;
     text-decoration: none !important;
-    box-shadow: 0 2px 10px rgba(139, 92, 246, 0.4);
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
     transition: all 0.2s ease;
     cursor: pointer;
-    margin-top: 8px;
+    margin-top: 10px;
+    border: none;
+    outline: none;
+  }
+
+  .download-qr-btn:active {
+    transform: scale(0.96);
+  }
+
+  .scan-title-text {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #ec4899;
+    margin-bottom: 12px;
+    text-align: center;
   }
 </style>
 </head>
@@ -445,8 +472,6 @@
   
   <ul class="sidebar-menu">
     <li id="authMenuItem"></li>
-    
-    <!-- New Order Link Updated Below -->
     <li><a href="https://rajsmmpanel.in/">🛒 New Order</a></li>
     <li><a href="https://rajsmmpanel.in/platform/2/">⚡ Platform 2</a></li>
     <li><a href="/orders/">📦 My Orders</a></li>
@@ -563,44 +588,33 @@
       <div class="checkout-heading-text">Checkout</div>
     </div>
 
+    <!-- Premium Service Card -->
     <div class="premium-service-card">
       <div class="card-top-row">
         <div class="platform-badge-icon" id="checkoutPlatformIcon">
           <i class="fa-brands fa-instagram"></i>
         </div>
         <div class="card-info">
-          <h4 id="checkoutServiceTitle">Instagram Followers</h4>
+          <h4 id="checkoutServiceTitle">Instagram – Followers Non-Drop | No Refill</h4>
           <div class="badge-row">
-            <span class="pkg-name-badge" id="checkoutPkgBadgeName">5K Followers</span>
-            <span class="popular-badge" id="checkoutBadge">Best Value</span>
+            <span class="pkg-name-badge" id="checkoutPkgBadgeName">200 Followers</span>
+            <span class="popular-badge" id="checkoutBadge">STARTER</span>
           </div>
         </div>
       </div>
-      <div class="units-text" id="checkoutUnitsText">5,000 units</div>
+      <div class="units-text" id="checkoutUnitsText">200 Package</div>
       <div class="price-text">
-        ₹<span id="checkoutPriceText">199.00</span> <small>one-time</small>
+        ₹<span id="checkoutPriceText">20.00</span> <small>one-time</small>
       </div>
     </div>
 
+    <!-- Instagram Profile Link Input -->
     <div class="checkout-input-group">
-      <label id="checkoutLinkLabel">Enter your Instagram link</label>
-      <input type="text" id="checkoutLinkInput" placeholder="https://instagram.com/your_username" />
+      <label id="checkoutLinkLabel">Instagram Profile Link</label>
+      <input type="text" id="checkoutLinkInput" placeholder="Enter Instagram username or profile link" />
     </div>
 
-    <div class="checkout-order-summary">
-      <div class="summary-title">Order Summary</div>
-      <div class="summary-row">
-        <span>Package</span>
-        <span id="summaryPackageText">5K Followers</span>
-      </div>
-      <div class="summary-divider"></div>
-      <div class="summary-row pay-row">
-        <span>You Pay</span>
-        <span class="pay-amount">₹<span id="summaryPayAmount">199.00</span></span>
-      </div>
-    </div>
-
-    <!-- Unified Payment Outer Container -->
+    <!-- Payment Switch Tabs & View -->
     <div class="payment-card-outer">
       <div class="pay-toggle-tabs">
         <button class="pay-tab active" id="btnTabUpi" onclick="switchCheckoutPayment('upi')">
@@ -611,15 +625,18 @@
         </button>
       </div>
 
-      <!-- UPI Payment View -->
+      <!-- UPI Payment Box View -->
       <div id="checkoutUpiView" class="payment-view-box">
-        <div class="qr-wrapper" style="text-align: center; margin-bottom: 2px;">
-          <img id="checkoutQrImg" src="" alt="UPI QR Code" style="display: block; margin: 0 auto; border-radius: 12px;" />
-          <a id="downloadQrBtn" href="javascript:void(0);" onclick="downloadCheckoutQR()" class="download-qr-btn">
-            <i class="fa-solid fa-circle-arrow-down"></i> Download QR Code
-          </a>
+        <div class="scan-title-text">TACK A SCREENSHOT OR SCAN TO PAY</div>
+        
+        <div class="qr-inner-card">
+          <img id="checkoutQrImg" src="" alt="UPI QR Code" style="width: 170px; height: 170px; display: block; border-radius: 10px;" />
+          <button id="downloadQrBtn" type="button" onclick="downloadCheckoutQR()" class="download-qr-btn">
+            <i class="fa-solid fa-circle-down"></i> Download QR Code
+          </button>
         </div>
-        <p class="qr-sub" style="font-size: 10px; color: #64748b; margin-top: 6px; margin-bottom: 8px; text-align: center;">
+
+        <p class="qr-sub" style="font-size: 11px; color: #94a3b8; margin-top: 10px; margin-bottom: 8px; text-align: center;">
           Scan or enter payment detail into any UPI App
         </p>
         
@@ -631,11 +648,11 @@
             <span style="color: #4285f4; font-weight: 800;">G</span><span style="color: #ea4335; font-weight: 800;">P</span><span style="color: #fbbc05; font-weight: 800;">a</span><span style="color: #34a853; font-weight: 800;">y</span>
           </div>
           <div class="upi-app-card-btn">
-            <i class="fa-solid fa-asterisk" style="color: #5f259f;"></i>
+            <i class="fa-solid fa-asterisk" style="color: #5f259f; font-size: 10px;"></i>
             <span style="color: #5f259f; font-weight: 800;">PhonePe</span>
           </div>
           <div class="upi-app-card-btn">
-            <i class="fa-solid fa-qrcode" style="color: #6366f1;"></i>
+            <i class="fa-solid fa-qrcode" style="color: #6366f1; font-size: 10px;"></i>
             <span style="color: #1e293b; font-weight: 700;">Other UPI</span>
           </div>
         </div>
@@ -643,11 +660,11 @@
 
       <!-- Binance Payment View -->
       <div id="checkoutBinanceView" class="payment-view-box hidden">
-        <div class="scan-title">SCAN TO PAY VIA BINANCE</div>
-        <div class="qr-wrapper" style="text-align: center;">
-          <img src="binance-qr.png" alt="Binance QR Code" style="display: block; margin: 0 auto; border-radius: 12px;" />
+        <div class="scan-title-text">SCAN TO PAY VIA BINANCE</div>
+        <div class="qr-inner-card">
+          <img src="binance-qr.png" alt="Binance QR Code" style="width: 170px; height: 170px; display: block; border-radius: 10px;" />
           <a href="binance-qr.png" download="binance-qr.png" class="download-qr-btn">
-            <i class="fa-solid fa-circle-arrow-down"></i> Download QR Code
+            <i class="fa-solid fa-circle-down"></i> Download QR Code
           </a>
         </div>
         <div class="binance-nick-box" style="margin-top: 10px; text-align: center;">
@@ -659,6 +676,7 @@
       </div>
     </div>
 
+    <!-- Ref Input -->
     <div class="checkout-input-group margin-top-15">
       <label id="txnLabel" for="checkoutTxnId">Enter 12-Digit UPI UTR / Ref No:</label>
       <input type="text" id="checkoutTxnId" placeholder="e.g. 4029XXXXXXXXXX (12-Digit UTR)" />
@@ -698,7 +716,6 @@
       return false;
     }
 
-    // 1. First Validation Check (Check inputs before setting processing state)
     const linkInput = document.getElementById('checkoutLinkInput');
     const txnInput = document.getElementById('checkoutTxnId');
 
@@ -717,7 +734,6 @@
       return false;
     }
 
-    // 2. Set processing state ONLY if validation passes
     isSubmittingOrder = true;
     const btn = document.getElementById('confirmOrderBtn') || document.querySelector('.whatsapp-submit-btn');
 
@@ -727,12 +743,9 @@
       btn.disabled = true;
     }
 
-    // 3. Execute Submission Logic
     try {
       if (typeof submitOrderToWhatsApp === 'function') {
         const result = submitOrderToWhatsApp();
-        
-        // If validation inside script.js returns false/fails
         if (result === false) {
           resetOrderButton();
           return false;
@@ -762,6 +775,43 @@
       const checkoutPage = document.getElementById('checkoutPage');
       if (checkoutPage) checkoutPage.classList.add('hidden');
     }
+  }
+
+  /* Instant Direct Download QR Code Logic */
+  function downloadCheckoutQR() {
+    const qrImg = document.getElementById('checkoutQrImg');
+    if (!qrImg || !qrImg.src) {
+      alert("QR Code unavailable.");
+      return;
+    }
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = function () {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width || 300;
+      canvas.height = img.height || 300;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+
+      const dataURL = canvas.toDataURL("image/png");
+      const downloadLink = document.createElement("a");
+      downloadLink.href = dataURL;
+      downloadLink.download = "UPI-Payment-QR.png";
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    };
+
+    img.onerror = function () {
+      const a = document.createElement('a');
+      a.href = qrImg.src;
+      a.download = 'UPI-Payment-QR.png';
+      a.target = '_blank';
+      a.click();
+    };
+
+    img.src = qrImg.src;
   }
 
   const observer = new MutationObserver(function(mutations) {
@@ -829,37 +879,6 @@
     }
   }
 
-  function downloadCheckoutQR() {
-    const qrImg = document.getElementById('checkoutQrImg');
-    if (!qrImg || !qrImg.src) {
-      alert("QR Code unavailable.");
-      return;
-    }
-
-    const imageSrc = qrImg.src;
-    
-    fetch(imageSrc)
-      .then(response => response.blob())
-      .then(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = url;
-        a.download = 'UPI-Payment-QR.png';
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-      })
-      .catch(() => {
-        const a = document.createElement('a');
-        a.href = imageSrc;
-        a.download = 'UPI-Payment-QR.png';
-        a.target = '_blank';
-        a.click();
-      });
-  }
-
   function openWhatsAppSupport() {
     const phoneNumber = "919239628344";
     const message = encodeURIComponent("Hi 👋 I want to know about your services on rajsmmpanel.in");
@@ -874,7 +893,6 @@
       sidebar.classList.add("active");
       overlay.classList.add("active");
       document.body.style.overflow = "hidden";
-      
       history.pushState({ sidebarOpen: true }, '');
     }
   }
@@ -903,20 +921,6 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     applyPlatformTheme('instagram');
-
-    document.body.addEventListener("focusin", function (e) {
-      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
-        const installBox = document.getElementById("installContainer");
-        if (installBox) installBox.style.display = "none";
-      }
-    });
-
-    document.body.addEventListener("focusout", function (e) {
-      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
-        const installBox = document.getElementById("installContainer");
-        if (installBox) installBox.style.display = "block";
-      }
-    });
   });
 
   if ('serviceWorker' in navigator) {

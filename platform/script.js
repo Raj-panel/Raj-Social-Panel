@@ -96,6 +96,9 @@
                 padding: 0px !important; 
                 margin-bottom: 2px !important; 
                 text-align: center !important; 
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
             }
             #scanToPayHeading { 
                 display: block !important; 
@@ -127,8 +130,9 @@
                 border-radius: 10px !important;
             }
             .upi-app-btn-grid { 
-                margin-top: 2px !important; 
+                margin-top: 6px !important; 
                 gap: 4px !important; 
+                order: 3 !important;
             }
             #checkoutPage .payment-tabs { 
                 margin-bottom: 2px !important; 
@@ -151,6 +155,30 @@
             #payViaUpiAppBtn { 
                 display: none !important; 
             }
+        }
+
+        /* QR Code Download Button Styling */
+        .qr-download-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px !important;
+            margin: 6px auto 10px auto !important;
+            padding: 6px 14px !important;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+            color: #ffffff !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            border: none !important;
+            border-radius: 6px !important;
+            text-decoration: none !important;
+            cursor: pointer !important;
+            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3) !important;
+            transition: all 0.2s ease !important;
+        }
+        .qr-download-btn:hover {
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4) !important;
         }
 
         /* Modern Glowing Popup & Confetti Styles */
@@ -1140,6 +1168,38 @@ function updateCheckoutQuantityDisplay() {
         qrImg.style.width = "110px";
         qrImg.style.height = "110px";
         qrImg.style.objectFit = "contain";
+
+        // Download QR Code Button Dynamic Injection
+        let downloadBtn = document.getElementById("downloadQrBtn");
+        if (!downloadBtn) {
+            downloadBtn = document.createElement("button");
+            downloadBtn.id = "downloadQrBtn";
+            downloadBtn.className = "qr-download-btn";
+            downloadBtn.type = "button";
+            downloadBtn.innerHTML = '📥 Download QR Code';
+            
+            // Image-এর ঠিক নিচে বাটন ইনসার্ট করা হচ্ছে
+            qrImg.insertAdjacentElement('afterend', downloadBtn);
+        }
+
+        // Download Event Handler
+        downloadBtn.onclick = async function () {
+            try {
+                const response = await fetch(qrImageSrc);
+                const blob = await response.blob();
+                const blobUrl = URL.createObjectURL(blob);
+                
+                const link = document.createElement("a");
+                link.href = blobUrl;
+                link.download = `RajSMM_QR_${d.price.toFixed(2)}INR.png`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(blobUrl);
+            } catch (err) {
+                window.open(qrImageSrc, '_blank');
+            }
+        };
     }
 }
 
@@ -1454,10 +1514,9 @@ function showOrderSuccessPopup(orderData) {
     const currentDate = now.toLocaleDateString('en-GB'); // DD/MM/YYYY format
     const currentTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-   
-    const whatsappNumber = "919239628344"; // 
+    const whatsappNumber = "919239628344";
 
-    // WhatsApp Message Format আপনার চাহিদা অনুযায়ী তৈরি করা হয়েছে
+    // WhatsApp Message Format
     const waMessage = 
 `📦 Track Your Order
 
@@ -1476,7 +1535,7 @@ I want to track my order.
 
 Thank you! 💚`;
 
-    // URL Encode করা যাতে স্পেস বা ইমোজি ঠিক থাকে
+    // URL Encode
     const encodedWaMessage = encodeURIComponent(waMessage);
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedWaMessage}`;
 
@@ -1494,7 +1553,7 @@ Thank you! 💚`;
             <div class="raj-popup-row"><strong>Quantity:</strong> ${orderData.quantity.toLocaleString()}</div>
             <div class="raj-popup-row"><strong>Total price:</strong> ₹${orderData.amount}</div>
 
-            <!-- নতুন WhatsApp Track Your Order Button (Center Aligned & Color-Changing) -->
+            <!-- WhatsApp Track Your Order Button -->
             <div style="text-align: center; margin-top: 20px;">
                 <a href="${whatsappUrl}" target="_blank" class="raj-whatsapp-track-btn">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -1610,11 +1669,7 @@ async function submitOrderToWhatsApp() {
     // -----------------------------
     // 6. Backend URL
     // -----------------------------
-    // LOCAL TEST
     const BACKEND_URL = "https://raj-social-panel-backend-qfwd.vercel.app";
-
-    // পরে Live করার সময়:
-    // const BACKEND_URL = "https://raj-social-panel-backend-qfwd.vercel.app";
 
     // -----------------------------
     // 7. Prepare Backend Request

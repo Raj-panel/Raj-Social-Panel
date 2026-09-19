@@ -187,7 +187,7 @@
     display: flex;
     justify-content: space-between;
     gap: 2px;
-    margin-top: 4px;
+    margin-top: 6px;
     width: 100%;
   }
   .upi-app-card-btn {
@@ -207,6 +207,30 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.03);
     pointer-events: none;
     cursor: default;
+  }
+
+  /* Download QR Button Styling */
+  .download-qr-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: rgba(168, 85, 247, 0.15);
+    color: var(--platform-primary, #a855f7);
+    border: 1px solid var(--platform-primary, #a855f7);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .download-qr-btn:hover {
+    background: var(--platform-primary, #a855f7);
+    color: #ffffff;
   }
 
   .checkout-input-group input[type="text"] {
@@ -581,10 +605,13 @@
 
     <div id="checkoutUpiView" class="payment-view-box">
       <div class="scan-title" style="font-weight: 800; color: var(--platform-primary, #a855f7); font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
-        SCAN TO PAY VIA UPI
+        TAKE A SCREENSHOT OR SCAN TO PAY
       </div>
       <div class="qr-wrapper" style="text-align: center; margin-bottom: 2px;">
         <img id="checkoutQrImg" src="" alt="UPI QR Code" style="display: block; margin: 0 auto; border-radius: 12px;" />
+        <a id="downloadQrBtn" href="javascript:void(0);" onclick="downloadQRCode()" class="download-qr-btn">
+          <i class="fa-solid fa-download"></i> Download QR Code
+        </a>
       </div>
       <p class="qr-sub" style="font-size: 10px; color: #64748b; margin-top: 2px; margin-bottom: 8px; text-align: center;">
         Scan or enter payment detail into any UPI App
@@ -639,6 +666,28 @@
 
 <script>
   let isSubmittingOrder = false;
+
+  function downloadQRCode() {
+    const qrImg = document.getElementById('checkoutQrImg');
+    if (!qrImg || !qrImg.src) {
+      alert("QR Code not loaded yet!");
+      return;
+    }
+    fetch(qrImg.src)
+      .then(response => response.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'UPI-QR-Code.png';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+      })
+      .catch(() => alert('Failed to download QR code automatically. Please long press or right click on image to save.'));
+  }
 
   function resetOrderButton() {
     isSubmittingOrder = false;

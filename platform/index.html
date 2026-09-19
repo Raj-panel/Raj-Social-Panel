@@ -402,52 +402,51 @@
     transform: none !important;
   }
 
-  /* Centered QR & Soft Gradient Button Styling */
+  /* QR Box & Button Alignment Custom Styling */
   .qr-card-container {
     background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(99, 102, 241, 0.08) 100%);
     border: 2px dashed rgba(168, 85, 247, 0.4);
     border-radius: 16px;
-    padding: 20px 16px;
+    padding: 16px;
     margin-bottom: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 100%;
-    box-sizing: border-box;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
   }
 
   .qr-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 100%;
-    margin-bottom: 14px;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-bottom: 12px;
   }
 
   .download-qr-btn {
-    background: linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(99, 102, 241, 0.25) 100%);
-    color: #a855f7;
-    border: 1px solid rgba(168, 85, 247, 0.4);
-    border-radius: 10px;
-    padding: 10px 20px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    box-shadow: 0 2px 8px rgba(168, 85, 247, 0.15);
-    transition: all 0.2s ease;
-    backdrop-filter: blur(4px);
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(99, 102, 241, 0.25) 100%) !important;
+    color: #a855f7 !important;
+    border: 1px solid rgba(168, 85, 247, 0.5) !important;
+    border-radius: 10px !important;
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    backdrop-filter: blur(5px) !important;
+    box-shadow: 0 3px 10px rgba(168, 85, 247, 0.15) !important;
+    transition: all 0.3s ease !important;
+    margin: 0 auto !important;
   }
 
   .download-qr-btn:hover {
-    background: linear-gradient(135deg, rgba(168, 85, 247, 0.35) 0%, rgba(99, 102, 241, 0.35) 100%);
-    color: #9333ea;
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.4) 0%, rgba(99, 102, 241, 0.4) 100%) !important;
+    color: #ffffff !important;
     transform: translateY(-1px);
   }
 </style>
@@ -631,7 +630,7 @@
       <!-- QR Container Box -->
       <div class="qr-card-container">
         <div class="qr-wrapper">
-          <img id="checkoutQrImg" src="" alt="UPI QR Code" crossorigin="anonymous" style="display: block; border-radius: 12px; width: 180px; height: 180px; background: #ffffff; padding: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
+          <img id="checkoutQrImg" src="" alt="UPI QR Code" crossorigin="anonymous" style="display: block; margin: 0 auto; border-radius: 12px; width: 180px; height: 180px; background: #ffffff; padding: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
         </div>
         
         <!-- Download QR Code Button -->

@@ -401,6 +401,55 @@
     box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4) !important;
     transform: none !important;
   }
+
+  /* Centered QR & Soft Gradient Button Styling */
+  .qr-card-container {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(99, 102, 241, 0.08) 100%);
+    border: 2px dashed rgba(168, 85, 247, 0.4);
+    border-radius: 16px;
+    padding: 20px 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .qr-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 14px;
+  }
+
+  .download-qr-btn {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(99, 102, 241, 0.25) 100%);
+    color: #a855f7;
+    border: 1px solid rgba(168, 85, 247, 0.4);
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(168, 85, 247, 0.15);
+    transition: all 0.2s ease;
+    backdrop-filter: blur(4px);
+  }
+
+  .download-qr-btn:hover {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.35) 0%, rgba(99, 102, 241, 0.35) 100%);
+    color: #9333ea;
+    transform: translateY(-1px);
+  }
 </style>
 </head>
 <body data-platform="instagram">
@@ -580,13 +629,13 @@
     <!-- CHECKOUT UPI VIEW -->
     <div id="checkoutUpiView" class="payment-view-box">
       <!-- QR Container Box -->
-      <div class="qr-card-container" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(99, 102, 241, 0.08) 100%); border: 2px dashed rgba(168, 85, 247, 0.4); border-radius: 16px; padding: 16px; text-align: center; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-        <div class="qr-wrapper" style="text-align: center; margin-bottom: 12px;">
-          <img id="checkoutQrImg" src="" alt="UPI QR Code" crossorigin="anonymous" style="display: block; margin: 0 auto; border-radius: 12px; width: 180px; height: 180px; background: #ffffff; padding: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
+      <div class="qr-card-container">
+        <div class="qr-wrapper">
+          <img id="checkoutQrImg" src="" alt="UPI QR Code" crossorigin="anonymous" style="display: block; border-radius: 12px; width: 180px; height: 180px; background: #ffffff; padding: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
         </div>
         
         <!-- Download QR Code Button -->
-        <button type="button" class="download-qr-btn" id="downloadQrBtn" onclick="downloadQRCode()" style="background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); color: #ffffff; border: none; border-radius: 8px; padding: 8px 16px; font-size: 13px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 3px 10px rgba(168, 85, 247, 0.3); transition: all 0.2s ease;">
+        <button type="button" class="download-qr-btn" id="downloadQrBtn" onclick="downloadQRCode()">
           <i class="fa-solid fa-download"></i> Download QR Code
         </button>
       </div>

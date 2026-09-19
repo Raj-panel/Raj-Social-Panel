@@ -1236,7 +1236,7 @@ function showCheckoutOverlay() {
         if (!scanHeading) {
             scanHeading = document.createElement("h3");
             scanHeading.id = "scanToPayHeading";
-            scanHeading.innerText = "TACK A SCREENSHOT OR SCAN TO PAY";
+            scanHeading.innerText = "DOWNLOAD QR & PAY VIA UPI";
             scanHeading.style.cssText = "margin: 2px 0 2px 0 !important; font-size: 12px !important; font-weight: 800 !important; text-align: center !important; text-transform: uppercase !important; background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; display: block !important; visibility: visible !important; opacity: 1 !important;";
         }
         if (qrImg && qrImg.parentElement === upiView) {

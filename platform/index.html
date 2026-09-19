@@ -579,46 +579,45 @@
       </button>
     </div>
 
+    <!-- UPDATED CHECKOUT UPI VIEW -->
     <div id="checkoutUpiView" class="payment-view-box">
-<!-- UPDATED CHECKOUT UPI VIEW -->
-<div id="checkoutUpiView" class="payment-view-box">
-  <div class="scan-title" style="font-weight: 800; color: var(--platform-primary, #a855f7); font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
-    SCAN TO PAY VIA UPI
-  </div>
-  
-  <!-- Stylish QR Container Box with Hero Gradient/Background -->
-  <div class="qr-card-container" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(99, 102, 241, 0.08) 100%); border: 2px dashed rgba(168, 85, 247, 0.4); border-radius: 16px; padding: 16px; text-align: center; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-    <div class="qr-wrapper" style="text-align: center; margin-bottom: 10px;">
-      <img id="checkoutQrImg" src="" alt="UPI QR Code" style="display: block; margin: 0 auto; border-radius: 12px; width: 180px; height: 180px; background: #ffffff; padding: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
-    </div>
-    
-    <!-- Download QR Code Button -->
-    <button type="button" class="download-qr-btn" onclick="downloadQRCode()" style="background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); color: #ffffff; border: none; border-radius: 8px; padding: 8px 16px; font-size: 13px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 3px 10px rgba(168, 85, 247, 0.3); transition: all 0.2s ease;">
-      <i class="fa-solid fa-download"></i> Download QR Code
-    </button>
-  </div>
+      <div class="scan-title" style="font-weight: 800; color: var(--platform-primary, #a855f7); font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
+        SCAN TO PAY VIA UPI
+      </div>
+      
+      <!-- QR Container Box with Border & Hero-like Background -->
+      <div class="qr-card-container" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(99, 102, 241, 0.08) 100%); border: 2px dashed rgba(168, 85, 247, 0.4); border-radius: 16px; padding: 16px; text-align: center; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <div class="qr-wrapper" style="text-align: center; margin-bottom: 12px;">
+          <img id="checkoutQrImg" src="" alt="UPI QR Code" style="display: block; margin: 0 auto; border-radius: 12px; width: 180px; height: 180px; background: #ffffff; padding: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
+        </div>
+        
+        <!-- Download QR Code Button (Placed inside container, right below border/QR) -->
+        <button type="button" class="download-qr-btn" onclick="downloadQRCode()" style="background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); color: #ffffff; border: none; border-radius: 8px; padding: 8px 16px; font-size: 13px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 3px 10px rgba(168, 85, 247, 0.3); transition: all 0.2s ease;">
+          <i class="fa-solid fa-download"></i> Download QR Code
+        </button>
+      </div>
 
-  <p class="qr-sub" style="font-size: 11px; color: #64748b; margin-top: 2px; margin-bottom: 8px; text-align: center;">
-    Scan or enter payment detail into any UPI App
-  </p>
-  
-  <div class="upi-app-btn-grid">
-    <div class="upi-app-card-btn">
-      <span style="color: #00baf2; font-weight: 900;">Paytm</span>
+      <p class="qr-sub" style="font-size: 11px; color: #64748b; margin-top: 2px; margin-bottom: 8px; text-align: center;">
+        Scan or enter payment detail into any UPI App
+      </p>
+      
+      <div class="upi-app-btn-grid">
+        <div class="upi-app-card-btn">
+          <span style="color: #00baf2; font-weight: 900;">Paytm</span>
+        </div>
+        <div class="upi-app-card-btn">
+          <span style="color: #4285f4; font-weight: 800;">G</span><span style="color: #ea4335; font-weight: 800;">P</span><span style="color: #fbbc05; font-weight: 800;">a</span><span style="color: #34a853; font-weight: 800;">y</span>
+        </div>
+        <div class="upi-app-card-btn">
+          <i class="fa-solid fa-asterisk" style="color: #5f259f;"></i>
+          <span style="color: #5f259f; font-weight: 800;">PhonePe</span>
+        </div>
+        <div class="upi-app-card-btn">
+          <i class="fa-solid fa-qrcode" style="color: #6366f1;"></i>
+          <span style="color: #1e293b; font-weight: 700;">Other UPI</span>
+        </div>
+      </div>
     </div>
-    <div class="upi-app-card-btn">
-      <span style="color: #4285f4; font-weight: 800;">G</span><span style="color: #ea4335; font-weight: 800;">P</span><span style="color: #fbbc05; font-weight: 800;">a</span><span style="color: #34a853; font-weight: 800;">Y</span>
-    </div>
-    <div class="upi-app-card-btn">
-      <i class="fa-solid fa-asterisk" style="color: #5f259f;"></i>
-      <span style="color: #5f259f; font-weight: 800;">PhonePe</span>
-    </div>
-    <div class="upi-app-card-btn">
-      <i class="fa-solid fa-qrcode" style="color: #6366f1;"></i>
-      <span style="color: #1e293b; font-weight: 700;">Other UPI</span>
-    </div>
-  </div>
-</div>
 
     <div id="checkoutBinanceView" class="payment-view-box hidden">
       <div class="scan-title">SCAN TO PAY VIA BINANCE</div>
@@ -660,6 +659,38 @@
       btn.classList.remove("processing-state");
       btn.disabled = false;
     }
+  }
+
+  // FUNCTION: DOWNLOAD QR CODE WITHOUT LEAVING CHECKOUT PAGE
+  function downloadQRCode() {
+    const qrImg = document.getElementById('checkoutQrImg');
+    if (!qrImg || !qrImg.src) {
+      alert("QR Code image not available!");
+      return;
+    }
+
+    fetch(qrImg.src)
+      .then(response => response.blob())
+      .then(blob => {
+        const blobUrl = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = 'Raj_SMM_UPI_QR.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(blobUrl);
+      })
+      .catch(err => {
+        console.error("Error downloading QR Code:", err);
+        const link = document.createElement('a');
+        link.href = qrImg.src;
+        link.download = 'Raj_SMM_UPI_QR.png';
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
   }
 
   function handleConfirmOrderClick(event) {

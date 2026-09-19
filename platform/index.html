@@ -579,10 +579,6 @@
 
     <!-- CHECKOUT UPI VIEW -->
     <div id="checkoutUpiView" class="payment-view-box">
-      <div class="scan-title" style="font-weight: 800; color: var(--platform-primary, #a855f7); font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
-        SCAN TO PAY VIA UPI
-      </div>
-      
       <!-- QR Container Box -->
       <div class="qr-card-container" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(99, 102, 241, 0.08) 100%); border: 2px dashed rgba(168, 85, 247, 0.4); border-radius: 16px; padding: 16px; text-align: center; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
         <div class="qr-wrapper" style="text-align: center; margin-bottom: 12px;">
@@ -659,7 +655,7 @@
     }
   }
 
-  // FIXED SILENT BACKGROUND DOWNLOAD FUNCTION
+  // SILENT BACKGROUND DOWNLOAD FUNCTION
   function downloadQRCode() {
     const qrImg = document.getElementById('checkoutQrImg');
     const dlBtn = document.getElementById('downloadQrBtn');
@@ -669,12 +665,10 @@
       return;
     }
 
-    // Temporary button state change to indicate downloading
     const originalText = dlBtn.innerHTML;
     dlBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Downloading...';
     dlBtn.disabled = true;
 
-    // Direct Canvas conversion to prevent image opening in new window/tab
     const img = new Image();
     img.crossOrigin = "anonymous";
     img.src = qrImg.src;
@@ -687,7 +681,6 @@
       const ctx = canvas.getContext('2d');
       ctx.drawImage(img, 0, 0);
 
-      // Convert image to Data Base64 URL for instant silent download
       const dataURL = canvas.toDataURL('image/png');
       
       const a = document.createElement('a');
@@ -697,7 +690,6 @@
       a.click();
       document.body.removeChild(a);
 
-      // Reset button
       setTimeout(() => {
         dlBtn.innerHTML = originalText;
         dlBtn.disabled = false;
@@ -705,7 +697,6 @@
     };
 
     img.onerror = function () {
-      // Fallback Blob method if CORS blocks Canvas
       fetch(qrImg.src)
         .then(response => response.blob())
         .then(blob => {

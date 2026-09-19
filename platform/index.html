@@ -187,7 +187,7 @@
     display: flex;
     justify-content: space-between;
     gap: 2px;
-    margin-top: 4px;
+    margin-top: 14px;
     width: 100%;
   }
   .upi-app-card-btn {
@@ -406,8 +406,7 @@
   .qr-card-container {
     background: transparent;
     border: none;
-    border-radius: 0;
-    padding: 10px 0 16px 0;
+    padding: 0;
     margin-bottom: 12px;
     box-shadow: none;
     display: flex;
@@ -420,26 +419,31 @@
   }
 
   .qr-wrapper {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    margin-bottom: 14px;
+    padding: 12px;
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    width: auto;
+    margin-bottom: 16px;
   }
 
   .download-qr-btn {
     background: linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(99, 102, 241, 0.25) 100%);
-    color: #a855f7;
+    color: #c084fc;
     border: 1px solid rgba(168, 85, 247, 0.4);
-    border-radius: 10px;
-    padding: 10px 20px;
-    font-size: 14px;
-    font-weight: 700;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     box-shadow: 0 2px 8px rgba(168, 85, 247, 0.15);
     transition: all 0.2s ease;
     backdrop-filter: blur(4px);
@@ -447,7 +451,7 @@
 
   .download-qr-btn:hover {
     background: linear-gradient(135deg, rgba(168, 85, 247, 0.35) 0%, rgba(99, 102, 241, 0.35) 100%);
-    color: #9333ea;
+    color: #e9d5ff;
     transform: translateY(-1px);
   }
 </style>
@@ -631,7 +635,7 @@
       <!-- QR Container Box -->
       <div class="qr-card-container">
         <div class="qr-wrapper">
-          <img id="checkoutQrImg" src="" alt="UPI QR Code" crossorigin="anonymous" style="display: block; border-radius: 12px; width: 180px; height: 180px; background: #ffffff; padding: 6px;" />
+          <img id="checkoutQrImg" src="" alt="UPI QR Code" crossorigin="anonymous" style="display: block; border-radius: 10px; width: 170px; height: 170px; background: #ffffff; padding: 4px;" />
         </div>
         
         <!-- Download QR Code Button -->

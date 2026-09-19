@@ -387,39 +387,6 @@ input:focus { border-color: var(--focus-color); background: #ffffff; }
     cursor: pointer;
 }
 
-/* Payment Switch Tabs */
-.pay-toggle-tabs { display: flex; gap: 8px; margin: 14px 0; }
-
-.pay-tab {
-    flex: 1;
-    padding: 8px;
-    background: #f1f5f9;
-    border: none;
-    border-radius: 10px;
-    font-size: 11px;
-    font-weight: 700;
-    color: #64748b;
-    cursor: pointer;
-}
-
-.pay-tab.active { background: var(--secondary-color); color: #fff; }
-
-.qr-box {
-    text-align: center;
-    background: #f8fafc;
-    padding: 12px;
-    border-radius: 12px;
-}
-
-.qr-box img {
-    width: 170px;
-    height: 170px;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-}
-
-.qr-sub { font-size: 10px; color: #64748b; margin-top: 6px; }
-
 /* Binance Box */
 .binance-info-card {
     background: #fefce8;
@@ -752,7 +719,9 @@ input:focus { border-color: var(--focus-color); background: #ffffff; }
   box-shadow: 0 0 16px var(--shadow-color);
 }
 
-/* Payment View Box (QR / UPI Section) */
+/* ==================================================
+   MODIFIED PAYMENT & QR CODE SECTION STYLES
+   ================================================== */
 .payment-view-box {
   background: #ffffff;
   border: 1.5px solid var(--border-color);
@@ -761,10 +730,13 @@ input:focus { border-color: var(--focus-color); background: #ffffff; }
   text-align: center;
   margin-top: 14px;
   box-shadow: 0 0 20px var(--shadow-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .payment-view-box.hidden {
-  display: none;
+  display: none !important;
 }
 
 .scan-title {
@@ -773,25 +745,75 @@ input:focus { border-color: var(--focus-color); background: #ffffff; }
 
 .qr-wrapper {
   display: inline-block;
-  padding: 2px;
+  padding: 4px;
   background: #ffffff;
   border: 1.5px solid var(--border-color);
   border-radius: 18px;
   box-shadow: 0 0 22px var(--shadow-color);
-  margin: 8px 0 12px 0;
+  margin: 4px 0 8px 0;
 }
 
 .qr-wrapper img {
   width: 200px;
   height: 200px;
-  border-radius: 10px;
+  border-radius: 12px;
   display: block;
 }
 
 .qr-sub {
   font-size: 11px;
   color: #64748b;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
+}
+
+/* Download QR Button Styling */
+.qr-download-container {
+  margin: 6px 0 12px 0;
+  width: 100%;
+}
+
+.qr-download-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--gradient);
+  color: #ffffff !important;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 9px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  box-shadow: 0 4px 14px var(--shadow-color);
+  transition: all 0.25s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.qr-download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px var(--shadow-color);
+}
+
+.qr-download-btn:active {
+  transform: scale(0.96);
+}
+
+/* UPI Payment Buttons Below QR */
+.upi-payment-section {
+  width: 100%;
+  margin-top: 12px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border-color);
+}
+
+.upi-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--secondary-color);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .pay-app-btn {
@@ -810,19 +832,26 @@ input:focus { border-color: var(--focus-color); background: #ffffff; }
 .upi-icons-row {
   display: flex;
   justify-content: center;
-  gap: 6px;
-  margin-top: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
 }
 
 .upi-chip {
   background: #ffffff;
-  border: 1px solid var(--border-color);
+  border: 1.5px solid var(--border-color);
   color: #475569;
-  font-size: 10px;
-  padding: 6px 10px;
-  border-radius: 8px;
+  font-size: 11px;
+  padding: 6px 12px;
+  border-radius: 10px;
   font-weight: 700;
-  box-shadow: 0 0 8px var(--shadow-color);
+  box-shadow: 0 2px 8px var(--shadow-color);
+  transition: all 0.2s ease;
+}
+
+.upi-chip:hover {
+  border-color: var(--focus-color);
+  color: var(--focus-color);
 }
 
 .binance-nick-box {
@@ -968,6 +997,14 @@ input:focus { border-color: var(--focus-color); background: #ffffff; }
     background-color: #0f172a !important;
     border-color: #334155 !important;
     color: #cbd5e1 !important;
+  }
+
+  .upi-payment-section {
+    border-top-color: #334155 !important;
+  }
+
+  .upi-title {
+    color: #c084fc !important;
   }
 }
 
@@ -1369,6 +1406,7 @@ body.auth-page {
     padding-top: 20px;
   }
 }
+
 /* =========================================================
    PREMIUM 3D / GLOSSY COMBO PERCENTAGE BADGE
    ========================================================= */

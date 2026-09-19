@@ -185,8 +185,8 @@
   .upi-app-btn-grid {
     display: flex;
     justify-content: space-between;
-    gap: 4px;
-    margin-top: 10px;
+    gap: 6px;
+    margin-top: 14px;
     width: 100%;
   }
   .upi-app-card-btn {
@@ -195,15 +195,15 @@
     align-items: center;
     justify-content: center;
     gap: 4px;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(226, 232, 240, 0.8);
+    background: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
     padding: 8px 2px;
     text-decoration: none;
     color: #1e293b;
     font-weight: 700;
     font-size: 11px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     pointer-events: none;
     cursor: default;
   }
@@ -391,7 +391,6 @@
     transform: translateY(-2px);
   }
 
-  /* Processing State CSS */
   .whatsapp-submit-btn.processing-state {
     background: #ec4899 !important;
     cursor: not-allowed !important;
@@ -401,31 +400,83 @@
     transform: none !important;
   }
 
-  /* Unified Payment Outer Box Container */
+  /* --- SINGLE MAIN BORDER BOX SYSTEM --- */
   .payment-card-outer {
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #101628;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 20px;
-    padding: 12px;
+    padding: 16px;
     margin-top: 15px;
     margin-bottom: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    box-sizing: border-box;
   }
 
-  /* Outer Image Box for QR */
-  .qr-inner-card {
-    background: #111827;
+  .pay-toggle-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .pay-tab {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 18px;
-    padding: 16px 12px 14px 12px;
-    margin: 0 auto;
-    max-width: 260px;
+    background: #1a2236;
+    color: #94a3b8;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+  }
+
+  .pay-tab.active {
+    background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+  }
+
+  .scan-title-text {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #ec4899;
+    margin-bottom: 14px;
+    text-align: center;
+  }
+
+  .qr-center-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    width: 100%;
   }
 
-  /* Download QR Code Button Exact Image Style */
+  .qr-img-box {
+    width: 160px;
+    height: 160px;
+    background: #ffffff;
+    padding: 8px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  .qr-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
   .download-qr-btn {
     display: inline-flex;
     align-items: center;
@@ -435,28 +486,19 @@
     color: #ffffff !important;
     font-size: 12px;
     font-weight: 700;
-    padding: 8px 18px;
+    padding: 9px 20px;
     border-radius: 20px;
     text-decoration: none !important;
     box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
     transition: all 0.2s ease;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 14px;
     border: none;
     outline: none;
   }
 
   .download-qr-btn:active {
     transform: scale(0.96);
-  }
-
-  .scan-title-text {
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-    color: #ec4899;
-    margin-bottom: 12px;
-    text-align: center;
   }
 </style>
 </head>
@@ -614,8 +656,9 @@
       <input type="text" id="checkoutLinkInput" placeholder="Enter Instagram username or profile link" />
     </div>
 
-    <!-- Payment Switch Tabs & View -->
+    <!-- Single Main Border Payment Card Container -->
     <div class="payment-card-outer">
+      <!-- 1. Top UPI / Binance Tabs -->
       <div class="pay-toggle-tabs">
         <button class="pay-tab active" id="btnTabUpi" onclick="switchCheckoutPayment('upi')">
           <i class="fa-solid fa-qrcode"></i> UPI QR Pay
@@ -625,18 +668,20 @@
         </button>
       </div>
 
-      <!-- UPI Payment Box View -->
+      <!-- 2. UPI Section Content -->
       <div id="checkoutUpiView" class="payment-view-box">
         <div class="scan-title-text">TACK A SCREENSHOT OR SCAN TO PAY</div>
         
-        <div class="qr-inner-card">
-          <img id="checkoutQrImg" src="" alt="UPI QR Code" style="width: 170px; height: 170px; display: block; border-radius: 10px;" />
+        <div class="qr-center-wrapper">
+          <div class="qr-img-box">
+            <img id="checkoutQrImg" src="" alt="UPI QR Code" />
+          </div>
           <button id="downloadQrBtn" type="button" onclick="downloadCheckoutQR()" class="download-qr-btn">
             <i class="fa-solid fa-circle-down"></i> Download QR Code
           </button>
         </div>
 
-        <p class="qr-sub" style="font-size: 11px; color: #94a3b8; margin-top: 10px; margin-bottom: 8px; text-align: center;">
+        <p class="qr-sub" style="font-size: 11px; color: #94a3b8; margin-top: 12px; margin-bottom: 8px; text-align: center;">
           Scan or enter payment detail into any UPI App
         </p>
         
@@ -658,20 +703,22 @@
         </div>
       </div>
 
-      <!-- Binance Payment View -->
+      <!-- 3. Binance Section Content -->
       <div id="checkoutBinanceView" class="payment-view-box hidden">
         <div class="scan-title-text">SCAN TO PAY VIA BINANCE</div>
-        <div class="qr-inner-card">
-          <img src="binance-qr.png" alt="Binance QR Code" style="width: 170px; height: 170px; display: block; border-radius: 10px;" />
+        <div class="qr-center-wrapper">
+          <div class="qr-img-box">
+            <img src="binance-qr.png" alt="Binance QR Code" />
+          </div>
           <a href="binance-qr.png" download="binance-qr.png" class="download-qr-btn">
             <i class="fa-solid fa-circle-down"></i> Download QR Code
           </a>
         </div>
-        <div class="binance-nick-box" style="margin-top: 10px; text-align: center;">
+        <div class="binance-nick-box" style="margin-top: 12px; text-align: center; font-size: 13px; color: #cbd5e1;">
           Binance Nickname: <strong style="color: #facc15;">Alex-Sahil786</strong>
         </div>
-        <div class="usdt-badge-box" style="text-align: center; margin-top: 5px;">
-          <span id="checkoutUsdtAmount">$0.00 USDT</span>
+        <div class="usdt-badge-box" style="text-align: center; margin-top: 6px;">
+          <span id="checkoutUsdtAmount" style="color: #4ade80; font-weight: 700;">$0.00 USDT</span>
         </div>
       </div>
     </div>
@@ -777,7 +824,7 @@
     }
   }
 
-  /* Instant Direct Download QR Code Logic */
+  /* Direct Download QR Code Logic */
   function downloadCheckoutQR() {
     const qrImg = document.getElementById('checkoutQrImg');
     if (!qrImg || !qrImg.src) {

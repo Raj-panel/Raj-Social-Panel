@@ -401,6 +401,36 @@
     box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4) !important;
     transform: none !important;
   }
+
+  /* Unified Payment Outer Box Container */
+  .payment-card-outer {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    padding: 12px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Download QR Code Button */
+  .download-qr-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+    color: #ffffff !important;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 18px;
+    border-radius: 20px;
+    text-decoration: none !important;
+    box-shadow: 0 2px 10px rgba(139, 92, 246, 0.4);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    margin-top: 8px;
+  }
 </style>
 </head>
 <body data-platform="instagram">
@@ -414,7 +444,7 @@
   </div>
   
   <ul class="sidebar-menu">
-    <li id="authMenuItem">
+    <li id="authMenuItem"></li>
     
     <!-- New Order Link Updated Below -->
     <li><a href="https://rajsmmpanel.in/">🛒 New Order</a></li>
@@ -570,54 +600,62 @@
       </div>
     </div>
 
-    <div class="pay-toggle-tabs">
-      <button class="pay-tab active" id="btnTabUpi" onclick="switchCheckoutPayment('upi')">
-        <i class="fa-solid fa-qrcode"></i> UPI QR Pay
-      </button>
-      <button class="pay-tab" id="btnTabBinance" onclick="switchCheckoutPayment('binance')">
-        <i class="fa-solid fa-wallet"></i> Binance Pay
-      </button>
-    </div>
+    <!-- Unified Payment Outer Container -->
+    <div class="payment-card-outer">
+      <div class="pay-toggle-tabs">
+        <button class="pay-tab active" id="btnTabUpi" onclick="switchCheckoutPayment('upi')">
+          <i class="fa-solid fa-qrcode"></i> UPI QR Pay
+        </button>
+        <button class="pay-tab" id="btnTabBinance" onclick="switchCheckoutPayment('binance')">
+          <i class="fa-solid fa-wallet"></i> Binance Pay
+        </button>
+      </div>
 
-    <div id="checkoutUpiView" class="payment-view-box">
-      <div class="scan-title" style="font-weight: 800; color: var(--platform-primary, #a855f7); font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
-        SCAN TO PAY VIA UPI
+      <!-- UPI Payment View -->
+      <div id="checkoutUpiView" class="payment-view-box">
+        <div class="qr-wrapper" style="text-align: center; margin-bottom: 2px;">
+          <img id="checkoutQrImg" src="" alt="UPI QR Code" style="display: block; margin: 0 auto; border-radius: 12px;" />
+          <a id="downloadQrBtn" href="javascript:void(0);" onclick="downloadCheckoutQR()" class="download-qr-btn">
+            <i class="fa-solid fa-circle-arrow-down"></i> Download QR Code
+          </a>
+        </div>
+        <p class="qr-sub" style="font-size: 10px; color: #64748b; margin-top: 6px; margin-bottom: 8px; text-align: center;">
+          Scan or enter payment detail into any UPI App
+        </p>
+        
+        <div class="upi-app-btn-grid">
+          <div class="upi-app-card-btn">
+            <span style="color: #00baf2; font-weight: 900;">Paytm</span>
+          </div>
+          <div class="upi-app-card-btn">
+            <span style="color: #4285f4; font-weight: 800;">G</span><span style="color: #ea4335; font-weight: 800;">P</span><span style="color: #fbbc05; font-weight: 800;">a</span><span style="color: #34a853; font-weight: 800;">y</span>
+          </div>
+          <div class="upi-app-card-btn">
+            <i class="fa-solid fa-asterisk" style="color: #5f259f;"></i>
+            <span style="color: #5f259f; font-weight: 800;">PhonePe</span>
+          </div>
+          <div class="upi-app-card-btn">
+            <i class="fa-solid fa-qrcode" style="color: #6366f1;"></i>
+            <span style="color: #1e293b; font-weight: 700;">Other UPI</span>
+          </div>
+        </div>
       </div>
-      <div class="qr-wrapper" style="text-align: center; margin-bottom: 2px;">
-        <img id="checkoutQrImg" src="" alt="UPI QR Code" style="display: block; margin: 0 auto; border-radius: 12px;" />
-      </div>
-      <p class="qr-sub" style="font-size: 10px; color: #64748b; margin-top: 2px; margin-bottom: 8px; text-align: center;">
-        Scan or enter payment detail into any UPI App
-      </p>
-      
-      <div class="upi-app-btn-grid">
-        <div class="upi-app-card-btn">
-          <span style="color: #00baf2; font-weight: 900;">Paytm</span>
-        </div>
-        <div class="upi-app-card-btn">
-          <span style="color: #4285f4; font-weight: 800;">G</span><span style="color: #ea4335; font-weight: 800;">P</span><span style="color: #fbbc05; font-weight: 800;">a</span><span style="color: #34a853; font-weight: 800;">y</span>
-        </div>
-        <div class="upi-app-card-btn">
-          <i class="fa-solid fa-asterisk" style="color: #5f259f;"></i>
-          <span style="color: #5f259f; font-weight: 800;">PhonePe</span>
-        </div>
-        <div class="upi-app-card-btn">
-          <i class="fa-solid fa-qrcode" style="color: #6366f1;"></i>
-          <span style="color: #1e293b; font-weight: 700;">Other UPI</span>
-        </div>
-      </div>
-    </div>
 
-    <div id="checkoutBinanceView" class="payment-view-box hidden">
-      <div class="scan-title">SCAN TO PAY VIA BINANCE</div>
-      <div class="qr-wrapper">
-        <img src="binance-qr.png" alt="Binance QR Code" />
-      </div>
-      <div class="binance-nick-box">
-        Binance Nickname: <strong style="color: #facc15;">Alex-Sahil786</strong>
-      </div>
-      <div class="usdt-badge-box">
-        <span id="checkoutUsdtAmount">$0.00 USDT</span>
+      <!-- Binance Payment View -->
+      <div id="checkoutBinanceView" class="payment-view-box hidden">
+        <div class="scan-title">SCAN TO PAY VIA BINANCE</div>
+        <div class="qr-wrapper" style="text-align: center;">
+          <img src="binance-qr.png" alt="Binance QR Code" style="display: block; margin: 0 auto; border-radius: 12px;" />
+          <a href="binance-qr.png" download="binance-qr.png" class="download-qr-btn">
+            <i class="fa-solid fa-circle-arrow-down"></i> Download QR Code
+          </a>
+        </div>
+        <div class="binance-nick-box" style="margin-top: 10px; text-align: center;">
+          Binance Nickname: <strong style="color: #facc15;">Alex-Sahil786</strong>
+        </div>
+        <div class="usdt-badge-box" style="text-align: center; margin-top: 5px;">
+          <span id="checkoutUsdtAmount">$0.00 USDT</span>
+        </div>
       </div>
     </div>
 
@@ -789,6 +827,37 @@
       txnLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
       txnInput.placeholder = "e.g. 4029XXXXXXXXXX (12-Digit UTR)";
     }
+  }
+
+  function downloadCheckoutQR() {
+    const qrImg = document.getElementById('checkoutQrImg');
+    if (!qrImg || !qrImg.src) {
+      alert("QR Code unavailable.");
+      return;
+    }
+
+    const imageSrc = qrImg.src;
+    
+    fetch(imageSrc)
+      .then(response => response.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'UPI-Payment-QR.png';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      })
+      .catch(() => {
+        const a = document.createElement('a');
+        a.href = imageSrc;
+        a.download = 'UPI-Payment-QR.png';
+        a.target = '_blank';
+        a.click();
+      });
   }
 
   function openWhatsAppSupport() {

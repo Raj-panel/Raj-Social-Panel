@@ -469,8 +469,75 @@ const serviceData = {
                 ],
                 placeholder: "Enter Instagram reel/video link"
             }
+        ],
+        "🔥 Photo Viral Combo Service": [
+            {
+                name: "Photo Viral Package 1",
+                price: 49,
+                badge: "5% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 60 min",
+                features: [
+                    "👁️ Photo Views — 4,000",
+                    "❤️ Photo Likes — 500",
+                    "💬 Photo Comments — 15",
+                    "💾 Post / Photo Save — 100",
+                    "🔄 Post / Photo Shares — 100",
+                    "♻️ Photo Reposts — 100"
+                ],
+                placeholder: "Enter Instagram photo link"
+            },
+            {
+                name: "Photo Viral Package 2",
+                price: 99,
+                badge: "10% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 60 min",
+                features: [
+                    "👁️ Photo Views — 10,000",
+                    "❤️ Photo Likes — 1,000",
+                    "💬 Photo Comments — 30",
+                    "💾 Post / Photo Save — 100",
+                    "🔄 Post / Photo Shares — 500",
+                    "♻️ Photo Reposts — 150"
+                ],
+                placeholder: "Enter Instagram photo link"
+            },
+            {
+                name: "Photo Viral Package 3",
+                price: 149,
+                badge: "20% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 60 min",
+                features: [
+                    "👁️ Photo Views — 20,000",
+                    "❤️ Photo Likes — 3,000",
+                    "💬 Photo Comments — 60",
+                    "💾 Post / Photo Save — 300",
+                    "🔄 Post / Photo Shares — 1,000",
+                    "♻️ Photo Reposts — 200"
+                ],
+                placeholder: "Enter Instagram photo link"
+            },
+            {
+                name: "Photo Viral Package 4",
+                price: 249,
+                badge: "30% OFF",
+                badgeClass: "badge-best",
+                subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 60 min",
+                features: [
+                    "👁️ Photo Views — 50,000",
+                    "❤️ Photo Likes — 4,000",
+                    "💬 Photo Comments — 100",
+                    "💾 Post / Photo Save — 500",
+                    "🔄 Post / Photo Shares — 3,000",
+                    "♻️ Photo Reposts — 400"
+                ],
+                placeholder: "Enter Instagram photo link"
+            }
         ]
-    },
+    }
+};
     facebook: { 
         "PAGE/PROFILE Followers Non-Drop / Refill": [
             { name: "200 Followers", price: 20, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },

@@ -51,6 +51,28 @@
         font-size: 14px !important;
       }
     }
+
+    /* Download QR Code Button Styling */
+    .download-qr-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 10px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #a855f7;
+      background: rgba(168, 85, 247, 0.1);
+      border: 1px solid #a855f7;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .download-qr-btn:hover {
+      background: #a855f7;
+      color: #ffffff;
+    }
   </style>
 </head>
 <body>
@@ -220,9 +242,10 @@
           <div id="qrcode" style="padding: 10px; background: #fff; border-radius: 12px; display: inline-block; border: 3px solid #a855f7; box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);"></div>
         </div>
         
-        <p style="font-size: 10px; color: #64748b; margin-bottom: 8px;">
-          Scan or enter payment detail into any UPI App
-        </p>
+        <!-- Download QR Code Button -->
+        <button type="button" class="download-qr-btn" onclick="downloadQRCode()">
+          <i class="fa-solid fa-download"></i> Download QR Code
+        </button>
         
         <div class="upi-app-btn-grid">
           <div class="upi-app-card-btn" style="color: #00baf2;">Paytm</div>
@@ -259,6 +282,35 @@
 
   <!-- External JS File -->
   <script src="script.js"></script>
+
+  <!-- QR CODE DOWNLOAD FUNCTION -->
+  <script>
+    function downloadQRCode() {
+      const qrContainer = document.getElementById('qrcode');
+      if (!qrContainer) return;
+
+      const img = qrContainer.querySelector('img');
+      const canvas = qrContainer.querySelector('canvas');
+      let imageSrc = '';
+
+      if (img && img.src) {
+        imageSrc = img.src;
+      } else if (canvas) {
+        imageSrc = canvas.toDataURL('image/png');
+      }
+
+      if (imageSrc) {
+        const downloadLink = document.createElement('a');
+        downloadLink.href = imageSrc;
+        downloadLink.download = 'payment-qr-code.png';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+      } else {
+        alert('QR code image not found. Please try again.');
+      }
+    }
+  </script>
 
   <!-- ORDER SAVING LOGIC INTEGRATION -->
   <script>

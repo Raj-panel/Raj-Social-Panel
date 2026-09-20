@@ -470,7 +470,7 @@ const serviceData = {
                 placeholder: "Enter Instagram reel/video link"
             }
         ],
-        "🔥 Photo Viral Combo Service": [
+        "📸 Photo Viral Combo Service": [
             {
                 name: "Photo Viral Package 1",
                 price: 49,
@@ -485,7 +485,7 @@ const serviceData = {
                     "🔄 Post / Photo Shares — 100",
                     "♻️ Photo Reposts — 100"
                 ],
-                placeholder: "Enter Instagram photo link"
+                placeholder: "Enter Instagram photo/post link"
             },
             {
                 name: "Photo Viral Package 2",
@@ -501,7 +501,7 @@ const serviceData = {
                     "🔄 Post / Photo Shares — 500",
                     "♻️ Photo Reposts — 150"
                 ],
-                placeholder: "Enter Instagram photo link"
+                placeholder: "Enter Instagram photo/post link"
             },
             {
                 name: "Photo Viral Package 3",
@@ -517,7 +517,7 @@ const serviceData = {
                     "🔄 Post / Photo Shares — 1,000",
                     "♻️ Photo Reposts — 200"
                 ],
-                placeholder: "Enter Instagram photo link"
+                placeholder: "Enter Instagram photo/post link"
             },
             {
                 name: "Photo Viral Package 4",
@@ -533,11 +533,10 @@ const serviceData = {
                     "🔄 Post / Photo Shares — 3,000",
                     "♻️ Photo Reposts — 400"
                 ],
-                placeholder: "Enter Instagram photo link"
+                placeholder: "Enter Instagram photo/post link"
             }
         ]
-    }
-};
+    },
     facebook: { 
         "PAGE/PROFILE Followers Non-Drop / Refill": [
             { name: "200 Followers", price: 20, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },

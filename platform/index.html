@@ -69,6 +69,35 @@
     --sidebar-close: #94a3b8;
   }
 
+  /* Glowing Border Animation for Input Fields */
+  @keyframes glowingBorder {
+    0% {
+      border-color: #00d2ff;
+      box-shadow: 0 0 10px rgba(0, 210, 255, 0.6), 0 0 20px rgba(0, 210, 255, 0.3);
+    }
+    50% {
+      border-color: #8a2be2;
+      box-shadow: 0 0 15px rgba(138, 43, 226, 0.8), 0 0 25px rgba(138, 43, 226, 0.5);
+    }
+    100% {
+      border-color: #00ffff;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.6), 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+  }
+
+  .checkout-input-group input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #00d2ff !important;
+    outline: none !important;
+    animation: glowingBorder 3s infinite alternate ease-in-out !important;
+    transition: all 0.3s ease-in-out !important;
+  }
+
+  .checkout-input-group input[type="text"]:focus {
+    animation-duration: 1.5s !important;
+  }
+
   /* Platform Switcher Card Container */
   .platform-card-wrapper {
     background: #ffffff !important;
@@ -207,11 +236,6 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.03);
     pointer-events: none;
     cursor: default;
-  }
-
-  .checkout-input-group input[type="text"] {
-    width: 100%;
-    box-sizing: border-box;
   }
 
   /* Sidebar Drawer Overlay */
@@ -896,7 +920,7 @@
       txnLabel.innerText = "Enter Binance TxID / Order ID:";
       txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
     } else {
-      binanceView.classList.add('hidden');
+      binanceView.classList.hidden;
       upiView.classList.remove('hidden');
       btnBinance.classList.remove('active');
       btnUpi.classList.add('active');

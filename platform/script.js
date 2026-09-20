@@ -301,7 +301,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const serviceData = {
     instagram: {
-        "Followers Non-Drop | No Refill": [
+        "👥 Followers Non-Drop | No Refill": [
             { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "1K Followers", price: 89, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "2K Followers", price: 139, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
@@ -538,7 +538,7 @@ const serviceData = {
         ]
     },
     facebook: { 
-        "PAGE/PROFILE Followers Non-Drop / Refill": [
+        "👥 PAGE/PROFILE Followers Non-Drop / Refill": [
             { name: "200 Followers", price: 20, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
             { name: "1k followers", price: 70, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
             { name: "3k followers", price: 169, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
@@ -547,7 +547,7 @@ const serviceData = {
             { name: "10k followers", price: 399, badge: "BEST VALUE", badgeClass: "badge-best", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
             { name: "25k Followers", price: 999, badge: "MEGA DEAL", badgeClass: "badge-super", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" }
         ],
-        "PAGE/PROFILE Premium Followers": [
+        "👤 PAGE/PROFILE Premium Followers": [
             { type: "custom", name: "High Quality Facebook Followers • ♻️ Lifetime Refill • 100K+/Day •Start in 40 Min", pricePer1000: 99 }
         ],
         "👍 Like Life-Time Refill ♻️": [

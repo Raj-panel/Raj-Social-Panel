@@ -69,33 +69,44 @@
     --sidebar-close: #94a3b8;
   }
 
-  /* Glowing Border Animation for Input Fields */
-  @keyframes glowingBorder {
+  /* -------------------------------------------------------------
+     MULTICOLOR GLOWING BORDER ANIMATION FOR INPUT BOXES
+  ------------------------------------------------------------- */
+  @keyframes multicolorGlow {
     0% {
-      border-color: #00d2ff;
-      box-shadow: 0 0 10px rgba(0, 210, 255, 0.6), 0 0 20px rgba(0, 210, 255, 0.3);
+      border-color: #00f0ff;
+      box-shadow: 0 0 8px #00f0ff, 0 0 16px rgba(0, 240, 255, 0.4);
     }
-    50% {
-      border-color: #8a2be2;
-      box-shadow: 0 0 15px rgba(138, 43, 226, 0.8), 0 0 25px rgba(138, 43, 226, 0.5);
+    33% {
+      border-color: #8b5cf6;
+      box-shadow: 0 0 8px #8b5cf6, 0 0 16px rgba(139, 92, 246, 0.4);
+    }
+    66% {
+      border-color: #ec4899;
+      box-shadow: 0 0 8px #ec4899, 0 0 16px rgba(236, 72, 153, 0.4);
     }
     100% {
-      border-color: #00ffff;
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.6), 0 0 20px rgba(0, 255, 255, 0.3);
+      border-color: #00f0ff;
+      box-shadow: 0 0 8px #00f0ff, 0 0 16px rgba(0, 240, 255, 0.4);
     }
   }
 
+  /* Applying glowing effect to Checkout Link & Txn Input boxes */
   .checkout-input-group input[type="text"] {
     width: 100%;
     box-sizing: border-box;
-    border: 2px solid #00d2ff !important;
+    border: 2px solid #00f0ff !important;
+    border-radius: 12px !important;
     outline: none !important;
-    animation: glowingBorder 3s infinite alternate ease-in-out !important;
+    padding: 12px 14px !important;
+    background-color: rgba(15, 23, 42, 0.8) !important;
+    color: #ffffff !important;
     transition: all 0.3s ease-in-out !important;
+    animation: multicolorGlow 4s infinite linear !important;
   }
 
   .checkout-input-group input[type="text"]:focus {
-    animation-duration: 1.5s !important;
+    box-shadow: 0 0 15px #00f0ff, 0 0 25px rgba(0, 240, 255, 0.8) !important;
   }
 
   /* Platform Switcher Card Container */
@@ -920,7 +931,7 @@
       txnLabel.innerText = "Enter Binance TxID / Order ID:";
       txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
     } else {
-      binanceView.classList.hidden;
+      binanceView.classList.add('hidden');
       upiView.classList.remove('hidden');
       btnBinance.classList.remove('active');
       btnUpi.classList.add('active');

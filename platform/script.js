@@ -541,11 +541,11 @@ const serviceData = {
         "PAGE/PROFILE Followers Non-Drop / Refill": [
             { name: "200 Followers", price: 20, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
             { name: "1k followers", price: 70, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
-            { name: "3k followers", price: 179, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
-            { name: "5k Followers", price: 270, badge: "POPULAR", badgeClass: "badge-popular", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
-            { name: "7k Followers", price: 369, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
-            { name: "10k followers", price: 510, badge: "BEST VALUE", badgeClass: "badge-best", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
-            { name: "20k Followers", price: 999, badge: "MEGA DEAL", badgeClass: "badge-super", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" }
+            { name: "3k followers", price: 169, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
+            { name: "5k Followers", price: 249, badge: "POPULAR", badgeClass: "badge-popular", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
+            { name: "7k Followers", price: 330, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
+            { name: "10k followers", price: 399, badge: "BEST VALUE", badgeClass: "badge-best", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
+            { name: "25k Followers", price: 999, badge: "MEGA DEAL", badgeClass: "badge-super", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" }
         ],
         "PAGE/PROFILE Premium Followers": [
             { type: "custom", name: "High Quality Facebook Followers • ♻️ Lifetime Refill • 100K+/Day •Start in 40 Min", pricePer1000: 99 }

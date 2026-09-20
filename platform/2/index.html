@@ -51,6 +51,28 @@
         font-size: 14px !important;
       }
     }
+
+    /* Download QR Code Button Styling */
+    .download-qr-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      margin-bottom: 4px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #a855f7;
+      background: rgba(168, 85, 247, 0.1);
+      border: 1px solid #a855f7;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .download-qr-btn:hover {
+      background: #a855f7;
+      color: #ffffff;
+    }
   </style>
 </head>
 <body>
@@ -220,6 +242,11 @@
           <div id="qrcode" style="padding: 10px; background: #fff; border-radius: 12px; display: inline-block; border: 3px solid #a855f7; box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);"></div>
         </div>
         
+        <!-- Download QR Code Button -->
+        <button type="button" class="download-qr-btn" onclick="downloadQRCode()">
+          <i class="fa-solid fa-download"></i> Download QR Code
+        </button>
+        
         <div class="upi-app-btn-grid">
           <div class="upi-app-card-btn" style="color: #00baf2;">Paytm</div>
           <div class="upi-app-card-btn"><span style="color: #4285f4;">G</span><span style="color: #ea4335;">P</span><span style="color: #fbbc05;">a</span><span style="color: #34a853;">y</span></div>
@@ -255,6 +282,59 @@
 
   <!-- External JS File -->
   <script src="script.js"></script>
+
+  <!-- HD QR CODE DOWNLOAD FUNCTION WITH WHITE MARGIN -->
+  <script>
+    function downloadQRCode() {
+      const qrContainer = document.getElementById('qrcode');
+      if (!qrContainer) return;
+
+      const img = qrContainer.querySelector('img');
+      const canvas = qrContainer.querySelector('canvas');
+
+      const srcElement = img && img.src ? img : canvas;
+      if (!srcElement) {
+        alert('QR code image not found. Please try again.');
+        return;
+      }
+
+      const tempImg = new Image();
+      tempImg.crossOrigin = 'Anonymous';
+      tempImg.onload = function () {
+        // HD resolution scaling factor
+        const scale = 4;
+        const padding = 30 * scale; // Margin space around QR code
+        
+        const hdCanvas = document.createElement('canvas');
+        hdCanvas.width = (tempImg.width * scale) + (padding * 2);
+        hdCanvas.height = (tempImg.height * scale) + (padding * 2);
+
+        const ctx = hdCanvas.getContext('2d');
+        
+        // Fill background with solid white for easy camera scan
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, hdCanvas.width, hdCanvas.height);
+
+        // Render QR Code in HD in center
+        ctx.drawImage(tempImg, padding, padding, tempImg.width * scale, tempImg.height * scale);
+
+        // Create download link
+        const hdImageSrc = hdCanvas.toDataURL('image/png', 1.0);
+        const downloadLink = document.createElement('a');
+        downloadLink.href = hdImageSrc;
+        downloadLink.download = 'payment-qr-code.png';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+      };
+
+      if (img && img.src) {
+        tempImg.src = img.src;
+      } else if (canvas) {
+        tempImg.src = canvas.toDataURL('image/png');
+      }
+    }
+  </script>
 
   <!-- ORDER SAVING LOGIC INTEGRATION -->
   <script>

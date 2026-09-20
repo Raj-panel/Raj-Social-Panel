@@ -47,6 +47,38 @@
             text-shadow: 0 0 1px rgba(255, 255, 255, 0.8) !important;
         }
 
+        /* Multi-Color Glowing Border Animation for Input Boxes */
+        @keyframes glowingBorder {
+            0% {
+                border-color: #007bff !important;
+                box-shadow: 0 0 8px rgba(0, 123, 255, 0.8), 0 0 15px rgba(0, 123, 255, 0.4) !important;
+            }
+            33% {
+                border-color: #8a2be2 !important;
+                box-shadow: 0 0 8px rgba(138, 43, 226, 0.8), 0 0 15px rgba(138, 43, 226, 0.4) !important;
+            }
+            66% {
+                border-color: #00f2fe !important;
+                box-shadow: 0 0 8px rgba(0, 242, 254, 0.8), 0 0 15px rgba(0, 242, 254, 0.4) !important;
+            }
+            100% {
+                border-color: #007bff !important;
+                box-shadow: 0 0 8px rgba(0, 123, 255, 0.8), 0 0 15px rgba(0, 123, 255, 0.4) !important;
+            }
+        }
+
+        /* Focus State Glowing Border Effect for all inputs & Instagram link field */
+        input:focus,
+        textarea:focus,
+        select:focus,
+        #checkoutLinkInput:focus,
+        #checkoutTxnId:focus,
+        #customQtyInput:focus {
+            border: 2px solid #007bff !important;
+            outline: none !important;
+            animation: glowingBorder 3s infinite linear !important;
+        }
+
         /* Dark Mode Fallback */
         @media (prefers-color-scheme: dark) {
             #checkoutPage label[for="checkoutLinkInput"],
@@ -1454,10 +1486,9 @@ function showOrderSuccessPopup(orderData) {
     const currentDate = now.toLocaleDateString('en-GB'); // DD/MM/YYYY format
     const currentTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-   
-    const whatsappNumber = "919239628344"; // 
+    const whatsappNumber = "919239628344";
 
-    // WhatsApp Message Format আপনার চাহিদা অনুযায়ী তৈরি করা হয়েছে
+    // WhatsApp Message Format
     const waMessage = 
 `📦 Track Your Order
 
@@ -1476,7 +1507,7 @@ I want to track my order.
 
 Thank you! 💚`;
 
-    // URL Encode করা যাতে স্পেস বা ইমোজি ঠিক থাকে
+    // URL Encode করা
     const encodedWaMessage = encodeURIComponent(waMessage);
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedWaMessage}`;
 
@@ -1494,7 +1525,7 @@ Thank you! 💚`;
             <div class="raj-popup-row"><strong>Quantity:</strong> ${orderData.quantity.toLocaleString()}</div>
             <div class="raj-popup-row"><strong>Total price:</strong> ₹${orderData.amount}</div>
 
-            <!-- নতুন WhatsApp Track Your Order Button (Center Aligned & Color-Changing) -->
+            <!-- WhatsApp Track Your Order Button -->
             <div style="text-align: center; margin-top: 20px;">
                 <a href="${whatsappUrl}" target="_blank" class="raj-whatsapp-track-btn">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -1610,11 +1641,7 @@ async function submitOrderToWhatsApp() {
     // -----------------------------
     // 6. Backend URL
     // -----------------------------
-    // LOCAL TEST
     const BACKEND_URL = "https://raj-social-panel-backend-qfwd.vercel.app";
-
-    // পরে Live করার সময়:
-    // const BACKEND_URL = "https://raj-social-panel-backend-qfwd.vercel.app";
 
     // -----------------------------
     // 7. Prepare Backend Request

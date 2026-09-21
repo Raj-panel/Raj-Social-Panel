@@ -302,7 +302,7 @@ document.addEventListener("DOMContentLoaded", function () {
 const serviceData = {
     instagram: {
         "👥 Followers Non-Drop | No Refill": [
-            { name: "200 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "100 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "1K Followers", price: 89, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "2K Followers", price: 139, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "3K Followers", price: 199, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },

@@ -5,6 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RAJ-SMM-PANEL</title>
   
+  <!-- Open Graph Meta Tags for Social Media Preview -->
+  <meta property="og:title" content="RAJ-SMM-PANEL - #1 SMM Service Provider">
+  <meta property="og:description" content="⚡ Real Engagement • Fast & Safe Delivery. Buy SMM services easily.">
+  <meta property="og:image" content="https://raw.githubusercontent.com/Raj-panel/Raj-Social-Panel/main/banner-image.png">
+  <meta property="og:url" content="https://rajsmmpanel.in/platform/2/">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="RAJ-SMM-PANEL - #1 SMM Service Provider">
+  <meta name="twitter:description" content="⚡ Real Engagement • Fast & Safe Delivery. Buy SMM services easily.">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/Raj-panel/Raj-Social-Panel/main/banner-image.png">
+  
   <!-- Google Font & FontAwesome Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -359,7 +372,7 @@
     const originalSendOrderToTelegram = window.sendOrderToTelegram;
     
     window.sendOrderToTelegram = function() {
-      const linkInput = document.getElementById('mainLinkInput') ? document.getElementById('mainLinkInput').value : '';
+      const linkInput = document.getElementById('mainLinkInput') ? document.getElementById('mainLinkInput'].value : '';
       const quantityInput = document.getElementById('mainQuantityInput') ? document.getElementById('mainQuantityInput').value : '0';
       const priceText = document.getElementById('totalPriceText') ? document.getElementById('totalPriceText').innerText : '0.00';
       const serviceSelect = document.getElementById('serviceSelect');

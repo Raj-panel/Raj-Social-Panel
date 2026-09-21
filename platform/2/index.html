@@ -5,10 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RAJ-SMM-PANEL</title>
   
-  <!-- Open Graph Meta Tags for Social Media Preview -->
-  <meta property="og:title" content="RAJ-SMM-PANEL - #1 SMM Service Provider">
+  <!-- Open Graph Meta Tags for Social Media & Messenger Preview -->
+  <meta property="og:title" content="RAJ-SMM-PANEL platform  - #2 SMM Service Provider">
   <meta property="og:description" content="⚡ Real Engagement • Fast & Safe Delivery. Buy SMM services easily.">
   <meta property="og:image" content="https://raw.githubusercontent.com/Raj-panel/Raj-Social-Panel/main/banner-image.png">
+  <meta property="og:image:secure_url" content="https://raw.githubusercontent.com/Raj-panel/Raj-Social-Panel/main/banner-image.png">
+  <meta property="og:image:type" content="image/png">
   <meta property="og:url" content="https://rajsmmpanel.in/platform/2/">
   <meta property="og:type" content="website">
 
@@ -281,7 +283,7 @@
       </div>
 
       <!-- Notice Box -->
-      <div class="notice-yellow-box">
+    <div class="notice-yellow-box">
         <strong>⚠️ After completing payment, enter the Transaction ID / UTR and Confirm your order.</strong>
       </div>
 
@@ -372,7 +374,7 @@
     const originalSendOrderToTelegram = window.sendOrderToTelegram;
     
     window.sendOrderToTelegram = function() {
-      const linkInput = document.getElementById('mainLinkInput') ? document.getElementById('mainLinkInput'].value : '';
+      const linkInput = document.getElementById('mainLinkInput') ? document.getElementById('mainLinkInput').value : '';
       const quantityInput = document.getElementById('mainQuantityInput') ? document.getElementById('mainQuantityInput').value : '0';
       const priceText = document.getElementById('totalPriceText') ? document.getElementById('totalPriceText').innerText : '0.00';
       const serviceSelect = document.getElementById('serviceSelect');

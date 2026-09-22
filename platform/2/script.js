@@ -170,7 +170,7 @@ const platformData = {
         ]
       },
       "YouTube Views 🇮🇳 {Shorts / Video} Non Drop": {
-        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐕𝐢𝐞𝐰𝐬 🇮🇳 {𝐒𝐡𝐨𝐫𝐭𝐬 / 𝐕𝐢𝐞𝐰𝐬} 𝐍𝐨𝐧~𝐃𝐫𝐨𝐩",
+        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐕𝐢𝐞𝐰𝐬 🇮🇳 {𝐒𝐡𝐨𝐫𝐭𝐬 / 𝐕𝐢𝐝𝐞𝐨} 𝐍𝐨𝐧~𝐃𝐫𝐨𝐩",
         services: [
           { id: "815", name: "YouTube Shorts / Video Views | Max 100K | Non Drop 📉 | Lifetime Guaranteed ♻️ | 20K/Day 🚀 | 0–20 Min Start ⚡", rate: 199.24, avgTime: "0–20 Min Start" }
         ]
@@ -602,7 +602,6 @@ function switchCheckoutPayment(method) {
   const txnInput = document.getElementById('checkoutTxnId');
 
   if (method === 'binance') {
-    if (upiView) cigarsView.classList.add('hidden'); // unchanged
     if (upiView) upiView.classList.add('hidden');
     if (binanceView) binanceView.classList.remove('hidden');
     if (btnUpi) btnUpi.classList.remove('active');
@@ -612,7 +611,7 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) cigarsView = null; // safe check
+    if (upiView) setupSelectIcons ? upiView.classList.remove('hidden') : null;
     if (upiView) upiView.classList.remove('hidden'); 
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
@@ -622,9 +621,8 @@ function switchCheckoutPayment(method) {
   }
 }
 
-// --- NEW FUNCTION: Firecracker/Confetti Animation on Success Popup ---
+// --- Firecracker/Confetti Animation on Success Popup ---
 function triggerOrderConfetti() {
-  // Load canvas-confetti library dynamically if not already available
   if (typeof confetti === 'undefined') {
     const script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
@@ -636,7 +634,6 @@ function triggerOrderConfetti() {
 }
 
 function runConfettiEffect() {
-  // Stunning firecracker / fireworks burst effect
   var duration = 2.5 * 1000;
   var animationEnd = Date.now() + duration;
   var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100000 };
@@ -653,7 +650,6 @@ function runConfettiEffect() {
     }
 
     var particleCount = 50 * (timeLeft / duration);
-    // Fire from multiple random spots to mimic firecrackers
     confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
     confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
   }, 250);
@@ -698,7 +694,6 @@ function showModernPopup(title, message, type = 'success') {
 
   document.body.appendChild(popupOverlay);
 
-  // Trigger firecracker animation if it's a success popup!
   if (isSuccess) {
     triggerOrderConfetti();
   }
@@ -721,7 +716,7 @@ function showModernPopup(title, message, type = 'success') {
   };
 }
 
-// PLATFORM 2 - BACKEND ORDER SUBMISSION
+// PLATFORM 2 - BACKEND ORDER SUBMISSION (UPDATED WITH UTR/TRANSACTION ID VALIDATION LOGIC)
 async function sendOrderToTelegram() {
   const mainLink = document.getElementById("mainLinkInput");
   const checkoutTxn = document.getElementById("checkoutTxnId");
@@ -758,22 +753,18 @@ async function sendOrderToTelegram() {
     return;
   }
 
-  // --- UTR / Transaction ID Validation Logic Added Here ---
-  // Checks if UTR is strictly 12 digits or 16 digits (numbers only)
-  const isUpiTabActive = document.getElementById('btnTabUpi') ? document.getElementById('btnTabUpi').classList.contains('active') : true;
-  
-  if (isUpiTabActive) {
-    const isValidUtrFormat = /^\d{12}$/.test(utr) \vert{}\vert{} /^\d{16}$/.test(utr);
-    if (!isValidUtrFormat) {
-      showModernPopup(
-        "Invalid UTR Number!",
-        "দয়া করে সঠিক ১২ বা ১৬ ডিজিটের ট্রানজেকশন আইডি (UTR) দিন। কোনো অক্ষর, লিংক বা ভুলভাল সংখ্যা গ্রহণযোগ্য নয়।",
-        "error"
-      );
-      return;
-    }
+  // --- নতুন UTR ভ্যালিডেশন লজিক ---
+  // শুধুমাত্র সংখ্যা (Digits) হতে হবে এবং এর দৈর্ঘ্য ঠিক ১২ অথবা ১৬ ডিজিট হতে হবে।
+  const utrRegex = /^\d+$/;
+  if (!utrRegex.test(utr) || (utr.length !== 12 && utr.length !== 16)) {
+    showModernPopup(
+      "Inavlid UTR!",
+      "সঠিক ট্রানজেকশন আইডি বা UTR নম্বর দিন (শুধুমাত্র ১২ অথবা ১৬ ডিজিটের সংখ্যা হতে হবে, কোনো লেটার বা লিংক গ্রহণ করা হবে না)।",
+      "error"
+    );
+    return;
   }
-  // --------------------------------------------------------
+  // ---------------------------------
 
   if (!quantity || quantity <= 0) {
     showModernPopup("Error!", "Please enter a valid quantity.", "error");
@@ -996,6 +987,7 @@ document.addEventListener('DOMContentLoaded', function () {
             searchInput.value = '';
           };
 
+          searchDropdown.id ? null : searchDropdown.appendChild(item);
           searchDropdown.appendChild(item);
         });
       } else {

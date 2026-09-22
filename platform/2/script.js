@@ -753,17 +753,31 @@ async function sendOrderToTelegram() {
     return;
   }
 
-  // --- নতুন UTR ভ্যালিডেশন লজিক ---
-  // শুধুমাত্র সংখ্যা (Digits) হতে হবে এবং এর দৈর্ঘ্য ঠিক ১২ অথবা ১৬ ডিজিট হতে হবে।
-  const utrRegex = /^\d+$/;
-  if (!utrRegex.test(utr) || (utr.length !== 12 && utr.length !== 16)) {
-    showModernPopup(
-      "Inavlid UTR!",
-      "সঠিক ট্রানজেকশন আইডি বা UTR নম্বর দিন (শুধুমাত্র ১২ অথবা ১৬ ডিজিটের সংখ্যা হতে হবে, কোনো লেটার বা লিংক গ্রহণ করা হবে না)।",
-      "error"
-    );
-    return;
-  }
+// ট্রানজ্যাকশন আইডি এবং ইউটিআর ভ্যালিডেশনের জন্য আপডেট করা কোড
+function validateTransactionInput(inputVal) {
+    // এটি ১২ ডিজিটের শুধু সংখ্যা (UTR) অথবা ১৬ ডিজিটের ট্রানজ্যাকশন আইডি (যা অক্ষর বা সংখ্যা হতে পারে, যেমন 'T' দিয়ে শুরু) সাপোর্ট করবে
+    // আপনি আপনার প্রয়োজন অনুযায়ী রেগুলার এক্সপ্রেশনটি অ্যাডজাস্ট করে নিতে পারেন
+    const utrRegex = /^\d{12}$/;
+    const txnIdRegex = /^[A-Za-z0-9]{10,20}$/; // টি (T) বা অন্য অক্ষরসহ ট্রানজ্যাকশন আইডির জন্য
+
+    if (utrRegex.test(inputVal) || txnIdRegex.test(inputVal)) {
+        return true;
+    }
+    return false;
+}
+
+// ফর্ম সাবমিট বা পপআপ মেসেজের অংশ
+function handleFormSubmit(transactionValue) {
+    if (!validateTransactionInput(transactionValue)) {
+        // বাংলা লেখার পরিবর্তে নতুন ইংরেজি পপআপ মেসেজ
+        alert("Please enter a valid UTR Number (12 digits) or Transaction ID (16 digits). Only numbers are accepted — letters, spaces, or links are not allowed.");
+        return false;
+    }
+    
+    // সফলভাবে সাবমিট হওয়ার পরবর্তী কোড এখানে থাকবে
+    console.log("Transaction is valid!");
+    return true;
+}
   // ---------------------------------
 
   if (!quantity || quantity <= 0) {

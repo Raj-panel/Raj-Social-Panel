@@ -1621,9 +1621,12 @@ async function submitOrderToWhatsApp() {
     // 2. Validate UTR / Transaction ID (Updated Logic)
     // -----------------------------
     const normalUtrRegex = /^[0-9]{12,}$/;
-    const txnIdRegex = /^T[0-9]+$/;
+    const transactionIdRegex = /^T[0-9]+$/;
 
-    if (!txnId || (!normalUtrRegex.test(txnId) && !txnIdRegex.test(txnId))) {
+    const isValidUtr = normalUtrRegex.test(txnId);
+    const isValidTxnId = transactionIdRegex.test(txnId);
+
+    if (!isValidUtr && !isValidTxnId) {
         alert("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T.");
         if (txnInput) txnInput.focus();
         return;
@@ -1680,7 +1683,11 @@ async function submitOrderToWhatsApp() {
     // -----------------------------
     // 6. Backend URL
     // -----------------------------
+    // LOCAL TEST
     const BACKEND_URL = "https://raj-social-panel-backend-qfwd.vercel.app";
+
+    // পরে Live করার সময়:
+    // const BACKEND_URL = "https://raj-social-panel-backend-qfwd.vercel.app";
 
     // -----------------------------
     // 7. Prepare Backend Request

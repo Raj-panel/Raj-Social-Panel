@@ -542,9 +542,9 @@ const serviceData = {
             { name: "200 Followers", price: 20, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
             { name: "1k followers", price: 70, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
             { name: "3k followers", price: 189, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
-            { name: "5k Followers", price: 279, badge: "POPULAR", badgeClass: "badge-popular", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
-            { name: "7k Followers", price: 369, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
-            { name: "10k followers", price: 499, badge: "BEST VALUE", badgeClass: "badge-best", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
+            { name: "5k Followers", price: 299, badge: "POPULAR", badgeClass: "badge-popular", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
+            { name: "7k Followers", price: 349, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
+            { name: "10k followers", price: 599, badge: "BEST VALUE", badgeClass: "badge-best", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
             { name: "20k Followers", price: 999, badge: "MEGA DEAL", badgeClass: "badge-super", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" }
         ],
         "👤 PAGE/PROFILE Premium Followers": [

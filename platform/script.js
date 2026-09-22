@@ -576,23 +576,23 @@ const serviceData = {
         ]
     },
     youtube: {
-        "YouTube Likes — Non Drop {REAL QUALITY}": [
-            { name: "100 Real Likes", price: 49, desc: "Indian Real Active High Quality" },
-            { name: "500 Real Likes", price: 149, desc: "Indian Real Active High Quality" },
-            { name: "1K Real Likes", price: 249, desc: "Indian Real Active High Quality" },
-            { name: "3K Real Likes", price: 499, desc: "Indian Real Active High Quality" },
-            { name: "5K Real Likes", price: 949, desc: "Indian Real Active High Quality" }
+        "👍 YouTube Likes — Non Drop {REAL QUALITY}": [
+            { name: "100 Likes", price: 49, desc: "Indian Real Active High Quality Lifetime Refill ♻️" },
+            { name: "500 Likes", price: 149, desc: "Indian Real Active High Quality Lifetime Refill ♻️" },
+            { name: "1K Likes", price: 249, desc: "Indian Real Active High Quality Lifetime Refill ♻️" },
+            { name: "3K Likes", price: 499, desc: "Indian Real Active High Quality Lifetime Refill ♻️" },
+            { name: "5K Likes", price: 949, desc: "Indian Real Active High Quality Lifetime Refill ♻️" }
         ],
-        "YT Shorts / Video Views Non-Drop {REAL QUALITY}": [
-            { name: "100 Short Video Views", price: 49, desc: "Indian High Quality" },
-            { name: "500 Short Video Views", price: 90, desc: "Indian High Quality" },
-            { name: "1K Short Video Views", price: 179, desc: "Indian High Quality" },
-            { name: "3K Short Video Views", price: 449, desc: "Indian High Quality" },
-            { name: "5K Short Video Views", price: 749, desc: "Indian High Quality" },
-            { name: "7K Short Video Views", price: 999, desc: "Indian High Quality" },
-            { name: "10K Short Video Views", price: 1499, desc: "Indian High Quality" }
+        "👁️ YT Shorts / Video Views Non-Drop {REAL QUALITY}": [
+            { name: "100 Short Video Views", price: 49, desc: "Indian High Quality Lifetime Refill ♻️" },
+            { name: "500 Short Video Views", price: 90, desc: "Indian High Quality Lifetime Refill ♻️" },
+            { name: "1K Short Video Views", price: 179, desc: "Indian High Quality Lifetime Refill ♻️" },
+            { name: "3K Short Video Views", price: 449, desc: "Indian High Quality Lifetime Refill ♻️" },
+            { name: "5K Short Video Views", price: 749, desc: "Indian High Quality Lifetime Refill ♻️" },
+            { name: "7K Short Video Views", price: 999, desc: "Indian High Quality Lifetime Refill ♻️" },
+            { name: "10K Short Video Views", price: 1499, desc: "Indian High Quality Lifetime Refill ♻️" }
         ],
-        "YT Live Stream Views Non-Drop {REAL QUALITY}": [
+        "👁️ YT Live Stream Views Non-Drop {REAL QUALITY}": [
             { name: "1K Live Stream Views — 15 Mins", price: 25, desc: "Live Views for 15 Minutes" },
             { name: "1K Live Stream Views — 30 Mins", price: 40, desc: "Live Views for 30 Minutes" },
             { name: "1K Live Stream Views — 60 Mins", price: 70, desc: "Live Views for 60 Minutes" },

@@ -834,6 +834,22 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
       return false;
     }
 
+    // -------------------------------------------------------------
+    // UTR / Transaction ID Validation Logic (Added as requested)
+    // -------------------------------------------------------------
+    const normalUtrRegex = /^[0-9]{12,}$/;
+    const transactionIdRegex = /^T[0-9]+$/;
+
+    const isValidUtr = normalUtrRegex.test(txnValue);
+    const isValidTxnId = transactionIdRegex.test(txnValue);
+
+    if (!isValidUtr && !isValidTxnId) {
+      alert("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T.");
+      if (txnInput) txnInput.focus();
+      resetOrderButton();
+      return false;
+    }
+
     isSubmittingOrder = true;
     const btn = document.getElementById('confirmOrderBtn') || document.querySelector('.whatsapp-submit-btn');
 

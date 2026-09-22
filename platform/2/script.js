@@ -611,7 +611,6 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) setupSelectIcons ? upiView.classList.remove('hidden') : null;
     if (upiView) upiView.classList.remove('hidden'); 
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
@@ -621,7 +620,7 @@ function switchCheckoutPayment(method) {
   }
 }
 
-// --- Firecracker/Confetti Animation on Success Popup ---
+// --- NEW FUNCTION: Firecracker/Confetti Animation on Success Popup ---
 function triggerOrderConfetti() {
   if (typeof confetti === 'undefined') {
     const script = document.createElement('script');
@@ -716,7 +715,7 @@ function showModernPopup(title, message, type = 'success') {
   };
 }
 
-// PLATFORM 2 - BACKEND ORDER SUBMISSION (UPDATED WITH UTR/TRANSACTION ID VALIDATION LOGIC)
+// PLATFORM 2 - BACKEND ORDER SUBMISSION (Updated with UTR & Transaction ID Validation Logic)
 async function sendOrderToTelegram() {
   const mainLink = document.getElementById("mainLinkInput");
   const checkoutTxn = document.getElementById("checkoutTxnId");
@@ -744,27 +743,19 @@ async function sendOrderToTelegram() {
     return;
   }
 
-  if (!utr) {
+  // --- UTR / Transaction ID Validation Logic Added Here ---
+  const normalUtrRegex = /^[0-9]{12,}$/;
+  const transactionIdRegex = /^T[0-9]+$/;
+
+  if (!utr || (!normalUtrRegex.test(utr) && !transactionIdRegex.test(utr))) {
     showModernPopup(
       "Error!",
-      "Please enter Transaction ID / UTR Number.",
+      "Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T.",
       "error"
     );
     return;
   }
-
-  // --- আপডেটকৃত UTR / Transaction ID ভ্যালিডেশন লজিক ---
-  // এটি এখন ১২ ডিজিটের সংখ্যা (UTR) অথবা 'T' বা অন্য কোনো লেটারযুক্ত ট্রানজ্যাকশন আইডি (যেমন আপনার দেওয়া ২১ ক্যারেক্টারের আইডি) সঠিকভাবে গ্রহণ করবে।
-  const utrRegex = /^([a-zA-Z0-9]{10,25})$/;
-  if (!utrRegex.test(utr)) {
-    showModernPopup(
-      "Invalid UTR / Transaction ID!",
-      "Please enter a valid UTR Number (12 digits) or Transaction ID (16 digits). Only numbers are accepted — letters, spaces, or links are not allowed.",
-      "error"
-    );
-    return;
-  }
-  // ---------------------------------
+  // --------------------------------------------------------
 
   if (!quantity || quantity <= 0) {
     showModernPopup("Error!", "Please enter a valid quantity.", "error");
@@ -987,7 +978,6 @@ document.addEventListener('DOMContentLoaded', function () {
             searchInput.value = '';
           };
 
-          searchDropdown.id ? null : searchDropdown.appendChild(item);
           searchDropdown.appendChild(item);
         });
       } else {

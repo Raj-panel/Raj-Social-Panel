@@ -713,7 +713,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     </div>
 
     <div class="checkout-input-group margin-top-15">
-      <label id="txnLabel" for="checkoutTxnId">Enter 12-Digit UPI UTR / Ref No:</label>
+      <label id="txnLabel" for="checkoutTxnId">Enter 12-digit UBI UTR refund number</label>
       <input type="text" id="checkoutTxnId" placeholder="e.g. 4029XXXXXXXXXX (12-Digit UTR)" />
     </div>
 
@@ -834,6 +834,25 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
       return false;
     }
 
+    // ==========================================
+    // UTR / Transaction ID Input Validation Logic
+    // ==========================================
+    const normalUtrRegex = /^[0-9]{12,}$/;
+    const transactionIdRegex = /^T[0-9]+$/;
+
+    const isValidUtr = normalUtrRegex.test(txnValue);
+    const isValidTransactionId = transactionIdRegex.test(txnValue);
+
+    if (!isValidUtr && !isValidTransactionId) {
+      alert("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T.");
+      if (txnInput) {
+        txnInput.focus();
+      }
+      resetOrderButton();
+      return false;
+    }
+    // ==========================================
+
     isSubmittingOrder = true;
     const btn = document.getElementById('confirmOrderBtn') || document.querySelector('.whatsapp-submit-btn');
 
@@ -938,7 +957,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
       btnBinance.classList.remove('active');
       btnUpi.classList.add('active');
       
-      txnLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
+      txnLabel.innerText = "Enter 12-digit UBI UTR refund number";
       txnInput.placeholder = "e.g. 4029XXXXXXXXXX (12-Digit UTR)";
     }
   }

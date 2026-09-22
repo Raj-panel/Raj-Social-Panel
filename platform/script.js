@@ -1679,9 +1679,6 @@ async function submitOrderToWhatsApp() {
     // LOCAL TEST
     const BACKEND_URL = "https://raj-social-panel-backend-qfwd.vercel.app";
 
-    // পরে Live করার সময়:
-    // const BACKEND_URL = "https://raj-social-panel-backend-qfwd.vercel.app";
-
     // -----------------------------
     // 7. Prepare Backend Request
     // -----------------------------

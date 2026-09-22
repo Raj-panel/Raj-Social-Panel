@@ -170,7 +170,7 @@ const platformData = {
         ]
       },
       "YouTube Views 🇮🇳 {Shorts / Video} Non Drop": {
-        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐕𝐢𝐞𝐰𝐬 🇮🇳 {𝐒𝐡𝐨𝐫𝐭𝐬 / 𝐕𝐢𝐝𝐞𝐨} 𝐍𝐨𝐧~𝐃𝐫𝐨𝐩",
+        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐕𝐢𝐞𝐰𝐬 🇮🇳 {𝐒𝐡𝐨𝐫𝐭𝐬 / 𝐕𝐢𝐞𝐰𝐬} 𝐍𝐨𝐧~𝐃𝐫𝐨𝐩",
         services: [
           { id: "815", name: "YouTube Shorts / Video Views | Max 100K | Non Drop 📉 | Lifetime Guaranteed ♻️ | 20K/Day 🚀 | 0–20 Min Start ⚡", rate: 199.24, avgTime: "0–20 Min Start" }
         ]
@@ -602,6 +602,7 @@ function switchCheckoutPayment(method) {
   const txnInput = document.getElementById('checkoutTxnId');
 
   if (method === 'binance') {
+    if (upiView) cigarsView.classList.add('hidden'); // unchanged
     if (upiView) upiView.classList.add('hidden');
     if (binanceView) binanceView.classList.remove('hidden');
     if (btnUpi) btnUpi.classList.remove('active');
@@ -611,6 +612,7 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
+    if (upiView) cigarsView = null; // safe check
     if (upiView) upiView.classList.remove('hidden'); 
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
@@ -755,6 +757,23 @@ async function sendOrderToTelegram() {
     );
     return;
   }
+
+  // --- UTR / Transaction ID Validation Logic Added Here ---
+  // Checks if UTR is strictly 12 digits or 16 digits (numbers only)
+  const isUpiTabActive = document.getElementById('btnTabUpi') ? document.getElementById('btnTabUpi').classList.contains('active') : true;
+  
+  if (isUpiTabActive) {
+    const isValidUtrFormat = /^\d{12}$/.test(utr) \vert{}\vert{} /^\d{16}$/.test(utr);
+    if (!isValidUtrFormat) {
+      showModernPopup(
+        "Invalid UTR Number!",
+        "দয়া করে সঠিক ১২ বা ১৬ ডিজিটের ট্রানজেকশন আইডি (UTR) দিন। কোনো অক্ষর, লিংক বা ভুলভাল সংখ্যা গ্রহণযোগ্য নয়।",
+        "error"
+      );
+      return;
+    }
+  }
+  // --------------------------------------------------------
 
   if (!quantity || quantity <= 0) {
     showModernPopup("Error!", "Please enter a valid quantity.", "error");

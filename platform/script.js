@@ -303,16 +303,16 @@ const serviceData = {
     instagram: {
         "👥 Followers Non-Drop | No Refill": [
             { name: "100 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
-            { name: "1K Followers", price: 89, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
-            { name: "2K Followers", price: 139, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
-            { name: "3K Followers", price: 199, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
-            { name: "4K Followers", price: 249, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
-            { name: "5K Followers", price: 299, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
-            { name: "6K Followers", price: 360, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
-            { name: "7K Followers", price: 420, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
-            { name: "8K Followers", price: 479, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
-            { name: "9K Followers", price: 539, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
-            { name: "10K Followers", price: 599, badge: "🎁 BUY 10K + GET 2K FREE", badgeClass: "badge-super", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" }
+            { name: "1K Followers", price: 99, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "2K Followers", price: 179, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "3K Followers", price: 269, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "4K Followers", price: 359, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "5K Followers", price: 459, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "6K Followers", price: 539, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "7K Followers", price: 629, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "8K Followers", price: 719, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "9K Followers", price: 809, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
+            { name: "10K Followers", price: 899, badge: "🎁 BUY 10K + GET 2K FREE", badgeClass: "badge-super", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" }
         ],
         "❤️ Likes Non-Drop": [
             { providerId: 675, name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo", desc: "⚡ Best Quality •Life-Time~♻️• Starts in 10 Min" },

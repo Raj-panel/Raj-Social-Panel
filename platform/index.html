@@ -492,110 +492,92 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     transform: translateY(-1px);
   }
 
-  /* -------------------------------------------------------------
-     CUSTOM GLOWING POPUP (MODAL) STYLING (As shown in Image 1)
-  ------------------------------------------------------------- */
-  #customAlertOverlay {
+  /* Custom Glow Popup Modal Styles (Matching Image 1) */
+  .custom-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.65);
+    background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(5px);
-    z-index: 99999;
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
+    z-index: 99999;
+    animation: fadeIn 0.3s ease;
   }
 
-  #customAlertOverlay.active {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .custom-alert-box {
+  .custom-modal-box {
     background: #ffffff;
     width: 85%;
-    max-width: 340px;
+    max-width: 380px;
     border-radius: 24px;
-    padding: 28px 20px 24px 20px;
+    padding: 30px 20px;
     text-align: center;
-    box-shadow: 0 0 30px rgba(239, 68, 68, 0.4), 0 10px 25px rgba(0, 0, 0, 0.2);
-    transform: scale(0.8);
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 0 25px rgba(239, 68, 68, 0.5), 0 0 50px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: scaleUp 0.3s ease;
   }
 
-  #customAlertOverlay.active .custom-alert-box {
-    transform: scale(1);
-  }
-
-  .custom-alert-icon-wrapper {
+  .custom-modal-icon {
     width: 60px;
     height: 60px;
-    margin: 0 auto 15px auto;
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 28px;
+    margin: 0 auto 15px auto;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
   }
 
-  .custom-alert-icon-wrapper i {
-    font-size: 52px;
-    color: #ef4444;
-    filter: drop-shadow(0 4px 8px rgba(239, 68, 68, 0.4));
-  }
-
-  .custom-alert-title {
-    font-size: 20px;
+  .custom-modal-title {
+    font-size: 22px;
     font-weight: 700;
     color: #1e293b;
     margin-bottom: 10px;
   }
 
-  .custom-alert-message {
+  .custom-modal-message {
     font-size: 14px;
     color: #64748b;
     line-height: 1.5;
-    margin-bottom: 22px;
+    margin-bottom: 20px;
   }
 
-  .custom-alert-btn {
+  .custom-modal-btn {
     background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
     color: #ffffff;
     border: none;
     border-radius: 12px;
-    width: 100%;
-    padding: 12px;
+    padding: 12px 30px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease;
+    width: 100%;
   }
 
-  .custom-alert-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6);
+  .custom-modal-btn:hover {
+    transform: translateY(-2px);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes scaleUp {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
   }
 </style>
 </head>
 <body data-platform="instagram">
-
-<!-- CUSTOM GLOWING ALERT MODAL HTML -->
-<div id="customAlertOverlay">
-  <div class="custom-alert-box">
-    <div class="custom-alert-icon-wrapper">
-      <i class="fa-solid fa-circle-xmark"></i>
-    </div>
-    <div class="custom-alert-title" id="customAlertTitle">Error!</div>
-    <div class="custom-alert-message" id="customAlertMessage">Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T.</div>
-    <button class="custom-alert-btn" onclick="closeCustomAlert()">Okay</button>
-  </div>
-</div>
 
 <!-- Left Sidebar Navigation -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar(true)"></div>
@@ -833,17 +815,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
 <script>
   let isSubmittingOrder = false;
 
-  // CUSTOM GLOWING ALERT MODAL TRIGGER FUNCTION
-  function showCustomAlert(message, title = "Error!") {
-    document.getElementById('customAlertTitle').innerText = title;
-    document.getElementById('customAlertMessage').innerText = message;
-    document.getElementById('customAlertOverlay').classList.add('active');
-  }
-
-  function closeCustomAlert() {
-    document.getElementById('customAlertOverlay').classList.remove('active');
-  }
-
   function resetOrderButton() {
     isSubmittingOrder = false;
     const btn = document.getElementById('confirmOrderBtn') || document.querySelector('.whatsapp-submit-btn');
@@ -854,13 +825,39 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
+  // CUSTOM GLOWING ERROR POPUP FUNCTION (Matching Image 1)
+  function showCustomErrorPopup(messageText) {
+    const existingModal = document.getElementById('customErrorModal');
+    if (existingModal) existingModal.remove();
+
+    const modalHTML = `
+      <div id="customErrorModal" class="custom-modal-overlay">
+        <div class="custom-modal-box">
+          <div class="custom-modal-icon">
+            <i class="fa-solid fa-xmark"></i>
+          </div>
+          <div class="custom-modal-title">Error!</div>
+          <div class="custom-modal-message">${messageText}</div>
+          <button class="custom-modal-btn" onclick="closeCustomErrorPopup()">Okay</button>
+        </div>
+      </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+  }
+
+  function closeCustomErrorPopup() {
+    const modal = document.getElementById('customErrorModal');
+    if (modal) modal.remove();
+  }
+
   // SILENT BACKGROUND DOWNLOAD FUNCTION
   function downloadQRCode() {
     const qrImg = document.getElementById('checkoutQrImg');
     const dlBtn = document.getElementById('downloadQrBtn');
 
     if (!qrImg || !qrImg.src) {
-      showCustomAlert("QR Code image not available!");
+      showCustomErrorPopup("QR Code image not available!");
       return;
     }
 
@@ -910,7 +907,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
         })
         .catch(err => {
           console.error("QR Download Error:", err);
-          showCustomAlert("Unable to download image automatically.");
+          showCustomErrorPopup("Unable to download image automatically.");
         })
         .finally(() => {
           dlBtn.innerHTML = originalText;
@@ -936,19 +933,19 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     const txnValue = txnInput ? txnInput.value.trim() : '';
 
     if (!linkValue) {
-      showCustomAlert("Please enter a valid Link / Username.");
+      showCustomErrorPopup("Please enter a valid Link / Username.");
       resetOrderButton();
       return false;
     }
 
     if (!txnValue) {
-      showCustomAlert("Please enter Transaction ID / UTR number.");
+      showCustomErrorPopup("Please enter Transaction ID / UTR number.");
       resetOrderButton();
       return false;
     }
 
     // -------------------------------------------------------------
-    // UTR / Transaction ID Validation Logic (Added as requested)
+    // UTR / Transaction ID Validation Logic
     // -------------------------------------------------------------
     const normalUtrRegex = /^[0-9]{12,}$/;
     const transactionIdRegex = /^T[0-9]+$/;
@@ -957,7 +954,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     const isValidTxnId = transactionIdRegex.test(txnValue);
 
     if (!isValidUtr && !isValidTxnId) {
-      showCustomAlert("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T.");
+      showCustomErrorPopup("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T.");
       if (txnInput) txnInput.focus();
       resetOrderButton();
       return false;

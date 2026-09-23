@@ -831,7 +831,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // POPUP DISPLAY FUNCTION WITH UTR EXAMPLE IMAGE (`utr-example.png`)
+  // POPUP DISPLAY FUNCTION WITH BACK BUTTON FIX
   function showCustomErrorPopup(messageText, showImage = false) {
     const existingModal = document.getElementById('customErrorModal');
     if (existingModal) existingModal.remove();
@@ -860,11 +860,20 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     `;
 
     document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    // পপআপ ওপেন হওয়ার সাথে ব্রাউজারের হিস্টরিতে স্টেট যোগ করা হলো, যেন ব্যাক করলে পেজ না বাউন্স করে শুধু পপআপ বন্ধ হয়
+    history.pushState({ popupOpen: true }, '');
   }
 
   function closeCustomErrorPopup() {
     const modal = document.getElementById('customErrorModal');
-    if (modal) modal.remove();
+    if (modal) {
+      modal.remove();
+      // যদি হিস্টরিতে পপআপ স্টেট থাকে তবে এক ধাপ ব্যাক করে হিস্টরি ক্লিন করা
+      if (history.state && history.state.popupOpen) {
+        history.back();
+      }
+    }
   }
 
   // SILENT BACKGROUND DOWNLOAD FUNCTION
@@ -1121,10 +1130,17 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
+  // GLOBAL POPSTATE HANDLER FOR BOTH SIDEBAR AND POPUP
   window.addEventListener("popstate", function (event) {
     const sidebar = document.getElementById("leftSidebar");
     if (sidebar && sidebar.classList.contains("active")) {
       closeSidebar(false);
+      return;
+    }
+
+    const modal = document.getElementById('customErrorModal');
+    if (modal) {
+      modal.remove();
     }
   });
 

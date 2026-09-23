@@ -618,7 +618,7 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) upiView.classList.remove('hidden'); 
+    if (upiView) upscaleView = upiView.classList.remove('hidden'); // safe existing
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
 
@@ -661,7 +661,7 @@ function runConfettiEffect() {
   }, 250);
 }
 
-// Custom Glow Popup with UTR Example Image Integration (ব্যাক বাটন ও ওকে ক্লিকের লজিক সহ)
+// Custom Glow Popup with UTR Example Image Integration (Bug Fixed: OK button will only close popup without triggering history.back)
 function showModernPopup(title, message, type = 'success') {
   const existingPopup = document.getElementById('modernCustomPopup');
   if (existingPopup) existingPopup.remove();
@@ -674,9 +674,6 @@ function showModernPopup(title, message, type = 'success') {
     display: flex; align-items: center; justify-content: center;
     z-index: 99999; animation: fadeInPopup 0.3s ease;
   `;
-
-  // পপআপ ওপেন করার সময় হিস্ট্রি স্টেট পুশ করা হলো যাতে ব্যাক বাটন প্রেস করলে পপআপটি বন্ধ হয় কিন্তু চেকআউট পেজ থেকে না যায়
-  history.pushState({ popupOpen: true }, "", "#popup");
 
   const isSuccess = type === 'success';
   const glowColor = isSuccess ? 'rgba(16, 185, 129, 0.5)' : 'rgba(239, 68, 68, 0.5)';
@@ -731,21 +728,15 @@ function showModernPopup(title, message, type = 'success') {
     document.head.appendChild(styleSheet);
   }
 
-  // 'Okay' বাটনে ক্লিক করলে শুধু পপআপটি বন্ধ হবে এবং ইউজার চেকআউট পেজেই অক্ষত থাকবে
+  // BUG FIX: 'Okay' বাটনে ক্লিক করলে শুধু পপআপটি রিমুভ হবে, কোনো history.back() ট্রিগার করবে না যাতে ইউজার চেকআউট পেজেই থাকে।
   document.getElementById('modernPopupCloseBtn').onclick = (e) => {
     e.stopPropagation();
     popupOverlay.remove();
-    if (history.state && history.state.popupOpen) {
-      history.back();
-    }
   };
   
   popupOverlay.onclick = (e) => {
     if (e.target === popupOverlay) {
       popupOverlay.remove();
-      if (history.state && history.state.popupOpen) {
-        history.back();
-      }
     }
   };
 }

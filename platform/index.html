@@ -854,30 +854,29 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
           <div class="custom-modal-title">Error!</div>
           <div class="custom-modal-message">${messageText}</div>
           ${imageHTML}
-          <button class="custom-modal-btn" onclick="closeCustomErrorPopup(true)">Okay</button>
+          <button class="custom-modal-btn" onclick="closeCustomErrorPopup()">Okay</button>
         </div>
       </div>
     `;
 
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 
-    // পপআপ ওপেন হওয়ার সাথে ব্রাউজারের হিস্টরিতে নতুন স্টেট যোগ করা হলো, 
-    // যাতে ব্যাক বাটনে ক্লিক করলে শুধু পপআপ ক্লোজ হয়।
-    history.pushState({ customPopupOpen: true }, '');
+    // পপআপ ওপেন হলে হিস্টরিতে স্টেট পুশ করা হয়
+    history.pushState({ popupOpen: true }, '');
   }
 
-  function closeCustomErrorPopup(fromUserAction = false) {
+  function closeCustomErrorPopup() {
     const modal = document.getElementById('customErrorModal');
     if (modal) {
       modal.remove();
-      // যদি ইউজার বাটন ক্লিক করে পপআপ বন্ধ করে, তবে পুশ করা হিস্ট্রি স্টেটটি ব্যাক করে সরিয়ে নেওয়া হবে
-      if (fromUserAction && history.state && history.state.customPopupOpen) {
+      // পপআপ বন্ধ হলে হিস্ট্রি স্টেট রিমুভ করতে এক ধাপ ব্যাক করা হয়
+      if (history.state && history.state.popupOpen) {
         history.back();
       }
     }
   }
 
-  // ফোনের ব্যাক বাটন বা ব্রাউজারের ব্যাক বাটনে ক্লিক করলে পপআপ ক্লোজ করার ইভেন্ট লিসেনার
+  // ফোনের ব্যাক বাটন প্রেস করলে শুধুমাত্র পপআপ বন্ধ হওয়ার লজিক
   window.addEventListener("popstate", function (event) {
     const modal = document.getElementById('customErrorModal');
     if (modal) {
@@ -973,7 +972,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
 
     if (!txnValue) {
-      // খালি রাখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter Transaction ID / UTR number. See example below:", true);
       resetOrderButton();
       return false;
@@ -989,7 +987,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     const isValidTxnId = transactionIdRegex.test(txnValue);
 
     if (!isValidUtr && !isValidTxnId) {
-      // ভুলভাল লিখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T. See example below:", true);
       if (txnInput) txnInput.focus();
       resetOrderButton();
@@ -1138,8 +1135,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
       }
     }
   }
-
-  // সাইডবারের popstate হ্যান্ডলারটি অলরেডি আছে, যা পপআপের পপস্টেটের সাথে সুন্দরভাবে কাজ করবে।
 
   document.addEventListener("DOMContentLoaded", function () {
     applyPlatformTheme('instagram');

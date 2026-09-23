@@ -79,7 +79,7 @@ const platformData = {
         ]
       },
       "🇮🇳 Instagram Shares - Premium Quality | Super Fast": {
-        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐒𝐡𝐚𝐫𝐞𝐬- 🇮🇳𝐏𝐫𝐞𝐦𝐢𝐮𝐦 𝐐𝐮𝐚𝐥𝐢𝐭𝐲",
+        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐒𝐡𝐚𝐫𝐞𝐬- 🇮🇳𝐏𝐫𝐞𝐦𝐢𝐮ⵎ 𝐐𝐮𝐚𝐥𝐢𝐭𝐲",
         services: [
           { id: "121", name: "🇮🇳 Instagram Shares | Premium Quality | Max 1M | 100K/Day | SuperFast | 10–25 Min Start | Lifetime Refill ♻️", rate: 22.266, avgTime: "10–25 Min Start" },
           { id: "123", name: "🇮🇳 Instagram Shares | High Quality | Max 1M | 200K/Day | SuperFast | 10–30 Min Start | Lifetime Refill ♻️ | One Click Done", rate: 20.33, avgTime: "10–30 Min Start" }
@@ -488,7 +488,7 @@ function calculatePrice() {
   updateAverageTime();
 }
 
-// Checkout Navigation
+// Checkout Navigation & UTR Example Image Preview Injection
 let qrcodeInstance = null;
 
 function openCheckout() {
@@ -534,6 +534,24 @@ function openCheckout() {
       correctLevel: QRCode.CorrectLevel.H
     });
   }
+
+  // --- UTR Example Image Integration in Checkout Popup ---
+  const upiView = document.getElementById("checkoutUpiView");
+  if (upiView && !document.getElementById("utrExamplePreviewContainer")) {
+    const previewContainer = document.createElement("div");
+    previewContainer.id = "utrExamplePreviewContainer";
+    previewContainer.style.cssText = "margin-top: 15px; text-align: center; border-top: 1px dashed #cbd5e1; padding-top: 12px;";
+    
+    previewContainer.innerHTML = `
+      <p style="font-size: 12px; color: #64748b; margin-bottom: 6px; font-weight: 600;">Where to find 12-Digit UTR / Ref No?</p>
+      <a href="https://raw.githubusercontent.com/Raj-panel/Raj-Social-Panel/main/platform/utr-example.png" target="_blank" style="display: inline-block; border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: transform 0.2s;">
+        <img src="https://raw.githubusercontent.com/Raj-panel/Raj-Social-Panel/main/platform/utr-example.png" alt="UTR Example" style="width: 100%; max-width: 220px; height: auto; display: block; object-fit: contain;" />
+      </a>
+      <p style="font-size: 10px; color: #94a3b8; margin-top: 4px;">Click image to zoom/view full size</p>
+    `;
+    upiView.appendChild(previewContainer);
+  }
+  // --------------------------------------------------------
 
   const checkoutPage = document.getElementById("checkoutPage");
   if (checkoutPage) {
@@ -620,7 +638,7 @@ function switchCheckoutPayment(method) {
   }
 }
 
-// --- NEW FUNCTION: Firecracker/Confetti Animation on Success Popup ---
+// --- Firecracker/Confetti Animation on Success Popup ---
 function triggerOrderConfetti() {
   if (typeof confetti === 'undefined') {
     const script = document.createElement('script');
@@ -743,7 +761,7 @@ async function sendOrderToTelegram() {
     return;
   }
 
-  // --- UTR / Transaction ID Validation Logic Added Here ---
+  // --- UTR / Transaction ID Validation Logic ---
   const normalUtrRegex = /^[0-9]{12,}$/;
   const transactionIdRegex = /^T[0-9]+$/;
 
@@ -755,7 +773,7 @@ async function sendOrderToTelegram() {
     );
     return;
   }
-  // --------------------------------------------------------
+  // ---------------------------------------------
 
   if (!quantity || quantity <= 0) {
     showModernPopup("Error!", "Please enter a valid quantity.", "error");

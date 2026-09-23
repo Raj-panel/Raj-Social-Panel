@@ -582,7 +582,6 @@ window.addEventListener('popstate', function (event) {
   const checkoutPage = document.getElementById("checkoutPage");
   const modernPopup = document.getElementById("modernCustomPopup");
 
-  // পপআপ ওপেন থাকা অবস্থায় ব্যাক বাটন প্রেস করলে চেকআউট পেজে রেখেই শুধু পপআপটি রিমুভ হবে
   if (modernPopup) {
     modernPopup.remove();
     return;
@@ -618,7 +617,7 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) upscaleView = upiView.classList.remove('hidden'); // safe existing
+    if (upiView) upiView.classList.remove('hidden');
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
 
@@ -661,7 +660,7 @@ function runConfettiEffect() {
   }, 250);
 }
 
-// Custom Glow Popup with UTR Example Image Integration (Bug Fixed: OK button will only close popup without triggering history.back)
+// Custom Glow Popup with UTR Example Image Integration & Confetti Restored
 function showModernPopup(title, message, type = 'success') {
   const existingPopup = document.getElementById('modernCustomPopup');
   if (existingPopup) existingPopup.remove();
@@ -714,6 +713,7 @@ function showModernPopup(title, message, type = 'success') {
 
   document.body.appendChild(popupOverlay);
 
+  // সাকসেস অর্ডার হলে আবার ফটকা বা কনফেটি অ্যানিমেশন ট্রিগার হবে
   if (isSuccess) {
     triggerOrderConfetti();
   }
@@ -728,7 +728,6 @@ function showModernPopup(title, message, type = 'success') {
     document.head.appendChild(styleSheet);
   }
 
-  // BUG FIX: 'Okay' বাটনে ক্লিক করলে শুধু পপআপটি রিমুভ হবে, কোনো history.back() ট্রিগার করবে না যাতে ইউজার চেকআউট পেজেই থাকে।
   document.getElementById('modernPopupCloseBtn').onclick = (e) => {
     e.stopPropagation();
     popupOverlay.remove();

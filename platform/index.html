@@ -831,7 +831,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // POPUP DISPLAY FUNCTION WITH BROWSER HISTORY PUSH FOR BACK BUTTON SUPPORT
+  // POPUP DISPLAY FUNCTION WITH UTR EXAMPLE IMAGE (`utr-example.png`) AND HISTORY PUSH FOR BACK BUTTON
   function showCustomErrorPopup(messageText, showImage = false) {
     const existingModal = document.getElementById('customErrorModal');
     if (existingModal) existingModal.remove();
@@ -846,8 +846,8 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
 
     const modalHTML = `
-      <div id="customErrorModal" class="custom-modal-overlay" onclick="closeCustomErrorPopup(true)">
-        <div class="custom-modal-box" onclick="event.stopPropagation()">
+      <div id="customErrorModal" class="custom-modal-overlay">
+        <div class="custom-modal-box">
           <div class="custom-modal-icon">
             <i class="fa-solid fa-xmark"></i>
           </div>
@@ -861,20 +861,29 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
 
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 
-    // পপআপ ওপেন হলে ব্রাউজারের হিস্টরিতে একটি স্টেট যুক্ত করা হলো যাতে ব্যাক বাটন চাপলে শুধু পপআপ সরে যায়
+    // ব্রাউজারের হিস্টরিতে স্টেট পুশ করা হলো যাতে ফোনের ব্যাক বাটন প্রেস করলে পপআপটি বন্ধ হয়ে যায়
     history.pushState({ popupOpen: true }, '');
   }
 
   function closeCustomErrorPopup(fromUserAction = false) {
     const modal = document.getElementById('customErrorModal');
-    if (modal) {
-      modal.remove();
-      // ইউজার যদি নিজে বাটন বা বাইরে ক্লিক করে পপআপ বন্ধ করে, তবে হিস্টরি থেকে পপআপের স্টেটটি পপ করে ফেলা হবে
-      if (fromUserAction && history.state && history.state.popupOpen) {
-        history.back();
-      }
+    if (modal) modal.remove();
+
+    // ইউজার যদি 'Okay' বাটনে ক্লিক করে, তবে হিস্ট্রি ব্যাক করে স্টেট ক্লিয়ার করা হবে
+    if (fromUserAction && history.state && history.state.popupOpen) {
+      history.back();
     }
   }
+
+  // গ্লোবাল পপস্টেট হ্যান্ডলার: ফোনের ব্যাক বাটন প্রেস করলে পপআপ বন্ধ হবে কিন্তু চেকআউট পেজ থাকবে
+  window.addEventListener("popstate", function (event) {
+    const modal = document.getElementById('customErrorModal');
+    if (modal) {
+      modal.remove();
+      // পপআপ বন্ধ করার পর যাতে চেকআউট পেজ থেকে হুট করে ব্যাক না হয়ে যায়, তাই আবার একটি পেজ স্টেট পুশ করে রাখা হলো
+      history.pushState({ checkoutOpen: true }, '');
+    }
+  });
 
   // SILENT BACKGROUND DOWNLOAD FUNCTION
   function downloadQRCode() {
@@ -964,6 +973,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
 
     if (!txnValue) {
+      // খালি রাখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter Transaction ID / UTR number. See example below:", true);
       resetOrderButton();
       return false;
@@ -979,6 +989,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     const isValidTxnId = transactionIdRegex.test(txnValue);
 
     if (!isValidUtr && !isValidTxnId) {
+      // ভুলভাল লিখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T. See example below:", true);
       if (txnInput) txnInput.focus();
       resetOrderButton();
@@ -1128,16 +1139,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // UNIFIED POPSTATE HANDLER FOR BOTH SIDEBAR AND ERROR POPUP BACK BUTTON CONTROL
   window.addEventListener("popstate", function (event) {
-    // ১. যদি এরর পপআপ খোলা থাকে এবং ব্যাক বাটন চাপলে পপআপ বন্ধ হবে কিন্তু চেকআউট পেজেই থাকবে
-    const errorModal = document.getElementById('customErrorModal');
-    if (errorModal) {
-      errorModal.remove();
-      return;
-    }
-
-    // ২. যদি সাইডবার খোলা থাকে
     const sidebar = document.getElementById("leftSidebar");
     if (sidebar && sidebar.classList.contains("active")) {
       closeSidebar(false);

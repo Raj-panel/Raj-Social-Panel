@@ -1198,16 +1198,15 @@ function updateCheckoutQuantityDisplay() {
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
     
-    // Optimized immediate QR generation & rendering
+    // ইনস্ট্যান্ট লোডিংয়ের জন্য QR URL আগে থেকেই সেট করা হলো
     const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
-        if (qrImg.src !== qrImageSrc) {
-            qrImg.src = qrImageSrc;
-        }
-        qrImg.style.width = "110px";
-        qrImg.style.height = "110px";
+        // ইমেজ সাথে সাথে রিফ্রেশ ও শো করার জন্য src প্রপার্টি সেট করা হলো
+        qrImg.src = qrImageSrc;
+        qrImg.style.width = "170px";
+        qrImg.style.height = "170px";
         qrImg.style.objectFit = "contain";
         qrImg.style.display = "block";
     }
@@ -1316,6 +1315,7 @@ function showCheckoutOverlay() {
         }
     }
 
+    // ওভারলে খোলার সাথে সাথেই কোড ডিসপ্লে আপডেট ও জেনারেট করা নিশ্চিত করা হলো
     updateCheckoutQuantityDisplay();
 
     const priceCard = priceEl ? priceEl.parentElement : null;
@@ -1506,7 +1506,7 @@ function triggerRajConfettiAnimation(overlayElement) {
 }
 
 // ==========================================
-// MODERN GLOWING SUCCESS POPUP FUNCTION
+// MODERN GLOWING SUCCESS POPUP FUNCTION (WITH WHATSAPP TRACK BUTTON)
 // ==========================================
 function showOrderSuccessPopup(orderData) {
     const existingOverlay = document.getElementById("rajOrderSuccessOverlay");
@@ -1515,6 +1515,7 @@ function showOrderSuccessPopup(orderData) {
     const now = new Date();
     const currentDate = now.toLocaleDateString('en-GB');
     const currentTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
     const whatsappNumber = "919239628344";
 
     const waMessage = 
@@ -1581,6 +1582,7 @@ function closeRajSuccessPopup() {
 
 // ==========================================
 // BACKEND ORDER SUBMISSION
+// Platform 1
 // ==========================================
 async function submitOrderToWhatsApp() {
     const linkInput = document.getElementById("checkoutLinkInput");
@@ -1619,16 +1621,13 @@ async function submitOrderToWhatsApp() {
             ? window.firebaseUserUid
             : (() => {
                 let bid = localStorage.getItem("raj_smm_browser_id");
-
                 if (!bid) {
                     bid =
                         "BID_" +
                         Math.random().toString(36).substring(2, 15) +
                         Math.random().toString(36).substring(2, 15);
-
                     localStorage.setItem("raj_smm_browser_id", bid);
                 }
-
                 return bid;
             })();
 
@@ -1643,26 +1642,16 @@ async function submitOrderToWhatsApp() {
     const finalPriceFormatted = finalPrice.toFixed(2);
 
     const isUpi = document.getElementById("btnTabUpi")
-        ? document
-            .getElementById("btnTabUpi")
-            .classList.contains("active")
+        ? document.getElementById("btnTabUpi").classList.contains("active")
         : true;
 
-    const payMethod = isUpi
-        ? "UPI QR Code"
-        : "Binance Pay";
-
+    const payMethod = isUpi ? "UPI QR Code" : "Binance Pay";
     const BACKEND_URL = "https://raj-social-panel-backend-qfwd.vercel.app";
 
     const orderPayload = {
         userId: userIdentifier,
         platform: "platform1",
-        serviceId: String(
-            d.serviceId ||
-            d.id ||
-            d.serviceID ||
-            "unknown"
-        ),
+        serviceId: String(d.serviceId || d.id || d.serviceID || "unknown"),
         serviceName: d.serviceName || "SMM Service",
         packageName: d.packageName || "",
         link: link,
@@ -1698,21 +1687,13 @@ async function submitOrderToWhatsApp() {
         const data = await response.json();
 
         if (!response.ok || !data.success) {
-            throw new Error(
-                data.message ||
-                data.error ||
-                "Order submission failed."
-            );
+            throw new Error(data.message || data.error || "Order submission failed.");
         }
 
         const backendOrder = data.order;
-
         const localOrder = {
-            orderId:
-                backendOrder?.internalOrderId ||
-                Math.floor(100000 + Math.random() * 900000),
-            serviceName:
-                `${d.platform} - ${d.serviceName} (${d.packageName || ""})`,
+            orderId: backendOrder?.internalOrderId || Math.floor(100000 + Math.random() * 900000),
+            serviceName: `${d.platform} - ${d.serviceName} (${d.packageName || ""})`,
             link: link,
             quantity: d.quantity || 0,
             amount: finalPriceFormatted,
@@ -1722,41 +1703,25 @@ async function submitOrderToWhatsApp() {
             paymentId: txnId
         };
 
-        const existingOrders = JSON.parse(
-            localStorage.getItem("raj_smm_orders") || "[]"
-        );
-
+        const existingOrders = JSON.parse(localStorage.getItem("raj_smm_orders") || "[]");
         existingOrders.push(localOrder);
-        localStorage.setItem(
-            "raj_smm_orders",
-            JSON.stringify(existingOrders)
-        );
+        localStorage.setItem("raj_smm_orders", JSON.stringify(existingOrders));
 
         closeCheckoutUI();
 
         showOrderSuccessPopup({
-            orderId:
-                backendOrder?.internalOrderId ||
-                localOrder.orderId,
-            platformName:
-                d.platform || "",
-            serviceName:
-                d.serviceName || "",
-            packageName:
-                d.packageName || "",
+            orderId: backendOrder?.internalOrderId || localOrder.orderId,
+            platformName: d.platform || "",
+            serviceName: d.serviceName || "",
+            packageName: d.packageName || "",
             link: link,
-            quantity:
-                d.quantity || 0,
-            amount:
-                finalPriceFormatted
+            quantity: d.quantity || 0,
+            amount: finalPriceFormatted
         });
 
     } catch (error) {
         console.error("❌ Backend Order Error:", error);
-        alert(
-            "Order could not be submitted.\n\n" +
-            (error.message || "Please try again.")
-        );
+        alert("Order could not be submitted.\n\n" + (error.message || "Please try again."));
     } finally {
         if (submitBtn) {
             submitBtn.disabled = false;

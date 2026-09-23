@@ -491,9 +491,111 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     color: #e9d5ff;
     transform: translateY(-1px);
   }
+
+  /* -------------------------------------------------------------
+     CUSTOM GLOWING POPUP (MODAL) STYLING (As shown in Image 1)
+  ------------------------------------------------------------- */
+  #customAlertOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(5px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+
+  #customAlertOverlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .custom-alert-box {
+    background: #ffffff;
+    width: 85%;
+    max-width: 340px;
+    border-radius: 24px;
+    padding: 28px 20px 24px 20px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(239, 68, 68, 0.4), 0 10px 25px rgba(0, 0, 0, 0.2);
+    transform: scale(0.8);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    font-family: 'Poppins', sans-serif;
+  }
+
+  #customAlertOverlay.active .custom-alert-box {
+    transform: scale(1);
+  }
+
+  .custom-alert-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 15px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .custom-alert-icon-wrapper i {
+    font-size: 52px;
+    color: #ef4444;
+    filter: drop-shadow(0 4px 8px rgba(239, 68, 68, 0.4));
+  }
+
+  .custom-alert-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 10px;
+  }
+
+  .custom-alert-message {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.5;
+    margin-bottom: 22px;
+  }
+
+  .custom-alert-btn {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .custom-alert-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6);
+  }
 </style>
 </head>
 <body data-platform="instagram">
+
+<!-- CUSTOM GLOWING ALERT MODAL HTML -->
+<div id="customAlertOverlay">
+  <div class="custom-alert-box">
+    <div class="custom-alert-icon-wrapper">
+      <i class="fa-solid fa-circle-xmark"></i>
+    </div>
+    <div class="custom-alert-title" id="customAlertTitle">Error!</div>
+    <div class="custom-alert-message" id="customAlertMessage">Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T.</div>
+    <button class="custom-alert-btn" onclick="closeCustomAlert()">Okay</button>
+  </div>
+</div>
 
 <!-- Left Sidebar Navigation -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar(true)"></div>
@@ -731,6 +833,17 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
 <script>
   let isSubmittingOrder = false;
 
+  // CUSTOM GLOWING ALERT MODAL TRIGGER FUNCTION
+  function showCustomAlert(message, title = "Error!") {
+    document.getElementById('customAlertTitle').innerText = title;
+    document.getElementById('customAlertMessage').innerText = message;
+    document.getElementById('customAlertOverlay').classList.add('active');
+  }
+
+  function closeCustomAlert() {
+    document.getElementById('customAlertOverlay').classList.remove('active');
+  }
+
   function resetOrderButton() {
     isSubmittingOrder = false;
     const btn = document.getElementById('confirmOrderBtn') || document.querySelector('.whatsapp-submit-btn');
@@ -747,7 +860,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     const dlBtn = document.getElementById('downloadQrBtn');
 
     if (!qrImg || !qrImg.src) {
-      alert("QR Code image not available!");
+      showCustomAlert("QR Code image not available!");
       return;
     }
 
@@ -797,7 +910,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
         })
         .catch(err => {
           console.error("QR Download Error:", err);
-          alert("Unable to download image automatically.");
+          showCustomAlert("Unable to download image automatically.");
         })
         .finally(() => {
           dlBtn.innerHTML = originalText;
@@ -823,13 +936,13 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     const txnValue = txnInput ? txnInput.value.trim() : '';
 
     if (!linkValue) {
-      alert("Please enter a valid Link / Username.");
+      showCustomAlert("Please enter a valid Link / Username.");
       resetOrderButton();
       return false;
     }
 
     if (!txnValue) {
-      alert("Please enter Transaction ID / UTR number.");
+      showCustomAlert("Please enter Transaction ID / UTR number.");
       resetOrderButton();
       return false;
     }
@@ -844,7 +957,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     const isValidTxnId = transactionIdRegex.test(txnValue);
 
     if (!isValidUtr && !isValidTxnId) {
-      alert("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T.");
+      showCustomAlert("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T.");
       if (txnInput) txnInput.focus();
       resetOrderButton();
       return false;

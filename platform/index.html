@@ -831,7 +831,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // POPUP DISPLAY FUNCTION WITH HISTORY STATE TRAPPING FOR BACK BUTTON
+  // পপআপ ওপেন করার ফাংশন (এখানে চেকআউট পেজের স্টেট অক্ষুণ্ণ রেখে শুধু পপআপ ওপেন করা হচ্ছে)
   function showCustomErrorPopup(messageText, showImage = false) {
     const existingModal = document.getElementById('customErrorModal');
     if (existingModal) existingModal.remove();
@@ -854,34 +854,42 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
           <div class="custom-modal-title">Error!</div>
           <div class="custom-modal-message">${messageText}</div>
           ${imageHTML}
-          <button class="custom-modal-btn" onclick="closeCustomErrorPopup(true)">Okay</button>
+          <button class="custom-modal-btn" onclick="closeCustomErrorPopup()">Okay</button>
         </div>
       </div>
     `;
 
     document.body.insertAdjacentHTML('beforeend', modalHTML);
-
-    // পুশস্টেট যোগ করা হলো যাতে ব্যাক বাটন প্রেস করলে ওয়েবসাইট থেকে ব্যাক না হয়ে শুধু পপআপটি ক্লোজ হয়
-    history.pushState({ modalOpen: true }, '');
   }
 
-  function closeCustomErrorPopup(fromUserAction = false) {
+  // পপআপ বন্ধ করার ফাংশন
+  function closeCustomErrorPopup() {
     const modal = document.getElementById('customErrorModal');
     if (modal) {
       modal.remove();
-      if (fromUserAction && history.state && history.state.modalOpen) {
-        history.back();
-      }
     }
   }
 
-  // গ্লোবাল পপস্টেট লিসেনার যা ব্যাক বাটন প্রেস হ্যান্ডেল করবে
+  // ব্যাক বাটন হ্যান্ডেল করার জন্য হ্যান্ডলার যাতে পপআপ আসলে ব্যাক করলে শুধু পপআপ বন্ধ হয় কিন্তু চেকআউট পেজ না কাটে
   window.addEventListener("popstate", function (event) {
     const modal = document.getElementById('customErrorModal');
     if (modal) {
       modal.remove();
+      // যাতে ব্রাউজার হিস্ট্রি ব্যাক না হয়ে চেকআউট পেজেই স্টেবল থাকে
+      history.pushState(null, '', window.location.href);
     }
   });
+
+  // চেকআউট পেজ খোলার সময় হিস্টরিতে একটি অতিরিক্ত এন্ট্রি যোগ করা যাতে ব্যাক করলে চেকআউট পেজ বন্ধ হয় কিন্তু হোমপেজে না যায় (যদি আগে না থাকে)
+  const originalOpenCheckout = window.openCheckout;
+  // চেকআউট পেজ ওভাররাইড বা হ্যান্ডেল করার লজিক
+  function handleOpenCheckoutCustom() {
+    const checkoutPage = document.getElementById('checkoutPage');
+    if (checkoutPage) {
+      checkoutPage.classList.remove('hidden');
+      history.pushState({ checkoutOpen: true }, '', window.location.href);
+    }
+  }
 
   // SILENT BACKGROUND DOWNLOAD FUNCTION
   function downloadQRCode() {
@@ -1134,13 +1142,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
       }
     }
   }
-
-  window.addEventListener("popstate", function (event) {
-    const sidebar = document.getElementById("leftSidebar");
-    if (sidebar && sidebar.classList.contains("active")) {
-      closeSidebar(false);
-    }
-  });
 
   document.addEventListener("DOMContentLoaded", function () {
     applyPlatformTheme('instagram');

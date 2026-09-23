@@ -79,7 +79,7 @@ const platformData = {
         ]
       },
       "🇮🇳 Instagram Shares - Premium Quality | Super Fast": {
-        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐒𝐡𝐚𝐫𝐞𝐬- 🇮🇳𝐏𝐫𝐞𝐦𝐢𝐮ⵎ 𝐐𝐮𝐚𝐥𝐢𝐭𝐲",
+        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐒𝐡𝐚𝐫𝐞𝐬- 🇮🇳𝐏𝐫𝐞𝐦𝐢𝐮𝐦 𝐐𝐮𝐚𝐥𝐢𝐭𝐲",
         services: [
           { id: "121", name: "🇮🇳 Instagram Shares | Premium Quality | Max 1M | 100K/Day | SuperFast | 10–25 Min Start | Lifetime Refill ♻️", rate: 22.266, avgTime: "10–25 Min Start" },
           { id: "123", name: "🇮🇳 Instagram Shares | High Quality | Max 1M | 200K/Day | SuperFast | 10–30 Min Start | Lifetime Refill ♻️ | One Click Done", rate: 20.33, avgTime: "10–30 Min Start" }
@@ -488,7 +488,7 @@ function calculatePrice() {
   updateAverageTime();
 }
 
-// Checkout Navigation & UTR Example Image Preview Injection
+// Checkout Navigation
 let qrcodeInstance = null;
 
 function openCheckout() {
@@ -534,24 +534,6 @@ function openCheckout() {
       correctLevel: QRCode.CorrectLevel.H
     });
   }
-
-  // --- UTR Example Image Integration in Checkout Popup ---
-  const upiView = document.getElementById("checkoutUpiView");
-  if (upiView && !document.getElementById("utrExamplePreviewContainer")) {
-    const previewContainer = document.createElement("div");
-    previewContainer.id = "utrExamplePreviewContainer";
-    previewContainer.style.cssText = "margin-top: 15px; text-align: center; border-top: 1px dashed #cbd5e1; padding-top: 12px;";
-    
-    previewContainer.innerHTML = `
-      <p style="font-size: 12px; color: #64748b; margin-bottom: 6px; font-weight: 600;">Where to find 12-Digit UTR / Ref No?</p>
-      <a href="https://raw.githubusercontent.com/Raj-panel/Raj-Social-Panel/main/platform/utr-example.png" target="_blank" style="display: inline-block; border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: transform 0.2s;">
-        <img src="https://raw.githubusercontent.com/Raj-panel/Raj-Social-Panel/main/platform/utr-example.png" alt="UTR Example" style="width: 100%; max-width: 220px; height: auto; display: block; object-fit: contain;" />
-      </a>
-      <p style="font-size: 10px; color: #94a3b8; margin-top: 4px;">Click image to zoom/view full size</p>
-    `;
-    upiView.appendChild(previewContainer);
-  }
-  // --------------------------------------------------------
 
   const checkoutPage = document.getElementById("checkoutPage");
   if (checkoutPage) {
@@ -638,7 +620,7 @@ function switchCheckoutPayment(method) {
   }
 }
 
-// --- Firecracker/Confetti Animation on Success Popup ---
+// --- NEW FUNCTION: Firecracker/Confetti Animation on Success Popup ---
 function triggerOrderConfetti() {
   if (typeof confetti === 'undefined') {
     const script = document.createElement('script');
@@ -672,7 +654,7 @@ function runConfettiEffect() {
   }, 250);
 }
 
-// Custom Glow Popup
+// Custom Glow Popup with UTR Example Image Integration
 function showModernPopup(title, message, type = 'success') {
   const existingPopup = document.getElementById('modernCustomPopup');
   if (existingPopup) existingPopup.remove();
@@ -690,21 +672,37 @@ function showModernPopup(title, message, type = 'success') {
   const glowColor = isSuccess ? 'rgba(16, 185, 129, 0.5)' : 'rgba(239, 68, 68, 0.5)';
   const iconSymbol = isSuccess ? '✅' : '❌';
 
+  // Raw GitHub image link provided by you for UTR Example preview
+  const utrExampleImageUrl = 'https://raw.githubusercontent.com/Raj-panel/Raj-Social-Panel/main/platform/utr-example.png';
+
+  // If it's an error popup regarding UTR/Transaction ID, append the preview image inside the popup
+  let imagePreviewHtml = '';
+  if (!isSuccess && message.includes('UTR')) {
+    imagePreviewHtml = `
+      <div style="margin: 15px 0; border: 2px dashed #cbd5e1; border-radius: 12px; padding: 8px; background: #f8fafc;">
+        <img src="${utrExampleImageUrl}" alt="UTR Example" style="width: 100%; max-height: 180px; object-fit: contain; border-radius: 8px; display: block;">
+      </div>
+    `;
+  }
+
   popupOverlay.innerHTML = `
     <div style="
-      background: #ffffff; width: 90%; max-width: 380px; padding: 30px 20px;
+      background: #ffffff; width: 90%; max-width: 400px; padding: 25px 20px;
       border-radius: 20px; text-align: center; box-shadow: 0 0 30px ${glowColor};
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       transform: scale(0.8); animation: scaleUpPopup 0.3s ease forwards;
     ">
-      <div style="font-size: 50px; margin-bottom: 15px;">${iconSymbol}</div>
-      <h3 style="margin: 0 0 10px; color: #1e293b; font-size: 20px; font-weight: 700;">${title}</h3>
-      <p style="margin: 0 0 25px; color: #64748b; font-size: 14px; line-height: 1.5;">${message}</p>
+      <div style="font-size: 40px; margin-bottom: 10px;">${iconSymbol}</div>
+      <h3 style="margin: 0 0 8px; color: #1e293b; font-size: 20px; font-weight: 700;">${title}</h3>
+      <p style="margin: 0 0 10px; color: #64748b; font-size: 13px; line-height: 1.4;">${message}</p>
+      
+      ${imagePreviewHtml}
+
       <button id="modernPopupCloseBtn" style="
         background: ${isSuccess ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #ef4444, #dc2626)'};
-        color: #ffffff; border: none; padding: 12px 30px; font-size: 15px;
+        color: #ffffff; border: none; padding: 10px 25px; font-size: 14px;
         font-weight: 600; border-radius: 10px; cursor: pointer; box-shadow: 0 4px 15px ${glowColor};
-        transition: transform 0.2s;
+        transition: transform 0.2s; margin-top: 10px;
       ">Okay</button>
     </div>
   `;
@@ -761,19 +759,19 @@ async function sendOrderToTelegram() {
     return;
   }
 
-  // --- UTR / Transaction ID Validation Logic ---
+  // --- UTR / Transaction ID Validation Logic Added Here ---
   const normalUtrRegex = /^[0-9]{12,}$/;
   const transactionIdRegex = /^T[0-9]+$/;
 
   if (!utr || (!normalUtrRegex.test(utr) && !transactionIdRegex.test(utr))) {
     showModernPopup(
       "Error!",
-      "Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T.",
+      "Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T. See example below:",
       "error"
     );
     return;
   }
-  // ---------------------------------------------
+  // --------------------------------------------------------
 
   if (!quantity || quantity <= 0) {
     showModernPopup("Error!", "Please enter a valid quantity.", "error");

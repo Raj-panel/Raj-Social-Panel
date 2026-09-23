@@ -617,7 +617,7 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) upiView.classList.remove('hidden'); 
+    if (upiView) apiView.classList.remove('hidden'); 
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
 
@@ -660,7 +660,7 @@ function runConfettiEffect() {
   }, 250);
 }
 
-// Custom Glow Popup with UTR Example Image Integration (FIXED: Added pushState so success/error popups open and show correctly)
+// Custom Glow Popup (FIXED: pushState and history.back() are now only applied for Success popups so Error popups keep you safely on the checkout page)
 function showModernPopup(title, message, type = 'success') {
   const existingPopup = document.getElementById('modernCustomPopup');
   if (existingPopup) existingPopup.remove();
@@ -712,9 +712,11 @@ function showModernPopup(title, message, type = 'success') {
   `;
 
   document.body.appendChild(popupOverlay);
-  history.pushState({ popupOpen: true }, "", "#popup");
 
+  // Only push state for success popups so closing success triggers back() to close checkout, 
+  // whereas error popups remain strictly on checkout without altering history state.
   if (isSuccess) {
+    history.pushState({ popupOpen: true }, "", "#popup");
     triggerOrderConfetti();
   }
 
@@ -730,7 +732,7 @@ function showModernPopup(title, message, type = 'success') {
 
   const closePopupAction = () => {
     popupOverlay.remove();
-    if (history.state && history.state.popupOpen) {
+    if (isSuccess && history.state && history.state.popupOpen) {
       history.back();
     }
   };

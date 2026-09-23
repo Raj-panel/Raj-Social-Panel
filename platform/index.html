@@ -831,7 +831,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // POPUP DISPLAY FUNCTION WITH BACK BUTTON FIX
+  // POPUP DISPLAY FUNCTION WITH HISTORY STATE TRAPPING FOR BACK BUTTON
   function showCustomErrorPopup(messageText, showImage = false) {
     const existingModal = document.getElementById('customErrorModal');
     if (existingModal) existingModal.remove();
@@ -854,27 +854,34 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
           <div class="custom-modal-title">Error!</div>
           <div class="custom-modal-message">${messageText}</div>
           ${imageHTML}
-          <button class="custom-modal-btn" onclick="closeCustomErrorPopup()">Okay</button>
+          <button class="custom-modal-btn" onclick="closeCustomErrorPopup(true)">Okay</button>
         </div>
       </div>
     `;
 
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 
-    // পপআপ ওপেন হওয়ার সাথে ব্রাউজারের হিস্টরিতে স্টেট যোগ করা হলো, যেন ব্যাক করলে পেজ না বাউন্স করে শুধু পপআপ বন্ধ হয়
-    history.pushState({ popupOpen: true }, '');
+    // পুশস্টেট যোগ করা হলো যাতে ব্যাক বাটন প্রেস করলে ওয়েবসাইট থেকে ব্যাক না হয়ে শুধু পপআপটি ক্লোজ হয়
+    history.pushState({ modalOpen: true }, '');
   }
 
-  function closeCustomErrorPopup() {
+  function closeCustomErrorPopup(fromUserAction = false) {
     const modal = document.getElementById('customErrorModal');
     if (modal) {
       modal.remove();
-      // যদি হিস্টরিতে পপআপ স্টেট থাকে তবে এক ধাপ ব্যাক করে হিস্টরি ক্লিন করা
-      if (history.state && history.state.popupOpen) {
+      if (fromUserAction && history.state && history.state.modalOpen) {
         history.back();
       }
     }
   }
+
+  // গ্লোবাল পপস্টেট লিসেনার যা ব্যাক বাটন প্রেস হ্যান্ডেল করবে
+  window.addEventListener("popstate", function (event) {
+    const modal = document.getElementById('customErrorModal');
+    if (modal) {
+      modal.remove();
+    }
+  });
 
   // SILENT BACKGROUND DOWNLOAD FUNCTION
   function downloadQRCode() {
@@ -964,7 +971,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
 
     if (!txnValue) {
-      // খালি রাখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter Transaction ID / UTR number. See example below:", true);
       resetOrderButton();
       return false;
@@ -980,7 +986,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     const isValidTxnId = transactionIdRegex.test(txnValue);
 
     if (!isValidUtr && !isValidTxnId) {
-      // ভুলভাল লিখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T. See example below:", true);
       if (txnInput) txnInput.focus();
       resetOrderButton();
@@ -1130,17 +1135,10 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // GLOBAL POPSTATE HANDLER FOR BOTH SIDEBAR AND POPUP
   window.addEventListener("popstate", function (event) {
     const sidebar = document.getElementById("leftSidebar");
     if (sidebar && sidebar.classList.contains("active")) {
       closeSidebar(false);
-      return;
-    }
-
-    const modal = document.getElementById('customErrorModal');
-    if (modal) {
-      modal.remove();
     }
   });
 

@@ -831,7 +831,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // পপআপ ওপেন করার ফাংশন (এখানে চেকআউট পেজের স্টেট অক্ষুণ্ণ রেখে শুধু পপআপ ওপেন করা হচ্ছে)
+  // POPUP DISPLAY FUNCTION WITH BROWSER HISTORY PUSH FOR BACK BUTTON SUPPORT
   function showCustomErrorPopup(messageText, showImage = false) {
     const existingModal = document.getElementById('customErrorModal');
     if (existingModal) existingModal.remove();
@@ -846,48 +846,33 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
 
     const modalHTML = `
-      <div id="customErrorModal" class="custom-modal-overlay">
-        <div class="custom-modal-box">
+      <div id="customErrorModal" class="custom-modal-overlay" onclick="closeCustomErrorPopup(true)">
+        <div class="custom-modal-box" onclick="event.stopPropagation()">
           <div class="custom-modal-icon">
             <i class="fa-solid fa-xmark"></i>
           </div>
           <div class="custom-modal-title">Error!</div>
           <div class="custom-modal-message">${messageText}</div>
           ${imageHTML}
-          <button class="custom-modal-btn" onclick="closeCustomErrorPopup()">Okay</button>
+          <button class="custom-modal-btn" onclick="closeCustomErrorPopup(true)">Okay</button>
         </div>
       </div>
     `;
 
     document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    // পপআপ ওপেন হলে ব্রাউজারের হিস্টরিতে একটি স্টেট যুক্ত করা হলো যাতে ব্যাক বাটন চাপলে শুধু পপআপ সরে যায়
+    history.pushState({ popupOpen: true }, '');
   }
 
-  // পপআপ বন্ধ করার ফাংশন
-  function closeCustomErrorPopup() {
+  function closeCustomErrorPopup(fromUserAction = false) {
     const modal = document.getElementById('customErrorModal');
     if (modal) {
       modal.remove();
-    }
-  }
-
-  // ব্যাক বাটন হ্যান্ডেল করার জন্য হ্যান্ডলার যাতে পপআপ আসলে ব্যাক করলে শুধু পপআপ বন্ধ হয় কিন্তু চেকআউট পেজ না কাটে
-  window.addEventListener("popstate", function (event) {
-    const modal = document.getElementById('customErrorModal');
-    if (modal) {
-      modal.remove();
-      // যাতে ব্রাউজার হিস্ট্রি ব্যাক না হয়ে চেকআউট পেজেই স্টেবল থাকে
-      history.pushState(null, '', window.location.href);
-    }
-  });
-
-  // চেকআউট পেজ খোলার সময় হিস্টরিতে একটি অতিরিক্ত এন্ট্রি যোগ করা যাতে ব্যাক করলে চেকআউট পেজ বন্ধ হয় কিন্তু হোমপেজে না যায় (যদি আগে না থাকে)
-  const originalOpenCheckout = window.openCheckout;
-  // চেকআউট পেজ ওভাররাইড বা হ্যান্ডেল করার লজিক
-  function handleOpenCheckoutCustom() {
-    const checkoutPage = document.getElementById('checkoutPage');
-    if (checkoutPage) {
-      checkoutPage.classList.remove('hidden');
-      history.pushState({ checkoutOpen: true }, '', window.location.href);
+      // ইউজার যদি নিজে বাটন বা বাইরে ক্লিক করে পপআপ বন্ধ করে, তবে হিস্টরি থেকে পপআপের স্টেটটি পপ করে ফেলা হবে
+      if (fromUserAction && history.state && history.state.popupOpen) {
+        history.back();
+      }
     }
   }
 
@@ -1142,6 +1127,22 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
       }
     }
   }
+
+  // UNIFIED POPSTATE HANDLER FOR BOTH SIDEBAR AND ERROR POPUP BACK BUTTON CONTROL
+  window.addEventListener("popstate", function (event) {
+    // ১. যদি এরর পপআপ খোলা থাকে এবং ব্যাক বাটন চাপলে পপআপ বন্ধ হবে কিন্তু চেকআউট পেজেই থাকবে
+    const errorModal = document.getElementById('customErrorModal');
+    if (errorModal) {
+      errorModal.remove();
+      return;
+    }
+
+    // ২. যদি সাইডবার খোলা থাকে
+    const sidebar = document.getElementById("leftSidebar");
+    if (sidebar && sidebar.classList.contains("active")) {
+      closeSidebar(false);
+    }
+  });
 
   document.addEventListener("DOMContentLoaded", function () {
     applyPlatformTheme('instagram');

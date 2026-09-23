@@ -89,13 +89,22 @@
   <!-- Manifest Link -->
   <link rel="manifest" href="/manifest.json">
 
-  <!-- Google Font -->
+  <!-- Preconnect for Performance Optimization -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 
-  <!-- Font Awesome Icons -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <!-- Google Font (Optimized Async Load) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet" media="print" onload="this.media='all'"/>
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
+  </noscript>
+
+  <!-- Font Awesome Icons (Optimized Async Load) -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'"/>
+  <noscript>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  </noscript>
 
   <!-- CSS Stylesheet Link -->
   <link rel="stylesheet" href="style.css">
@@ -471,7 +480,7 @@
 
 
   <!-- Firebase Authentication Logic Handler -->
-  <script type="module" src="/auth-handler.js"></script>
+  <script type="module" src="/auth-handler.js" defer></script>
 
 </body>
 </html>

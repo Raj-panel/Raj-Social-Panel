@@ -582,7 +582,7 @@ window.addEventListener('popstate', function (event) {
   const checkoutPage = document.getElementById("checkoutPage");
   const modernPopup = document.getElementById("modernCustomPopup");
 
-  // পপআপ ওপেন থাকা অবস্থায় ব্যাক বাটন প্রেস করলে পপআপ বন্ধ হবে কিন্তু চেকআউট পেজেই থাকবে
+  // পপআপ ওপেন থাকা অবস্থায় ব্যাক বাটন প্রেস করলে চেকআউট পেজে রেখেই শুধু পপআপটি রিমুভ হবে
   if (modernPopup) {
     modernPopup.remove();
     return;
@@ -661,7 +661,7 @@ function runConfettiEffect() {
   }, 250);
 }
 
-// Custom Glow Popup with UTR Example Image Integration (ব্যাক বাটন হ্যান্ডলিং সহ)
+// Custom Glow Popup with UTR Example Image Integration (ব্যাক বাটন ও ওকে ক্লিকের লজিক সহ)
 function showModernPopup(title, message, type = 'success') {
   const existingPopup = document.getElementById('modernCustomPopup');
   if (existingPopup) existingPopup.remove();
@@ -675,7 +675,7 @@ function showModernPopup(title, message, type = 'success') {
     z-index: 99999; animation: fadeInPopup 0.3s ease;
   `;
 
-  // পপআপ ওপেন হওয়ার সাথে হিস্ট্রি পুশ করা হলো যাতে ব্যাক বাটন চাপলে পপআপ বন্ধ হয়
+  // পপআপ ওপেন করার সময় হিস্ট্রি স্টেট পুশ করা হলো যাতে ব্যাক বাটন প্রেস করলে পপআপটি বন্ধ হয় কিন্তু চেকআউট পেজ থেকে না যায়
   history.pushState({ popupOpen: true }, "", "#popup");
 
   const isSuccess = type === 'success';
@@ -731,7 +731,9 @@ function showModernPopup(title, message, type = 'success') {
     document.head.appendChild(styleSheet);
   }
 
-  document.getElementById('modernPopupCloseBtn').onclick = () => {
+  // 'Okay' বাটনে ক্লিক করলে শুধু পপআপটি বন্ধ হবে এবং ইউজার চেকআউট পেজেই অক্ষত থাকবে
+  document.getElementById('modernPopupCloseBtn').onclick = (e) => {
+    e.stopPropagation();
     popupOverlay.remove();
     if (history.state && history.state.popupOpen) {
       history.back();

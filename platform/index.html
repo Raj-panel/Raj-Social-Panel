@@ -831,7 +831,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // POPUP DISPLAY FUNCTION WITH UTR EXAMPLE IMAGE (`utr-example.png`)
+  // POPUP DISPLAY FUNCTION WITH HISTORY PUSH
   function showCustomErrorPopup(messageText, showImage = false) {
     const existingModal = document.getElementById('customErrorModal');
     if (existingModal) existingModal.remove();
@@ -860,12 +860,31 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     `;
 
     document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    // পপআপ ওপেন হওয়ার সময় হিস্ট্রিতে নতুন স্টেট যুক্ত করা হলো
+    history.pushState({ popupOpen: true }, '', window.location.href);
   }
 
   function closeCustomErrorPopup() {
     const modal = document.getElementById('customErrorModal');
-    if (modal) modal.remove();
+    if (modal) {
+      modal.remove();
+      // হিস্ট্রিতে পপআপ স্টেট থাকলে এক ধাপ ব্যাক করা হবে
+      if (window.history.state && window.history.state.popupOpen) {
+        history.back();
+      }
+    }
   }
+
+  // ব্যাক বাটন (popstate) হ্যান্ডলার - পপআপ বন্ধ করার জন্য
+  window.addEventListener('popstate', function(event) {
+    const modal = document.getElementById('customErrorModal');
+    if (modal) {
+      modal.remove();
+      // যাতে পেজ বা চেকআউট থেকে বাইরে না চলে যায়
+      history.pushState(null, '', window.location.href);
+    }
+  });
 
   // SILENT BACKGROUND DOWNLOAD FUNCTION
   function downloadQRCode() {
@@ -955,7 +974,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
 
     if (!txnValue) {
-      // খালি রাখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter Transaction ID / UTR number. See example below:", true);
       resetOrderButton();
       return false;
@@ -971,7 +989,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     const isValidTxnId = transactionIdRegex.test(txnValue);
 
     if (!isValidUtr && !isValidTxnId) {
-      // ভুলভাল লিখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T. See example below:", true);
       if (txnInput) txnInput.focus();
       resetOrderButton();
@@ -1120,13 +1137,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
       }
     }
   }
-
-  window.addEventListener("popstate", function (event) {
-    const sidebar = document.getElementById("leftSidebar");
-    if (sidebar && sidebar.classList.contains("active")) {
-      closeSidebar(false);
-    }
-  });
 
   document.addEventListener("DOMContentLoaded", function () {
     applyPlatformTheme('instagram');

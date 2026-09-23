@@ -580,6 +580,13 @@ window.addEventListener('popstate', function (event) {
   const sidebar = document.getElementById("leftSidebar");
   const overlay = document.getElementById("sidebarOverlay");
   const checkoutPage = document.getElementById("checkoutPage");
+  const modernPopup = document.getElementById("modernCustomPopup");
+
+  // পপআপ ওপেন থাকা অবস্থায় ব্যাক বাটন প্রেস করলে পপআপ বন্ধ হবে কিন্তু চেকআউট পেজেই থাকবে
+  if (modernPopup) {
+    modernPopup.remove();
+    return;
+  }
 
   if (sidebar && sidebar.classList.contains("active")) {
     sidebar.classList.remove("active");
@@ -620,7 +627,7 @@ function switchCheckoutPayment(method) {
   }
 }
 
-// --- NEW FUNCTION: Firecracker/Confetti Animation on Success Popup ---
+// --- Firecracker/Confetti Animation on Success Popup ---
 function triggerOrderConfetti() {
   if (typeof confetti === 'undefined') {
     const script = document.createElement('script');
@@ -654,7 +661,7 @@ function runConfettiEffect() {
   }, 250);
 }
 
-// Custom Glow Popup with UTR Example Image Integration
+// Custom Glow Popup with UTR Example Image Integration (ব্যাক বাটন হ্যান্ডলিং সহ)
 function showModernPopup(title, message, type = 'success') {
   const existingPopup = document.getElementById('modernCustomPopup');
   if (existingPopup) existingPopup.remove();
@@ -668,14 +675,15 @@ function showModernPopup(title, message, type = 'success') {
     z-index: 99999; animation: fadeInPopup 0.3s ease;
   `;
 
+  // পপআপ ওপেন হওয়ার সাথে হিস্ট্রি পুশ করা হলো যাতে ব্যাক বাটন চাপলে পপআপ বন্ধ হয়
+  history.pushState({ popupOpen: true }, "", "#popup");
+
   const isSuccess = type === 'success';
   const glowColor = isSuccess ? 'rgba(16, 185, 129, 0.5)' : 'rgba(239, 68, 68, 0.5)';
   const iconSymbol = isSuccess ? '✅' : '❌';
 
-  // Raw GitHub image link provided by you for UTR Example preview
   const utrExampleImageUrl = 'https://raw.githubusercontent.com/Raj-panel/Raj-Social-Panel/main/platform/utr-example.png';
 
-  // If it's an error popup regarding UTR/Transaction ID, append the preview image inside the popup
   let imagePreviewHtml = '';
   if (!isSuccess && message.includes('UTR')) {
     imagePreviewHtml = `
@@ -725,13 +733,22 @@ function showModernPopup(title, message, type = 'success') {
 
   document.getElementById('modernPopupCloseBtn').onclick = () => {
     popupOverlay.remove();
+    if (history.state && history.state.popupOpen) {
+      history.back();
+    }
   };
+  
   popupOverlay.onclick = (e) => {
-    if (e.target === popupOverlay) popupOverlay.remove();
+    if (e.target === popupOverlay) {
+      popupOverlay.remove();
+      if (history.state && history.state.popupOpen) {
+        history.back();
+      }
+    }
   };
 }
 
-// PLATFORM 2 - BACKEND ORDER SUBMISSION (Updated with UTR & Transaction ID Validation Logic)
+// PLATFORM 2 - BACKEND ORDER SUBMISSION
 async function sendOrderToTelegram() {
   const mainLink = document.getElementById("mainLinkInput");
   const checkoutTxn = document.getElementById("checkoutTxnId");
@@ -759,7 +776,6 @@ async function sendOrderToTelegram() {
     return;
   }
 
-  // --- UTR / Transaction ID Validation Logic Added Here ---
   const normalUtrRegex = /^[0-9]{12,}$/;
   const transactionIdRegex = /^T[0-9]+$/;
 
@@ -771,7 +787,6 @@ async function sendOrderToTelegram() {
     );
     return;
   }
-  // --------------------------------------------------------
 
   if (!quantity || quantity <= 0) {
     showModernPopup("Error!", "Please enter a valid quantity.", "error");

@@ -582,6 +582,7 @@ window.addEventListener('popstate', function (event) {
   const checkoutPage = document.getElementById("checkoutPage");
   const modernPopup = document.getElementById("modernCustomPopup");
 
+  // ফিক্সড: পপআপের জন্য এখন আর পপআপ রিমুভ করার সময় ব্রাউজার হিস্ট্রি বাব্যাক ট্রিগার করবে না
   if (modernPopup) {
     modernPopup.remove();
     return;
@@ -617,7 +618,8 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) upiView.classList.remove('hidden');
+    if (upiView) cmpUpiView = document.getElementById('checkoutUpiView');
+    if (upiView) upiView.classList.remove('hidden'); 
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
 
@@ -660,7 +662,7 @@ function runConfettiEffect() {
   }, 250);
 }
 
-// Custom Glow Popup with UTR Example Image Integration & Safe Close (No history.back on OK button)
+// Custom Glow Popup with UTR Example Image Integration (BUG FIXED: OK Button will only close popup and stay on checkout page)
 function showModernPopup(title, message, type = 'success') {
   const existingPopup = document.getElementById('modernCustomPopup');
   if (existingPopup) existingPopup.remove();
@@ -727,7 +729,7 @@ function showModernPopup(title, message, type = 'success') {
     document.head.appendChild(styleSheet);
   }
 
-  // Safe close logic: closes only the popup without triggering history.back()
+  // ফিক্সড: 'Okay' বাটনে ক্লিক করলে শুধু পপআপ রিমুভ হবে, কোনো history.back() বা home redirect ট্রিগার হবে না।
   document.getElementById('modernPopupCloseBtn').onclick = (e) => {
     e.stopPropagation();
     popupOverlay.remove();
@@ -880,7 +882,6 @@ async function sendOrderToTelegram() {
       JSON.stringify(existingOrders)
     );
 
-    // RESTORED SUCCESS POPUP CALL WITH CONFETTI
     showModernPopup(
       "Success!",
       "Order submitted successfully!",

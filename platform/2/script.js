@@ -500,12 +500,12 @@ function openCheckout() {
   const quantity = parseInt(quantityInput);
 
   if (!link) {
-    showModernPopup("Error!", "Please enter link!", "error");
+    alert("Please enter link!");
     return;
   }
 
   if (!quantityInput || isNaN(quantity) || quantity < 100) {
-    showModernPopup("Error!", "Minimum order quantity is 100!", "error");
+    alert("Minimum order quantity is 100!");
     return;
   }
 
@@ -617,7 +617,7 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) rahulView = upiView.classList.remove('hidden'); // safe update
+    if (upiView) upiView.classList.remove('hidden');
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
 
@@ -660,7 +660,7 @@ function runConfettiEffect() {
   }, 250);
 }
 
-// Custom Glow Popup with UTR Example Image Integration (Safe close logic without history.back)
+// Custom Glow Popup with UTR Example Image Integration & Safe Close (No history.back on OK button)
 function showModernPopup(title, message, type = 'success') {
   const existingPopup = document.getElementById('modernCustomPopup');
   if (existingPopup) existingPopup.remove();
@@ -727,6 +727,7 @@ function showModernPopup(title, message, type = 'success') {
     document.head.appendChild(styleSheet);
   }
 
+  // Safe close logic: closes only the popup without triggering history.back()
   document.getElementById('modernPopupCloseBtn').onclick = (e) => {
     e.stopPropagation();
     popupOverlay.remove();
@@ -879,7 +880,7 @@ async function sendOrderToTelegram() {
       JSON.stringify(existingOrders)
     );
 
-    // ব্যাকএন্ড থেকে সফল রেসপন্স পাওয়ার পর সুনিশ্চিতভাবে Success Popup ও Confetti কল করা হলো
+    // RESTORED SUCCESS POPUP CALL WITH CONFETTI
     showModernPopup(
       "Success!",
       "Order submitted successfully!",

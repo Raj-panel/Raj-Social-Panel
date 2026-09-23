@@ -943,7 +943,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     const isValidTxnId = transactionIdRegex.test(txnValue);
 
     if (!isValidUtr && !isValidTxnId) {
-      showCustomErrorPopup("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T.");
+      showCustomErrorPopup("Please enter a valid 12-digit UTR number or a valid Transaction ID");
       if (txnInput) txnInput.focus();
       resetOrderButton();
       return false;

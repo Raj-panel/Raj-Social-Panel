@@ -93,7 +93,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  /* Applying glowing effect to Checkout Link & Txn Input boxes */
   .checkout-input-group input[type="text"] {
     width: 100%;
     box-sizing: border-box;
@@ -492,7 +491,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     transform: translateY(-1px);
   }
 
-  /* Custom Glow Popup Modal Styles (Ensuring it stays on top of Checkout Page) */
+  /* Custom Glow Popup Modal Styles */
   .custom-modal-overlay {
     position: fixed !important;
     top: 0 !important;
@@ -509,42 +508,60 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
 
   .custom-modal-box {
     background: #ffffff !important;
-    width: 85% !important;
-    max-width: 380px !important;
+    width: 90% !important;
+    max-width: 420px !important;
+    max-height: 90vh !important;
     border-radius: 24px !important;
-    padding: 30px 20px !important;
+    padding: 25px 20px !important;
     text-align: center !important;
     box-shadow: 0 0 30px rgba(239, 68, 68, 0.6), 0 0 60px rgba(0, 0, 0, 0.4) !important;
     position: relative !important;
     z-index: 2147483647 !important;
+    overflow-y: auto !important;
   }
 
   .custom-modal-icon {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     background: rgba(239, 68, 68, 0.1);
     color: #ef4444;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
-    margin: 0 auto 15px auto;
+    font-size: 24px;
+    margin: 0 auto 12px auto;
     box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
   }
 
   .custom-modal-title {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     color: #1e293b;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   .custom-modal-message {
     font-size: 14px;
     color: #64748b;
     line-height: 1.5;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+  }
+
+  /* UTR Example Image Styling inside Popup */
+  .custom-modal-img-container {
+    margin-bottom: 15px;
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 6px;
+    background: #f8fafc;
+  }
+
+  .custom-modal-img-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
   }
 
   .custom-modal-btn {
@@ -814,10 +831,19 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // INSTANT POPUP DISPLAY FUNCTION (Forces rendering above checkout page)
-  function showCustomErrorPopup(messageText) {
+  // POPUP DISPLAY FUNCTION WITH UTR EXAMPLE IMAGE (`utr-example.png`)
+  function showCustomErrorPopup(messageText, showImage = false) {
     const existingModal = document.getElementById('customErrorModal');
     if (existingModal) existingModal.remove();
+
+    let imageHTML = '';
+    if (showImage) {
+      imageHTML = `
+        <div class="custom-modal-img-container">
+          <img src="utr-example.png" alt="UTR Example Guide" />
+        </div>
+      `;
+    }
 
     const modalHTML = `
       <div id="customErrorModal" class="custom-modal-overlay">
@@ -827,6 +853,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
           </div>
           <div class="custom-modal-title">Error!</div>
           <div class="custom-modal-message">${messageText}</div>
+          ${imageHTML}
           <button class="custom-modal-btn" onclick="closeCustomErrorPopup()">Okay</button>
         </div>
       </div>
@@ -928,7 +955,8 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
 
     if (!txnValue) {
-      showCustomErrorPopup("Please enter Transaction ID / UTR number.");
+      // খালি রাখলে পপআপের সাথে ছবি সহ দেখাবে
+      showCustomErrorPopup("Please enter Transaction ID / UTR number. See example below:", true);
       resetOrderButton();
       return false;
     }
@@ -943,7 +971,8 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     const isValidTxnId = transactionIdRegex.test(txnValue);
 
     if (!isValidUtr && !isValidTxnId) {
-      showCustomErrorPopup("Please enter a valid 12-digit UTR number or a valid Transaction ID");
+      // ভুলভাল লিখলে পপআপের সাথে ছবি সহ দেখাবে
+      showCustomErrorPopup("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T. See example below:", true);
       if (txnInput) txnInput.focus();
       resetOrderButton();
       return false;

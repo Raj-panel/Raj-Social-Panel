@@ -762,8 +762,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
       <!-- QR Container Box -->
       <div class="qr-card-container">
         <div class="qr-wrapper">
-          <!-- এখানে src-এ আপনার কিউআর কোডের ফাইলনেম (যেমন: qr.png) সেট করে দেওয়া হয়েছে যাতে সিলেক্ট করার সঙ্গে সঙ্গেই তা শো হয় -->
-          <img id="checkoutQrImg" src="qr.png" alt="UPI QR Code" crossorigin="anonymous" style="display: block; border-radius: 10px; width: 170px; height: 170px; background: #ffffff; padding: 4px;" />
+          <img id="checkoutQrImg" src="" alt="UPI QR Code" crossorigin="anonymous" style="display: block; border-radius: 10px; width: 170px; height: 170px; background: #ffffff; padding: 4px;" />
         </div>
         
         <!-- Download QR Code Button -->
@@ -956,6 +955,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
 
     if (!txnValue) {
+      // খালি রাখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter Transaction ID / UTR number. See example below:", true);
       resetOrderButton();
       return false;
@@ -971,6 +971,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     const isValidTxnId = transactionIdRegex.test(txnValue);
 
     if (!isValidUtr && !isValidTxnId) {
+      // ভুলভাল লিখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T. See example below:", true);
       if (txnInput) txnInput.focus();
       resetOrderButton();

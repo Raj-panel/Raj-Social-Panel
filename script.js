@@ -104,6 +104,60 @@ function closeComingSoonModal() {
   if (modal) modal.classList.remove("active");
 }
 
+// --- 4. Subtle Tap / Click Sound Engine (Web Audio API) ---
+let audioCtx = null;
+let lastClickTime = 0;
+const CLICK_COOLDOWN = 60; // মিলিসেকেন্ড কোলডাউন, যাতে দ্রুত ক্লিকে সাউন্ড ওভারল্যাপ না করে
+
+function playTapSound() {
+  const now = Date.now();
+  if (now - lastClickTime < CLICK_COOLDOWN) return;
+  lastClickTime = now;
+
+  try {
+    if (!audioCtx) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (AudioContext) {
+        audioCtx = new AudioContext();
+      }
+    }
+
+    if (audioCtx) {
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      const osc = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+
+      // প্রিমিয়াম ও সফট ইউআই ক্লিকের জন্য প্যারামিটার
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.05);
+
+      // কম ভলিউম (১৫-২৫% রেঞ্জ নিশ্চিত করতে)
+      gainNode.gain.setValueAtTime(0.18, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.07);
+
+      osc.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.07);
+    }
+  } catch (e) {
+    // অডিও ব্লক থাকলে সাইলেন্ট থাকবে
+  }
+}
+
+// গ্লোবাল ইভেন্ট ডেলিগেশনের মাধ্যমে সমস্ত ক্লিকযোগ্য এলিমেন্টে সাউন্ড যুক্ত করা
+document.addEventListener('click', (e) => {
+  const target = e.target.closest('button, a, .glass-service-card, .service-card, .card, input[type="checkbox"], input[type="radio"], select');
+  if (target) {
+    playTapSound();
+  }
+}, { passive: true });
+
 // Page DOM Init
 document.addEventListener("DOMContentLoaded", function () {
   // ১. সেশন স্ট্যাটাস চেক
@@ -123,4 +177,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
-```[cite: 2]
+```[cite: 1]

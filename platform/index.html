@@ -23,9 +23,6 @@
 <link href="style.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 
-<!-- Client-side / Local QR Code Generation Library (QRCode.js) for Instant Generation -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
 <!-- Open Graph Meta Tags -->
 <meta content="website" property="og:type"/>
 <meta content="https://rajsmmpanel.in/" property="og:url"/>
@@ -762,10 +759,10 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
 
     <!-- CHECKOUT UPI VIEW -->
     <div id="checkoutUpiView" class="payment-view-box">
-      <!-- QR Container Box (Client-side local rendering container) -->
+      <!-- QR Container Box -->
       <div class="qr-card-container">
-        <div class="qr-wrapper" id="checkoutQrContainer" style="width: 170px; height: 170px; display: inline-flex; justify-content: center; align-items: center; background: #ffffff; padding: 4px; border-radius: 10px; box-sizing: border-box;">
-          <!-- Local QR generator will render canvas/svg here instantly without external server call -->
+        <div class="qr-wrapper">
+          <img id="checkoutQrImg" src="" alt="UPI QR Code" crossorigin="anonymous" style="display: block; border-radius: 10px; width: 170px; height: 170px; background: #ffffff; padding: 4px;" />
         </div>
         
         <!-- Download QR Code Button -->
@@ -864,6 +861,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
 
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 
+    // Error Popup ওপেন হওয়ার সাথে সাথে ব্রাউজারের হিস্টরিতে স্টেট পুশ করা হচ্ছে
     history.pushState({ errorPopupOpen: true }, '');
   }
 
@@ -874,25 +872,34 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // LOCAL QR CODE INSTANT DOWNLOAD FUNCTION
+  // SILENT BACKGROUND DOWNLOAD FUNCTION
   function downloadQRCode() {
-    const qrContainer = document.getElementById('checkoutQrContainer');
+    const qrImg = document.getElementById('checkoutQrImg');
     const dlBtn = document.getElementById('downloadQrBtn');
 
-    if (!qrContainer) {
-      showCustomErrorPopup("QR Code container not available!");
+    if (!qrImg || !qrImg.src) {
+      showCustomErrorPopup("QR Code image not available!");
       return;
     }
 
-    const canvas = qrContainer.querySelector('canvas');
-    const imgElem = qrContainer.querySelector('img');
+    const originalText = dlBtn.innerHTML;
+    dlBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Downloading...';
+    dlBtn.disabled = true;
 
-    if (canvas) {
-      const originalText = dlBtn.innerHTML;
-      dlBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Downloading...';
-      dlBtn.disabled = true;
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = qrImg.src;
+
+    img.onload = function () {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth || img.width;
+      canvas.height = img.naturalHeight || img.height;
+      
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
 
       const dataURL = canvas.toDataURL('image/png');
+      
       const a = document.createElement('a');
       a.href = dataURL;
       a.download = 'Raj_SMM_UPI_QR.png';
@@ -904,26 +911,30 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
         dlBtn.innerHTML = originalText;
         dlBtn.disabled = false;
       }, 500);
-    } else if (imgElem && imgElem.src) {
-      // Fallback if rendered as image element
-      const originalText = dlBtn.innerHTML;
-      dlBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Downloading...';
-      dlBtn.disabled = true;
+    };
 
-      const a = document.createElement('a');
-      a.href = imgElem.src;
-      a.download = 'Raj_SMM_UPI_QR.png';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-
-      setTimeout(() => {
-        dlBtn.innerHTML = originalText;
-        dlBtn.disabled = false;
-      }, 500);
-    } else {
-      showCustomErrorPopup("QR Code image not available!");
-    }
+    img.onerror = function () {
+      fetch(qrImg.src)
+        .then(response => response.blob())
+        .then(blob => {
+          const blobUrl = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = blobUrl;
+          a.download = 'Raj_SMM_UPI_QR.png';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(blobUrl);
+        })
+        .catch(err => {
+          console.error("QR Download Error:", err);
+          showCustomErrorPopup("Unable to download image automatically.");
+        })
+        .finally(() => {
+          dlBtn.innerHTML = originalText;
+          dlBtn.disabled = false;
+        });
+    };
   }
 
   function handleConfirmOrderClick(event) {
@@ -949,6 +960,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
 
     if (!txnValue) {
+      // খালি রাখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter Transaction ID / UTR number. See example below:", true);
       resetOrderButton();
       return false;
@@ -964,6 +976,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     const isValidTxnId = transactionIdRegex.test(txnValue);
 
     if (!isValidUtr && !isValidTxnId) {
+      // ভুলভাল লিখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T. See example below:", true);
       if (txnInput) txnInput.focus();
       resetOrderButton();
@@ -1114,12 +1127,14 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
   }
 
   window.addEventListener("popstate", function (event) {
+    // ১. সাইডবার খোলা থাকলে ব্যাক বাটন চাপলে সাইডবার বন্ধ হবে
     const sidebar = document.getElementById("leftSidebar");
     if (sidebar && sidebar.classList.contains("active")) {
       closeSidebar(false);
       return;
     }
 
+    // ২. এরর পপআপ খোলা থাকলে ব্যাক বাটন চাপলে শুধু পপআপ বন্ধ হবে এবং ইউজার চেকআউট পেজেই থাকবে
     const errorModal = document.getElementById('customErrorModal');
     if (errorModal) {
       errorModal.remove();

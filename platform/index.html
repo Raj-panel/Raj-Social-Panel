@@ -955,15 +955,11 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
 
     if (!txnValue) {
-      // খালি রাখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter Transaction ID / UTR number. See example below:", true);
       resetOrderButton();
       return false;
     }
 
-    // -------------------------------------------------------------
-    // UTR / Transaction ID Validation Logic
-    // -------------------------------------------------------------
     const normalUtrRegex = /^[0-9]{12,}$/;
     const transactionIdRegex = /^T[0-9]+$/;
 
@@ -971,7 +967,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     const isValidTxnId = transactionIdRegex.test(txnValue);
 
     if (!isValidUtr && !isValidTxnId) {
-      // ভুলভাল লিখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T. See example below:", true);
       if (txnInput) txnInput.focus();
       resetOrderButton();
@@ -1022,12 +1017,20 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
+  // MutationObserver দিয়ে চেকআউট পেজ ওপেন/ক্লোজ ট্র্যাক করা এবং হিস্ট্রি ম্যানেজ করা
   const observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
       if (mutation.attributeName === 'class') {
         const checkoutPage = document.getElementById('checkoutPage');
-        if (checkoutPage && checkoutPage.classList.contains('hidden')) {
-          resetOrderButton();
+        if (checkoutPage) {
+          if (checkoutPage.classList.contains('hidden')) {
+            resetOrderButton();
+          } else {
+            // চেকআউট পেজ দৃশ্যমান হলে হিস্টরিতে স্টেট যোগ করা হচ্ছে
+            if (!history.state || !history.state.checkoutOpen) {
+              history.pushState({ checkoutOpen: true }, '');
+            }
+          }
         }
       }
     });
@@ -1121,10 +1124,18 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
+  // ব্যাক বাটন হ্যান্ডলিং (সাইডবার বা চেকআউট পেজ বন্ধ করার জন্য)
   window.addEventListener("popstate", function (event) {
     const sidebar = document.getElementById("leftSidebar");
+    const checkoutPage = document.getElementById("checkoutPage");
+
     if (sidebar && sidebar.classList.contains("active")) {
       closeSidebar(false);
+      return;
+    }
+
+    if (checkoutPage && !checkoutPage.classList.contains("hidden")) {
+      handleCloseCheckout();
     }
   });
 

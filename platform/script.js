@@ -727,66 +727,7 @@ window.onload = function () {
     switchPlatform("instagram");
 };
 
-// ==========================================
-// CUSTOM ERROR POPUP & HISTORY / BACK BUTTON HANDLER
-// ==========================================
-function showRajErrorPopup(message, showUtrGuide = false) {
-    const existingOverlay = document.getElementById("rajErrorPopupOverlay");
-    if (existingOverlay) existingOverlay.remove();
-
-    const utrGuideHtml = showUtrGuide ? `
-        <div style="margin: 12px 0; text-align: center;">
-            <div style="border: 2px dashed #cbd5e1; border-radius: 12px; padding: 8px; background: #fff;">
-                <img src="image_3b8461.png" alt="UTR Guide" style="width: 100%; max-width: 400px; height: auto; border-radius: 8px;" />
-            </div>
-        </div>
-    ` : '';
-
-    const overlay = document.createElement("div");
-    overlay.id = "rajErrorPopupOverlay";
-    overlay.className = "raj-popup-overlay";
-
-    overlay.innerHTML = `
-        <div class="raj-popup-card">
-            <button class="raj-popup-close" onclick="closeRajErrorPopup()">×</button>
-            <div class="raj-popup-title" style="color: #ef4444;">Error!</div>
-            <div class="raj-popup-row" style="font-weight: 600; color: #334155;">${message}</div>
-            ${utrGuideHtml}
-            <div style="text-align: center; margin-top: 20px;">
-                <button type="button" onclick="closeRajErrorPopup()" style="background: #ef4444; color: #fff; border: none; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer;">Okay</button>
-            </div>
-        </div>
-    `;
-
-    document.body.appendChild(overlay);
-    history.pushState({ errorPopupOpen: true }, "");
-
-    setTimeout(() => {
-        overlay.classList.add("active");
-    }, 10);
-}
-
-function closeRajErrorPopup() {
-    const overlay = document.getElementById("rajErrorPopupOverlay");
-    if (overlay && overlay.classList.contains("active")) {
-        overlay.classList.remove("active");
-        setTimeout(() => {
-            overlay.remove();
-            if (history.state && history.state.errorPopupOpen) {
-                history.back();
-            }
-        }, 300);
-    }
-}
-
-window.addEventListener('popstate', function (event) {
-    const errorOverlay = document.getElementById("rajErrorPopupOverlay");
-    if (errorOverlay && errorOverlay.classList.contains("active")) {
-        errorOverlay.classList.remove("active");
-        setTimeout(() => errorOverlay.remove(), 300);
-        return; // চেকআউট পেজ বন্ধ হওয়া আটকাবে এবং পপআপ শুধু ক্লোজ হবে
-    }
-
+window.addEventListener('popstate', function () {
     const checkoutPage = document.getElementById("checkoutPage");
     if (checkoutPage && (checkoutPage.style.display === "block" || !checkoutPage.classList.contains("hidden"))) {
         closeCheckoutUI();
@@ -1197,7 +1138,7 @@ function openCheckoutFromCustom() {
     const qty = parseFloat(qtyInput ? qtyInput.value : 0);
 
     if (!qty || qty < 100) {
-        showRajErrorPopup("Minimum order quantity is 100!");
+        alert("Minimum order quantity is 100!");
         return;
     }
 
@@ -1257,10 +1198,12 @@ function updateCheckoutQuantityDisplay() {
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
     
+    // ইনস্ট্যান্ট লোডিংয়ের জন্য QR URL আগে থেকেই সেট করা হলো
     const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
+        // ইমেজ সাথে সাথে রিফ্রেশ ও শো করার জন্য src প্রপার্টি সেট করা হলো
         qrImg.src = qrImageSrc;
         qrImg.style.width = "170px";
         qrImg.style.height = "170px";
@@ -1372,6 +1315,7 @@ function showCheckoutOverlay() {
         }
     }
 
+    // ওভারলে খোলার সাথে সাথেই কোড ডিসপ্লে আপডেট ও জেনারেট করা নিশ্চিত করা হলো
     updateCheckoutQuantityDisplay();
 
     const priceCard = priceEl ? priceEl.parentElement : null;
@@ -1654,7 +1598,7 @@ async function submitOrderToWhatsApp() {
     );
 
     if (!validation.isValid) {
-        showRajErrorPopup(validation.message);
+        alert(validation.message);
         return;
     }
 
@@ -1667,7 +1611,7 @@ async function submitOrderToWhatsApp() {
     const isValidTxnId = transactionIdRegex.test(txnId);
 
     if (!isValidUtr && !isValidTxnId) {
-        showRajErrorPopup("Please enter Transaction ID / UTR number. See example below:", true);
+        alert("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T.");
         if (txnInput) txnInput.focus();
         return;
     }
@@ -1691,7 +1635,7 @@ async function submitOrderToWhatsApp() {
     const finalPrice = Number(d.price || 0);
 
     if (finalPrice <= 0) {
-        showRajErrorPopup("Invalid order amount.");
+        alert("Invalid order amount.");
         return;
     }
 
@@ -1777,7 +1721,7 @@ async function submitOrderToWhatsApp() {
 
     } catch (error) {
         console.error("❌ Backend Order Error:", error);
-        showRajErrorPopup("Order could not be submitted.\n\n" + (error.message || "Please try again."));
+        alert("Order could not be submitted.\n\n" + (error.message || "Please try again."));
     } finally {
         if (submitBtn) {
             submitBtn.disabled = false;
@@ -1839,21 +1783,21 @@ async function submitOrderWithWallet() {
 
     const validation = processProfileOrLink(rawLink, currentCheckoutData.platform, currentCheckoutData.serviceName);
     if (!validation.isValid) {
-        showRajErrorPopup(validation.message);
+        alert(validation.message);
         return;
     }
 
     const link = validation.url;
 
     if (typeof firebase === 'undefined' || !firebase.auth) {
-        showRajErrorPopup("Authentication system unavailable.");
+        alert("Authentication system unavailable.");
         return;
     }
 
     const auth = firebase.auth();
     const user = auth.currentUser;
     if (!user) {
-        showRajErrorPopup("Please login to use Wallet System.");
+        alert("Please login to use Wallet System.");
         return;
     }
 
@@ -1903,7 +1847,7 @@ async function submitOrderWithWallet() {
         });
 
     } catch (error) {
-        showRajErrorPopup("Error: " + (error.message || error));
+        alert("Error: " + (error.message || error));
     } finally {
         if (walletBtn) walletBtn.disabled = false;
     }

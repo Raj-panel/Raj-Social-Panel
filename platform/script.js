@@ -723,24 +723,6 @@ let currentCategory = "";
 let selectedPackage = null;
 let currentCheckoutData = {};
 
-// ==========================================
-// INSTANT QR CODE PRELOAD CACHE LOGIC
-// ==========================================
-const qrPreloadCache = {};
-
-function getAndPreloadQrUrl(price, packageName) {
-    const upiId = "saheb.68@ptyes";
-    const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(packageName)}`;
-    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=${encodeURIComponent(upiUrl)}`;
-
-    if (!qrPreloadCache[qrImageSrc]) {
-        const img = new Image();
-        img.src = qrImageSrc;
-        qrPreloadCache[qrImageSrc] = img;
-    }
-    return qrImageSrc;
-}
-
 window.onload = function () {
     switchPlatform("instagram");
 };
@@ -999,8 +981,6 @@ function calculateCustomPrice(serviceName, ratePer1000, providerId) {
             quantity: qty,
             category: currentCategory
         };
-        // ব্যাকগ্রাউন্ডে কিউআর কোড জেনারেট ও প্রি-লোড করা
-        getAndPreloadQrUrl(total, selectedPackage.name);
     } else {
         if (minWarning) minWarning.style.display = "none";
         if (calcPriceSpan) calcPriceSpan.innerText = "0.00";
@@ -1150,9 +1130,6 @@ function openCheckoutForFixed(platform, serviceName, packageName, quantity, pric
         badge: badge || 'Popular'
     };
 
-    // ক্লিক করার মুহূর্তেই QR Image Pre-load
-    getAndPreloadQrUrl(price, packageName);
-
     showCheckoutOverlay();
 }
 
@@ -1181,9 +1158,6 @@ function openCheckoutFromCustom() {
         multiplier: 1,
         badge: "Custom"
     };
-
-    // ক্লিক করার মুহূর্তেই QR Image Pre-load
-    getAndPreloadQrUrl(price, currentCheckoutData.packageName);
 
     showCheckoutOverlay();
 }
@@ -1221,8 +1195,10 @@ function updateCheckoutQuantityDisplay() {
         usdtEl.innerText = `$${usdt} USDT`;
     }
 
-    // Pre-loaded cache URL থেকে তাৎক্ষণিক ইনস্ট্যান্ট কিউআর কোড সেট করা
-    const qrImageSrc = getAndPreloadQrUrl(d.price, d.packageName || "Social Boost Service");
+    const upiId = "saheb.68@ptyes";
+    const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
+    
+    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
@@ -1529,13 +1505,13 @@ function triggerRajConfettiAnimation(overlayElement) {
 // ==========================================
 // MODERN GLOWING SUCCESS POPUP FUNCTION (5-SEC AUTO-HIDE & MANUAL CLOSE)
 // ==========================================
-let rajPopupTimer = null; 
+let rajPopupTimer = null; // গ্লোবাল টাইমার ভেরিয়েবল যাতে একাধিক পপআপের সময় সমস্যা না হয়
 
 function showOrderSuccessPopup(orderData) {
     const existingOverlay = document.getElementById("rajOrderSuccessOverlay");
     if (existingOverlay) {
         existingOverlay.remove();
-        if (rajPopupTimer) clearTimeout(rajPopupTimer); 
+        if (rajPopupTimer) clearTimeout(rajPopupTimer); // পুরনো টাইমার ক্লিয়ার করা হলো
     }
 
     const now = new Date();
@@ -1597,12 +1573,14 @@ Thank you! 💚`;
         triggerRajConfettiAnimation(overlay);
     }, 10);
 
+    // লজিক ১: ঠিক ৫ সেকেন্ড (৫০০০ মিলিসেকেন্ড) পর পপআপ অটোমেটিক হাইড হয়ে রিমুভ হবে
     rajPopupTimer = setTimeout(() => {
         closeRajSuccessPopup();
     }, 6000);
 }
 
 function closeRajSuccessPopup() {
+    // লজিক ২: ম্যানুয়াল ক্লোজ বা টাইমার শেষ হলে পপআপ ক্লোজ করার লজিক
     if (rajPopupTimer) {
         clearTimeout(rajPopupTimer);
         rajPopupTimer = null;

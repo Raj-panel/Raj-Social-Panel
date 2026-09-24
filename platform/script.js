@@ -111,13 +111,12 @@
                 -webkit-text-fill-color: transparent !important; 
             }
             #checkoutUpiView img { 
-                width: 170px !important; 
-                height: 170px !important; 
+                width: 140px !important; 
+                height: 130px !important; 
                 object-fit: contain !important; 
                 margin: 4px auto !important; 
                 padding: 4px !important; 
                 border-radius: 8px !important; 
-                background-color: #ffffff !important;
             }
             #checkoutBinanceView img {
                 width: 150px !important;
@@ -284,239 +283,6 @@
     `;
     document.head.appendChild(style);
 })();
-
-// ==========================================
-// LIGHTWEIGHT LOCAL BROWSER-SIDE QR GENERATOR
-// ==========================================
-// Embedded minimal qrious/qr implementation for instant local rendering without external API calls
-(function() {
-    // Simple canvas-based QR drawer using standard qrious-like logic or micro encoder
-    window.generateLocalQRCodeDataUrl = function(text, size = 170) {
-        // Fallback lightweight matrix generator or using canvas to draw a reliable data URI via minimal qrcode logic
-        // Since we need 100% reliable local generation without external network, we include a compact encoder/drawer:
-        try {
-            // Let's create a dynamic SVG data URI which renders instantly locally without network request
-            // To ensure standard QR scannability across UPI apps, we use a robust embedded pure JS QR generator snippet:
-            return generateQRCodeSVGDataURL(text, size);
-        } catch(e) {
-            return "";
-        }
-    };
-
-    function generateQRCodeSVGDataURL(text, size) {
-        // Simple qrcode encoder implementation inline
-        const qr = qrcode(4, 'M');
-        qr.addData(text);
-        qr.make();
-        const svgString = qr.createSvgTag({cellSize: 4, margin: 2});
-        // Convert SVG to data URI
-        return 'data:image/svg+xml;utf8,' + encodeURIComponent(svgString);
-    }
-})();
-
-// Minimal embedded qrcode generator library (UTF-8 supported)
-// Provided locally to guarantee zero network latency
-var qrcode = function() {
-    var DIGIT_MATRIX = {};
-    // Minimal core QR code generation engine implementation
-    function QRPolynomial(num, shift) {
-        if (num.length == undefined) throw new Error(num.length + "/" + shift);
-        var offset = 0;
-        while (offset < num.length && num[offset] == 0) offset++;
-        var mod = new Array(num.length - offset + shift);
-        for (var i = 0; i < num.length - offset; i++) mod[i] = num[i + offset];
-        return {
-            get: function(index) { return mod[index]; },
-            length: function() { return mod.length; },
-            multiply: function(e) {
-                var num = new Array(this.length() + e.length() - 1);
-                for (var i = 0; i < this.length(); i++) {
-                    for (var j = 0; j < e.length(); j++) {
-                        num[i + j] ^= QRMath.gmul(this.get(i), e.get(j));
-                    }
-                }
-                return QRPolynomial(num, 0);
-            },
-            mod: function(e) {
-                if (this.length() - e.length() < 0) return this;
-                var ratio = QRMath.glog(this.get(0)) - QRMath.glog(e.get(0));
-                var num = new Array(this.length());
-                for (var i = 0; i < this.length(); i++) num[i] = this.get(i);
-                for (var i = 0; i < e.length(); i++) {
-                    num[i] ^= QRMath.gexp(QRMath.glog(e.get(i)) + ratio);
-                }
-                return QRPolynomial(num, 0).mod(e);
-            }
-        };
-    }
-    var QRMath = {
-        glog: function(n) { return QRMath.LOG_TABLE[n]; },
-        gexp: function(n) { return QRMath.EXP_TABLE[n < 0 ? n + 255 : n % 255]; },
-        gmul: function(v1, v2) { return v1 == 0 || v2 == 0 ? 0 : QRMath.EXP_TABLE[(QRMath.LOG_TABLE[v1] + QRMath.LOG_TABLE[v2]) % 255]; }
-    };
-    QRMath.EXP_TABLE = new Array(256);
-    QRMath.LOG_TABLE = new Array(256);
-    for (var i = 0; i < 8; i++) QRMath.EXP_TABLE[i] = 1 << i;
-    for (var i = 8; i < 256; i++) QRMath.EXP_TABLE[i] = QRMath.EXP_TABLE[i - 4] ^ QRMath.EXP_TABLE[i - 5] ^ QRMath.EXP_TABLE[i - 6] ^ QRMath.EXP_TABLE[i - 8];
-    for (var i = 0; i < 255; i++) QRMath.LOG_TABLE[QRMath.EXP_TABLE[i]] = i;
-
-    return function(typeNumber, errorCorrectionLevel) {
-        var PAD0 = 0xEC, PAD1 = 0x11;
-        var _typeNumber = typeNumber;
-        var _errorCorrectionLevel = errorCorrectionLevel;
-        var _modules = null;
-        var _moduleCount = 0;
-        var _dataCache = null;
-        var _dataList = [];
-        
-        var qr = {
-            addData: function(data) {
-                _dataList.push({ data: data, mode: 4 }); // 8-bit byte mode
-                _dataCache = null;
-            },
-            isDark: function(row, col) {
-                if (row < 0 || _moduleCount <= row || col < 0 || _moduleCount <= col) throw new Error(row + "," + col);
-                return _modules[row][col];
-            },
-            getModuleCount: function() { return _moduleCount; },
-            make: function() {
-                _moduleCount = _typeNumber * 4 + 17;
-                _modules = new Array(_moduleCount);
-                for (var r = 0; r < _moduleCount; r++) {
-                    _modules[r] = new Array(_moduleCount);
-                    for (var c = 0; c < _moduleCount; c++) _modules[r][c] = null;
-                }
-                // Setup position probe & timing patterns
-                this.setupPositionProbePattern(0, 0);
-                this.setupPositionProbePattern(_moduleCount - 7, 0);
-                this.setupPositionProbePattern(0, _moduleCount - 7);
-                this.setupTimingPattern();
-                this.setupTypeInfo(true, 0);
-                
-                _dataCache = QRUtil.createData(_typeNumber, _errorCorrectionLevel, _dataList);
-                this.mapData(_dataCache, 0);
-            },
-            setupPositionProbePattern: function(row, col) {
-                for (var r = -1; r <= 7; r++) {
-                    if (row + r <= -1 || _moduleCount <= row + r) continue;
-                    for (var c = -1; c <= 7; c++) {
-                        if (col + c <= -1 || _moduleCount <= col + c) continue;
-                        if ((0 <= r && r <= 6 && (c == 0 || c == 6)) || (0 <= c && c <= 6 && (r == 0 || r == 6)) || (2 <= r && r <= 4 && 2 <= c && c <= 4)) {
-                            _modules[row + r][col + c] = true;
-                        } else {
-                            _modules[row + r][col + c] = false;
-                        }
-                    }
-                }
-            },
-            setupTimingPattern: function() {
-                for (var r = 8; r < _moduleCount - 8; r++) {
-                    if (_modules[r][6] == null) _modules[r][6] = (r % 2 == 0);
-                    if (_modules[6][r] == null) _modules[6][r] = (r % 2 == 0);
-                }
-            },
-            setupTypeInfo: function(test, maskPattern) {
-                var data = (_errorCorrectionLevel << 3) | maskPattern;
-                var bits = QRUtil.getRSCodeWord(data, 1335, 10);
-                for (var i = 0; i < 15; i++) {
-                    var mod = (!test && ((bits >> i) & 1) == 1);
-                    if (i < 6) _modules[i][8] = mod;
-                    else if (i < 8) _modules[i + 1][8] = mod;
-                    else _modules[_moduleCount - 15 + i][8] = mod;
-
-                    if (i < 8) _modules[8][_moduleCount - i - 1] = mod;
-                    else if (i < 9) _modules[8][15 - i - 1 + 1] = mod;
-                    else _modules[8][15 - i - 1] = mod;
-                }
-                _modules[_moduleCount - 8][8] = (!test);
-            },
-            mapData: function(data, maskPattern) {
-                var inc = -1;
-                var row = _moduleCount - 1;
-                var bitIndex = 7;
-                var byteIndex = 0;
-                for (var col = _moduleCount - 1; col > 0; col -= 2) {
-                    if (col == 6) col--;
-                    while (true) {
-                        for (var c = 0; c < 2; c++) {
-                            if (_modules[row][col - c] == null) {
-                                var dark = false;
-                                if (byteIndex < data.length) {
-                                    dark = (((data[byteIndex] >>> bitIndex) & 1) == 1);
-                                }
-                                var mask = QRUtil.getMask(maskPattern, row, col - c);
-                                if (mask) dark = !dark;
-                                _modules[row][col - c] = dark;
-                                bitIndex--;
-                                if (bitIndex == -1) {
-                                    byteIndex++;
-                                    bitIndex = 7;
-                                }
-                            }
-                        }
-                        row += inc;
-                        if (row < 0 || _moduleCount <= row) {
-                            row -= inc;
-                            inc = -inc;
-                            break;
-                        }
-                    }
-                }
-            },
-            createSvgTag: function(opts) {
-                opts = opts || {};
-                var cellSize = opts.cellSize || 2;
-                var margin = (opts.margin !== undefined) ? opts.margin : 2;
-                var size = (_moduleCount + margin * 2) * cellSize;
-                var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + size + ' ' + size + '" width="100%" height="100%">';
-                svg += '<rect width="100%" height="100%" fill="#ffffff"/>';
-                svg += '<path fill="#000000" d="';
-                for (var r = 0; r < _moduleCount; r++) {
-                    for (var c = 0; c < _moduleCount; c++) {
-                        if (this.isDark(r, c)) {
-                            var x = (c + margin) * cellSize;
-                            var y = (r + margin) * cellSize;
-                            svg += 'M' + x + ' ' + y + 'h' + cellSize + 'v' + cellSize + 'h-' + cellSize + 'z';
-                        }
-                    }
-                }
-                svg += '"/>';
-                svg += '</svg>';
-                return svg;
-            }
-        };
-        return qr;
-    };
-}();
-
-var QRUtil = {
-    getRSCodeWord: function(data, poly, shift) {
-        var data_ = data << shift;
-        while (QRUtil.getBCHDigit(data_) - QRUtil.getBCHDigit(poly) >= 0) {
-            data_ ^= (poly << (QRUtil.getBCHDigit(data_) - QRUtil.getBCHDigit(poly)));
-        }
-        return (data << shift) ^ data_;
-    },
-    getBCHDigit: function(data) {
-        var digit = 0;
-        while (data != 0) {
-            digit++;
-            data >>>= 1;
-        }
-        return digit;
-    },
-    getMask: function(maskPattern, i, j) {
-        return (i + j) % 2 == 0;
-    },
-    createData: function(typeNumber, errorCorrectionLevel, dataList) {
-        var data = dataList[0].data;
-        var buffer = [];
-        for (var i = 0; i < data.length; i++) {
-            buffer.push(data.charCodeAt(i));
-        }
-        return buffer;
-    }
-};
 
 // ==========================================
 // NAVIGATION FIX FOR LOGIN / CREATE ACCOUNT
@@ -956,6 +722,9 @@ let currentPlatform = "instagram";
 let currentCategory = "";
 let selectedPackage = null;
 let currentCheckoutData = {};
+
+// Global Preloaded QR Image cache to ensure instant display
+let preloadedQrImage = new Image();
 
 window.onload = function () {
     switchPlatform("instagram");
@@ -1432,11 +1201,12 @@ function updateCheckoutQuantityDisplay() {
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
     
-    // INSTANT LOCAL BROWSER-SIDE QR GENERATION (No network API call needed)
-    const qrImageSrc = window.generateLocalQRCodeDataUrl(upiUrl, 170);
+    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
+        // Instant assignment with preloaded/cached background image object to eliminate visual loading delay
+        preloadedQrImage.src = qrImageSrc;
         qrImg.src = qrImageSrc;
         qrImg.style.width = "170px";
         qrImg.style.height = "170px";
@@ -1547,6 +1317,11 @@ function showCheckoutOverlay() {
             upiView.prepend(scanHeading);
         }
     }
+
+    // Preload QR URL instantly before opening or alongside DOM reveal
+    const upiId = "saheb.68@ptyes";
+    const initialUpiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
+    preloadedQrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=${encodeURIComponent(initialUpiUrl)}`;
 
     updateCheckoutQuantityDisplay();
 
@@ -1828,6 +1603,7 @@ function closeRajSuccessPopup() {
 
 // ==========================================
 // BACKEND ORDER SUBMISSION
+// Platform 1
 // ==========================================
 async function submitOrderToWhatsApp() {
     const linkInput = document.getElementById("checkoutLinkInput");
@@ -2043,6 +1819,7 @@ async function submitOrderWithWallet() {
     const user = auth.currentUser;
     if (!user) {
         alert("Please login to use Wallet System.");
+        return;
     }
 
     if (walletBtn) walletBtn.disabled = true;
@@ -2083,7 +1860,7 @@ async function submitOrderWithWallet() {
         showOrderSuccessPopup({
             orderId: orderIdVal,
             platformName: currentCheckoutData.platform || '',
-            serviceName: currentCheckoutData.serviceName || '',
+            serviceName: currentCategory || '',
             packageName: currentCheckoutData.packageName || '',
             link: link,
             quantity: currentCheckoutData.quantity || 0,

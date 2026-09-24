@@ -1,1058 +1,1177 @@
-// Global State Variables
-let currentPlatform = 'all';
-let calculatedPrice = 0;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<!-- Canonical Link -->
+<link rel="canonical" href="https://rajsmmpanel.in/"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Raj SMM Panel – Best India Cheapest SMM Panel for Instagram, Facebook &amp; YouTube</title>
+<meta content="Raj SMM Panel offers affordable social media marketing services for Instagram, Facebook, YouTube and more. Get Followers, Likes, Views, Comments and other SMM services at the best prices." name="description"/>
 
-// Platform SVG / Image Logos
-const platformLogos = {
-  instagram: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg",
-  facebook: "https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg",
-  youtube: "https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg",
-  tiktok: "https://upload.wikimedia.org/wikipedia/commons/a/a9/TikTok_logo.svg",
-  telegram: "https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg",
-  whatsapp: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-};
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,800&display=swap" rel="stylesheet"/>
 
-// Precise Logo Detection via Explicit Platform Tag & Text Analysis
-function getLogoForOption(opt) {
-  const targetPlat = opt.getAttribute('data-platform');
-  if (targetPlat && platformLogos[targetPlat]) {
-    return platformLogos[targetPlat];
+<!-- PWA / Web App Manifest & Theme -->
+<link href="manifest.json" rel="manifest"/>
+<meta content="#0f172a" name="theme-color"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="SMM Panel" name="apple-mobile-web-app-title"/>
+<link href="icon-192.png" rel="apple-touch-icon"/>
+<link href="style.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+<!-- Open Graph Meta Tags -->
+<meta content="website" property="og:type"/>
+<meta content="https://rajsmmpanel.in/" property="og:url"/>
+<meta content="Grow Your Facebook & Instagram
+Followers • Likes • Views — Click Here☝️" property="og:title"/>
+<meta content="Get instant Followers, Likes, Views for Instagram and Facebook at lowest prices!" property="og:description"/>
+<meta content="https://rajsmmpanel.in/banner-image.png" property="og:image"/>
+<meta content="https://rajsmmpanel.in/banner-image.png" property="og:image:secure_url"/>
+<meta content="image/png" property="og:image:type"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+
+<!-- Twitter Card Meta Tags -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://rajsmmpanel.in/" name="twitter:url"/>
+<meta content="Grow Your Facebook & Instagram
+Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
+<meta content="Instant Delivery &amp; Premium Quality Social Media Services." name="twitter:description"/>
+<meta content="https://rajsmmpanel.in/banner-image.png" name="twitter:image"/>
+
+<style>
+  :root {
+    --sidebar-bg: #0f172a;
+    --sidebar-text: #cbd5e1;
+    --sidebar-border: rgba(255, 255, 255, 0.1);
+    --sidebar-hover: rgba(168, 85, 247, 0.15);
+    --sidebar-hover-text: #ffffff;
+    --sidebar-close: #94a3b8;
   }
 
-  const text = (opt.textContent || "").toLowerCase();
-  if (text.includes('telegram')) return platformLogos.telegram;
-  if (text.includes('facebook') || text.includes('fb')) return platformLogos.facebook;
-  if (text.includes('youtube') || text.includes('yt')) return platformLogos.youtube;
-  if (text.includes('tiktok')) return platformLogos.tiktok;
-  if (text.includes('whatsapp')) return platformLogos.whatsapp;
-  if (text.includes('instagram') || text.includes('ig')) return platformLogos.instagram;
+  body.light-mode, body.light {
+    --sidebar-bg: #ffffff;
+    --sidebar-text: #1e293b;
+    --sidebar-border: rgba(0, 0, 0, 0.1);
+    --sidebar-hover: rgba(168, 85, 247, 0.1);
+    --sidebar-hover-text: #000000;
+    --sidebar-close: #64748b;
+  }
 
-  return platformLogos.instagram;
-}
+  body.dark-mode, body.dark {
+    --sidebar-bg: #0f172a;
+    --sidebar-text: #cbd5e1;
+    --sidebar-border: rgba(255, 255, 255, 0.1);
+    --sidebar-hover: rgba(168, 85, 247, 0.15);
+    --sidebar-hover-text: #ffffff;
+    --sidebar-close: #94a3b8;
+  }
 
-// All Platform & Service Data
-const platformData = {
-  all: {
-    title: "All Services",
-    icon: "fa-solid fa-layer-group",
-    linkPlaceholder: "Link profile / post / channel"
-  },
-  instagram: {
-    title: "Instagram Boost",
-    icon: "fa-brands fa-instagram",
-    linkPlaceholder: "Link Instagram profile",
-    categories: {
-      "working": {
-        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐅𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬- 𝐌𝐢𝐱 𝐒𝐞𝐫𝐯𝐢𝐜𝐞",
-        services: [
-          { id: "1220", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 60D Refill 🔄", rate: 180.358, avgTime: "0–10 Min Start" },
-          { id: "1221", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 90D Refill 🔄", rate: 185.929, avgTime: "0–10 Min Start" },
-          { id: "1222", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - 365D Refill 🔄", rate: 205.501, avgTime: "0–10 Min Start" },
-          { id: "1223", name: "Instagram Followers | Real Profile Accounts | Less Drop - 100K/Day - Max Unlimited | 0–10 Min Start - Lifetime Refill ♻️", rate: 230.072, avgTime: "0–10 Min Start" },
-        ]
-      },
-      "nondrop": {
-        name: "Instagram - Followers | Real Profiles [Refill Working] NEW",
-        services: [
-          { id: "5811", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - No Refill 🔄", rate: 157.929, avgTime: "0–30 Min Start" },
-          { id: "5812", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 30D Refill 🔄", rate: 170.072, avgTime: "0–30 Min Start" },
-          { id: "5813", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 60D Refill 🔄", rate: 182.644, avgTime: "0–30 Min Start" },
-          { id: "5814", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 90D Refill 🔄", rate: 194.215, avgTime: "0–30 Min Start" },
-          { id: "5815", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - 365D Refill 🔄", rate: 207.858, avgTime: "0–30 Min Start" },
-          { id: "5816", name: "Instagram Followers | 100% Real Accounts - Non Drop | 300K/Day - Max Unlimited | 0–2 Min Start - Lifetime Refill ♻️", rate: 235.358, avgTime: "0–30 Min Start" },
-        ]
-      },
-      "Instagram like real profile": {
-        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐋𝐢𝐤𝐞 𝐈𝐧𝐝𝐢𝐚 𝐦𝐢𝐱 𝐑𝐞𝐚𝐥 𝐩𝐫𝐨𝐟𝐢𝐥𝐞",
-        services: [
-          { id: "881", name: "Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 60 Days Refill♻️ | 0–10 Minutes Start", rate: 14.600, avgTime: "0–10 Minutes Start" },
-          { id: "882", name: "Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 90 Days Refill♻️ | 0–10 Minutes Start", rate: 15.664, avgTime: "0–10 Minutes Start" },
-          { id: "883", name: "Instagram Likes | Real Profiles | 100% Non Drop | 500K+ Per Day | 365 Days Refill♻️ | 0–10 Minutes Start", rate: 16.729, avgTime: "0–10 Minutes Start" },
-          { id: "884", name: "Instagram Likes | Real Profiles ✓ | 100% Non Drop | 500K+ Per Day | Life Time Refill♻️ | 0–10 Minutes Start", rate: 20.600, avgTime: "0–10 Minutes Start" }
-        ]
-      },
-      "🇮🇳 Instagram Repost- India high quality": {
-        name: "🇮🇳 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐑𝐞𝐩𝐨𝐬𝐭- 𝐈𝐧𝐝𝐢𝐚 𝐡𝐢𝐠𝐡 𝐪𝐮𝐚𝐥𝐢𝐭𝐲",
-        services: [
-          { id: "2008", name: "Instagram Repost | Worldwide | Max 50K | 100% 🇮🇳 Real Accounts | 12–30 Min Start", rate: 60.94, avgTime: "12–30 Min Start" },
-          { id: "2086", name: "🇮🇳 Instagram Repost | Worldwide | Max 100K | 100% 🇮🇳 Real Accounts | 12–30 Min Start", rate: 72.6832, avgTime: "12–30 Min Start" }
-        ]
-      },
-      "🇮🇳 Instagram Shares - Premium Quality | Super Fast": {
-        name: "𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐒𝐡𝐚𝐫𝐞𝐬- 🇮🇳𝐏𝐫𝐞𝐦𝐢𝐮𝐦 𝐐𝐮𝐚𝐥𝐢𝐭𝐲",
-        services: [
-          { id: "121", name: "🇮🇳 Instagram Shares | Premium Quality | Max 1M | 100K/Day | SuperFast | 10–25 Min Start | Lifetime Refill ♻️", rate: 22.266, avgTime: "10–25 Min Start" },
-          { id: "123", name: "🇮🇳 Instagram Shares | High Quality | Max 1M | 200K/Day | SuperFast | 10–30 Min Start | Lifetime Refill ♻️ | One Click Done", rate: 20.33, avgTime: "10–30 Min Start" }
-        ]
-      },
-      "🇮🇳 Instagram Reels/ Video Views High Speed": {
-        name: "🇮🇳 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐑𝐞𝐞𝐥𝐬/ 𝐕𝐢𝐝𝐞𝐨 𝐕𝐢𝐞𝐰𝐬 𝐇𝐢𝐠𝐡 𝐒𝐩𝐞𝐞𝐝",
-        services: [
-          { id: "2623", name: "🇮🇳Instagram Reels views [ Non-Drop] 500K/1M Days ULTRA FAST 0–5 Minutes Start Life-timeRefill♻️", rate: 2.10, avgTime: "0–5 Minutes Start" }
-        ]
-      },
-      "🇮🇳Instagram Photo / post Views": {
-        name: "🇮🇳𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 𝐏𝐡𝐨𝐭𝐨 / 𝐩𝐨𝐬𝐭 𝐕𝐢𝐞𝐰𝐬",
-        services: [
-          { id: "1030", name: "🇮🇳Instagram Photo & Post Views | Photo + Post + Image Impressions | Non Drop | 1M+ Per Day | 0–1 Minutes Start", rate: 10.286, avgTime: "0–1 Minutes Start" }
-        ]
-      }
+  /* -------------------------------------------------------------
+     MULTICOLOR GLOWING BORDER ANIMATION FOR INPUT BOXES
+  ------------------------------------------------------------- */
+  @keyframes multicolorGlow {
+    0% {
+      border-color: #00f0ff;
+      box-shadow: 0 0 8px #00f0ff, 0 0 16px rgba(0, 240, 255, 0.4);
     }
-  },
-  facebook: {
-    title: "Facebook Boost",
-    icon: "fa-brands fa-facebook",
-    linkPlaceholder: "Link Facebook page or profile",
-    categories: {
-      "Facebook - Followers | HQ - Cheapest Price": {
-        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 - 𝐅𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬 | 𝐇𝐐 - 𝐂𝐡𝐞𝐚𝐩𝐞𝐬𝐭 𝐏𝐫𝐢𝐜𝐞",
-        services: [
-          { id: "4501", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | 60D Refill", rate: 34.1075, avgTime: "0–30 Min Start" },
-          { id: "4502", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | 90D Refill", rate: 35.1525, avgTime: "0–30 Min Start" },
-          { id: "5988", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | 365D Refill ♻️", rate: 36.1975, avgTime: "0–30 Min Start" },
-          { id: "5989", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | Lifetime Refill♻️", rate: 40.2425, avgTime: "0–30 Min Start" }
-        ]
-      },
-      "Facebook follower real account medium speed": {
-        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫 𝐑𝐞𝐚𝐥 𝐀𝐜𝐜𝐨𝐮𝐧𝐭 [𝐍𝐨𝐧-𝐃𝐫𝐨𝐩]",
-        services: [
-          { id: "6426", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts| 0–30 Min Start | 90D Refill ♻️", rate: 40.4272, avgTime: "0–30 Min Start" },
-          { id: "6427", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts| 0–30 Min Start | 365D Refill ♻️", rate: 45.0640, avgTime: "0–30 Min Start" },
-          { id: "6428", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts| 0–30 Min Start | Lifetime Refill ♻️", rate: 53.7008, avgTime: "0–30 Min Start" },
-        ]
-      },
-      "🇮🇳 Real Video Views Facebook - High Quality": {
-        name: "🇮🇳 𝐑𝐞𝐚𝐥 𝐕𝐢𝐝𝐞𝐨 𝐕𝐢𝐞𝐰𝐬 𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 - 𝐇𝐢𝐠𝐡 𝐐𝐮𝐚𝐥𝐢𝐭𝐲",
-        services: [
-          { id: "6581", name: "Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 0–30 Min Start | 90D Refill ♻️", rate: 13.2500, avgTime: "0–30 Min Start" },
-          { id: "6582", name: "Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 0–30 Min Start | 365D Refill ♻️", rate: 15.4000, avgTime: "0–30 Min Start" },
-          { id: "6583", name: "Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 0–30 Min Start | Lifetime Refill ♻️", rate: 17.5500, avgTime: "0–30 Min Start" }
-        ]
-      },
-      "Facebook - Post Reactions mix | Cheapest Rate": {
-        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 - 𝐏𝐨𝐬𝐭 𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 𝐦𝐢𝐱~ 𝐋𝐨𝐰 𝐑𝐚𝐭𝐞",
-        services: [
-          { id: "5507", name: "Facebook - Post Likes 👍 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
-          { id: "5508", name: "Facebook - Reaction | Love ❤️ | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 23.5170, avgTime: "0–30 Min Start" },
-          { id: "5509", name: "Facebook - Reaction | Care 🥰 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 22.5170, avgTime: "0–30 Min Start" },
-          { id: "5510", name: "Facebook - Reaction | Wow 😮 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 21.5170, avgTime: "0–30 Min Start" },
-          { id: "5511", name: "Facebook - Reaction | Haha 😂 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
-          { id: "5512", name: "Facebook - Reaction | Sad 😢 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" },
-          { id: "5513", name: "Facebook - Reaction | Angry 😡 | 50K/Day - Max 100K | Worldwide | Instant | 0–30 Min Start | No Refill", rate: 20.5170, avgTime: "0–30 Min Start" }
-        ]
-      }
+    33% {
+      border-color: #8b5cf6;
+      box-shadow: 0 0 8px #8b5cf6, 0 0 16px rgba(139, 92, 246, 0.4);
     }
-  },
-  youtube: {
-    title: "YouTube Boost",
-    icon: "fa-brands fa-youtube",
-    linkPlaceholder: "Link YouTube channel or video",
-    categories: {
-      "YouTube Subscribers | No Guaranteed": {
-        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐒𝐮𝐛𝐬𝐜𝐫𝐢𝐛𝐞𝐫𝐬 | 𝐍𝐨 𝐆𝐮𝐚𝐫𝐚𝐧𝐭𝐞𝐞𝐝",
-        services: [
-          { id: "69", name: "YouTube Subscribers | Low Quality | 50K+/Day | 0–5 Min Start | Fast | No Refill 🔄", rate: 36.429, avgTime: "0–5 Min Start" },
-          { id: "950", name: "YouTube Subscribers | Low Quality | 100K+/Day | 0–5 Min Start | Ultra Cheapest | No Refill 🔄", rate: 70.149, avgTime: "0–5 Min Start" },
-          { id: "951", name: "YouTube Subscribers | Low Quality | 500K+/Day | 0–5 Min Start | No Refill 🔄", rate: 76.345, avgTime: "0–5 Min Start" }
-        ]
-      },
-      "YouTube Subscribers- 🇮🇳 Guaranteed ✅": {
-        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐒𝐮𝐛𝐬𝐜𝐫𝐢𝐛𝐞𝐫𝐬- 🇮🇳[𝐍𝐨𝐧~𝐃𝐫𝐨𝐩] ✅",
-        services: [
-          { id: "964", name: "YouTube Subscribers 🇮🇳 | High Quality | 100% Non Drop | 100+/Day | 0–15 Min Start ⚡ | Lifetime Refill ♻️", rate: 2541.601, avgTime: "0–15 Min Start" }
-        ]
-      },
-      "YouTube Likes [Best Quality] — 🇮🇳 Premium": {
-        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐋𝐢𝐤𝐞𝐬 [𝐁𝐞𝐬𝐭 𝐐𝐮𝐚𝐥𝐢𝐭𝐲] — 🇮🇳 𝐏𝐫𝐞𝐦𝐢𝐮𝐦",
-        services: [
-          { id: "2009", name: "YouTube Likes | Best Quality | Max 1M | Non Drop | Super Instant | 0–20 Min Start | 100K/Day | No Refill 🔄", rate: 49.8745, avgTime: "0–20 Min Start" },
-          { id: "2010", name: "YouTube Likes | Best Quality | Max 1M | Non Drop | Super Instant | 0–20 Min Start | 100K/Day | 365D Refill 🔄", rate: 299.0462, avgTime: "0–20 Min Start" }
-        ]
-      },
-      "YouTube Views 🇮🇳 {Shorts / Video} Non Drop": {
-        name: "𝐘𝐨𝐮𝐓𝐮𝐛𝐞 𝐕𝐢𝐞𝐰𝐬 🇮🇳 {𝐒𝐡𝐨𝐫𝐭𝐬 / 𝐕𝐢𝐝𝐞𝐨} 𝐍𝐨𝐧~𝐃𝐫𝐨𝐩",
-        services: [
-          { id: "815", name: "YouTube Shorts / Video Views | Max 100K | Non Drop 📉 | Lifetime Guaranteed ♻️ | 20K/Day 🚀 | 0–20 Min Start ⚡", rate: 199.24, avgTime: "0–20 Min Start" }
-        ]
-      }
+    66% {
+      border-color: #ec4899;
+      box-shadow: 0 0 8px #ec4899, 0 0 16px rgba(236, 72, 153, 0.4);
     }
-  },
-  tiktok: {
-    title: "TikTok Boost",
-    icon: "fa-brands fa-tiktok",
-    linkPlaceholder: "Link TikTok account or video",
-    categories: {}
-  },
-  telegram: {
-    title: "Telegram Boost",
-    icon: "fa-brands fa-telegram",
-    linkPlaceholder: "Link Telegram channel / group / post",
-    categories: {
-      "Telegram Members - Non~Drop": {
-        name: "𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦 𝐌𝐞𝐦𝐛𝐞𝐫𝐬 - 𝐍𝐨𝐧~𝐃𝐫𝐨𝐩",
-        services: [
-          { id: "6749", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | Refill ♻️", rate: 60.5200, avgTime: "0–10 Min Start" },
-          { id: "6750", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 60D Refill ♻️", rate: 62.8000, avgTime: "0–10 Min Start" },
-          { id: "6751", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 90D Refill ♻️", rate: 64.7000, avgTime: "0–10 Min Start" },
-          { id: "6752", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | 365D Refill ♻️", rate: 66.6000, avgTime: "0–10 Min Start" },
-          { id: "6753", name: "Telegram Members | HQ Accounts | Non Drop | 100K/Day 🚀 | Max 1M | Instant ⚡ | 0–10 Min Start | Lifetime Refill ♻️", rate: 69.5000, avgTime: "0–10 Min Start" }
-        ]
-      },
-      "Telegram - Reactions | Cheapest in The World": {
-        name: "𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦 - 𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 | 𝐂𝐡𝐞𝐚𝐩𝐞𝐬𝐭 𝐢𝐧 𝐓𝐡𝐞 𝐖𝐨𝐫𝐥𝐝",
-        services: [
-          { id: "6050", name: "Telegram Mix Positive Reaction [👍😍🎉🔥❤️🥰👏🥳🤩🔥💯] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6051", name: "Telegram Mix Negative Reaction [👎💔😢💩🤢🤬😡😴🍌😈] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6052", name: "Telegram Reaction [🔥] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6053", name: "Telegram Reaction [❤️] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6054", name: "Telegram Reaction [💘] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6055", name: "Telegram Reaction [💔] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6056", name: "Telegram Reaction [🔥] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6057", name: "Telegram Reaction [👍] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6058", name: "Telegram Reaction [👎] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6059", name: "Telegram Reaction [💩] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6060", name: "Telegram Reaction [⚡] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6061", name: "Telegram Reaction [⛄] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6062", name: "Telegram Reaction [✍️] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6063", name: "Telegram Reaction [🙈] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6064", name: "Telegram Reaction [💊] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6065", name: "Telegram Reaction [😎] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6066", name: "Telegram Reaction [😘] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6067", name: "Telegram Reaction [🦄] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6068", name: "Telegram Reaction [🤷] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6069", name: "Telegram Reaction [🆒] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6070", name: "Telegram Reaction [👾] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6071", name: "Telegram Reaction [🗿] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6072", name: "Telegram Reaction [🤪] + Views", rate: 10.3749, avgTime: "0–20 Min Start" },
-          { id: "6073", name: "Telegram Reaction [🎉] + Views", rate: 10.3749, avgTime: "0–20 Min Start" }
-        ]
-      },
-      "Telegram - Post Views": {
-        name: "𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦 - 𝐏𝐨𝐬𝐭 𝐕𝐢𝐞𝐰𝐬",
-        services: [
-          { id: "3882", name: "Telegram - Views ~ 1 POST ~ INSTANT", rate: 3.2645, avgTime: "0–20 Min Start" },
-          { id: "3885", name: "Telegram Post View (Last 5 Post)", rate: 12.3135, avgTime: "0–20 Min Start" },
-          { id: "3886", name: "Telegram Post View (Last 10 Post)", rate: 25.0515, avgTime: "0–20 Min Start" },
-          { id: "3887", name: "Telegram Post View [Last 20 Post]", rate: 40.5275, avgTime: "0–20 Min Start" },
-          { id: "3888", name: "Telegram Post View [Last 50 Post]", rate: 80.0315, avgTime: "0–20 Min Start" },
-          { id: "3889", name: "Telegram Post View [Last 100 Post]", rate: 159.8545, avgTime: "0–20 Min Start" }
-        ]
-      }
+    100% {
+      border-color: #00f0ff;
+      box-shadow: 0 0 8px #00f0ff, 0 0 16px rgba(0, 240, 255, 0.4);
     }
   }
-};
 
-// Render Select With Dynamic Platform Logos per item & Extended Popup Height with Gradient Border
-function setupSelectIcons(selectId) {
-  const selectElem = document.getElementById(selectId);
-  if (!selectElem) return;
+  .checkout-input-group input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #00f0ff !important;
+    border-radius: 12px !important;
+    outline: none !important;
+    padding: 12px 14px !important;
+    background-color: rgba(15, 23, 42, 0.8) !important;
+    color: #ffffff !important;
+    transition: all 0.3s ease-in-out !important;
+    animation: multicolorGlow 4s infinite linear !important;
+  }
 
-  let wrapper = selectElem.parentElement.querySelector('.custom-select-wrapper');
-  if (wrapper) wrapper.remove();
+  .checkout-input-group input[type="text"]:focus {
+    box-shadow: 0 0 15px #00f0ff, 0 0 25px rgba(0, 240, 255, 0.8) !important;
+  }
 
-  wrapper = document.createElement('div');
-  wrapper.className = 'custom-select-wrapper';
-  wrapper.style.cssText = 'position: relative; width: 100%; font-family: sans-serif;';
+  /* Platform Switcher Card Container */
+  .platform-card-wrapper {
+    background: #ffffff !important;
+    border: 1px solid rgba(173, 216, 230, 0.8) !important;
+    border-radius: 20px !important;
+    padding: 2px !important;
+    box-shadow: 0 0 15px rgba(173, 216, 230, 0.6) !important;
+    margin-bottom: 20px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
 
-  const defaultBoxStyle = 'background: #f8fafc; color: #1e293b; font-weight: 500; border: 2px solid #ec4899;';
-  const isCategory = selectId === 'categorySelect';
-  const boxFontSize = '14px';
-  const optionFontSize = isCategory ? '14px' : '13px';
+  .platform-switch-container {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 4px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: visible !important;
+    white-space: normal !important;
+    margin: 0 !important;
+  }
 
-  const selectedDisplay = document.createElement('div');
-  selectedDisplay.className = 'custom-selected-box';
-  selectedDisplay.style.cssText = `display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 8px; cursor: pointer; font-size: ${boxFontSize}; transition: all 0.3s ease; ${defaultBoxStyle}`;
+  .platform-switch-container .platform-btn {
+    width: 100% !important;
+    height: 40px !important;
+    background: #ffffff !important;
+    color: #1e293b !important;
+    border: 0.5px solid #f1f5f9 !important;
+    border-radius: 14px !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease-in-out !important;
+    box-sizing: border-box !important;
+    padding: 0 12px !important;
+    margin: 0 !important;
+  }
 
-  const optionsContainer = document.createElement('div');
-  optionsContainer.className = 'custom-options-container';
-  optionsContainer.style.cssText = `
-    display: none; position: absolute; top: 105%; left: 0; right: 0;
-    background: linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6) border-box;
-    border: 1px solid transparent; border-radius: 12px;
-    max-height: 340px; overflow-y: auto; z-index: 999;
-    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.25);
-  `;
+  .platform-switch-container .platform-btn.active {
+    background: var(--platform-active-gradient, linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%)) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 4px 15px var(--platform-active-shadow, rgba(236, 72, 153, 0.3)) !important;
+  }
 
-  const formatTextWithBadge = (text) => {
-    return text.replace(/^(\d+)\s*[-—]?\s*/, '<span class="service-id-badge" style="background: #8b5cf6; color: #ffffff; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 12px; display: inline-block; margin-right: 6px;">$1</span>');
-  };
+  .platform-switch-container .platform-btn:not(.active) i.fa-instagram { color: #e1306c !important; }
+  .platform-switch-container .platform-btn:not(.active) i.fa-facebook { color: #1877f2 !important; }
+  .platform-switch-container .platform-btn:not(.active) i.fa-youtube { color: #ff0000 !important; }
+  .platform-switch-container .platform-btn:not(.active) i.fa-tiktok { color: #000000 !important; }
 
-  let selectedItemElement = null;
+  .platform-switch-container .platform-btn.active i {
+    color: #ffffff !important;
+  }
 
-  Array.from(selectElem.options).forEach((opt, index) => {
-    const item = document.createElement('div');
-    item.className = 'custom-option-item';
+  /* Hamburger Button */
+  .hamburger-btn {
+    position: absolute;
+    top: -4px;
+    left: -8px;
+    z-index: 100;
+    background: rgba(30, 41, 59, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: inherit;
+    font-size: 18px;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+  }
 
-    const logoUrl = getLogoForOption(opt);
-    const isSelected = index === selectElem.selectedIndex;
-    const formattedText = formatTextWithBadge(opt.textContent);
+  /* Panel Heading */
+  .panel-heading {
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 22px !important;
+    font-weight: 600 !important;
+    font-style: italic !important;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    background: var(--platform-primary-gradient, linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin: -6px 0 10px 0;
+    filter: drop-shadow(0px 2px 8px var(--platform-glow-color, rgba(168, 85, 247, 0.4)));
+  }
 
-    const defaultItemStyle = `display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: ${optionFontSize}; color: #1e293b; background: #ffffff; transition: background 0.2s;`;
-    const activeItemStyle = `display: flex; align-items: center; gap: 10px; padding: 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: ${optionFontSize}; color: #ffffff; background: #8b5cf6;`;
+  /* Install App Container */
+  #installContainer {
+    text-align: center;
+    margin: 40px 0 26px 0;
+    transition: all 0.3s ease-in-out;
+  }
+  .install-btn {
+    box-shadow: 0 0 20px rgba(0, 150, 255, 0.8), 0 0 40px rgba(138, 43, 226, 0.6);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+  }
+  .install-btn:hover {
+    box-shadow: 0 0 30px rgba(0, 150, 255, 1), 0 0 50px rgba(138, 43, 226, 0.9);
+    transform: translateY(-2px);
+  }
 
-    item.style.cssText = isSelected ? activeItemStyle : defaultItemStyle;
-    item.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${formattedText}</span>`;
+  /* UPI Buttons Grid */
+  .upi-app-btn-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 2px;
+    margin-top: 14px;
+    width: 100%;
+  }
+  .upi-app-card-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(226, 232, 240, 0.6);
+    border-radius: 12px;
+    padding: 8px 4px;
+    text-decoration: none;
+    color: #1e293b;
+    font-weight: 700;
+    font-size: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    pointer-events: none;
+    cursor: default;
+  }
 
-    if (isSelected) {
-      selectedItemElement = item;
-      selectedDisplay.innerHTML = `<img src="${logoUrl}" style="width:20px; height:20px; object-fit:contain; flex-shrink:0;"> <span>${formattedText}</span>`;
+  /* Sidebar Drawer Overlay */
+  .sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Sidebar Drawer */
+  .left-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100%;
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    border-right: 1px solid var(--sidebar-border);
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .left-sidebar.active {
+    transform: translateX(0);
+  }
+
+  .sidebar-header {
+    padding: 20px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--sidebar-border);
+  }
+  .sidebar-title {
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    font-style: italic !important;
+    background: var(--platform-primary-gradient, linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .sidebar-close-btn {
+    background: transparent;
+    border: none;
+    color: var(--sidebar-close);
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  .sidebar-menu {
+    list-style: none;
+    padding: 15px 10px;
+    margin: 0;
+    flex: 1;
+  }
+  .sidebar-menu li {
+    margin-bottom: 6px;
+  }
+  .sidebar-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .sidebar-menu a:hover {
+    background: var(--sidebar-hover);
+    color: var(--sidebar-hover-text);
+  }
+
+  .sidebar-footer-media {
+    padding: 15px;
+    border-top: 1px solid var(--sidebar-border);
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .watch-tutorials-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #dc2626;
+    color: #ffffff !important;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+    transition: background 0.2s ease, transform 0.2s ease;
+    text-align: center;
+  }
+  .watch-tutorials-btn:hover {
+    background: #b91c1c;
+    transform: translateY(-1px);
+  }
+
+  .tutorial-banner-link {
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .tutorial-banner-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+  }
+  .tutorial-banner-link:hover .tutorial-banner-img {
+    transform: scale(1.02);
+  }
+  
+  .hidden {
+    display: none !important;
+  }
+
+  /* Glowing Effect for Confirm Your Order Button */
+  @keyframes glowingBtn {
+    0% {
+      box-shadow: 0 0 5px rgba(34, 197, 94, 0.5), 0 0 10px rgba(34, 197, 94, 0.4), 0 0 15px rgba(34, 197, 94, 0.3);
     }
-
-    item.onclick = () => {
-      selectElem.selectedIndex = index;
-      setupSelectIcons(selectId);
-      optionsContainer.style.display = 'none';
-
-      const event = new Event('change');
-      selectElem.dispatchEvent(event);
-    };
-
-    item.onmouseenter = () => {
-      if (index !== selectElem.selectedIndex) {
-        item.style.background = '#f1f5f9';
-      }
-    };
-    item.onmouseleave = () => {
-      if (index !== selectElem.selectedIndex) {
-        item.style.background = '#ffffff';
-      }
-    };
-
-    optionsContainer.appendChild(item);
-  });
-
-  selectedDisplay.onclick = (e) => {
-    e.stopPropagation();
-    const isVisible = optionsContainer.style.display === 'block';
-    document.querySelectorAll('.custom-options-container, #liveSearchDropdown').forEach(c => c.style.display = 'none');
-
-    if (!isVisible) {
-      optionsContainer.style.display = 'block';
-      if (selectedItemElement) {
-        optionsContainer.scrollTop = selectedItemElement.offsetTop - (optionsContainer.clientHeight / 2) + (selectedItemElement.clientHeight / 2);
-      }
-    } else {
-      optionsContainer.style.display = 'none';
+    50% {
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.9), 0 0 30px rgba(34, 197, 94, 0.7), 0 0 40px rgba(34, 197, 94, 0.5);
     }
-  };
-
-  selectElem.style.display = 'none';
-  wrapper.appendChild(selectedDisplay);
-  wrapper.appendChild(optionsContainer);
-  selectElem.parentElement.appendChild(wrapper);
-}
-
-document.addEventListener('click', () => {
-  document.querySelectorAll('.custom-options-container, #liveSearchDropdown').forEach(c => c.style.display = 'none');
-});
-
-// Platform Selection Logic
-function selectPlatform(platform) {
-  currentPlatform = platform;
-
-  document.querySelectorAll('.platform-btn').forEach(btn => btn.classList.remove('active'));
-  const activeBtn = document.getElementById(`btn-${platform}`);
-  if (activeBtn) activeBtn.classList.add('active');
-
-  const data = platformData[platform];
-  if (data) {
-    const heroTitle = document.getElementById('heroPlatformTitle');
-    const heroIcon = document.getElementById('heroPlatformIcon');
-    const checkoutIcon = document.getElementById('checkoutPlatformIcon');
-    const linkLabel = document.getElementById('linkLabel');
-
-    if (heroTitle) heroTitle.innerText = data.title;
-    if (heroIcon) heroIcon.innerHTML = `<i class="${data.icon}"></i>`;
-    if (checkoutIcon) checkoutIcon.innerHTML = `<i class="${data.icon}"></i>`;
-    if (linkLabel) linkLabel.innerText = data.linkPlaceholder;
-  }
-
-  const categorySelect = document.getElementById('categorySelect');
-  if (categorySelect) {
-    categorySelect.innerHTML = "";
-
-    if (platform === 'all') {
-      const platformKeys = ['instagram', 'facebook', 'youtube', 'tiktok', 'telegram'];
-      platformKeys.forEach(plat => {
-        if (platformData[plat] && platformData[plat].categories) {
-          for (let catKey in platformData[plat].categories) {
-            const option = document.createElement("option");
-            option.value = `${plat}_${catKey}`;
-            option.textContent = platformData[plat].categories[catKey].name;
-            option.setAttribute("data-platform", plat);
-            categorySelect.appendChild(option);
-          }
-        }
-      });
-    } else if (data && data.categories) {
-      for (let key in data.categories) {
-        const option = document.createElement("option");
-        option.value = key;
-        option.textContent = data.categories[key].name;
-        option.setAttribute("data-platform", platform);
-        categorySelect.appendChild(option);
-      }
-    }
-    setupSelectIcons('categorySelect');
-  }
-
-  const searchInput = document.getElementById('categorySearchInput');
-  if (searchInput) searchInput.value = "";
-
-  updateServices();
-}
-
-// Service Options & Average Time Update Logic
-function updateServices() {
-  const categorySelect = document.getElementById("categorySelect");
-  if (!categorySelect) return;
-
-  const categoryValue = categorySelect.value;
-  const serviceSelect = document.getElementById("serviceSelect");
-  if (!serviceSelect) return;
-
-  serviceSelect.innerHTML = "";
-
-  let targetPlatform = currentPlatform;
-  let catKey = categoryValue;
-
-  if (currentPlatform === 'all' && categoryValue.includes('_')) {
-    const parts = categoryValue.split('_');
-    targetPlatform = parts[0];
-    catKey = parts.slice(1).join('_');
-  }
-
-  const platObj = platformData[targetPlatform];
-  if (!catKey || !platObj || !platObj.categories || !platObj.categories[catKey]) {
-    const timeBox = document.querySelector('.time-box');
-    if (timeBox) timeBox.innerHTML = `⚡ Average Time: <strong>N/A</strong>`;
-    setupSelectIcons('serviceSelect');
-    calculatePrice();
-    return;
-  }
-
-  const services = platObj.categories[catKey].services;
-
-  services.forEach(service => {
-    const option = document.createElement("option");
-    option.value = service.id;
-    option.setAttribute("data-rate", service.rate);
-    option.setAttribute("data-avgtime", service.avgTime);
-    option.setAttribute("data-platform", targetPlatform);
-    option.textContent = `${service.id} - ${service.name} - ₹${service.rate}`;
-    serviceSelect.appendChild(option);
-  });
-
-  setupSelectIcons('serviceSelect');
-  updateAverageTime();
-  calculatePrice();
-}
-
-// Dynamic Average Time Display
-function updateAverageTime() {
-  const serviceSelect = document.getElementById("serviceSelect");
-  if (!serviceSelect) return;
-
-  const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
-  const timeBox = document.querySelector('.time-box');
-
-  if (selectedOption && timeBox) {
-    const avgTime = selectedOption.getAttribute("data-avgtime");
-    timeBox.innerHTML = `⚡ Average Time: <strong>${avgTime}</strong>`;
-  } else if (timeBox) {
-    timeBox.innerHTML = `⚡ Average Time: <strong>N/A</strong>`;
-  }
-}
-
-// Calculate Price Logic
-function calculatePrice() {
-  const serviceSelect = document.getElementById("serviceSelect");
-  if (!serviceSelect) return;
-
-  const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
-  const totalPriceText = document.getElementById("totalPriceText");
-
-  if (!selectedOption) {
-    if (totalPriceText) totalPriceText.innerText = "0.00";
-    calculatedPrice = "0.00";
-    return;
-  }
-
-  const ratePer1000 = parseFloat(selectedOption.getAttribute("data-rate"));
-  const quantityInput = document.getElementById("mainQuantityInput") ? document.getElementById("mainQuantityInput").value : 0;
-  const quantity = parseInt(quantityInput) || 0;
-
-  calculatedPrice = ((ratePer1000 / 1000) * quantity).toFixed(2);
-  if (totalPriceText) totalPriceText.innerText = calculatedPrice;
-
-  updateAverageTime();
-}
-
-// Checkout Navigation & QR Generator Helper
-let qrcodeInstance = null;
-
-function generateUpiQrCode() {
-  const upiId = "rajsmmpanel@jio";
-  const upiString = `upi://pay?pa=${upiId}&am=${calculatedPrice}&cu=INR`;
-
-  const qrContainer = document.getElementById("qrcode");
-  if (qrContainer) {
-    qrContainer.innerHTML = "";
-
-    if (typeof QRCode !== 'undefined') {
-      qrcodeInstance = new QRCode(qrContainer, {
-        text: upiString,
-        width: 130,
-        height: 120,
-        colorDark: "#000000",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H
-      });
-    }
-  }
-}
-
-function openCheckout() {
-  const mainLink = document.getElementById("mainLinkInput");
-  const mainQty = document.getElementById("mainQuantityInput");
-
-  const link = mainLink ? mainLink.value.trim() : "";
-  const quantityInput = mainQty ? mainQty.value.trim() : "";
-  const quantity = parseInt(quantityInput);
-
-  if (!link) {
-    alert("Please enter link!");
-    return;
-  }
-
-  if (!quantityInput || isNaN(quantity) || quantity < 100) {
-    alert("Minimum order quantity is 100!");
-    return;
-  }
-
-  const serviceSelect = document.getElementById("serviceSelect");
-  const selectedText = serviceSelect.options[serviceSelect.selectedIndex].textContent;
-
-  const checkoutTitle = document.getElementById("checkoutServiceTitle");
-  const checkoutPrice = document.getElementById("checkoutPriceText");
-
-  if (checkoutTitle) checkoutTitle.innerText = selectedText.split(' - ₹')[0];
-  if (checkoutPrice) checkoutPrice.innerText = calculatedPrice;
-
-  // Generate QR code when checkout opens
-  generateUpiQrCode();
-
-  // Reset payment method view to UPI by default when opening checkout
-  switchCheckoutPayment('upi');
-
-  const checkoutPage = document.getElementById("checkoutPage");
-  if (checkoutPage) {
-    checkoutPage.classList.remove("hidden");
-    history.pushState({ checkoutOpen: true }, "", "#checkout");
-  }
-}
-
-function closeCheckout() {
-  const checkoutPage = document.getElementById("checkoutPage");
-  if (checkoutPage && !checkoutPage.classList.contains("hidden")) {
-    checkoutPage.classList.add("hidden");
-    if (history.state && history.state.checkoutOpen) {
-      history.back();
+    100% {
+      box-shadow: 0 0 5px rgba(34, 197, 94, 0.5), 0 0 10px rgba(34, 197, 94, 0.4), 0 0 15px rgba(34, 197, 94, 0.3);
     }
   }
-}
 
-// Left Sidebar Handlers
-function openSidebar() {
-  const sidebar = document.getElementById("leftSidebar");
-  const overlay = document.getElementById("sidebarOverlay");
-  if (sidebar) sidebar.classList.add("active");
-  if (overlay) overlay.classList.add("active");
-
-  history.pushState({ sidebarOpen: true }, "", "#sidebar");
-}
-
-function closeSidebar() {
-  const sidebar = document.getElementById("leftSidebar");
-  const overlay = document.getElementById("sidebarOverlay");
-
-  if (sidebar && sidebar.classList.contains("active")) {
-    sidebar.classList.remove("active");
-    if (overlay) overlay.classList.remove("active");
-
-    if (history.state && history.state.sidebarOpen) {
-      history.back();
-    }
-  }
-}
-
-window.addEventListener('popstate', function (event) {
-  const sidebar = document.getElementById("leftSidebar");
-  const overlay = document.getElementById("sidebarOverlay");
-  const checkoutPage = document.getElementById("checkoutPage");
-  const modernPopup = document.getElementById("modernCustomPopup");
-
-  if (modernPopup) {
-    modernPopup.remove();
-    return;
+  .whatsapp-submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: glowingBtn 2s infinite ease-in-out;
+    transition: transform 0.2s ease, background 0.3s ease;
   }
 
-  if (sidebar && sidebar.classList.contains("active")) {
-    sidebar.classList.remove("active");
-    if (overlay) overlay.classList.remove("active");
-    return;
+  .whatsapp-submit-btn:hover {
+    transform: translateY(-2px);
   }
 
-  if (checkoutPage && !checkoutPage.classList.contains("hidden")) {
-    checkoutPage.classList.add("hidden");
-    return;
+  /* Processing State CSS */
+  .whatsapp-submit-btn.processing-state {
+    background: #ec4899 !important;
+    cursor: not-allowed !important;
+    animation: none !important;
+    opacity: 0.9 !important;
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4) !important;
+    transform: none !important;
   }
-});
 
-function switchCheckoutPayment(method) {
-  const upiView = document.getElementById('checkoutUpiView');
-  const binanceView = document.getElementById('checkoutBinanceView');
-  const btnUpi = document.getElementById('btnTabUpi');
-  const btnBinance = document.getElementById('btnTabBinance');
-  const txnLabel = document.getElementById('txnLabel');
-  const txnInput = document.getElementById('checkoutTxnId');
+  /* Centered QR & Soft Gradient Button Styling */
+  .qr-card-container {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-bottom: 12px;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
 
-  if (method === 'binance') {
-    if (upiView) upiView.classList.add('hidden');
+  .qr-wrapper {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    width: auto;
+    margin-bottom: 16px;
+  }
+
+  .download-qr-btn {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(99, 102, 241, 0.25) 100%);
+    color: #c084fc;
+    border: 1px solid rgba(168, 85, 247, 0.4);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(168, 85, 247, 0.15);
+    transition: all 0.2s ease;
+    backdrop-filter: blur(4px);
+  }
+
+  .download-qr-btn:hover {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.35) 0%, rgba(99, 102, 241, 0.35) 100%);
+    color: #e9d5ff;
+    transform: translateY(-1px);
+  }
+
+  /* Custom Glow Popup Modal Styles */
+  .custom-modal-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.75) !important;
+    backdrop-filter: blur(6px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 2147483647 !important;
+  }
+
+  .custom-modal-box {
+    background: #ffffff !important;
+    width: 90% !important;
+    max-width: 420px !important;
+    max-height: 90vh !important;
+    border-radius: 24px !important;
+    padding: 25px 20px !important;
+    text-align: center !important;
+    box-shadow: 0 0 30px rgba(239, 68, 68, 0.6), 0 0 60px rgba(0, 0, 0, 0.4) !important;
+    position: relative !important;
+    z-index: 2147483647 !important;
+    overflow-y: auto !important;
+  }
+
+  .custom-modal-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 12px auto;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+  }
+
+  .custom-modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 8px;
+  }
+
+  .custom-modal-message {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.5;
+    margin-bottom: 15px;
+  }
+
+  /* UTR Example Image Styling inside Popup */
+  .custom-modal-img-container {
+    margin-bottom: 15px;
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 6px;
+    background: #f8fafc;
+  }
+
+  .custom-modal-img-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+  }
+
+  .custom-modal-btn {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+    transition: transform 0.2s ease;
+    width: 100%;
+  }
+
+  .custom-modal-btn:hover {
+    transform: translateY(-2px);
+  }
+</style>
+</head>
+<body data-platform="instagram">
+
+<!-- Left Sidebar Navigation -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar(true)"></div>
+<div class="left-sidebar" id="leftSidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-title">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
+    <button class="sidebar-close-btn" onclick="closeSidebar(true)" aria-label="Close Sidebar"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  
+  <ul class="sidebar-menu">
+    <li id="authMenuItem"></li>
+    <li><a href="https://rajsmmpanel.in/">🛒 New Order</a></li>
+    <li><a href="https://rajsmmpanel.in/platform/2/">⚡ Platform 2</a></li>
+    <li><a href="/orders/">📦 My Orders</a></li>
+    <li id="addFundsMenuItem" style="display: none;"></li>
+    <li><a href="/pages/privacy-policy.html">🔒 Privacy Policy</a></li>
+    <li><a href="/pages/refund-policy.html">💸 Refund Policy</a></li>
+    <li><a href="/pages/terms.html">📜 Terms &amp; Conditions</a></li>
+    <li><a href="/pages/contact.html">📞 Contact Us</a></li>
+    <li><a href="/pages/about.html">ℹ️ About Us</a></li>
+    <li><a href="/buy-smm-panel">🛒 Buy SMM Panel</a></li>
+  </ul>
+
+  <div class="sidebar-footer-media">
+    <a href="https://youtu.be/LxW3nfwomNE?si=JLWAqf5EAYTWoxrW" target="_blank" rel="noopener noreferrer" class="watch-tutorials-btn">
+      <i class="fa-brands fa-youtube"></i> Watch Tutorials
+    </a>
+    <a href="https://youtu.be/LxW3nfwomNE?si=JLWAqf5EAYTWoxrW" target="_blank" rel="noopener noreferrer" class="tutorial-banner-link">
+      <img src="thumbnail.png" alt="Watch Tutorial" class="tutorial-banner-img" />
+    </a>
+  </div>
+</div>
+
+<div class="main-wrapper" id="mainHomeView" style="position: relative;">
+  
+  <!-- Hamburger Button -->
+  <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open Navigation Menu">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <!-- Header -->
+  <div class="panel-heading">𝐑𝐀𝐉-𝐒𝐌𝐌-𝐏𝐀𝐍𝐄𝐋</div>
+
+  <!-- Support Buttons Header -->
+  <div class="hero-actions">
+    <a class="glass-btn btn-telegram" href="https://t.me/raj_smm_panel" target="_blank" rel="noopener noreferrer">
+      <i class="fa-brands fa-telegram"></i> Telegram Support
+    </a>
+    <a class="glass-btn btn-whatsapp" href="javascript:void(0);" onclick="openWhatsAppSupport()">
+      <i class="fa-brands fa-whatsapp"></i> WhatsApp Support
+    </a>
+  </div>
+
+  <!-- Platform Switcher -->
+  <div class="platform-card-wrapper">
+    <div class="platform-switch-container">
+      <button class="platform-btn active" id="btnInsta" onclick="handlePlatformClick('instagram', this)">
+        <i class="fa-brands fa-instagram"></i> Instagram
+      </button>
+      <button class="platform-btn" id="btnFb" onclick="handlePlatformClick('facebook', this)">
+        <i class="fa-brands fa-facebook"></i> Facebook
+      </button>
+      <button class="platform-btn" id="btnYt" onclick="handlePlatformClick('youtube', this)">
+        <i class="fa-brands fa-youtube"></i> YouTube
+      </button>
+      <button class="platform-btn" id="btnTt" onclick="handlePlatformClick('tiktok', this)">
+        <i class="fa-brands fa-tiktok"></i> TikTok
+      </button>
+    </div>
+  </div>
+
+  <!-- Hero Status Banner -->
+  <div class="hero-banner">
+    <div class="hero-top-row">
+      <div class="hero-logo-box" id="heroLogoIcon">
+        <i class="fa-brands fa-instagram"></i>
+      </div>
+      <span class="provider-badge">#1 Service Provider</span>
+    </div>
+    <h2 id="heroTitle">Instagram Boost</h2>
+    <p class="hero-sub">⚡Real Engagement• Fast &amp; Safe Delivery</p>
+    <div class="hero-stats-grid">
+      <div class="stat-card">
+        <span class="stat-icon"><i class="fa-solid fa-rocket"></i></span>
+        <span class="stat-num" id="totalOrders">10M</span>
+        <span class="stat-lbl">Orders Delivered</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon"><i class="fa-solid fa-headset"></i></span>
+        <span class="stat-num">24/7</span>
+        <span class="stat-lbl">Support</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon"><i class="fa-solid fa-shield-halved"></i></span>
+        <span class="stat-num">100%</span>
+        <span class="stat-lbl">Safe &amp; Refundable</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scrollable Category Tabs -->
+  <div class="category-tabs-wrapper">
+    <div class="category-tabs" id="categoryTabs"></div>
+  </div>
+
+  <!-- Package List Section -->
+  <div class="package-list-container" id="packageList"></div>
+
+  <div class="footer-note">
+    ⚡ Fast Processing • 100% Refund Guarantee If Failed
+  </div>
+
+  <!-- Install App Button -->
+  <div id="installContainer" style="display:none;">
+    <button class="install-btn" id="installBtn"><i class="fa-solid fa-download"></i> Install App</button>
+  </div>
+</div>
+
+<!-- CHECKOUT PAGE OVERLAY -->
+<div id="checkoutPage" class="checkout-page-overlay hidden">
+  <div class="checkout-content">
     
-    // Binance View-তে GitHub-এর নির্দিষ্ট QR Image লোড করার লজিক
-    if (binanceView) {
-      binanceView.classList.remove('hidden');
-      
-      // যদি আগে থেকে Binance QR কন্টেইনারে ইমেজ না থাকে, তবে তৈরি করে দিন
-      if (!document.getElementById('binanceCustomQrImg')) {
-        binanceView.innerHTML = `
-          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px;">
-            <img id="binanceCustomQrImg" src="https://raw.githubusercontent.com/Raj-panel/Raj-Social-Panel/main/platform/binance-qr.png" alt="Binance QR Code" style="width: 140px; height: 140px; object-fit: contain; border-radius: 8px; border: 2px solid #f59e0b; background: #fff; padding: 5px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-            <p style="margin: 10px 0 0; font-size: 13px; color: #64748b; font-weight: 500;">Scan with Binance App to Pay</p>
+    <div class="checkout-nav">
+      <button class="back-btn" onclick="handleCloseCheckout()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+      <div class="checkout-heading-text">Checkout</div>
+    </div>
+
+    <div class="premium-service-card">
+      <div class="card-top-row">
+        <div class="platform-badge-icon" id="checkoutPlatformIcon">
+          <i class="fa-brands fa-instagram"></i>
+        </div>
+        <div class="card-info">
+          <h4 id="checkoutServiceTitle">Instagram Followers</h4>
+          <div class="badge-row">
+            <span class="pkg-name-badge" id="checkoutPkgBadgeName">5K Followers</span>
+            <span class="popular-badge" id="checkoutBadge">Best Value</span>
           </div>
-        `;
-      }
+        </div>
+      </div>
+      <div class="units-text" id="checkoutUnitsText">5,000 units</div>
+      <div class="price-text">
+        ₹<span id="checkoutPriceText">199.00</span> <small>one-time</small>
+      </div>
+    </div>
+
+    <div class="checkout-input-group">
+      <label id="checkoutLinkLabel">Enter your Instagram link</label>
+      <input type="text" id="checkoutLinkInput" placeholder="https://instagram.com/your_username" />
+    </div>
+
+    <div class="checkout-order-summary">
+      <div class="summary-title">Order Summary</div>
+      <div class="summary-row">
+        <span>Package</span>
+        <span id="summaryPackageText">5K Followers</span>
+      </div>
+      <div class="summary-divider"></div>
+      <div class="summary-row pay-row">
+        <span>You Pay</span>
+        <span class="pay-amount">₹<span id="summaryPayAmount">199.00</span></span>
+      </div>
+    </div>
+
+    <div class="pay-toggle-tabs">
+      <button class="pay-tab active" id="btnTabUpi" onclick="switchCheckoutPayment('upi')">
+        <i class="fa-solid fa-qrcode"></i> UPI QR Pay
+      </button>
+      <button class="pay-tab" id="btnTabBinance" onclick="switchCheckoutPayment('binance')">
+        <i class="fa-solid fa-wallet"></i> Binance Pay
+      </button>
+    </div>
+
+    <!-- CHECKOUT UPI VIEW -->
+    <div id="checkoutUpiView" class="payment-view-box">
+      <!-- QR Container Box -->
+      <div class="qr-card-container">
+        <div class="qr-wrapper">
+          <img id="checkoutQrImg" src="" alt="UPI QR Code" crossorigin="anonymous" style="display: block; border-radius: 10px; width: 170px; height: 170px; background: #ffffff; padding: 4px;" />
+        </div>
+        
+        <!-- Download QR Code Button -->
+        <button type="button" class="download-qr-btn" id="downloadQrBtn" onclick="downloadQRCode()">
+          <i class="fa-solid fa-download"></i> Download QR Code
+        </button>
+      </div>
+
+      <div class="upi-app-btn-grid">
+        <div class="upi-app-card-btn">
+          <span style="color: #00baf2; font-weight: 900;">Paytm</span>
+        </div>
+        <div class="upi-app-card-btn">
+          <span style="color: #4285f4; font-weight: 800;">G</span><span style="color: #ea4335; font-weight: 800;">P</span><span style="color: #fbbc05; font-weight: 800;">a</span><span style="color: #34a853; font-weight: 800;">Y</span>
+        </div>
+        <div class="upi-app-card-btn">
+          <i class="fa-solid fa-asterisk" style="color: #5f259f;"></i>
+          <span style="color: #5f259f; font-weight: 800;">PhonePe</span>
+        </div>
+        <div class="upi-app-card-btn">
+          <i class="fa-solid fa-qrcode" style="color: #6366f1;"></i>
+          <span style="color: #1e293b; font-weight: 700;">Other UPI</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="checkoutBinanceView" class="payment-view-box hidden">
+      <div class="scan-title">SCAN TO PAY VIA BINANCE</div>
+      <div class="qr-wrapper">
+        <img src="binance-qr.png" alt="Binance QR Code" />
+      </div>
+      <div class="binance-nick-box">
+        Binance Nickname: <strong style="color: #facc15;">Alex-Sahil786</strong>
+      </div>
+      <div class="usdt-badge-box">
+        <span id="checkoutUsdtAmount">$0.00 USDT</span>
+      </div>
+    </div>
+
+    <div class="checkout-input-group margin-top-15">
+      <label id="txnLabel" for="checkoutTxnId">Enter 12-Digit UPI UTR / Ref No:</label>
+      <input type="text" id="checkoutTxnId" placeholder="e.g. 4029XXXXXXXXXX (12-Digit UTR)" />
+    </div>
+
+    <button class="whatsapp-submit-btn" id="confirmOrderBtn" onclick="handleConfirmOrderClick(event)">
+      Confirm your order
+    </button>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script type="module" src="firebase-config.js"></script>
+<script type="module" src="auth-handler.js"></script>
+
+<script>
+  let isSubmittingOrder = false;
+
+  function resetOrderButton() {
+    isSubmittingOrder = false;
+    const btn = document.getElementById('confirmOrderBtn') || document.querySelector('.whatsapp-submit-btn');
+    if (btn) {
+      btn.innerText = "Confirm your order";
+      btn.classList.remove("processing-state");
+      btn.disabled = false;
+    }
+  }
+
+  // POPUP DISPLAY FUNCTION WITH UTR EXAMPLE IMAGE (`utr-example.png`)
+  function showCustomErrorPopup(messageText, showImage = false) {
+    const existingModal = document.getElementById('customErrorModal');
+    if (existingModal) existingModal.remove();
+
+    let imageHTML = '';
+    if (showImage) {
+      imageHTML = `
+        <div class="custom-modal-img-container">
+          <img src="utr-example.png" alt="UTR Example Guide" />
+        </div>
+      `;
     }
 
-    if (btnUpi) btnUpi.classList.remove('active');
-    if (btnBinance) btnBinance.classList.add('active');
-
-    if (txnLabel) txnLabel.innerText = "Enter Binance TxID / Order ID:";
-    if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
-  } else {
-    if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) upiView.classList.remove('hidden'); 
-    if (btnBinance) btnBinance.classList.remove('active');
-    if (btnUpi) btnUpi.classList.add('active');
-
-    if (txnLabel) txnLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
-    if (txnInput) txnInput.placeholder = "e.g. 4029XXXXXXXXXX (12-Digit UTR)";
-
-    // Re-trigger QR code generation on returning to UPI view
-    generateUpiQrCode();
-  }
-}
-
-// --- Firecracker/Confetti Animation on Success Popup ---
-function triggerOrderConfetti() {
-  if (typeof confetti === 'undefined') {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
-    script.onload = () => runConfettiEffect();
-    document.head.appendChild(script);
-  } else {
-    runConfettiEffect();
-  }
-}
-
-function runConfettiEffect() {
-  var duration = 2.5 * 1000;
-  var animationEnd = Date.now() + duration;
-  var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100000 };
-
-  function randomInRange(min, max) {
-    return Math.random() * (max - min) + min;
-  }
-
-  var interval = setInterval(function() {
-    var timeLeft = animationEnd - Date.now();
-
-    if (timeLeft <= 0) {
-      return clearInterval(interval);
-    }
-
-    var particleCount = 50 * (timeLeft / duration);
-    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-  }, 250);
-}
-
-// Custom Glow Popup
-function showModernPopup(title, message, type = 'success') {
-  const existingPopup = document.getElementById('modernCustomPopup');
-  if (existingPopup) existingPopup.remove();
-
-  const popupOverlay = document.createElement('div');
-  popupOverlay.id = 'modernCustomPopup';
-  popupOverlay.style.cssText = `
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 99999; animation: fadeInPopup 0.3s ease;
-  `;
-
-  const isSuccess = type === 'success';
-  const glowColor = isSuccess ? 'rgba(16, 185, 129, 0.5)' : 'rgba(239, 68, 68, 0.5)';
-  const iconSymbol = isSuccess ? '✅' : '❌';
-
-  const utrExampleImageUrl = 'https://raw.githubusercontent.com/Raj-panel/Raj-Social-Panel/main/platform/utr-example.png';
-
-  let imagePreviewHtml = '';
-  if (!isSuccess && message.includes('UTR')) {
-    imagePreviewHtml = `
-      <div style="margin: 15px 0; border: 2px dashed #cbd5e1; border-radius: 12px; padding: 8px; background: #f8fafc;">
-        <img src="${utrExampleImageUrl}" alt="UTR Example" style="width: 100%; max-height: 180px; object-fit: contain; border-radius: 8px; display: block;">
+    const modalHTML = `
+      <div id="customErrorModal" class="custom-modal-overlay">
+        <div class="custom-modal-box">
+          <div class="custom-modal-icon">
+            <i class="fa-solid fa-xmark"></i>
+          </div>
+          <div class="custom-modal-title">Error!</div>
+          <div class="custom-modal-message">${messageText}</div>
+          ${imageHTML}
+          <button class="custom-modal-btn" onclick="closeCustomErrorPopup()">Okay</button>
+        </div>
       </div>
     `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    // Error Popup ওপেন হওয়ার সাথে সাথে ব্রাউজারের হিস্টরিতে স্টেট পুশ করা হচ্ছে
+    history.pushState({ errorPopupOpen: true }, '');
   }
 
-  popupOverlay.innerHTML = `
-    <div style="
-      background: #ffffff; width: 90%; max-width: 400px; padding: 25px 20px;
-      border-radius: 20px; text-align: center; box-shadow: 0 0 30px ${glowColor};
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      transform: scale(0.8); animation: scaleUpPopup 0.3s ease forwards;
-    ">
-      <div style="font-size: 40px; margin-bottom: 10px;">${iconSymbol}</div>
-      <h3 style="margin: 0 0 8px; color: #1e293b; font-size: 20px; font-weight: 700;">${title}</h3>
-      <p style="margin: 0 0 10px; color: #64748b; font-size: 13px; line-height: 1.4;">${message}</p>
-      
-      ${imagePreviewHtml}
-
-      <button id="modernPopupCloseBtn" style="
-        background: ${isSuccess ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #ef4444, #dc2626)'};
-        color: #ffffff; border: none; padding: 10px 25px; font-size: 14px;
-        font-weight: 600; border-radius: 10px; cursor: pointer; box-shadow: 0 4px 15px ${glowColor};
-        transition: transform 0.2s; margin-top: 10px;
-      ">Okay</button>
-    </div>
-  `;
-
-  document.body.appendChild(popupOverlay);
-
-  if (isSuccess) {
-    history.pushState({ popupOpen: true }, "", "#popup");
-    triggerOrderConfetti();
-  }
-
-  if (!document.getElementById('modernPopupKeyframes')) {
-    const styleSheet = document.createElement('style');
-    styleSheet.id = 'modernPopupKeyframes';
-    styleSheet.innerHTML = `
-      @keyframes fadeInPopup { from { opacity: 0; } to { opacity: 1; } }
-      @keyframes scaleUpPopup { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-    `;
-    document.head.appendChild(styleSheet);
-  }
-
-  const closePopupAction = () => {
-    popupOverlay.remove();
-    if (isSuccess && history.state && history.state.popupOpen) {
-      history.back();
-    }
-  };
-
-  document.getElementById('modernPopupCloseBtn').onclick = (e) => {
-    e.stopPropagation();
-    closePopupAction();
-  };
-  
-  popupOverlay.onclick = (e) => {
-    if (e.target === popupOverlay) {
-      closePopupAction();
-    }
-  };
-}
-
-// PLATFORM 2 - BACKEND ORDER SUBMISSION
-async function sendOrderToTelegram() {
-  const mainLink = document.getElementById("mainLinkInput");
-  const checkoutTxn = document.getElementById("checkoutTxnId");
-  const checkoutTitle = document.getElementById("checkoutServiceTitle");
-  const mainQty = document.getElementById("mainQuantityInput");
-  const categorySelect = document.getElementById("categorySelect");
-
-  const submitBtn =
-    document.querySelector("#checkoutPage button[onclick*='sendOrderToTelegram']") ||
-    document.querySelector("#checkoutPage button");
-
-  const link = mainLink ? mainLink.value.trim() : "";
-  const utr = checkoutTxn ? checkoutTxn.value.trim() : "";
-  const service = checkoutTitle ? checkoutTitle.innerText.trim() : "";
-  const quantity = Number(mainQty ? mainQty.value : 0);
-
-  const categoryText =
-    categorySelect &&
-    categorySelect.options[categorySelect.selectedIndex]
-      ? categorySelect.options[categorySelect.selectedIndex].textContent.trim()
-      : "N/A";
-
-  if (!link) {
-    showModernPopup("Error!", "Please enter the target link.", "error");
-    return;
-  }
-
-  const normalUtrRegex = /^[0-9]{12,}$/;
-  const transactionIdRegex = /^T[0-9]+$/;
-
-  if (!utr || (!normalUtrRegex.test(utr) && !transactionIdRegex.test(utr))) {
-    showModernPopup(
-      "Error!",
-      "Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T. See example below:",
-      "error"
-    );
-    return;
-  }
-
-  if (!quantity || quantity <= 0) {
-    showModernPopup("Error!", "Please enter a valid quantity.", "error");
-    return;
-  }
-
-  let userIdentifier = localStorage.getItem("raj_smm_browser_id");
-
-  if (!userIdentifier) {
-    userIdentifier =
-      "BID_" +
-      Math.random().toString(36).substring(2, 15) +
-      Math.random().toString(36).substring(2, 15);
-
-    localStorage.setItem("raj_smm_browser_id", userIdentifier);
-  }
-
-  let serviceId = "PLATFORM2_SERVICE";
-
-  if (typeof selectedServiceId !== "undefined" && selectedServiceId) {
-    serviceId = String(selectedServiceId);
-  } else if (typeof currentServiceId !== "undefined" && currentServiceId) {
-    serviceId = String(currentServiceId);
-  }
-
-  const amount = Number(
-    typeof calculatedPrice !== "undefined"
-      ? calculatedPrice
-      : 0
-  );
-
-  if (submitBtn) {
-    submitBtn.disabled = true;
-    submitBtn.style.opacity = "0.7";
-    submitBtn.style.cursor = "not-allowed";
-    submitBtn.dataset.originalText = submitBtn.innerText;
-    submitBtn.innerText = "Processing...";
-  }
-
-  try {
-    const response = await fetch(
-      "https://raj-social-panel-backend-qfwd.vercel.app/api/orders/create",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          userId: userIdentifier,
-          platform: "platform2",
-          serviceId: serviceId,
-          serviceName: `${service} (${categoryText})`,
-          link: link,
-          quantity: quantity,
-          amount: amount,
-          paymentId: utr,
-          transactionId: utr,
-          paymentMethod: "UPI QR Code"
-        })
+  function closeCustomErrorPopup(fromPopstate = false) {
+    const modal = document.getElementById('customErrorModal');
+    if (modal) {
+      modal.remove();
+      // যদি ব্যবহারকারী ব্যাক বাটন চাপার কারণে পপআপ বন্ধ হয় এবং হিস্ট্রি স্টেট থেকে থাকে, তবে তা হ্যান্ডেল করা
+      if (!fromPopstate && history.state && history.state.errorPopupOpen) {
+        history.back();
       }
-    );
+    }
+  }
 
-    const data = await response.json();
+  // SILENT BACKGROUND DOWNLOAD FUNCTION
+  function downloadQRCode() {
+    const qrImg = document.getElementById('checkoutQrImg');
+    const dlBtn = document.getElementById('downloadQrBtn');
 
-    if (!response.ok || !data.success) {
-      throw new Error(
-        data.message ||
-        data.error ||
-        "Order submission failed."
-      );
+    if (!qrImg || !qrImg.src) {
+      showCustomErrorPopup("QR Code image not available!");
+      return;
     }
 
-    const backendOrder = data.order || {};
+    const originalText = dlBtn.innerHTML;
+    dlBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Downloading...';
+    dlBtn.disabled = true;
 
-    const localOrder = {
-      orderId:
-        backendOrder.internalOrderId ||
-        Math.floor(100000 + Math.random() * 900000),
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = qrImg.src;
 
-      serviceName: service,
-      category: categoryText,
-      link: link,
-      quantity: quantity,
-      amount: amount.toFixed(2),
-      transactionId: utr,
-      status: "Pending",
-      userIdentifier: userIdentifier,
-      orderTimeEpoch: Date.now()
+    img.onload = function () {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth || img.width;
+      canvas.height = img.naturalHeight || img.height;
+      
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+
+      const dataURL = canvas.toDataURL('image/png');
+      
+      const a = document.createElement('a');
+      a.href = dataURL;
+      a.download = 'Raj_SMM_UPI_QR.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      setTimeout(() => {
+        dlBtn.innerHTML = originalText;
+        dlBtn.disabled = false;
+      }, 500);
     };
 
-    const existingOrders = JSON.parse(
-      localStorage.getItem("raj_smm_orders") || "[]"
-    );
-
-    existingOrders.push(localOrder);
-
-    localStorage.setItem(
-      "raj_smm_orders",
-      JSON.stringify(existingOrders)
-    );
-
-    showModernPopup(
-      "Success!",
-      "Order submitted successfully!",
-      "success"
-    );
-
-    if (checkoutTxn) {
-      checkoutTxn.value = "";
-    }
-
-    closeCheckout();
-
-  } catch (error) {
-    console.error(
-      "Platform 2 Backend Order Error:",
-      error
-    );
-
-    showModernPopup(
-      "Connection Failed!",
-      error.message || "Please try again.",
-      "error"
-    );
-
-  } finally {
-    if (submitBtn) {
-      submitBtn.disabled = false;
-      submitBtn.style.opacity = "1";
-      submitBtn.style.cursor = "pointer";
-      submitBtn.innerText =
-        submitBtn.dataset.originalText || "Confirm Order";
-    }
+    img.onerror = function () {
+      fetch(qrImg.src)
+        .then(response => response.blob())
+        .then(blob => {
+          const blobUrl = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = blobUrl;
+          a.download = 'Raj_SMM_UPI_QR.png';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(blobUrl);
+        })
+        .catch(err => {
+          console.error("QR Download Error:", err);
+          showCustomErrorPopup("Unable to download image automatically.");
+        })
+        .finally(() => {
+          dlBtn.innerHTML = originalText;
+          dlBtn.disabled = false;
+        });
+    };
   }
-}
 
-function submitOrderToWhatsApp() {
-  sendOrderToTelegram();
-}
+  function handleConfirmOrderClick(event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
 
-// Live Search Input Logic
-document.addEventListener('DOMContentLoaded', function () {
-  const searchInput = document.getElementById('categorySearchInput');
+    if (isSubmittingOrder) {
+      return false;
+    }
 
-  if (searchInput) {
-    let searchDropdown = document.createElement('div');
-    searchDropdown.id = 'liveSearchDropdown';
-    searchDropdown.style.cssText = `
-      display: none; position: absolute; top: calc(100% + 6px); left: 0; right: 0;
-      background: linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6) border-box;
-      border: 1px solid transparent; border-radius: 12px;
-      max-height: 340px; overflow-y: auto; z-index: 1000;
-      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.25); padding: 8px;
-    `;
-    searchInput.parentElement.style.position = 'relative';
-    searchInput.parentElement.appendChild(searchDropdown);
+    const linkInput = document.getElementById('checkoutLinkInput');
+    const txnInput = document.getElementById('checkoutTxnId');
 
-    searchInput.addEventListener('input', function (e) {
-      const searchTerm = e.target.value.toLowerCase().trim();
-      searchDropdown.innerHTML = "";
+    const linkValue = linkInput ? linkInput.value.trim() : '';
+    const txnValue = txnInput ? txnInput.value.trim() : '';
 
-      if (searchTerm === "") {
-        searchDropdown.style.display = 'none';
-        return;
-      }
+    if (!linkValue) {
+      showCustomErrorPopup("Please enter a valid Link / Username.");
+      resetOrderButton();
+      return false;
+    }
 
-      let matchedServices = [];
+    if (!txnValue) {
+      // খালি রাখলে পপআপের সাথে ছবি সহ দেখাবে
+      showCustomErrorPopup("Please enter Transaction ID / UTR number. See example below:", true);
+      resetOrderButton();
+      return false;
+    }
 
-      for (let platKey in platformData) {
-        if (platKey === 'all') continue;
-        const categories = platformData[platKey].categories;
-        for (let catKey in categories) {
-          categories[catKey].services.forEach(service => {
-            if (service.id.includes(searchTerm) || service.name.toLowerCase().includes(searchTerm)) {
-              matchedServices.push({ ...service, platform: platKey, categoryKey: catKey });
-            }
+    // -------------------------------------------------------------
+    // UTR / Transaction ID Validation Logic
+    // -------------------------------------------------------------
+    const normalUtrRegex = /^[0-9]{12,}$/;
+    const transactionIdRegex = /^T[0-9]+$/;
+
+    const isValidUtr = normalUtrRegex.test(txnValue);
+    const isValidTxnId = transactionIdRegex.test(txnValue);
+
+    if (!isValidUtr && !isValidTxnId) {
+      // ভুলভাল লিখলে পপআপের সাথে ছবি সহ দেখাবে
+      showCustomErrorPopup("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T. See example below:", true);
+      if (txnInput) txnInput.focus();
+      resetOrderButton();
+      return false;
+    }
+
+    isSubmittingOrder = true;
+    const btn = document.getElementById('confirmOrderBtn') || document.querySelector('.whatsapp-submit-btn');
+
+    if (btn) {
+      btn.innerText = "Processing";
+      btn.classList.add("processing-state");
+      btn.disabled = true;
+    }
+
+    try {
+      if (typeof submitOrderToWhatsApp === 'function') {
+        const result = submitOrderToWhatsApp();
+        
+        if (result === false) {
+          resetOrderButton();
+          return false;
+        }
+
+        if (result && typeof result.catch === 'function') {
+          result.catch(function(err) {
+            console.error("Order submit error:", err);
+            resetOrderButton();
           });
         }
-      }
-
-      if (matchedServices.length > 0) {
-        searchDropdown.style.display = 'block';
-
-        matchedServices.forEach(service => {
-          const item = document.createElement('div');
-          const platLogo = platformLogos[service.platform] || platformLogos.instagram;
-          item.style.cssText = `
-            display: flex; align-items: center; gap: 10px; padding: 10px 12px;
-            cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #1e293b;
-            border-radius: 8px; transition: background 0.2s;
-          `;
-
-          item.innerHTML = `
-            <img src="${platLogo}" style="width:18px; height:18px; object-fit:contain;">
-            <span style="background: #8b5cf6; color: #ffffff; padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 12px; flex-shrink: 0;">${service.id}</span>
-            <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${service.name}</span>
-          `;
-
-          item.onmouseenter = () => item.style.background = '#f1f5f9';
-          item.onmouseleave = () => item.style.background = '#ffffff';
-
-          item.onclick = () => {
-            if (currentPlatform !== 'all' && currentPlatform !== service.platform) {
-              selectPlatform(service.platform);
-            }
-
-            const categorySelect = document.getElementById('categorySelect');
-            const targetVal = currentPlatform === 'all' ? `${service.platform}_${service.categoryKey}` : service.categoryKey;
-            categorySelect.value = targetVal;
-            setupSelectIcons('categorySelect');
-
-            updateServices();
-
-            const serviceSelect = document.getElementById('serviceSelect');
-            serviceSelect.value = service.id;
-            setupSelectIcons('serviceSelect');
-            calculatePrice();
-
-            searchDropdown.style.display = 'none';
-            searchInput.value = '';
-          };
-
-          searchDropdown.appendChild(item);
-        });
       } else {
-        searchDropdown.style.display = 'block';
-        searchDropdown.innerHTML = `<div style="padding: 12px; text-align: center; color: #64748b; font-size: 13px;">No matching services found</div>`;
+        console.warn("submitOrderToWhatsApp function not found");
+        resetOrderButton();
+      }
+    } catch (error) {
+      console.error("Error executing submitOrderToWhatsApp:", error);
+      resetOrderButton();
+    }
+  }
+
+  function handleCloseCheckout() {
+    resetOrderButton();
+    if (typeof closeCheckout === 'function') {
+      closeCheckout();
+    } else {
+      const checkoutPage = document.getElementById('checkoutPage');
+      if (checkoutPage) checkoutPage.classList.add('hidden');
+    }
+  }
+
+  const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.attributeName === 'class') {
+        const checkoutPage = document.getElementById('checkoutPage');
+        if (checkoutPage && checkoutPage.classList.contains('hidden')) {
+          resetOrderButton();
+        }
+      }
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const checkoutPage = document.getElementById('checkoutPage');
+    if (checkoutPage) {
+      observer.observe(checkoutPage, { attributes: true });
+    }
+  });
+
+  function applyPlatformTheme(platform) {
+    if (!platform) return;
+    const p = platform.toLowerCase();
+    document.body.setAttribute('data-platform', p);
+  }
+
+  function handlePlatformClick(platform, elem) {
+    document.querySelectorAll('.platform-switch-container .platform-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    elem.classList.add('active');
+    applyPlatformTheme(platform);
+
+    if (typeof switchPlatform === 'function') {
+      switchPlatform(platform);
+    } else if (typeof loadPlatformServices === 'function') {
+      loadPlatformServices(platform);
+    }
+  }
+
+  function switchCheckoutPayment(method) {
+    const upiView = document.getElementById('checkoutUpiView');
+    const binanceView = document.getElementById('checkoutBinanceView');
+    const btnUpi = document.getElementById('btnTabUpi');
+    const btnBinance = document.getElementById('btnTabBinance');
+    const txnLabel = document.getElementById('txnLabel');
+    const txnInput = document.getElementById('checkoutTxnId');
+
+    if (method === 'binance') {
+      upiView.classList.add('hidden');
+      binanceView.classList.remove('hidden');
+      btnUpi.classList.remove('active');
+      btnBinance.classList.add('active');
+      
+      txnLabel.innerText = "Enter Binance TxID / Order ID:";
+      txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
+    } else {
+      binanceView.classList.add('hidden');
+      upiView.classList.remove('hidden');
+      btnBinance.classList.remove('active');
+      btnUpi.classList.add('active');
+      
+      txnLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
+      txnInput.placeholder = "e.g. 4029XXXXXXXXXX (12-Digit UTR)";
+    }
+  }
+
+  function openWhatsAppSupport() {
+    const phoneNumber = "919239628344";
+    const message = encodeURIComponent("Hi 👋 I want to know about your services on rajsmmpanel.in");
+    window.open("https://wa.me/" + phoneNumber + "?text=" + message, "_blank");
+  }
+
+  function openSidebar() {
+    const sidebar = document.getElementById("leftSidebar");
+    const overlay = document.getElementById("sidebarOverlay");
+    
+    if (!sidebar.classList.contains("active")) {
+      sidebar.classList.add("active");
+      overlay.classList.add("active");
+      document.body.style.overflow = "hidden";
+      
+      history.pushState({ sidebarOpen: true }, '');
+    }
+  }
+
+  function closeSidebar(fromUserAction = false) {
+    const sidebar = document.getElementById("leftSidebar");
+    const overlay = document.getElementById("sidebarOverlay");
+    
+    if (sidebar.classList.contains("active")) {
+      sidebar.classList.remove("active");
+      overlay.classList.remove("active");
+      document.body.style.overflow = "auto";
+      
+      if (fromUserAction && history.state && history.state.sidebarOpen) {
+        history.back();
+      }
+    }
+  }
+
+  window.addEventListener("popstate", function (event) {
+    // ১. সাইডবার খোলা থাকলে ব্যাক বাটন চাপলে সাইডবার বন্ধ হবে
+    const sidebar = document.getElementById("leftSidebar");
+    if (sidebar && sidebar.classList.contains("active")) {
+      closeSidebar(false);
+      return;
+    }
+
+    // ২. এরর পপআপ খোলা থাকলে ব্যাক বাটন চাপলে শুধু পপআপ বন্ধ হবে এবং ইউজার চেকআউট পেজেই থাকবে
+    const errorModal = document.getElementById('customErrorModal');
+    if (errorModal) {
+      closeCustomErrorPopup(true);
+      return;
+    }
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    applyPlatformTheme('instagram');
+
+    document.body.addEventListener("focusin", function (e) {
+      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
+        const installBox = document.getElementById("installContainer");
+        if (installBox) installBox.style.display = "none";
       }
     });
 
-    document.addEventListener('click', function (e) {
-      if (!searchInput.contains(e.target) && !searchDropdown.contains(e.target)) {
-        searchDropdown.style.display = 'none';
+    document.body.addEventListener("focusout", function (e) {
+      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
+        const installBox = document.getElementById("installContainer");
+        if (installBox) installBox.style.display = "block";
       }
+    });
+  });
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then((reg) => console.log('Service Worker Registered Successfully:', reg))
+        .catch((err) => console.log('Service Worker Registration Failed:', err));
     });
   }
-});
-
-// Auto Initialize Page to Default 'all'
-window.onload = function() {
-  selectPlatform('all');
-};
+</script>
+<script type="module" src="js/services-loader.js"></script>
+</body>
+</html>

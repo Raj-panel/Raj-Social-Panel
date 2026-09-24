@@ -71,9 +71,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     --sidebar-close: #94a3b8;
   }
 
-  /* -------------------------------------------------------------
-     MULTICOLOR GLOWING BORDER ANIMATION FOR INPUT BOXES
-  ------------------------------------------------------------- */
+  /* MULTICOLOR GLOWING BORDER ANIMATION FOR INPUT BOXES */
   @keyframes multicolorGlow {
     0% {
       border-color: #00f0ff;
@@ -820,7 +818,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
 
 <script>
   let isSubmittingOrder = false;
-  let isErrorPopupOpen = false; // Error Popup tracking flag
 
   function resetOrderButton() {
     isSubmittingOrder = false;
@@ -832,10 +829,15 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // POPUP DISPLAY FUNCTION WITH CLEAN STATE FLAG MANAGEMENT
+  // POPUP DISPLAY FUNCTION WITH UTR EXAMPLE IMAGE AND BACK BUTTON HISTORY HANDLING
   function showCustomErrorPopup(messageText, showImage = false) {
     const existingModal = document.getElementById('customErrorModal');
-    if (existingModal) existingModal.remove();
+    if (existingModal) {
+      existingModal.remove();
+    } else {
+      // Push history state so pressing back button pops modal state instead of closing checkout page
+      history.pushState({ errorModalOpen: true }, '');
+    }
 
     let imageHTML = '';
     if (showImage) {
@@ -855,25 +857,22 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
           <div class="custom-modal-title">Error!</div>
           <div class="custom-modal-message">${messageText}</div>
           ${imageHTML}
-          <button class="custom-modal-btn" onclick="closeCustomErrorPopup()">Okay</button>
+          <button class="custom-modal-btn" onclick="closeCustomErrorPopup(true)">Okay</button>
         </div>
       </div>
     `;
 
     document.body.insertAdjacentHTML('beforeend', modalHTML);
-    isErrorPopupOpen = true;
-
-    // Push history state so phone/browser back button triggers popstate
-    history.pushState({ errorModalActive: true }, '');
   }
 
-  function closeCustomErrorPopup() {
+  function closeCustomErrorPopup(fromUserAction = false) {
     const modal = document.getElementById('customErrorModal');
     if (modal) {
       modal.remove();
-    }
-    if (isErrorPopupOpen) {
-      isErrorPopupOpen = false;
+      // If user clicked 'Okay' button manually, go back in history to clean up pushed state
+      if (fromUserAction && history.state && history.state.errorModalOpen) {
+        history.back();
+      }
     }
   }
 
@@ -965,6 +964,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
 
     if (!txnValue) {
+      // খালি রাখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter Transaction ID / UTR number. See example below:", true);
       resetOrderButton();
       return false;
@@ -980,6 +980,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     const isValidTxnId = transactionIdRegex.test(txnValue);
 
     if (!isValidUtr && !isValidTxnId) {
+      // ভুলভাল লিখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T. See example below:", true);
       if (txnInput) txnInput.focus();
       resetOrderButton();
@@ -1129,22 +1130,17 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // Unified popstate handler for Sidebar and Error Popup without page exit
+  // LISTEN TO BROWSER / DEVICE BACK BUTTON PRESS (POPSTATE)
   window.addEventListener("popstate", function (event) {
-    const sidebar = document.getElementById("leftSidebar");
-    if (sidebar && sidebar.classList.contains("active")) {
-      closeSidebar(false);
+    const errorModal = document.getElementById('customErrorModal');
+    if (errorModal) {
+      closeCustomErrorPopup(false);
       return;
     }
 
-    if (isErrorPopupOpen) {
-      const modal = document.getElementById('customErrorModal');
-      if (modal) modal.remove();
-      isErrorPopupOpen = false;
-      
-      // Prevent browser from navigating back to Home Page by pushing current state back
-      history.pushState(null, '', window.location.href);
-      return;
+    const sidebar = document.getElementById("leftSidebar");
+    if (sidebar && sidebar.classList.contains("active")) {
+      closeSidebar(false);
     }
   });
 
@@ -1152,13 +1148,17 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     applyPlatformTheme('instagram');
 
     document.body.addEventListener("focusin", function (e) {
-      (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) &&
-        ((document.getElementById("installContainer") || {}).style.display = "none");
+      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
+        const installBox = document.getElementById("installContainer");
+        if (installBox) installBox.style.display = "none";
+      }
     });
 
     document.body.addEventListener("focusout", function (e) {
-      (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) &&
-        ((document.getElementById("installContainer") || {}).style.display = "block");
+      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
+        const installBox = document.getElementById("installContainer");
+        if (installBox) installBox.style.display = "block";
+      }
     });
   });
 

@@ -110,13 +110,14 @@
                 -webkit-background-clip: text !important; 
                 -webkit-text-fill-color: transparent !important; 
             }
-            #checkoutUpiView img { 
-                width: 140px !important; 
-                height: 130px !important; 
+            #checkoutUpiView img, #checkoutUpiView canvas { 
+                width: 170px !important; 
+                height: 170px !important; 
                 object-fit: contain !important; 
                 margin: 4px auto !important; 
                 padding: 4px !important; 
                 border-radius: 8px !important; 
+                background: #ffffff !important;
             }
             #checkoutBinanceView img {
                 width: 150px !important;
@@ -722,6 +723,7 @@ let currentPlatform = "instagram";
 let currentCategory = "";
 let selectedPackage = null;
 let currentCheckoutData = {};
+let upiQRCodeInstance = null; // Browser-side local QR Code instance
 
 window.onload = function () {
     switchPlatform("instagram");
@@ -1198,15 +1200,74 @@ function updateCheckoutQuantityDisplay() {
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
     
-    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=${encodeURIComponent(upiUrl)}`;
+    // ==========================================
+    // BROWSER-SIDE LOCAL INSTANT QR GENERATION
+    // ==========================================
+    const upiView = document.getElementById("checkoutUpiView");
+    if (upiView) {
+        // Ensure container for QR exists or convert/replace img tag with a clean div container
+        let qrContainer = document.getElementById("qrcode");
+        if (!qrContainer) {
+            qrContainer = document.createElement("div");
+            qrContainer.id = "qrcode";
+            qrContainer.style.cssText = "width: 170px; height: 170px; margin: 4px auto; display: flex; align-items: center; justify-content: center; background: #fff; border-radius: 8px; padding: 4px;";
+            
+            const oldImg = document.getElementById("checkoutQrImg");
+            if (oldImg && oldImg.parentElement === upiView) {
+                oldImg.replaceWith(qrContainer);
+            } else {
+                upiView.appendChild(qrContainer);
+            }
+        }
 
-    const qrImg = document.getElementById("checkoutQrImg");
-    if (qrImg) {
-        qrImg.src = qrImageSrc;
-        qrImg.style.width = "170px";
-        qrImg.style.height = "170px";
-        qrImg.style.objectFit = "contain";
-        qrImg.style.display = "block";
+        // Clear previous QR instance/content instantly
+        qrContainer.innerHTML = "";
+
+        try {
+            if (typeof QRCode !== "undefined") {
+                upiQRCodeInstance = new QRCode(qrContainer, {
+                    text: upiUrl,
+                    width: 170,
+                    height: 170,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            } else {
+                // Fallback if CDN is slow or offline
+                qrContainer.innerHTML = `<img id="checkoutQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=${encodeURIComponent(upiUrl)}" style="width: 170px; height: 170px; object-fit: contain; display: block;" alt="UPI QR">`;
+            }
+        } catch (err) {
+            console.error("Local QR Generation Error:", err);
+        }
+    }
+}
+
+function downloadQRCode() {
+    try {
+        const upiView = document.getElementById("checkoutUpiView");
+        if (!upiView) return;
+
+        let dataUrl = "";
+        const canvas = upiView.querySelector("canvas");
+        const img = upiView.querySelector("img");
+
+        if (canvas) {
+            dataUrl = canvas.toDataURL("image/png");
+        } else if (img) {
+            dataUrl = img.src;
+        }
+
+        if (dataUrl) {
+            const downloadLink = document.createElement("a");
+            downloadLink.href = dataUrl;
+            downloadLink.download = "RajSocialPanel-UPI-QR.png";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+    } catch (e) {
+        console.error("QR Download Error:", e);
     }
 }
 
@@ -1297,7 +1358,6 @@ function showCheckoutOverlay() {
     d.multiplier = 1;
 
     const upiView = document.getElementById("checkoutUpiView");
-    const qrImg = document.getElementById("checkoutQrImg");
     if (upiView) {
         let scanHeading = document.getElementById("scanToPayHeading");
         if (!scanHeading) {
@@ -1306,11 +1366,7 @@ function showCheckoutOverlay() {
             scanHeading.innerText = "DOWNLOAD QR & PAY VIA UPI";
             scanHeading.style.cssText = "margin: 2px 0 2px 0 !important; font-size: 12px !important; font-weight: 800 !important; text-align: center !important; text-transform: uppercase !important; background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; display: block !important; visibility: visible !important; opacity: 1 !important;";
         }
-        if (qrImg && qrImg.parentElement === upiView) {
-            upiView.insertBefore(scanHeading, qrImg);
-        } else {
-            upiView.prepend(scanHeading);
-        }
+        upiView.prepend(scanHeading);
     }
 
     updateCheckoutQuantityDisplay();
@@ -1505,13 +1561,13 @@ function triggerRajConfettiAnimation(overlayElement) {
 // ==========================================
 // MODERN GLOWING SUCCESS POPUP FUNCTION (5-SEC AUTO-HIDE & MANUAL CLOSE)
 // ==========================================
-let rajPopupTimer = null; // গ্লোবাল টাইমার ভেরিয়েবল যাতে একাধিক পপআপের সময় সমস্যা না হয়
+let rajPopupTimer = null;
 
 function showOrderSuccessPopup(orderData) {
     const existingOverlay = document.getElementById("rajOrderSuccessOverlay");
     if (existingOverlay) {
         existingOverlay.remove();
-        if (rajPopupTimer) clearTimeout(rajPopupTimer); // পুরনো টাইমার ক্লিয়ার করা হলো
+        if (rajPopupTimer) clearTimeout(rajPopupTimer);
     }
 
     const now = new Date();
@@ -1573,14 +1629,12 @@ Thank you! 💚`;
         triggerRajConfettiAnimation(overlay);
     }, 10);
 
-    // লজিক ১: ঠিক ৫ সেকেন্ড (৫০০০ মিলিসেকেন্ড) পর পপআপ অটোমেটিক হাইড হয়ে রিমুভ হবে
     rajPopupTimer = setTimeout(() => {
         closeRajSuccessPopup();
     }, 6000);
 }
 
 function closeRajSuccessPopup() {
-    // লজিক ২: ম্যানুয়াল ক্লোজ বা টাইমার শেষ হলে পপআপ ক্লোজ করার লজিক
     if (rajPopupTimer) {
         clearTimeout(rajPopupTimer);
         rajPopupTimer = null;

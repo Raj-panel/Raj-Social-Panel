@@ -1503,11 +1503,16 @@ function triggerRajConfettiAnimation(overlayElement) {
 }
 
 // ==========================================
-// MODERN GLOWING SUCCESS POPUP FUNCTION (WITH AUTO-HIDE LOGIC)
+// MODERN GLOWING SUCCESS POPUP FUNCTION (5-SEC AUTO-HIDE & MANUAL CLOSE)
 // ==========================================
+let rajPopupTimer = null; // গ্লোবাল টাইমার ভেরিয়েবল যাতে একাধিক পপআপের সময় সমস্যা না হয়
+
 function showOrderSuccessPopup(orderData) {
     const existingOverlay = document.getElementById("rajOrderSuccessOverlay");
-    if (existingOverlay) existingOverlay.remove();
+    if (existingOverlay) {
+        existingOverlay.remove();
+        if (rajPopupTimer) clearTimeout(rajPopupTimer); // পুরনো টাইমার ক্লিয়ার করা হলো
+    }
 
     const now = new Date();
     const currentDate = now.toLocaleDateString('en-GB');
@@ -1568,13 +1573,19 @@ Thank you! 💚`;
         triggerRajConfettiAnimation(overlay);
     }, 10);
 
-    // ** নতুন সংযোজিত লজিক: ঠিক ২ সেকেন্ড (2000 মিলিএসেকেন্ড) পর পপআপ অটোমেটিক বন্ধ হয়ে যাবে **
-    setTimeout(() => {
+    // লজিক ১: ঠিক ৫ সেকেন্ড (৫০০০ মিলিসেকেন্ড) পর পপআপ অটোমেটিক হাইড হয়ে রিমুভ হবে
+    rajPopupTimer = setTimeout(() => {
         closeRajSuccessPopup();
-    }, 2000);
+    }, 5000);
 }
 
 function closeRajSuccessPopup() {
+    // লজিক ২: ম্যানুয়াল ক্লোজ বা টাইমার শেষ হলে পপআপ ক্লোজ করার লজিক
+    if (rajPopupTimer) {
+        clearTimeout(rajPopupTimer);
+        rajPopupTimer = null;
+    }
+
     const overlay = document.getElementById("rajOrderSuccessOverlay");
     if (overlay) {
         overlay.classList.remove("active");

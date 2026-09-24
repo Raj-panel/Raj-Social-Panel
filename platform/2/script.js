@@ -488,8 +488,29 @@ function calculatePrice() {
   updateAverageTime();
 }
 
-// Checkout Navigation
+// Checkout Navigation & QR Generator Helper
 let qrcodeInstance = null;
+
+function generateUpiQrCode() {
+  const upiId = "rajsmmpanel@jio";
+  const upiString = `upi://pay?pa=${upiId}&am=${calculatedPrice}&cu=INR`;
+
+  const qrContainer = document.getElementById("qrcode");
+  if (qrContainer) {
+    qrContainer.innerHTML = "";
+
+    if (typeof QRCode !== 'undefined') {
+      qrcodeInstance = new QRCode(qrContainer, {
+        text: upiString,
+        width: 130,
+        height: 120,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+  }
+}
 
 function openCheckout() {
   const mainLink = document.getElementById("mainLinkInput");
@@ -518,22 +539,11 @@ function openCheckout() {
   if (checkoutTitle) checkoutTitle.innerText = selectedText.split(' - ₹')[0];
   if (checkoutPrice) checkoutPrice.innerText = calculatedPrice;
 
-  const upiId = "rajsmmpanel@jio";
-  const upiString = `upi://pay?pa=${upiId}&am=${calculatedPrice}&cu=INR`;
+  // Generate QR code when checkout opens
+  generateUpiQrCode();
 
-  const qrContainer = document.getElementById("qrcode");
-  if (qrContainer) {
-    qrContainer.innerHTML = "";
-
-    qrcodeInstance = new QRCode(qrContainer, {
-      text: upiString,
-      width: 130,
-      height: 120,
-      colorDark: "#000000",
-      colorLight: "#ffffff",
-      correctLevel: QRCode.CorrectLevel.H
-    });
-  }
+  // Reset payment method view to UPI by default when opening checkout
+  switchCheckoutPayment('upi');
 
   const checkoutPage = document.getElementById("checkoutPage");
   if (checkoutPage) {
@@ -617,12 +627,16 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    if (upiView) apiView.classList.remove('hidden'); 
+    // FIXED: apiView corrected to upiView so UPI QR section displays correctly on switch
+    if (upiView) upiView.classList.remove('hidden'); 
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');
 
     if (txnLabel) txnLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
     if (txnInput) txnInput.placeholder = "e.g. 4029XXXXXXXXXX (12-Digit UTR)";
+
+    // Re-trigger QR code generation on returning to UPI view
+    generateUpiQrCode();
   }
 }
 
@@ -660,7 +674,7 @@ function runConfettiEffect() {
   }, 250);
 }
 
-// Custom Glow Popup (FIXED: pushState and history.back() are now only applied for Success popups so Error popups keep you safely on the checkout page)
+// Custom Glow Popup
 function showModernPopup(title, message, type = 'success') {
   const existingPopup = document.getElementById('modernCustomPopup');
   if (existingPopup) existingPopup.remove();
@@ -713,8 +727,6 @@ function showModernPopup(title, message, type = 'success') {
 
   document.body.appendChild(popupOverlay);
 
-  // Only push state for success popups so closing success triggers back() to close checkout, 
-  // whereas error popups remain strictly on checkout without altering history state.
   if (isSuccess) {
     history.pushState({ popupOpen: true }, "", "#popup");
     triggerOrderConfetti();

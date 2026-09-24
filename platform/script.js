@@ -1198,12 +1198,10 @@ function updateCheckoutQuantityDisplay() {
     const upiId = "saheb.68@ptyes";
     const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
     
-    // ইনস্ট্যান্ট লোডিংয়ের জন্য QR URL আগে থেকেই সেট করা হলো
     const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=${encodeURIComponent(upiUrl)}`;
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
-        // ইমেজ সাথে সাথে রিফ্রেশ ও শো করার জন্য src প্রপার্টি সেট করা হলো
         qrImg.src = qrImageSrc;
         qrImg.style.width = "170px";
         qrImg.style.height = "170px";
@@ -1315,7 +1313,6 @@ function showCheckoutOverlay() {
         }
     }
 
-    // ওভারলে খোলার সাথে সাথেই কোড ডিসপ্লে আপডেট ও জেনারেট করা নিশ্চিত করা হলো
     updateCheckoutQuantityDisplay();
 
     const priceCard = priceEl ? priceEl.parentElement : null;
@@ -1506,7 +1503,7 @@ function triggerRajConfettiAnimation(overlayElement) {
 }
 
 // ==========================================
-// MODERN GLOWING SUCCESS POPUP FUNCTION (WITH WHATSAPP TRACK BUTTON)
+// MODERN GLOWING SUCCESS POPUP FUNCTION (WITH AUTO-HIDE LOGIC)
 // ==========================================
 function showOrderSuccessPopup(orderData) {
     const existingOverlay = document.getElementById("rajOrderSuccessOverlay");
@@ -1570,6 +1567,11 @@ Thank you! 💚`;
         overlay.classList.add("active");
         triggerRajConfettiAnimation(overlay);
     }, 10);
+
+    // ** নতুন সংযোজিত লজিক: ঠিক ২ সেকেন্ড (2000 মিলিএসেকেন্ড) পর পপআপ অটোমেটিক বন্ধ হয়ে যাবে **
+    setTimeout(() => {
+        closeRajSuccessPopup();
+    }, 2000);
 }
 
 function closeRajSuccessPopup() {

@@ -93,6 +93,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
+  /* Applying glowing effect to Checkout Link & Txn Input boxes */
   .checkout-input-group input[type="text"] {
     width: 100%;
     box-sizing: border-box;
@@ -490,97 +491,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     color: #e9d5ff;
     transform: translateY(-1px);
   }
-
-  /* Custom Glow Popup Modal Styles */
-  .custom-modal-overlay {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background: rgba(0, 0, 0, 0.75) !important;
-    backdrop-filter: blur(6px) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    z-index: 2147483647 !important;
-  }
-
-  .custom-modal-box {
-    background: #ffffff !important;
-    width: 90% !important;
-    max-width: 420px !important;
-    max-height: 90vh !important;
-    border-radius: 24px !important;
-    padding: 25px 20px !important;
-    text-align: center !important;
-    box-shadow: 0 0 30px rgba(239, 68, 68, 0.6), 0 0 60px rgba(0, 0, 0, 0.4) !important;
-    position: relative !important;
-    z-index: 2147483647 !important;
-    overflow-y: auto !important;
-  }
-
-  .custom-modal-icon {
-    width: 50px;
-    height: 50px;
-    background: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    margin: 0 auto 12px auto;
-    box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
-  }
-
-  .custom-modal-title {
-    font-size: 20px;
-    font-weight: 700;
-    color: #1e293b;
-    margin-bottom: 8px;
-  }
-
-  .custom-modal-message {
-    font-size: 14px;
-    color: #64748b;
-    line-height: 1.5;
-    margin-bottom: 15px;
-  }
-
-  /* UTR Example Image Styling inside Popup */
-  .custom-modal-img-container {
-    margin-bottom: 15px;
-    border: 2px dashed #cbd5e1;
-    border-radius: 12px;
-    padding: 6px;
-    background: #f8fafc;
-  }
-
-  .custom-modal-img-container img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 8px;
-  }
-
-  .custom-modal-btn {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 12px;
-    padding: 12px 30px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
-    transition: transform 0.2s ease;
-    width: 100%;
-  }
-
-  .custom-modal-btn:hover {
-    transform: translateY(-2px);
-  }
 </style>
 </head>
 <body data-platform="instagram">
@@ -820,8 +730,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
 
 <script>
   let isSubmittingOrder = false;
-  let isErrorPopupOpen = false;
-  let isCheckoutHistoryPushed = false;
 
   function resetOrderButton() {
     isSubmittingOrder = false;
@@ -833,83 +741,13 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // POPUP DISPLAY FUNCTION WITH UTR EXAMPLE IMAGE (`utr-example.png`)
-  function showCustomErrorPopup(messageText, showImage = false) {
-    const existingModal = document.getElementById('customErrorModal');
-    if (existingModal) existingModal.remove();
-
-    let imageHTML = '';
-    if (showImage) {
-      imageHTML = `
-        <div class="custom-modal-img-container">
-          <img src="utr-example.png" alt="UTR Example Guide" />
-        </div>
-      `;
-    }
-
-    const modalHTML = `
-      <div id="customErrorModal" class="custom-modal-overlay">
-        <div class="custom-modal-box">
-          <div class="custom-modal-icon">
-            <i class="fa-solid fa-xmark"></i>
-          </div>
-          <div class="custom-modal-title">Error!</div>
-          <div class="custom-modal-message">${messageText}</div>
-          ${imageHTML}
-          <button class="custom-modal-btn" onclick="closeCustomErrorPopup()">Okay</button>
-        </div>
-      </div>
-    `;
-
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-
-    isErrorPopupOpen = true;
-    history.pushState({ errorModal: true }, '', window.location.href);
-  }
-
-  function closeCustomErrorPopup() {
-    const modal = document.getElementById('customErrorModal');
-    if (modal) {
-      modal.remove();
-    }
-    if (isErrorPopupOpen) {
-      isErrorPopupOpen = false;
-      if (history.state && history.state.errorModal) {
-        history.back(); // পপআপের স্টেট পপ করে সরাসরি চেকআউট পেজে ফিরিয়ে নিয়ে আসবে
-      }
-    }
-  }
-
-  // ব্রাউজার বা ফোনের Back button হ্যান্ডেল করার ইভেন্ট লিসেনার
-  window.addEventListener('popstate', (event) => {
-    if (isErrorPopupOpen) {
-      isErrorPopupOpen = false;
-      const modal = document.getElementById('customErrorModal');
-      if (modal) {
-        modal.remove();
-      }
-    } else {
-      const checkoutPage = document.getElementById('checkoutPage');
-      if (checkoutPage && !checkoutPage.classList.contains('hidden')) {
-        if (!event.state || !event.state.checkoutOpen) {
-          if (typeof closeCheckout === 'function') {
-            closeCheckout();
-          } else {
-            checkoutPage.classList.add('hidden');
-          }
-        }
-      }
-      isCheckoutHistoryPushed = false;
-    }
-  });
-
   // SILENT BACKGROUND DOWNLOAD FUNCTION
   function downloadQRCode() {
     const qrImg = document.getElementById('checkoutQrImg');
     const dlBtn = document.getElementById('downloadQrBtn');
 
     if (!qrImg || !qrImg.src) {
-      showCustomErrorPopup("QR Code image not available!");
+      alert("QR Code image not available!");
       return;
     }
 
@@ -959,7 +797,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
         })
         .catch(err => {
           console.error("QR Download Error:", err);
-          showCustomErrorPopup("Unable to download image automatically.");
+          alert("Unable to download image automatically.");
         })
         .finally(() => {
           dlBtn.innerHTML = originalText;
@@ -985,19 +823,19 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     const txnValue = txnInput ? txnInput.value.trim() : '';
 
     if (!linkValue) {
-      showCustomErrorPopup("Please enter a valid Link / Username.");
+      alert("Please enter a valid Link / Username.");
       resetOrderButton();
       return false;
     }
 
     if (!txnValue) {
-      showCustomErrorPopup("Please enter Transaction ID / UTR number. See example below:", true);
+      alert("Please enter Transaction ID / UTR number.");
       resetOrderButton();
       return false;
     }
 
     // -------------------------------------------------------------
-    // UTR / Transaction ID Validation Logic
+    // UTR / Transaction ID Validation Logic (Added as requested)
     // -------------------------------------------------------------
     const normalUtrRegex = /^[0-9]{12,}$/;
     const transactionIdRegex = /^T[0-9]+$/;
@@ -1006,7 +844,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     const isValidTxnId = transactionIdRegex.test(txnValue);
 
     if (!isValidUtr && !isValidTxnId) {
-      showCustomErrorPopup("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T. See example below:", true);
+      alert("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T.");
       if (txnInput) txnInput.focus();
       resetOrderButton();
       return false;
@@ -1056,21 +894,12 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // MutationObserver দ্বারা চেকআউট পেজ ওপেন/ক্লোজ এবং হিস্ট্রি স্টেট ম্যানেজমেন্ট
   const observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
       if (mutation.attributeName === 'class') {
         const checkoutPage = document.getElementById('checkoutPage');
-        if (checkoutPage) {
-          if (checkoutPage.classList.contains('hidden')) {
-            resetOrderButton();
-            isCheckoutHistoryPushed = false;
-          } else {
-            if (!isCheckoutHistoryPushed) {
-              isCheckoutHistoryPushed = true;
-              history.pushState({ checkoutOpen: true }, '', window.location.href);
-            }
-          }
+        if (checkoutPage && checkoutPage.classList.contains('hidden')) {
+          resetOrderButton();
         }
       }
     });

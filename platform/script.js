@@ -1576,7 +1576,7 @@ Thank you! 💚`;
     // লজিক ১: ঠিক ৫ সেকেন্ড (৫০০০ মিলিসেকেন্ড) পর পপআপ অটোমেটিক হাইড হয়ে রিমুভ হবে
     rajPopupTimer = setTimeout(() => {
         closeRajSuccessPopup();
-    }, 6000);
+    }, 4000);
 }
 
 function closeRajSuccessPopup() {

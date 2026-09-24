@@ -619,7 +619,22 @@ function switchCheckoutPayment(method) {
 
   if (method === 'binance') {
     if (upiView) upiView.classList.add('hidden');
-    if (binanceView) binanceView.classList.remove('hidden');
+    
+    // Binance View-তে GitHub-এর নির্দিষ্ট QR Image লোড করার লজিক
+    if (binanceView) {
+      binanceView.classList.remove('hidden');
+      
+      // যদি আগে থেকে Binance QR কন্টেইনারে ইমেজ না থাকে, তবে তৈরি করে দিন
+      if (!document.getElementById('binanceCustomQrImg')) {
+        binanceView.innerHTML = `
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px;">
+            <img id="binanceCustomQrImg" src="https://raw.githubusercontent.com/Raj-panel/Raj-Social-Panel/main/platform/binance-qr.png" alt="Binance QR Code" style="width: 140px; height: 140px; object-fit: contain; border-radius: 8px; border: 2px solid #f59e0b; background: #fff; padding: 5px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+            <p style="margin: 10px 0 0; font-size: 13px; color: #64748b; font-weight: 500;">Scan with Binance App to Pay</p>
+          </div>
+        `;
+      }
+    }
+
     if (btnUpi) btnUpi.classList.remove('active');
     if (btnBinance) btnBinance.classList.add('active');
 
@@ -627,7 +642,6 @@ function switchCheckoutPayment(method) {
     if (txnInput) txnInput.placeholder = "e.g. 21893XXXXXXXXXX (Binance TxID)";
   } else {
     if (binanceView) binanceView.classList.add('hidden');
-    // FIXED: apiView corrected to upiView so UPI QR section displays correctly on switch
     if (upiView) upiView.classList.remove('hidden'); 
     if (btnBinance) btnBinance.classList.remove('active');
     if (btnUpi) btnUpi.classList.add('active');

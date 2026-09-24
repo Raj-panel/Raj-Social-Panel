@@ -831,7 +831,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // POPUP DISPLAY FUNCTION WITH UTR EXAMPLE IMAGE (`utr-example.png`)
+  // POPUP DISPLAY FUNCTION WITH UTR IMAGE & HISTORY PUSHSTATE FOR BACK BUTTON
   function showCustomErrorPopup(messageText, showImage = false) {
     const existingModal = document.getElementById('customErrorModal');
     if (existingModal) existingModal.remove();
@@ -854,17 +854,25 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
           <div class="custom-modal-title">Error!</div>
           <div class="custom-modal-message">${messageText}</div>
           ${imageHTML}
-          <button class="custom-modal-btn" onclick="closeCustomErrorPopup()">Okay</button>
+          <button class="custom-modal-btn" onclick="closeCustomErrorPopup(true)">Okay</button>
         </div>
       </div>
     `;
 
     document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    // Push history state so back button can detect the open popup
+    history.pushState({ errorPopupOpen: true }, '');
   }
 
-  function closeCustomErrorPopup() {
+  function closeCustomErrorPopup(fromUserAction = false) {
     const modal = document.getElementById('customErrorModal');
-    if (modal) modal.remove();
+    if (modal) {
+      modal.remove();
+      if (fromUserAction && history.state && history.state.errorPopupOpen) {
+        history.back();
+      }
+    }
   }
 
   // SILENT BACKGROUND DOWNLOAD FUNCTION
@@ -1062,7 +1070,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
 
   function switchCheckoutPayment(method) {
     const upiView = document.getElementById('checkoutUpiView');
-    const binanceView = document.getElementById('checkoutBinanceView');
+  const binanceView = document.getElementById('checkoutBinanceView');
     const btnUpi = document.getElementById('btnTabUpi');
     const btnBinance = document.getElementById('btnTabBinance');
     const txnLabel = document.getElementById('txnLabel');
@@ -1121,10 +1129,17 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
+  // Global popstate handler for both Sidebar and Error Popup
   window.addEventListener("popstate", function (event) {
     const sidebar = document.getElementById("leftSidebar");
     if (sidebar && sidebar.classList.contains("active")) {
       closeSidebar(false);
+      return;
+    }
+
+    const errorModal = document.getElementById('customErrorModal');
+    if (errorModal) {
+      errorModal.remove();
     }
   });
 

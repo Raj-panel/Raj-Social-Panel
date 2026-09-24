@@ -863,7 +863,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     document.body.insertAdjacentHTML('beforeend', modalHTML);
     isErrorPopupOpen = true;
 
-    // Push a dummy history state so the phone's back button triggers popstate instead of exiting the page
+    // Push history state so phone/browser back button triggers popstate
     history.pushState({ errorModalActive: true }, '');
   }
 
@@ -1141,6 +1141,9 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
       const modal = document.getElementById('customErrorModal');
       if (modal) modal.remove();
       isErrorPopupOpen = false;
+      
+      // Prevent browser from navigating back to Home Page by pushing current state back
+      history.pushState(null, '', window.location.href);
       return;
     }
   });
@@ -1149,17 +1152,13 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     applyPlatformTheme('instagram');
 
     document.body.addEventListener("focusin", function (e) {
-      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
-        const installBox = document.getElementById("installContainer");
-        if (installBox) installBox.style.display = "none";
-      }
+      (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) &&
+        ((document.getElementById("installContainer") || {}).style.display = "none");
     });
 
     document.body.addEventListener("focusout", function (e) {
-      if (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) {
-        const installBox = document.getElementById("installContainer");
-        if (installBox) installBox.style.display = "block";
-      }
+      (e.target && (e.target.id === "quantity" || e.target.id === "checkoutLinkInput" || e.target.id === "checkoutTxnId")) &&
+        ((document.getElementById("installContainer") || {}).style.display = "block");
     });
   });
 

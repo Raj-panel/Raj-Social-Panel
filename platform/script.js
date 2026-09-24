@@ -723,8 +723,23 @@ let currentCategory = "";
 let selectedPackage = null;
 let currentCheckoutData = {};
 
-// Global Preloaded QR Image cache to ensure instant display
-let preloadedQrImage = new Image();
+// ==========================================
+// INSTANT QR CODE PRELOAD CACHE LOGIC
+// ==========================================
+const qrPreloadCache = {};
+
+function getAndPreloadQrUrl(price, packageName) {
+    const upiId = "saheb.68@ptyes";
+    const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(packageName)}`;
+    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=${encodeURIComponent(upiUrl)}`;
+
+    if (!qrPreloadCache[qrImageSrc]) {
+        const img = new Image();
+        img.src = qrImageSrc;
+        qrPreloadCache[qrImageSrc] = img;
+    }
+    return qrImageSrc;
+}
 
 window.onload = function () {
     switchPlatform("instagram");
@@ -984,6 +999,8 @@ function calculateCustomPrice(serviceName, ratePer1000, providerId) {
             quantity: qty,
             category: currentCategory
         };
+        // ব্যাকগ্রাউন্ডে কিউআর কোড জেনারেট ও প্রি-লোড করা
+        getAndPreloadQrUrl(total, selectedPackage.name);
     } else {
         if (minWarning) minWarning.style.display = "none";
         if (calcPriceSpan) calcPriceSpan.innerText = "0.00";
@@ -1133,6 +1150,9 @@ function openCheckoutForFixed(platform, serviceName, packageName, quantity, pric
         badge: badge || 'Popular'
     };
 
+    // ক্লিক করার মুহূর্তেই QR Image Pre-load
+    getAndPreloadQrUrl(price, packageName);
+
     showCheckoutOverlay();
 }
 
@@ -1161,6 +1181,9 @@ function openCheckoutFromCustom() {
         multiplier: 1,
         badge: "Custom"
     };
+
+    // ক্লিক করার মুহূর্তেই QR Image Pre-load
+    getAndPreloadQrUrl(price, currentCheckoutData.packageName);
 
     showCheckoutOverlay();
 }
@@ -1198,15 +1221,11 @@ function updateCheckoutQuantityDisplay() {
         usdtEl.innerText = `$${usdt} USDT`;
     }
 
-    const upiId = "saheb.68@ptyes";
-    const upiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
-    
-    const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=${encodeURIComponent(upiUrl)}`;
+    // Pre-loaded cache URL থেকে তাৎক্ষণিক ইনস্ট্যান্ট কিউআর কোড সেট করা
+    const qrImageSrc = getAndPreloadQrUrl(d.price, d.packageName || "Social Boost Service");
 
     const qrImg = document.getElementById("checkoutQrImg");
     if (qrImg) {
-        // Instant assignment with preloaded/cached background image object to eliminate visual loading delay
-        preloadedQrImage.src = qrImageSrc;
         qrImg.src = qrImageSrc;
         qrImg.style.width = "170px";
         qrImg.style.height = "170px";
@@ -1317,11 +1336,6 @@ function showCheckoutOverlay() {
             upiView.prepend(scanHeading);
         }
     }
-
-    // Preload QR URL instantly before opening or alongside DOM reveal
-    const upiId = "saheb.68@ptyes";
-    const initialUpiUrl = `upi://pay?pa=${upiId}&pn=RajSocialPanel&am=${d.price.toFixed(2)}&cu=INR&tn=${encodeURIComponent(d.packageName)}`;
-    preloadedQrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=${encodeURIComponent(initialUpiUrl)}`;
 
     updateCheckoutQuantityDisplay();
 
@@ -1860,7 +1874,7 @@ async function submitOrderWithWallet() {
         showOrderSuccessPopup({
             orderId: orderIdVal,
             platformName: currentCheckoutData.platform || '',
-            serviceName: currentCategory || '',
+            serviceName: currentCheckoutData.serviceName || '',
             packageName: currentCheckoutData.packageName || '',
             link: link,
             quantity: currentCheckoutData.quantity || 0,

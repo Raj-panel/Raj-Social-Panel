@@ -71,7 +71,9 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     --sidebar-close: #94a3b8;
   }
 
-  /* MULTICOLOR GLOWING BORDER ANIMATION FOR INPUT BOXES */
+  /* -------------------------------------------------------------
+     MULTICOLOR GLOWING BORDER ANIMATION FOR INPUT BOXES
+  ------------------------------------------------------------- */
   @keyframes multicolorGlow {
     0% {
       border-color: #00f0ff;
@@ -829,15 +831,10 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // POPUP DISPLAY FUNCTION WITH UTR EXAMPLE IMAGE AND BACK BUTTON HISTORY HANDLING
+  // POPUP DISPLAY FUNCTION WITH UTR EXAMPLE IMAGE (`utr-example.png`)
   function showCustomErrorPopup(messageText, showImage = false) {
     const existingModal = document.getElementById('customErrorModal');
-    if (existingModal) {
-      existingModal.remove();
-    } else {
-      // Push history state so pressing back button pops modal state instead of closing checkout page
-      history.pushState({ errorModalOpen: true }, '');
-    }
+    if (existingModal) existingModal.remove();
 
     let imageHTML = '';
     if (showImage) {
@@ -857,20 +854,23 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
           <div class="custom-modal-title">Error!</div>
           <div class="custom-modal-message">${messageText}</div>
           ${imageHTML}
-          <button class="custom-modal-btn" onclick="closeCustomErrorPopup(true)">Okay</button>
+          <button class="custom-modal-btn" onclick="closeCustomErrorPopup()">Okay</button>
         </div>
       </div>
     `;
 
     document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    // পপআপ আসার সাথে হিস্ট্রিতে একটি স্টেট পুশ করা হলো, যাতে ব্যাক বাটন চাপলে পপআপ বন্ধ হয় কিন্তু চেকআউট পেজেই থাকে
+    history.pushState({ popupOpen: true }, '');
   }
 
-  function closeCustomErrorPopup(fromUserAction = false) {
+  function closeCustomErrorPopup() {
     const modal = document.getElementById('customErrorModal');
     if (modal) {
       modal.remove();
-      // If user clicked 'Okay' button manually, go back in history to clean up pushed state
-      if (fromUserAction && history.state && history.state.errorModalOpen) {
+      // ব্যাক বাটনের হিস্ট্রি স্টেট রিমুভ করার জন্য
+      if (history.state && history.state.popupOpen) {
         history.back();
       }
     }
@@ -1130,11 +1130,11 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // LISTEN TO BROWSER / DEVICE BACK BUTTON PRESS (POPSTATE)
+  // গ্লোবাল পপআপ এবং সাইডবারের জন্য ব্যাক বাটন লজিক হ্যান্ডলার
   window.addEventListener("popstate", function (event) {
-    const errorModal = document.getElementById('customErrorModal');
-    if (errorModal) {
-      closeCustomErrorPopup(false);
+    const modal = document.getElementById('customErrorModal');
+    if (modal) {
+      modal.remove(); // পপআপ ওপেন থাকলে ব্যাক বাটনে শুধু পপআপ বন্ধ হবে, চেকআউট পেজেই থাকবে
       return;
     }
 

@@ -820,7 +820,8 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
 
 <script>
   let isSubmittingOrder = false;
-  let isErrorPopupOpen = false; // পপআপ স্ট্যাটাস ট্র্যাক করার জন্য ফ্ল্যাগ
+  let isErrorPopupOpen = false;
+  let isCheckoutHistoryPushed = false;
 
   function resetOrderButton() {
     isSubmittingOrder = false;
@@ -862,7 +863,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
 
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 
-    // পপআপ ওপেন হলে ব্যাক বাটন হ্যান্ডেল করার জন্য ہسٹরি স্টেট পুশ করা হলো
     isErrorPopupOpen = true;
     history.pushState({ errorModal: true }, '', window.location.href);
   }
@@ -875,7 +875,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     if (isErrorPopupOpen) {
       isErrorPopupOpen = false;
       if (history.state && history.state.errorModal) {
-        history.back();
+        history.back(); // পপআপের স্টেট পপ করে সরাসরি চেকআউট পেজে ফিরিয়ে নিয়ে আসবে
       }
     }
   }
@@ -888,6 +888,18 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
       if (modal) {
         modal.remove();
       }
+    } else {
+      const checkoutPage = document.getElementById('checkoutPage');
+      if (checkoutPage && !checkoutPage.classList.contains('hidden')) {
+        if (!event.state || !event.state.checkoutOpen) {
+          if (typeof closeCheckout === 'function') {
+            closeCheckout();
+          } else {
+            checkoutPage.classList.add('hidden');
+          }
+        }
+      }
+      isCheckoutHistoryPushed = false;
     }
   });
 
@@ -979,7 +991,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
 
     if (!txnValue) {
-      // খালি রাখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter Transaction ID / UTR number. See example below:", true);
       resetOrderButton();
       return false;
@@ -995,7 +1006,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     const isValidTxnId = transactionIdRegex.test(txnValue);
 
     if (!isValidUtr && !isValidTxnId) {
-      // ভুলভাল লিখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T. See example below:", true);
       if (txnInput) txnInput.focus();
       resetOrderButton();
@@ -1046,12 +1056,21 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
+  // MutationObserver দ্বারা চেকআউট পেজ ওপেন/ক্লোজ এবং হিস্ট্রি স্টেট ম্যানেজমেন্ট
   const observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
       if (mutation.attributeName === 'class') {
         const checkoutPage = document.getElementById('checkoutPage');
-        if (checkoutPage && checkoutPage.classList.contains('hidden')) {
-          resetOrderButton();
+        if (checkoutPage) {
+          if (checkoutPage.classList.contains('hidden')) {
+            resetOrderButton();
+            isCheckoutHistoryPushed = false;
+          } else {
+            if (!isCheckoutHistoryPushed) {
+              isCheckoutHistoryPushed = true;
+              history.pushState({ checkoutOpen: true }, '', window.location.href);
+            }
+          }
         }
       }
     });
@@ -1145,7 +1164,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // সাইডবার এবং পপআপ উভതിയর ব্যাক বাটন রিকনসিলিয়েশন
   window.addEventListener("popstate", function (event) {
     const sidebar = document.getElementById("leftSidebar");
     if (sidebar && sidebar.classList.contains("active")) {

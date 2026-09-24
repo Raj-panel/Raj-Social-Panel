@@ -831,7 +831,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // POPUP DISPLAY FUNCTION WITH UTR IMAGE & HISTORY PUSHSTATE FOR BACK BUTTON
+  // POPUP DISPLAY FUNCTION WITH UTR EXAMPLE IMAGE (`utr-example.png`)
   function showCustomErrorPopup(messageText, showImage = false) {
     const existingModal = document.getElementById('customErrorModal');
     if (existingModal) existingModal.remove();
@@ -854,24 +854,21 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
           <div class="custom-modal-title">Error!</div>
           <div class="custom-modal-message">${messageText}</div>
           ${imageHTML}
-          <button class="custom-modal-btn" onclick="closeCustomErrorPopup(true)">Okay</button>
+          <button class="custom-modal-btn" onclick="closeCustomErrorPopup()">Okay</button>
         </div>
       </div>
     `;
 
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 
-    // Push history state so back button can detect the open popup
+    // Error Popup ওপেন হওয়ার সাথে সাথে ব্রাউজারের হিস্টরিতে স্টেট পুশ করা হচ্ছে
     history.pushState({ errorPopupOpen: true }, '');
   }
 
-  function closeCustomErrorPopup(fromUserAction = false) {
+  function closeCustomErrorPopup() {
     const modal = document.getElementById('customErrorModal');
     if (modal) {
       modal.remove();
-      if (fromUserAction && history.state && history.state.errorPopupOpen) {
-        history.back();
-      }
     }
   }
 
@@ -1070,7 +1067,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
 
   function switchCheckoutPayment(method) {
     const upiView = document.getElementById('checkoutUpiView');
-  const binanceView = document.getElementById('checkoutBinanceView');
+    const binanceView = document.getElementById('checkoutBinanceView');
     const btnUpi = document.getElementById('btnTabUpi');
     const btnBinance = document.getElementById('btnTabBinance');
     const txnLabel = document.getElementById('txnLabel');
@@ -1129,17 +1126,19 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // Global popstate handler for both Sidebar and Error Popup
   window.addEventListener("popstate", function (event) {
+    // ১. সাইডবার খোলা থাকলে ব্যাক বাটন চাপলে সাইডবার বন্ধ হবে
     const sidebar = document.getElementById("leftSidebar");
     if (sidebar && sidebar.classList.contains("active")) {
       closeSidebar(false);
       return;
     }
 
+    // ২. এরর পপআপ খোলা থাকলে ব্যাক বাটন চাপলে শুধু পপআপ বন্ধ হবে এবং ইউজার চেকআউট পেজেই থাকবে
     const errorModal = document.getElementById('customErrorModal');
     if (errorModal) {
       errorModal.remove();
+      return;
     }
   });
 

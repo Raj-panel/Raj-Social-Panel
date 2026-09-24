@@ -820,6 +820,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
 
 <script>
   let isSubmittingOrder = false;
+  let isErrorPopupOpen = false; // Error Popup tracking flag
 
   function resetOrderButton() {
     isSubmittingOrder = false;
@@ -831,7 +832,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // POPUP DISPLAY FUNCTION WITH UTR IMAGE & HISTORY PUSHSTATE FOR BACK BUTTON
+  // POPUP DISPLAY FUNCTION WITH CLEAN STATE FLAG MANAGEMENT
   function showCustomErrorPopup(messageText, showImage = false) {
     const existingModal = document.getElementById('customErrorModal');
     if (existingModal) existingModal.remove();
@@ -854,24 +855,25 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
           <div class="custom-modal-title">Error!</div>
           <div class="custom-modal-message">${messageText}</div>
           ${imageHTML}
-          <button class="custom-modal-btn" onclick="closeCustomErrorPopup(true)">Okay</button>
+          <button class="custom-modal-btn" onclick="closeCustomErrorPopup()">Okay</button>
         </div>
       </div>
     `;
 
     document.body.insertAdjacentHTML('beforeend', modalHTML);
+    isErrorPopupOpen = true;
 
-    // Push history state so back button can detect the open popup
-    history.pushState({ errorPopupOpen: true }, '');
+    // Push a dummy history state so the phone's back button triggers popstate instead of exiting the page
+    history.pushState({ errorModalActive: true }, '');
   }
 
-  function closeCustomErrorPopup(fromUserAction = false) {
+  function closeCustomErrorPopup() {
     const modal = document.getElementById('customErrorModal');
     if (modal) {
       modal.remove();
-      if (fromUserAction && history.state && history.state.errorPopupOpen) {
-        history.back();
-      }
+    }
+    if (isErrorPopupOpen) {
+      isErrorPopupOpen = false;
     }
   }
 
@@ -963,7 +965,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
 
     if (!txnValue) {
-      // খালি রাখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter Transaction ID / UTR number. See example below:", true);
       resetOrderButton();
       return false;
@@ -979,7 +980,6 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     const isValidTxnId = transactionIdRegex.test(txnValue);
 
     if (!isValidUtr && !isValidTxnId) {
-      // ভুলভাল লিখলে পপআপের সাথে ছবি সহ দেখাবে
       showCustomErrorPopup("Please enter a valid 12-digit UTR number or a valid Transaction ID starting with T. See example below:", true);
       if (txnInput) txnInput.focus();
       resetOrderButton();
@@ -1070,7 +1070,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
 
   function switchCheckoutPayment(method) {
     const upiView = document.getElementById('checkoutUpiView');
-  const binanceView = document.getElementById('checkoutBinanceView');
+    const binanceView = document.getElementById('checkoutBinanceView');
     const btnUpi = document.getElementById('btnTabUpi');
     const btnBinance = document.getElementById('btnTabBinance');
     const txnLabel = document.getElementById('txnLabel');
@@ -1129,7 +1129,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // Global popstate handler for both Sidebar and Error Popup
+  // Unified popstate handler for Sidebar and Error Popup without page exit
   window.addEventListener("popstate", function (event) {
     const sidebar = document.getElementById("leftSidebar");
     if (sidebar && sidebar.classList.contains("active")) {
@@ -1137,9 +1137,11 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
       return;
     }
 
-    const errorModal = document.getElementById('customErrorModal');
-    if (errorModal) {
-      errorModal.remove();
+    if (isErrorPopupOpen) {
+      const modal = document.getElementById('customErrorModal');
+      if (modal) modal.remove();
+      isErrorPopupOpen = false;
+      return;
     }
   });
 

@@ -820,6 +820,7 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
 
 <script>
   let isSubmittingOrder = false;
+  let isErrorPopupOpen = false; // পপআপ স্ট্যাটাস ট্র্যাক করার জন্য ফ্ল্যাগ
 
   function resetOrderButton() {
     isSubmittingOrder = false;
@@ -861,20 +862,34 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
 
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 
-    // পপআপ আসার সাথে হিস্ট্রিতে একটি স্টেট পুশ করা হলো, যাতে ব্যাক বাটন চাপলে পপআপ বন্ধ হয় কিন্তু চেকআউট পেজেই থাকে
-    history.pushState({ popupOpen: true }, '');
+    // পপআপ ওপেন হলে ব্যাক বাটন হ্যান্ডেল করার জন্য ہسٹরি স্টেট পুশ করা হলো
+    isErrorPopupOpen = true;
+    history.pushState({ errorModal: true }, '', window.location.href);
   }
 
   function closeCustomErrorPopup() {
     const modal = document.getElementById('customErrorModal');
     if (modal) {
       modal.remove();
-      // ব্যাক বাটনের হিস্ট্রি স্টেট রিমুভ করার জন্য
-      if (history.state && history.state.popupOpen) {
+    }
+    if (isErrorPopupOpen) {
+      isErrorPopupOpen = false;
+      if (history.state && history.state.errorModal) {
         history.back();
       }
     }
   }
+
+  // ব্রাউজার বা ফোনের Back button হ্যান্ডেল করার ইভেন্ট লিসেনার
+  window.addEventListener('popstate', (event) => {
+    if (isErrorPopupOpen) {
+      isErrorPopupOpen = false;
+      const modal = document.getElementById('customErrorModal');
+      if (modal) {
+        modal.remove();
+      }
+    }
+  });
 
   // SILENT BACKGROUND DOWNLOAD FUNCTION
   function downloadQRCode() {
@@ -1130,14 +1145,8 @@ Followers • Likes • Views — Click Here☝️" name="twitter:title"/>
     }
   }
 
-  // গ্লোবাল পপআপ এবং সাইডবারের জন্য ব্যাক বাটন লজিক হ্যান্ডলার
+  // সাইডবার এবং পপআপ উভതിയর ব্যাক বাটন রিকনসিলিয়েশন
   window.addEventListener("popstate", function (event) {
-    const modal = document.getElementById('customErrorModal');
-    if (modal) {
-      modal.remove(); // পপআপ ওপেন থাকলে ব্যাক বাটনে শুধু পপআপ বন্ধ হবে, চেকআউট পেজেই থাকবে
-      return;
-    }
-
     const sidebar = document.getElementById("leftSidebar");
     if (sidebar && sidebar.classList.contains("active")) {
       closeSidebar(false);

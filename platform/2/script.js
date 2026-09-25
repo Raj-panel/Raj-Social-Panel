@@ -107,10 +107,10 @@ const platformData = {
       "Facebook - Followers | HQ - Cheapest Price": {
         name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 - 𝐅𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬 | 𝐇𝐐 - 𝐂𝐡𝐞𝐚𝐩𝐞𝐬𝐭 𝐏𝐫𝐢𝐜𝐞",
         services: [
-          { id: "4501", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | 60D Refill", rate: 34.1075, avgTime: "0–30 Min Start" },
-          { id: "4502", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | 90D Refill", rate: 35.1525, avgTime: "0–30 Min Start" },
-          { id: "5988", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | 365D Refill ♻️", rate: 36.1975, avgTime: "0–30 Min Start" },
-          { id: "5989", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | Lifetime Refill♻️", rate: 40.2425, avgTime: "0–30 Min Start" }
+          { id: "4501", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | 60D Refill", rate: 23.8875, avgTime: "0–30 Min Start" },
+          { id: "4502", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | 90D Refill", rate: 24.9025, avgTime: "0–30 Min Start" },
+          { id: "5988", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | 365D Refill ♻️", rate: 25.9975, avgTime: "0–30 Min Start" },
+          { id: "5989", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | Lifetime Refill♻️", rate: 30.8425, avgTime: "0–30 Min Start" }
         ]
       },
       "Facebook follower real account medium speed": {

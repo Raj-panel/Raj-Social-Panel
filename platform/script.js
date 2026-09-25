@@ -372,7 +372,7 @@ const serviceData = {
                 desc: "Real blue Trick verified ✓" 
             }
         ],
-        "🔥 Reels Combo Service": [
+        "🚀 Reels Viral Combo Service": [
             {
                 name: "Reels Viral Package 1",
                 price: 49,

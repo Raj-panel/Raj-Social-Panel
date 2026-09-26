@@ -314,11 +314,11 @@ const serviceData = {
             { name: "9K Followers", price: 809, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "10K Followers", price: 899, badge: "🎁 BUY 10K + GET 2K FREE", badgeClass: "badge-super", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" }
         ],
-        "Followers Non-Drop | Life time Refill♻️": [
-            { name: "1k followers", price: 299, desc: "High quality activie | Start In 1-10 Hours" },
-            { name: "3k followers", price: 870, desc: "High quality activie | Start In 1-10 Hours" },
-            { name: "5k Followers", price: 1459, desc: "High quality activie | Start In 1-10 Hours" },
-            { name: "10k followers", price: 2899, desc: "Followers Non-Drop | No Refill" }
+        "🫂 Followers Non-Drop | Permanent": [
+            { name: "1k followers", price: 299, desc: "🚀High quality activie | Life Time ♻️Start In 1-10 Hours" },
+            { name: "3k followers", price: 870, desc: "🚀High quality activie | Start In 1-10 Hours" },
+            { name: "5k Followers", price: 1459, desc: "🚀 High quality activie | Start In 1-10 Hours" },
+            { name: "10k followers", price: 2899, desc: "🚀High quality activie | Life Time ♻️Start In 1-10 Hours" }
         ],
         "❤️ Likes Non-Drop": [
             { providerId: 675, name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo", desc: "⚡ Best Quality •Life-Time~♻️• Starts in 10 Min" },

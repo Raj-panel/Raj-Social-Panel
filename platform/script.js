@@ -312,7 +312,7 @@ const serviceData = {
             { name: "7K Followers", price: 359, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "8K Followers", price: 410, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "9K Followers", price: 459, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
-            { name: "10K Followers", price: 499, badge: "🎁 BUY 10K + GET 2K FREE", badgeClass: "badge-super", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" }
+            { name: "10K Followers", price: 499, badge: "MOST POPULAR", badgeClass: "badge-super", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" }
         ],
         "🫂 Followers Non-Drop | Permanent": [
             { name: "200 followers", price: 50, desc: "🚀High Quality • Lifetime Refill ♻️ • Start 0–40 Min" },

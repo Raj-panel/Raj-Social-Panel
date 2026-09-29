@@ -329,7 +329,7 @@ const serviceData = {
             { providerId: 675, name: "5K Likes", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "⚡ Best Quality •Life-Time~♻️• Starts in 10 Min" },
             { providerId: 675, name: "10K Likes", price: 179, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "⚡ Best Quality •Life-Time~♻️• Starts in 10 Min" }
         ],
-        "👀 Views Reels / Video Non-Drop {REAL QUALITY}": [
+        "👀 Views Reels-Video Non-Drop {REAL QUALITY}": [
             { providerId: 853, name: "1K Views", price: 5, badge: "DEMO", badgeClass: "badge-demo", desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
             { providerId: 853, name: "5K Views", price: 9, desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
             { providerId: 853, name: "10K Views", price: 15, badge: "BEST VALUE", badgeClass: "badge-best", desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
@@ -339,7 +339,7 @@ const serviceData = {
             { providerId: 853, name: "500K Views", price: 299, desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
             { providerId: 853, name: "1M Views", price: 499, badge: "💥 MEGA DEAL", badgeClass: "badge-best", desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" }
         ],
-        "📸 Post Views Non-Drop {REAL QUALITY}": [
+        "📸 Photo-Post Views Non-Drop {REAL QUALITY}": [
             { providerId: 1030, name: "1K Views", price: 10, badge: "🎯 Demo", badgeClass: "badge-demo", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
             { providerId: 1030, name: "3K Views", price: 17, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
             { providerId: 1030, name: "5K Views", price: 29, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },

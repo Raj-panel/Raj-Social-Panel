@@ -301,7 +301,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const serviceData = {
     instagram: {
-        "👥 Followers Non-Drop | No Refill": [
+        "👥 Followers Less-Drop | No Refill": [
             { name: "100 Followers", price: 20, badge: "Starter", badgeClass: "badge-demo", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "1K Followers", price: 89, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "2K Followers", price: 110, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },

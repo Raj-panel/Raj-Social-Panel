@@ -389,7 +389,7 @@ const serviceData = {
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
                     "👁️ Reels Views — 16,000",
-                    "❤️ Reels Likes — 500",
+                    "❤️ Reels Likes — 300",
                     "💬 Reels Comments — 13",
                     "💾 Post / Reels Save — 100",
                     "🔗 Post / Reels Shares — 200",

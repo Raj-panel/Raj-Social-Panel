@@ -347,7 +347,7 @@ const serviceData = {
             { providerId: 1030, name: "10K Views", price: 49, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
             { providerId: 1030, name: "30K Views", price: 89, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
             { providerId: 1030, name: "50K Views", price: 149, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
-            { providerId: 1030, name: "100K Views", price: 270, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" }
+            { providerId: 1030, name: "100K Views", price: 279, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" }
         ],
         "💬 Comments Non-Drop {REAL QUALITY}": [
             { providerId: 31, name: "15 Comment (Start)", price: 10, desc: "💬High Quality • Custom Random Comments start in 10 min" },
@@ -359,9 +359,9 @@ const serviceData = {
             { providerId: 31, name: "1K Comments", price: 199, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "💬High Quality • Custom Random Comments start in 10 min" }
         ],
         "🔄 Repost Non-Drop {REAL QUALITY}": [
-            { providerId: 505, name: "100 Reposts", price: 10, badge: "Starter", badgeClass: "badge-demo", desc: "🔄-Life-Time~♻️• 🇮🇳Premium Quality Start in 20 Min" },
-            { providerId: 505, name: "300 Reposts", price: 20, desc: "🔄-Life-Time~♻️• 🇮🇳Premium Quality Start in 20 Min" },
-            { providerId: 505, name: "500 Reposts", price: 49, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🔄-Life-Time~♻️• 🇮🇳Premium Quality Start in 20 Min" },
+            { providerId: 505, name: "50 Reposts", price: 10, badge: "Starter", badgeClass: "badge-demo", desc: "🔄-Life-Time~♻️• 🇮🇳Premium Quality Start in 20 Min" },
+            { providerId: 505, name: "150 Reposts", price: 20, desc: "🔄-Life-Time~♻️• 🇮🇳Premium Quality Start in 20 Min" },
+            { providerId: 505, name: "400 Reposts", price: 49, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "🔄-Life-Time~♻️• 🇮🇳Premium Quality Start in 20 Min" },
             { providerId: 505, name: "1K Reposts", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🔄-Life-Time~♻️• 🇮🇳Premium Quality Start in 20 Min" },
             { providerId: 505, name: "3K Reposts", price: 199, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🔄-Life-Time~♻️• 🇮🇳Premium Quality Start in 20 Min" }
         ],

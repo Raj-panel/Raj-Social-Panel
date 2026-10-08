@@ -555,8 +555,8 @@ const serviceData = {
             { name: "10k followers", price: 799, badge: "BEST VALUE", badgeClass: "badge-best", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
             { name: "20k Followers", price: 1399, badge: "MEGA DEAL", badgeClass: "badge-super", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" }
         ],
-        "👤 PAGE/PROFILE Premium Followers": [
-            { type: "custom", name: "High Quality Facebook Followers • ♻️ Lifetime Refill • 100K+/Day •Start in 40 Min", pricePer1000: 99 }
+        "👤 REAL-ACTIVE Followers": [
+            { type: "custom", name: "High Quality Facebook Followers • ♻️ Lifetime Refill • 100K+/Day •Start in 40 Min", pricePer1000: 249 }
         ],
         "👍 Like Life-Time Refill ♻️": [
             { name: "100 Likes", price: 10, badge: "STARTER", badgeClass: "badge-demo", desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" },

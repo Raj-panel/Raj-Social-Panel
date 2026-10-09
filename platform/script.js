@@ -315,12 +315,12 @@ const serviceData = {
             { name: "10K Followers", price: 799, badge: "MOST POPULAR", badgeClass: "badge-super", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" }
         ],
         "🫂 Followers Non-Drop | Permanent": [
-            { name: "200 followers", price: 49, desc: "🚀High Quality • Lifetime Refill ♻️ • Start 0–40 Min" },
-            { name: "1k followers", price: 199, desc: "🚀High Quality • Lifetime Refill ♻️ • Start 0–40 Min" },
-            { name: "3k followers", price: 599, desc: "🚀High Quality • Lifetime Refill ♻️ • Start 0–40 Min" },
-            { name: "5k followers", price: 999, desc: "🚀High Quality • Lifetime Refill ♻️ • Start 0–40 Min" },
-            { name: "7k Followers", price: 1469, desc: "🚀High Quality • Lifetime Refill ♻️ • Start 0–40 Min" },
-            { name: "10k followers", price: 1949, desc: "🚀High Quality • Lifetime Refill ♻️ • Start 0–40 Min" }
+            { name: "100 followers", price: 49, desc: "🚀High Quality • Lifetime Refill ♻️ • Start 0–40 Min" },
+            { name: "1k followers", price: 249, desc: "🚀High Quality • Lifetime Refill ♻️ • Start 0–40 Min" },
+            { name: "3k followers", price: 699, desc: "🚀High Quality • Lifetime Refill ♻️ • Start 0–40 Min" },
+            { name: "5k followers", price: 1199, desc: "🚀High Quality • Lifetime Refill ♻️ • Start 0–40 Min" },
+            { name: "7k Followers", price: 1749, desc: "🚀High Quality • Lifetime Refill ♻️ • Start 0–40 Min" },
+            { name: "10k followers", price: 2399, desc: "🚀High Quality • Lifetime Refill ♻️ • Start 0–40 Min" }
         ],
         "❤️ Likes Non-Drop": [
             { providerId: 675, name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo", desc: "⚡ Best Quality •Life-Time~♻️• Starts in 10 Min" },

@@ -121,6 +121,22 @@ const platformData = {
           { id: "6428", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts| 0–30 Min Start | Lifetime Refill ♻️", rate: 53.7008, avgTime: "0–30 Min Start" },
         ]
       },
+      // নতুন যোগ করা ক্যাটাগরি ১: Hidden Facebook followers
+      "Hidden Facebook followers": {
+        name: "𝐇𝐢𝐝𝐝𝐞𝐧 𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬",
+        services: [
+          { id: "14252", name: "Facebook - Followers | 100K/Day - Max 5M | Hidden | Instant | 0–30 Min Start | - 30D Refill♻️", rate: 69.3121, avgTime: "0–30 Min Start" },
+          { id: "14256", name: "Facebook - Followers | 100K/Day - Max 5M | Hidden | 0–30 Min Start | Instant - Lifetime Refill ♻️", rate: 75.6208, avgTime: "0–30 Min Start" }
+        ]
+      },
+      // নতুন যোগ করা ক্যাটাগরি ২: 🇮🇳 Indian Facebook Followers
+      "Indian Facebook Followers": {
+        name: "🇮🇳 𝐈𝐧𝐝𝐢𝐚𝐧 𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐅𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬",
+        services: [
+          { id: "4173", name: "Facebook - Page Likes + Followers [Indian] ~ 5k+/day ~ | 0–6 Hours | Start ~ REFILL 30D", rate: 189.2878, avgTime: "0–6 Hours" },
+          { id: "9020", name: "Facebook - Page Likes + Followers [Indian] ~1k-5k/day ~ | 0–4Hours | LifeTime", rate: 279.8231, avgTime: "0–4 Hours" }
+        ]
+      },
       "🇮🇳 Real Video Views Facebook - High Quality": {
         name: "🇮🇳 𝐑𝐞𝐚𝐥 𝐕𝐢𝐝𝐞𝐨 𝐕𝐢𝐞𝐰𝐬 𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 - 𝐇𝐢𝐠𝐡 𝐐𝐮𝐚𝐥𝐢𝐭𝐲",
         services: [

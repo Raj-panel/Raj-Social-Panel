@@ -546,7 +546,7 @@ const serviceData = {
         ]
     },
     facebook: { 
-        "👥 PAGE/PROFILE Followers Non-Drop / Refill": [
+        "👥 PAGE/PROFILE Followers Non-Drop": [
             { name: "200 Followers", price: 20, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
             { name: "1k followers", price: 99, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
             { name: "3k followers", price: 269, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
@@ -556,7 +556,7 @@ const serviceData = {
             { name: "20k Followers", price: 1399, badge: "MEGA DEAL", badgeClass: "badge-super", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" }
         ],
         "👤 REAL-ACTIVE Followers": [
-            { type: "custom", name: "High Quality Facebook Followers • ♻️ Lifetime Refill • 100K+/Day •Start in 40 Min", pricePer1000: 249 }
+            { type: "custom", name: "High Quality Facebook Followers •Non-Drop♻️ Lifetime Refill • 100K+/Day •Start in 40 Min", pricePer1000: 249 }
         ],
         "👍 Like Life-Time Refill ♻️": [
             { name: "100 Likes", price: 15, badge: "STARTER", badgeClass: "badge-demo", desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" },

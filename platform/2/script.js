@@ -145,6 +145,15 @@ const platformData = {
           { id: "6583", name: "Facebook - Views | 50K/Day - Max 100K | Real High Quality | Instant | 0–30 Min Start | Lifetime Refill ♻️", rate: 17.5500, avgTime: "0–30 Min Start" }
         ]
       },
+      "Facebook post Like": {
+        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐩𝐨𝐬𝐭 𝐋𝐢𝐤𝐞 𝐍𝐨𝐧-𝐃𝐫𝐨𝐩",
+        services: [
+          { id: "760", name: "Facebook Post Likes | High Quality Non-Drop | 100K+ Per Day | 60 Days Refill♻️ | 0–10 Minutes Start", rate: 60.961, avgTime: "0–10 Minutes Start" },
+          { id: "761", name: "Facebook Post Likes | High Quality Non-Drop | 100K+ Per Day | 90 Days Refill♻️ | 0–10 Minutes Start", rate: 67.948, avgTime: "0–10 Minutes Start" },
+          { id: "365", name: "Facebook Post Likes | High Quality Non-Drop | 100K+ Per Day | 365 Days Refill ♻️| 0–10 Minutes Start", rate: 75.345, avgTime: "0–10 Minutes Start" },
+          { id: "366", name: "Facebook Post Likes | High Quality Non-Drop | 100K+ Per Day | Lifetime Refill♻️ | 0–10 Minutes Start", rate: 80.538, avgTime: "0–10 Minutes Start" }
+        ]
+      },
       "Facebook - Post Reactions mix | Cheapest Rate": {
         name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 - 𝐏𝐨𝐬𝐭 𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 𝐦𝐢𝐱~ 𝐋𝐨𝐰 𝐑𝐚𝐭𝐞",
         services: [

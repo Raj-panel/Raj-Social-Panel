@@ -122,7 +122,7 @@ const platformData = {
         ]
       },
       // নতুন যোগ করা ক্যাটাগরি ১: Hidden Facebook followers
-      "Hidden Facebook followers": {
+      "🕵️ Hidden Facebook followers 𝗣𝗥𝗢𝗩𝗜𝗗𝗘": {
         name: "𝐇𝐢𝐝𝐝𝐞𝐧 𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬",
         services: [
           { id: "14252", name: "Facebook - Followers | 100K/Day - Max 5M | Hidden | Instant | 0–30 Min Start | - 30D Refill♻️", rate: 69.3121, avgTime: "0–30 Min Start" },

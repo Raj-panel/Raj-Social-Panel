@@ -105,28 +105,28 @@ const platformData = {
     linkPlaceholder: "Link Facebook page or profile",
     categories: {
       "Facebook - Followers | HQ - Cheapest Price": {
-        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 - 𝐅𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬 | 𝐇𝐐 - 𝐂𝐡𝐞𝐚𝐩𝐞𝐬𝐭 𝐏𝐫𝐢𝐜𝐞",
+        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 - 𝐅𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬 | 𝐁𝐨𝐭 - 𝐍𝐨𝐧-𝐃𝐫𝐨𝐩",
         services: [
-          { id: "4501", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | 60D Refill", rate: 23.8875, avgTime: "0–30 Min Start" },
-          { id: "4502", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | 90D Refill", rate: 24.9025, avgTime: "0–30 Min Start" },
-          { id: "5988", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | 365D Refill ♻️", rate: 25.9975, avgTime: "0–30 Min Start" },
-          { id: "5989", name: "Facebook Followers | 100K/Day | Max 1M | Global Name | Instant | 0–30 Min Start | Lifetime Refill♻️", rate: 30.8425, avgTime: "0–30 Min Start" }
+          { id: "4501", name: "Facebook Followers | 100K/Day | Max 1M | Non-Drop | Instant | 0–30 Min Start | 60D Refill", rate: 23.8875, avgTime: "0–30 Min Start" },
+          { id: "4502", name: "Facebook Followers | 100K/Day | Max 1M | Non-Drop | Instant | 0–30 Min Start | 90D Refill", rate: 24.9025, avgTime: "0–30 Min Start" },
+          { id: "5988", name: "Facebook Followers | 100K/Day | Max 1M | Non-Drop | Instant | 0–30 Min Start | 365D Refill ♻️", rate: 25.9975, avgTime: "0–30 Min Start" },
+          { id: "5989", name: "Facebook Followers | 100K/Day | Max 1M | Non-Drop | Instant | 0–30 Min Start | Lifetime Refill♻️", rate: 30.8425, avgTime: "0–30 Min Start" }
         ]
       },
       "Facebook follower real account medium speed": {
-        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫 𝐑𝐞𝐚𝐥 𝐀𝐜𝐜𝐨𝐮𝐧𝐭 [𝐍𝐨𝐧-𝐃𝐫𝐨𝐩]",
+        name: "𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫 𝐌𝐢𝐱𝐞𝐝 𝐀𝐜𝐜𝐨𝐮𝐧𝐭 [𝐍𝐨𝐧-𝐃𝐫𝐨𝐩]",
         services: [
-          { id: "6426", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts| 0–30 Min Start | 90D Refill ♻️", rate: 40.4272, avgTime: "0–30 Min Start" },
-          { id: "6427", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts| 0–30 Min Start | 365D Refill ♻️", rate: 45.0640, avgTime: "0–30 Min Start" },
-          { id: "6428", name: "Facebook - Followers | 100K/Day - Max 100K | Real Accounts| 0–30 Min Start | Lifetime Refill ♻️", rate: 53.7008, avgTime: "0–30 Min Start" },
+          { id: "6426", name: "Facebook - Followers | 100K/Day - Max 100K | Non-Drop Mix Accounts| 0–30 Min Start | 90D Refill ♻️", rate: 40.4272, avgTime: "0–30 Min Start" },
+          { id: "6427", name: "Facebook - Followers | 100K/Day - Max 100K | Non-Drop Mix Accounts| 0–30 Min Start | 365D Refill ♻️", rate: 45.0640, avgTime: "0–30 Min Start" },
+          { id: "6428", name: "Facebook - Followers | 100K/Day - Max 100K | Non-Drop Mix Accounts| 0–30 Min Start | Lifetime Refill ♻️", rate: 53.7008, avgTime: "0–30 Min Start" },
         ]
       },
       // নতুন যোগ করা ক্যাটাগরি ১: Hidden Facebook followers
       "Hidden Facebook followers": {
         name: "🕵️ 𝐇𝐢𝐝𝐝𝐞𝐧 𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬 𝗣𝗥𝗢𝗩𝗜𝗗𝗘",
         services: [
-          { id: "14252", name: "Facebook - Followers | 100K/Day - Max 5M | Hidden | Instant | 0–30 Min Start | - 30D Refill♻️", rate: 69.3121, avgTime: "0–30 Min Start" },
-          { id: "14256", name: "Facebook - Followers | 100K/Day - Max 5M | Hidden | 0–30 Min Start | Instant - Lifetime Refill ♻️", rate: 75.6208, avgTime: "0–30 Min Start" }
+          { id: "14252", name: "Facebook - Followers | 100K/Day - Max 5M | Hidden | Instant | 0–3 Hours Start | - 30D Refill♻️", rate: 75.3121, avgTime: "0–30 Min Start" },
+          { id: "14256", name: "Facebook - Followers | 100K/Day - Max 5M | Hidden | 0–3 Hours Start | Instant - Lifetime Refill ♻️", rate: 82.6208, avgTime: "0–30 Min Start" }
         ]
       },
       // নতুন যোগ করা ক্যাটাগরি ২: 🇮🇳 Indian Facebook Followers
@@ -150,8 +150,8 @@ const platformData = {
         services: [
           { id: "760", name: "Facebook Post Likes | High Quality Non-Drop | 100K+ Per Day | 60 Days Refill♻️ | 0–10 Minutes Start", rate: 60.961, avgTime: "0–10 Minutes Start" },
           { id: "761", name: "Facebook Post Likes | High Quality Non-Drop | 100K+ Per Day | 90 Days Refill♻️ | 0–10 Minutes Start", rate: 67.948, avgTime: "0–10 Minutes Start" },
-          { id: "365", name: "Facebook Post Likes | High Quality Non-Drop | 100K+ Per Day | 365 Days Refill ♻️| 0–10 Minutes Start", rate: 75.345, avgTime: "0–10 Minutes Start" },
-          { id: "366", name: "Facebook Post Likes | High Quality Non-Drop | 100K+ Per Day | Lifetime Refill♻️ | 0–10 Minutes Start", rate: 80.538, avgTime: "0–10 Minutes Start" }
+          { id: "365", name: "Facebook Post Likes | High Quality Non-Drop | 100K+ Per Day | 365 Days Refill ♻️| 0–10 Minutes Start", rate: 71.345, avgTime: "0–10 Minutes Start" },
+          { id: "366", name: "Facebook Post Likes | High Quality Non-Drop | 100K+ Per Day | Lifetime Refill♻️ | 0–10 Minutes Start", rate: 70.538, avgTime: "0–10 Minutes Start" }
         ]
       },
       "Facebook - Post Reactions mix | Cheapest Rate": {

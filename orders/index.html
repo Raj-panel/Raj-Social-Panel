@@ -6,6 +6,56 @@
     <title>My Orders - Raj SMM Panel</title>
     <!-- STYLE 08 EXTERNAL STYLESHEET (NO INLINE CSS) -->
     <link rel="stylesheet" href="./stylish.css">
+    <style>
+        /* Multi-select extra UI styling */
+        .selection-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1e1e2f;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            color: #fff;
+            font-size: 14px;
+        }
+        .selection-toolbar label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        .btn-copy-selected {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .btn-copy-selected:hover {
+            background: #4338ca;
+        }
+        .order-card-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        .order-card-wrapper .order-card {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        .order-checkbox {
+            width: 18px;
+            height: 18px;
+            margin-top: 20px;
+            cursor: pointer;
+            accent-color: #4f46e5;
+        }
+    </style>
 </head>
 <body>
 
@@ -53,6 +103,14 @@
             </div>
         </section>
 
+        <!-- Multi-select Toolbar -->
+        <div class="selection-toolbar">
+            <label>
+                <input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll(this)"> Select All Visible
+            </label>
+            <button class="btn-copy-selected" onclick="copySelectedOrderIds()">Copy Selected IDs</button>
+        </div>
+
         <!-- Orders Container (IDs Preserved for JavaScript Rendering) -->
         <div id="orders-container" class="orders-list-container">
             <!-- Dynamic Order Cards Inject Here -->
@@ -72,12 +130,10 @@
         &copy; 2026 Raj SMM Panel. All rights reserved.
     </footer>
 
-    <!-- Order Logic & Management Script (UPDATED BUSINESS LOGIC) -->
+    <!-- Order Logic & Management Script (UPDATED WITH MULTI-SELECT & COPY) -->
     <script>
         /**
          * User Identifier Utility
-         * - Firebase UID: window.firebaseUserUid
-         * - Browser ID: Stored in localStorage as 'raj_smm_browser_id'
          */
         function getUserIdentifier() {
             if (typeof window.firebaseUserUid !== 'undefined' && window.firebaseUserUid) {
@@ -95,8 +151,8 @@
          * Calculate Automatic Status based on Order Time
          * - 0 to 20 minutes: Pending
          * - 20 minutes to 120 minutes: In Progress
-         * - 120 minutes to 1200 minutes (or up to 7 hours): Processing
-         * - After 7 hours (420 minutes): Completed
+         * - 120 minutes to 420 minutes (7 hours): Processing
+         * - After 7 hours: Completed
          */
         function calculateOrderStatus(orderTimeEpoch) {
             const now = Date.now();
@@ -107,7 +163,7 @@
                 return { label: 'Pending', cssClass: 'status-pill-Pending' };
             } else if (elapsedMinutes < 120) {
                 return { label: 'In Progress', cssClass: 'status-pill-In-Progress' };
-            } else if (elapsedMinutes < 420) { // ৭ ঘণ্টা = ৪২০ মিনিট (এবং ১২০০ মিনিটের সীমার মধ্যে কার্যকরী)
+            } else if (elapsedMinutes < 420) { 
                 return { label: 'Processing', cssClass: 'status-pill-Processing' };
             } else {
                 return { label: 'Completed', cssClass: 'status-pill-Completed' };
@@ -124,7 +180,6 @@
             const currentUser = getUserIdentifier();
             const allOrders = JSON.parse(localStorage.getItem('raj_smm_orders') || '[]');
 
-            // Filter orders belonging strictly to current user identifier
             const userOrders = allOrders.filter(order => order.userIdentifier === currentUser);
 
             if (userOrders.length === 0) {
@@ -136,7 +191,6 @@
             noOrdersState.classList.add('hidden');
             container.innerHTML = '';
 
-            // Sort orders descending (newest first)
             userOrders.sort((a, b) => b.orderTimeEpoch - a.orderTimeEpoch);
 
             userOrders.forEach(order => {
@@ -145,48 +199,82 @@
                     month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit'
                 });
 
-                const card = document.createElement('div');
-                card.className = 'order-card order-item-node';
-                card.setAttribute('data-status', status.label);
-                card.setAttribute('data-id', order.orderId || '');
-                card.setAttribute('data-service', (order.serviceName || '').toLowerCase());
+                // Wrapper to hold checkbox + card together side-by-side
+                const wrapper = document.createElement('div');
+                wrapper.className = 'order-card-wrapper order-item-node';
+                wrapper.setAttribute('data-status', status.label);
+                wrapper.setAttribute('data-id', order.orderId || '');
+                wrapper.setAttribute('data-service', (order.serviceName || '').toLowerCase());
 
-                card.innerHTML = `
-                    <div class="card-header-row">
-                        <div class="order-id-wrapper">
-                            <span class="order-id-label">Order ID</span>
-                            <h4 class="order-id-value">#${order.orderId}</h4>
-                        </div>
-                        <div class="status-pill ${status.cssClass}">
-                            <span class="status-pill-dot"></span>
-                            ${status.label}
-                        </div>
-                    </div>
-
-                    <div class="card-body-content">
-                        <div class="detail-block-full">
-                            <span class="detail-label">Service Name</span>
-                            <span class="service-title-value">${order.serviceName}</span>
+                wrapper.innerHTML = `
+                    <input type="checkbox" class="order-checkbox" value="${order.orderId}">
+                    <div class="order-card">
+                        <div class="card-header-row">
+                            <div class="order-id-wrapper">
+                                <span class="order-id-label">Order ID</span>
+                                <h4 class="order-id-value">#${order.orderId}</h4>
+                            </div>
+                            <div class="status-pill ${status.cssClass}">
+                                <span class="status-pill-dot"></span>
+                                ${status.label}
+                            </div>
                         </div>
 
-                        <div class="card-details-grid">
+                        <div class="card-body-content">
                             <div class="detail-block-full">
-                                <span class="detail-label">Quantity</span>
-                                <span class="quantity-value-badge">${order.quantity}</span>
+                                <span class="detail-label">Service Name</span>
+                                <span class="service-title-value">${order.serviceName}</span>
                             </div>
-                            <div class="target-link-wrapper">
-                                <span class="detail-label">Target Link</span>
-                                <a href="${order.link}" target="_blank" rel="noopener noreferrer" class="target-link-anchor">${order.link}</a>
+
+                            <div class="card-details-grid">
+                                <div class="detail-block-full">
+                                    <span class="detail-label">Quantity</span>
+                                    <span class="quantity-value-badge">${order.quantity}</span>
+                                </div>
+                                <div class="target-link-wrapper">
+                                    <span class="detail-label">Target Link</span>
+                                    <a href="${order.link}" target="_blank" rel="noopener noreferrer" class="target-link-anchor">${order.link}</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="card-footer-row">
-                        <span>${formattedDate}</span>
-                        <span class="price-tag-value">₹${order.amount}</span>
+                        <div class="card-footer-row">
+                            <span>${formattedDate}</span>
+                            <span class="price-tag-value">₹${order.amount}</span>
+                        </div>
                     </div>
                 `;
-                container.appendChild(card);
+                container.appendChild(wrapper);
+            });
+        }
+
+        /**
+         * Select All / Deselect All functionality
+         */
+        function toggleSelectAll(selectAllCheckbox) {
+            const visibleCheckboxes = document.querySelectorAll('.order-item-node:not([style*="display: none"]) .order-checkbox');
+            visibleCheckboxes.forEach(checkbox => {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+        }
+
+        /**
+         * Copy Selected Order IDs to Clipboard
+         */
+        function copySelectedOrderIds() {
+            const checkedBoxes = document.querySelectorAll('.order-item-node:not([style*="display: none"]) .order-checkbox:checked');
+            if (checkedBoxes.length === 0) {
+                alert('Please select at least one order ID to copy!');
+                return;
+            }
+
+            const ids = Array.from(checkedBoxes).map(cb => cb.value);
+            const textToCopy = ids.join(', ');
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert(`Successfully copied ${ids.length} order ID(s): ${textToCopy}`);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
             });
         }
 
@@ -200,7 +288,7 @@
                 const id = card.getAttribute('data-id').toLowerCase();
                 const service = card.getAttribute('data-service').toLowerCase();
                 if (id.includes(query) || service.includes(query)) {
-                    card.style.display = "block";
+                    card.style.display = "flex";
                 } else {
                     card.style.display = "none";
                 }
@@ -223,11 +311,14 @@
             const cards = document.querySelectorAll('.order-item-node');
             cards.forEach(card => {
                 if (status === 'all' || card.getAttribute('data-status') === status) {
-                    card.style.display = "block";
+                    card.style.display = "flex";
                 } else {
                     card.style.display = "none";
                 }
             });
+
+            // Reset select all checkbox when changing tabs
+            document.getElementById('selectAllCheckbox').checked = false;
         }
 
         // Initialize render on page load

@@ -792,7 +792,7 @@ function showModernPopup(title, message, type = 'success') {
   };
 }
 
-// PLATFORM 2 - BACKEND ORDER SUBMISSION (ডবল অর্ডার সমস্যা সমাধানের জন্য সংশোধিত কোড)
+// PLATFORM 2 - BACKEND ORDER SUBMISSION
 async function sendOrderToTelegram() {
   const mainLink = document.getElementById("mainLinkInput");
   const checkoutTxn = document.getElementById("checkoutTxnId");
@@ -836,9 +836,6 @@ async function sendOrderToTelegram() {
     showModernPopup("Error!", "Please enter a valid quantity.", "error");
     return;
   }
-
-  // ডবল ক্লিক বা একাধিক সাবমিট রোধ করার জন্য বাটন চেক
-  if (submitBtn && submitBtn.disabled) return;
 
   let userIdentifier = localStorage.getItem("raj_smm_browser_id");
 
@@ -885,7 +882,7 @@ async function sendOrderToTelegram() {
           userId: userIdentifier,
           platform: "platform2",
           serviceId: serviceId,
-          serviceName: service, // সার্ভিস নামের সাথে এক্সট্রা ক্যাটেগরি বা প্রাইস ডবল যোগ হওয়া রোধ করা হয়েছে
+          serviceName: `${service} (${categoryText})`,
           link: link,
           quantity: quantity,
           amount: amount,
@@ -908,11 +905,11 @@ async function sendOrderToTelegram() {
 
     const backendOrder = data.order || {};
 
-    // ব্যাকএন্ড থেকে প্রাপ্ত ইউনিক অর্ডার আইডি বা ইন্টারনাল আইডি ব্যবহার করা হচ্ছে যাতে দুটি আলাদা আইডি জেনারেট না হয়
-    const generatedOrderId = backendOrder.orderId || backendOrder.internalOrderId || `#ORD-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
+    // শুধুমাত্র কাস্টম অর্ডার আইডিটি সেভ করার জন্য আপডেট করা হলো
+    const customOrderId = `#ORD-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
 
     const localOrder = {
-      orderId: generatedOrderId.startsWith('#') ? generatedOrderId : `#${generatedOrderId}`,
+      orderId: customOrderId,
       serviceName: service,
       category: categoryText,
       link: link,
@@ -928,16 +925,12 @@ async function sendOrderToTelegram() {
       localStorage.getItem("raj_smm_orders") || "[]"
     );
 
-    // ডুপ্লিকেট এন্ট্রি চেক: একই ট্রানজেকশন আইডি বা লিংক দিয়ে ইতিমধ্যে লোকাল স্টোরেজে অর্ডার থাকলে তা আবার পুশ করবে না
-    const isDuplicate = existingOrders.some(ord => ord.transactionId === utr && ord.link === link);
-    
-    if (!isDuplicate) {
-      existingOrders.push(localOrder);
-      localStorage.setItem(
-        "raj_smm_orders",
-        JSON.stringify(existingOrders)
-      );
-    }
+    existingOrders.push(localOrder);
+
+    localStorage.setItem(
+      "raj_smm_orders",
+      JSON.stringify(existingOrders)
+    );
 
     showModernPopup(
       "Success!",

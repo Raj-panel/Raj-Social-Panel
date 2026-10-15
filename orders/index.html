@@ -44,26 +44,12 @@
                 <input type="text" id="orderSearchInput" onkeyup="filterOrdersBySearch()" placeholder="Search by Order ID or Service Name..." class="search-input">
             </div>
 
-            <div class="filter-tabs-container" style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between;">
-                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                    <button onclick="filterOrdersByStatus('all')" class="tab-btn active" data-filter="all">All Orders</button>
-                    <button onclick="filterOrdersByStatus('Completed')" class="tab-btn" data-filter="Completed">Completed</button>
-                    <button onclick="filterOrdersByStatus('Pending')" class="tab-btn" data-filter="Pending">Pending</button>
-                    <button onclick="filterOrdersByStatus('In Progress')" class="tab-btn" data-filter="In Progress">In Progress</button>
-                    <button onclick="filterOrdersByStatus('Processing')" class="tab-btn" data-filter="Processing">Processing</button>
-                </div>
-                <div>
-                    <button onclick="toggleBulkSelectMode()" id="bulkSelectToggleBtn" class="tab-btn" style="background-color: #4f46e5; color: #ffffff; border-color: #4f46e5;">Select</button>
-                </div>
-            </div>
-
-            <!-- Bulk Actions Bar (Hidden by Default) -->
-            <div id="bulkActionsBar" class="hidden" style="margin-top: 12px; padding: 10px 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
-                <span id="selectedCountText" style="font-size: 14px; font-weight: 500; color: #334155;">0 orders selected</span>
-                <div style="display: flex; gap: 8px;">
-                    <button onclick="selectAllVisibleOrders()" class="tab-btn" style="padding: 6px 12px; font-size: 13px;">Select All</button>
-                    <button onclick="copySelectedOrders()" class="tab-btn" style="padding: 6px 12px; font-size: 13px; background-color: #10b981; color: #ffffff; border-color: #10b981;">Copy Selected</button>
-                </div>
+            <div class="filter-tabs-container">
+                <button onclick="filterOrdersByStatus('all')" class="tab-btn active" data-filter="all">All Orders</button>
+                <button onclick="filterOrdersByStatus('Completed')" class="tab-btn" data-filter="Completed">Completed</button>
+                <button onclick="filterOrdersByStatus('Pending')" class="tab-btn" data-filter="Pending">Pending</button>
+                <button onclick="filterOrdersByStatus('In Progress')" class="tab-btn" data-filter="In Progress">In Progress</button>
+                <button onclick="filterOrdersByStatus('Processing')" class="tab-btn" data-filter="Processing">Processing</button>
             </div>
         </section>
 
@@ -88,8 +74,6 @@
 
     <!-- Order Logic & Management Script (UPDATED BUSINESS LOGIC) -->
     <script>
-        let isBulkSelectActive = false;
-
         /**
          * User Identifier Utility
          * - Firebase UID: window.firebaseUserUid
@@ -109,6 +93,10 @@
 
         /**
          * Calculate Automatic Status based on Order Time
+         * - 0 to 20 minutes: Pending
+         * - 20 minutes to 120 minutes: In Progress
+         * - 120 minutes to 1200 minutes (or up to 7 hours): Processing
+         * - After 7 hours (420 minutes): Completed
          */
         function calculateOrderStatus(orderTimeEpoch) {
             const now = Date.now();
@@ -119,90 +107,11 @@
                 return { label: 'Pending', cssClass: 'status-pill-Pending' };
             } else if (elapsedMinutes < 120) {
                 return { label: 'In Progress', cssClass: 'status-pill-In-Progress' };
-            } else if (elapsedMinutes < 420) {
+            } else if (elapsedMinutes < 420) { // ৭ ঘণ্টা = ৪২০ মিনিট (এবং ১২০০ মিনিটের সীমার মধ্যে কার্যকরী)
                 return { label: 'Processing', cssClass: 'status-pill-Processing' };
             } else {
                 return { label: 'Completed', cssClass: 'status-pill-Completed' };
             }
-        }
-
-        /**
-         * Copy Single Order ID to Clipboard
-         */
-        function copySingleOrderId(orderId, event) {
-            if (event) event.stopPropagation();
-            navigator.clipboard.writeText(orderId).then(() => {
-                alert('Order ID #' + orderId + ' copied to clipboard!');
-            }).catch(err => {
-                console.error('Failed to copy order ID: ', err);
-            });
-        }
-
-        /**
-         * Toggle Bulk Selection Mode
-         */
-        function toggleBulkSelectMode() {
-            isBulkSelectActive = !isBulkSelectActive;
-            const toggleBtn = document.getElementById('bulkSelectToggleBtn');
-            const bulkBar = document.getElementById('bulkActionsBar');
-
-            if (isBulkSelectActive) {
-                toggleBtn.style.background = '#3730a3';
-                toggleBtn.textContent = 'Cancel Selection';
-                bulkBar.classList.remove('hidden');
-            } else {
-                toggleBtn.style.background = '#4f46e5';
-                toggleBtn.textContent = 'Select';
-                bulkBar.classList.add('hidden');
-                // Uncheck all checkboxes when closing mode
-                document.querySelectorAll('.order-checkbox').forEach(cb => cb.checked = false);
-            }
-            renderOrders();
-        }
-
-        /**
-         * Update Selected Count Display
-         */
-        function updateSelectedCount() {
-            const checkedBoxes = document.querySelectorAll('.order-checkbox:checked');
-            const countText = document.getElementById('selectedCountText');
-            if (countText) {
-                countText.textContent = checkedBoxes.length + ' orders selected';
-            }
-        }
-
-        /**
-         * Select All Currently Visible Orders
-         */
-        function selectAllVisibleOrders() {
-            const visibleCards = document.querySelectorAll('.order-item-node');
-            visibleCards.forEach(card => {
-                if (card.style.display !== 'none') {
-                    const cb = card.querySelector('.order-checkbox');
-                    if (cb) cb.checked = true;
-                }
-            });
-            updateSelectedCount();
-        }
-
-        /**
-         * Copy Selected Orders to Clipboard
-         */
-        function copySelectedOrders() {
-            const checkedBoxes = document.querySelectorAll('.order-checkbox:checked');
-            if (checkedBoxes.length === 0) {
-                alert('Please select at least one order to copy!');
-                return;
-            }
-
-            const orderIds = Array.from(checkedBoxes).map(cb => cb.getAttribute('data-order-id'));
-            const textToCopy = orderIds.join('\n');
-
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                alert(orderIds.length + ' Order IDs copied to clipboard successfully!');
-            }).catch(err => {
-                console.error('Failed to copy selected orders: ', err);
-            });
         }
 
         /**
@@ -242,31 +151,15 @@
                 card.setAttribute('data-id', order.orderId || '');
                 card.setAttribute('data-service', (order.serviceName || '').toLowerCase());
 
-                // Checkbox display logic based on bulk select state
-                const checkboxHtml = isBulkSelectActive ? `
-                    <div style="margin-right: 12px; display: flex; align-items: center;">
-                        <input type="checkbox" class="order-checkbox" data-order-id="${order.orderId}" onchange="updateSelectedCount()" style="width: 18px; height: 18px; cursor: pointer;">
-                    </div>
-                ` : '';
-
                 card.innerHTML = `
-                    <div class="card-header-row" style="display: flex; align-items: center;">
-                        ${checkboxHtml}
-                        <div class="order-id-wrapper" style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-                            <div>
-                                <span class="order-id-label">Order ID</span>
-                                <h4 class="order-id-value" style="display: inline-block; margin-left: 6px;">#${order.orderId}</h4>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 12px;">
-                                <button onclick="copySingleOrderId('${order.orderId}', event)" title="Copy Order ID" style="background: transparent; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 12px; color: #475569; display: flex; align-items: center; gap: 4px;">
-                                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                                    Copy
-                                </button>
-                                <div class="status-pill ${status.cssClass}">
-                                    <span class="status-pill-dot"></span>
-                                    ${status.label}
-                                </div>
-                            </div>
+                    <div class="card-header-row">
+                        <div class="order-id-wrapper">
+                            <span class="order-id-label">Order ID</span>
+                            <h4 class="order-id-value">#${order.orderId}</h4>
+                        </div>
+                        <div class="status-pill ${status.cssClass}">
+                            <span class="status-pill-dot"></span>
+                            ${status.label}
                         </div>
                     </div>
 
@@ -295,10 +188,6 @@
                 `;
                 container.appendChild(card);
             });
-
-            if (isBulkSelectActive) {
-                updateSelectedCount();
-            }
         }
 
         /**

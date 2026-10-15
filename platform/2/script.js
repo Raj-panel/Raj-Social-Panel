@@ -121,7 +121,6 @@ const platformData = {
           { id: "6428", name: "Facebook - Followers | 100K/Day - Max 100K | Non-Drop Mix Accounts| 0–30 Min Start | Lifetime Refill ♻️", rate: 53.7008, avgTime: "0–30 Min Start" },
         ]
       },
-      // নতুন যোগ করা ক্যাটাগরি ১: Hidden Facebook followers
       "Hidden Facebook followers": {
         name: "🕵️ 𝐇𝐢𝐝𝐝𝐞𝐧 𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬 𝗣𝗥𝗢𝗩𝗜𝗗𝗘",
         services: [
@@ -129,7 +128,6 @@ const platformData = {
           { id: "14256", name: "Facebook - Followers | 100K/Day - Max 5M | Hidden | 0–3 Hours Start | Instant - Lifetime Refill ♻️", rate: 82.6208, avgTime: "0–30 Min Start" }
         ]
       },
-      // নতুন যোগ করা ক্যাটাগরি ২: 🇮🇳 Indian Facebook Followers
       "Indian Facebook Followers": {
         name: "🇮🇳 𝐈𝐧𝐝𝐢𝐚𝐧 𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐅𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬",
         services: [
@@ -564,10 +562,7 @@ function openCheckout() {
   if (checkoutTitle) checkoutTitle.innerText = selectedText.split(' - ₹')[0];
   if (checkoutPrice) checkoutPrice.innerText = calculatedPrice;
 
-  // Generate QR code when checkout opens
   generateUpiQrCode();
-
-  // Reset payment method view to UPI by default when opening checkout
   switchCheckoutPayment('upi');
 
   const checkoutPage = document.getElementById("checkoutPage");
@@ -645,11 +640,9 @@ function switchCheckoutPayment(method) {
   if (method === 'binance') {
     if (upiView) upiView.classList.add('hidden');
     
-    // Binance View-তে GitHub-এর নির্দিষ্ট QR Image লোড করার লজিক
     if (binanceView) {
       binanceView.classList.remove('hidden');
       
-      // যদি আগে থেকে Binance QR কন্টেইনারে ইমেজ না থাকে, তবে তৈরি করে দিন
       if (!document.getElementById('binanceCustomQrImg')) {
         binanceView.innerHTML = `
           <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px;">
@@ -674,7 +667,6 @@ function switchCheckoutPayment(method) {
     if (txnLabel) txnLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
     if (txnInput) txnInput.placeholder = "e.g. 4029XXXXXXXXXX (12-Digit UTR)";
 
-    // Re-trigger QR code generation on returning to UPI view
     generateUpiQrCode();
   }
 }
@@ -800,7 +792,7 @@ function showModernPopup(title, message, type = 'success') {
   };
 }
 
-// PLATFORM 2 - BACKEND ORDER SUBMISSION
+// PLATFORM 2 - BACKEND ORDER SUBMISSION (ডবল অর্ডার সমস্যা সমাধানের জন্য সংশোধিত কোড)
 async function sendOrderToTelegram() {
   const mainLink = document.getElementById("mainLinkInput");
   const checkoutTxn = document.getElementById("checkoutTxnId");
@@ -844,6 +836,9 @@ async function sendOrderToTelegram() {
     showModernPopup("Error!", "Please enter a valid quantity.", "error");
     return;
   }
+
+  // ডবল ক্লিক বা একাধিক সাবমিট রোধ করার জন্য বাটন চেক
+  if (submitBtn && submitBtn.disabled) return;
 
   let userIdentifier = localStorage.getItem("raj_smm_browser_id");
 
@@ -890,7 +885,7 @@ async function sendOrderToTelegram() {
           userId: userIdentifier,
           platform: "platform2",
           serviceId: serviceId,
-          serviceName: `${service} (${categoryText})`,
+          serviceName: service, // সার্ভিস নামের সাথে এক্সট্রা ক্যাটেগরি বা প্রাইস ডবল যোগ হওয়া রোধ করা হয়েছে
           link: link,
           quantity: quantity,
           amount: amount,
@@ -913,11 +908,11 @@ async function sendOrderToTelegram() {
 
     const backendOrder = data.order || {};
 
-    const localOrder = {
-      orderId:
-        backendOrder.internalOrderId ||
-        Math.floor(100000 + Math.random() * 900000),
+    // ব্যাকএন্ড থেকে প্রাপ্ত ইউনিক অর্ডার আইডি বা ইন্টারনাল আইডি ব্যবহার করা হচ্ছে যাতে দুটি আলাদা আইডি জেনারেট না হয়
+    const generatedOrderId = backendOrder.orderId || backendOrder.internalOrderId || `#ORD-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
 
+    const localOrder = {
+      orderId: generatedOrderId.startsWith('#') ? generatedOrderId : `#${generatedOrderId}`,
       serviceName: service,
       category: categoryText,
       link: link,
@@ -933,12 +928,16 @@ async function sendOrderToTelegram() {
       localStorage.getItem("raj_smm_orders") || "[]"
     );
 
-    existingOrders.push(localOrder);
-
-    localStorage.setItem(
-      "raj_smm_orders",
-      JSON.stringify(existingOrders)
-    );
+    // ডুপ্লিকেট এন্ট্রি চেক: একই ট্রানজেকশন আইডি বা লিংক দিয়ে ইতিমধ্যে লোকাল স্টোরেজে অর্ডার থাকলে তা আবার পুশ করবে না
+    const isDuplicate = existingOrders.some(ord => ord.transactionId === utr && ord.link === link);
+    
+    if (!isDuplicate) {
+      existingOrders.push(localOrder);
+      localStorage.setItem(
+        "raj_smm_orders",
+        JSON.stringify(existingOrders)
+      );
+    }
 
     showModernPopup(
       "Success!",

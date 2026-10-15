@@ -48,6 +48,7 @@
                 <button onclick="filterOrdersByStatus('all')" class="tab-btn active" data-filter="all">All Orders</button>
                 <button onclick="filterOrdersByStatus('Completed')" class="tab-btn" data-filter="Completed">Completed</button>
                 <button onclick="filterOrdersByStatus('Pending')" class="tab-btn" data-filter="Pending">Pending</button>
+                <button onclick="filterOrdersByStatus('In Progress')" class="tab-btn" data-filter="In Progress">In Progress</button>
                 <button onclick="filterOrdersByStatus('Processing')" class="tab-btn" data-filter="Processing">Processing</button>
             </div>
         </section>
@@ -71,7 +72,7 @@
         &copy; 2026 Raj SMM Panel. All rights reserved.
     </footer>
 
-    <!-- Order Logic & Management Script (ORIGINAL BUSINESS LOGIC) -->
+    <!-- Order Logic & Management Script (UPDATED BUSINESS LOGIC) -->
     <script>
         /**
          * User Identifier Utility
@@ -92,18 +93,21 @@
 
         /**
          * Calculate Automatic Status based on Order Time
-         * - 0 to 5 minutes: Pending
-         * - 5 minutes to 1 hour: Processing
-         * - After 1 hour: Completed
+         * - 0 to 20 minutes: Pending
+         * - 20 minutes to 120 minutes: In Progress
+         * - 120 minutes to 1200 minutes (or up to 7 hours): Processing
+         * - After 7 hours (420 minutes): Completed
          */
         function calculateOrderStatus(orderTimeEpoch) {
             const now = Date.now();
             const elapsedMs = now - orderTimeEpoch;
             const elapsedMinutes = elapsedMs / (1000 * 60);
 
-            if (elapsedMinutes < 5) {
+            if (elapsedMinutes < 20) {
                 return { label: 'Pending', cssClass: 'status-pill-Pending' };
-            } else if (elapsedMinutes < 60) {
+            } else if (elapsedMinutes < 120) {
+                return { label: 'In Progress', cssClass: 'status-pill-In-Progress' };
+            } else if (elapsedMinutes < 420) { // ৭ ঘণ্টা = ৪২০ মিনিট (এবং ১২০০ মিনিটের সীমার মধ্যে কার্যকরী)
                 return { label: 'Processing', cssClass: 'status-pill-Processing' };
             } else {
                 return { label: 'Completed', cssClass: 'status-pill-Completed' };

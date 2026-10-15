@@ -121,6 +121,7 @@ const platformData = {
           { id: "6428", name: "Facebook - Followers | 100K/Day - Max 100K | Non-Drop Mix Accounts| 0–30 Min Start | Lifetime Refill ♻️", rate: 53.7008, avgTime: "0–30 Min Start" },
         ]
       },
+      // নতুন যোগ করা ক্যাটাগরি ১: Hidden Facebook followers
       "Hidden Facebook followers": {
         name: "🕵️ 𝐇𝐢𝐝𝐝𝐞𝐧 𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐟𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬 𝗣𝗥𝗢𝗩𝗜𝗗𝗘",
         services: [
@@ -128,6 +129,7 @@ const platformData = {
           { id: "14256", name: "Facebook - Followers | 100K/Day - Max 5M | Hidden | 0–3 Hours Start | Instant - Lifetime Refill ♻️", rate: 82.6208, avgTime: "0–30 Min Start" }
         ]
       },
+      // নতুন যোগ করা ক্যাটাগরি ২: 🇮🇳 Indian Facebook Followers
       "Indian Facebook Followers": {
         name: "🇮🇳 𝐈𝐧𝐝𝐢𝐚𝐧 𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 𝐅𝐨𝐥𝐥𝐨𝐰𝐞𝐫𝐬",
         services: [
@@ -562,7 +564,10 @@ function openCheckout() {
   if (checkoutTitle) checkoutTitle.innerText = selectedText.split(' - ₹')[0];
   if (checkoutPrice) checkoutPrice.innerText = calculatedPrice;
 
+  // Generate QR code when checkout opens
   generateUpiQrCode();
+
+  // Reset payment method view to UPI by default when opening checkout
   switchCheckoutPayment('upi');
 
   const checkoutPage = document.getElementById("checkoutPage");
@@ -640,9 +645,11 @@ function switchCheckoutPayment(method) {
   if (method === 'binance') {
     if (upiView) upiView.classList.add('hidden');
     
+    // Binance View-তে GitHub-এর নির্দিষ্ট QR Image লোড করার লজিক
     if (binanceView) {
       binanceView.classList.remove('hidden');
       
+      // যদি আগে থেকে Binance QR কন্টেইনারে ইমেজ না থাকে, তবে তৈরি করে দিন
       if (!document.getElementById('binanceCustomQrImg')) {
         binanceView.innerHTML = `
           <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px;">
@@ -667,6 +674,7 @@ function switchCheckoutPayment(method) {
     if (txnLabel) txnLabel.innerText = "Enter 12-Digit UPI UTR / Ref No:";
     if (txnInput) txnInput.placeholder = "e.g. 4029XXXXXXXXXX (12-Digit UTR)";
 
+    // Re-trigger QR code generation on returning to UPI view
     generateUpiQrCode();
   }
 }
@@ -905,11 +913,11 @@ async function sendOrderToTelegram() {
 
     const backendOrder = data.order || {};
 
-    // শুধুমাত্র কাস্টম অর্ডার আইডিটি সেভ করার জন্য আপডেট করা হলো
-    const customOrderId = `#ORD-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
-
     const localOrder = {
-      orderId: customOrderId,
+      orderId:
+        backendOrder.internalOrderId ||
+        Math.floor(100000 + Math.random() * 900000),
+
       serviceName: service,
       category: categoryText,
       link: link,

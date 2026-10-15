@@ -6,56 +6,6 @@
     <title>My Orders - Raj SMM Panel</title>
     <!-- STYLE 08 EXTERNAL STYLESHEET (NO INLINE CSS) -->
     <link rel="stylesheet" href="./stylish.css">
-    <style>
-        /* Multi-select extra UI styling */
-        .selection-toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #1e1e2f;
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            color: #fff;
-            font-size: 14px;
-        }
-        .selection-toolbar label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-        }
-        .btn-copy-selected {
-            background: #4f46e5;
-            color: white;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background 0.2s;
-        }
-        .btn-copy-selected:hover {
-            background: #4338ca;
-        }
-        .order-card-wrapper {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-        .order-card-wrapper .order-card {
-            flex: 1;
-            margin-bottom: 0;
-        }
-        .order-checkbox {
-            width: 18px;
-            height: 18px;
-            margin-top: 20px;
-            cursor: pointer;
-            accent-color: #4f46e5;
-        }
-    </style>
 </head>
 <body>
 
@@ -101,15 +51,15 @@
                 <button onclick="filterOrdersByStatus('In Progress')" class="tab-btn" data-filter="In Progress">In Progress</button>
                 <button onclick="filterOrdersByStatus('Processing')" class="tab-btn" data-filter="Processing">Processing</button>
             </div>
-        </section>
 
-        <!-- Multi-select Toolbar -->
-        <div class="selection-toolbar">
-            <label>
-                <input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll(this)"> Select All Visible
-            </label>
-            <button class="btn-copy-selected" onclick="copySelectedOrderIds()">Copy Selected IDs</button>
-        </div>
+            <!-- নতুন সিলেক্ট অপশন ও মাল্টিপল কপি অ্যাকশন বার -->
+            <div class="bulk-action-bar" style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding: 10px 15px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; font-weight: 500;">
+                    <input type="checkbox" id="selectAllOrders" onchange="toggleSelectAllOrders(this)"> অল সিলেক্ট
+                </label>
+                <button onclick="copySelectedOrderIds()" style="background: #3b82f6; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500;">সিলেক্টেড কপি করুন</button>
+            </div>
+        </section>
 
         <!-- Orders Container (IDs Preserved for JavaScript Rendering) -->
         <div id="orders-container" class="orders-list-container">
@@ -130,10 +80,15 @@
         &copy; 2026 Raj SMM Panel. All rights reserved.
     </footer>
 
-    <!-- Order Logic & Management Script (UPDATED WITH MULTI-SELECT & COPY) -->
+    <!-- টোস্ট নোটিফিকেশন এলিমেন্ট -->
+    <div id="copyToast" class="toast-hidden" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #0f172a; color: #fff; padding: 8px 16px; border-radius: 6px; font-size: 13px; transition: opacity 0.3s ease; z-index: 1000; opacity: 0; pointer-events: none;">কপি করা হয়েছে!</div>
+
+    <!-- Order Logic & Management Script (UPDATED BUSINESS LOGIC) -->
     <script>
         /**
          * User Identifier Utility
+         * - Firebase UID: window.firebaseUserUid
+         * - Browser ID: Stored in localStorage as 'raj_smm_browser_id'
          */
         function getUserIdentifier() {
             if (typeof window.firebaseUserUid !== 'undefined' && window.firebaseUserUid) {
@@ -151,8 +106,8 @@
          * Calculate Automatic Status based on Order Time
          * - 0 to 20 minutes: Pending
          * - 20 minutes to 120 minutes: In Progress
-         * - 120 minutes to 420 minutes (7 hours): Processing
-         * - After 7 hours: Completed
+         * - 120 minutes to 1200 minutes (or up to 7 hours): Processing
+         * - After 7 hours (420 minutes): Completed
          */
         function calculateOrderStatus(orderTimeEpoch) {
             const now = Date.now();
@@ -163,7 +118,7 @@
                 return { label: 'Pending', cssClass: 'status-pill-Pending' };
             } else if (elapsedMinutes < 120) {
                 return { label: 'In Progress', cssClass: 'status-pill-In-Progress' };
-            } else if (elapsedMinutes < 420) { 
+            } else if (elapsedMinutes < 420) { // ৭ ঘণ্টা = ৪২০ মিনিট (এবং ১২০০ মিনিটের সীমার মধ্যে কার্যকরী)
                 return { label: 'Processing', cssClass: 'status-pill-Processing' };
             } else {
                 return { label: 'Completed', cssClass: 'status-pill-Completed' };
@@ -180,17 +135,21 @@
             const currentUser = getUserIdentifier();
             const allOrders = JSON.parse(localStorage.getItem('raj_smm_orders') || '[]');
 
+            // Filter orders belonging strictly to current user identifier
             const userOrders = allOrders.filter(order => order.userIdentifier === currentUser);
 
             if (userOrders.length === 0) {
                 container.innerHTML = '';
                 noOrdersState.classList.remove('hidden');
+                document.querySelector('.bulk-action-bar').style.display = 'none';
                 return;
             }
 
             noOrdersState.classList.add('hidden');
+            document.querySelector('.bulk-action-bar').style.display = 'flex';
             container.innerHTML = '';
 
+            // Sort orders descending (newest first)
             userOrders.sort((a, b) => b.orderTimeEpoch - a.orderTimeEpoch);
 
             userOrders.forEach(order => {
@@ -199,100 +158,152 @@
                     month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit'
                 });
 
-                // Wrapper to hold checkbox + card together side-by-side
-                const wrapper = document.createElement('div');
-                wrapper.className = 'order-card-wrapper order-item-node';
-                wrapper.setAttribute('data-status', status.label);
-                wrapper.setAttribute('data-id', order.orderId || '');
-                wrapper.setAttribute('data-service', (order.serviceName || '').toLowerCase());
+                const card = document.createElement('div');
+                card.className = 'order-card order-item-node';
+                card.setAttribute('data-status', status.label);
+                card.setAttribute('data-id', order.orderId || '');
+                card.setAttribute('data-service', (order.serviceName || '').toLowerCase());
 
-                wrapper.innerHTML = `
-                    <input type="checkbox" class="order-checkbox" value="${order.orderId}">
-                    <div class="order-card">
-                        <div class="card-header-row">
+                card.innerHTML = `
+                    <div class="card-header-row" style="display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <!-- প্রতি অর্ডার কার্ডের জন্য সিলেক্ট চেকবাক্স -->
+                            <input type="checkbox" class="order-select-checkbox" value="${order.orderId}" onchange="updateMasterSelectState()" style="cursor: pointer; width: 16px; height: 16px;">
                             <div class="order-id-wrapper">
                                 <span class="order-id-label">Order ID</span>
-                                <h4 class="order-id-value">#${order.orderId}</h4>
-                            </div>
-                            <div class="status-pill ${status.cssClass}">
-                                <span class="status-pill-dot"></span>
-                                ${status.label}
-                            </div>
-                        </div>
-
-                        <div class="card-body-content">
-                            <div class="detail-block-full">
-                                <span class="detail-label">Service Name</span>
-                                <span class="service-title-value">${order.serviceName}</span>
-                            </div>
-
-                            <div class="card-details-grid">
-                                <div class="detail-block-full">
-                                    <span class="detail-label">Quantity</span>
-                                    <span class="quantity-value-badge">${order.quantity}</span>
-                                </div>
-                                <div class="target-link-wrapper">
-                                    <span class="detail-label">Target Link</span>
-                                    <a href="${order.link}" target="_blank" rel="noopener noreferrer" class="target-link-anchor">${order.link}</a>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <h4 class="order-id-value">#${order.orderId}</h4>
+                                    <!-- ডানপাশে ছোট্ট কপি বক্স/বাটন -->
+                                    <button type="button" onclick="copySingleOrderId('${order.orderId}', this)" title="Copy Order ID" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 2px 6px; border-radius: 4px; cursor: pointer; font-size: 11px; display: inline-flex; align-items: center; color: #475569;">
+                                        📋
+                                    </button>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="card-footer-row">
-                            <span>${formattedDate}</span>
-                            <span class="price-tag-value">₹${order.amount}</span>
+                        <div class="status-pill ${status.cssClass}">
+                            <span class="status-pill-dot"></span>
+                            ${status.label}
                         </div>
                     </div>
+
+                    <div class="card-body-content">
+                        <div class="detail-block-full">
+                            <span class="detail-label">Service Name</span>
+                            <span class="service-title-value">${order.serviceName}</span>
+                        </div>
+
+                        <div class="card-details-grid">
+                            <div class="detail-block-full">
+                                <span class="detail-label">Quantity</span>
+                                <span class="quantity-value-badge">${order.quantity}</span>
+                            </div>
+                            <div class="target-link-wrapper">
+                                <span class="detail-label">Target Link</span>
+                                <a href="${order.link}" target="_blank" rel="noopener noreferrer" class="target-link-anchor">${order.link}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer-row">
+                        <span>${formattedDate}</span>
+                        <span class="price-tag-value">₹${order.amount}</span>
+                    </div>
                 `;
-                container.appendChild(wrapper);
+                container.appendChild(card);
             });
+
+            // দৃশ্যমান ফিল্টারের সাথে সামঞ্জস্য রেখে কারেন্ট সার্চ বা ট্যাব ফিল্টার বজায় রাখা
+            applyCurrentFilters();
         }
 
         /**
-         * Select All / Deselect All functionality
+         * ১. সিঙ্গেল অর্ডার আইডি কপি করার ফাংশন
          */
-        function toggleSelectAll(selectAllCheckbox) {
-            const visibleCheckboxes = document.querySelectorAll('.order-item-node:not([style*="display: none"]) .order-checkbox');
-            visibleCheckboxes.forEach(checkbox => {
-                checkbox.checked = selectAllCheckbox.checked;
+        function copySingleOrderId(orderId, btnElement) {
+            navigator.clipboard.writeText(orderId).then(() => {
+                showToast("Order ID copied: " + orderId);
+                let originalText = btnElement.innerText;
+                btnElement.innerText = "✓";
+                setTimeout(() => {
+                    btnElement.innerText = originalText;
+                }, 1200);
+            }).catch(err => {
+                console.error("Failed to copy: ", err);
             });
         }
 
         /**
-         * Copy Selected Order IDs to Clipboard
+         * ২. অল সিলেক্ট চেকবাক্স টগল করার ফাংশন
+         */
+        function toggleSelectAllOrders(masterCheckbox) {
+            const visibleCheckboxes = document.querySelectorAll('.order-item-node:not([style*="display: none"]) .order-select-checkbox');
+            visibleCheckboxes.forEach(cb => {
+                cb.checked = masterCheckbox.checked;
+            });
+        }
+
+        /**
+         * ৩. ইন্ডিভিজুয়াল চেকবাক্স পরিবর্তনের মাধ্যমে মাস্টার চেকবাক্স আপডেট করা
+         */
+        function updateMasterSelectState() {
+            const masterCheckbox = document.getElementById('selectAllOrders');
+            const visibleCheckboxes = document.querySelectorAll('.order-item-node:not([style*="display: none"]) .order-select-checkbox');
+            const checkedCount = document.querySelectorAll('.order-item-node:not([style*="display: none"]) .order-select-checkbox:checked').length;
+
+            if (visibleCheckboxes.length === 0) return;
+
+            if (checkedCount === 0) {
+                masterCheckbox.checked = false;
+                masterCheckbox.indeterminate = false;
+            } else if (checkedCount === visibleCheckboxes.length) {
+                masterCheckbox.checked = true;
+                masterCheckbox.indeterminate = false;
+            } else {
+                masterCheckbox.checked = false;
+                masterCheckbox.indeterminate = true;
+            }
+        }
+
+        /**
+         * ৪. সিলেক্ট করা একাধিক অর্ডার আইডি একসাথে কপি করার ফাংশন
          */
         function copySelectedOrderIds() {
-            const checkedBoxes = document.querySelectorAll('.order-item-node:not([style*="display: none"]) .order-checkbox:checked');
+            const checkedBoxes = document.querySelectorAll('.order-select-checkbox:checked');
             if (checkedBoxes.length === 0) {
-                alert('Please select at least one order ID to copy!');
+                showToast("দয়া করে কমপক্ষে একটি অর্ডার সিলেক্ট করুন!");
                 return;
             }
 
-            const ids = Array.from(checkedBoxes).map(cb => cb.value);
-            const textToCopy = ids.join(', ');
-
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                alert(`Successfully copied ${ids.length} order ID(s): ${textToCopy}`);
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
+            let ids = [];
+            checkedBoxes.forEach(cb => {
+                ids.push(cb.value);
             });
+
+            const textToCopy = ids.join('\n');
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast(`${ids.length}টি অর্ডার আইডি কপি করা হয়েছে!`);
+            }).catch(err => {
+                console.error("Bulk copy failed: ", err);
+            });
+        }
+
+        /**
+         * টোস্ট মেসেজ দেখানোর ফাংশন
+         */
+        function showToast(message) {
+            const toast = document.getElementById('copyToast');
+            toast.innerText = message;
+            toast.style.opacity = '1';
+            setTimeout(() => {
+                toast.style.opacity = '0';
+            }, 2000);
         }
 
         /**
          * Optional Search Filter for UI
          */
         function filterOrdersBySearch() {
-            const query = document.getElementById('orderSearchInput').value.toLowerCase().trim();
-            const cards = document.querySelectorAll('.order-item-node');
-            cards.forEach(card => {
-                const id = card.getAttribute('data-id').toLowerCase();
-                const service = card.getAttribute('data-service').toLowerCase();
-                if (id.includes(query) || service.includes(query)) {
-                    card.style.display = "flex";
-                } else {
-                    card.style.display = "none";
-                }
-            });
+            applyCurrentFilters();
         }
 
         /**
@@ -307,18 +318,37 @@
                     tab.classList.remove('active');
                 }
             });
+            applyCurrentFilters();
+        }
+
+        /**
+         * কম্বাইন্ড ফিল্টার লজিক (সার্চ এবং স্ট্যাটাস ট্যাব একসাথে কাজ করার জন্য)
+         */
+        function applyCurrentFilters() {
+            const query = document.getElementById('orderSearchInput').value.toLowerCase().trim();
+            const activeTab = document.querySelector('.tab-btn.active');
+            const statusFilter = activeTab ? activeTab.getAttribute('data-filter') : 'all';
 
             const cards = document.querySelectorAll('.order-item-node');
             cards.forEach(card => {
-                if (status === 'all' || card.getAttribute('data-status') === status) {
-                    card.style.display = "flex";
+                const id = card.getAttribute('data-id').toLowerCase();
+                const service = card.getAttribute('data-service').toLowerCase();
+                const cardStatus = card.getAttribute('data-status');
+
+                const matchesSearch = id.includes(query) || service.includes(query);
+                const matchesStatus = (statusFilter === 'all' || cardStatus === statusFilter);
+
+                if (matchesSearch && matchesStatus) {
+                    card.style.display = "block";
                 } else {
                     card.style.display = "none";
+                    // ফিল্ড হাইড হলে এর চেকবাক্স আনচেক করে দেওয়া ভালো
+                    const cb = card.querySelector('.order-select-checkbox');
+                    if (cb) cb.checked = false;
                 }
             });
 
-            // Reset select all checkbox when changing tabs
-            document.getElementById('selectAllCheckbox').checked = false;
+            updateMasterSelectState();
         }
 
         // Initialize render on page load
@@ -329,3 +359,4 @@
     </script>
 </body>
 </html>
+```[cite: 1]

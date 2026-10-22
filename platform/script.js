@@ -332,11 +332,10 @@ const serviceData = {
         ],
         "👀 Views Reels-Video Non-Drop {REAL QUALITY}": [
             { providerId: 853, name: "1K Views", price: 5, badge: "DEMO", badgeClass: "badge-demo", desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
-            { providerId: 853, name: "5K Views", price: 9, desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
-            { providerId: 853, name: "10K Views", price: 15, badge: "BEST VALUE", badgeClass: "badge-best", desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
-            { providerId: 853, name: "20K Views", price: 25, desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
-            { providerId: 853, name: "50K Views", price: 55, desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
-            { providerId: 853, name: "100K Views", price: 99, badge: "🔥 BEST SELLER", badgeClass: "badge-best", desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
+            { providerId: 853, name: "5K Views", price: 20, desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
+            { providerId: 853, name: "10K Views", price: 30, badge: "BEST VALUE", badgeClass: "badge-best", desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
+            { providerId: 853, name: "50K Views", price: 99, desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
+            { providerId: 853, name: "100K Views", price: 149, badge: "🔥 BEST SELLER", badgeClass: "badge-best", desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
             { providerId: 853, name: "500K Views", price: 299, desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
             { providerId: 853, name: "1M Views", price: 499, badge: "💥 MEGA DEAL", badgeClass: "badge-best", desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" }
         ],

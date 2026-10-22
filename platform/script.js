@@ -387,8 +387,8 @@ const serviceData = {
                 badgeClass: "badge-best",
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
-                    "👁️ Reels Views — 16,000",
-                    "❤️ Reels Likes — 300",
+                    "👁️ Reels Views — 20,000",
+                    "❤️ Reels Likes — 100",
                     "💬 Reels Comments — 13",
                     "💾 Post / Reels Save — 100",
                     "🔗 Post / Reels Shares — 200",
@@ -404,7 +404,7 @@ const serviceData = {
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
                     "👁️ Reels Views — 40,000",
-                    "❤️ Reels Likes — 1,000",
+                    "❤️ Reels Likes — 500",
                     "💬 Reels Comments — 30",
                     "💾 Post / Reels Save — 300",
                     "🔗 Post / Reels Shares — 500",
@@ -420,7 +420,7 @@ const serviceData = {
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
                     "👁️ Reels Views — 70,000",
-                    "❤️ Reels Likes — 2,000",
+                    "❤️ Reels Likes — 1,500",
                     "💬 Reels Comments — 60",
                     "💾 Post / Reels Save — 500",
                     "🔗 Post / Reels Shares — 1,500",
@@ -436,7 +436,7 @@ const serviceData = {
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
                     "👁️ Reels Views — 100,000",
-                    "❤️ Reels Likes — 3,500",
+                    "❤️ Reels Likes — 2,500",
                     "💬 Reels Comments — 120",
                     "💾 Post / Reels Save — 700",
                     "🔗 Post / Reels Shares — 3,000",
@@ -452,7 +452,7 @@ const serviceData = {
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
                     "👁️ Reels Views — 150,000",
-                    "❤️ Reels Likes — 5,000",
+                    "❤️ Reels Likes — 4,000",
                     "💬 Reels Comments — 400",
                     "💾 Post / Reels Save — 1,000",
                     "🔗 Post / Reels Shares — 5,000",
@@ -468,7 +468,7 @@ const serviceData = {
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
                     "👁️ Reels Views — 220,000",
-                    "❤️ Reels Likes — 8,000",
+                    "❤️ Reels Likes — 6,000",
                     "💬 Reels Comments — 600",
                     "💾 Post / Reels Save — 2,000",
                     "🔗 Post / Reels Shares — 8,000",
@@ -486,7 +486,7 @@ const serviceData = {
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 60 min",
                 features: [
                     "👁️ Photo Views — 4,000",
-                    "❤️ Photo Likes — 500",
+                    "❤️ Photo Likes — 100",
                     "💬 Photo Comments — 15",
                     "💾 Post / Photo Save — 100",
                     "🔗 Post / Photo Shares — 100",
@@ -502,7 +502,7 @@ const serviceData = {
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 60 min",
                 features: [
                     "👁️ Photo Views — 10,000",
-                    "❤️ Photo Likes — 1,000",
+                    "❤️ Photo Likes — 500",
                     "💬 Photo Comments — 30",
                     "💾 Post / Photo Save — 100",
                     "🔄 Post / Photo Shares — 500",
@@ -518,7 +518,7 @@ const serviceData = {
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 60 min",
                 features: [
                     "👁️ Photo Views — 20,000",
-                    "❤️ Photo Likes — 3,000",
+                    "❤️ Photo Likes — 1,500",
                     "💬 Photo Comments — 60",
                     "💾 Post / Photo Save — 300",
                     "🔄 Post / Photo Shares — 1,000",
@@ -534,7 +534,7 @@ const serviceData = {
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 60 min",
                 features: [
                     "👁️ Photo Views — 50,000",
-                    "❤️ Photo Likes — 4,000",
+                    "❤️ Photo Likes — 3,000",
                     "💬 Photo Comments — 100",
                     "💾 Post / Photo Save — 500",
                     "🔄 Post / Photo Shares — 3,000",

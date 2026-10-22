@@ -323,12 +323,12 @@ const serviceData = {
             { name: "10k followers", price: 2399, desc: "🚀High Quality • Lifetime Refill ♻️ • Start 0–40 Min" }
         ],
         "❤️ Likes Non-Drop": [
-            { providerId: 675, name: "100 Likes", price: 15, badge: "Starter", badgeClass: "badge-demo", desc: "⚡ Best Quality •Life-Time~♻️• Starts in 10 Min" },
-            { providerId: 675, name: "500 Likes", price: 25, desc: "⚡ Best Quality •Life-Time~♻️• Starts in 10 Min" },
-            { providerId: 675, name: "1K Likes", price: 30, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "⚡ Best Quality •Life-Time~♻️• Starts in 10 Min" },
-            { providerId: 675, name: "3K Likes", price: 69, desc: "⚡ Best Quality •Life-Time~♻️• Starts in 5 Min" },
-            { providerId: 675, name: "5K Likes", price: 99, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "⚡ Best Quality •Life-Time~♻️• Starts in 10 Min" },
-            { providerId: 675, name: "10K Likes", price: 179, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "⚡ Best Quality •Life-Time~♻️• Starts in 10 Min" }
+            { providerId: 675, name: "100 Likes", price: 20, badge: "Starter", badgeClass: "badge-demo", desc: "⚡ Best Quality •Life-Time~♻️• Starts in 10 Min" },
+            { providerId: 675, name: "500 Likes", price: 30, desc: "⚡ Best Quality •Life-Time~♻️• Starts in 10 Min" },
+            { providerId: 675, name: "1K Likes", price: 49, badge: "⭐ Popular", badgeClass: "badge-popular", desc: "⚡ Best Quality •Life-Time~♻️• Starts in 10 Min" },
+            { providerId: 675, name: "3K Likes", price: 149, desc: "⚡ Best Quality •Life-Time~♻️• Starts in 5 Min" },
+            { providerId: 675, name: "5K Likes", price: 199, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "⚡ Best Quality •Life-Time~♻️• Starts in 10 Min" },
+            { providerId: 675, name: "10K Likes", price: 249, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "⚡ Best Quality •Life-Time~♻️• Starts in 10 Min" }
         ],
         "👀 Views Reels-Video Non-Drop {REAL QUALITY}": [
             { providerId: 853, name: "1K Views", price: 5, badge: "DEMO", badgeClass: "badge-demo", desc: "🇮🇳 Real Views ♻️Life Time Start in 5 Min" },
@@ -347,7 +347,7 @@ const serviceData = {
             { providerId: 1030, name: "10K Views", price: 49, badge: "🔥 Best Value", badgeClass: "badge-best", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
             { providerId: 1030, name: "30K Views", price: 89, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
             { providerId: 1030, name: "50K Views", price: 149, desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" },
-            { providerId: 1030, name: "100K Views", price: 279, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" }
+            { providerId: 1030, name: "100K Views", price: 199, badge: "👑 Most Popular", badgeClass: "badge-best", desc: "🇮🇳 Real Views •♻️Life-Time Start in 10 Min" }
         ],
         "💬 Comments Non-Drop {REAL QUALITY}": [
             { providerId: 31, name: "15 Comment (Start)", price: 10, desc: "💬High Quality • Custom Random Comments start in 10 min" },
@@ -552,7 +552,7 @@ const serviceData = {
             { name: "3k followers", price: 269, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
             { name: "5k Followers", price: 449, badge: "POPULAR", badgeClass: "badge-popular", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
             { name: "7k Followers", price: 599, desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
-            { name: "10k followers", price: 799, badge: "BEST VALUE", badgeClass: "badge-best", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
+            { name: "10k followers", price: 849, badge: "BEST VALUE", badgeClass: "badge-best", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" },
             { name: "20k Followers", price: 1499, badge: "MEGA DEAL", badgeClass: "badge-super", desc: "High Quality • Life-time Refill ♻️ • Start in 60 Min" }
         ],
         "👤 REAL-ACTIVE Followers": [
@@ -563,8 +563,8 @@ const serviceData = {
             { name: "500 Likes", price: 49, desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" },
             { name: "1K Likes", price: 90, badge: "⭐ POPULAR", badgeClass: "badge-popular", desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" },
             { name: "3K Likes", price: 199, desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" },
-            { name: "5K Likes", price: 299, badge: "🔥 BEST VALUE", badgeClass: "badge-best", desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" },
-            { name: "10K Likes", price: 499, badge: "👑 MOST POPULAR", badgeClass: "badge-best", desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" }
+            { name: "5K Likes", price: 399, badge: "🔥 BEST VALUE", badgeClass: "badge-best", desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" },
+            { name: "10K Likes", price: 599, badge: "👑 MOST POPULAR", badgeClass: "badge-best", desc: "👍 High Quality • Non-Drop Likes • Starts in 20 Min" }
         ],
         "👀 Views Reels / Video Non-Drop {REAL QUALITY}": [
             { name: "1K Views", price: 20, badge: "STARTER", badgeClass: "badge-demo", desc: "🎥 Real Quality Reels / Video Views • ♻️ Lifetime Refill • 15 Min Start" },

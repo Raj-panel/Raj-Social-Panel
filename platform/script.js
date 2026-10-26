@@ -606,9 +606,9 @@ const serviceData = {
             { name: "1K Live Stream Views — 90 Mins", price: 99, desc: "Live Views for 90 Minutes" }
         ],
         "YouTube Subscribe — Non Drop {REAL QUALITY}": [
-            { name: "100 Subscribers", price: 249, desc: "High Quality Indian Subscribers" },
-            { name: "500 Subscribers", price: 1199, desc: "High Quality Indian Subscribers" },
-            { name: "1K Subscribers", price: 2349, desc: "High Quality Indian Subscribers" }
+            { name: "100 Subscribers", price: 399, desc: "High Quality Indian Subscribers" },
+            { name: "500 Subscribers", price: 1999, desc: "High Quality Indian Subscribers" },
+            { name: "1K Subscribers", price: 3999, desc: "High Quality Indian Subscribers" }
         ]
     },
     tiktok: {

@@ -1525,7 +1525,7 @@ function showOrderSuccessPopup(orderData) {
     const currentDate = now.toLocaleDateString('en-GB');
     const currentTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    const whatsappNumber = "919239628344";
+    const whatsappNumber = "919239886345";
 
     const waMessage = 
 `📦 Track Your Order

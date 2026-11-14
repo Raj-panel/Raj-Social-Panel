@@ -314,7 +314,7 @@ const serviceData = {
             { name: "9K Followers", price: 729, desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" },
             { name: "10K Followers", price: 799, badge: "MOST POPULAR", badgeClass: "badge-super", desc: "🚀 Super Fast Delivery • Premium Quality • Starts in 2 Min" }
         ],
-        "🫂 Followers Non-Drop | Permanent": [
+        "🫂 Followers Non-Drop": [
             { name: "100 followers", price: 49, desc: "🚀High Quality • Lifetime Refill ♻️ • Start 0–40 Min" },
             { name: "1k followers", price: 349, desc: "🚀High Quality • Lifetime Refill ♻️ • Start 0–40 Min" },
             { name: "3k followers", price: 999, desc: "🚀High Quality • Lifetime Refill ♻️ • Start 0–40 Min" },

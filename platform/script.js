@@ -392,7 +392,7 @@ const serviceData = {
                     "💬 Reels Comments — 13",
                     "💾 Post / Reels Save — 100",
                     "🔗 Post / Reels Shares — 200",
-                    "♻️ Reels Reposts — 50"
+                    "♻️ Reels Reposts — 30"
                 ],
                 placeholder: "Enter Instagram reel/video link"
             },
@@ -404,11 +404,11 @@ const serviceData = {
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
                     "👁️ Reels Views — 40,000",
-                    "❤️ Reels Likes — 500",
+                    "❤️ Reels Likes — 300",
                     "💬 Reels Comments — 30",
                     "💾 Post / Reels Save — 300",
                     "🔗 Post / Reels Shares — 500",
-                    "♻️ Reels Reposts — 100"
+                    "♻️ Reels Reposts — 70"
                 ],
                 placeholder: "Enter Instagram reel/video link"
             },
@@ -420,11 +420,11 @@ const serviceData = {
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
                     "👁️ Reels Views — 70,000",
-                    "❤️ Reels Likes — 1,500",
+                    "❤️ Reels Likes — 1,000",
                     "💬 Reels Comments — 60",
                     "💾 Post / Reels Save — 500",
                     "🔗 Post / Reels Shares — 1,500",
-                    "♻️ Reels Reposts — 250"
+                    "♻️ Reels Reposts — 150"
                 ],
                 placeholder: "Enter Instagram reel/video link"
             },
@@ -436,11 +436,11 @@ const serviceData = {
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 20 min",
                 features: [
                     "👁️ Reels Views — 100,000",
-                    "❤️ Reels Likes — 2,500",
+                    "❤️ Reels Likes — 2,000",
                     "💬 Reels Comments — 120",
                     "💾 Post / Reels Save — 700",
                     "🔗 Post / Reels Shares — 3,000",
-                    "♻️ Reels Reposts — 400"
+                    "♻️ Reels Reposts — 350"
                 ],
                 placeholder: "Enter Instagram reel/video link"
             },
@@ -490,7 +490,7 @@ const serviceData = {
                     "💬 Photo Comments — 15",
                     "💾 Post / Photo Save — 100",
                     "🔗 Post / Photo Shares — 100",
-                    "♻️ Photo Reposts — 100"
+                    "♻️ Photo Reposts — 50"
                 ],
                 placeholder: "Enter Instagram photo/post link"
             },
@@ -506,7 +506,7 @@ const serviceData = {
                     "💬 Photo Comments — 30",
                     "💾 Post / Photo Save — 100",
                     "🔄 Post / Photo Shares — 500",
-                    "♻️ Photo Reposts — 150"
+                    "♻️ Photo Reposts — 110"
                 ],
                 placeholder: "Enter Instagram photo/post link"
             },
@@ -518,7 +518,7 @@ const serviceData = {
                 subtitle: "🇮🇳 Viral reels high quality♻️Life Time Star In 60 min",
                 features: [
                     "👁️ Photo Views — 20,000",
-                    "❤️ Photo Likes — 1,500",
+                    "❤️ Photo Likes — 1,200",
                     "💬 Photo Comments — 60",
                     "💾 Post / Photo Save — 300",
                     "🔄 Post / Photo Shares — 1,000",
